@@ -1,0 +1,6 @@
+{
+  "appName": "Youth membership FI",
+  "oidc": {
+    "redirecting": "Ohjataan tunnistautumiseen..."
+  }
+}
