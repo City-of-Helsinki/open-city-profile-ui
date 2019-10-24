@@ -7,7 +7,11 @@ type Props = RouteChildrenProps & {};
 
 function Home(props: Props) {
   return (
-  <PageLayout>Home</PageLayout>
+    <PageLayout>
+      <div>
+        Frontpage
+      </div>
+    </PageLayout>
   );
 }
 
