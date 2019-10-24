@@ -8,6 +8,6 @@ type Props = {
 
 function PageLayout(props: Props) {
   return <Header />
-}
+};
 
 export default PageLayout;

@@ -6,9 +6,9 @@ import Home from './pages/Home';
 const App: React.FC = () => {
   return (
     <Switch>
-      <Route path="/" component={Home}/>
+      <Route path="/" component={Home} />
     </Switch>
   );
-}
+};
 
 export default App;
