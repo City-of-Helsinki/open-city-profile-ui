@@ -8,9 +8,7 @@ type Props = {
 
 function PageLayout(props: Props) {
   return (
-    <div>
-      <Header />
-    </div>
+    <Header />
   );
 }
 
