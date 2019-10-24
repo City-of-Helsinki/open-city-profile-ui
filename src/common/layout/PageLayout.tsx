@@ -7,9 +7,7 @@ type Props = {
 };
 
 function PageLayout(props: Props) {
-  return (
-    <Header />
-  );
+  return <Header />
 }
 
 export default PageLayout;
