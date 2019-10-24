@@ -1,0 +1,6 @@
+{
+  "appName": "Open city profile",
+  "oidc": {
+    "redirecting": "Redirecting..."
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "appName": "Open city profile FI",
+  "oidc": {
+    "redirecting": "Ohjataan tunnistautumiseen..."
+  }
+}

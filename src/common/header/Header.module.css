@@ -1,0 +1,10 @@
+.header {
+  align-items: center;
+  border-bottom: 2px solid black;
+  display: flex;
+  padding: 10px;
+}
+
+.appName {
+  margin-left: 30px;
+}
