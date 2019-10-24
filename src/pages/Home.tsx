@@ -6,11 +6,7 @@ import PageLayout from '../common/layout/PageLayout';
 type Props = RouteChildrenProps & {};
 
 function Home(props: Props) {
-  return (
-    <PageLayout>
-      Frontpage
-    </PageLayout>
-  );
+  return <PageLayout>Frontpage</PageLayout>;
 }
 
 export default Home;
