@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    container_name: opencity-profile-ui
+    container_name: open-city-profile-ui
     build:
       context: .
       dockerfile: Dockerfile
