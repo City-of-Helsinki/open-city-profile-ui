@@ -54,7 +54,7 @@ Follow the instructions for setting up tunnistamo locally. Before running `docke
 After you've got tunnistamo running locally, make sure the automatically created **Project** OpenID Connect Provider Client has the following settings:
 
     Response types: `id_token token` must be enabled
-    Redirect URIs: `http://localhost:3000/callback` must be one of the listed URLs
+    Redirect URIs: `http://localhost:3000/callback` and `http://localhost:3000/silent_renew` must be in the listed URLs
 
 Then make sure the *https://api.hel.fi/auth/profiles*-scope can be used by the **Project** application. Go to OIDC_APIS -> API Scopes -> https://api.hel.fi/auth/profiles and make sure **Project** is selected in Allowed applications.
 
