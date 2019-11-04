@@ -1,13 +1,16 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import Header from '../header/Header';
 
-type Props = {
-  children: ReactNode;
-};
+type Props = React.PropsWithChildren<{}>;
 
 function PageLayout(props: Props) {
-  return <Header />;
+  return (
+    <>
+      <Header />
+      {props.children}
+    </>
+  );
 }
 
 export default PageLayout;
