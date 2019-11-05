@@ -1,8 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
+import { ApolloProvider } from '@apollo/react-hooks';
 import { Provider as ReduxProvider } from 'react-redux';
 import { OidcProvider, loadUser } from 'redux-oidc';
 
+import graphqlClient from './graphql/client';
 import store from './redux/store';
 import userManager from './auth/userManager';
 import enableOidcLogging from './auth/enableOidcLogging';
@@ -26,17 +28,19 @@ function App(props: Props) {
   return (
     <ReduxProvider store={store}>
       <OidcProvider store={store} userManager={userManager}>
-        <Switch>
-          <Route
-            path="/silent_renew"
-            render={() => {
-              userManager.signinSilentCallback();
-              return null;
-            }}
-          />
-          <Route path="/callback" component={OidcCallback} />
-          <Route path="/" component={Home} exact />
-        </Switch>
+        <ApolloProvider client={graphqlClient}>
+          <Switch>
+            <Route
+              path="/silent_renew"
+              render={() => {
+                userManager.signinSilentCallback();
+                return null;
+              }}
+            />
+            <Route path="/callback" component={OidcCallback} />
+            <Route path="/" component={Home} exact />
+          </Switch>
+        </ApolloProvider>
       </OidcProvider>
     </ReduxProvider>
   );
