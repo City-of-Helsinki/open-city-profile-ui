@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 loadUser(store, userManager).then(async user => {
-  if (user) {
+  if (user && !user.expired) {
     store.dispatch(fetchApiTokenThunk(user.access_token));
   }
 });
