@@ -2,5 +2,8 @@
   "appName": "Open city profile",
   "oidc": {
     "redirecting": "Redirecting..."
+  },
+  "profile": {
+    "loading": "Loading profile..."
   }
 }
