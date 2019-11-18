@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import OidcCallback from './pages/OidcCallback';
 import Profile from './pages/Profile';
 import { fetchApiTokenThunk } from './auth/redux';
+import PrivateRoute from './auth/PrivateRoute';
 
 if (process.env.NODE_ENV !== 'production') {
   enableOidcLogging();
@@ -39,7 +40,7 @@ function App(props: Props) {
               }}
             />
             <Route path="/callback" component={OidcCallback} />
-            <Route path="/profile" component={Profile} />
+            <PrivateRoute path="/profile" component={Profile} />
             <Route path="/" component={Home} exact />
           </Switch>
         </ApolloProvider>

@@ -4,6 +4,15 @@
     "redirecting": "Redirecting..."
   },
   "profile": {
-    "loading": "Loading profile..."
+    "loading": "Loading profile...",
+    "createHeading": "Create profile"
+  },
+  "profileForm": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone",
+    "terms": "I accept the terms",
+    "submit": "Save"
   }
 }
