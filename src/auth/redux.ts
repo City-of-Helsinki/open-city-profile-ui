@@ -44,3 +44,6 @@ export const fetchApiTokenThunk = (
 
 export const profileApiTokenSelector = (state: RootState) =>
   state.auth.apiTokens[process.env.REACT_APP_PROFILE_AUDIENCE as string];
+
+export const isAuthenticatedSelector = (state: RootState) =>
+  Boolean(!state.oidc.isLoadingUser && state.oidc.user);
