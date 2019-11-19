@@ -18,28 +18,44 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  extraReducers: {
-    [USER_EXPIRED]: (state, action) => {
+  name: 'auth',
+  initialState,
+  reducers: {
+    startFetching: (state, action) => {
+      state.loading = true;
+    },
+    receiveApiToken: (state, action) => {
+      state.error = null;
+      state.apiTokens = action.payload;
+      state.loading = false;
+    },
+    apiError: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
       state.apiTokens = {};
     },
   },
-  initialState: initialState,
-  name: 'auth',
-  reducers: {
-    receiveApiToken: (state, action) => {
-      state.apiTokens = action.payload;
+  extraReducers: {
+    [USER_EXPIRED]: (state, action) => {
+      console.log('user expired tralalalla');
+      state.apiTokens = {};
     },
   },
 });
 
-export const { receiveApiToken } = authSlice.actions;
+export const { receiveApiToken, startFetching, apiError } = authSlice.actions;
 export default authSlice.reducer;
 
 export const fetchApiTokenThunk = (
   accessToken: string
 ): AppThunk => async dispatch => {
-  const token = await fetchApiToken(accessToken);
-  return dispatch(receiveApiToken(token));
+  try {
+    dispatch(startFetching());
+    const token = await fetchApiToken(accessToken);
+    return dispatch(receiveApiToken(token));
+  } catch (e) {
+    return dispatch(apiError(e.toString()));
+  }
 };
 
 export const profileApiTokenSelector = (state: RootState) =>
@@ -47,3 +63,6 @@ export const profileApiTokenSelector = (state: RootState) =>
 
 export const isAuthenticatedSelector = (state: RootState) =>
   Boolean(!state.oidc.isLoadingUser && state.oidc.user);
+
+export const isFetchingApiTokenSelector = (state: RootState) =>
+  state.auth.loading;
