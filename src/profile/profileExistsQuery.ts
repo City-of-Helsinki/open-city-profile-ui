@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost';
 
 const PROFILE_EXISTS = gql`
-  query ProfileQuery {
-    profile {
+  query ProfileExistsQuery {
+    myProfile {
       id
     }
   }
