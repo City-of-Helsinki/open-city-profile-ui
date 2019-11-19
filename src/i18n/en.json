@@ -14,5 +14,9 @@
     "phone": "Phone",
     "terms": "I accept the terms",
     "submit": "Save"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "The value must be an email-address"
   }
 }
