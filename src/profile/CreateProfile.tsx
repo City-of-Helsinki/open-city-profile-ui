@@ -25,7 +25,7 @@ function CreateProfile() {
             email: tunnistamoUser.profile.email,
             phone: '',
           }}
-          onReady={(values: {}) => createProfile({ variables: values })}
+          onReady={(profile: {}) => createProfile({ variables: { profile } })}
         />
       )}
       {loading || (!tunnistamoUser && <p>Loading</p>)}
