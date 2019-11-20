@@ -1,19 +1,20 @@
 import React from 'react';
 import { CallbackComponent } from 'redux-oidc';
-import { RouteChildrenProps } from 'react-router';
+import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import userManager from '../auth/userManager';
 
-type Props = RouteChildrenProps & {};
+type Props = {};
 
 function OidcCallback(props: Props) {
+  const history = useHistory();
   const onSuccess = (user: object) => {
-    props.history.push('/');
+    history.push('/');
   };
   const onError = (error: object) => {
     // TODO: do something about errors
-    props.history.push('/');
+    history.push('/');
   };
   const { t } = useTranslation();
   return (

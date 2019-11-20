@@ -39,9 +39,15 @@ function App(props: Props) {
                 return null;
               }}
             />
-            <Route path="/callback" component={OidcCallback} />
-            <PrivateRoute path="/profile" component={Profile} />
-            <Route path="/" component={Home} exact />
+            <Route path="/callback">
+              <OidcCallback />
+            </Route>
+            <PrivateRoute path="/profile">
+              <Profile />
+            </PrivateRoute>
+            <Route path="/" exact>
+              <Home />
+            </Route>
           </Switch>
         </ApolloProvider>
       </OidcProvider>
