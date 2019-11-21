@@ -1,16 +1,13 @@
-version: '3'
+version: '3.7'
 
 services:
-  web:
+  app:
     container_name: open-city-profile-ui
     build:
       context: .
-      dockerfile: Dockerfile
+      target: ${DOCKER_TARGET:-development}
     volumes:
-      - '.:/usr/src/app'
-      - '/usr/src/app/node_modules'
+      - '.:/app'
+      - '/app/node_modules'
     ports:
       - '3000:3000'
-      - '9000:9000'
-    environment:
-      - NODE_ENV='development'
