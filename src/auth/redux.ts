@@ -1,9 +1,10 @@
 import { createSlice } from 'redux-starter-kit';
-import { USER_EXPIRED } from 'redux-oidc';
+import { USER_EXPIRED, LOAD_USER_ERROR, USER_SIGNED_OUT } from 'redux-oidc';
 
 import { AppThunk } from '../redux/store';
 import { RootState } from '../redux/rootReducer';
 import fetchApiToken from './fetchApiToken';
+import pickProfileApiToken from './pickProfileApiToken';
 
 interface AuthState {
   apiTokens: { [key: string]: string };
@@ -11,15 +12,15 @@ interface AuthState {
   loading: boolean;
 }
 
-const initialState: AuthState = {
+const getInitialState = (): AuthState => ({
   apiTokens: {},
   error: null,
   loading: false,
-};
+});
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState,
+  initialState: getInitialState(),
   reducers: {
     startFetching: (state, action) => {
       state.loading = true;
@@ -36,10 +37,9 @@ const authSlice = createSlice({
     },
   },
   extraReducers: {
-    [USER_EXPIRED]: (state, action) => {
-      console.log('user expired tralalalla');
-      state.apiTokens = {};
-    },
+    [USER_EXPIRED]: (state, action) => getInitialState(),
+    [LOAD_USER_ERROR]: (state, action) => getInitialState(),
+    [USER_SIGNED_OUT]: (state, action) => getInitialState(),
   },
 });
 
@@ -59,7 +59,7 @@ export const fetchApiTokenThunk = (
 };
 
 export const profileApiTokenSelector = (state: RootState) =>
-  state.auth.apiTokens[process.env.REACT_APP_PROFILE_AUDIENCE as string];
+  pickProfileApiToken(state.auth.apiTokens);
 
 export const isAuthenticatedSelector = (state: RootState) =>
   Boolean(!state.oidc.isLoadingUser && state.oidc.user);
