@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import React from 'react';
+import { User } from 'oidc-client';
 import { useTranslation } from 'react-i18next';
 
-import CREATE_PROFILE from './createProfileMutation';
 import CreateProfileForm from './CreateProfileForm';
-import getAuthenticatedUser from '../auth/getAuthenticatedUser';
 import PageHeading from '../common/pageHeading/PageHeading';
 
-function CreateProfile() {
+type Props = {
+  tunnistamoUser: User;
+};
+
+function CreateProfile({ tunnistamoUser }: Props) {
   const { t } = useTranslation();
-  const [createProfile, { loading, data }] = useMutation(CREATE_PROFILE);
-  const [tunnistamoUser, setTunnistamoUser] = useState();
-  useEffect(() => {
-    getAuthenticatedUser().then(user => setTunnistamoUser(user));
-  }, []);
   return (
     <>
       <PageHeading text={t('profile.createHeading')} />
@@ -25,10 +22,9 @@ function CreateProfile() {
             email: tunnistamoUser.profile.email,
             phone: '',
           }}
-          onReady={(profile: {}) => createProfile({ variables: { profile } })}
+          onReady={(profile: {}) => {}}
         />
       )}
-      {loading || (!tunnistamoUser && <p>Loading</p>)}
     </>
   );
 }
