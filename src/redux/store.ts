@@ -33,9 +33,7 @@ export function configureAppStore(options: Partial<ConfigureStoreOptions>) {
 const store = configureAppStore({
   devTools: !isProd,
   middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [USER_FOUND],
-    },
+    serializableCheck: false,
   }),
 });
 
