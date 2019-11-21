@@ -12,7 +12,6 @@ import Home from './pages/Home';
 import OidcCallback from './pages/OidcCallback';
 import Profile from './pages/Profile';
 import { fetchApiTokenThunk } from './auth/redux';
-import PrivateRoute from './auth/PrivateRoute';
 
 if (process.env.NODE_ENV !== 'production') {
   enableOidcLogging();
@@ -42,9 +41,9 @@ function App(props: Props) {
             <Route path="/callback">
               <OidcCallback />
             </Route>
-            <PrivateRoute path="/profile">
+            <Route path="/profile">
               <Profile />
-            </PrivateRoute>
+            </Route>
             <Route path="/" exact>
               <Home />
             </Route>
