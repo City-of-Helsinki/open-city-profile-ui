@@ -10,7 +10,7 @@ import userManager from './auth/userManager';
 import enableOidcLogging from './auth/enableOidcLogging';
 import Home from './pages/Home';
 import OidcCallback from './pages/OidcCallback';
-import Profile from './pages/Profile';
+import Profile from './profile/components/profile/Profile';
 import { fetchApiTokenThunk } from './auth/redux';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -41,9 +41,7 @@ function App(props: Props) {
             <Route path="/callback">
               <OidcCallback />
             </Route>
-            <Route path="/profile">
-              <Profile />
-            </Route>
+            <Route path="/profile" component={Profile} />
             <Route path="/" exact>
               <Home />
             </Route>

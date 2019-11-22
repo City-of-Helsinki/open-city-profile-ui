@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
+import { useHistory, RouteComponentProps } from 'react-router';
 
-import PageLayout from '../common/layout/PageLayout';
-import PROFILE_EXISTS from '../profile/profileExistsQuery';
-import CreateProfile from '../profile/CreateProfile';
-import getAuthenticatedUser from '../auth/getAuthenticatedUser';
+import PROFILE_EXISTS from '../../graphql/profileExistsQuery';
+import getAuthenticatedUser from '../../../auth/getAuthenticatedUser';
+import PageLayout from '../../../common/layout/PageLayout';
+import CreateProfile from '../createProfile/CreateProfile';
+import ViewProfile from '../viewProfile/ViewProfile';
+import Loading from '../../../common/loading/Loading';
+import styles from './Profile.module.css';
 
-type Props = {};
+type Props = RouteComponentProps & {};
 
 function Profile(props: Props) {
   const { t } = useTranslation();
@@ -32,13 +35,20 @@ function Profile(props: Props) {
 
   return (
     <PageLayout>
-      {isLoadingAnything ? (
-        <span>{t('profile.loading')}</span>
-      ) : isProfileFound ? (
-        JSON.stringify(data.myProfile)
-      ) : (
-        <CreateProfile tunnistamoUser={tunnistamoUser} />
-      )}
+      <Loading
+        loadingClassName={styles.loading}
+        isLoading={isLoadingAnything}
+        loadingText={t('profile.loading')}
+      >
+        {isProfileFound ? (
+          <ViewProfile />
+        ) : (
+          <CreateProfile
+            tunnistamoUser={tunnistamoUser}
+            onProfileCreated={() => checkProfileExists()}
+          />
+        )}
+      </Loading>
     </PageLayout>
   );
 }

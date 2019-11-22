@@ -18,7 +18,7 @@ type Props = {
     email: string;
     phone: string;
   };
-  onReady: (values: {}) => void;
+  onSubmit: (values: {}) => void;
 };
 
 function CreateProfileForm(props: Props) {
@@ -33,7 +33,7 @@ function CreateProfileForm(props: Props) {
         terms: 'validation.required',
       }}
       onSubmit={values => {
-        props.onReady({
+        props.onSubmit({
           firstName: values.firstName,
           lastName: values.lastName,
           email: values.lastName,
