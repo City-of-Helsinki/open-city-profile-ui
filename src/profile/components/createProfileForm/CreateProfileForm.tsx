@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { TextInput } from 'hds-react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
@@ -87,7 +87,12 @@ function CreateProfileForm(props: Props) {
             />
           </div>
           <label className={styles.terms}>
-            <Field name="terms" type="checkbox" /> {t('profileForm.terms')}
+            <Field name="terms" type="checkbox" />{' '}
+            <Trans
+              i18nKey="profileForm.terms"
+              // eslint-disable-next-line jsx-a11y/anchor-has-content
+              components={[<a href="/tos"></a>]}
+            />
           </label>
           <div>
             <Button
