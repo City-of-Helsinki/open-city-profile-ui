@@ -1,7 +1,7 @@
 import React from 'react';
 
 import authenticate from '../auth/authenticate';
-import PageLayout from '../common/layout/PageLayout';
+import PageLayout from '../common/pageLayout/PageLayout';
 
 type Props = {};
 

@@ -5,7 +5,7 @@ import { useHistory, RouteComponentProps } from 'react-router';
 import { loader } from 'graphql.macro';
 
 import getAuthenticatedUser from '../../../auth/getAuthenticatedUser';
-import PageLayout from '../../../common/layout/PageLayout';
+import PageLayout from '../../../common/pageLayout/PageLayout';
 import CreateProfile from '../createProfile/CreateProfile';
 import ViewProfile from '../viewProfile/ViewProfile';
 import Loading from '../../../common/loading/Loading';
