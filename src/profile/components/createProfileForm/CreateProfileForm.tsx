@@ -14,15 +14,17 @@ const schema = yup.object().shape({
   terms: yup.boolean().oneOf([true], 'validation.required'),
 });
 
+export type FormValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+};
+
 type Props = {
-  profile: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-  };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSubmit: (values: {}) => Promise<any>;
+  profile: FormValues;
+  onValues: (values: FormValues) => void;
+  isSubmitting: boolean;
 };
 
 function CreateProfileForm(props: Props) {
@@ -37,7 +39,7 @@ function CreateProfileForm(props: Props) {
         terms: 'validation.required',
       }}
       onSubmit={values => {
-        return props.onSubmit({
+        props.onValues({
           firstName: values.firstName,
           lastName: values.lastName,
           email: props.profile.email,
@@ -98,7 +100,9 @@ function CreateProfileForm(props: Props) {
           <div>
             <Button
               type="submit"
-              disabled={Boolean(isSubmitting || errors.terms)}
+              disabled={Boolean(
+                isSubmitting || errors.terms || props.isSubmitting
+              )}
             >
               {t('profileForm.submit')}
             </Button>

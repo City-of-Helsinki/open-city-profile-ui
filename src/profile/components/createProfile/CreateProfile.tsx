@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 
-import CreateProfileForm from '../createProfileForm/CreateProfileForm';
+import CreateProfileForm, {
+  FormValues,
+} from '../createProfileForm/CreateProfileForm';
 import PageHeading from '../../../common/pageHeading/PageHeading';
 import Explanation from '../../../common/explanation/Explanation';
 import styles from './CreateProfile.module.css';
@@ -16,11 +18,15 @@ type Props = {
   onProfileCreated: () => void;
 };
 
-function CreateProfile({ tunnistamoUser }: Props) {
+function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
   const { t } = useTranslation();
-  const [createProfile, { data, loading, error }] = useMutation(CREATE_PROFILE);
-  const handleSubmit = (profileData: {}) => {
-    createProfile({ variables: { profile: profileData } });
+  const [createProfile, { loading }] = useMutation(CREATE_PROFILE);
+  const handleOnValues = (profileData: FormValues) => {
+    createProfile({ variables: { profile: profileData } }).then(result => {
+      if (result.data) {
+        onProfileCreated();
+      }
+    });
   };
   return (
     <div className={styles.createProfile}>
@@ -37,7 +43,8 @@ function CreateProfile({ tunnistamoUser }: Props) {
             email: tunnistamoUser.profile.email,
             phone: '',
           }}
-          onSubmit={handleSubmit}
+          isSubmitting={loading}
+          onValues={handleOnValues}
         />
       </div>
     </div>
