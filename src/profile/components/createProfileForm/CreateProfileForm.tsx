@@ -4,10 +4,12 @@ import { TextInput } from 'hds-react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 
+import styles from './CreateProfileForm.module.css';
+
 const schema = yup.object().shape({
   firstName: yup.string(),
   lastName: yup.string(),
-  email: yup.string().email('validation.email'),
+  phone: yup.string().min(6, 'validation.phoneMin'),
   terms: yup.boolean().oneOf([true], 'validation.required'),
 });
 
@@ -36,51 +38,61 @@ function CreateProfileForm(props: Props) {
         props.onSubmit({
           firstName: values.firstName,
           lastName: values.lastName,
-          email: values.lastName,
+          email: props.profile.email,
           phone: values.lastName,
         });
       }}
       validationSchema={schema}
     >
-      {({ errors }) => (
-        <Form>
-          <Field
-            name="firstName"
-            id="firstName"
-            as={TextInput}
-            invalid={errors.firstName}
-            invalidText={errors.firstName && t(errors.firstName)}
-            labelText={t('profileForm.firstName')}
-          />
-          <Field
-            name="lastName"
-            id="lastName"
-            as={TextInput}
-            invalid={errors.lastName}
-            invalidText={errors.lastName && t(errors.lastName)}
-            labelText={t('profileForm.lastName')}
-          />
-          <Field
-            name="email"
-            id="email"
-            as={TextInput}
-            invalid={errors.email}
-            invalidText={errors.email && t(errors.email)}
-            labelText={t('profileForm.email')}
-          />
-          <Field
-            name="phone"
-            id="phone"
-            as={TextInput}
-            invalid={errors.phone}
-            invalidText={errors.phone && t(errors.phone)}
-            labelText={t('profileForm.phone')}
-          />
+      {({ errors, isSubmitting, submitCount }) => (
+        <Form noValidate>
+          <div className={styles.formFields}>
+            <Field
+              className={styles.formField}
+              name="firstName"
+              id="firstName"
+              as={TextInput}
+              invalid={submitCount && errors.firstName}
+              invalidText={
+                submitCount && errors.firstName && t(errors.firstName)
+              }
+              labelText={t('profileForm.firstName')}
+            />
+            <Field
+              className={styles.formField}
+              name="lastName"
+              id="lastName"
+              as={TextInput}
+              invalid={submitCount && errors.lastName}
+              invalidText={submitCount && errors.lastName && t(errors.lastName)}
+              labelText={t('profileForm.lastName')}
+            />
+            <div className={styles.formField}>
+              <label className={styles.label}>{t('profileForm.email')}</label>
+              <span className={styles.email}>{props.profile.email}</span>
+            </div>
+            <Field
+              className={styles.formField}
+              name="phone"
+              id="phone"
+              as={TextInput}
+              type="tel"
+              minlength="6"
+              invalid={submitCount && errors.phone}
+              invalidText={
+                submitCount && errors.phone && t(errors.phone, { min: 6 })
+              }
+              labelText={t('profileForm.phone')}
+            />
+          </div>
           <label>
             <Field name="terms" type="checkbox" /> {t('profileForm.terms')}
           </label>
           <div>
-            <button type="submit" disabled={Object.keys(errors).length > 0}>
+            <button
+              type="submit"
+              disabled={Boolean(isSubmitting || errors.terms)}
+            >
               {t('profileForm.submit')}
             </button>
           </div>
