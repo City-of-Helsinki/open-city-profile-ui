@@ -21,7 +21,8 @@ type Props = {
     email: string;
     phone: string;
   };
-  onSubmit: (values: {}) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSubmit: (values: {}) => Promise<any>;
 };
 
 function CreateProfileForm(props: Props) {
@@ -36,11 +37,11 @@ function CreateProfileForm(props: Props) {
         terms: 'validation.required',
       }}
       onSubmit={values => {
-        props.onSubmit({
+        return props.onSubmit({
           firstName: values.firstName,
           lastName: values.lastName,
           email: props.profile.email,
-          phone: values.lastName,
+          phone: values.phone,
         });
       }}
       validationSchema={schema}
