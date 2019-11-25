@@ -5,5 +5,23 @@
   },
   "profile": {
     "loading": "Ladataan profiilia..."
+  },
+  "createProfile": {
+    "pageTitle": "Uusi profiili",
+    "heading": "Täydennä tietosi luodaksesi profiili",
+    "helpText": "Nämä tiedot näkyvät vain sinulle"
+  },
+  "profileForm": {
+    "firstName": "Etunimi",
+    "lastName": "Sukunimi",
+    "email": "Sähköpostiosoite",
+    "phone": "Puhelinnumero",
+    "terms": "Hyväksyn <0>palvelun ehdot</0>, ja että minuun voi olla yhteydessä antamaani osoitteeseen",
+    "submit": "Tallenna"
+  },
+  "validation": {
+    "required": "Tämä kenttä on pakollinen",
+    "email": "Ei kelvollinen sähköpostiosoite",
+    "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä"
   }
 }

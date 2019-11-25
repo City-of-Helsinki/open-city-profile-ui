@@ -5,5 +5,23 @@
   },
   "profile": {
     "loading": "Laddar profil..."
+  },
+  "createProfile": {
+    "pageTitle": "Skapa profil",
+    "heading": "Fyll i detaljerna för att skapa en profil",
+    "helpText": "Denna information syns endast åt dig"
+  },
+  "profileForm": {
+    "firstName": "Förnamn",
+    "lastName": "Efternamn",
+    "email": "Epost-adress",
+    "phone": "Telefonnummer",
+    "terms": "Jag godkänner <0>användarvillkorna</0>, och att man får kontakta mig i adressen jag givit",
+    "submit": "Spara"
+  },
+  "validation": {
+    "required": "Detta fält krävs",
+    "email": "Inte ett giltigt epost-adress",
+    "phoneMin": "Telefonnumret måste vara mint {{min}} tecken långt"
   }
 }
