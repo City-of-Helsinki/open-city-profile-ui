@@ -1,12 +1,23 @@
 .header {
   align-items: center;
-  border-bottom: 2px solid black;
   display: flex;
-  padding: 10px;
+  height: 75px;
+  position: sticky;
+}
+
+@media (min-width: 768px) {
+  .header {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  }
+}
+
+.logo {
+  margin-left: 23px;
+  height: 42px;
 }
 
 .appName {
-  margin-left: 30px;
-  font-size: 30px;
+  margin-left: 20px;
+  font-size: 18px;
   font-weight: bold;
 }
