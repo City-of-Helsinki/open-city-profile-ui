@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import { useHistory, RouteComponentProps } from 'react-router';
+import { loader } from 'graphql.macro';
 
-import PROFILE_EXISTS from '../../graphql/profileExistsQuery';
 import getAuthenticatedUser from '../../../auth/getAuthenticatedUser';
 import PageLayout from '../../../common/layout/PageLayout';
 import CreateProfile from '../createProfile/CreateProfile';
 import ViewProfile from '../viewProfile/ViewProfile';
 import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
+
+const PROFILE_EXISTS = loader('../../graphql/profileExistsQuery.graphql');
 
 type Props = RouteComponentProps & {};
 

@@ -2,12 +2,14 @@ import React from 'react';
 import { User } from 'oidc-client';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
+import { loader } from 'graphql.macro';
 
 import CreateProfileForm from '../createProfileForm/CreateProfileForm';
 import PageHeading from '../../../common/pageHeading/PageHeading';
-import CREATE_PROFILE from '../../graphql/createProfileMutation';
 import Explanation from '../../../common/explanation/Explanation';
 import styles from './CreateProfile.module.css';
+
+const CREATE_PROFILE = loader('../../graphql/createProfileMutation.graphql');
 
 type Props = {
   tunnistamoUser: User;
