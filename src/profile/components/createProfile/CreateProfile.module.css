@@ -1,3 +1,11 @@
 .createProfile {
-  
+  background: var(--hds-brand-color-coat-of-arms-blue-light-20);
+  padding: 32px 15px 50px;
+}
+
+.front {
+  background: var(--soft-white);
+  border-radius: 2px;
+  margin-top: 20px;
+  padding: 22px 22px 36px;
 }

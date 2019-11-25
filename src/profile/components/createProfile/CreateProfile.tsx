@@ -6,6 +6,8 @@ import { useMutation } from '@apollo/react-hooks';
 import CreateProfileForm from '../createProfileForm/CreateProfileForm';
 import PageHeading from '../../../common/pageHeading/PageHeading';
 import CREATE_PROFILE from '../../graphql/createProfileMutation';
+import Explanation from '../../../common/explanation/Explanation';
+import styles from './CreateProfile.module.css';
 
 type Props = {
   tunnistamoUser: User;
@@ -14,23 +16,29 @@ type Props = {
 
 function CreateProfile({ tunnistamoUser }: Props) {
   const { t } = useTranslation();
-  const [createProfile, { data, loading }] = useMutation(CREATE_PROFILE);
+  const [createProfile, { data, loading, error }] = useMutation(CREATE_PROFILE);
   const handleSubmit = (profileData: {}) => {
     createProfile({ variables: { profile: profileData } });
   };
   return (
-    <>
-      <PageHeading text={t('profile.createHeading')} />
-      <CreateProfileForm
-        profile={{
-          firstName: tunnistamoUser.profile.given_name,
-          lastName: tunnistamoUser.profile.family_name,
-          email: tunnistamoUser.profile.email,
-          phone: '',
-        }}
-        onSubmit={handleSubmit}
-      />
-    </>
+    <div className={styles.createProfile}>
+      <PageHeading text={t('createProfile.pageTitle')} />
+      <div className={styles.front}>
+        <Explanation
+          main={t('createProfile.heading')}
+          small={t('createProfile.helpText')}
+        />
+        <CreateProfileForm
+          profile={{
+            firstName: tunnistamoUser.profile.given_name,
+            lastName: tunnistamoUser.profile.family_name,
+            email: tunnistamoUser.profile.email,
+            phone: '',
+          }}
+          onSubmit={handleSubmit}
+        />
+      </div>
+    </div>
   );
 }
 
