@@ -4,6 +4,7 @@ import { TextInput } from 'hds-react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 
+import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
 
 const schema = yup.object().shape({
@@ -89,12 +90,12 @@ function CreateProfileForm(props: Props) {
             <Field name="terms" type="checkbox" /> {t('profileForm.terms')}
           </label>
           <div>
-            <button
+            <Button
               type="submit"
               disabled={Boolean(isSubmitting || errors.terms)}
             >
               {t('profileForm.submit')}
-            </button>
+            </Button>
           </div>
         </Form>
       )}
