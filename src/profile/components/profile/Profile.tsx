@@ -18,7 +18,9 @@ type Props = RouteComponentProps & {};
 function Profile(props: Props) {
   const { t } = useTranslation();
   const history = useHistory();
-  const [checkProfileExists, { data, loading }] = useLazyQuery(PROFILE_EXISTS);
+  const [checkProfileExists, { data, loading }] = useLazyQuery(PROFILE_EXISTS, {
+    fetchPolicy: 'no-cache',
+  });
   const [isCheckingAuthState, setIsCheckingAuthState] = useState(true);
   const [tunnistamoUser, setTunnistamoUser] = useState();
 
