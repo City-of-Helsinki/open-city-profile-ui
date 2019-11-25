@@ -86,7 +86,7 @@ function CreateProfileForm(props: Props) {
               labelText={t('profileForm.phone')}
             />
           </div>
-          <label>
+          <label className={styles.terms}>
             <Field name="terms" type="checkbox" /> {t('profileForm.terms')}
           </label>
           <div>

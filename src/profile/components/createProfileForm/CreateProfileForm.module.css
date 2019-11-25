@@ -1,18 +1,15 @@
-.formField {
-  padding-bottom: 20px;
-}
-
-.label {
-  composes: text-bold text-sm from '~hds-core/lib/helsinki.css';
-  display: block;
-}
-
 @media (min-width: 768px) {
   .formFields {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
   }
+}
+
+.formField {
+  padding-bottom: 20px;
+}
+@media (min-width: 768px) {
   .formField {
     flex-basis: 50%;
     padding: 10px 10px 10px 0;
@@ -21,9 +18,24 @@
     padding-right: 0;
     padding-left: 10px;
   }
+}
+
+.label {
+  composes: text-bold text-sm from '~hds-core/lib/helsinki.css';
+  display: block;
+}
+
+.terms {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.email {
+
+}
+@media (min-width: 768px) {
   .email {
     display: inline-block;
     margin-top: 20px;
   }
 }
-
