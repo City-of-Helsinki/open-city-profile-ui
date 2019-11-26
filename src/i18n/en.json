@@ -2,5 +2,26 @@
   "appName": "Open city profile",
   "oidc": {
     "redirecting": "Redirecting..."
+  },
+  "profile": {
+    "loading": "Loading profile..."
+  },
+  "createProfile": {
+    "pageTitle": "Create profile",
+    "heading": "Fill in your details to create a profile",
+    "helpText": "This information is only visible to you"
+  },
+  "profileForm": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone",
+    "terms": "I agree to the <0>Terms of Service</0>, and that I may be contacted at the address I provide",
+    "submit": "Save"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "The value must be an email-address",
+    "phoneMin": "The number must be at least {{min}} characters long"
   }
 }

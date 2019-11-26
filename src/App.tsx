@@ -10,6 +10,7 @@ import userManager from './auth/userManager';
 import enableOidcLogging from './auth/enableOidcLogging';
 import Home from './pages/Home';
 import OidcCallback from './pages/OidcCallback';
+import Profile from './profile/components/profile/Profile';
 import { fetchApiTokenThunk } from './auth/redux';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -17,7 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 loadUser(store, userManager).then(async user => {
-  if (user) {
+  if (user && !user.expired) {
     store.dispatch(fetchApiTokenThunk(user.access_token));
   }
 });
@@ -37,8 +38,13 @@ function App(props: Props) {
                 return null;
               }}
             />
-            <Route path="/callback" component={OidcCallback} />
-            <Route path="/" component={Home} exact />
+            <Route path="/callback">
+              <OidcCallback />
+            </Route>
+            <Route path="/profile" component={Profile} />
+            <Route path="/" exact>
+              <Home />
+            </Route>
           </Switch>
         </ApolloProvider>
       </OidcProvider>

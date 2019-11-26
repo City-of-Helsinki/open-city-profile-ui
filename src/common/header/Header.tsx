@@ -1,8 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import { ReactComponent as HelsinkiLogo } from '../svg/HelsinkiLogo.svg';
 import styles from './Header.module.css';
+import responsive from '../cssHelpers/responsive.module.css';
 
 type Props = {};
 
@@ -10,8 +12,10 @@ function Header(props: Props) {
   const { t } = useTranslation();
   return (
     <header className={styles.header}>
-      <HelsinkiLogo />
-      <h1 className={styles.appName}>{t('appName')}</h1>
+      <div className={classNames(styles.inner, responsive.maxWidthCentered)}>
+        <HelsinkiLogo className={styles.logo} />
+        <span className={`${styles.appName}`}>{t('appName')}</span>
+      </div>
     </header>
   );
 }

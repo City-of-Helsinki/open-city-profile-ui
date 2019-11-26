@@ -5,7 +5,6 @@ import {
   ConfigureStoreOptions,
 } from 'redux-starter-kit';
 import { ThunkAction } from 'redux-thunk';
-import { USER_FOUND } from 'redux-oidc';
 
 import rootReducer, { RootState } from './rootReducer';
 
@@ -33,9 +32,7 @@ export function configureAppStore(options: Partial<ConfigureStoreOptions>) {
 const store = configureAppStore({
   devTools: !isProd,
   middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [USER_FOUND],
-    },
+    serializableCheck: false,
   }),
 });
 

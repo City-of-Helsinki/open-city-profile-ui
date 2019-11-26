@@ -1,0 +1,11 @@
+.pageHeading {
+  align-items: center;
+  color: var(--hds-brand-color-coat-of-arms-blue-dark-50);
+  display: flex;
+  height: 120px;
+  padding-left: 10px;
+}
+
+.pageHeading h1 {
+  margin-left: 20px;
+}
