@@ -1,0 +1,33 @@
+.footer {
+  background: var(--hds-brand-color-bus);
+}
+
+.logo {
+  height: 58px;
+  margin: 20px;
+}
+@media (min-width: 1024px) {
+  .logo {
+    height: 84px;
+    margin: 40px 0 20px;
+  }
+}
+
+.logo g {
+  fill: var(--hds-ui-color-white);
+}
+
+.copyright {
+  border-top: 1px solid var(--hds-ui-color-black-50);
+  color: var(--hds-ui-color-white);
+  display: block;
+  font-size: 14px;
+  margin: 0 3px;
+  padding: 20px 10px;
+}
+@media (min-width: 1024px) {
+  .copyright {
+    margin: 0;
+    padding: 20px 0 50px 3px;
+  }
+}
