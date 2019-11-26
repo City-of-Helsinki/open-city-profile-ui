@@ -13,7 +13,7 @@ function Header(props: Props) {
   return (
     <header className={styles.header}>
       <div className={classNames(styles.inner, responsive.maxWidthCentered)}>
-        <HelsinkiLogo className={styles.logo} />
+        <HelsinkiLogo className={styles.logo} aria-label="Helsinki logo" />
         <span className={`${styles.appName}`}>{t('appName')}</span>
       </div>
     </header>
