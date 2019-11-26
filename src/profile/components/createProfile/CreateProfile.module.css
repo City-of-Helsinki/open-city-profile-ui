@@ -6,6 +6,6 @@
 .front {
   background: var(--soft-white);
   border-radius: 2px;
-  margin-top: 20px;
+  margin: 20px auto 0;
   padding: 22px 22px 36px;
 }

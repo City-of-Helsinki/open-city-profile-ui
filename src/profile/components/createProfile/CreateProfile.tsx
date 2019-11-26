@@ -3,6 +3,7 @@ import { User } from 'oidc-client';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
+import classNames from 'classnames';
 
 import CreateProfileForm, {
   FormValues,
@@ -10,6 +11,7 @@ import CreateProfileForm, {
 import PageHeading from '../../../common/pageHeading/PageHeading';
 import Explanation from '../../../common/explanation/Explanation';
 import styles from './CreateProfile.module.css';
+import responsive from '../../../common/cssHelpers/responsive.module.css';
 
 const CREATE_PROFILE = loader('../../graphql/createProfileMutation.graphql');
 
@@ -30,8 +32,11 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
   };
   return (
     <div className={styles.createProfile}>
-      <PageHeading text={t('createProfile.pageTitle')} />
-      <div className={styles.front}>
+      <PageHeading
+        text={t('createProfile.pageTitle')}
+        className={responsive.maxWidthCentered}
+      />
+      <div className={classNames(styles.front, responsive.maxWidthCentered)}>
         <Explanation
           main={t('createProfile.heading')}
           small={t('createProfile.helpText')}

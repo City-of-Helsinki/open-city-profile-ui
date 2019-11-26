@@ -1,23 +1,24 @@
 .header {
-  align-items: center;
-  display: flex;
   height: 75px;
   position: sticky;
 }
-
 @media (min-width: 768px) {
   .header {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   }
 }
 
+.inner {
+  align-items: center;
+  display: flex;
+  height: 100%;
+}
+
 .logo {
-  margin-left: 23px;
   height: 42px;
 }
 
 .appName {
-  margin-left: 20px;
   font-size: 18px;
   font-weight: bold;
 }
