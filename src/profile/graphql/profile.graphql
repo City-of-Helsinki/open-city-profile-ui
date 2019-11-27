@@ -1,0 +1,7 @@
+query ProfileQuery {
+  myProfile {
+    firstName
+    lastName
+    nickname
+  }
+}
