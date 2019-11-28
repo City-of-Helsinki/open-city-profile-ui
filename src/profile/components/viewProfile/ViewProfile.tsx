@@ -9,7 +9,7 @@ const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
 type Props = {};
 
 function Profile(props: Props) {
-  const { data, loading, error } = useQuery<MyProfileQuery>(MY_PROFILE);
+  const { data } = useQuery<MyProfileQuery>(MY_PROFILE);
   return <div>{data && JSON.stringify(data)}</div>;
 }
 
