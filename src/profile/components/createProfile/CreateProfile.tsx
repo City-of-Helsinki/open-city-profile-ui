@@ -12,8 +12,12 @@ import PageHeading from '../../../common/pageHeading/PageHeading';
 import Explanation from '../../../common/explanation/Explanation';
 import styles from './CreateProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
+import {
+  CreateProfile as CreateProfileData,
+  CreateProfileVariables,
+} from '../../graphql/__generated__/CreateProfile';
 
-const CREATE_PROFILE = loader('../../graphql/createProfileMutation.graphql');
+const CREATE_PROFILE = loader('../../graphql/CreateProfile.graphql');
 
 type Props = {
   tunnistamoUser: User;
@@ -22,7 +26,10 @@ type Props = {
 
 function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
   const { t } = useTranslation();
-  const [createProfile, { loading }] = useMutation(CREATE_PROFILE);
+  const [createProfile, { loading }] = useMutation<
+    CreateProfileData,
+    CreateProfileVariables
+  >(CREATE_PROFILE);
   const handleOnValues = (profileData: FormValues) => {
     createProfile({ variables: { profile: profileData } }).then(result => {
       if (result.data) {

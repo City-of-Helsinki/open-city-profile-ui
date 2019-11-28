@@ -10,15 +10,18 @@ import CreateProfile from '../createProfile/CreateProfile';
 import ViewProfile from '../viewProfile/ViewProfile';
 import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
+import { ProfileExistsQuery } from '../../graphql/__generated__/ProfileExistsQuery';
 
-const PROFILE_EXISTS = loader('../../graphql/profileExistsQuery.graphql');
+const PROFILE_EXISTS = loader('../../graphql/ProfileExistsQuery.graphql');
 
 type Props = RouteComponentProps & {};
 
 function Profile(props: Props) {
   const { t } = useTranslation();
   const history = useHistory();
-  const [checkProfileExists, { data, loading }] = useLazyQuery(PROFILE_EXISTS, {
+  const [checkProfileExists, { data, loading }] = useLazyQuery<
+    ProfileExistsQuery
+  >(PROFILE_EXISTS, {
     fetchPolicy: 'no-cache',
   });
   const [isCheckingAuthState, setIsCheckingAuthState] = useState(true);

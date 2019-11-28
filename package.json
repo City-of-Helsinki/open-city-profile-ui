@@ -39,7 +39,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "ci": "CI=true yarn test --coverage",
-    "lint": "eslint --ext js,ts,tsx src"
+    "lint": "eslint --ext js,ts,tsx src",
+    "codegen": "apollo client:codegen __generated__ --includes=./src/**/*.graphql --target=typescript --endpoint=https://helsinkiprofile.test.kuva.hel.ninja/graphql/ --useReadOnlyTypes --globalTypesFile=./src/graphql/__generated__/globalTypes.ts --addTypename"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -57,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "apollo": "^2.21.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-prettier": "^3.1.1",
     "jest-fetch-mock": "^2.1.2",
