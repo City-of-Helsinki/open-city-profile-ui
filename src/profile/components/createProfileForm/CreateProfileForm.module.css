@@ -36,6 +36,7 @@
 .terms {
   display: inline-block;
   margin-bottom: 20px;
+  user-select: none;
 }
 @media (min-width: 768px) {
   .terms {
