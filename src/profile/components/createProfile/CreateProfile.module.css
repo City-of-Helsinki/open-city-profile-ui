@@ -1,0 +1,10 @@
+.createProfile {
+  padding: 32px 15px 50px;
+}
+
+.front {
+  background: var(--soft-white);
+  border-radius: 2px;
+  margin: 20px auto 0;
+  padding: 22px 22px 36px;
+}
