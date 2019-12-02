@@ -11,8 +11,8 @@ build-review:
   extends: .build
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-review"
-    DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.test.kuva.hel.ninja"
-    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql"
+    DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.test.kuva.hel.ninja/"
+    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql/"
   only:
     refs:
       - external_pull_requests
@@ -21,8 +21,8 @@ build-staging:
   extends: .build
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-staging"
-    DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.test.kuva.hel.ninja"
-    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql"
+    DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.test.kuva.hel.ninja/"
+    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql/"
   only:
     refs:
       - develop
@@ -31,8 +31,8 @@ build-production:
   extends: .build
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-production"
-    DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.test.kuva.hel.ninja"
-    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql"
+    DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.test.kuva.hel.ninja/"
+    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql/"
   only:
     refs:
       - master
