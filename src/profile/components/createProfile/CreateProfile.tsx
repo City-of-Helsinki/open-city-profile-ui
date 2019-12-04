@@ -31,7 +31,7 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
     CreateProfileVariables
   >(CREATE_PROFILE);
   const handleOnValues = (formValues: FormValues) => {
-    const data: CreateProfileVariables = {
+    const variables: CreateProfileVariables = {
       profile: {
         firstName: formValues.firstName,
         lastName: formValues.lastName,
@@ -51,7 +51,7 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
         ],
       },
     };
-    createProfile({ variables: data }).then(result => {
+    createProfile({ variables }).then(result => {
       if (result.data) {
         onProfileCreated();
       }
