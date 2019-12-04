@@ -4912,16 +4912,17 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hds-core@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-0.3.0.tgz#88f63031034a01e04dc05501e2184dccf20e122d"
+hds-core@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-0.3.2.tgz#70c5129ae0c4ecd08b70bd69ca5e1a234cc3747f"
 
-hds-react@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-0.3.1.tgz#ffb813c350265b27a607884b0d92ad0280252863"
+hds-react@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-0.4.4.tgz#25558ee5b826c81333213e87bab20d5c1f8de8d1"
   dependencies:
-    hds-core "^0.3.0"
+    hds-core "^0.3.2"
     lodash.uniqueid "^4.0.1"
+    react-spring "^8.0.27"
 
 he@1.2.x:
   version "1.2.0"
@@ -8142,7 +8143,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.3"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   dependencies:
@@ -8456,6 +8457,13 @@ react-scripts@3.2.0:
     workbox-webpack-plugin "4.3.1"
   optionalDependencies:
     fsevents "2.0.7"
+
+react-spring@^8.0.27:
+  version "8.0.27"
+  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.27.tgz#97d4dee677f41e0b2adcb696f3839680a3aa356a"
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    prop-types "^15.5.8"
 
 react@^16.11.0:
   version "16.11.0"
