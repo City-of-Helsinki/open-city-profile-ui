@@ -8,9 +8,12 @@ import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
 
 const schema = yup.object().shape({
-  firstName: yup.string(),
-  lastName: yup.string(),
-  phone: yup.string().min(6, 'validation.phoneMin'),
+  firstName: yup.string().max(255, 'validation.maxLength'),
+  lastName: yup.string().max(255, 'validation.maxLength'),
+  phone: yup
+    .string()
+    .min(6, 'validation.phoneMin')
+    .max(255, 'validation.maxLength'),
   terms: yup.boolean().oneOf([true], 'validation.required'),
 });
 
@@ -49,16 +52,19 @@ function CreateProfileForm(props: Props) {
       validationSchema={schema}
     >
       {({ errors, isSubmitting, submitCount }) => (
-        <Form noValidate>
+        <Form>
           <div className={styles.formFields}>
             <Field
               className={styles.formField}
               name="firstName"
               id="firstName"
+              maxlength="255"
               as={TextInput}
               invalid={submitCount && errors.firstName}
               invalidText={
-                submitCount && errors.firstName && t(errors.firstName)
+                submitCount &&
+                errors.firstName &&
+                t(errors.firstName, { max: 255 })
               }
               labelText={t('profileForm.firstName')}
             />
@@ -66,9 +72,14 @@ function CreateProfileForm(props: Props) {
               className={styles.formField}
               name="lastName"
               id="lastName"
+              maxlength="255"
               as={TextInput}
               invalid={submitCount && errors.lastName}
-              invalidText={submitCount && errors.lastName && t(errors.lastName)}
+              invalidText={
+                submitCount &&
+                errors.lastName &&
+                t(errors.lastName, { max: 255 })
+              }
               labelText={t('profileForm.lastName')}
             />
             <div className={styles.formField}>
@@ -82,9 +93,12 @@ function CreateProfileForm(props: Props) {
               as={TextInput}
               type="tel"
               minlength="6"
+              maxlength="255"
               invalid={submitCount && errors.phone}
               invalidText={
-                submitCount && errors.phone && t(errors.phone, { min: 6 })
+                submitCount &&
+                errors.phone &&
+                t(errors.phone, { min: 6, max: 255 })
               }
               labelText={t('profileForm.phone')}
             />

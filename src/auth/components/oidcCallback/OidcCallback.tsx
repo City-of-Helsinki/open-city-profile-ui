@@ -3,7 +3,7 @@ import { CallbackComponent } from 'redux-oidc';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
-import userManager from '../auth/userManager';
+import userManager from '../../userManager';
 
 type Props = {};
 
@@ -14,7 +14,7 @@ function OidcCallback(props: Props) {
   };
   const onError = (error: object) => {
     // TODO: do something about errors
-    history.push('/');
+    history.push('/login');
   };
   const { t } = useTranslation();
   return (
