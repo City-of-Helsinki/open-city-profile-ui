@@ -8,8 +8,8 @@ import graphqlClient from './graphql/client';
 import store from './redux/store';
 import userManager from './auth/userManager';
 import enableOidcLogging from './auth/enableOidcLogging';
-import Home from './pages/Home';
-import OidcCallback from './pages/OidcCallback';
+import Login from './auth/components/login/Login';
+import OidcCallback from './auth/components/oidcCallback/OidcCallback';
 import Profile from './profile/components/profile/Profile';
 import { fetchApiTokenThunk } from './auth/redux';
 
@@ -41,10 +41,13 @@ function App(props: Props) {
             <Route path="/callback">
               <OidcCallback />
             </Route>
-            <Route path="/profile" component={Profile} />
-            <Route path="/" exact>
-              <Home />
+            <Route path="/login">
+              <Login />
             </Route>
+            <Route path="/" exact>
+              <Profile />
+            </Route>
+            <Route path="*">404 - not found</Route>
           </Switch>
         </ApolloProvider>
       </OidcProvider>
