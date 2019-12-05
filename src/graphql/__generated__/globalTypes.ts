@@ -6,12 +6,26 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum AddressType {
+  HOME = "HOME",
+  NONE = "NONE",
+  OTHER = "OTHER",
+  WORK = "WORK",
+}
+
 /**
  * An enumeration.
  */
 export enum ContactMethod {
   EMAIL = "EMAIL",
   SMS = "SMS",
+}
+
+export enum EmailType {
+  NONE = "NONE",
+  OTHER = "OTHER",
+  PERSONAL = "PERSONAL",
+  WORK = "WORK",
 }
 
 /**
@@ -23,32 +37,22 @@ export enum Language {
   SWEDISH = "SWEDISH",
 }
 
-/**
- * An enumeration.
- */
-export enum addressType {
-  HOME = "HOME",
-  OTHER = "OTHER",
-  WORK = "WORK",
-}
-
-/**
- * An enumeration.
- */
-export enum emailType {
-  OTHER = "OTHER",
-  PERSONAL = "PERSONAL",
-  WORK = "WORK",
-}
-
-/**
- * An enumeration.
- */
-export enum phoneType {
+export enum PhoneType {
   HOME = "HOME",
   MOBILE = "MOBILE",
+  NONE = "NONE",
   OTHER = "OTHER",
   WORK = "WORK",
+}
+
+export enum YouthLanguage {
+  ARABIC = "ARABIC",
+  ENGLISH = "ENGLISH",
+  ESTONIAN = "ESTONIAN",
+  FINNISH = "FINNISH",
+  RUSSIAN = "RUSSIAN",
+  SOMALI = "SOMALI",
+  SWEDISH = "SWEDISH",
 }
 
 export interface AddressInput {
@@ -57,21 +61,21 @@ export interface AddressInput {
   readonly postalCode?: string | null;
   readonly city?: string | null;
   readonly countryCode?: string | null;
-  readonly addressType?: addressType | null;
+  readonly addressType?: AddressType | null;
   readonly primary?: boolean | null;
 }
 
 export interface EmailInput {
   readonly id?: string | null;
   readonly email?: string | null;
-  readonly emailType?: emailType | null;
+  readonly emailType?: EmailType | null;
   readonly primary?: boolean | null;
 }
 
 export interface PhoneInput {
   readonly id?: string | null;
   readonly phone?: string | null;
-  readonly phoneType?: phoneType | null;
+  readonly phoneType?: PhoneType | null;
   readonly primary?: boolean | null;
 }
 
@@ -93,6 +97,18 @@ export interface ProfileInput {
   readonly addAddresses?: ReadonlyArray<(AddressInput | null)> | null;
   readonly updateAddresses?: ReadonlyArray<(AddressInput | null)> | null;
   readonly removeAddresses?: ReadonlyArray<(string | null)> | null;
+  readonly youthProfile?: YouthProfileFields | null;
+}
+
+export interface YouthProfileFields {
+  readonly schoolName?: string | null;
+  readonly schoolClass?: string | null;
+  readonly languageAtHome?: YouthLanguage | null;
+  readonly approverFirstName?: string | null;
+  readonly approverLastName?: string | null;
+  readonly approverPhone?: string | null;
+  readonly approverEmail?: string | null;
+  readonly birthDate: any;
 }
 
 //==============================================================
