@@ -1,10 +1,26 @@
 {
   "appName": "Open city profile",
+  "loading": "Loading...",
   "oidc": {
     "redirecting": "Redirecting..."
   },
   "profile": {
     "loading": "Loading profile..."
+  },
+  "profileNav": {
+    "information": "Information",
+    "services": "Connected services"
+  },
+  "profileInformation": {
+    "title": "My information",
+    "personalData": "Personal data",
+    "visibility": "This information is only visible to you",
+    "deleteProfile": "Delete your profile",
+    "downloadData": "Download your data",
+    "name": "Name",
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone"
   },
   "createProfile": {
     "pageTitle": "Create profile",

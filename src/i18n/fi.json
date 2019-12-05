@@ -1,10 +1,26 @@
 {
   "appName": "Open city profile FI",
+  "loading": "Ladataan...",
   "oidc": {
     "redirecting": "Ohjataan tunnistautumiseen..."
   },
   "profile": {
     "loading": "Ladataan profiilia..."
+  },
+  "profileNav": {
+    "information": "Omat tiedot",
+    "services": "Yhdistetyt palvelut"
+  },
+  "profileInformation": {
+    "title": "Omat tiedot",
+    "personalData": "Henkilötiedot",
+    "visibility": "Nämä tiedot näkyvät vain sinulle",
+    "deleteProfile": "Poista omat tietosi",
+    "downloadData": "Lataa omat tietosi",
+    "name": "Nimi",
+    "address": "Osoite",
+    "email": "Sähköpostiosoite",
+    "phone": "Puhelinnumero"
   },
   "createProfile": {
     "pageTitle": "Uusi profiili",

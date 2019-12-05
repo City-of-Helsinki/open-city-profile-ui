@@ -1,10 +1,26 @@
 {
   "appName": "Open city profile SV",
+  "loading": "Laddar...",
   "oidc": {
     "redirecting": "Omdirigerar..."
   },
   "profile": {
     "loading": "Laddar profil..."
+  },
+  "profileNav": {
+    "information": "Mina uppgifter",
+    "services": "Anslutna servicer"
+  },
+  "profileInformation": {
+    "title": "Mina uppgifter",
+    "personalData": "Personuppgifter",
+    "visibility": "Denna information syns endast åt dig",
+    "deleteProfile": "Radera profil",
+    "downloadData": "Ladda ner min data",
+    "name": "Namn",
+    "address": "Adress",
+    "email": "Epost",
+    "phone": "Telefonnummer"
   },
   "createProfile": {
     "pageTitle": "Skapa profil",
