@@ -10,7 +10,7 @@ const languages = [
 ];
 
 type Props = {
-  onLanguageChanged: () => void;
+  onLanguageChanged?: () => void;
 };
 
 function LanguageSwitcher(props: Props) {

@@ -1,0 +1,36 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  width: 100vw;
+}
+
+.navControls {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 64px;
+  justify-content: flex-start;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+}
+
+.navItems {
+  background: var(--hds-ui-color-white);
+  flex: 1;
+}
+
+.closeNav {
+  margin-left: auto;
+  height: auto;
+  padding: 3px;
+  width: 24px;
+}
+
+.navigationToggle {
+  cursor: pointer;
+}
