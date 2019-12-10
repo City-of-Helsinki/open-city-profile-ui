@@ -9,10 +9,17 @@ const languages = [
   { code: 'sv', label: 'Svenska' },
 ];
 
-function LanguageSwitcher() {
+type Props = {
+  onLanguageChanged: () => void;
+};
+
+function LanguageSwitcher(props: Props) {
   const { i18n } = useTranslation();
   const setLanguage = (code: string) => {
     i18n.changeLanguage(code);
+    if (props.onLanguageChanged) {
+      props.onLanguageChanged();
+    }
   };
   return (
     <ul className={styles.list}>
