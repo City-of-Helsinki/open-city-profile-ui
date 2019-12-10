@@ -1,4 +1,5 @@
 .header {
+  background: var(--hds-ui-color-white);
   height: 64px;
   position: sticky;
 }
@@ -23,7 +24,37 @@
   font-weight: bold;
 }
 
-.end {
+.navigation {
   margin-left: auto;
   padding-right: 20px;
+}
+
+.navigationControl {
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+  .navigationControl {
+    display: none;
+  }
+}
+
+.navigationItems {
+  display: none;
+}
+@media (min-width: 768px) {
+  .navigationItems {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .navigationItemsOpen {
+    background: var(--hds-ui-color-white);
+    display: block;
+    min-height: calc(100vh - 64px);
+    left: 0;
+    position: absolute;
+    top: 64px;
+    width: 100%;
+  }
 }
