@@ -56,7 +56,7 @@ After you've got tunnistamo running locally, make sure the automatically created
     Response types: `id_token token` must be enabled
     Redirect URIs: `http://localhost:3000/callback` and `http://localhost:3000/silent_renew` must be in the listed URLs
 
-Then make sure the *https://api.hel.fi/auth/profiles*-scope can be used by the **Project** application. Go to OIDC_APIS -> API Scopes -> https://api.hel.fi/auth/profiles and make sure **Project** is selected in Allowed applications.
+Then make sure the *https://api.hel.fi/auth/helsinkiprofile*-scope can be used by the **Project** application. Go to OIDC_APIS -> API Scopes -> https://api.hel.fi/auth/profiles and make sure **Project** is selected in Allowed applications.
 
 ### Install open-city-profile locally
 Clone the repository (https://github.com/City-of-Helsinki/open-city-profile). Follow the instructions for running open-city-profile with docker. Before running `docker-compose up` set the following settings in open-city-profile roots `docker-compose up`:

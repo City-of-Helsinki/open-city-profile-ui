@@ -22,6 +22,7 @@
   "validation": {
     "required": "Tämä kenttä on pakollinen",
     "email": "Ei kelvollinen sähköpostiosoite",
-    "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä"
+    "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä",
+    "maxLength": "Kentän maksimipituus on {{max}} merkkiä"
   }
 }

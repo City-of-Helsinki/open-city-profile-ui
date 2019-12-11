@@ -30,8 +30,28 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
     CreateProfileData,
     CreateProfileVariables
   >(CREATE_PROFILE);
-  const handleOnValues = (profileData: FormValues) => {
-    createProfile({ variables: { profile: profileData } }).then(result => {
+  const handleOnValues = (formValues: FormValues) => {
+    const variables: CreateProfileVariables = {
+      profile: {
+        firstName: formValues.firstName,
+        lastName: formValues.lastName,
+        addEmails: [
+          {
+            email: formValues.email,
+            primary: true,
+          },
+        ],
+        addPhones: [
+          formValues.phone
+            ? {
+                phone: formValues.phone,
+                primary: true,
+              }
+            : null,
+        ],
+      },
+    };
+    createProfile({ variables }).then(result => {
       if (result.data) {
         onProfileCreated();
       }

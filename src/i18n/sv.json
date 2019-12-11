@@ -22,6 +22,7 @@
   "validation": {
     "required": "Detta fält krävs",
     "email": "Inte ett giltigt epost-adress",
-    "phoneMin": "Telefonnumret måste vara mint {{min}} tecken långt"
+    "phoneMin": "Telefonnumret måste vara mint {{min}} tecken långt",
+    "maxLength": "Fältet får vara högst {{max}} tecken långt"
   }
 }

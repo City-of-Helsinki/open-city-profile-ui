@@ -22,6 +22,7 @@
   "validation": {
     "required": "This field is required",
     "email": "The value must be an email-address",
-    "phoneMin": "The number must be at least {{min}} characters long"
+    "phoneMin": "The number must be at least {{min}} characters long",
+    "maxLength": "This field can be max {{max}} characters"
   }
 }
