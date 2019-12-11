@@ -13,8 +13,8 @@ function OidcCallback(props: Props) {
     history.push('/');
   };
   const onError = (error: object) => {
+    console.error(error);
     // TODO: do something about errors
-    history.push('/login');
   };
   const { t } = useTranslation();
   return (
