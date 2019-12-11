@@ -2,7 +2,7 @@
   "appName": "Open city profile FI",
   "loading": "Ladataan...",
   "oidc": {
-    "redirecting": "Ohjataan tunnistautumiseen..."
+    "authenticating": "Tunnistaudutaan..."
   },
   "profile": {
     "loading": "Ladataan profiilia..."

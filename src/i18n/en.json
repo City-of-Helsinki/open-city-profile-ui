@@ -2,7 +2,7 @@
   "appName": "Open city profile",
   "loading": "Loading...",
   "oidc": {
-    "redirecting": "Redirecting..."
+    "authenticating": "Authenticating..."
   },
   "profile": {
     "loading": "Loading profile..."

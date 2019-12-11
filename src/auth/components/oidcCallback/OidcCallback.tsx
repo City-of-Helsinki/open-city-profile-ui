@@ -23,7 +23,7 @@ function OidcCallback(props: Props) {
       errorCallback={onError}
       userManager={userManager}
     >
-      <p>{t('oidc.redirecting')}</p>
+      <p>{t('oidc.authenticating')}</p>
     </CallbackComponent>
   );
 }

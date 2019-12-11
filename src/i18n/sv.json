@@ -2,7 +2,7 @@
   "appName": "Open city profile SV",
   "loading": "Laddar...",
   "oidc": {
-    "redirecting": "Omdirigerar..."
+    "redirecting": "Autentiserar..."
   },
   "profile": {
     "loading": "Laddar profil..."
