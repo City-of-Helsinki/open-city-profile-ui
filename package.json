@@ -21,6 +21,7 @@
     "hds-core": "^0.3.2",
     "hds-react": "^0.4.4",
     "i18next": "^17.3.0",
+    "i18next-browser-languagedetector": "^4.0.1",
     "oidc-client": "^1.9.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
