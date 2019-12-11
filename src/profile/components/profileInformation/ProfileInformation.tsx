@@ -7,7 +7,6 @@ import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import styles from './ProfileInformation.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import Explanation from '../../../common/explanation/Explanation';
-import { ReactComponent as EditIcon } from '../../../common/svg/Edit.svg';
 import getName from '../../helpers/getName';
 import getAddress from '../../helpers/getAddress';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
@@ -29,7 +28,6 @@ function ProfileInformation(props: Props) {
               main={t('profileInformation.personalData')}
               small={t('profileInformation.visibility')}
             />
-            <EditIcon className={styles.editIcon} />
           </div>
           <div>
             {loading && t('loading')}
