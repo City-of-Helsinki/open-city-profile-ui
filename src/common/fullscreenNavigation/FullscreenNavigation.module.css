@@ -1,9 +1,9 @@
 .nav {
   display: flex;
   flex-direction: column;
-  position: absolute;
   height: 100vh;
   left: 0;
+  position: absolute;
   top: 0;
   width: 100vw;
 }
