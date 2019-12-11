@@ -4901,7 +4901,7 @@ hds-core@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-0.3.2.tgz#70c5129ae0c4ecd08b70bd69ca5e1a234cc3747f"
 
-hds-react@^0.4.4:
+hds-react@^0.4.6:
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-0.4.6.tgz#5278dcac98d7767c0d2e0eb5f38ed1ad328f8fa2"
   dependencies:
