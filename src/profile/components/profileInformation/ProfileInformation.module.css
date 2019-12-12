@@ -9,6 +9,11 @@
   padding-left: 20px;
   padding-right: 20px;
 }
+@media (min-width: 1200px) {
+  .title {
+    padding-left: 10px;
+  }
+}
 
 .personalInformation {
   background: var(--hds-ui-color-white);
@@ -24,6 +29,13 @@
   margin-bottom: 20px;
 }
 
-.editIcon {
-  margin-right: 10px;
+@media (min-width: 768px) {
+  .storedInformation {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .storedInformation > * {
+    width: 50%;
+  }
 }

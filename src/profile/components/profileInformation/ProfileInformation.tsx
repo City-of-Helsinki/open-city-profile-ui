@@ -29,7 +29,7 @@ function ProfileInformation(props: Props) {
               small={t('profileInformation.visibility')}
             />
           </div>
-          <div>
+          <div className={styles.storedInformation}>
             {loading && t('loading')}
             {data && (
               <>
