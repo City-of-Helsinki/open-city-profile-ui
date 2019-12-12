@@ -33,13 +33,19 @@ function ViewProfile(props: Props) {
               responsive.maxWidthCentered
             )}
           >
-            <NavLink exact to="/" className={styles.profileNavLink}>
+            <NavLink
+              exact
+              to="/"
+              className={styles.profileNavLink}
+              activeClassName={styles.activeProfileNavLink}
+            >
               {t('nav.information')}
             </NavLink>
             <NavLink
               exact
               to="/connected-services"
               className={styles.profileNavLink}
+              activeClassName={styles.activeProfileNavLink}
             >
               {t('nav.services')}
             </NavLink>
