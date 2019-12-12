@@ -2,14 +2,15 @@
   "appName": "Profil",
   "loading": "Laddar...",
   "oidc": {
-    "redirecting": "Autentiserar..."
+    "authenticating": "Autentiserar..."
   },
   "profile": {
     "loading": "Laddar profil..."
   },
-  "profileNav": {
+  "nav": {
     "information": "Mina uppgifter",
-    "services": "Anslutna servicer"
+    "services": "Anslutna servicer",
+    "signout": "Logga ut"
   },
   "profileInformation": {
     "title": "Mina uppgifter",

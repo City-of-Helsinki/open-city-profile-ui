@@ -34,14 +34,14 @@ function ViewProfile(props: Props) {
             )}
           >
             <NavLink exact to="/" className={styles.profileNavLink}>
-              {t('profileNav.information')}
+              {t('nav.information')}
             </NavLink>
             <NavLink
               exact
               to="/connected-services"
               className={styles.profileNavLink}
             >
-              {t('profileNav.services')}
+              {t('nav.services')}
             </NavLink>
           </nav>
           <Switch>

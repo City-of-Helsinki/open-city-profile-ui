@@ -7,9 +7,10 @@
   "profile": {
     "loading": "Ladataan profiilia..."
   },
-  "profileNav": {
+  "nav": {
     "information": "Omat tiedot",
-    "services": "Yhdistetyt palvelut"
+    "services": "Yhdistetyt palvelut",
+    "signout": "Kirjaudu ulos"
   },
   "profileInformation": {
     "title": "Omat tiedot",

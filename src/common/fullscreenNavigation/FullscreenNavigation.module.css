@@ -21,7 +21,11 @@
 
 .navItems {
   background: var(--hds-ui-color-white);
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: flex-start;
 }
 
 .closeNav {
@@ -33,4 +37,20 @@
 
 .navigationToggle {
   cursor: pointer;
+}
+
+.navLink {
+  color: var(--hds-ui-color-black);
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 60px;
+  margin-top: 60px;
+}
+
+.languageSwitcher {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
 }

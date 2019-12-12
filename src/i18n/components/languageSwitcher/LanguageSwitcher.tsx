@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import styles from './LanguageSwitcher.module.css';
 
@@ -11,6 +12,7 @@ const languages = [
 
 type Props = {
   onLanguageChanged?: () => void;
+  className?: string;
 };
 
 function LanguageSwitcher(props: Props) {
@@ -22,7 +24,7 @@ function LanguageSwitcher(props: Props) {
     }
   };
   return (
-    <ul className={styles.list}>
+    <ul className={classNames(props.className, styles.list)}>
       {languages.map(lang => (
         <li key={lang.code} className={styles.item}>
           <button

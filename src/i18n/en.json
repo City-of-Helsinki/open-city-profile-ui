@@ -7,9 +7,10 @@
   "profile": {
     "loading": "Loading profile..."
   },
-  "profileNav": {
+  "nav": {
     "information": "Information",
-    "services": "Connected services"
+    "services": "Connected services",
+    "signout": "Sign out"
   },
   "profileInformation": {
     "title": "My information",
