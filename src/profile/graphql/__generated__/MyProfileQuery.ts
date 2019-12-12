@@ -15,7 +15,7 @@ export interface MyProfileQuery_myProfile_primaryAddress {
 
 export interface MyProfileQuery_myProfile_primaryEmail {
   readonly __typename: "EmailNode";
-  readonly email: string | null;
+  readonly email: string;
 }
 
 export interface MyProfileQuery_myProfile_primaryPhone {

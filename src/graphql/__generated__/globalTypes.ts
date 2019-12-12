@@ -57,25 +57,25 @@ export enum YouthLanguage {
 
 export interface AddressInput {
   readonly id?: string | null;
-  readonly address?: string | null;
-  readonly postalCode?: string | null;
-  readonly city?: string | null;
+  readonly address: string;
+  readonly postalCode: string;
+  readonly city: string;
   readonly countryCode?: string | null;
-  readonly addressType?: AddressType | null;
+  readonly addressType: AddressType;
   readonly primary?: boolean | null;
 }
 
 export interface EmailInput {
   readonly id?: string | null;
   readonly email?: string | null;
-  readonly emailType?: EmailType | null;
+  readonly emailType: EmailType;
   readonly primary?: boolean | null;
 }
 
 export interface PhoneInput {
   readonly id?: string | null;
-  readonly phone?: string | null;
-  readonly phoneType?: PhoneType | null;
+  readonly phone: string;
+  readonly phoneType: PhoneType;
   readonly primary?: boolean | null;
 }
 
