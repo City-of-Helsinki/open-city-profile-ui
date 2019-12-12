@@ -15,7 +15,7 @@
   "profileInformation": {
     "title": "My information",
     "personalData": "Personal data",
-    "visibility": "This information is only visible to you",
+    "visibility": "The following information about you is stored in the service",
     "deleteProfile": "Delete your profile",
     "downloadData": "Download your data",
     "name": "Name",

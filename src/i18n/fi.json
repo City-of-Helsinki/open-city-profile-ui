@@ -15,7 +15,7 @@
   "profileInformation": {
     "title": "Omat tiedot",
     "personalData": "Henkilötiedot",
-    "visibility": "Nämä tiedot näkyvät vain sinulle",
+    "visibility": "Palveluun on tallennettu sinusta seuraavat tiedot",
     "deleteProfile": "Poista omat tietosi",
     "downloadData": "Lataa omat tietosi",
     "name": "Nimi",

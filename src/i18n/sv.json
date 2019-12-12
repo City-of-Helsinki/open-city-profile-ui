@@ -15,7 +15,7 @@
   "profileInformation": {
     "title": "Mina uppgifter",
     "personalData": "Personuppgifter",
-    "visibility": "Denna information syns endast åt dig",
+    "visibility": "Följande information om dig lagras i tjänsten",
     "deleteProfile": "Radera profil",
     "downloadData": "Ladda ner min data",
     "name": "Namn",
