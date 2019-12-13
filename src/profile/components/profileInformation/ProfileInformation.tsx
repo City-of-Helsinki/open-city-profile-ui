@@ -17,7 +17,7 @@ type Props = {};
 
 function ProfileInformation(props: Props) {
   const { t } = useTranslation();
-  const { data, loading, error } = useQuery<MyProfileQuery>(MY_PROFILE);
+  const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE);
   return (
     <div className={styles.profileInformation}>
       <div className={responsive.maxWidthCentered}>

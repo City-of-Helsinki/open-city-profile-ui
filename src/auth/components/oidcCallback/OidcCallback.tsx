@@ -13,8 +13,9 @@ function OidcCallback(props: Props) {
     history.push('/');
   };
   const onError = (error: object) => {
-    console.error(error);
     // TODO: do something about errors
+    // eslint-disable-next-line no-console
+    console.error(error);
   };
   const { t } = useTranslation();
   return (
