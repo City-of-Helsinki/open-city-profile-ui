@@ -31,7 +31,7 @@ function FullscreenNavigation(props: Props) {
           onClick={() => setIsNavOpen(true)}
         />
       )}
-      <div className={styles.nav} hidden={!isNavOpen}>
+      <div className={isNavOpen ? styles.nav : styles.hidden}>
         <div className={styles.navControls}>
           <Close
             className={classNames(styles.navigationToggle, styles.closeNav)}

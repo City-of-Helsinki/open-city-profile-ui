@@ -8,6 +8,10 @@
   width: 100vw;
 }
 
+.hidden {
+  display: none;
+}
+
 .navControls {
   align-items: center;
   display: flex;
