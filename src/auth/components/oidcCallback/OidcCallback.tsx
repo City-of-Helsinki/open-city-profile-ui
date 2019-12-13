@@ -14,7 +14,8 @@ function OidcCallback(props: Props) {
   };
   const onError = (error: object) => {
     // TODO: do something about errors
-    history.push('/login');
+    // eslint-disable-next-line no-console
+    console.error(error);
   };
   const { t } = useTranslation();
   return (
@@ -23,7 +24,7 @@ function OidcCallback(props: Props) {
       errorCallback={onError}
       userManager={userManager}
     >
-      <p>{t('oidc.redirecting')}</p>
+      <p>{t('oidc.authenticating')}</p>
     </CallbackComponent>
   );
 }

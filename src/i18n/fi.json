@@ -1,10 +1,27 @@
 {
   "appName": "Profiili",
+  "loading": "Ladataan...",
   "oidc": {
-    "redirecting": "Ohjataan tunnistautumiseen..."
+    "authenticating": "Tunnistaudutaan..."
   },
   "profile": {
     "loading": "Ladataan profiilia..."
+  },
+  "nav": {
+    "information": "Omat tiedot",
+    "services": "Yhdistetyt palvelut",
+    "signout": "Kirjaudu ulos"
+  },
+  "profileInformation": {
+    "title": "Omat tiedot",
+    "personalData": "Henkilötiedot",
+    "visibility": "Palveluun on tallennettu sinusta seuraavat tiedot",
+    "deleteProfile": "Poista omat tietosi",
+    "downloadData": "Lataa omat tietosi",
+    "name": "Nimi",
+    "address": "Osoite",
+    "email": "Sähköpostiosoite",
+    "phone": "Puhelinnumero"
   },
   "createProfile": {
     "pageTitle": "Uusi profiili",

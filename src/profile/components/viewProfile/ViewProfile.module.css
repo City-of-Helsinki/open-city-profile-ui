@@ -1,0 +1,24 @@
+.viewProfile {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileNav {
+  display: none;
+}
+@media (min-width: 768px) {
+  .profileNav {
+    display: flex;
+  }
+}
+
+.profileNavLink {
+  color: var(--hds-ui-color-black);
+  font-size: 17px;
+  text-decoration: none;
+  padding: 10px 40px 20px 10px;
+}
+
+.activeProfileNavLink {
+  font-weight: bold;
+}

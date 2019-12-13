@@ -16,6 +16,10 @@ import {
   CreateProfile as CreateProfileData,
   CreateProfileVariables,
 } from '../../graphql/__generated__/CreateProfile';
+import {
+  EmailType,
+  PhoneType,
+} from '../../../graphql/__generated__/globalTypes';
 
 const CREATE_PROFILE = loader('../../graphql/CreateProfile.graphql');
 
@@ -39,6 +43,7 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
           {
             email: formValues.email,
             primary: true,
+            emailType: EmailType.OTHER,
           },
         ],
         addPhones: [
@@ -46,6 +51,7 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
             ? {
                 phone: formValues.phone,
                 primary: true,
+                phoneType: PhoneType.OTHER,
               }
             : null,
         ],

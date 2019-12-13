@@ -1,10 +1,27 @@
 {
   "appName": "Profil",
+  "loading": "Laddar...",
   "oidc": {
-    "redirecting": "Omdirigerar..."
+    "authenticating": "Autentiserar..."
   },
   "profile": {
     "loading": "Laddar profil..."
+  },
+  "nav": {
+    "information": "Mina uppgifter",
+    "services": "Anslutna servicer",
+    "signout": "Logga ut"
+  },
+  "profileInformation": {
+    "title": "Mina uppgifter",
+    "personalData": "Personuppgifter",
+    "visibility": "Följande information om dig lagras i tjänsten",
+    "deleteProfile": "Radera profil",
+    "downloadData": "Ladda ner min data",
+    "name": "Namn",
+    "address": "Adress",
+    "email": "Epost",
+    "phone": "Telefonnummer"
   },
   "createProfile": {
     "pageTitle": "Skapa profil",
