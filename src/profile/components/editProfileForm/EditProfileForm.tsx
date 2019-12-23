@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { TextInput } from 'hds-react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
@@ -13,8 +13,8 @@ const schema = yup.object().shape({
   phone: yup.string()
     .min(6, 'validation.phoneMin')
     .max(255, 'validation.maxLength'),
-  address: yup.string().max(255, 'validation.maxLength'),
-  city: yup.string().max(255, 'validation.maxLength'),
+  address: yup.string().max(128, 'validation.maxLength'),
+  city: yup.string().max(64, 'validation.maxLength'),
   postalCode: yup.string().max(5, 'validation.maxLength')
 });
 

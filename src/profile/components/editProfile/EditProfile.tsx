@@ -21,8 +21,47 @@ type Props = {
 function EditProfile (props: Props) {
   const { profileData } = props;
   const { t } = useTranslation();
+
   const handleOnValues = (formValues: FormValues) => {
-    console.log(formValues);
+    /*
+    const variables: EditProfileVariables = {
+      profile: {
+        firstName: formValues.firstName,
+        lastName: formValues.lastName,
+        updateEmails: [
+          {
+            email: formValues.email,
+            primary: true,
+            emailType: EmailType.OTHER
+          }
+        ],
+        updatePhones: [
+          formValues.phone
+          ? {
+              phone: formValues.phone,
+              primary: true,
+              phoneType: PhoneType.OTHER
+            }
+          : null
+        ],
+      }
+    };
+    const address = {
+      address: formValues.address,
+      city: formValues.city,
+      postalCode: formValues.postalCode,
+      primary: true,
+      addressType: AddressType.OTHER
+    };
+
+    if (profileData?.myProfile?.primaryAddress) {
+      variables.profile.updateAddresses = [address];
+    }
+    else {
+      variables.profile.addAddresses = [address]
+    }
+
+     */
   };
 
   return (
