@@ -27,6 +27,7 @@ export interface MyProfileQuery_myProfile {
   readonly __typename: "ProfileNode";
   readonly firstName: string;
   readonly lastName: string;
+  readonly nickname: string | null;
   readonly primaryAddress: MyProfileQuery_myProfile_primaryAddress | null;
   readonly primaryEmail: MyProfileQuery_myProfile_primaryEmail | null;
   readonly primaryPhone: MyProfileQuery_myProfile_primaryPhone | null;
