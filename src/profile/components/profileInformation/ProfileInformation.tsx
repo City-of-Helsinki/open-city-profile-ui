@@ -1,7 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/react-hooks';
-import { loader } from 'graphql.macro';
 
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import styles from './ProfileInformation.module.css';
@@ -11,13 +9,17 @@ import getName from '../../helpers/getName';
 import getAddress from '../../helpers/getAddress';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 
-const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
-
-type Props = {};
+type Props = {
+  loading: boolean,
+  data: MyProfileQuery,
+  isEditing: boolean,
+  setEditing: () => void
+};
 
 function ProfileInformation(props: Props) {
   const { t } = useTranslation();
-  const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE);
+  const { isEditing, setEditing, loading, data} = props;
+
   return (
     <div className={styles.profileInformation}>
       <div className={responsive.maxWidthCentered}>
@@ -28,10 +30,15 @@ function ProfileInformation(props: Props) {
               main={t('profileInformation.personalData')}
               small={t('profileInformation.visibility')}
             />
+            {!isEditing &&
+              <button onClick={setEditing}>
+                EDIT
+              </button>
+            }
           </div>
           <div className={styles.storedInformation}>
             {loading && t('loading')}
-            {data && (
+            {data && !isEditing && (
               <>
                 <LabeledValue
                   label={t('profileInformation.name')}

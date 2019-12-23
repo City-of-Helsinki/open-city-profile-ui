@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
@@ -7,18 +7,30 @@ import classNames from 'classnames';
 
 import styles from './ViewProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
-import { NameQuery } from '../../graphql/__generated__/NameQuery';
 import PageHeading from '../../../common/pageHeading/PageHeading';
 import ProfileInformation from '../profileInformation/ProfileInformation';
+import ProfileEditForm, { FormValues } from '../editProfileForm/ProfileEditForm';
 import getNicknameOrName from '../../helpers/getNicknameOrName';
+import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 
-const NAME = loader('../../graphql/NameQuery.graphql');
+const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
+
 
 type Props = {};
 
 function ViewProfile(props: Props) {
+  const [isEditing, setEditing] = useState(false);
   const { t } = useTranslation();
-  const { data } = useQuery<NameQuery>(NAME);
+  const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE);
+  console.log("DATA", data);
+  const toggleEditing = () => {
+    setEditing(true);
+  };
+
+  const handleOnValues = (formValues: FormValues) => {
+
+  };
+
   return (
     <div className={styles.viewProfile}>
       {data && (
@@ -53,7 +65,30 @@ function ViewProfile(props: Props) {
           <Switch>
             <Route path="/connected-services">services</Route>
             <Route path="/">
-              <ProfileInformation />
+              {!isEditing
+                ? (
+                <ProfileInformation
+                  data={data}
+                  loading={loading}
+                  isEditing={isEditing}
+                  setEditing={toggleEditing}
+                />
+                )
+                : (
+                  <ProfileEditForm
+                    profile={{
+                      firstName: data?.myProfile?.firstName || "",
+                      lastName: data?.myProfile?.lastName || "",
+                      email: data?.myProfile?.primaryEmail?.email || "",
+                      phone: data?.myProfile?.primaryPhone?.phone || "",
+                      address: data?.myProfile?.primaryAddress?.address || "",
+                      city: data?.myProfile?.primaryAddress?.city || "",
+                      postalCode: data?.myProfile?.primaryAddress?.postalCode || "",
+                    }}
+                    onValues={handleOnValues}
+                  />
+                )
+              }
             </Route>
           </Switch>
         </>

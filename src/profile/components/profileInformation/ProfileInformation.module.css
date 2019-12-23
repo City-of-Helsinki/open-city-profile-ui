@@ -4,6 +4,14 @@
   padding-bottom: 50px;
 }
 
+.edit {
+  font-weight: bold;
+}
+
+.edit:hover {
+  cursor: pointer;
+}
+
 .title {
   font-size: 36px;
   padding-left: 20px;
@@ -39,3 +47,6 @@
     width: 50%;
   }
 }
+
+
+
