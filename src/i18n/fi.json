@@ -33,6 +33,9 @@
     "lastName": "Sukunimi",
     "email": "Sähköpostiosoite",
     "phone": "Puhelinnumero",
+    "address": "Kotiosoite",
+    "city": "Kaupunki",
+    "postalCode": "Postinumero",
     "terms": "Hyväksyn <0>palvelun ehdot</0>, ja että minuun voi olla yhteydessä antamaani osoitteeseen",
     "submit": "Tallenna"
   },
