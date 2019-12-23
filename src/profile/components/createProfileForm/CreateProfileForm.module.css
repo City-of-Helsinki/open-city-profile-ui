@@ -44,3 +44,17 @@
     margin-top: 30px;
   }
 }
+
+.linebreak {
+  height: 1px;
+  width: 200%;
+  background: #333;
+  margin: 15px 0;
+
+}
+
+@media (max-width: 768px) {
+  .linebreak {
+    width: 100%;
+  }
+}
