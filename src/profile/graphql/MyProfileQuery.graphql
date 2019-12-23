@@ -4,14 +4,17 @@ query MyProfileQuery {
     lastName
     nickname
     primaryAddress {
+      id
       address
       postalCode
       city
     }
     primaryEmail {
+      id
       email
     }
     primaryPhone {
+      id
       phone
     }
   }
