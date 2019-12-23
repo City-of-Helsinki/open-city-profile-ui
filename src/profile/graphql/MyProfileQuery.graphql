@@ -2,6 +2,7 @@ query MyProfileQuery {
   myProfile {
     firstName
     lastName
+    nickname
     primaryAddress {
       address
       postalCode

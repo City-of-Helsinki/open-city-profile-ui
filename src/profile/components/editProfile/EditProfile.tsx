@@ -8,11 +8,17 @@ import responsive from '../../../common/cssHelpers/responsive.module.css';
 import EditProfileForm, { FormValues } from '../editProfileForm/EditProfileForm';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 import {
+  UpdateProfile as UpdateProfileData,
+  UpdateProfileVariables
+} from '../../graphql/__generated__/UpdateProfile';
+import {
   AddressType,
   EmailType,
   PhoneType
 } from '../../../graphql/__generated__/globalTypes';
 import Explanation from '../../../common/explanation/Explanation';
+
+const UPDATE_PROFILE = loader('../../graphql/UpdateProfile.graphql');
 
 type Props = {
   profileData: MyProfileQuery;
@@ -21,10 +27,13 @@ type Props = {
 function EditProfile (props: Props) {
   const { profileData } = props;
   const { t } = useTranslation();
+  const [updateProfile, { loading }] = useMutation<
+    UpdateProfileData,
+    UpdateProfileVariables
+    >(UPDATE_PROFILE);
 
   const handleOnValues = (formValues: FormValues) => {
-    /*
-    const variables: EditProfileVariables = {
+    const variables: UpdateProfileVariables = {
       profile: {
         firstName: formValues.firstName,
         lastName: formValues.lastName,
@@ -46,22 +55,11 @@ function EditProfile (props: Props) {
         ],
       }
     };
-    const address = {
-      address: formValues.address,
-      city: formValues.city,
-      postalCode: formValues.postalCode,
-      primary: true,
-      addressType: AddressType.OTHER
-    };
-
-    if (profileData?.myProfile?.primaryAddress) {
-      variables.profile.updateAddresses = [address];
-    }
-    else {
-      variables.profile.addAddresses = [address]
-    }
-
-     */
+    updateProfile({ variables }).then(result => {
+      if (result.data) {
+        console.log("Updated", result.data);
+      }
+    })
   };
 
   return (
