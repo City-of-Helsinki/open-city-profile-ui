@@ -28,6 +28,10 @@ function ViewProfile(props: Props) {
     setEditing(true);
   };
 
+  const closeEditing = () => {
+    setEditing(false);
+  };
+
   return (
     <div className={styles.viewProfile}>
       {data && (
@@ -76,6 +80,7 @@ function ViewProfile(props: Props) {
                     )
                     : (
                       <EditProfile
+                        setEditing={closeEditing}
                         profileData={data}
                       />
                     )

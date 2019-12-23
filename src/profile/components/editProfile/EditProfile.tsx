@@ -21,6 +21,7 @@ import Explanation from '../../../common/explanation/Explanation';
 const UPDATE_PROFILE = loader('../../graphql/UpdateProfile.graphql');
 
 type Props = {
+  setEditing: () => void,
   profileData: MyProfileQuery;
 }
 
@@ -39,6 +40,7 @@ function EditProfile (props: Props) {
         lastName: formValues.lastName,
         updateEmails: [
           {
+            id: profileData?.myProfile?.primaryEmail?.id,
             email: formValues.email,
             primary: true,
             emailType: EmailType.OTHER
@@ -47,17 +49,41 @@ function EditProfile (props: Props) {
         updatePhones: [
           formValues.phone
           ? {
+              id: profileData?.myProfile?.primaryPhone?.id,
               phone: formValues.phone,
               primary: true,
               phoneType: PhoneType.OTHER
             }
           : null
         ],
+        addAddresses: [
+          !profileData?.myProfile?.primaryAddress?.address
+            ? {
+              address: formValues.address,
+              city: formValues.city,
+              postalCode: formValues.postalCode,
+              primary: true,
+              addressType: AddressType.OTHER
+            }
+            : null
+        ],
+        updateAddresses: [
+          profileData?.myProfile?.primaryAddress?.id
+            ? {
+              id: profileData?.myProfile?.primaryAddress?.id,
+              address: formValues.address,
+              city: formValues.city,
+              postalCode: formValues.postalCode,
+              primary: true,
+              addressType: AddressType.OTHER
+            }
+            : null
+        ],
       }
     };
     updateProfile({ variables }).then(result => {
       if (result.data) {
-        console.log("Updated", result.data);
+        props.setEditing();
       }
     })
   };
@@ -81,6 +107,7 @@ function EditProfile (props: Props) {
             city: profileData?.myProfile?.primaryAddress?.city || "",
             postalCode: profileData?.myProfile?.primaryAddress?.postalCode || "",
           }}
+          isSubmitting={loading}
           onValues={handleOnValues}
         />
       </div>

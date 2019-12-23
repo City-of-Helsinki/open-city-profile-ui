@@ -29,6 +29,7 @@ export  type FormValues = {
 }
 
 type Props = {
+  isSubmitting: boolean,
   profile: FormValues;
   onValues: (values: FormValues) => void;
 }
@@ -163,6 +164,9 @@ function EditProfileForm(props: Props) {
           </div>
           <Button
             type="submit"
+            disabled={Boolean(
+              isSubmitting || props.isSubmitting
+            )}
           >
             {t('profileForm.submit')}
           </Button>
