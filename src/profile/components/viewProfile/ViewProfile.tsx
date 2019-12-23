@@ -9,7 +9,8 @@ import styles from './ViewProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import PageHeading from '../../../common/pageHeading/PageHeading';
 import ProfileInformation from '../profileInformation/ProfileInformation';
-import ProfileEditForm, { FormValues } from '../editProfileForm/ProfileEditForm';
+import EditProfile from '../editProfile/EditProfile';
+
 import getNicknameOrName from '../../helpers/getNicknameOrName';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 
@@ -22,19 +23,15 @@ function ViewProfile(props: Props) {
   const [isEditing, setEditing] = useState(false);
   const { t } = useTranslation();
   const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE);
-  console.log("DATA", data);
+
   const toggleEditing = () => {
     setEditing(true);
-  };
-
-  const handleOnValues = (formValues: FormValues) => {
-
   };
 
   return (
     <div className={styles.viewProfile}>
       {data && (
-        <>
+        <React.Fragment>
           <PageHeading
             text={getNicknameOrName(data)}
             className={responsive.maxWidthCentered}
@@ -65,33 +62,29 @@ function ViewProfile(props: Props) {
           <Switch>
             <Route path="/connected-services">services</Route>
             <Route path="/">
-              {!isEditing
-                ? (
-                <ProfileInformation
-                  data={data}
-                  loading={loading}
-                  isEditing={isEditing}
-                  setEditing={toggleEditing}
-                />
-                )
-                : (
-                  <ProfileEditForm
-                    profile={{
-                      firstName: data?.myProfile?.firstName || "",
-                      lastName: data?.myProfile?.lastName || "",
-                      email: data?.myProfile?.primaryEmail?.email || "",
-                      phone: data?.myProfile?.primaryPhone?.phone || "",
-                      address: data?.myProfile?.primaryAddress?.address || "",
-                      city: data?.myProfile?.primaryAddress?.city || "",
-                      postalCode: data?.myProfile?.primaryAddress?.postalCode || "",
-                    }}
-                    onValues={handleOnValues}
-                  />
-                )
-              }
+              <div className={styles.profileContent}>
+                <div className={responsive.maxWidthCentered}>
+                  <h2 className={styles.title}>{t('profileInformation.title')}</h2>
+                  {!isEditing
+                    ? (
+                      <ProfileInformation
+                        data={data}
+                        loading={loading}
+                        isEditing={isEditing}
+                        setEditing={toggleEditing}
+                      />
+                    )
+                    : (
+                      <EditProfile
+                        profileData={data}
+                      />
+                    )
+                  }
+                </div>
+              </div>
             </Route>
           </Switch>
-        </>
+        </React.Fragment>
       )}
     </div>
   );
