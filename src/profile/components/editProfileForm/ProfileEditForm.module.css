@@ -1,0 +1,110 @@
+.profileInformation {
+    background: var(--hds-ui-color-black-5);
+    flex: 1;
+    padding-bottom: 50px;
+}
+
+.edit {
+    font-weight: bold;
+}
+
+.edit:hover {
+    cursor: pointer;
+}
+
+.title {
+    font-size: 36px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+@media (min-width: 1200px) {
+    .title {
+        padding-left: 10px;
+    }
+}
+
+.personalInformation {
+    background: var(--hds-ui-color-white);
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.personalInformationTitleRow {
+    align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+    .storedInformation {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .storedInformation > * {
+        width: 50%;
+    }
+}
+
+@media (min-width: 768px) {
+    .formFields {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 750px;
+    }
+}
+
+.formField {
+    padding-bottom: 20px;
+}
+@media (min-width: 768px) {
+    .formField {
+        flex-basis: 50%;
+        max-width: 350px;
+        padding: 10px 10px 10px 0;
+    }
+    .formField:nth-of-type(even) {
+        padding-right: 0;
+        padding-left: 10px;
+    }
+}
+
+.label {
+    composes: text-bold text-sm from '~hds-core/lib/helsinki.css';
+    display: block;
+}
+@media (min-width: 768px) {
+    .email {
+        display: inline-block;
+        margin-top: 20px;
+    }
+}
+
+.terms {
+    display: inline-block;
+    margin-bottom: 20px;
+    user-select: none;
+}
+@media (min-width: 768px) {
+    .terms {
+        margin-bottom: 30px;
+        margin-top: 30px;
+    }
+}
+
+.linebreak {
+    height: 1px;
+    width: 200%;
+    background: #333;
+    margin: 15px 0;
+
+}
+
+@media (max-width: 768px) {
+    .linebreak {
+        width: 100%;
+    }
+}
