@@ -10,7 +10,6 @@ import responsive from '../../../common/cssHelpers/responsive.module.css';
 import PageHeading from '../../../common/pageHeading/PageHeading';
 import ProfileInformation from '../profileInformation/ProfileInformation';
 import EditProfile from '../editProfile/EditProfile';
-
 import getNicknameOrName from '../../helpers/getNicknameOrName';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 

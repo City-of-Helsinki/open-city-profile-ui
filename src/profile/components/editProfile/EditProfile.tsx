@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+
 import styles from './EditProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import EditProfileForm, {
