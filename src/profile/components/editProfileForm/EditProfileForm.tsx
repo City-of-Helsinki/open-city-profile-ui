@@ -10,15 +10,16 @@ import styles from './EditProfileForm.module.css';
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
   lastName: yup.string().max(255, 'validation.maxLength'),
-  phone: yup.string()
+  phone: yup
+    .string()
     .min(6, 'validation.phoneMin')
     .max(255, 'validation.maxLength'),
   address: yup.string().max(128, 'validation.maxLength'),
   city: yup.string().max(64, 'validation.maxLength'),
-  postalCode: yup.string().max(5, 'validation.maxLength')
+  postalCode: yup.string().max(5, 'validation.maxLength'),
 });
 
-export  type FormValues = {
+export type FormValues = {
   firstName: string;
   lastName: string;
   email: string;
@@ -26,13 +27,13 @@ export  type FormValues = {
   address: string;
   postalCode: string;
   city: string;
-}
+};
 
 type Props = {
-  isSubmitting: boolean,
+  isSubmitting: boolean;
   profile: FormValues;
   onValues: (values: FormValues) => void;
-}
+};
 
 function EditProfileForm(props: Props) {
   const { t } = useTranslation();
@@ -40,7 +41,7 @@ function EditProfileForm(props: Props) {
   return (
     <Formik
       initialValues={{
-        ...props.profile
+        ...props.profile,
       }}
       onSubmit={values => {
         props.onValues({
@@ -50,8 +51,8 @@ function EditProfileForm(props: Props) {
           phone: values.phone,
           address: values.address,
           city: values.city,
-          postalCode: values.postalCode
-        })
+          postalCode: values.postalCode,
+        });
       }}
       validationSchema={schema}
     >
@@ -68,7 +69,7 @@ function EditProfileForm(props: Props) {
               invalidText={
                 submitCount &&
                 errors.firstName &&
-                t(errors.firstName, {max: 255 })
+                t(errors.firstName, { max: 255 })
               }
               labelText={t('profileForm.firstName')}
             />
@@ -105,11 +106,10 @@ function EditProfileForm(props: Props) {
               invalidText={
                 submitCount &&
                 errors.phone &&
-                t(errors.phone, {min: 6, max: 255 })
+                t(errors.phone, { min: 6, max: 255 })
               }
               labelText={t('profileForm.phone')}
             />
-
           </div>
 
           <div className={styles.linebreak} />
@@ -123,9 +123,7 @@ function EditProfileForm(props: Props) {
               as={TextInput}
               invalid={submitCount && errors.address}
               invalidText={
-                submitCount &&
-                errors.address &&
-                t(errors.address, { max: 255})
+                submitCount && errors.address && t(errors.address, { max: 255 })
               }
               labelText={t('profileForm.address')}
             />
@@ -153,27 +151,22 @@ function EditProfileForm(props: Props) {
               as={TextInput}
               invalid={submitCount && errors.city}
               invalidText={
-                submitCount &&
-                errors.city &&
-                t(errors.city, { max: 255 })
+                submitCount && errors.city && t(errors.city, { max: 255 })
               }
               labelText={t('profileForm.city')}
             />
-            <br/>
-
+            <br />
           </div>
           <Button
             type="submit"
-            disabled={Boolean(
-              isSubmitting || props.isSubmitting
-            )}
+            disabled={Boolean(isSubmitting || props.isSubmitting)}
           >
             {t('profileForm.submit')}
           </Button>
         </Form>
       )}
     </Formik>
-  )
+  );
 }
 
 export default EditProfileForm;

@@ -5,33 +5,35 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import styles from './EditProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
-import EditProfileForm, { FormValues } from '../editProfileForm/EditProfileForm';
+import EditProfileForm, {
+  FormValues,
+} from '../editProfileForm/EditProfileForm';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 import {
   UpdateProfile as UpdateProfileData,
-  UpdateProfileVariables
+  UpdateProfileVariables,
 } from '../../graphql/__generated__/UpdateProfile';
 import {
   AddressType,
   EmailType,
-  PhoneType
+  PhoneType,
 } from '../../../graphql/__generated__/globalTypes';
 import Explanation from '../../../common/explanation/Explanation';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateProfile.graphql');
 
 type Props = {
-  setEditing: () => void,
+  setEditing: () => void;
   profileData: MyProfileQuery;
-}
+};
 
-function EditProfile (props: Props) {
+function EditProfile(props: Props) {
   const { profileData } = props;
   const { t } = useTranslation();
   const [updateProfile, { loading }] = useMutation<
     UpdateProfileData,
     UpdateProfileVariables
-    >(UPDATE_PROFILE);
+  >(UPDATE_PROFILE);
 
   const handleOnValues = (formValues: FormValues) => {
     const variables: UpdateProfileVariables = {
@@ -43,49 +45,49 @@ function EditProfile (props: Props) {
             id: profileData?.myProfile?.primaryEmail?.id,
             email: formValues.email,
             primary: true,
-            emailType: EmailType.OTHER
-          }
+            emailType: EmailType.OTHER,
+          },
         ],
         updatePhones: [
           formValues.phone
-          ? {
-              id: profileData?.myProfile?.primaryPhone?.id,
-              phone: formValues.phone,
-              primary: true,
-              phoneType: PhoneType.OTHER
-            }
-          : null
+            ? {
+                id: profileData?.myProfile?.primaryPhone?.id,
+                phone: formValues.phone,
+                primary: true,
+                phoneType: PhoneType.OTHER,
+              }
+            : null,
         ],
         addAddresses: [
           !profileData?.myProfile?.primaryAddress?.address
             ? {
-              address: formValues.address,
-              city: formValues.city,
-              postalCode: formValues.postalCode,
-              primary: true,
-              addressType: AddressType.OTHER
-            }
-            : null
+                address: formValues.address,
+                city: formValues.city,
+                postalCode: formValues.postalCode,
+                primary: true,
+                addressType: AddressType.OTHER,
+              }
+            : null,
         ],
         updateAddresses: [
           profileData?.myProfile?.primaryAddress?.id
             ? {
-              id: profileData?.myProfile?.primaryAddress?.id,
-              address: formValues.address,
-              city: formValues.city,
-              postalCode: formValues.postalCode,
-              primary: true,
-              addressType: AddressType.OTHER
-            }
-            : null
+                id: profileData?.myProfile?.primaryAddress?.id,
+                address: formValues.address,
+                city: formValues.city,
+                postalCode: formValues.postalCode,
+                primary: true,
+                addressType: AddressType.OTHER,
+              }
+            : null,
         ],
-      }
+      },
     };
     updateProfile({ variables }).then(result => {
       if (result.data) {
         props.setEditing();
       }
-    })
+    });
   };
 
   return (
@@ -99,20 +101,21 @@ function EditProfile (props: Props) {
         </div>
         <EditProfileForm
           profile={{
-            firstName: profileData?.myProfile?.firstName || "",
-            lastName: profileData?.myProfile?.lastName || "",
-            email: profileData?.myProfile?.primaryEmail?.email || "",
-            phone: profileData?.myProfile?.primaryPhone?.phone || "",
-            address: profileData?.myProfile?.primaryAddress?.address || "",
-            city: profileData?.myProfile?.primaryAddress?.city || "",
-            postalCode: profileData?.myProfile?.primaryAddress?.postalCode || "",
+            firstName: profileData?.myProfile?.firstName || '',
+            lastName: profileData?.myProfile?.lastName || '',
+            email: profileData?.myProfile?.primaryEmail?.email || '',
+            phone: profileData?.myProfile?.primaryPhone?.phone || '',
+            address: profileData?.myProfile?.primaryAddress?.address || '',
+            city: profileData?.myProfile?.primaryAddress?.city || '',
+            postalCode:
+              profileData?.myProfile?.primaryAddress?.postalCode || '',
           }}
           isSubmitting={loading}
           onValues={handleOnValues}
         />
       </div>
     </section>
-  )
+  );
 }
 
 export default EditProfile;

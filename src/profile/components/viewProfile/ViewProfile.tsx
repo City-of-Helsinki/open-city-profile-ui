@@ -16,10 +16,7 @@ import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 
 const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
 
-
-type Props = {};
-
-function ViewProfile(props: Props) {
+function ViewProfile() {
   const [isEditing, setEditing] = useState(false);
   const { t } = useTranslation();
   const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE);
@@ -68,23 +65,19 @@ function ViewProfile(props: Props) {
             <Route path="/">
               <div className={styles.profileContent}>
                 <div className={responsive.maxWidthCentered}>
-                  <h2 className={styles.title}>{t('profileInformation.title')}</h2>
-                  {!isEditing
-                    ? (
-                      <ProfileInformation
-                        data={data}
-                        loading={loading}
-                        isEditing={isEditing}
-                        setEditing={toggleEditing}
-                      />
-                    )
-                    : (
-                      <EditProfile
-                        setEditing={closeEditing}
-                        profileData={data}
-                      />
-                    )
-                  }
+                  <h2 className={styles.title}>
+                    {t('profileInformation.title')}
+                  </h2>
+                  {!isEditing ? (
+                    <ProfileInformation
+                      data={data}
+                      loading={loading}
+                      isEditing={isEditing}
+                      setEditing={toggleEditing}
+                    />
+                  ) : (
+                    <EditProfile setEditing={closeEditing} profileData={data} />
+                  )}
                 </div>
               </div>
             </Route>

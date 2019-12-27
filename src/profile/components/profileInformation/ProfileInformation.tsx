@@ -9,15 +9,15 @@ import getAddress from '../../helpers/getAddress';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 
 type Props = {
-  loading: boolean,
-  data: MyProfileQuery,
-  isEditing: boolean,
-  setEditing: () => void
+  loading: boolean;
+  data: MyProfileQuery;
+  isEditing: boolean;
+  setEditing: () => void;
 };
 
 function ProfileInformation(props: Props) {
   const { t } = useTranslation();
-  const { isEditing, setEditing, loading, data} = props;
+  const { isEditing, setEditing, loading, data } = props;
 
   return (
     <section className={styles.personalInformation}>
@@ -26,11 +26,7 @@ function ProfileInformation(props: Props) {
           main={t('profileInformation.personalData')}
           small={t('profileInformation.visibility')}
         />
-        {!isEditing &&
-          <button onClick={setEditing}>
-            EDIT
-          </button>
-        }
+        {!isEditing && <button onClick={setEditing}>EDIT</button>}
       </div>
       <div className={styles.storedInformation}>
         {loading && t('loading')}
