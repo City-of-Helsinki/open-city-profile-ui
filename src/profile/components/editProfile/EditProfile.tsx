@@ -11,6 +11,7 @@ import EditProfileForm, {
 } from '../editProfileForm/EditProfileForm';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 import {
+  UpdateProfile,
   UpdateProfile as UpdateProfileData,
   UpdateProfileVariables,
 } from '../../graphql/__generated__/UpdateProfile';
@@ -36,21 +37,20 @@ function EditProfile(props: Props) {
     UpdateProfileVariables
   >(UPDATE_PROFILE);
 
-  const updateFields = (result: any) => {
-    if (!result) return {};
+  const updateFields = (result: UpdateProfile) => {
+    const profile = result?.updateProfile?.profile;
+    if (!profile) return {};
 
     const updatedProfile = JSON.parse(JSON.stringify(profileData));
-
-    Object.keys(result).forEach(key => {
-      if (typeof result[key] !== 'object' && updatedProfile.myProfile[key]) {
-        updatedProfile.myProfile[key] = result[key];
-      }
-      if (typeof result[key] === 'object') {
-        Object.keys(result[key]).forEach(subKey => {
-          updatedProfile.myProfile[key][subKey] = result[key][subKey]
-        });
-      }
-    });
+    updatedProfile.myProfile.firstName = profile.firstName;
+    updatedProfile.myProfile.lastName = profile.lastName;
+    updatedProfile.myProfile.primaryPhone.phone = profile?.primaryPhone?.phone;
+    updatedProfile.myProfile.primaryAddress.address =
+      profile?.primaryAddress?.address;
+    updatedProfile.myProfile.primaryAddress.postalCode =
+      profile?.primaryAddress?.postalCode;
+    updatedProfile.myProfile.primaryAddress.city =
+      profile?.primaryAddress?.city;
 
     return updatedProfile;
   };
@@ -105,7 +105,8 @@ function EditProfile(props: Props) {
     };
     updateProfile({ variables }).then(result => {
       if (result.data) {
-        const updatedProfile = updateFields(result.data?.updateProfile?.profile);
+        const updatedProfile = updateFields(result.data);
+
         props.setEditing(updatedProfile);
       }
     });
