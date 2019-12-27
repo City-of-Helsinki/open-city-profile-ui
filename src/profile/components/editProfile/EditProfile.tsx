@@ -24,7 +24,7 @@ import Explanation from '../../../common/explanation/Explanation';
 const UPDATE_PROFILE = loader('../../graphql/UpdateProfile.graphql');
 
 type Props = {
-  setEditing: () => void;
+  setEditing: (updatedProfile: MyProfileQuery) => void;
   profileData: MyProfileQuery;
 };
 
@@ -35,6 +35,25 @@ function EditProfile(props: Props) {
     UpdateProfileData,
     UpdateProfileVariables
   >(UPDATE_PROFILE);
+
+  const updateFields = (result: any) => {
+    if (!result) return {};
+
+    const updatedProfile = JSON.parse(JSON.stringify(profileData));
+
+    Object.keys(result).forEach(key => {
+      if (typeof result[key] !== 'object' && updatedProfile.myProfile[key]) {
+        updatedProfile.myProfile[key] = result[key];
+      }
+      if (typeof result[key] === 'object') {
+        Object.keys(result[key]).forEach(subKey => {
+          updatedProfile.myProfile[key][subKey] = result[key][subKey]
+        });
+      }
+    });
+
+    return updatedProfile;
+  };
 
   const handleOnValues = (formValues: FormValues) => {
     const variables: UpdateProfileVariables = {
@@ -86,7 +105,8 @@ function EditProfile(props: Props) {
     };
     updateProfile({ variables }).then(result => {
       if (result.data) {
-        props.setEditing();
+        const updatedProfile = updateFields(result.data?.updateProfile?.profile);
+        props.setEditing(updatedProfile);
       }
     });
   };

@@ -2,6 +2,22 @@ mutation UpdateProfile($profile: ProfileInput!) {
     updateProfile(profile: $profile) {
         profile {
             id
+            firstName
+            lastName
+            primaryAddress {
+                id
+                address
+                postalCode
+                city
+            }
+            primaryEmail {
+                id
+                email
+            }
+            primaryPhone {
+                id
+                phone
+            }
         }
     }
 }
