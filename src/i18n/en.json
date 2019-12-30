@@ -37,7 +37,8 @@
     "city": "City",
     "postalCode": "Postal code",
     "terms": "I agree to the <0>Terms of Service</0>, and that I may be contacted at the address I provide",
-    "submit": "Save"
+    "submit": "Save",
+    "edit": "Edit"
   },
   "validation": {
     "required": "This field is required",

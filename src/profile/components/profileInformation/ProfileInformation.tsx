@@ -26,7 +26,11 @@ function ProfileInformation(props: Props) {
           main={t('profileInformation.personalData')}
           small={t('profileInformation.visibility')}
         />
-        {!isEditing && <button onClick={setEditing}>EDIT</button>}
+        {!isEditing && (
+          <button onClick={setEditing} className={styles.edit}>
+            {t('profileForm.edit').toUpperCase()}
+          </button>
+        )}
       </div>
       <div className={styles.storedInformation}>
         {loading && t('loading')}
