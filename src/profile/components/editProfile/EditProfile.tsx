@@ -54,7 +54,7 @@ function EditProfile(props: Props) {
         updatePhones: [
           profileData?.myProfile?.primaryPhone?.id
             ? {
-                id: profileData?.myProfile?.primaryPhone?.id,
+                id: profileData.myProfile.primaryPhone.id,
                 phone: formValues.phone,
                 primary: true,
                 phoneType: PhoneType.OTHER,
@@ -76,7 +76,7 @@ function EditProfile(props: Props) {
         updateAddresses: [
           profileData?.myProfile?.primaryAddress?.id
             ? {
-                id: profileData?.myProfile?.primaryAddress?.id,
+                id: profileData.myProfile.primaryAddress.id,
                 address: formValues.address,
                 city: formValues.city,
                 postalCode: formValues.postalCode,
