@@ -17,7 +17,6 @@ import {
 } from '../../graphql/__generated__/UpdateProfile';
 import {
   AddressType,
-  EmailType,
   PhoneType,
 } from '../../../graphql/__generated__/globalTypes';
 import Explanation from '../../../common/explanation/Explanation';
@@ -42,16 +41,15 @@ function EditProfile(props: Props) {
     if (!profile) return {};
 
     const updatedProfile = JSON.parse(JSON.stringify(profileData));
+
     updatedProfile.myProfile.firstName = profile.firstName;
     updatedProfile.myProfile.lastName = profile.lastName;
-    updatedProfile.myProfile.primaryPhone.phone = profile?.primaryPhone?.phone;
-    updatedProfile.myProfile.primaryAddress.address =
-      profile?.primaryAddress?.address;
-    updatedProfile.myProfile.primaryAddress.postalCode =
-      profile?.primaryAddress?.postalCode;
-    updatedProfile.myProfile.primaryAddress.city =
-      profile?.primaryAddress?.city;
-
+    if (profile?.primaryPhone) {
+      updatedProfile.myProfile.primaryPhone = profile?.primaryPhone;
+    }
+    if (profile?.primaryAddress) {
+      updatedProfile.myProfile.primaryAddress = profile?.primaryAddress;
+    }
     return updatedProfile;
   };
 
@@ -60,16 +58,17 @@ function EditProfile(props: Props) {
       profile: {
         firstName: formValues.firstName,
         lastName: formValues.lastName,
-        updateEmails: [
-          {
-            id: profileData?.myProfile?.primaryEmail?.id,
-            email: formValues.email,
-            primary: true,
-            emailType: EmailType.OTHER,
-          },
+        addPhones: [
+          !profileData?.myProfile?.primaryPhone?.id && formValues.phone
+            ? {
+                phone: formValues.phone,
+                primary: true,
+                phoneType: PhoneType.OTHER,
+              }
+            : null,
         ],
         updatePhones: [
-          formValues.phone
+          profileData?.myProfile?.primaryPhone?.id
             ? {
                 id: profileData?.myProfile?.primaryPhone?.id,
                 phone: formValues.phone,
@@ -79,7 +78,8 @@ function EditProfile(props: Props) {
             : null,
         ],
         addAddresses: [
-          !profileData?.myProfile?.primaryAddress?.address
+          !profileData?.myProfile?.primaryAddress?.id &&
+          (formValues.address || formValues.postalCode || formValues.city)
             ? {
                 address: formValues.address,
                 city: formValues.city,
@@ -106,7 +106,6 @@ function EditProfile(props: Props) {
     updateProfile({ variables }).then(result => {
       if (result.data) {
         const updatedProfile = updateFields(result.data);
-
         props.setEditing(updatedProfile);
       }
     });
