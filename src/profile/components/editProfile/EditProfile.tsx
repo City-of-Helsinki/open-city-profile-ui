@@ -11,7 +11,6 @@ import EditProfileForm, {
 } from '../editProfileForm/EditProfileForm';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 import {
-  UpdateProfile,
   UpdateProfile as UpdateProfileData,
   UpdateProfileVariables,
 } from '../../graphql/__generated__/UpdateProfile';
@@ -24,7 +23,7 @@ import Explanation from '../../../common/explanation/Explanation';
 const UPDATE_PROFILE = loader('../../graphql/UpdateProfile.graphql');
 
 type Props = {
-  setEditing: (updatedProfile: MyProfileQuery) => void;
+  setEditing: () => void;
   profileData: MyProfileQuery;
 };
 
@@ -34,24 +33,9 @@ function EditProfile(props: Props) {
   const [updateProfile, { loading }] = useMutation<
     UpdateProfileData,
     UpdateProfileVariables
-  >(UPDATE_PROFILE);
-
-  const updateFields = (result: UpdateProfile) => {
-    const profile = result?.updateProfile?.profile;
-    if (!profile) return {};
-
-    const updatedProfile = JSON.parse(JSON.stringify(profileData));
-
-    updatedProfile.myProfile.firstName = profile.firstName;
-    updatedProfile.myProfile.lastName = profile.lastName;
-    if (profile?.primaryPhone) {
-      updatedProfile.myProfile.primaryPhone = profile?.primaryPhone;
-    }
-    if (profile?.primaryAddress) {
-      updatedProfile.myProfile.primaryAddress = profile?.primaryAddress;
-    }
-    return updatedProfile;
-  };
+  >(UPDATE_PROFILE, {
+    refetchQueries: ['MyProfileQuery'],
+  });
 
   const handleOnValues = (formValues: FormValues) => {
     const variables: UpdateProfileVariables = {
@@ -105,8 +89,7 @@ function EditProfile(props: Props) {
     };
     updateProfile({ variables }).then(result => {
       if (result.data) {
-        const updatedProfile = updateFields(result.data);
-        props.setEditing(updatedProfile);
+        props.setEditing();
       }
     });
   };

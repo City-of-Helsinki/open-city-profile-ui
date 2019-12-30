@@ -17,17 +17,12 @@ const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
 
 function ViewProfile() {
   const [isEditing, setEditing] = useState(false);
-  const [editedData, setEditedData] = useState<MyProfileQuery>();
   const { t } = useTranslation();
+
   const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE);
 
   const toggleEditing = () => {
-    setEditing(true);
-  };
-
-  const closeEditing = (updatedProfile: MyProfileQuery) => {
-    setEditedData(updatedProfile);
-    setEditing(false);
+    setEditing(prevState => !prevState);
   };
 
   return (
@@ -35,7 +30,7 @@ function ViewProfile() {
       {data && (
         <React.Fragment>
           <PageHeading
-            text={getNicknameOrName(editedData ? editedData : data)}
+            text={getNicknameOrName(data)}
             className={responsive.maxWidthCentered}
           />
           <nav
@@ -71,15 +66,15 @@ function ViewProfile() {
                   </h2>
                   {!isEditing ? (
                     <ProfileInformation
-                      data={editedData ? editedData : data}
+                      data={data}
                       loading={loading}
                       isEditing={isEditing}
                       setEditing={toggleEditing}
                     />
                   ) : (
                     <EditProfile
-                      setEditing={closeEditing}
-                      profileData={editedData ? editedData : data}
+                      setEditing={toggleEditing}
+                      profileData={data}
                     />
                   )}
                 </div>
