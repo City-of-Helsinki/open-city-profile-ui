@@ -2,15 +2,19 @@ query MyProfileQuery {
   myProfile {
     firstName
     lastName
+    nickname
     primaryAddress {
+      id
       address
       postalCode
       city
     }
     primaryEmail {
+      id
       email
     }
     primaryPhone {
+      id
       phone
     }
   }

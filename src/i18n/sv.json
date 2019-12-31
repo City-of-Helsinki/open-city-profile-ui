@@ -33,8 +33,12 @@
     "lastName": "Efternamn",
     "email": "Epost-adress",
     "phone": "Telefonnummer",
+    "address": "Hemadress",
+    "city": "Stad",
+    "postalCode": "Postnummer",
     "terms": "Jag godkänner <0>användarvillkorna</0>, och att man får kontakta mig i adressen jag givit",
-    "submit": "Spara"
+    "submit": "Spara",
+    "edit": "Redigera"
   },
   "validation": {
     "required": "Detta fält krävs",

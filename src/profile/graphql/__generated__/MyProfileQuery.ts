@@ -8,6 +8,10 @@
 
 export interface MyProfileQuery_myProfile_primaryAddress {
   readonly __typename: "AddressNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
   readonly address: string;
   readonly postalCode: string;
   readonly city: string;
@@ -15,11 +19,19 @@ export interface MyProfileQuery_myProfile_primaryAddress {
 
 export interface MyProfileQuery_myProfile_primaryEmail {
   readonly __typename: "EmailNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
   readonly email: string;
 }
 
 export interface MyProfileQuery_myProfile_primaryPhone {
   readonly __typename: "PhoneNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
   readonly phone: string | null;
 }
 
@@ -27,6 +39,7 @@ export interface MyProfileQuery_myProfile {
   readonly __typename: "ProfileNode";
   readonly firstName: string;
   readonly lastName: string;
+  readonly nickname: string | null;
   readonly primaryAddress: MyProfileQuery_myProfile_primaryAddress | null;
   readonly primaryEmail: MyProfileQuery_myProfile_primaryEmail | null;
   readonly primaryPhone: MyProfileQuery_myProfile_primaryPhone | null;

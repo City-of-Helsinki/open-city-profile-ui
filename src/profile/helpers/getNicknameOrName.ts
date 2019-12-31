@@ -1,6 +1,6 @@
-import { NameQuery } from '../graphql/__generated__/NameQuery';
+import { MyProfileQuery } from '../graphql/__generated__/MyProfileQuery';
 
-export default function getNicknameOrName(data?: NameQuery) {
+export default function getNicknameOrName(data?: MyProfileQuery) {
   if (data && data.myProfile) {
     const myProfile = data.myProfile;
     if (myProfile.nickname) {
