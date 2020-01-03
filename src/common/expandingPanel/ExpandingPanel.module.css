@@ -18,6 +18,18 @@
     color: var(--hds-brand-color-bus-dark-50);
 }
 
+.iconDown {
+    height: 15px;
+    width: 15px;
+    transform: rotateZ(90deg);
+}
+
+.iconUp {
+    height: 15px;
+    width: 15px;
+    transform: rotateZ(-90deg);
+}
+
 .title:hover {
     cursor: pointer;
 }

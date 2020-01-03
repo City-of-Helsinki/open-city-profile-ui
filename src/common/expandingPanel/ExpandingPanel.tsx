@@ -1,5 +1,6 @@
 import React, { useState, PropsWithChildren } from 'react';
 import classNames from 'classnames';
+import IconAngleRight from 'hds-react/lib/icons/IconAngleRight';
 
 import styles from './ExpandingPanel.module.css';
 
@@ -16,7 +17,9 @@ function ExpandingPanel(props: Props) {
     <div className={styles.container}>
       <div className={styles.title} onClick={toggleExpanding}>
         <h2>{props.title}</h2>
-        <span>D</span>
+        <IconAngleRight
+          className={expanded ? styles.iconUp : styles.iconDown}
+        />
       </div>
       <div
         className={classNames(
