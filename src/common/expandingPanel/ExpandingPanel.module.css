@@ -1,0 +1,47 @@
+.container {
+    width: 100%;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    background: var(--hds-ui-color-white);
+    margin: 15px 0;
+}
+
+.title {
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title h2 {
+    font-size: 22px;
+    color: var(--hds-brand-color-bus-dark-50);
+}
+
+.title:hover {
+    cursor: pointer;
+}
+
+.content {
+    padding: 0 20px;
+    width: 80%;
+    overflow: hidden;
+}
+
+.content p {
+    margin: 0;
+    padding: 0;
+    line-height: 22px;
+}
+
+.open {
+    overflow: auto;
+    height: 100%;
+    padding-bottom: 20px;
+}
+
+.closed {
+    height: 0;
+}
+
+
