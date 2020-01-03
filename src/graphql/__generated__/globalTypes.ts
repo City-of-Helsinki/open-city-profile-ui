@@ -45,6 +45,13 @@ export enum PhoneType {
   WORK = "WORK",
 }
 
+export enum ServiceType {
+  BERTH = "BERTH",
+  GODCHILDREN_OF_CULTURE = "GODCHILDREN_OF_CULTURE",
+  HKI_MY_DATA = "HKI_MY_DATA",
+  YOUTH_MEMBERSHIP = "YOUTH_MEMBERSHIP",
+}
+
 export enum YouthLanguage {
   ARABIC = "ARABIC",
   ENGLISH = "ENGLISH",

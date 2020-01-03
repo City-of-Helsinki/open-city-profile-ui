@@ -1,0 +1,13 @@
+query ServiceConnectionQuery {
+  myProfile {
+    serviceConnections {
+      edges {
+        node {
+          service {
+            type
+          }
+        }
+      }
+    }
+  }
+}
