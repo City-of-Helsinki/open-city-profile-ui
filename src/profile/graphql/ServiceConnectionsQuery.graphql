@@ -1,4 +1,4 @@
-query ServiceConnectionQuery {
+query ServiceConnectionsQuery {
   myProfile {
     serviceConnections {
       edges {
