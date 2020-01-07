@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import DeleteProfile from '../deleteProfile/DeleteProfile';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import styles from './ProfileInformation.module.css';
 import Explanation from '../../../common/explanation/Explanation';
 import getName from '../../helpers/getName';
 import getAddress from '../../helpers/getAddress';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
-import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
-import Button from '../../../common/button/Button';
-import Checkbox from '../../../common/checkbox/Checkbox';
-import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
 
 type Props = {
   loading: boolean;
@@ -20,21 +17,8 @@ type Props = {
 };
 
 function ProfileInformation(props: Props) {
-  const [deleteAccepted, setDeleteAccepted] = useState(false);
-  const [deleteConfirmationDialog, setDeleteConfirmationDialog] = useState(
-    false
-  );
   const { t } = useTranslation();
   const { isEditing, setEditing, loading, data } = props;
-
-  const acceptDelete = () => {
-    setDeleteAccepted(prevState => !prevState);
-  };
-
-  const deleteConfirmation = () => {
-    setDeleteConfirmationDialog(prevState => !prevState);
-  };
-
   return (
     <React.Fragment>
       <section className={styles.personalInformation}>
@@ -73,35 +57,7 @@ function ProfileInformation(props: Props) {
           )}
         </div>
       </section>
-      <ExpandingPanel title="Haluatko poistaa Oma.helsinki tunnuksesi?">
-        <p>
-          Voit halutessasi poistaa kaikki tietosi, mutta se tarkoittaa myös
-          käyttäjätilisi poistamista Lue lisää ohjeesta. Poistamalla Helsinki
-          profiilisi menetätä myös kaikki yhdistettyihin palveluihin tallennetut
-          tietosi, etkä voi enää kirjautua niihin.
-        </p>
-
-        <Checkbox
-          onChange={acceptDelete}
-          i18Key="profileInformation.deletionExplanation"
-          useTransComponent
-          // eslint-disable-next-line jsx-a11y/anchor-has-content
-          components={[<a href="/#"></a>]}
-        />
-
-        <Button
-          type="button"
-          onClick={deleteConfirmation}
-          disabled={!deleteAccepted}
-        >
-          Poista Helsinki profiili
-        </Button>
-      </ExpandingPanel>
-
-      <DeleteConfirmationModal
-        isOpen={deleteConfirmationDialog}
-        onClose={deleteConfirmation}
-      />
+      <DeleteProfile />
     </React.Fragment>
   );
 }
