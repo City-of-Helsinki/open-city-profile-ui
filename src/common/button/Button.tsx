@@ -7,6 +7,7 @@ type Props = PropsWithChildren<{
   type?: 'button' | 'submit' | 'reset';
   className?: string;
   disabled?: boolean;
+  onClick?: () => void;
 }>;
 
 function Button(props: Props) {

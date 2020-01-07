@@ -10,6 +10,7 @@ import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import Button from '../../../common/button/Button';
 import Checkbox from '../../../common/checkbox/Checkbox';
+import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
 
 type Props = {
   loading: boolean;
@@ -20,12 +21,18 @@ type Props = {
 
 function ProfileInformation(props: Props) {
   const [deleteAccepted, setDeleteAccepted] = useState(false);
-  //const [deleteConfirmationDialog, setDeleteConfirmationDialog] = useState(false);
+  const [deleteConfirmationDialog, setDeleteConfirmationDialog] = useState(
+    false
+  );
   const { t } = useTranslation();
   const { isEditing, setEditing, loading, data } = props;
 
   const acceptDelete = () => {
     setDeleteAccepted(prevState => !prevState);
+  };
+
+  const deleteConfirmation = () => {
+    setDeleteConfirmationDialog(prevState => !prevState);
   };
 
   return (
@@ -82,8 +89,19 @@ function ProfileInformation(props: Props) {
           components={[<a href="/#"></a>]}
         />
 
-        <Button disabled={!deleteAccepted}>Poista Helsinki profiili</Button>
+        <Button
+          type="button"
+          onClick={deleteConfirmation}
+          disabled={!deleteAccepted}
+        >
+          Poista Helsinki profiili
+        </Button>
       </ExpandingPanel>
+
+      <DeleteConfirmationModal
+        isOpen={deleteConfirmationDialog}
+        onClose={deleteConfirmation}
+      />
     </React.Fragment>
   );
 }
