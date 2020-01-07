@@ -11,6 +11,7 @@ import PageHeading from '../../../common/pageHeading/PageHeading';
 import ProfileInformation from '../profileInformation/ProfileInformation';
 import EditProfile from '../editProfile/EditProfile';
 import getNicknameOrName from '../../helpers/getNicknameOrName';
+import ServiceConnections from '../serviceConnections/ServiceConnections';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 
 const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
@@ -57,7 +58,9 @@ function ViewProfile() {
             </NavLink>
           </nav>
           <Switch>
-            <Route path="/connected-services">services</Route>
+            <Route path="/connected-services">
+              <ServiceConnections />
+            </Route>
             <Route path="/">
               <div className={styles.profileContent}>
                 <div className={responsive.maxWidthCentered}>
