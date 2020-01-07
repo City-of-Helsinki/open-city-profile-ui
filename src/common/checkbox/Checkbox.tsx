@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { Trans } from 'react-i18next';
 import classNames from 'classnames';
+
 import styles from './Checkbox.module.css';
 
 type Props = PropsWithChildren<{

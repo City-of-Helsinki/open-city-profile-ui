@@ -21,7 +21,8 @@
     "name": "Nimi",
     "address": "Osoite",
     "email": "Sähköpostiosoite",
-    "phone": "Puhelinnumero"
+    "phone": "Puhelinnumero",
+    "deletionExplanation": "Olen lukenut <0>ohjeet</0> ja ymmärrän mitä tietojeni poistaminen tarkoittaa"
   },
   "createProfile": {
     "pageTitle": "Uusi profiili",

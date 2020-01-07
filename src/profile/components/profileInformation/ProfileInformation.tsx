@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -9,6 +9,7 @@ import getAddress from '../../helpers/getAddress';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import Button from '../../../common/button/Button';
+import Checkbox from '../../../common/checkbox/Checkbox';
 
 type Props = {
   loading: boolean;
@@ -18,8 +19,14 @@ type Props = {
 };
 
 function ProfileInformation(props: Props) {
+  const [deleteAccepted, setDeleteAccepted] = useState(false);
+  //const [deleteConfirmationDialog, setDeleteConfirmationDialog] = useState(false);
   const { t } = useTranslation();
   const { isEditing, setEditing, loading, data } = props;
+
+  const acceptDelete = () => {
+    setDeleteAccepted(prevState => !prevState);
+  };
 
   return (
     <React.Fragment>
@@ -64,18 +71,18 @@ function ProfileInformation(props: Props) {
           Voit halutessasi poistaa kaikki tietosi, mutta se tarkoittaa myös
           käyttäjätilisi poistamista Lue lisää ohjeesta. Poistamalla Helsinki
           profiilisi menetätä myös kaikki yhdistettyihin palveluihin tallennetut
-          tietosi, etkä voi enää kirjautua niihin
+          tietosi, etkä voi enää kirjautua niihin.
         </p>
 
-        <div>
-          <input type="checkbox" />
-          <span>
-            Olen lukenut ohjeet ja ymmärrän mitä tietojeni poistaminen
-            tarkoittaa
-          </span>
-        </div>
+        <Checkbox
+          onChange={acceptDelete}
+          i18Key="profileInformation.deletionExplanation"
+          useTransComponent
+          // eslint-disable-next-line jsx-a11y/anchor-has-content
+          components={[<a href="/#"></a>]}
+        />
 
-        <Button>Poista Helsinki profiili</Button>
+        <Button disabled={!deleteAccepted}>Poista Helsinki profiili</Button>
       </ExpandingPanel>
     </React.Fragment>
   );
