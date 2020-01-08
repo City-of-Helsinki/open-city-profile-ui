@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
+import { GraphQLError } from 'graphql';
 
 import DeleteConfirmationModal from '../modals/deleteConfirmation/DeleteConfirmationModal';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
@@ -12,8 +13,12 @@ import {
   DeleteProfile as DeleteProfileData,
   DeleteProfileVariables,
 } from '../../graphql/__generated__/DeleteProfile';
+import { ServiceConnectionQuery } from '../../graphql/__generated__/ServiceConnectionQuery';
 
 const DELETE_PROFILE = loader('../../graphql/DeleteProfile.graphql');
+const SERVICE_CONNECTIONS = loader(
+  '../../graphql/ServiceConnectionsQuery.graphql'
+);
 
 type Props = {
   profileID: string;
@@ -24,6 +29,7 @@ function DeleteProfile(props: Props) {
   const [deleteInstructions, setDeleteInstructions] = useState(false);
   const [berthError, setBerthError] = useState(false);
   const { t } = useTranslation();
+  const { data } = useQuery<ServiceConnectionQuery>(SERVICE_CONNECTIONS);
   const [deleteProfile] = useMutation<
     DeleteProfileData,
     DeleteProfileVariables
@@ -52,7 +58,15 @@ function DeleteProfile(props: Props) {
         }
       })
       .catch(err => {
-        setBerthError(true);
+        err.graphQLErrors &&
+          err.graphQLErrors.forEach((error: GraphQLError) => {
+            if (
+              error?.extensions?.code ===
+              'CANNOT_DELETE_PROFILE_WHILE_SERVICE_CONNECTED_ERROR'
+            ) {
+              setBerthError(true);
+            }
+          });
       });
   };
 
@@ -82,6 +96,7 @@ function DeleteProfile(props: Props) {
         isOpen={deleteConfirmationModal}
         onClose={handleConfirmationModal}
         onDelete={handleProfileDelete}
+        services={data}
       />
 
       <BerthErrorModal
