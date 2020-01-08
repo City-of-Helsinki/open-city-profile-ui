@@ -44,6 +44,12 @@
     "submit": "Save",
     "edit": "Edit"
   },
+  "validation": {
+    "required": "This field is required",
+    "email": "The value must be an email-address",
+    "phoneMin": "The number must be at least {{min}} characters long",
+    "maxLength": "This field can be max {{max}} characters"
+  },
   "deleteProfile": {
     "title": "Do you want to delete you Oma.helsinki account?",
     "explanation": "If desired you can delete all your information, but also means deleting your account. Read more from the guide. By deleting your Helsinki profile you also loose all information saved to connected services and can no longer log in",
