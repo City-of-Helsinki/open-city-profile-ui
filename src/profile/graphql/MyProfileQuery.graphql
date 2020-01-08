@@ -1,5 +1,6 @@
 query MyProfileQuery {
   myProfile {
+    id
     firstName
     lastName
     nickname

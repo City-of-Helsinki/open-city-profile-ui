@@ -2,14 +2,14 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProfileInput } from '../../../graphql/__generated__/globalTypes';
+import { ProfileInput } from "./../../../graphql/__generated__/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateProfile
 // ====================================================
 
 export interface UpdateProfile_updateProfile_profile_primaryAddress {
-  readonly __typename: 'AddressNode';
+  readonly __typename: "AddressNode";
   /**
    * The ID of the object.
    */
@@ -20,7 +20,7 @@ export interface UpdateProfile_updateProfile_profile_primaryAddress {
 }
 
 export interface UpdateProfile_updateProfile_profile_primaryEmail {
-  readonly __typename: 'EmailNode';
+  readonly __typename: "EmailNode";
   /**
    * The ID of the object.
    */
@@ -29,7 +29,7 @@ export interface UpdateProfile_updateProfile_profile_primaryEmail {
 }
 
 export interface UpdateProfile_updateProfile_profile_primaryPhone {
-  readonly __typename: 'PhoneNode';
+  readonly __typename: "PhoneNode";
   /**
    * The ID of the object.
    */
@@ -38,7 +38,7 @@ export interface UpdateProfile_updateProfile_profile_primaryPhone {
 }
 
 export interface UpdateProfile_updateProfile_profile {
-  readonly __typename: 'ProfileNode';
+  readonly __typename: "ProfileNode";
   /**
    * The ID of the object.
    */
@@ -51,7 +51,7 @@ export interface UpdateProfile_updateProfile_profile {
 }
 
 export interface UpdateProfile_updateProfile {
-  readonly __typename: 'UpdateProfile';
+  readonly __typename: "UpdateProfile";
   readonly profile: UpdateProfile_updateProfile_profile | null;
 }
 

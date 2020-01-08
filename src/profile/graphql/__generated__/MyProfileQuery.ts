@@ -37,6 +37,10 @@ export interface MyProfileQuery_myProfile_primaryPhone {
 
 export interface MyProfileQuery_myProfile {
   readonly __typename: "ProfileNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
   readonly firstName: string;
   readonly lastName: string;
   readonly nickname: string | null;
