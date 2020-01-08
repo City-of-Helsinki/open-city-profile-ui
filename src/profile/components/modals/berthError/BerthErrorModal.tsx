@@ -34,11 +34,6 @@ function BerthErrorModal(props: Props) {
       <div className={styles.content}>
         <h3>{t('berthErrors.title')}</h3>
         <p>{t('berthErrors.explanation')}</p>
-        <ul>
-          <li>Venepaikka</li>
-          <li>Venepaikka</li>
-          <li>Venepaikka</li>
-        </ul>
       </div>
 
       <div className={styles.actions}>
