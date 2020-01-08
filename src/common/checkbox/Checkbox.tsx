@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 import { Trans } from 'react-i18next';
 import classNames from 'classnames';
 
@@ -8,7 +8,7 @@ type Props = PropsWithChildren<{
   onChange: () => void;
   label?: string;
   useTransComponent?: boolean;
-  components?: Array<any>;
+  components?: Array<ReactNode>;
   i18Key?: string;
   className?: string;
 }>;
