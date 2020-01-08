@@ -36,6 +36,10 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections {
 
 export interface ServiceConnectionsQuery_myProfile {
   readonly __typename: "ProfileNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
   readonly serviceConnections: ServiceConnectionsQuery_myProfile_serviceConnections | null;
 }
 
