@@ -1,9 +1,9 @@
 .container {
-    min-width: 300px;
+    min-width: 540px;
     padding: 30px;
     width: 18%;
     position: relative;
-    background-color: #FFF;
+    background-color: var(--hds-ui-color-white);
     border-radius: 2px;
     border: none;
 }
@@ -55,6 +55,10 @@
 
 
 @media (max-width: 540px) {
+    .container {
+        min-width: 300px;
+    }
+
     .actions {
         flex-direction: column;
         justify-content: center;

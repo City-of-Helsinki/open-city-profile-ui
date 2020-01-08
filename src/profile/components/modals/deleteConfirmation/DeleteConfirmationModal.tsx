@@ -2,24 +2,27 @@ import React from 'react';
 import ReactModal from 'react-modal';
 import IconClose from 'hds-react/lib/icons/IconClose';
 
-import Button from '../../../common/button/Button';
+import Button from '../../../../common/button/Button';
 import styles from './DeleteConfirmationModal.module.css';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  onDelete: () => void;
 };
 
 function DeleteConfirmationModal(props: Props) {
-  const { isOpen, onClose } = props;
+  const { isOpen, onClose, onDelete } = props;
 
   if (!isOpen) return null;
   return (
     <ReactModal
+      ariaHideApp={false}
       isOpen={isOpen}
       onRequestClose={onClose}
       className={styles.container}
       overlayClassName={styles.overlay}
+      shouldCloseOnOverlayClick
     >
       <div className={styles.close}>
         <button type="button" onClick={onClose}>
@@ -41,8 +44,12 @@ function DeleteConfirmationModal(props: Props) {
       </div>
 
       <div className={styles.actions}>
-        <Button className={styles.button}>Peru poistaminen</Button>
-        <Button className={styles.button}>Poista Helsinki profiili</Button>
+        <Button className={styles.button} variant="outlined" onClick={onClose}>
+          Peru poistaminen
+        </Button>
+        <Button className={styles.button} onClick={onDelete}>
+          Poista Helsinki profiili
+        </Button>
       </div>
     </ReactModal>
   );
