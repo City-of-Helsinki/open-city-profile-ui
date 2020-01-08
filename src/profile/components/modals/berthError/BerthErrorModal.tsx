@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import IconClose from 'hds-react/lib/icons/IconClose';
+import { useTranslation } from 'react-i18next';
 
 import Button from '../../../../common/button/Button';
 import styles from './BerthErrorModal.module.css';
@@ -12,6 +13,7 @@ type Props = {
 
 function BerthErrorModal(props: Props) {
   const { isOpen, onClose } = props;
+  const { t } = useTranslation();
 
   if (!isOpen) return null;
   return (
@@ -30,14 +32,8 @@ function BerthErrorModal(props: Props) {
       </div>
 
       <div className={styles.content}>
-        <h3>
-          Et voi poistaa Helsinki profiiliasi, koska venepaikka tarvitsee
-          tietojasi laskutukseen
-        </h3>
-        <p>
-          Jotta voit poistaa profiilisi, sinun on ensin irtisanottava
-          venepaikkasopimuksesi
-        </p>
+        <h3>{t('berthErrors.title')}</h3>
+        <p>{t('berthErrors.explanation')}</p>
         <ul>
           <li>Venepaikka</li>
           <li>Venepaikka</li>
@@ -47,7 +43,7 @@ function BerthErrorModal(props: Props) {
 
       <div className={styles.actions}>
         <Button className={styles.button} variant="outlined" onClick={onClose}>
-          Sulje
+          {t('berthErrors.close')}
         </Button>
       </div>
     </ReactModal>

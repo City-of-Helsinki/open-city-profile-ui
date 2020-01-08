@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import IconClose from 'hds-react/lib/icons/IconClose';
+import { useTranslation } from 'react-i18next';
 
 import Button from '../../../../common/button/Button';
 import styles from './DeleteConfirmationModal.module.css';
@@ -13,6 +14,7 @@ type Props = {
 
 function DeleteConfirmationModal(props: Props) {
   const { isOpen, onClose, onDelete } = props;
+  const { t } = useTranslation();
 
   if (!isOpen) return null;
   return (
@@ -31,11 +33,8 @@ function DeleteConfirmationModal(props: Props) {
       </div>
 
       <div className={styles.content}>
-        <h3>Haluatko varmasti poistaa Helsinki profiilisi</h3>
-        <p>
-          Poistamalla profiilisi menetät myös kaikki seuraaviin palveluihin
-          tallennetut tiedot
-        </p>
+        <h3>{t('deleteProfileModal.title')}</h3>
+        <p>{t('deleteProfileModal.explanation')}</p>
         <ul>
           <li>Venepaikka</li>
           <li>Venepaikka</li>
@@ -45,10 +44,10 @@ function DeleteConfirmationModal(props: Props) {
 
       <div className={styles.actions}>
         <Button className={styles.button} variant="outlined" onClick={onClose}>
-          Peru poistaminen
+          {t('deleteProfileModal.close')}
         </Button>
         <Button className={styles.button} onClick={onDelete}>
-          Poista Helsinki profiili
+          {t('deleteProfileModal.delete')}
         </Button>
       </div>
     </ReactModal>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
+import { useTranslation } from 'react-i18next';
 
 import DeleteConfirmationModal from '../modals/deleteConfirmation/DeleteConfirmationModal';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
@@ -22,7 +23,7 @@ function DeleteProfile(props: Props) {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [deleteInstructions, setDeleteInstructions] = useState(false);
   const [berthError, setBerthError] = useState(false);
-
+  const { t } = useTranslation();
   const [deleteProfile] = useMutation<
     DeleteProfileData,
     DeleteProfileVariables
@@ -57,17 +58,12 @@ function DeleteProfile(props: Props) {
 
   return (
     <React.Fragment>
-      <ExpandingPanel title="Haluatko poistaa Oma.helsinki tunnuksesi?">
-        <p>
-          Voit halutessasi poistaa kaikki tietosi, mutta se tarkoittaa myös
-          käyttäjätilisi poistamista Lue lisää ohjeesta. Poistamalla Helsinki
-          profiilisi menetätä myös kaikki yhdistettyihin palveluihin tallennetut
-          tietosi, etkä voi enää kirjautua niihin.
-        </p>
+      <ExpandingPanel title={t('deleteProfile.title')}>
+        <p>{t('deleteProfile.explanation')}</p>
 
         <Checkbox
           onChange={handleDeleteInstructions}
-          i18Key="profileInformation.deletionExplanation"
+          i18Key="deleteProfile.accept"
           useTransComponent
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           components={[<a href="/#"></a>]}
@@ -78,7 +74,7 @@ function DeleteProfile(props: Props) {
           onClick={handleConfirmationModal}
           disabled={!deleteInstructions}
         >
-          Poista Helsinki profiili
+          {t('deleteProfile.delete')}
         </Button>
       </ExpandingPanel>
 
