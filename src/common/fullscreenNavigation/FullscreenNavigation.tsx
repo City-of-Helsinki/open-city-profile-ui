@@ -17,9 +17,12 @@ function FullscreenNavigation(props: Props) {
   const { t } = useTranslation();
   const history = useHistory();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const closeNav = () => {
+    setIsNavOpen(false);
+  };
   const signout = () => {
     userManager.removeUser().then(() => {
-      setIsNavOpen(false);
+      closeNav();
       history.push('/login');
     });
   };
@@ -35,14 +38,18 @@ function FullscreenNavigation(props: Props) {
         <div className={styles.navControls}>
           <Close
             className={classNames(styles.navigationToggle, styles.closeNav)}
-            onClick={() => setIsNavOpen(false)}
+            onClick={closeNav}
           />
         </div>
         <div className={styles.navItems}>
-          <NavLink to="/" className={styles.navLink}>
+          <NavLink to="/" className={styles.navLink} onClick={closeNav}>
             {t('nav.information')}
           </NavLink>
-          <NavLink to="/connected-services" className={styles.navLink}>
+          <NavLink
+            to="/connected-services"
+            className={styles.navLink}
+            onClick={closeNav}
+          >
             {t('nav.services')}
           </NavLink>
           <span role="button" className={styles.navLink} onClick={signout}>
@@ -50,7 +57,7 @@ function FullscreenNavigation(props: Props) {
           </span>
           <LanguageSwitcher
             className={styles.languageSwitcher}
-            onLanguageChanged={() => setIsNavOpen(false)}
+            onLanguageChanged={closeNav}
           />
         </div>
       </div>

@@ -7,6 +7,10 @@
   "profile": {
     "loading": "Ladataan profiilia..."
   },
+  "serviceConnections": {
+    "title": "Yhdistetyt palvelut",
+    "explanation": "Olet yhdistänyt seuraavat palvelut tunnukseesi. Voit käyttää samalla profiilillasi useita helsingin kaupungin palveluita sekä tiettyjä kolmansien osapuolten palveluita."
+  },
   "nav": {
     "information": "Omat tiedot",
     "services": "Yhdistetyt palvelut",

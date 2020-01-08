@@ -1,0 +1,8 @@
+.serviceConnections {
+  background: var(--hds-ui-color-black-5);
+  flex: 1;
+}
+
+.pageTitle {
+  padding: 25px;
+}

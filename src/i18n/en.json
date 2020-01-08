@@ -7,6 +7,10 @@
   "profile": {
     "loading": "Loading profile..."
   },
+  "serviceConnections": {
+    "title": "Connected services",
+    "explanation": "You have linked the following services to your account. You may use several services in the City of Helsinki as well as certain third-party services for the same profile."
+  },
   "nav": {
     "information": "Information",
     "services": "Connected services",

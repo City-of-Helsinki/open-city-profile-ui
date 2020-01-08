@@ -44,7 +44,7 @@ function App(props: Props) {
             <Route path="/login">
               <Login />
             </Route>
-            <Route path="/" exact>
+            <Route path={['/', '/connected-services']} exact>
               <Profile />
             </Route>
             <Route path="*">404 - not found</Route>
