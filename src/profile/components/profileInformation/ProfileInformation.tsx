@@ -19,6 +19,7 @@ type Props = {
 function ProfileInformation(props: Props) {
   const { t } = useTranslation();
   const { isEditing, setEditing, loading, data } = props;
+
   return (
     <React.Fragment>
       <section className={styles.personalInformation}>
@@ -57,7 +58,7 @@ function ProfileInformation(props: Props) {
           )}
         </div>
       </section>
-      <DeleteProfile />
+      <DeleteProfile profileID={data.myProfile?.id || ''} />
     </React.Fragment>
   );
 }
