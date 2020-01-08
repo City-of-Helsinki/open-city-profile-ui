@@ -47,6 +47,10 @@
     padding: 0;
 }
 
+.content ul {
+    margin: 0;
+}
+
 .actions {
     width: 100%;
     display: flex;
