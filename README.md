@@ -1,4 +1,28 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Helsinki-profile / OmaHelsinki / Citizen-profile UI
+
+UI for citizen-profile - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Environments
+
+Test: https://omahelsinki.test.kuva.hel.ninja/
+
+Staging: None
+
+Production: None
+
+## Development
+
+If running on Linux or MacOS, easiest way is to just run the app without docker. Any semi-new version of node should probably work, the docker-image is set to use node 12.
+
+Run `yarn` to install dependencies, start app with `yarn start`.
+
+The graphql-backend for development is located at https://helsinkiprofile.test.kuva.hel.ninja/graphql/, it has graphiql installed so you can browse it in your browser!
+
+Since this app uses react-scripts (Create React App) the env-files work a bit differently to what people are used to. Read more about them [here](https://create-react-app.dev/docs/adding-custom-environment-variables).
+
+## CI
+
+The test-environment is built automatically from `develop`-branch.
 
 ## Available Scripts
 
@@ -27,47 +51,13 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Setting up development environment locally with docker
+## Running with docker
 
-### Set tunnistamo hostname
-Add the following line to your hosts file (`/etc/hosts` on mac and linux):
+If you really must, you can run this app with docker locally.
 
-    127.0.0.1 tunnistamo-backend
+Run `docker-compose up` to start the app in docker.
 
-### Create a new OAuth app on GitHub
-Go to https://github.com/settings/developers/ and add a new app with the following settings:
-
-- Application name: can be anything, e.g. local tunnistamo
-- Homepage URL: http://tunnistamo-backend:8000
-- Authorization callback URL: http://tunnistamo-backend:8000/accounts/github/login/callback/
-
-Save. You'll need the created **Client ID** and **Client Secret** for configuring tunnistamo in the next step.
-
-### Install local tunnistamo
-Clone https://github.com/City-of-Helsinki/tunnistamo/. If [this PR](https://github.com/City-of-Helsinki/tunnistamo/pull/94) has not been merged yet, use [this fork](https://github.com/andersinno/tunnistamo/tree/docker-refactor) instead.
-
-Follow the instructions for setting up tunnistamo locally. Before running `docker-compose up` set the following settings in tunnistamo roots `docker-compose.env.yaml`:
-
-- SOCIAL_AUTH_GITHUB_KEY: **Client ID** from the GitHub OAuth app
-- SOCIAL_AUTH_GITHUB_SECRET: **Client Secret** from the GitHub OAuth app
-
-After you've got tunnistamo running locally, make sure the automatically created **Project** OpenID Connect Provider Client has the following settings:
-
-    Response types: `id_token token` must be enabled
-    Redirect URIs: `http://localhost:3000/callback` and `http://localhost:3000/silent_renew` must be in the listed URLs
-
-Then make sure the *https://api.hel.fi/auth/helsinkiprofile*-scope can be used by the **Project** application. Go to OIDC_APIS -> API Scopes -> https://api.hel.fi/auth/profiles and make sure **Project** is selected in Allowed applications.
-
-### Install open-city-profile locally
-Clone the repository (https://github.com/City-of-Helsinki/open-city-profile). Follow the instructions for running open-city-profile with docker. Before running `docker-compose up` set the following settings in open-city-profile roots `docker-compose up`:
-
-- OIDC_SECRET: leave empty, it's not needed
-- OIDC_ENDPOINT: http://tunnistamo-backend:8000/openid
-
-### Run open-city-profile-ui
-Run `docker-compose up`, now the app should be running at `http://localhost:3000/`!
 `docker-compose down` stops the container.
-
 
 ## Learn More
 
