@@ -66,5 +66,10 @@
     "title": "You cannot delete your Helsinki profile because Berth needs your information for billing",
     "explanation": "To delete your profile, you must first terminate your berth billing agreement",
     "close": "Close"
+  },
+  "downloadData": {
+    "panelTitle": "Do you want to download your data?",
+    "panelText": "Download your data to see all the information we have stored about you.",
+    "button": "Download my data"
   }
 }

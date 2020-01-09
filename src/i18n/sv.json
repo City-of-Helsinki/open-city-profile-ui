@@ -66,5 +66,10 @@
     "title": "Du kan inte ta bort din Helsingfors-profil eftersom Berth behöver din information för fakturering",
     "explanation": "För att radera din profil måste du först säga upp betalningsavtal för kaj",
     "close": "Stänga"
+  },
+  "downloadData": {
+    "panelTitle": "Vill du ladda ner dina uppgifter?",
+    "panelText": "Du kan ladda ner all information vi har om dig från följande knapp.",
+    "button": "Ladda ner informationen om mig"
   }
 }
