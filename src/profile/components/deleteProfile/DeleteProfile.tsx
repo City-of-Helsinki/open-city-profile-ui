@@ -66,6 +66,7 @@ function DeleteProfile(props: Props) {
 
         <Checkbox
           onChange={handleDeleteInstructions}
+          name="deleteInstructions"
           label={
             <Trans
               i18nKey="deleteProfile.accept"
