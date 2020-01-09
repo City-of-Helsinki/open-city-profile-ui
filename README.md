@@ -18,8 +18,6 @@ Run `yarn` to install dependencies, start app with `yarn start`.
 
 The graphql-backend for development is located at https://helsinkiprofile.test.kuva.hel.ninja/graphql/, it has graphiql installed so you can browse it in your browser!
 
-Since this app uses react-scripts (Create React App) the env-files work a bit differently to what people are used to. Read more about them [here](https://create-react-app.dev/docs/adding-custom-environment-variables).
-
 ## CI
 
 The test-environment is built automatically from `develop`-branch.
@@ -58,6 +56,38 @@ If you really must, you can run this app with docker locally.
 Run `docker-compose up` to start the app in docker.
 
 `docker-compose down` stops the container.
+
+## Environment variables
+
+Since this app uses react-scripts (Create React App) the env-files work a bit differently to what people are used to. Read more about them [here](https://create-react-app.dev/docs/adding-custom-environment-variables).
+
+The following envs are used:
+
+- REACT_APP_OIDC_AUTHORITY - this is the URL to tunnistamo
+- REACT_APP_OIDC_CLIENT_ID - ID of the client that has to be configured in tunnistamo
+- REACT_APP_PROFILE_AUDIENCE - name of the api-token that client uses profile-api with
+- REACT_APP_PROFILE_GRAPHQL - URL to the profile graphql
+- REACT_APP_OIDC_SCOPE - which scopes the app requires
+- REACT_APP_SENTRY_DSN - not yet used
+
+
+## Tunnistamo configuration
+
+This app uses tunnistamo for authentication. Tunnistamo needs to have the following things set up:
+
+**OIDC client**
+
+The ID of this client must be the same as set in the REACT_APP_OIDC_CLIENT_ID environment variable.
+
+Requires the following things:
+- Response types - id_token token
+- Redirect URIs (app-url is where the UI is running, e.g. http://localhost:3000 for development) - {app-url}/callback, {app-url}/silent_renew
+- Client ID - the name as noted above
+- Login methods - which providers can be used to authenticate, should have at least GitHub enabled for development.
+
+**API Scopes**
+
+The scopes this app uses are set with the REACT_APP_OIDC_SCOPE environment variable.
 
 ## Learn More
 
