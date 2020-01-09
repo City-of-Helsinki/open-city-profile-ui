@@ -66,5 +66,10 @@
     "title": "Et voi poistaa Helsinki profiiliasi, koska venepaikka tarvitsee tietojasi laskutukseen",
     "explanation": "Jotta voit poistaa profiilisi, sinun on ensin irtisanottava venepaikkasopimuksesi",
     "close": "Sulje"
+  },
+  "downloadData": {
+    "panelTitle": "Haluatko ladata omat tietosi?",
+    "panelText": "Jos haluat nähdä kaikki sinusta tallentamamme tiedot, voit ladata ne seuraavasta napista.",
+    "button": "Lataa kaikki palvelun tiedot"
   }
 }
