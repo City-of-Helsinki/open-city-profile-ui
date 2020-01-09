@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { GraphQLError } from 'graphql';
 
 import DeleteConfirmationModal from '../modals/deleteConfirmation/DeleteConfirmationModal';
@@ -77,10 +77,13 @@ function DeleteProfile(props: Props) {
 
         <Checkbox
           onChange={handleDeleteInstructions}
-          i18Key="deleteProfile.accept"
-          useTransComponent
-          // eslint-disable-next-line jsx-a11y/anchor-has-content
-          components={[<a href="/#"></a>]}
+          label={
+            <Trans
+              i18nKey="deleteProfile.accept"
+              // eslint-disable-next-line jsx-a11y/anchor-has-content
+              components={[<a href="/#"></a>]}
+            />
+          }
         />
 
         <Button
