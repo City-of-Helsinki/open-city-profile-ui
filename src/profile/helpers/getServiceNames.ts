@@ -1,6 +1,6 @@
 import { ServiceConnectionQuery } from '../graphql/__generated__/ServiceConnectionQuery';
 
-export const getServiceTypes = (data?: ServiceConnectionQuery) => {
+export default function getServiceTypes(data?: ServiceConnectionQuery) {
   if (data?.myProfile?.serviceConnections) {
     return data.myProfile.serviceConnections.edges.map(edge => {
       if (edge?.node?.service.type) {

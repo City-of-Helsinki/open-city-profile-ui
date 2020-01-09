@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ServiceType } from '../../../../graphql/__generated__/globalTypes';
 import { ServiceConnectionQuery } from '../../../graphql/__generated__/ServiceConnectionQuery';
-import { getServiceTypes } from '../../../helpers/getServiceNames';
+import getServiceTypes from '../../../helpers/getServiceNames';
 import Button from '../../../../common/button/Button';
 import styles from './DeleteConfirmationModal.module.css';
 
