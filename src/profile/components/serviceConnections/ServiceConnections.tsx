@@ -9,7 +9,7 @@ import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './ServiceConnections.module.css';
 import { ServiceConnectionQuery } from '../../graphql/__generated__/ServiceConnectionQuery';
 import { ServiceType } from '../../../graphql/__generated__/globalTypes';
-import { getServiceTypes } from '../../helpers/getServiceNames';
+import getServiceTypes from '../../helpers/getServiceTypes';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'

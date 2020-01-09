@@ -10,4 +10,4 @@ export default function getServiceTypes(data?: ServiceConnectionQuery) {
     });
   }
   return [];
-};
+}
