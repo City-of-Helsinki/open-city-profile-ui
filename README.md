@@ -1,4 +1,26 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Helsinki-profile / OmaHelsinki / Citizen-profile UI
+
+UI for citizen-profile - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Environments
+
+Test: https://omahelsinki.test.kuva.hel.ninja/
+
+Staging: None
+
+Production: None
+
+## Development
+
+If running on Linux or MacOS, easiest way is to just run the app without docker. Any semi-new version of node should probably work, the docker-image is set to use node 12.
+
+Run `yarn` to install dependencies, start app with `yarn start`.
+
+The graphql-backend for development is located at https://helsinkiprofile.test.kuva.hel.ninja/graphql/, it has graphiql installed so you can browse it in your browser!
+
+## CI
+
+The test-environment is built automatically from `develop`-branch.
 
 ## Available Scripts
 
@@ -27,47 +49,45 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Setting up development environment locally with docker
+## Running with docker
 
-### Set tunnistamo hostname
-Add the following line to your hosts file (`/etc/hosts` on mac and linux):
+If you really must, you can run this app with docker locally.
 
-    127.0.0.1 tunnistamo-backend
+Run `docker-compose up` to start the app in docker.
 
-### Create a new OAuth app on GitHub
-Go to https://github.com/settings/developers/ and add a new app with the following settings:
-
-- Application name: can be anything, e.g. local tunnistamo
-- Homepage URL: http://tunnistamo-backend:8000
-- Authorization callback URL: http://tunnistamo-backend:8000/accounts/github/login/callback/
-
-Save. You'll need the created **Client ID** and **Client Secret** for configuring tunnistamo in the next step.
-
-### Install local tunnistamo
-Clone https://github.com/City-of-Helsinki/tunnistamo/. If [this PR](https://github.com/City-of-Helsinki/tunnistamo/pull/94) has not been merged yet, use [this fork](https://github.com/andersinno/tunnistamo/tree/docker-refactor) instead.
-
-Follow the instructions for setting up tunnistamo locally. Before running `docker-compose up` set the following settings in tunnistamo roots `docker-compose.env.yaml`:
-
-- SOCIAL_AUTH_GITHUB_KEY: **Client ID** from the GitHub OAuth app
-- SOCIAL_AUTH_GITHUB_SECRET: **Client Secret** from the GitHub OAuth app
-
-After you've got tunnistamo running locally, make sure the automatically created **Project** OpenID Connect Provider Client has the following settings:
-
-    Response types: `id_token token` must be enabled
-    Redirect URIs: `http://localhost:3000/callback` and `http://localhost:3000/silent_renew` must be in the listed URLs
-
-Then make sure the *https://api.hel.fi/auth/helsinkiprofile*-scope can be used by the **Project** application. Go to OIDC_APIS -> API Scopes -> https://api.hel.fi/auth/profiles and make sure **Project** is selected in Allowed applications.
-
-### Install open-city-profile locally
-Clone the repository (https://github.com/City-of-Helsinki/open-city-profile). Follow the instructions for running open-city-profile with docker. Before running `docker-compose up` set the following settings in open-city-profile roots `docker-compose up`:
-
-- OIDC_SECRET: leave empty, it's not needed
-- OIDC_ENDPOINT: http://tunnistamo-backend:8000/openid
-
-### Run open-city-profile-ui
-Run `docker-compose up`, now the app should be running at `http://localhost:3000/`!
 `docker-compose down` stops the container.
 
+## Environment variables
+
+Since this app uses react-scripts (Create React App) the env-files work a bit differently to what people are used to. Read more about them [here](https://create-react-app.dev/docs/adding-custom-environment-variables).
+
+The following envs are used:
+
+- REACT_APP_OIDC_AUTHORITY - this is the URL to tunnistamo
+- REACT_APP_OIDC_CLIENT_ID - ID of the client that has to be configured in tunnistamo
+- REACT_APP_PROFILE_AUDIENCE - name of the api-token that client uses profile-api with
+- REACT_APP_PROFILE_GRAPHQL - URL to the profile graphql
+- REACT_APP_OIDC_SCOPE - which scopes the app requires
+- REACT_APP_SENTRY_DSN - not yet used
+
+
+## Tunnistamo configuration
+
+This app uses tunnistamo for authentication. Tunnistamo needs to have the following things set up:
+
+**OIDC client**
+
+The ID of this client must be the same as set in the REACT_APP_OIDC_CLIENT_ID environment variable.
+
+Requires the following things:
+- Response types - id_token token
+- Redirect URIs (app-url is where the UI is running, e.g. http://localhost:3000 for development) - {app-url}/callback, {app-url}/silent_renew
+- Client ID - the name as noted above
+- Login methods - which providers can be used to authenticate, should have at least GitHub enabled for development.
+
+**API Scopes**
+
+The scopes this app uses are set with the REACT_APP_OIDC_SCOPE environment variable.
 
 ## Learn More
 
