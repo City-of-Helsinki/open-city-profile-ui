@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Button from '../../../common/button/Button';
@@ -8,12 +8,21 @@ import styles from './DownloadData.module.css';
 type Props = {};
 
 function DownloadData(props: Props) {
-  const downloadData = () => {};
+  const [isLoading, setIsLoading] = useState(false);
+  const downloadData = () => {
+    setIsLoading(true);
+  };
   const { t } = useTranslation();
   return (
     <ExpandingPanel title={t('downloadData.panelTitle')}>
-      <span>{t('downloadData.panelText')}</span>
-      <Button onClick={downloadData}>{t('downloadData.button')}</Button>
+      <p>{t('downloadData.panelText')}</p>
+      <Button
+        onClick={downloadData}
+        className={styles.button}
+        disabled={isLoading}
+      >
+        {isLoading ? t('loading') : t('downloadData.button')}
+      </Button>
     </ExpandingPanel>
   );
 }
