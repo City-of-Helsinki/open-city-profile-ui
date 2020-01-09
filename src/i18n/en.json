@@ -49,5 +49,22 @@
     "email": "The value must be an email-address",
     "phoneMin": "The number must be at least {{min}} characters long",
     "maxLength": "This field can be max {{max}} characters"
+  },
+  "deleteProfile": {
+    "title": "Do you want to delete you Oma.helsinki account?",
+    "explanation": "If desired you can delete all your information, but also means deleting your account. Read more from the guide. By deleting your Helsinki profile you also loose all information saved to connected services and can no longer log in",
+    "accept": "I have read <0>guide</0> and understand what deleting my data means.",
+    "delete": "Delete Helsinki profile"
+  },
+  "deleteProfileModal": {
+    "title": "Are you sure you want to delete your Helsinki profile",
+    "explanation": "By deleting your profile you also loose all the data saved to following services",
+    "close": "Cancel deletion",
+    "delete": "Delete Helsinki profile"
+  },
+  "berthErrors": {
+    "title": "You cannot delete your Helsinki profile because Berth needs your information for billing",
+    "explanation": "To delete your profile, you must first terminate your berth billing agreement",
+    "close": "Close"
   }
 }

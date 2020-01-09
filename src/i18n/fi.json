@@ -49,5 +49,22 @@
     "email": "Ei kelvollinen sähköpostiosoite",
     "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä",
     "maxLength": "Kentän maksimipituus on {{max}} merkkiä"
+  },
+  "deleteProfile": {
+    "title": "Haluatko poistaa Oma.helsinki tunnuksesi?",
+    "explanation": "Voit halutessasi poistaa kaikki tietosi, mutta se tarkoittaa myös käyttäjätilisi poistamista Lue lisää ohjeesta. Poistamalla Helsinki profiilisi menetätä myös kaikki yhdistettyihin palveluihin tallennetut tietosi, etkä voi enää kirjautua niihin.",
+    "accept": "Olen lukenut <0>ohjeet</0> ja ymmärrän mitä tietojeni poistaminen tarkoittaa",
+    "delete": "Poista Helsinki profiili"
+  },
+  "deleteProfileModal": {
+    "title": "Haluatko varmasti poistaa Helsinki profiilisi",
+    "explanation": "Poistamalla profiilisi menetät myös kaikki seuraaviin palveluihin tallennetut tiedot",
+    "close": "Peru poistaminen",
+    "delete": "Poista Helsinki profiili"
+  },
+  "berthErrors": {
+    "title": "Et voi poistaa Helsinki profiiliasi, koska venepaikka tarvitsee tietojasi laskutukseen",
+    "explanation": "Jotta voit poistaa profiilisi, sinun on ensin irtisanottava venepaikkasopimuksesi",
+    "close": "Sulje"
   }
 }

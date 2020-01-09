@@ -49,5 +49,22 @@
     "email": "Inte ett giltigt epost-adress",
     "phoneMin": "Telefonnumret måste vara mint {{min}} tecken långt",
     "maxLength": "Fältet får vara högst {{max}} tecken långt"
+  },
+  "deleteProfile": {
+    "title": "Vill du ta bort ditt Oma.helsinki-konto?",
+    "explanation": "Om så önskas kan du ta bort all information, men betyder också att du tar bort ditt konto. Läs mer från guiden. Genom att ta bort din Helsingfors-profil tappar du också all information som sparats i anslutna tjänster och kan inte längre logga in.",
+    "accept": "Jag har läst <0>guide</0> och förstå vad att ta bort mina data betyder.",
+    "delete": "Radera Helsinki profilen"
+  },
+  "deleteProfileModal": {
+    "title": "Är du säker på att du vill ta bort din Helsingfors-profil",
+    "explanation": "Genom att ta bort din profil tappar du också all data som sparats till följande tjänster",
+    "close": "Avbryt borttagning",
+    "delete": "Radera Helsingfors-profilen"
+  },
+  "berthErrors": {
+    "title": "Du kan inte ta bort din Helsingfors-profil eftersom Berth behöver din information för fakturering",
+    "explanation": "För att radera din profil måste du först säga upp betalningsavtal för kaj",
+    "close": "Stänga"
   }
 }

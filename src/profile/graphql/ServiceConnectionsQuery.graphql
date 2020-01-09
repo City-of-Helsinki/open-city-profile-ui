@@ -1,5 +1,6 @@
 query ServiceConnectionsQuery {
   myProfile {
+    id
     serviceConnections {
       edges {
         node {
