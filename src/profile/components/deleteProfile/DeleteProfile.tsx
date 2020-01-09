@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation, Trans } from 'react-i18next';
-import { GraphQLError } from 'graphql';
 
+import checkBerthError from '../../helpers/checkBerthError';
 import DeleteConfirmationModal from '../modals/deleteConfirmation/DeleteConfirmationModal';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
@@ -52,22 +52,11 @@ function DeleteProfile(props: Props) {
       id: props.profileID,
     };
 
-    deleteProfile({ variables })
-      .then(result => {
-        if (result.data) {
-        }
-      })
-      .catch(err => {
-        err.graphQLErrors &&
-          err.graphQLErrors.forEach((error: GraphQLError) => {
-            if (
-              error?.extensions?.code ===
-              'CANNOT_DELETE_PROFILE_WHILE_SERVICE_CONNECTED_ERROR'
-            ) {
-              setBerthError(true);
-            }
-          });
-      });
+    deleteProfile({ variables }).catch(error => {
+      if (checkBerthError(error.graphQLErrors)) {
+        setBerthError(true);
+      }
+    });
   };
 
   return (
