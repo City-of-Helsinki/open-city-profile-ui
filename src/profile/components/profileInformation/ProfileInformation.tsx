@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
+import DownloadData from '../downloadData/DownloadData';
 import styles from './ProfileInformation.module.css';
 import Explanation from '../../../common/explanation/Explanation';
 import getName from '../../helpers/getName';
@@ -59,6 +60,7 @@ function ProfileInformation(props: Props) {
         </div>
       </section>
       {data.myProfile?.id && <DeleteProfile profileID={data.myProfile.id} />}
+      <DownloadData />
     </React.Fragment>
   );
 }
