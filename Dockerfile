@@ -31,7 +31,7 @@ USER root
 RUN apt-install.sh build-essential
 
 USER appuser
-RUN yarn && yarn cache clean --force
+RUN yarn cache clean --force && yarn install --frozen-lockfile
 
 USER root
 RUN apt-cleanup.sh build-essential
@@ -48,7 +48,7 @@ ENV NODE_ENV $NODE_ENV
 COPY --chown=appuser:appuser . .
 
 # Bake package.json start command into the image
-CMD ["react-scripts", "start"]
+CMD ["yarn", "start"]
 
 # ===================================
 FROM appbase as staticbuilder
