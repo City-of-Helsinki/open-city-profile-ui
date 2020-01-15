@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { TextInput } from 'hds-react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
@@ -108,7 +109,7 @@ function CreateProfileForm(props: Props) {
             <Trans
               i18nKey="profileForm.terms"
               // eslint-disable-next-line jsx-a11y/anchor-has-content
-              components={[<a href="/tos"></a>]}
+              components={[<Link to="/terms-of-service" />]}
             />
           </label>
           <div>

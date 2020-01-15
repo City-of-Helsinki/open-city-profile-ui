@@ -11,7 +11,7 @@ function FooterLinks(props: Props) {
       {' '}
       <Link to="/#">Rekisteriseloste</Link> |{' '}
       <Link to="/#">Saavutettavuusseloste</Link> |{' '}
-      <Link to="/">Käyttöehdot</Link>
+      <Link to="/terms-of-service">Käyttöehdot</Link>
     </span>
   );
 }
