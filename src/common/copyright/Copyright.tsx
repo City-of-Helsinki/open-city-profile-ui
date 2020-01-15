@@ -9,7 +9,7 @@ function Copyright(props: Props) {
   return (
     <span className={props.className}>
       &copy; Copyright {year} &middot; Helsingin kaupunki &middot; All rights
-      reserved.
+      reserved &middot;
     </span>
   );
 }
