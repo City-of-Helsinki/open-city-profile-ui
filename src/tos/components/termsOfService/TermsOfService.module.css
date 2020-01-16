@@ -2,9 +2,6 @@
     background-color: #FFF;
 }
 
-.wrapper {
-    width: 1200px;
-}
 .container {
     margin: 20px 20px;
     display: flex;

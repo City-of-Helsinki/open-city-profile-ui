@@ -21,7 +21,7 @@ function TermsOfService() {
 
   return (
     <PageLayout className={styles.background}>
-      <div className={styles.wrapper}>
+      <div>
         <div className={responsive.maxWidthCentered}>
           <div className={styles.container}>
             <div className={styles.back}>
@@ -30,7 +30,7 @@ function TermsOfService() {
               </button>
             </div>
             <div className={styles.content}>
-              <h1>{t('tos.title')}</h1>
+              <h1>{t('tos.mainTitle')}</h1>
               <span className={styles.updated}>{t('tos.updated')}</span>
 
               {termsOfService.map((term, index) => (
