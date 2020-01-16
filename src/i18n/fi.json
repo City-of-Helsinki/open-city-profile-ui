@@ -71,5 +71,36 @@
     "panelTitle": "Haluatko ladata omat tietosi?",
     "panelText": "Jos haluat nähdä kaikki sinusta tallentamamme tiedot, voit ladata ne seuraavasta napista.",
     "button": "Lataa kaikki palvelun tiedot"
+  },
+  "footer": {
+    "copyright": "Tekijänoikeus {{year}}",
+    "reserveRights": "Kaikki oikeudet pidätetään",
+    "privacy": "Rekisteriseloste",
+    "accessibility": "Saavutettavuusseloste",
+    "terms": "Palvelun käyttöehdot"
+  },
+  "tos": {
+    "mainTitle": "Helsinkiprofiilin käyttöä koskevat käyttöehdot",
+    "updated": "Olemme päivittäneet käyttöehdot 14.1.2020",
+    "termsTitle": "Helsinki profiili - avain kaikkiin kaupungin palveluihin",
+    "termsText": "Luomalla Helsinkiprofiilin voit kirjautua kaikkiin Helsingin kaupungin digitaalisiin palveluihin. Tarjoamme sinulle parempaa henkilökohtaista palvelua, kun käytät kaikkiin palveluihin samaa kirjautumistapaa. Keräämme käytöstäsi tietoja tarjotaksemme sinulle sinua kiinnostavia palveluita ja tuotteita, ymmärtääksemme paremmin kaupunkilaistemme kiinnostuksen kohteita ja tarpeita sekä kehittääksemme palveluistamme jatkuvasti parempia. <br><br>Helsinkiprofiili on turvallinen. Pidämme kaiken keräämästämme tiedon itsellämme: emme luovuta tietoja ulkopuolisille tahoille. Emme käytä tietojasi muuhun kuin tässä kuvaaviimme tarkoituksiin. Voit ladata itsellesi kaikki sinusta keräämämme tiedot sekä halutessasi poistaa Helsinkiprofiilisi kokonaan. <br><br>Lähetämme sinulle ainoastaan olennaista palvelukohtaista tietoa. Voit itse hallita asiakasviestintää joko omassa profiilissasi tai käyttämiesi palveluiden kirjautuneen käyttäjän näkymässä.",
+    "terms1Title": "1. Soveltamisala",
+    "terms1Text": "Helsinkiprofiili on Helsingin kaupungin tarjoama kirjautumistapa sen ja mahdollisten muiden palveluntarjoajien palveluihin (jäljempänä \"Palvelut\"). <br><br> Nämä Helsingin palveluiden käyttöehdot yhdessä Helsingin kaupungin tietosuojalausekkeen kanssa (yhdessä “Ehdot”) sääntelevät Helsinkiprofiilin käyttöä eri Palvelujen yhteydessä. Helsinkiprofiililla tarkoitetaan näissä ehdoissa käyttäjätunnuksen ja salasanan yhdistelmää tai muuta kirjautumisessa käytettyä tunnistautumistapaa ja niiden mahdollistamaa kirjautumispalvelua. Ehdot määrittelevät oikeutesi ja velvollisuutesi Helsinkiprofiiliin liittyen. Käyttö edellyttää, että noudatat näitä ehtoja. <br><br>Huomioithan, että Helsingin kaupungin eri palveluiden käyttöön tai niiden osiin voi soveltua lisäehtoja. Nämä ehdot kommunikoidaan käyttäjälle aina kirjautumisen yhteydessä. Luomalla Helsinkiprofiilin tiedostat ja hyväksyt myös, että Helsingin kaupunki kerää ja käyttää palveluiden kautta kerättyjä henkilötietoja Helsingin kaupungin tietosuojalausekkeessa ja evästekäytännöissä kuvatuilla tavoilla. Tietosuojalausekkeen löydät <0>TÄÄLTÄ</0>.",
+    "terms2Title": "2. Tunnuksen luominen ja poistaminen käytöstä",
+    "terms2Text": "Luodaksesi Helsinkiprofiilin sinun on oltava vähintään 13-vuotias. Profiilin luodaksesi sinun tulee antaa vaaditut rekisteröintitiedot, joiden avulla sinut voidaan tunnistaa.<br><br>Rekisteröidessäsi Helsinkiprofiilin luot käyttäjätunnuksen ja salasanan tai tunnistaudut jollain kirjautumispalvelun tarjoamalla kirjautumispalveluntarjoajalla. Olet henkilökohtaisesti vastuussa kaikesta käyttäjätunnuksellasi ja salasanallasi tapahtuvasta Palvelujen käytöstä. Sinun tulee säilyttää käyttäjätunnusta ja salasanaa huolellisesti ja ilmoittaa kaikista tietoosi tulleista väärinkäytöksistä. Voit poistaa profiilisi, mikäli et halua enää käyttää Helsinkiprofiilia palveluihin kirjautumisessa. Helsinkiprofiilin poistamisen jälkeen sinulla ei ole enää ole pääsyä palveluihin tai niiden ominaisuuksiin, jotka vaativat kirjautumista. Voit luoda Helsinkiprofiilin uudelleen, mutta tällöin aiemmin käytöstäsi kertyneet tiedot on poistettu eikä niitä voi enää palauttaa.",
+    "terms3Title": "3. Helsinki profiilin käyttäminen",
+    "terms3Text": "Saat käyttää Helsinkiprofiilia näiden ehtojen mukaisesti. Helsinkiprofiili on henkilökohtainen, etkä saa luovuttaa sitä kenellekään muulle. Sinun pitää ilmoittaa viipymättä Helsingin kaupungille, mikäli huomaat väärinkäytöksiä. Helsinki Profiilin käyttö on omalla vastuullasi. Helsingin kaupunki vastaa tarjoamistaan palveluista ja niiden sisällöistä niihin kohdistuvien ehtojen mukaisesti. ",
+    "terms4Title": "4. Palvelun saatavuus",
+    "terms4Text": "Helsinkiprofiili on käytettävissä ympäri vuorokauden. Helsingin kaupunki varaa oikeuden harkintansa mukaan kehittää, muuttaa ja korjata Helsinkiprofiilia, sen ominaisuuksia, käyttökohteita tai taustajärjestelmiä. Helsinkiprofiili saattaa myös olla poissa käytöstä huoltotaukojen aikana ja muinakin ajankohtina esimerkiksi liiallisen kuormituksen vuoksi.",
+    "terms5Title": "5. Henkilötiedot",
+    "terms5Text": "Helsinkiprofiiliin liittyvät henkilötietojen suojaperiaatteet on määritelty tietosuojalausekekkeessa. Tietosuojalausekkeen löydät <0>TÄÄLTÄ</0>. Helsingin kaupunki käsittelee henkilötietojasi voimassa olevan lainsäädännön ja tietosuojalausekkeen mukaisesti. Palveluissa saatetaan käyttää evästeitä tai vastaavia tunnisteita evästekäytännöissä kuvatulla tavalla. Evästekäytännöt löydät <1>TÄÄLTÄ</1>.",
+    "terms6Title": "6. Oikeudet",
+    "terms6Text": "Helsinkiprofiiliin ja siihen liittyvät taustajärjestelmät ja ohjelmistot ovat tekijänoikeuslakien suojaamia ja tekijänoikeus niihin kuuluu Helsingin kaupungille. Kaikki oikeudet Helsinkiprofiiliin ja kaikkiin sen kautta tarjottaviin tai käytettävissä oleviin palveluihin kuuluvat Helsingin kaupungille.",
+    "terms7Title": "7. Vastuunrajoitus",
+    "terms7Text": "Helsingin kaupunki tarjoaa Helsinkiprofiilin käytettäväksi “sellaisena kuin se on”. Helsingin kaupunki ei takaa, että palvelu on käytettävissä keskeytyksettä tai että se toimii virheettömästi. Helsingin kaupunki ei anna mitään Helsinkiprofiilin saatavuuteen, täydellisyyteen, luotettavuuteen, tietoihin tai sisältöön liittyvää nimenomaista tai välillistä takuuta. <br><br>Lukuun ottamatta törkeästä huolimattomuudesta tai tahallisuudesta aiheutuvaa vastuuta, Helsingin kaupunki ei ole vastuussa mistään suorasta, epäsuorasta, välillisestä tai yllättävästä vahingosta, joka on seurausta Helsinkiprofiilin käytöstä tai kykenemättömyydestä käyttää Helsinkiprofiilia.",
+    "terms8Title": "8. Muut ehdot",
+    "terms8Text": "Helsinkiprofiiliin ja Ehtoihin sovelletaan Suomessa voimassa olevaa lainsäädäntöä pois lukien lainvalintaan liittyvät säädökset. Helsingin kaupunki pidättää oikeuden muuttaa Ehtoja milloin tahansa ilman ennakkoilmoitusta. Jos Ehtoja muutetaan merkittävästi, Helsingin kaupunki ilmoittaa tällaisesta muutoksesta erikseen etukäteen. Muutokset tulevat voimaan viikon kuluttua ilmoituksesta. Ehtojen muutoksista kerrotaan Helsinkiprofiilissa sekä eri palveluiden verkkosivuilla. (Voiko tähän laittaa “ja/tai sähköpostitse”) <br><br>Mikäli Ehtojen muutos johtuu lainsäädännön muutoksesta, viranomaismääräyksestä tai muusta ennalta arvaamattomasta syystä, Ehtojen muutos tulee voimaan välittömästi.",
+    "terms9Title": "9. Yhteystiedot",
+    "terms9Text": "Helsinki profiilin palveluntarjoajana toimii Helsingin kaupungin kanslia, osoitteessa YHTEYSTIEDOT TÄHÄN."
   }
 }

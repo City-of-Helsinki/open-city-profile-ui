@@ -17,7 +17,7 @@
   fill: var(--hds-ui-color-white);
 }
 
-.copyright {
+.textContainer {
   border-top: 1px solid var(--hds-ui-color-black-50);
   color: var(--hds-ui-color-white);
   display: block;
@@ -26,8 +26,14 @@
   padding: 20px 10px;
 }
 @media (min-width: 1024px) {
-  .copyright {
+  .textContainer {
     margin: 0;
     padding: 20px 0 50px 3px;
   }
+}
+
+.links a {
+  font-weight: bold;
+  color: var(--hds-ui-color-white);
+  text-decoration: none;
 }
