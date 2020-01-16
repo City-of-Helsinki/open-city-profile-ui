@@ -3,8 +3,8 @@ import LeftIconArrow from 'hds-react/lib/icons/IconArrowLeft';
 import { useTranslation, Trans } from 'react-i18next';
 import { useHistory } from 'react-router';
 
-import getTransComponents from '../helpers/getTransComponents';
-import tosKeys from '../helpers/tosKeys';
+import getTransComponents from '../../helpers/getTransComponents';
+import tosKeys from '../../helpers/tosKeys';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import styles from './TermsOfService.module.css';
 import PageLayout from '../../../common/pageLayout/PageLayout';
