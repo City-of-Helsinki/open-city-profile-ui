@@ -72,6 +72,13 @@
     "panelText": "Download your data to see all the information we have stored about you.",
     "button": "Download my data"
   },
+  "footer": {
+    "copyright": "Copyright {{year}}",
+    "reserveRights": "All rights reserved",
+    "privacy": "Privacy policy",
+    "accessibility": "Accessibility document",
+    "terms": "Terms of Service"
+  },
   "tos": {
     "title": "Helsinkiprofiilin käyttöä koskevat käyttöehdot",
     "updated": "Olemme päivittäneet käyttöehdot 14.1.2020",

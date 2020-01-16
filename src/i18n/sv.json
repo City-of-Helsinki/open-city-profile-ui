@@ -72,6 +72,13 @@
     "panelText": "Du kan ladda ner all information vi har om dig från följande knapp.",
     "button": "Ladda ner informationen om mig"
   },
+  "footer": {
+    "copyright": "Upphovsrätt {{year}}",
+    "reserveRights": "Alla rättigheter förbehållna",
+    "privacy": "Integritetspolicy",
+    "accessibility": "Tillgänglighetsdokument",
+    "terms": "Användarvillkor"
+  },
   "tos": {
     "title": "Helsinkiprofiilin käyttöä koskevat käyttöehdot",
     "updated": "Olemme päivittäneet käyttöehdot 14.1.2020",

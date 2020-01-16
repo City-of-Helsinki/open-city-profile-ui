@@ -72,6 +72,13 @@
     "panelText": "Jos haluat nähdä kaikki sinusta tallentamamme tiedot, voit ladata ne seuraavasta napista.",
     "button": "Lataa kaikki palvelun tiedot"
   },
+  "footer": {
+    "copyright": "Tekijänoikeus {{year}}",
+    "reserveRights": "Kaikki oikeudet pidätetään",
+    "privacy": "Rekisteriseloste",
+    "accessibility": "Saavutettavuusseloste",
+    "terms": "Palvelun käyttöehdot"
+  },
   "tos": {
     "title": "Helsinkiprofiilin käyttöä koskevat käyttöehdot",
     "updated": "Olemme päivittäneet käyttöehdot 14.1.2020",
