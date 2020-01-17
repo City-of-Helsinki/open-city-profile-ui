@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { ReactComponent as HelsinkiLogo } from '../svg/HelsinkiLogo.svg';
 import Copyright from '../copyright/Copyright';
@@ -11,6 +13,7 @@ type Props = {
 };
 
 function Footer(props: Props) {
+  const { t } = useTranslation();
   return (
     <footer className={styles.footer}>
       <div className={responsive.maxWidthCentered}>
@@ -18,8 +21,11 @@ function Footer(props: Props) {
           <HelsinkiLogo className={styles.logo} aria-label="Helsinki logo" />
         )}
         <div className={styles.textContainer}>
-          <Copyright />
-          <FooterLinks className={styles.links} />
+          <div>
+            <Copyright />
+            <FooterLinks className={styles.links} />
+          </div>
+          <Link to="/#">{t('footer.feedback')}</Link>
         </div>
       </div>
     </footer>

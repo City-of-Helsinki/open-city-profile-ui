@@ -20,10 +20,12 @@
 .textContainer {
   border-top: 1px solid var(--hds-ui-color-black-50);
   color: var(--hds-ui-color-white);
-  display: block;
   font-size: 14px;
   margin: 0 3px;
   padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 @media (min-width: 1024px) {
   .textContainer {
@@ -32,8 +34,26 @@
   }
 }
 
+@media (min-width: 650px) {
+  .textContainer {
+    flex-direction: row;
+  }
+
+  .textContainer a {
+    margin-top: 0 !important;
+  }
+}
+
 .links a {
   font-weight: bold;
   color: var(--hds-ui-color-white);
   text-decoration: none;
 }
+
+.textContainer a {
+  font-weight: bold;
+  color: var(--hds-ui-color-white);
+  margin-top: 10px;
+}
+
+
