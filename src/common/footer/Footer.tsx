@@ -25,7 +25,9 @@ function Footer(props: Props) {
             <Copyright />
             <FooterLinks className={styles.links} />
           </div>
-          <Link to="/#">{t('footer.feedback')}</Link>
+          <Link to="/#" className={styles.feedback}>
+            {t('footer.feedback')}
+          </Link>
         </div>
       </div>
     </footer>
