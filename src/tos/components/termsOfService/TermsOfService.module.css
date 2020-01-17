@@ -1,5 +1,5 @@
 .background {
-    background-color: #FFF;
+    background-color: var(--hds-ui-color-white);
 }
 
 .container {
