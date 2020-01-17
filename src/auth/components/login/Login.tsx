@@ -12,7 +12,7 @@ type Props = {};
 function Home(props: Props) {
   const { t } = useTranslation();
   return (
-    <PageLayout className={styles.background} hideFooterLogo={true}>
+    <PageLayout hideFooterLogo={true}>
       <div>
         <div className={styles.wrapper}>
           <div className={styles.content}>

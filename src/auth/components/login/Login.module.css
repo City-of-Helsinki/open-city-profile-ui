@@ -1,9 +1,5 @@
-.background {
-    background: var(--hds-brand-color-bus) !important;
-}
-
 .wrapper {
-    width: 100%;
+    background-color: var(--hds-brand-color-bus);
     height: 100%;
     display: flex;
     justify-content: center;
