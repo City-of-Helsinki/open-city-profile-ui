@@ -19,7 +19,11 @@ function Home(props: Props) {
             <HelsinkiLogo className={styles.logo} aria-label="Helsinki logo" />
             <h1>{t('login.title')}</h1>
             <h5>{t('login.description')}</h5>
-            <Button variant="outlined" className={styles.button}>
+            <Button
+              variant="outlined"
+              className={styles.button}
+              onClick={authenticate}
+            >
               {t('login.login')}
             </Button>
           </div>
