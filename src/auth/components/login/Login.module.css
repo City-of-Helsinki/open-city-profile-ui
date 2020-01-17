@@ -1,0 +1,39 @@
+.background {
+    background: var(--hds-brand-color-bus) !important;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content {
+    margin: 20px 10px;
+    width: auto;
+    text-align: center;
+    color: var(--hds-ui-color-white);
+}
+
+@media (min-width: 600px) {
+    .content {
+        width: 600px;
+    }
+}
+
+.logo {
+    width: 170px;
+    height: 80px;
+}
+
+.logo g {
+    fill: var(--hds-ui-color-white);
+}
+
+.button {
+    margin-top: 50px;
+}
+

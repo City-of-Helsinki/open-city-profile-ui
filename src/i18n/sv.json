@@ -4,6 +4,11 @@
   "oidc": {
     "authenticating": "Autentiserar..."
   },
+  "login": {
+    "title": "Många möjligheter med ett konto",
+    "description": "Registrering ger dig tillgång till nya tjänster med en enkel inloggning. Ett enda konto gör en medborgares vardagsliv enklare.",
+    "login": "Logga in"
+  },
   "profile": {
     "loading": "Laddar profil..."
   },
