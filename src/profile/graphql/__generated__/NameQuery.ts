@@ -10,7 +10,7 @@ export interface NameQuery_myProfile {
   readonly __typename: "ProfileNode";
   readonly firstName: string;
   readonly lastName: string;
-  readonly nickname: string | null;
+  readonly nickname: string;
 }
 
 export interface NameQuery {

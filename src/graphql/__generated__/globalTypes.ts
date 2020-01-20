@@ -72,6 +72,15 @@ export interface AddressInput {
   readonly primary?: boolean | null;
 }
 
+export interface CreateMyProfileMutationInput {
+  readonly profile: ProfileInput;
+  readonly clientMutationId?: string | null;
+}
+
+export interface DeleteMyProfileMutationInput {
+  readonly clientMutationId?: string | null;
+}
+
 export interface EmailInput {
   readonly id?: string | null;
   readonly email?: string | null;
@@ -93,8 +102,6 @@ export interface ProfileInput {
   readonly image?: string | null;
   readonly language?: Language | null;
   readonly contactMethod?: ContactMethod | null;
-  readonly conceptsOfInterest?: ReadonlyArray<(string | null)> | null;
-  readonly divisionsOfInterest?: ReadonlyArray<(string | null)> | null;
   readonly addEmails?: ReadonlyArray<(EmailInput | null)> | null;
   readonly updateEmails?: ReadonlyArray<(EmailInput | null)> | null;
   readonly removeEmails?: ReadonlyArray<(string | null)> | null;
@@ -107,6 +114,11 @@ export interface ProfileInput {
   readonly youthProfile?: YouthProfileFields | null;
 }
 
+export interface UpdateMyProfileMutationInput {
+  readonly profile: ProfileInput;
+  readonly clientMutationId?: string | null;
+}
+
 export interface YouthProfileFields {
   readonly schoolName?: string | null;
   readonly schoolClass?: string | null;
@@ -115,7 +127,7 @@ export interface YouthProfileFields {
   readonly approverLastName?: string | null;
   readonly approverPhone?: string | null;
   readonly approverEmail?: string | null;
-  readonly birthDate: any;
+  readonly birthDate?: any | null;
 }
 
 //==============================================================

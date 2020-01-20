@@ -1,7 +1,0 @@
-mutation CreateProfile($profile: ProfileInput!) {
-  createProfile(profile: $profile) {
-    profile {
-      id
-    }
-  }
-}
