@@ -13,15 +13,15 @@ import Explanation from '../../../common/explanation/Explanation';
 import styles from './CreateProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import {
-  CreateProfile as CreateProfileData,
-  CreateProfileVariables,
-} from '../../graphql/__generated__/CreateProfile';
+  CreateMyProfile as CreateMyProfileData,
+  CreateMyProfileVariables,
+} from '../../graphql/__generated__/CreateMyProfile';
 import {
   EmailType,
   PhoneType,
 } from '../../../graphql/__generated__/globalTypes';
 
-const CREATE_PROFILE = loader('../../graphql/CreateProfile.graphql');
+const CREATE_PROFILE = loader('../../graphql/CreateMyProfile.graphql');
 
 type Props = {
   tunnistamoUser: User;
@@ -31,30 +31,32 @@ type Props = {
 function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
   const { t } = useTranslation();
   const [createProfile, { loading }] = useMutation<
-    CreateProfileData,
-    CreateProfileVariables
+    CreateMyProfileData,
+    CreateMyProfileVariables
   >(CREATE_PROFILE);
   const handleOnValues = (formValues: FormValues) => {
-    const variables: CreateProfileVariables = {
-      profile: {
-        firstName: formValues.firstName,
-        lastName: formValues.lastName,
-        addEmails: [
-          {
-            email: formValues.email,
-            primary: true,
-            emailType: EmailType.OTHER,
-          },
-        ],
-        addPhones: [
-          formValues.phone
-            ? {
-                phone: formValues.phone,
-                primary: true,
-                phoneType: PhoneType.OTHER,
-              }
-            : null,
-        ],
+    const variables: CreateMyProfileVariables = {
+      input: {
+        profile: {
+          firstName: formValues.firstName,
+          lastName: formValues.lastName,
+          addEmails: [
+            {
+              email: formValues.email,
+              primary: true,
+              emailType: EmailType.OTHER,
+            },
+          ],
+          addPhones: [
+            formValues.phone
+              ? {
+                  phone: formValues.phone,
+                  primary: true,
+                  phoneType: PhoneType.OTHER,
+                }
+              : null,
+          ],
+        },
       },
     };
     createProfile({ variables }).then(result => {
