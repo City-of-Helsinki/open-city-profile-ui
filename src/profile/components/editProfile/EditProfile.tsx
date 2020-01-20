@@ -11,16 +11,16 @@ import EditProfileForm, {
 } from '../editProfileForm/EditProfileForm';
 import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 import {
-  UpdateProfile as UpdateProfileData,
-  UpdateProfileVariables,
-} from '../../graphql/__generated__/UpdateProfile';
+  UpdateMyProfile as UpdateMyProfileData,
+  UpdateMyProfileVariables,
+} from '../../graphql/__generated__/UpdateMyProfile';
 import {
   AddressType,
   PhoneType,
 } from '../../../graphql/__generated__/globalTypes';
 import Explanation from '../../../common/explanation/Explanation';
 
-const UPDATE_PROFILE = loader('../../graphql/UpdateProfile.graphql');
+const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
 
 type Props = {
   setEditing: () => void;
@@ -31,60 +31,62 @@ function EditProfile(props: Props) {
   const { profileData } = props;
   const { t } = useTranslation();
   const [updateProfile, { loading }] = useMutation<
-    UpdateProfileData,
-    UpdateProfileVariables
+    UpdateMyProfileData,
+    UpdateMyProfileVariables
   >(UPDATE_PROFILE, {
     refetchQueries: ['MyProfileQuery'],
   });
 
   const handleOnValues = (formValues: FormValues) => {
-    const variables: UpdateProfileVariables = {
-      profile: {
-        firstName: formValues.firstName,
-        lastName: formValues.lastName,
-        addPhones: [
-          !profileData?.myProfile?.primaryPhone?.id && formValues.phone
-            ? {
-                phone: formValues.phone,
-                primary: true,
-                phoneType: PhoneType.OTHER,
-              }
-            : null,
-        ],
-        updatePhones: [
-          profileData?.myProfile?.primaryPhone?.id
-            ? {
-                id: profileData.myProfile.primaryPhone.id,
-                phone: formValues.phone,
-                primary: true,
-                phoneType: PhoneType.OTHER,
-              }
-            : null,
-        ],
-        addAddresses: [
-          !profileData?.myProfile?.primaryAddress?.id &&
-          (formValues.address || formValues.postalCode || formValues.city)
-            ? {
-                address: formValues.address,
-                city: formValues.city,
-                postalCode: formValues.postalCode,
-                primary: true,
-                addressType: AddressType.OTHER,
-              }
-            : null,
-        ],
-        updateAddresses: [
-          profileData?.myProfile?.primaryAddress?.id
-            ? {
-                id: profileData.myProfile.primaryAddress.id,
-                address: formValues.address,
-                city: formValues.city,
-                postalCode: formValues.postalCode,
-                primary: true,
-                addressType: AddressType.OTHER,
-              }
-            : null,
-        ],
+    const variables: UpdateMyProfileVariables = {
+      input: {
+        profile: {
+          firstName: formValues.firstName,
+          lastName: formValues.lastName,
+          addPhones: [
+            !profileData?.myProfile?.primaryPhone?.id && formValues.phone
+              ? {
+                  phone: formValues.phone,
+                  primary: true,
+                  phoneType: PhoneType.OTHER,
+                }
+              : null,
+          ],
+          updatePhones: [
+            profileData?.myProfile?.primaryPhone?.id
+              ? {
+                  id: profileData.myProfile.primaryPhone.id,
+                  phone: formValues.phone,
+                  primary: true,
+                  phoneType: PhoneType.OTHER,
+                }
+              : null,
+          ],
+          addAddresses: [
+            !profileData?.myProfile?.primaryAddress?.id &&
+            (formValues.address || formValues.postalCode || formValues.city)
+              ? {
+                  address: formValues.address,
+                  city: formValues.city,
+                  postalCode: formValues.postalCode,
+                  primary: true,
+                  addressType: AddressType.OTHER,
+                }
+              : null,
+          ],
+          updateAddresses: [
+            profileData?.myProfile?.primaryAddress?.id
+              ? {
+                  id: profileData.myProfile.primaryAddress.id,
+                  address: formValues.address,
+                  city: formValues.city,
+                  postalCode: formValues.postalCode,
+                  primary: true,
+                  addressType: AddressType.OTHER,
+                }
+              : null,
+          ],
+        },
       },
     };
     updateProfile({ variables }).then(result => {

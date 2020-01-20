@@ -1,0 +1,7 @@
+mutation CreateMyProfile($input:CreateMyProfileMutationInput!) {
+  createMyProfile(input:$input) {
+    profile {
+      id
+    }
+  }
+}

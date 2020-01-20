@@ -10,19 +10,17 @@ import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import Checkbox from '../../../common/checkbox/Checkbox';
 import Button from '../../../common/button/Button';
 import {
-  DeleteProfile as DeleteProfileData,
-  DeleteProfileVariables,
-} from '../../graphql/__generated__/DeleteProfile';
+  DeleteMyProfile as DeleteMyProfileData,
+  DeleteMyProfileVariables,
+} from '../../graphql/__generated__/DeleteMyProfile';
 import { ServiceConnectionQuery } from '../../graphql/__generated__/ServiceConnectionQuery';
 
-const DELETE_PROFILE = loader('../../graphql/DeleteProfile.graphql');
+const DELETE_PROFILE = loader('../../graphql/DeleteMyProfile.graphql');
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
 );
 
-type Props = {
-  profileID: string;
-};
+type Props = {};
 
 function DeleteProfile(props: Props) {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
@@ -31,8 +29,8 @@ function DeleteProfile(props: Props) {
   const { t } = useTranslation();
   const { data } = useQuery<ServiceConnectionQuery>(SERVICE_CONNECTIONS);
   const [deleteProfile] = useMutation<
-    DeleteProfileData,
-    DeleteProfileVariables
+    DeleteMyProfileData,
+    DeleteMyProfileVariables
   >(DELETE_PROFILE, {
     refetchQueries: ['ProfileExistsQuery'],
   });
@@ -49,7 +47,7 @@ function DeleteProfile(props: Props) {
     setDeleteConfirmationModal(false);
 
     const variables = {
-      id: props.profileID,
+      input: {},
     };
 
     deleteProfile({ variables }).catch(error => {

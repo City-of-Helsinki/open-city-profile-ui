@@ -60,7 +60,7 @@ function ProfileInformation(props: Props) {
         </div>
       </section>
       <DownloadData />
-      {data.myProfile?.id && <DeleteProfile profileID={data.myProfile.id} />}
+      <DeleteProfile />
     </React.Fragment>
   );
 }

@@ -1,5 +1,5 @@
-mutation UpdateProfile($profile: ProfileInput!) {
-    updateProfile(profile: $profile) {
+mutation UpdateMyProfile($input:UpdateMyProfileMutationInput!) {
+    updateMyProfile(input: $input) {
         profile {
             id
             firstName

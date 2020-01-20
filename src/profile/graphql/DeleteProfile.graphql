@@ -1,5 +1,0 @@
-mutation DeleteProfile($id: ID!) {
-  deleteProfile(id: $id) {
-    ok
-  }
-}

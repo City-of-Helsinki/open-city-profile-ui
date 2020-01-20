@@ -43,7 +43,7 @@ export interface MyProfileQuery_myProfile {
   readonly id: string;
   readonly firstName: string;
   readonly lastName: string;
-  readonly nickname: string | null;
+  readonly nickname: string;
   readonly primaryAddress: MyProfileQuery_myProfile_primaryAddress | null;
   readonly primaryEmail: MyProfileQuery_myProfile_primaryEmail | null;
   readonly primaryPhone: MyProfileQuery_myProfile_primaryPhone | null;
