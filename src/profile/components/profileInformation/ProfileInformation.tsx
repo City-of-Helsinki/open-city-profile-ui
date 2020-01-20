@@ -20,7 +20,7 @@ type Props = {
 function ProfileInformation(props: Props) {
   const { t } = useTranslation();
   const { isEditing, setEditing, loading, data } = props;
-  console.log(data);
+
   return (
     <React.Fragment>
       <section className={styles.personalInformation}>
