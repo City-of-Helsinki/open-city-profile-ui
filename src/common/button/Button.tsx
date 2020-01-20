@@ -20,8 +20,8 @@ function Button(props: Props) {
     ...rest
   } = props;
   const classes = classNames(
-    className,
-    variant === 'outlined' ? styles.outlined : styles.button
+    variant === 'outlined' ? styles.outlined : styles.button,
+    className
   );
   return (
     <button type={type} className={classes} disabled={disabled} {...rest}>

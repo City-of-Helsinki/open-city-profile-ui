@@ -4,6 +4,11 @@
   "oidc": {
     "authenticating": "Tunnistaudutaan..."
   },
+  "login": {
+    "title": "Yhdellä tunnuksella monta mahdollisuutta",
+    "description": "Rekisteröitymällä pääset käyttämään uusia palveluita yhdellä helpolla kirjautimisella. Yksi yhtenäinen tunnus tekee kaupunkilaisen arjesta helpompaa.",
+    "login": "Kirjaudu sisään"
+  },
   "profile": {
     "loading": "Ladataan profiilia..."
   },
@@ -77,7 +82,8 @@
     "reserveRights": "Kaikki oikeudet pidätetään",
     "privacy": "Rekisteriseloste",
     "accessibility": "Saavutettavuusseloste",
-    "terms": "Palvelun käyttöehdot"
+    "terms": "Palvelun käyttöehdot",
+    "feedback": "ANNA PALAUTETTA"
   },
   "tos": {
     "mainTitle": "Helsinkiprofiilin käyttöä koskevat käyttöehdot",

@@ -4,6 +4,11 @@
   "oidc": {
     "authenticating": "Authenticating..."
   },
+  "login": {
+    "title": "Many opportunities with one account",
+    "description": "Registering gives you access to new services with one easy login. A single account makes the everyday life of a citizen easier.",
+    "login": "Log in"
+  },
   "profile": {
     "loading": "Loading profile..."
   },
@@ -77,7 +82,8 @@
     "reserveRights": "All rights reserved",
     "privacy": "Privacy policy",
     "accessibility": "Accessibility document",
-    "terms": "Terms of Service"
+    "terms": "Terms of Service",
+    "feedback": "GIVE FEEDBACK"
   },
   "tos": {
     "mainTitle": "Helsinkiprofiilin käyttöä koskevat käyttöehdot",

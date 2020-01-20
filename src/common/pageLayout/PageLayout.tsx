@@ -7,6 +7,7 @@ import styles from './PageLayout.module.css';
 
 type Props = React.PropsWithChildren<{
   className?: string;
+  hideFooterLogo?: boolean;
 }>;
 
 function PageLayout(props: Props) {
@@ -16,7 +17,7 @@ function PageLayout(props: Props) {
       <main className={classNames(styles.content, props.className)}>
         {props.children}
       </main>
-      <Footer />
+      <Footer hideFooterLogo={props.hideFooterLogo} />
     </div>
   );
 }
