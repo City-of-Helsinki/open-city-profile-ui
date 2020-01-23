@@ -2,6 +2,7 @@
   background: var(--hds-ui-color-white);
   height: 64px;
   position: sticky;
+  z-index: 1;
 }
 
 
