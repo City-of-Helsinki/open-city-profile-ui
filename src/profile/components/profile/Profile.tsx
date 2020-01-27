@@ -25,7 +25,7 @@ function Profile(props: Props) {
     fetchPolicy: 'no-cache',
   });
   const [isCheckingAuthState, setIsCheckingAuthState] = useState(true);
-  const [tunnistamoUser, setTunnistamoUser] = useState();
+  const [tunnistamoUser, setTunnistamoUser] = useState<User>();
 
   useEffect(() => {
     getAuthenticatedUser()
