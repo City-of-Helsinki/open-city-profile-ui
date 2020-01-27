@@ -52,7 +52,7 @@ function Profile(props: Props) {
           <ViewProfile />
         ) : (
           <CreateProfile
-            tunnistamoUser={tunnistamoUser}
+            tunnistamoUser={tunnistamoUser as User}
             onProfileCreated={() => checkProfileExists()}
           />
         )}
