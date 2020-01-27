@@ -14,7 +14,8 @@
   },
   "serviceConnections": {
     "title": "Yhdistetyt palvelut",
-    "explanation": "Olet yhdistänyt seuraavat palvelut tunnukseesi. Voit käyttää samalla profiilillasi useita helsingin kaupungin palveluita sekä tiettyjä kolmansien osapuolten palveluita."
+    "explanation": "Olet yhdistänyt seuraavat palvelut tunnukseesi. Voit käyttää samalla profiilillasi useita helsingin kaupungin palveluita sekä tiettyjä kolmansien osapuolten palveluita.",
+    "empty": "Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi."
   },
   "nav": {
     "information": "Omat tiedot",

@@ -21,8 +21,11 @@ type Props = {};
 
 function ServiceConnections(props: Props) {
   const { t } = useTranslation();
-  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS);
+  const { data, loading } = useQuery<ServiceConnectionsQuery>(
+    SERVICE_CONNECTIONS
+  );
   const services = getServiceTypes(data);
+  const hasNoServices = !loading && services.length === 0;
   return (
     <div className={styles.serviceConnections}>
       <div className={responsive.maxWidthCentered}>
@@ -31,12 +34,12 @@ function ServiceConnections(props: Props) {
           main={t('serviceConnections.title')}
           small={t('serviceConnections.explanation')}
         />
-        {services.map(
-          (service, index) =>
-            service && (
-              <ExpandingPanel key={index} title={ServiceType[service]} />
-            )
+        {hasNoServices && (
+          <p className={styles.empty}>{t('serviceConnections.empty')}</p>
         )}
+        {services.map((service, index) => (
+          <ExpandingPanel key={index} title={ServiceType[service]} />
+        ))}
       </div>
     </div>
   );
