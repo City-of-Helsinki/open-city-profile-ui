@@ -43,7 +43,7 @@
     "test": "react-scripts test",
     "ci": "CI=true yarn test --coverage",
     "lint": "eslint --ext js,ts,tsx src",
-    "codegen": "apollo client:codegen __generated__ --includes=./src/**/*.graphql --target=typescript --endpoint=https://helsinkiprofile.test.kuva.hel.ninja/graphql/ --useReadOnlyTypes --globalTypesFile=./src/graphql/__generated__/globalTypes.ts --addTypename"
+    "codegen": "apollo client:codegen ./src/graphql/generatedTypes.ts --outputFlat --includes=./src/**/*.graphql --target=typescript --endpoint=https://helsinkiprofile.test.kuva.hel.ninja/graphql/ --useReadOnlyTypes --addTypename"
   },
   "eslintConfig": {
     "extends": "react-app"

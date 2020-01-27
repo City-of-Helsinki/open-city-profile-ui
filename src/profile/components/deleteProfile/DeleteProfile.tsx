@@ -12,8 +12,8 @@ import Button from '../../../common/button/Button';
 import {
   DeleteMyProfile as DeleteMyProfileData,
   DeleteMyProfileVariables,
-} from '../../graphql/__generated__/DeleteMyProfile';
-import { ServiceConnectionQuery } from '../../graphql/__generated__/ServiceConnectionQuery';
+  ServiceConnectionsQuery,
+} from '../../../graphql/generatedTypes';
 
 const DELETE_PROFILE = loader('../../graphql/DeleteMyProfile.graphql');
 const SERVICE_CONNECTIONS = loader(
@@ -27,7 +27,7 @@ function DeleteProfile(props: Props) {
   const [deleteInstructions, setDeleteInstructions] = useState(false);
   const [berthError, setBerthError] = useState(false);
   const { t } = useTranslation();
-  const { data } = useQuery<ServiceConnectionQuery>(SERVICE_CONNECTIONS);
+  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS);
   const [deleteProfile] = useMutation<
     DeleteMyProfileData,
     DeleteMyProfileVariables

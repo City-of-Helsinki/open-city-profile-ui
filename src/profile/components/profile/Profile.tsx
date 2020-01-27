@@ -3,6 +3,7 @@ import { useLazyQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { loader } from 'graphql.macro';
+import { User } from 'oidc-client';
 
 import getAuthenticatedUser from '../../../auth/getAuthenticatedUser';
 import PageLayout from '../../../common/pageLayout/PageLayout';
@@ -10,7 +11,7 @@ import CreateProfile from '../createProfile/CreateProfile';
 import ViewProfile from '../viewProfile/ViewProfile';
 import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
-import { ProfileExistsQuery } from '../../graphql/__generated__/ProfileExistsQuery';
+import { ProfileExistsQuery } from '../../../graphql/generatedTypes';
 
 const PROFILE_EXISTS = loader('../../graphql/ProfileExistsQuery.graphql');
 

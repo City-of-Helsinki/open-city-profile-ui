@@ -1,4 +1,4 @@
-import { MyProfileQuery } from '../graphql/__generated__/MyProfileQuery';
+import { MyProfileQuery } from '../../graphql/generatedTypes';
 
 export default function getNicknameOrName(data?: MyProfileQuery) {
   if (data && data.myProfile) {

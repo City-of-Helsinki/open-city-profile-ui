@@ -7,8 +7,10 @@ import responsive from '../../../common/cssHelpers/responsive.module.css';
 import Explanation from '../../../common/explanation/Explanation';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './ServiceConnections.module.css';
-import { ServiceConnectionQuery } from '../../graphql/__generated__/ServiceConnectionQuery';
-import { ServiceType } from '../../../graphql/__generated__/globalTypes';
+import {
+  ServiceType,
+  ServiceConnectionsQuery,
+} from '../../../graphql/generatedTypes';
 import getServiceTypes from '../../helpers/getServiceTypes';
 
 const SERVICE_CONNECTIONS = loader(
@@ -19,7 +21,7 @@ type Props = {};
 
 function ServiceConnections(props: Props) {
   const { t } = useTranslation();
-  const { data } = useQuery<ServiceConnectionQuery>(SERVICE_CONNECTIONS);
+  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS);
   const services = getServiceTypes(data);
   return (
     <div className={styles.serviceConnections}>

@@ -15,11 +15,9 @@ import responsive from '../../../common/cssHelpers/responsive.module.css';
 import {
   CreateMyProfile as CreateMyProfileData,
   CreateMyProfileVariables,
-} from '../../graphql/__generated__/CreateMyProfile';
-import {
   EmailType,
   PhoneType,
-} from '../../../graphql/__generated__/globalTypes';
+} from '../../../graphql/generatedTypes';
 
 const CREATE_PROFILE = loader('../../graphql/CreateMyProfile.graphql');
 

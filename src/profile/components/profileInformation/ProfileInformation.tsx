@@ -8,7 +8,7 @@ import styles from './ProfileInformation.module.css';
 import Explanation from '../../../common/explanation/Explanation';
 import getName from '../../helpers/getName';
 import getAddress from '../../helpers/getAddress';
-import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
+import { MyProfileQuery } from '../../../graphql/generatedTypes';
 
 type Props = {
   loading: boolean;

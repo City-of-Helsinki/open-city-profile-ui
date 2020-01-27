@@ -9,15 +9,13 @@ import responsive from '../../../common/cssHelpers/responsive.module.css';
 import EditProfileForm, {
   FormValues,
 } from '../editProfileForm/EditProfileForm';
-import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
 import {
+  MyProfileQuery,
   UpdateMyProfile as UpdateMyProfileData,
   UpdateMyProfileVariables,
-} from '../../graphql/__generated__/UpdateMyProfile';
-import {
   AddressType,
   PhoneType,
-} from '../../../graphql/__generated__/globalTypes';
+} from '../../../graphql/generatedTypes';
 import Explanation from '../../../common/explanation/Explanation';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
