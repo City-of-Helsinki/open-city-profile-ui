@@ -6,6 +6,8 @@ query ServiceConnectionsQuery {
         node {
           service {
             type
+            title
+            description
           }
         }
       }
