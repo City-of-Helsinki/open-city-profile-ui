@@ -3,11 +3,8 @@ import ReactModal from 'react-modal';
 import IconClose from 'hds-react/lib/icons/IconClose';
 import { useTranslation } from 'react-i18next';
 
-import {
-  ServiceType,
-  ServiceConnectionsQuery,
-} from '../../../../graphql/generatedTypes';
-import getServiceTypes from '../../../helpers/getServiceTypes';
+import { ServiceConnectionsQuery } from '../../../../graphql/generatedTypes';
+import getServices from '../../../helpers/getServices';
 import Button from '../../../../common/button/Button';
 import styles from './DeleteConfirmationModal.module.css';
 
@@ -21,7 +18,7 @@ type Props = {
 function DeleteConfirmationModal(props: Props) {
   const { isOpen, onClose, onDelete } = props;
   const { t } = useTranslation();
-  const services = getServiceTypes(props.services);
+  const services = getServices(props.services);
 
   if (!isOpen) return null;
   return (
@@ -43,10 +40,9 @@ function DeleteConfirmationModal(props: Props) {
         <h3>{t('deleteProfileModal.title')}</h3>
         <p>{t('deleteProfileModal.explanation')}</p>
         <ul>
-          {services.map(
-            (service, index) =>
-              service && <li key={index}>{ServiceType[service]}</li>
-          )}
+          {services.map((service, index) => (
+            <li key={index}>{service.title}</li>
+          ))}
         </ul>
       </div>
 
