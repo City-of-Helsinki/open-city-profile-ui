@@ -7,11 +7,8 @@ import responsive from '../../../common/cssHelpers/responsive.module.css';
 import Explanation from '../../../common/explanation/Explanation';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './ServiceConnections.module.css';
-import {
-  ServiceType,
-  ServiceConnectionsQuery,
-} from '../../../graphql/generatedTypes';
-import getServiceTypes from '../../helpers/getServiceTypes';
+import { ServiceConnectionsQuery } from '../../../graphql/generatedTypes';
+import getServices from '../../helpers/getServices';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -24,7 +21,7 @@ function ServiceConnections(props: Props) {
   const { data, loading } = useQuery<ServiceConnectionsQuery>(
     SERVICE_CONNECTIONS
   );
-  const services = getServiceTypes(data);
+  const services = getServices(data);
   const hasNoServices = !loading && services.length === 0;
   return (
     <div className={styles.serviceConnections}>
@@ -38,7 +35,9 @@ function ServiceConnections(props: Props) {
           <p className={styles.empty}>{t('serviceConnections.empty')}</p>
         )}
         {services.map((service, index) => (
-          <ExpandingPanel key={index} title={ServiceType[service]} />
+          <ExpandingPanel key={index} title={service.title || ''}>
+            {service.description}
+          </ExpandingPanel>
         ))}
       </div>
     </div>
