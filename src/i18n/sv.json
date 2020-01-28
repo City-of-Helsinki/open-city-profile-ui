@@ -14,7 +14,8 @@
   },
   "serviceConnections": {
     "title": "Anslutna servicer",
-    "explanation": "Du har kopplat följande tjänster till ditt konto. Du kan använda många av Helsingfors stads tjänster samt vissa tjänster från tredje parter med samma profil."
+    "explanation": "Du kan använda många av Helsingfors stads tjänster samt vissa tjänster från tredje parter med samma profil.",
+    "empty": "Du har för närvarande inga tjänster anslutna till din profil."
   },
   "nav": {
     "information": "Mina uppgifter",

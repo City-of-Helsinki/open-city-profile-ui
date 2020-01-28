@@ -3,6 +3,7 @@
   flex: 1;
 }
 
+.empty,
 .pageTitle {
   padding: 25px;
 }

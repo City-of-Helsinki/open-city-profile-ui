@@ -1,4 +1,4 @@
-import { MyProfileQuery } from '../graphql/__generated__/MyProfileQuery';
+import { MyProfileQuery } from '../../graphql/generatedTypes';
 
 export default function getAddress(data: MyProfileQuery) {
   if (data.myProfile?.primaryAddress) {

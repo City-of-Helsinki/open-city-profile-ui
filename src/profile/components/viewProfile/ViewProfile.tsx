@@ -12,7 +12,7 @@ import ProfileInformation from '../profileInformation/ProfileInformation';
 import EditProfile from '../editProfile/EditProfile';
 import getNicknameOrName from '../../helpers/getNicknameOrName';
 import ServiceConnections from '../serviceConnections/ServiceConnections';
-import { MyProfileQuery } from '../../graphql/__generated__/MyProfileQuery';
+import { MyProfileQuery } from '../../../graphql/generatedTypes';
 
 const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
 

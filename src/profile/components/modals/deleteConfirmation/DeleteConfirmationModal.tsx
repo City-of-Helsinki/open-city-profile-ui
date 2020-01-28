@@ -3,8 +3,10 @@ import ReactModal from 'react-modal';
 import IconClose from 'hds-react/lib/icons/IconClose';
 import { useTranslation } from 'react-i18next';
 
-import { ServiceType } from '../../../../graphql/__generated__/globalTypes';
-import { ServiceConnectionQuery } from '../../../graphql/__generated__/ServiceConnectionQuery';
+import {
+  ServiceType,
+  ServiceConnectionsQuery,
+} from '../../../../graphql/generatedTypes';
 import getServiceTypes from '../../../helpers/getServiceTypes';
 import Button from '../../../../common/button/Button';
 import styles from './DeleteConfirmationModal.module.css';
@@ -13,7 +15,7 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   onDelete: () => void;
-  services?: ServiceConnectionQuery;
+  services?: ServiceConnectionsQuery;
 };
 
 function DeleteConfirmationModal(props: Props) {
