@@ -153,6 +153,8 @@ export interface ProfileExistsQuery {
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
   readonly __typename: "ServiceNode";
   readonly type: ServiceType | null;
+  readonly title: string | null;
+  readonly description: string | null;
 }
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node {

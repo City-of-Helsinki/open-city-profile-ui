@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/react-hooks';
@@ -7,11 +7,8 @@ import responsive from '../../../common/cssHelpers/responsive.module.css';
 import Explanation from '../../../common/explanation/Explanation';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './ServiceConnections.module.css';
-import {
-  ServiceType,
-  ServiceConnectionsQuery,
-} from '../../../graphql/generatedTypes';
-import getServiceTypes from '../../helpers/getServiceTypes';
+import { ServiceConnectionsQuery } from '../../../graphql/generatedTypes';
+import getServices from '../../helpers/getServices';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -20,11 +17,23 @@ const SERVICE_CONNECTIONS = loader(
 type Props = {};
 
 function ServiceConnections(props: Props) {
-  const { t } = useTranslation();
-  const { data, loading } = useQuery<ServiceConnectionsQuery>(
+  const { t, i18n } = useTranslation();
+
+  const { data, loading, refetch } = useQuery<ServiceConnectionsQuery>(
     SERVICE_CONNECTIONS
   );
-  const services = getServiceTypes(data);
+
+  // Refetch services when language changes, services are translated based on
+  // Accept-Language header which is set in the graphql-client (src/graphql/client).
+  useEffect(() => {
+    const cb = () => refetch();
+    i18n.on('languageChanged', cb);
+    return () => {
+      i18n.off('languageChanged', cb);
+    };
+  });
+
+  const services = getServices(data);
   const hasNoServices = !loading && services.length === 0;
   return (
     <div className={styles.serviceConnections}>
@@ -38,7 +47,9 @@ function ServiceConnections(props: Props) {
           <p className={styles.empty}>{t('serviceConnections.empty')}</p>
         )}
         {services.map((service, index) => (
-          <ExpandingPanel key={index} title={ServiceType[service]} />
+          <ExpandingPanel key={index} title={service.title || ''}>
+            {service.description}
+          </ExpandingPanel>
         ))}
       </div>
     </div>
