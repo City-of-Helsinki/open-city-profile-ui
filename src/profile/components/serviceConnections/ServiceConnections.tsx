@@ -6,9 +6,11 @@ import { useQuery } from '@apollo/react-hooks';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import Explanation from '../../../common/explanation/Explanation';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
+import CheckedLabel from '../../../common/checkedLabel/CheckedLabel';
 import styles from './ServiceConnections.module.css';
 import { ServiceConnectionsQuery } from '../../../graphql/generatedTypes';
 import getServices from '../../helpers/getServices';
+import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -49,6 +51,13 @@ function ServiceConnections(props: Props) {
         {services.map((service, index) => (
           <ExpandingPanel key={index} title={service.title || ''}>
             {service.description}
+            {getAllowedDataFieldsFromService(service).map(node => (
+              <CheckedLabel
+                key={node.fieldName}
+                value={node.label || node.fieldName}
+                className={styles.allowedDataField}
+              />
+            ))}
           </ExpandingPanel>
         ))}
       </div>
