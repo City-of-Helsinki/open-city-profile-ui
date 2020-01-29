@@ -5,6 +5,7 @@ import { profileApiTokenSelector } from '../auth/redux';
 import getAuthenticatedUser from '../auth/getAuthenticatedUser';
 import fetchApiToken from '../auth/fetchApiToken';
 import pickProfileApiToken from '../auth/pickProfileApiToken';
+import i18n from '../i18n/i18nInit';
 
 const getToken = async () => {
   try {
@@ -29,6 +30,7 @@ export default new ApolloClient({
       operation.setContext({
         headers: {
           Authorization: `Bearer ${token}`,
+          'Accept-Language': i18n.languages[0],
         },
       });
     }
