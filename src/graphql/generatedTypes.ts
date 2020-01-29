@@ -53,6 +53,18 @@ export interface DeleteMyProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: DownloadMyProfile
+// ====================================================
+
+export interface DownloadMyProfile {
+  readonly downloadMyProfile: any | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: MyProfileQuery
 // ====================================================
 
