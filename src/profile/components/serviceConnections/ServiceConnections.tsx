@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/react-hooks';
@@ -9,6 +9,7 @@ import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './ServiceConnections.module.css';
 import { ServiceConnectionsQuery } from '../../../graphql/generatedTypes';
 import getServices from '../../helpers/getServices';
+import i18n from '../../../i18n/i18nInit';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -18,9 +19,21 @@ type Props = {};
 
 function ServiceConnections(props: Props) {
   const { t } = useTranslation();
-  const { data, loading } = useQuery<ServiceConnectionsQuery>(
+
+  const { data, loading, refetch } = useQuery<ServiceConnectionsQuery>(
     SERVICE_CONNECTIONS
   );
+
+  // Refetch services when language changes, services are translated based on
+  // Accept-Language header which is set in the graphql-client (src/graphql/client).
+  useEffect(() => {
+    const cb = () => refetch();
+    i18n.on('languageChanged', cb);
+    return () => {
+      i18n.off('languageChanged', cb);
+    };
+  });
+
   const services = getServices(data);
   const hasNoServices = !loading && services.length === 0;
   return (
