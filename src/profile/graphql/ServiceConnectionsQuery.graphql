@@ -8,6 +8,14 @@ query ServiceConnectionsQuery {
             type
             title
             description
+            allowedDataFields {
+              edges {
+                node {
+                  fieldName
+                  label
+                }
+              }
+            }
           }
         }
       }
