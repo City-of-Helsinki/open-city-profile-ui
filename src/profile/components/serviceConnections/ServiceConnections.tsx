@@ -9,7 +9,6 @@ import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './ServiceConnections.module.css';
 import { ServiceConnectionsQuery } from '../../../graphql/generatedTypes';
 import getServices from '../../helpers/getServices';
-import i18n from '../../../i18n/i18nInit';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -18,7 +17,7 @@ const SERVICE_CONNECTIONS = loader(
 type Props = {};
 
 function ServiceConnections(props: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const { data, loading, refetch } = useQuery<ServiceConnectionsQuery>(
     SERVICE_CONNECTIONS
