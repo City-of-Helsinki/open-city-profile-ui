@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import {
   ServiceConnectionsQuery,
-  ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service,
+  ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service as Service,
 } from '../../graphql/generatedTypes';
 
 export default function getServiceTypes(data?: ServiceConnectionsQuery) {
@@ -13,12 +12,7 @@ export default function getServiceTypes(data?: ServiceConnectionsQuery) {
         }
         return false;
       })
-      .filter(
-        (
-          service
-        ): service is ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service =>
-          Boolean(service)
-      );
+      .filter((service): service is Service => Boolean(service));
   }
   return [];
 }

@@ -150,11 +150,34 @@ export interface ProfileExistsQuery {
 // GraphQL query operation: ServiceConnectionsQuery
 // ====================================================
 
+export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node {
+  readonly __typename: "AllowedDataFieldNode";
+  readonly fieldName: string;
+  readonly label: string | null;
+}
+
+export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges {
+  readonly __typename: "AllowedDataFieldNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node | null;
+}
+
+export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields {
+  readonly __typename: "AllowedDataFieldNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges | null)>;
+}
+
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
   readonly __typename: "ServiceNode";
   readonly type: ServiceType | null;
   readonly title: string | null;
   readonly description: string | null;
+  readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;
 }
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
