@@ -15,7 +15,10 @@
   "serviceConnections": {
     "title": "Connected services",
     "explanation": "You may use several services in the City of Helsinki as well as certain third-party services for the same profile.",
-    "empty": "You currently don't have any active services connected to your profile."
+    "empty": "You currently don't have any active services connected to your profile.",
+    "servicePersonalData": "Data which the service will know about you:",
+    "created": "Created",
+    "clock": "at"
   },
   "nav": {
     "information": "Information",
@@ -77,6 +80,10 @@
     "panelTitle": "Do you want to download your data?",
     "panelText": "Download your data to see all the information we have stored about you.",
     "button": "Download my data"
+  },
+  "expandingPanel": {
+    "showInformation": "SHOW INFORMATION",
+    "hideInformation": "HIDE INFORMATION"
   },
   "footer": {
     "copyright": "Copyright {{year}}",
