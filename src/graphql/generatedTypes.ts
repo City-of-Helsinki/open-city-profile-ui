@@ -177,6 +177,7 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node
   readonly type: ServiceType | null;
   readonly title: string | null;
   readonly description: string | null;
+  readonly createdAt: any;
   readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;
 }
 
