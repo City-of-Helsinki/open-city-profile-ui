@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/react-hooks';
+import { format } from 'date-fns';
 
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import Explanation from '../../../common/explanation/Explanation';
@@ -35,6 +36,12 @@ function ServiceConnections(props: Props) {
     };
   });
 
+  const getDateTime = (date: Date) => {
+    const day = format(new Date(date), 'dd.MM.yyyy');
+    const time = format(new Date(date), 'hh:mm');
+    return `${day}, ${t('serviceConnections.clock')} ${time}`;
+  };
+
   const services = getServices(data);
   const hasNoServices = !loading && services.length === 0;
   return (
@@ -49,8 +56,15 @@ function ServiceConnections(props: Props) {
           <p className={styles.empty}>{t('serviceConnections.empty')}</p>
         )}
         {services.map((service, index) => (
-          <ExpandingPanel key={index} title={service.title || ''}>
+          <ExpandingPanel
+            key={index}
+            title={service.title || ''}
+            showInformationText
+          >
             {service.description}
+            <p className={styles.serviceInformation}>
+              {t('serviceConnections.servicePersonalData')}
+            </p>
             {getAllowedDataFieldsFromService(service).map(node => (
               <CheckedLabel
                 key={node.fieldName}
@@ -58,6 +72,12 @@ function ServiceConnections(props: Props) {
                 className={styles.allowedDataField}
               />
             ))}
+            <p className={styles.createdAt}>
+              {t('serviceConnections.created')}
+            </p>
+            <p className={styles.dateAndTime}>
+              {getDateTime(service.createdAt)}
+            </p>
           </ExpandingPanel>
         ))}
       </div>
