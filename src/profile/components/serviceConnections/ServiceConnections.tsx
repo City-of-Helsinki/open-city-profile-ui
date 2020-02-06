@@ -38,7 +38,7 @@ function ServiceConnections(props: Props) {
 
   const getDateTime = (date: Date) => {
     const day = format(new Date(date), 'dd.MM.yyyy');
-    const time = format(new Date(date), 'hh:mm');
+    const time = format(new Date(date), 'HH:mm');
     return `${day}, ${t('serviceConnections.clock')} ${time}`;
   };
 
