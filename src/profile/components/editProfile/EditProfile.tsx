@@ -35,7 +35,6 @@ function EditProfile(props: Props) {
     UpdateMyProfileVariables
   >(UPDATE_PROFILE, {
     refetchQueries: ['MyProfileQuery'],
-    onError: () => setShowNotification(true),
   });
 
   const handleOnValues = (formValues: FormValues) => {
@@ -90,11 +89,13 @@ function EditProfile(props: Props) {
         },
       },
     };
-    updateProfile({ variables }).then(result => {
-      if (result.data) {
-        props.setEditing();
-      }
-    });
+    updateProfile({ variables })
+      .then(result => {
+        if (result.data) {
+          props.setEditing();
+        }
+      })
+      .catch(() => setShowNotification(true));
   };
 
   return (
