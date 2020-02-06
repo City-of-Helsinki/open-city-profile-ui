@@ -15,7 +15,10 @@
   "serviceConnections": {
     "title": "Yhdistetyt palvelut",
     "explanation": "Voit käyttää samalla profiilillasi useita helsingin kaupungin palveluita sekä tiettyjä kolmansien osapuolten palveluita.",
-    "empty": "Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi."
+    "empty": "Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi.",
+    "servicePersonalData": "Palvelu saa tietää sinusta:",
+    "created": "Luotu",
+    "clock": "klo"
   },
   "nav": {
     "information": "Omat tiedot",
@@ -77,6 +80,10 @@
     "panelTitle": "Haluatko ladata omat tietosi?",
     "panelText": "Jos haluat nähdä kaikki sinusta tallentamamme tiedot, voit ladata ne seuraavasta napista.",
     "button": "Lataa kaikki palvelun tiedot"
+  },
+  "expandingPanel": {
+    "showInformation": "NÄYTÄ TIEDOT",
+    "hideInformation": "PIILOTA TIEDOT"
   },
   "footer": {
     "copyright": "Tekijänoikeus {{year}}",

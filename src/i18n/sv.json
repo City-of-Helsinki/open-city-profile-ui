@@ -15,7 +15,10 @@
   "serviceConnections": {
     "title": "Anslutna servicer",
     "explanation": "Du kan använda många av Helsingfors stads tjänster samt vissa tjänster från tredje parter med samma profil.",
-    "empty": "Du har för närvarande inga tjänster anslutna till din profil."
+    "empty": "Du har för närvarande inga tjänster anslutna till din profil.",
+    "servicePersonalData": "Data som tjänsten vet om dig:",
+    "created": "Skapad",
+    "clock": "kl."
   },
   "nav": {
     "information": "Mina uppgifter",
@@ -77,6 +80,10 @@
     "panelTitle": "Vill du ladda ner dina uppgifter?",
     "panelText": "Du kan ladda ner all information vi har om dig från följande knapp.",
     "button": "Ladda ner informationen om mig"
+  },
+  "expandingPanel": {
+    "showInformation": "VISA INFORMATION",
+    "hideInformation": "GÖM INFORMATION"
   },
   "footer": {
     "copyright": "Upphovsrätt {{year}}",

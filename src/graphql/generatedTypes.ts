@@ -53,6 +53,18 @@ export interface DeleteMyProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: DownloadMyProfile
+// ====================================================
+
+export interface DownloadMyProfile {
+  readonly downloadMyProfile: any | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: MyProfileQuery
 // ====================================================
 
@@ -177,6 +189,7 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node
   readonly type: ServiceType | null;
   readonly title: string | null;
   readonly description: string | null;
+  readonly createdAt: any;
   readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;
 }
 

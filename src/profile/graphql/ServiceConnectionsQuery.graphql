@@ -8,6 +8,7 @@ query ServiceConnectionsQuery {
             type
             title
             description
+            createdAt
             allowedDataFields {
               edges {
                 node {
