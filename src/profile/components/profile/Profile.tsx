@@ -12,6 +12,7 @@ import ViewProfile from '../viewProfile/ViewProfile';
 import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
 import { ProfileExistsQuery } from '../../../graphql/generatedTypes';
+import NotificationComponent from '../../../common/notification/NotificationComponent';
 
 const PROFILE_EXISTS = loader('../../graphql/ProfileExistsQuery.graphql');
 
@@ -24,9 +25,11 @@ function Profile(props: Props) {
     ProfileExistsQuery
   >(PROFILE_EXISTS, {
     fetchPolicy: 'no-cache',
+    onError: () => setShowNotification(true),
   });
   const [isCheckingAuthState, setIsCheckingAuthState] = useState(true);
   const [tunnistamoUser, setTunnistamoUser] = useState<User>();
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     getAuthenticatedUser()
@@ -57,6 +60,11 @@ function Profile(props: Props) {
           />
         )}
       </Loading>
+
+      <NotificationComponent
+        show={showNotification}
+        onClose={() => setShowNotification(false)}
+      />
     </PageLayout>
   );
 }

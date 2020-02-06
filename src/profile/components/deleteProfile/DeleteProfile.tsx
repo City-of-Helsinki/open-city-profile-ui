@@ -5,6 +5,7 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import checkBerthError from '../../helpers/checkBerthError';
 import DeleteConfirmationModal from '../modals/deleteConfirmation/DeleteConfirmationModal';
+import NotificationComponent from '../../../common/notification/NotificationComponent';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import Checkbox from '../../../common/checkbox/Checkbox';
@@ -26,6 +27,8 @@ function DeleteProfile(props: Props) {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [deleteInstructions, setDeleteInstructions] = useState(false);
   const [berthError, setBerthError] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+
   const { t } = useTranslation();
   const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS);
   const [deleteProfile] = useMutation<
@@ -53,6 +56,8 @@ function DeleteProfile(props: Props) {
     deleteProfile({ variables }).catch(error => {
       if (checkBerthError(error.graphQLErrors)) {
         setBerthError(true);
+      } else {
+        setShowNotification(true);
       }
     });
   };
@@ -93,6 +98,11 @@ function DeleteProfile(props: Props) {
       <BerthErrorModal
         isOpen={berthError}
         onClose={() => setBerthError(prevState => !prevState)}
+      />
+
+      <NotificationComponent
+        show={showNotification}
+        onClose={() => setShowNotification(false)}
       />
     </React.Fragment>
   );
