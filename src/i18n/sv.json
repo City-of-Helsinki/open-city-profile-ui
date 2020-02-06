@@ -68,6 +68,7 @@
   "deleteProfileModal": {
     "title": "Är du säker på att du vill ta bort din Helsingfors-profil",
     "explanation": "Genom att ta bort din profil tappar du också all data som sparats till följande tjänster",
+    "noServiceExplanation": "Genom, att ta bort din profil kommer du att förlora alla dina lagrade data.",
     "close": "Avbryt borttagning",
     "delete": "Radera Helsingfors-profilen"
   },
