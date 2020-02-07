@@ -38,7 +38,11 @@ function DeleteConfirmationModal(props: Props) {
 
       <div className={styles.content}>
         <h3>{t('deleteProfileModal.title')}</h3>
-        <p>{t('deleteProfileModal.explanation')}</p>
+        <p>
+          {services.length > 0
+            ? t('deleteProfileModal.explanation')
+            : t('deleteProfileModal.noServiceExplanation')}
+        </p>
         <ul>
           {services.map((service, index) => (
             <li key={index}>{service.title}</li>

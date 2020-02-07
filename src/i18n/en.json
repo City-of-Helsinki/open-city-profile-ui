@@ -68,6 +68,7 @@
   "deleteProfileModal": {
     "title": "Are you sure you want to delete your Helsinki profile",
     "explanation": "By deleting your profile you also loose all the data saved to following services",
+    "noServiceExplanation": "By removing your profile you will loose all of your stored data.",
     "close": "Cancel deletion",
     "delete": "Delete Helsinki profile"
   },
