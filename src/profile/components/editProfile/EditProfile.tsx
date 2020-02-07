@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +17,7 @@ import {
   PhoneType,
 } from '../../../graphql/generatedTypes';
 import Explanation from '../../../common/explanation/Explanation';
+import NotificationComponent from '../../../common/notification/NotificationComponent';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
 
@@ -26,6 +27,7 @@ type Props = {
 };
 
 function EditProfile(props: Props) {
+  const [showNotification, setShowNotification] = useState(false);
   const { profileData } = props;
   const { t } = useTranslation();
   const [updateProfile, { loading }] = useMutation<
@@ -87,11 +89,13 @@ function EditProfile(props: Props) {
         },
       },
     };
-    updateProfile({ variables }).then(result => {
-      if (result.data) {
-        props.setEditing();
-      }
-    });
+    updateProfile({ variables })
+      .then(result => {
+        if (result.data) {
+          props.setEditing();
+        }
+      })
+      .catch(() => setShowNotification(true));
   };
 
   return (
@@ -118,6 +122,10 @@ function EditProfile(props: Props) {
           onValues={handleOnValues}
         />
       </div>
+      <NotificationComponent
+        show={showNotification}
+        onClose={() => setShowNotification(false)}
+      />
     </section>
   );
 }

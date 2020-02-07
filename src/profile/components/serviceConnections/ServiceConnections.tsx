@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/react-hooks';
@@ -12,6 +12,7 @@ import styles from './ServiceConnections.module.css';
 import { ServiceConnectionsQuery } from '../../../graphql/generatedTypes';
 import getServices from '../../helpers/getServices';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
+import NotificationComponent from '../../../common/notification/NotificationComponent';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -21,9 +22,13 @@ type Props = {};
 
 function ServiceConnections(props: Props) {
   const { t, i18n } = useTranslation();
+  const [showNotification, setShowNotification] = useState(false);
 
   const { data, loading, refetch } = useQuery<ServiceConnectionsQuery>(
-    SERVICE_CONNECTIONS
+    SERVICE_CONNECTIONS,
+    {
+      onError: () => setShowNotification(true),
+    }
   );
 
   // Refetch services when language changes, services are translated based on
@@ -81,6 +86,10 @@ function ServiceConnections(props: Props) {
           </ExpandingPanel>
         ))}
       </div>
+      <NotificationComponent
+        show={showNotification}
+        onClose={() => setShowNotification(false)}
+      />
     </div>
   );
 }

@@ -94,6 +94,11 @@
     "terms": "Användarvillkor",
     "feedback": "Ge feedback"
   },
+  "notification": {
+    "defaultErrorTitle": "Fel",
+    "defaultErrorText": "Något gick fel. Försök igen efter ett tag.",
+    "closeButtonText": "Stäng"
+  },
   "tos": {
     "mainTitle": "Helsinkiprofiilin käyttöä koskevat käyttöehdot",
     "updated": "Olemme päivittäneet käyttöehdot 14.1.2020",

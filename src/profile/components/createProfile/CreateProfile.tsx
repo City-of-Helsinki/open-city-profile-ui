@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { User } from 'oidc-client';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
@@ -18,6 +18,7 @@ import {
   EmailType,
   PhoneType,
 } from '../../../graphql/generatedTypes';
+import NotificationComponent from '../../../common/notification/NotificationComponent';
 
 const CREATE_PROFILE = loader('../../graphql/CreateMyProfile.graphql');
 
@@ -28,6 +29,7 @@ type Props = {
 
 function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
   const { t } = useTranslation();
+  const [showNotification, setShowNotification] = useState(false);
   const [createProfile, { loading }] = useMutation<
     CreateMyProfileData,
     CreateMyProfileVariables
@@ -57,11 +59,13 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
         },
       },
     };
-    createProfile({ variables }).then(result => {
-      if (result.data) {
-        onProfileCreated();
-      }
-    });
+    createProfile({ variables })
+      .then(result => {
+        if (result.data) {
+          onProfileCreated();
+        }
+      })
+      .catch(() => setShowNotification(true));
   };
   return (
     <div className={styles.createProfile}>
@@ -85,6 +89,10 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
           onValues={handleOnValues}
         />
       </div>
+      <NotificationComponent
+        show={showNotification}
+        onClose={() => setShowNotification(false)}
+      />
     </div>
   );
 }

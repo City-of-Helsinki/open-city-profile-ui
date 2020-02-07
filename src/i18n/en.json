@@ -94,6 +94,12 @@
     "terms": "Terms of Service",
     "feedback": "GIVE FEEDBACK"
   },
+  "notification": {
+    "defaultErrorTitle": "Error",
+    "defaultErrorText": "Something went wrong. Try again after a while.",
+    "closeButtonText": "Close"
+
+  },
   "tos": {
     "mainTitle": "Helsinkiprofiilin käyttöä koskevat käyttöehdot",
     "updated": "Olemme päivittäneet käyttöehdot 14.1.2020",

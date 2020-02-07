@@ -6,7 +6,7 @@ import { RootState } from '../redux/rootReducer';
 import fetchApiToken from './fetchApiToken';
 import pickProfileApiToken from './pickProfileApiToken';
 
-interface AuthState {
+export interface AuthState {
   apiTokens: { [key: string]: string };
   error: string | null;
   loading: boolean;
@@ -35,6 +35,9 @@ const authSlice = createSlice({
       state.error = action.payload;
       state.apiTokens = {};
     },
+    resetApiError: (state, action) => {
+      state.error = null;
+    },
   },
   extraReducers: {
     [USER_EXPIRED]: (state, action) => getInitialState(),
@@ -43,7 +46,12 @@ const authSlice = createSlice({
   },
 });
 
-export const { receiveApiToken, startFetching, apiError } = authSlice.actions;
+export const {
+  receiveApiToken,
+  startFetching,
+  apiError,
+  resetApiError,
+} = authSlice.actions;
 export default authSlice.reducer;
 
 export const fetchApiTokenThunk = (

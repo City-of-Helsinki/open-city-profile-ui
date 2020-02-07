@@ -94,6 +94,11 @@
     "terms": "Palvelun käyttöehdot",
     "feedback": "ANNA PALAUTETTA"
   },
+  "notification": {
+    "defaultErrorTitle": "Virhe",
+    "defaultErrorText": "Jokin meni pieleen. Yritä hetken kuluttua uudelleen.",
+    "closeButtonText": "Sulje"
+  },
   "tos": {
     "mainTitle": "Helsinkiprofiilin käyttöä koskevat käyttöehdot",
     "updated": "Olemme päivittäneet käyttöehdot 14.1.2020",

@@ -13,14 +13,18 @@ import EditProfile from '../editProfile/EditProfile';
 import getNicknameOrName from '../../helpers/getNicknameOrName';
 import ServiceConnections from '../serviceConnections/ServiceConnections';
 import { MyProfileQuery } from '../../../graphql/generatedTypes';
+import NotificationComponent from '../../../common/notification/NotificationComponent';
 
 const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
 
 function ViewProfile() {
   const [isEditing, setEditing] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
   const { t } = useTranslation();
 
-  const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE);
+  const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE, {
+    onError: () => setShowNotification(true),
+  });
 
   const toggleEditing = () => {
     setEditing(prevState => !prevState);
@@ -86,6 +90,11 @@ function ViewProfile() {
           </Switch>
         </React.Fragment>
       )}
+
+      <NotificationComponent
+        show={showNotification}
+        onClose={() => setShowNotification(false)}
+      />
     </div>
   );
 }
