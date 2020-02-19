@@ -23,7 +23,9 @@
   "nav": {
     "information": "Omat tiedot",
     "services": "Yhdistetyt palvelut",
-    "signout": "Kirjaudu ulos"
+    "signin": "Kirjaudu sisään",
+    "signout": "Kirjaudu ulos",
+    "menuButtonLabel": "Valikko"
   },
   "profileInformation": {
     "title": "Omat tiedot",
