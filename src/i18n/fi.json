@@ -25,7 +25,7 @@
     "services": "Yhdistetyt palvelut",
     "signin": "Kirjaudu sisään",
     "signout": "Kirjaudu ulos",
-    "menuButtonLabel": "Valikko"
+    "menuButtonLabel": "Profiili valikko"
   },
   "profileInformation": {
     "title": "Omat tiedot",

@@ -6,6 +6,7 @@ import styles from './Dropdown.module.css';
 interface DropdownOption {
   id: string;
   label: string;
+  altText?: string;
   icon?: string;
   url?: string;
   onClick?: () => void;
@@ -44,21 +45,26 @@ function Dropdown(props: Props) {
       {isDropdown && (
         <React.Fragment>
           <button
+            aria-haspopup={true}
+            aria-expanded={isOpen}
             className={styles.navButton}
             onClick={() => toggleDropdown(prevState => !prevState)}
           >
             {navBarItem.label}
-            <img
-              src={navBarItem.icon}
-              alt={t('nav.menuButtonLabel')}
-              className={styles.icon}
-            />
+            {navBarItem.icon && (
+              <img
+                src={navBarItem.icon}
+                alt={navBarItem.altText}
+                className={styles.icon}
+              />
+            )}
           </button>
           {isOpen && (
             <div className={styles.dropdownContent}>
               {props.options.slice(1).map((option, index) =>
                 option.url ? (
                   <a
+                    id={option.id}
                     href={option.url}
                     className={styles.linkButton}
                     key={index}
@@ -86,6 +92,7 @@ function Dropdown(props: Props) {
       {/* If we have only one option, show it as a simple button */}
       {!isDropdown && (
         <button
+          aria-label={navBarItem.label}
           id={navBarItem.label}
           onClick={() => {
             navBarItem.onClick && navBarItem.onClick();

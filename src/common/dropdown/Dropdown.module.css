@@ -57,3 +57,9 @@
 .dropdownContentOption:not(:last-child) {
     border-bottom: 1px solid var(--hds-ui-color-black-30);
 }
+
+.linkButton:focus,
+.dropdownContent button:focus,
+.dropdownWrapper button:focus {
+    outline: 1px solid var(--hds-brand-color-coat-of-arms-blue);
+}
