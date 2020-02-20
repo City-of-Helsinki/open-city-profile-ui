@@ -54,7 +54,7 @@ function Dropdown(props: Props) {
             {navBarItem.icon && (
               <img
                 src={navBarItem.icon}
-                alt={navBarItem.altText}
+                alt={navBarItem.altText || ''}
                 className={styles.icon}
               />
             )}
