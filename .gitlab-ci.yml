@@ -1,6 +1,6 @@
 include:
   - project: 'city-of-helsinki/kuva/ci-cd-config/ci-configuration'
-    ref: v1
+    ref: v2
     file: '/.gitlab-ci-template.yml'
 
 variables:
