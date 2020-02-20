@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import styles from './Dropdown.module.css';
 
@@ -19,7 +18,6 @@ type Props = {
 
 function Dropdown(props: Props) {
   const [isOpen, toggleDropdown] = useState(false);
-  const { t } = useTranslation();
 
   const isDropdown = props.options.length > 1;
   const navBarItem = props.options[0];
