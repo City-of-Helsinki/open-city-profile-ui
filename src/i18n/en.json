@@ -23,7 +23,9 @@
   "nav": {
     "information": "Information",
     "services": "Connected services",
-    "signout": "Sign out"
+    "signin": "Log in",
+    "signout": "Sign out",
+    "menuButtonLabel": "Profile menu"
   },
   "profileInformation": {
     "title": "My information",

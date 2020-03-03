@@ -7,6 +7,7 @@ import FullscreenNavigation from '../fullscreenNavigation/FullscreenNavigation';
 import styles from './Header.module.css';
 import responsive from '../cssHelpers/responsive.module.css';
 import LanguageSwitcher from '../../i18n/components/languageSwitcher/LanguageSwitcher';
+import UserDropdown from './userDropdown/UserDropdown';
 
 function Header() {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ function Header() {
           <FullscreenNavigation className={styles.mobileNav} />
           <div className={styles.desktopNav}>
             <LanguageSwitcher />
+            <UserDropdown />
           </div>
         </section>
       </div>

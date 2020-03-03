@@ -38,6 +38,7 @@
 }
 @media (min-width: 768px) {
   .desktopNav {
-    display: block;
+    display: flex;
+    align-items: center;
   }
 }

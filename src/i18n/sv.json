@@ -23,7 +23,9 @@
   "nav": {
     "information": "Mina uppgifter",
     "services": "Anslutna servicer",
-    "signout": "Logga ut"
+    "signin": "Logga in",
+    "signout": "Logga ut",
+    "menuButtonLabel": "Profilmeny"
   },
   "profileInformation": {
     "title": "Mina uppgifter",
