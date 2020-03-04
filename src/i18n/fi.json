@@ -74,6 +74,10 @@
     "close": "Peru poistaminen",
     "delete": "Poista Helsinki profiili"
   },
+  "profileDeleted": {
+    "title": "Profiilisi on poistettu onnistuneesti!",
+    "message": "Jos haluat, voit luoda profiilis uudestaan myöhemmin. Sinut kirjataan ulos {{time}} sekunnin kuluttua."
+  },
   "berthErrors": {
     "title": "Et voi poistaa Helsinki profiiliasi, koska venepaikka tarvitsee tietojasi laskutukseen",
     "explanation": "Jotta voit poistaa profiilisi, sinun on ensin irtisanottava venepaikkasopimuksesi",

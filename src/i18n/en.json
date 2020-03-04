@@ -74,6 +74,10 @@
     "close": "Cancel deletion",
     "delete": "Delete Helsinki profile"
   },
+  "profileDeleted": {
+    "title": "Your profile has been successfully removed!",
+    "message": "You can recreate it later if you want. You will be logged out after {{time}} seconds."
+  },
   "berthErrors": {
     "title": "You cannot delete your Helsinki profile because Berth needs your information for billing",
     "explanation": "To delete your profile, you must first terminate your berth billing agreement",

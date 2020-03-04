@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation, Trans } from 'react-i18next';
+import { useHistory } from 'react-router';
 
 import checkBerthError from '../../helpers/checkBerthError';
 import DeleteConfirmationModal from '../modals/deleteConfirmation/DeleteConfirmationModal';
@@ -29,14 +30,13 @@ function DeleteProfile(props: Props) {
   const [berthError, setBerthError] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
+  const history = useHistory();
   const { t } = useTranslation();
   const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS);
   const [deleteProfile] = useMutation<
     DeleteMyProfileData,
     DeleteMyProfileVariables
-  >(DELETE_PROFILE, {
-    refetchQueries: ['ProfileExistsQuery'],
-  });
+  >(DELETE_PROFILE);
 
   const handleDeleteInstructions = () => {
     setDeleteInstructions(prevState => !prevState);
@@ -53,13 +53,17 @@ function DeleteProfile(props: Props) {
       input: {},
     };
 
-    deleteProfile({ variables }).catch(error => {
-      if (checkBerthError(error.graphQLErrors)) {
-        setBerthError(true);
-      } else {
-        setShowNotification(true);
-      }
-    });
+    deleteProfile({ variables })
+      .then(result => {
+        if (result.data) history.push('/profile-deleted');
+      })
+      .catch(error => {
+        if (checkBerthError(error.graphQLErrors)) {
+          setBerthError(true);
+        } else {
+          setShowNotification(true);
+        }
+      });
   };
 
   return (
