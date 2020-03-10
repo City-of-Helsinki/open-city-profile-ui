@@ -13,6 +13,7 @@ import OidcCallback from './auth/components/oidcCallback/OidcCallback';
 import Profile from './profile/components/profile/Profile';
 import { fetchApiTokenThunk } from './auth/redux';
 import TermsOfService from './tos/components/termsOfService/TermsOfService';
+import ProfileDeleted from './profile/components/profileDeleted/ProfileDeleted';
 
 if (process.env.NODE_ENV !== 'production') {
   enableOidcLogging();
@@ -50,6 +51,9 @@ function App(props: Props) {
             </Route>
             <Route path="/terms-of-service" exact>
               <TermsOfService />
+            </Route>
+            <Route path="/profile-deleted" exact>
+              <ProfileDeleted />
             </Route>
             <Route path="*">404 - not found</Route>
           </Switch>

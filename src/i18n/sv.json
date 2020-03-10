@@ -74,6 +74,10 @@
     "close": "Avbryt borttagning",
     "delete": "Radera Helsingfors-profilen"
   },
+  "profileDeleted": {
+    "title": "Din profil har tagits bort!",
+    "message": "Du kan återskapa det senare om du vill. Du kommer att loggas ut efter {{time}} sekunder."
+  },
   "berthErrors": {
     "title": "Du kan inte ta bort din Helsingfors-profil eftersom Berth behöver din information för fakturering",
     "explanation": "För att radera din profil måste du först säga upp betalningsavtal för kaj",
