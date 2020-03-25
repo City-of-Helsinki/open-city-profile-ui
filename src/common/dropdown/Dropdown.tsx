@@ -48,7 +48,9 @@ function Dropdown(props: Props) {
             className={styles.navButton}
             onClick={() => toggleDropdown(prevState => !prevState)}
           >
+            <span className={styles.label}>
             {navBarItem.label}
+            </span>
             {navBarItem.icon && (
               <img
                 src={navBarItem.icon}

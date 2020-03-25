@@ -8,4 +8,37 @@
 
 .pageHeading h1 {
   margin-left: 20px;
+  margin-top: 15px;
 }
+
+.wrapper {
+  max-width: 900px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* For some reason setting text overflows from wrapper even it has
+  overflow and text-overflow parameters. These media queries force max width
+  for wrapper which seems to do the trick
+*/
+
+@media (max-width: 1000px) {
+  .wrapper {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 750px) {
+  .wrapper {
+    max-width: 400px;
+  }
+}
+
+
+@media (max-width: 550px) {
+  .wrapper {
+    max-width: 200px;
+  }
+}
+
