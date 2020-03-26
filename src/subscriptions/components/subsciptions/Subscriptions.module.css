@@ -1,0 +1,9 @@
+.subscriptions {
+    background: var(--hds-ui-color-black-5);
+    flex: 1;
+}
+
+.empty,
+.pageTitle {
+    padding: 25px 0;
+}

@@ -23,6 +23,7 @@
   "nav": {
     "information": "Mina uppgifter",
     "services": "Anslutna servicer",
+    "subscriptions": "Prenumerationer",
     "signin": "Logga in",
     "signout": "Logga ut",
     "menuButtonLabel": "Profilmeny"

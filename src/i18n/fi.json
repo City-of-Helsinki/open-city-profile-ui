@@ -20,9 +20,16 @@
     "created": "Luotu",
     "clock": "klo"
   },
+  "subscriptions": {
+    "title": "Tilaukset ja uutiskirjeet",
+    "explanation": "Tähän joku kuvaus",
+    "empty": "Ei tilattavia palveluita / ilmoituksia",
+    "subscribed": "Tilattu!"
+  },
   "nav": {
     "information": "Omat tiedot",
     "services": "Yhdistetyt palvelut",
+    "subscriptions": "Tilaukset",
     "signin": "Kirjaudu sisään",
     "signout": "Kirjaudu ulos",
     "menuButtonLabel": "Profiili valikko"
