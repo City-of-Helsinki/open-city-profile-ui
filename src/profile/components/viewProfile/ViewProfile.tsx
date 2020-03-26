@@ -34,10 +34,7 @@ function ViewProfile() {
     <div className={styles.viewProfile}>
       {data && (
         <React.Fragment>
-          <PageHeading
-            text={getNicknameOrName(data)}
-            className={responsive.maxWidthCentered}
-          />
+          <PageHeading text={getNicknameOrName(data)} />
           <nav
             className={classNames(
               styles.profileNav,
