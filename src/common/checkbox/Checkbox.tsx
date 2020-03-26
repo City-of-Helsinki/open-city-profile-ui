@@ -7,7 +7,7 @@ type Props = PropsWithChildren<{
   onChange: () => void;
   label?: string | ReactNode;
   className?: string;
-  name: string;
+  name?: string;
 }>;
 
 function Checkbox(props: Props) {

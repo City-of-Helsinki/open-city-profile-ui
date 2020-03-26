@@ -5,7 +5,7 @@ import ToggleSwitch from '../toggleSwitch/ToggleSwitch';
 import styles from './TogglePanel.module.css';
 
 type Props = PropsWithChildren<{
-  title?: string;
+  title?: string | null;
   informationText?: string;
 }>;
 
