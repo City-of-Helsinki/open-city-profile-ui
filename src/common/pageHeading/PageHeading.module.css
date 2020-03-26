@@ -4,8 +4,25 @@
   display: flex;
   min-height: 120px;
   padding: 20px 10px 10px;
+  font-size: var(--hds-text-xxxl);
+  font-weight: bold;
+  width: 100%;
 }
 
-.pageHeading h1 {
+@media (min-width: 1200px) {
+  .pageHeading {
+    width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.titleWrapper {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   margin-left: 20px;
 }
+
