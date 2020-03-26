@@ -12,7 +12,7 @@ build-review:
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-review"
     DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.test.kuva.hel.ninja/"
-    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql/"
+    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.test.kuva.hel.ninja/graphql/"
   only:
     refs:
       - external_pull_requests
@@ -22,7 +22,7 @@ build-staging:
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-staging"
     DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.test.kuva.hel.ninja/"
-    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql/"
+    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.test.kuva.hel.ninja/graphql/"
   only:
     refs:
       - develop
@@ -31,11 +31,13 @@ build-production:
   extends: .build
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-production"
-    DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.test.kuva.hel.ninja/"
-    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql/"
+    DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://api.hel.fi/sso/"
+    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.prod.kuva.hel.ninja/graphql/"
   only:
     refs:
       - master
+      # this regexp will match release-tags
+      - /^release-.*$/
 
 review:
   variables:
@@ -49,3 +51,7 @@ staging:
   only:
     refs:
       - develop
+
+production:
+  variables:
+    DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-production"
