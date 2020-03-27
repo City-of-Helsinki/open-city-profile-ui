@@ -1,0 +1,19 @@
+.select {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.label {
+    font-size: var(--hds-text-sm);
+    line-height: var(--hds-text-sm-line-height);
+    font-weight: bold;
+    margin-bottom: 0.2em;
+}
+
+.select select {
+    border: 2px solid var(--hds-ui-color-black-20);
+    padding: 14.492px 12.960px;
+    background-color: white;
+}
+
