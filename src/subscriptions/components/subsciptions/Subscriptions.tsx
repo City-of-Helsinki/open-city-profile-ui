@@ -15,7 +15,9 @@ const QUERY_SUBSCRIPTIONS = loader('../../graphql/QuerySubscriptions.graphql');
 
 function Subscriptions() {
   const [showNotification, setShowNotification] = useState<boolean>(false);
-  const { data, loading } = useQuery<QuerySubscriptions>(QUERY_SUBSCRIPTIONS);
+  const { data, loading } = useQuery<QuerySubscriptions>(QUERY_SUBSCRIPTIONS, {
+    onError: () => setShowNotification(true),
+  });
   const { t } = useTranslation();
 
   const getSubscriptionTypes = (data?: QuerySubscriptions) => {
@@ -46,14 +48,23 @@ function Subscriptions() {
         />
 
         {!data && <p className={styles.empty}>{t('subscriptions.empty')}</p>}
-
-        {subscriptions?.map(subscription => (
-          <TogglePanel
-            title={subscription.label}
-            informationText={t('subscriptions.subscribed')}
-            key={subscription.code}
-          >
+        <TogglePanel
+          title={'Tilaa viestejä'}
+          informationText={t('subscriptions.subscribed')}
+        >
+          <Checkbox
+            onChange={() => ''}
+            name="email"
+            label={t('subscriptions.email')}
+          />
+          <Checkbox
+            onChange={() => ''}
+            name="phone"
+            label={t('subscriptions.phone')}
+          />
+          {subscriptions?.map(subscription => (
             <div>
+              <h3>{subscription.label}</h3>
               {subscription?.options?.map(option => (
                 <Checkbox
                   onChange={() => ''}
@@ -63,8 +74,8 @@ function Subscriptions() {
                 />
               ))}
             </div>
-          </TogglePanel>
-        ))}
+          ))}
+        </TogglePanel>
       </div>
 
       <NotificationComponent
