@@ -15,6 +15,7 @@ import {
   UpdateMyProfileVariables,
   AddressType,
   PhoneType,
+  Language,
 } from '../../../graphql/generatedTypes';
 import Explanation from '../../../common/explanation/Explanation';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
@@ -43,6 +44,7 @@ function EditProfile(props: Props) {
         profile: {
           firstName: formValues.firstName,
           lastName: formValues.lastName,
+          language: formValues.profileLanguage,
           addPhones: [
             !profileData?.myProfile?.primaryPhone?.id && formValues.phone
               ? {
@@ -108,9 +110,12 @@ function EditProfile(props: Props) {
           />
         </div>
         <EditProfileForm
+          setEditing={props.setEditing}
           profile={{
             firstName: profileData?.myProfile?.firstName || '',
             lastName: profileData?.myProfile?.lastName || '',
+            profileLanguage:
+              profileData?.myProfile?.language || Language.FINNISH,
             email: profileData?.myProfile?.primaryEmail?.email || '',
             phone: profileData?.myProfile?.primaryPhone?.phone || '',
             address: profileData?.myProfile?.primaryAddress?.address || '',

@@ -54,7 +54,8 @@
     "language": "Profilspråk",
     "terms": "Jag godkänner <0>användarvillkorna</0>, och att man får kontakta mig i adressen jag givit",
     "submit": "Spara",
-    "edit": "Redigera"
+    "edit": "Redigera",
+    "cancel": "Annullera"
   },
   "validation": {
     "required": "Detta fält krävs",

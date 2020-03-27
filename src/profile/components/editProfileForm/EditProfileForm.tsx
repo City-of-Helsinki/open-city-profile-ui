@@ -4,12 +4,15 @@ import { TextInput } from 'hds-react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 
+import Select from '../../../common/select/Select';
 import Button from '../../../common/button/Button';
 import styles from './EditProfileForm.module.css';
+import { Language } from '../../../graphql/generatedTypes';
 
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
   lastName: yup.string().max(255, 'validation.maxLength'),
+  language: yup.string(),
   phone: yup
     .string()
     .min(6, 'validation.phoneMin')
@@ -27,9 +30,11 @@ export type FormValues = {
   address: string;
   postalCode: string;
   city: string;
+  profileLanguage: Language;
 };
 
 type Props = {
+  setEditing: () => void;
   isSubmitting: boolean;
   profile: FormValues;
   onValues: (values: FormValues) => void;
@@ -37,7 +42,7 @@ type Props = {
 
 function EditProfileForm(props: Props) {
   const { t } = useTranslation();
-
+  const languages = ['FINNISH', 'ENGLISH', 'SWEDISH'];
   return (
     <Formik
       initialValues={{
@@ -52,6 +57,7 @@ function EditProfileForm(props: Props) {
           address: values.address,
           city: values.city,
           postalCode: values.postalCode,
+          profileLanguage: values.profileLanguage,
         });
       }}
       validationSchema={schema}
@@ -89,10 +95,19 @@ function EditProfileForm(props: Props) {
               labelText={t('profileForm.lastName')}
             />
 
-            <div className={styles.formField}>
-              <label className={styles.label}>{t('profileForm.email')}</label>
-              <span className={styles.email}>{props.profile.email}</span>
-            </div>
+            <Field
+              id="profileLanguage"
+              name="profileLanguage"
+              className={styles.formField}
+              as={Select}
+              options={languages.map(language => {
+                return {
+                  value: language,
+                  label: t(`LANGUAGE_OPTIONS.${language}`),
+                };
+              })}
+              labelText={t('profileForm.language')}
+            />
 
             <Field
               className={styles.formField}
@@ -110,6 +125,11 @@ function EditProfileForm(props: Props) {
               }
               labelText={t('profileForm.phone')}
             />
+
+            <div className={styles.formField}>
+              <label className={styles.label}>{t('profileForm.email')}</label>
+              <span className={styles.email}>{props.profile.email}</span>
+            </div>
           </div>
 
           <div className={styles.linebreak} />
@@ -162,6 +182,14 @@ function EditProfileForm(props: Props) {
             disabled={Boolean(isSubmitting || props.isSubmitting)}
           >
             {t('profileForm.submit')}
+          </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            className={styles.button}
+            onClick={props.setEditing}
+          >
+            {t('profileForm.cancel')}
           </Button>
         </Form>
       )}

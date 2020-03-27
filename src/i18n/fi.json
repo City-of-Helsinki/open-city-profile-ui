@@ -54,7 +54,8 @@
     "language": "Profiilin kieli",
     "terms": "Hyväksyn <0>palvelun ehdot</0>, ja että minuun voi olla yhteydessä antamaani osoitteeseen",
     "submit": "Tallenna",
-    "edit": "Muokkaa"
+    "edit": "Muokkaa",
+    "cancel": "Peruuta"
   },
   "validation": {
     "required": "Tämä kenttä on pakollinen",
