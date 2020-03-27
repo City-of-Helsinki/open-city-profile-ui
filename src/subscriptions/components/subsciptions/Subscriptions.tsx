@@ -4,7 +4,7 @@ import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/react-hooks';
 
 import Explanation from '../../../common/explanation/Explanation';
-import TogglePanel from '../../../common/togglePanel/TogglePanel';
+import Button from '../../../common/button/Button';
 import Checkbox from '../../../common/checkbox/Checkbox';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
@@ -39,43 +39,37 @@ function Subscriptions() {
   const subscriptions = getSubscriptionTypes(data);
 
   return (
-    <div className={styles.subscriptions}>
+    <div className={styles.subscriptionsPage}>
       <div className={responsive.maxWidthCentered}>
         <Explanation
           className={styles.pageTitle}
           main={t('subscriptions.title')}
           small={t('subscriptions.explanation')}
         />
-
         {!data && <p className={styles.empty}>{t('subscriptions.empty')}</p>}
-        <TogglePanel
-          title={'Tilaa viestejä'}
-          informationText={t('subscriptions.subscribed')}
-        >
-          <Checkbox
-            onChange={() => ''}
-            name="email"
-            label={t('subscriptions.email')}
-          />
-          <Checkbox
-            onChange={() => ''}
-            name="phone"
-            label={t('subscriptions.phone')}
-          />
-          {subscriptions?.map(subscription => (
-            <div>
-              <h3>{subscription.label}</h3>
-              {subscription?.options?.map(option => (
-                <Checkbox
-                  onChange={() => ''}
-                  name={option?.code}
-                  label={option?.label}
-                  key={option?.code}
-                />
-              ))}
+        {data && (
+          <div className={styles.subscriptionsContainer}>
+            {subscriptions?.map(subscription => (
+              <div key={subscription.code} className={styles.subscription}>
+                <h3>{subscription.label}</h3>
+                {subscription?.options?.map(option => (
+                  <Checkbox
+                    onChange={() => ''}
+                    name={option?.code}
+                    label={option?.label}
+                    key={option?.code}
+                  />
+                ))}
+              </div>
+            ))}
+            <div className={styles.buttonRow}>
+              <Button>Tallenna</Button>
+              <Button className={styles.button} variant="outlined">
+                Peruuta
+              </Button>
             </div>
-          ))}
-        </TogglePanel>
+          </div>
+        )}
       </div>
 
       <NotificationComponent
