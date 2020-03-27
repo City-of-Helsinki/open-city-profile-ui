@@ -88,10 +88,21 @@ function CreateProfileForm(props: Props) {
               }
               labelText={t('profileForm.lastName')}
             />
-            <div className={styles.formField}>
-              <label className={styles.label}>{t('profileForm.email')}</label>
-              <span className={styles.email}>{props.profile.email}</span>
-            </div>
+
+            <Field
+              className={styles.formField}
+              as={Select}
+              options={languages.map(language => {
+                return {
+                  value: language,
+                  label: t(`LANGUAGE_OPTIONS.${language}`),
+                };
+              })}
+              labelText={t('profileForm.language')}
+              name="profileLanguage"
+              id="profileLanguage"
+            />
+
             <Field
               className={styles.formField}
               name="phone"
@@ -108,19 +119,11 @@ function CreateProfileForm(props: Props) {
               }
               labelText={t('profileForm.phone')}
             />
-            <Field
-              className={styles.formField}
-              as={Select}
-              options={languages.map(language => {
-                return {
-                  value: language,
-                  label: t(`LANGUAGE_OPTIONS.${language}`),
-                };
-              })}
-              labelText={t('profileForm.language')}
-              name="profileLanguage"
-              id="profileLanguage"
-            />
+
+            <div className={styles.formField}>
+              <label className={styles.label}>{t('profileForm.email')}</label>
+              <span className={styles.email}>{props.profile.email}</span>
+            </div>
           </div>
           <label className={styles.terms}>
             <Field name="terms" type="checkbox" />{' '}
