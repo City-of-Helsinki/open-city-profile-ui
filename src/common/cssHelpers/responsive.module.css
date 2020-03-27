@@ -1,0 +1,12 @@
+@media (min-width: 1200px) {
+  .maxWidth {
+    width: 1140px;
+  }
+}
+@media (min-width: 1200px) {
+  .maxWidthCentered {
+    width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

@@ -1,0 +1,15 @@
+
+.wrapper {
+    width: 1200px
+}
+
+.content {
+    margin-top: 100px;
+    background-color: var(--hds-ui-color-white);
+    padding: 20px;
+    text-align: center;
+}
+
+.content h2 {
+    margin-bottom: 40px;
+}

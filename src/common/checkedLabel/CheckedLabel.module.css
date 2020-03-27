@@ -1,0 +1,5 @@
+.checkedLabel::before {
+  content: '\2714';
+  display: inline-block;
+  margin-right: 10px;
+}

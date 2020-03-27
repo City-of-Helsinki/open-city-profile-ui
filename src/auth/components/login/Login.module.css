@@ -1,0 +1,44 @@
+.wrapper {
+    background-color: var(--hds-brand-color-bus);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.content {
+    margin: 20px 10px;
+    width: 95%;
+    text-align: center;
+    color: var(--hds-ui-color-white);
+}
+
+.logo {
+    width: 170px;
+    height: 80px;
+}
+
+.logo g {
+    fill: var(--hds-ui-color-white);
+}
+
+.button {
+    margin-top: 50px;
+}
+
+.content button {
+    min-width: auto;
+}
+
+@media (min-width: 600px) {
+    .content {
+        width: 600px;
+    }
+}
+
+@media (min-width: 230px) {
+    .content button {
+        min-width: 230px;
+    }
+}

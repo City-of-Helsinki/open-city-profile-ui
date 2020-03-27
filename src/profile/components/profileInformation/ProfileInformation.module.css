@@ -1,0 +1,35 @@
+.edit {
+  font-weight: bold;
+}
+
+.edit:hover {
+  cursor: pointer;
+}
+
+.personalInformation {
+  background: var(--hds-ui-color-white);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.personalInformationTitleRow {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .storedInformation {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .storedInformation > * {
+    width: 50%;
+  }
+}
+
+
+

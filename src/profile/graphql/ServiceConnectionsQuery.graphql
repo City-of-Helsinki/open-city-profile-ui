@@ -1,0 +1,25 @@
+query ServiceConnectionsQuery {
+  myProfile {
+    id
+    serviceConnections {
+      edges {
+        node {
+          service {
+            type
+            title
+            description
+            createdAt
+            allowedDataFields {
+              edges {
+                node {
+                  fieldName
+                  label
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

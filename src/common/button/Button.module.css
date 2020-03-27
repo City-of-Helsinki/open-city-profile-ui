@@ -1,0 +1,32 @@
+.button {
+  background: var(--hds-brand-color-bus);
+  border: none;
+  color: var(--hds-ui-color-white);
+  display: inline-block;
+  font-weight: 500;
+  font-size: 16px;
+  text-align: center;
+  padding: 15px;
+  min-width: 230px;
+}
+
+.button:hover {
+  background: var(--hds-brand-color-bus-dark-50);
+}
+
+.button:disabled {
+  background: var(--hds-brand-color-bus-light-20);
+  cursor: not-allowed;
+}
+
+.outlined {
+  background: var(--hds-ui-color-white);
+  border: 1px solid var(--hds-brand-color-bus);
+  color: var(--hds-ui-color-black);
+  display: inline-block;
+  font-weight: 500;
+  font-size: 16px;
+  text-align: center;
+  padding: 15px;
+  min-width: 230px;
+}

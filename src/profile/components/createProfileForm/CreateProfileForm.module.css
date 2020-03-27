@@ -1,0 +1,46 @@
+@media (min-width: 768px) {
+  .formFields {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 750px;
+  }
+}
+
+.formField {
+  padding-bottom: 20px;
+}
+@media (min-width: 768px) {
+  .formField {
+    flex-basis: 50%;
+    max-width: 350px;
+    padding: 10px 10px 10px 0;
+  }
+  .formField:nth-of-type(even) {
+    padding-right: 0;
+    padding-left: 10px;
+  }
+}
+
+.label {
+  composes: text-bold text-sm from '~hds-core/lib/helsinki.css';
+  display: block;
+}
+@media (min-width: 768px) {
+  .email {
+    display: inline-block;
+    margin-top: 20px;
+  }
+}
+
+.terms {
+  display: inline-block;
+  margin-bottom: 20px;
+  user-select: none;
+}
+@media (min-width: 768px) {
+  .terms {
+    margin-bottom: 30px;
+    margin-top: 30px;
+  }
+}

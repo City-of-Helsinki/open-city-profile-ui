@@ -1,0 +1,44 @@
+.header {
+  background: var(--hds-ui-color-white);
+  height: 64px;
+  position: sticky;
+  z-index: 1;
+}
+
+
+.inner {
+  align-items: center;
+  display: flex;
+  height: 100%;
+}
+
+.logo {
+  height: 40px;
+}
+
+.appName {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.end {
+  margin-left: auto;
+  padding-right: 20px;
+}
+
+
+@media (min-width: 768px) {
+  .mobileNav {
+    display: none;
+  }
+}
+
+.desktopNav {
+  display: none;
+}
+@media (min-width: 768px) {
+  .desktopNav {
+    display: flex;
+    align-items: center;
+  }
+}

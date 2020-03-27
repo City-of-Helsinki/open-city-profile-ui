@@ -1,0 +1,23 @@
+mutation UpdateMyProfile($input:UpdateMyProfileMutationInput!) {
+    updateMyProfile(input: $input) {
+        profile {
+            id
+            firstName
+            lastName
+            primaryAddress {
+                id
+                address
+                postalCode
+                city
+            }
+            primaryEmail {
+                id
+                email
+            }
+            primaryPhone {
+                id
+                phone
+            }
+        }
+    }
+}

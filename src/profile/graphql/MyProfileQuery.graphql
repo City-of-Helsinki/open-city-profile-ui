@@ -1,0 +1,22 @@
+query MyProfileQuery {
+  myProfile {
+    id
+    firstName
+    lastName
+    nickname
+    primaryAddress {
+      id
+      address
+      postalCode
+      city
+    }
+    primaryEmail {
+      id
+      email
+    }
+    primaryPhone {
+      id
+      phone
+    }
+  }
+}
