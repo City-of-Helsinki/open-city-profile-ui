@@ -410,6 +410,67 @@ export interface UpdateMyProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: QueryMySubscriptions
+// ====================================================
+
+export interface QueryMySubscriptions_myProfile_subscriptions_edges_node_subscriptionType {
+  readonly __typename: "SubscriptionTypeNode";
+  readonly code: string;
+}
+
+export interface QueryMySubscriptions_myProfile_subscriptions_edges_node {
+  readonly __typename: "SubscriptionNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly enabled: boolean;
+  readonly subscriptionType: QueryMySubscriptions_myProfile_subscriptions_edges_node_subscriptionType;
+}
+
+export interface QueryMySubscriptions_myProfile_subscriptions_edges {
+  readonly __typename: "SubscriptionNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: QueryMySubscriptions_myProfile_subscriptions_edges_node | null;
+}
+
+export interface QueryMySubscriptions_myProfile_subscriptions {
+  readonly __typename: "SubscriptionNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(QueryMySubscriptions_myProfile_subscriptions_edges | null)>;
+}
+
+export interface QueryMySubscriptions_myProfile {
+  readonly __typename: "ProfileNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly subscriptions: QueryMySubscriptions_myProfile_subscriptions | null;
+}
+
+export interface QueryMySubscriptions {
+  /**
+   * Get the profile belonging to the currently authenticated user.
+   * 
+   * Requires authentication.
+   * 
+   * Possible error codes:
+   * 
+   * * `TODO`
+   */
+  readonly myProfile: QueryMySubscriptions_myProfile | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: QuerySubscriptions
 // ====================================================
 
@@ -583,12 +644,18 @@ export interface ProfileInput {
   readonly addAddresses?: ReadonlyArray<(AddressInput | null)> | null;
   readonly updateAddresses?: ReadonlyArray<(AddressInput | null)> | null;
   readonly removeAddresses?: ReadonlyArray<(string | null)> | null;
+  readonly subscriptions?: ReadonlyArray<(SubscriptionInputType | null)> | null;
   readonly youthProfile?: YouthProfileFields | null;
   readonly sensitivedata?: SensitiveDataFields | null;
 }
 
 export interface SensitiveDataFields {
   readonly ssn?: string | null;
+}
+
+export interface SubscriptionInputType {
+  readonly subscriptionTypeId?: string | null;
+  readonly enabled?: boolean | null;
 }
 
 export interface UpdateMyProfileMutationInput {
