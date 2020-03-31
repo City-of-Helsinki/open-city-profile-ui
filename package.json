@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
+    "@apollo/react-testing": "^3.1.3",
     "@types/classnames": "^2.2.9",
     "@types/enzyme": "^3.10.5",
     "@types/enzyme-adapter-react-16": "^1.0.6",
@@ -49,7 +50,7 @@
     "test": "react-scripts test",
     "ci": "CI=true yarn test --coverage",
     "lint": "eslint --ext js,ts,tsx src",
-    "codegen": "apollo client:codegen ./src/graphql/generatedTypes.ts --outputFlat --includes=./src/**/*.graphql --target=typescript --endpoint=https://helsinkiprofile.test.kuva.hel.ninja/graphql/ --useReadOnlyTypes --addTypename"
+    "codegen": "apollo client:codegen ./src/graphql/generatedTypes.ts --outputFlat --includes=./src/**/*.graphql --target=typescript --endpoint=https://profiili-api.test.kuva.hel.ninja/graphql/ --useReadOnlyTypes --addTypename"
   },
   "eslintConfig": {
     "extends": "react-app"
