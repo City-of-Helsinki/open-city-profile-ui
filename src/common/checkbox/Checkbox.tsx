@@ -12,7 +12,6 @@ type Props = PropsWithChildren<{
 }>;
 
 function Checkbox(props: Props) {
-  console.log('CHECKED', props.checked);
   return (
     <div className={classNames(styles.container, props.className)}>
       <input
