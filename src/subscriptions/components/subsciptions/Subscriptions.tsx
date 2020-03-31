@@ -7,6 +7,7 @@ import Explanation from '../../../common/explanation/Explanation';
 import Button from '../../../common/button/Button';
 import Checkbox from '../../../common/checkbox/Checkbox';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
+import Loading from '../../../common/loading/Loading';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import styles from './Subscriptions.module.css';
 import {
@@ -128,56 +129,68 @@ function Subscriptions() {
     }
   };
 
-  if (loading || profileLoading) return <div>Ladataan...</div>;
-
   return (
-    <div className={styles.subscriptionsPage}>
-      <div className={responsive.maxWidthCentered}>
-        <Explanation
-          className={styles.pageTitle}
-          main={t('subscriptions.title')}
-          small={t('subscriptions.explanation')}
-        />
+    <Loading
+      isLoading={loading || profileLoading}
+      loadingText={t('loading')}
+      loadingClassName={styles.loading}
+    >
+      <div className={styles.subscriptionsPage}>
+        <div className={responsive.maxWidthCentered}>
+          <Explanation
+            className={styles.pageTitle}
+            main={t('subscriptions.title')}
+            small={t('subscriptions.explanation')}
+          />
 
-        {!subscriptionData && (
-          <p className={styles.empty}>{t('subscriptions.empty')}</p>
-        )}
-        {subscriptionData && (
-          <div className={styles.subscriptionsContainer}>
-            {subscriptionData.map(
-              (subscription: SubscriptionData, index: number) => (
-                <div key={subscription.code} className={styles.subscription}>
-                  <h3>{subscription.label}</h3>
-                  {subscription?.options?.map((option: SubscriptionOption) => (
-                    <Checkbox
-                      onChange={() =>
-                        handleCheckboxValues(index, option.code, option.enabled)
-                      }
-                      name={option.code}
-                      checked={option.enabled}
-                      label={option.label}
-                      key={option.code}
-                    />
-                  ))}
-                </div>
-              )
-            )}
+          {subscriptionData?.length === 0 && (
+            <p className={styles.empty}>{t('subscriptions.empty')}</p>
+          )}
+          {subscriptionData && subscriptionData.length > 0 && (
+            <div className={styles.subscriptionsContainer}>
+              {subscriptionData.map(
+                (subscription: SubscriptionData, index: number) => (
+                  <div key={subscription.code} className={styles.subscription}>
+                    <h3>{subscription.label}</h3>
+                    {subscription?.options?.map(
+                      (option: SubscriptionOption) => (
+                        <Checkbox
+                          onChange={() =>
+                            handleCheckboxValues(
+                              index,
+                              option.code,
+                              option.enabled
+                            )
+                          }
+                          name={option.code}
+                          checked={option.enabled}
+                          label={option.label}
+                          key={option.code}
+                        />
+                      )
+                    )}
+                  </div>
+                )
+              )}
 
-            <div className={styles.buttonRow}>
-              <Button onClick={handleUpdate}>Tallenna</Button>
-              <Button className={styles.button} variant="outlined">
-                Peruuta
-              </Button>
+              <div className={styles.buttonRow}>
+                <Button onClick={handleUpdate}>
+                  {t('profileForm.submit')}
+                </Button>
+                <Button className={styles.button} variant="outlined">
+                  {t('profileForm.cancel')}
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
 
-      <NotificationComponent
-        show={showNotification}
-        onClose={() => setShowNotification(false)}
-      />
-    </div>
+        <NotificationComponent
+          show={showNotification}
+          onClose={() => setShowNotification(false)}
+        />
+      </div>
+    </Loading>
   );
 }
 
