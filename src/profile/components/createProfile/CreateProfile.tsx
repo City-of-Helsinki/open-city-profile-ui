@@ -16,6 +16,7 @@ import {
   CreateMyProfile as CreateMyProfileData,
   CreateMyProfileVariables,
   EmailType,
+  Language,
   PhoneType,
 } from '../../../graphql/generatedTypes';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
@@ -40,6 +41,7 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
         profile: {
           firstName: formValues.firstName,
           lastName: formValues.lastName,
+          language: formValues.profileLanguage,
           addEmails: [
             {
               email: formValues.email,
@@ -59,6 +61,7 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
         },
       },
     };
+
     createProfile({ variables })
       .then(result => {
         if (result.data) {
@@ -80,9 +83,10 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
         />
         <CreateProfileForm
           profile={{
-            firstName: tunnistamoUser.profile.given_name,
-            lastName: tunnistamoUser.profile.family_name,
+            firstName: tunnistamoUser.profile.given_name || '',
+            lastName: tunnistamoUser.profile.family_name || '',
             email: tunnistamoUser.profile.email,
+            profileLanguage: Language.FINNISH,
             phone: '',
           }}
           isSubmitting={loading}

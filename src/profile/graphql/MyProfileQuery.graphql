@@ -4,6 +4,7 @@ query MyProfileQuery {
     firstName
     lastName
     nickname
+    language
     primaryAddress {
       id
       address

@@ -16,7 +16,15 @@
 }
 
 .navButton {
-    max-width: 160px;
+    max-width: 180px;
+}
+
+.label {
+    max-width: 150px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .icon {

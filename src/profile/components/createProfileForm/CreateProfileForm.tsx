@@ -5,8 +5,11 @@ import { TextInput } from 'hds-react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 
+import Select from '../../../common/select/Select';
 import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
+import profileConstants from '../../constants/profileConstants';
+import { Language } from '../../../graphql/generatedTypes';
 
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
@@ -23,6 +26,7 @@ export type FormValues = {
   lastName: string;
   email: string;
   phone: string;
+  profileLanguage: Language;
 };
 
 type Props = {
@@ -33,6 +37,7 @@ type Props = {
 
 function CreateProfileForm(props: Props) {
   const { t } = useTranslation();
+
   return (
     <Formik
       initialValues={{
@@ -48,6 +53,7 @@ function CreateProfileForm(props: Props) {
           lastName: values.lastName,
           email: props.profile.email,
           phone: values.phone,
+          profileLanguage: values.profileLanguage,
         });
       }}
       validationSchema={schema}
@@ -83,10 +89,21 @@ function CreateProfileForm(props: Props) {
               }
               labelText={t('profileForm.lastName')}
             />
-            <div className={styles.formField}>
-              <label className={styles.label}>{t('profileForm.email')}</label>
-              <span className={styles.email}>{props.profile.email}</span>
-            </div>
+
+            <Field
+              className={styles.formField}
+              as={Select}
+              options={profileConstants.LANGUAGES.map(language => {
+                return {
+                  value: language,
+                  label: t(`LANGUAGE_OPTIONS.${language}`),
+                };
+              })}
+              labelText={t('profileForm.language')}
+              name="profileLanguage"
+              id="profileLanguage"
+            />
+
             <Field
               className={styles.formField}
               name="phone"
@@ -103,6 +120,11 @@ function CreateProfileForm(props: Props) {
               }
               labelText={t('profileForm.phone')}
             />
+
+            <div className={styles.formField}>
+              <label className={styles.label}>{t('profileForm.email')}</label>
+              <span className={styles.email}>{props.profile.email}</span>
+            </div>
           </div>
           <label className={styles.terms}>
             <Field name="terms" type="checkbox" />{' '}

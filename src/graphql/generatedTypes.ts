@@ -22,19 +22,19 @@ export interface CreateMyProfile_createMyProfile {
 export interface CreateMyProfile {
   /**
    * Creates a new profile based on the given data. The new profile is linked to the currently authenticated user.
-   * 
+   *
    * One or several of the following is possible to add:
-   * 
+   *
    * * Email
    * * Address
    * * Phone
-   * 
+   *
    * If youth data is given, a youth profile will also be created and linked to the profile.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly createMyProfile: CreateMyProfile_createMyProfile | null;
@@ -60,15 +60,15 @@ export interface DeleteMyProfile_deleteMyProfile {
 export interface DeleteMyProfile {
   /**
    * Deletes the data of the profile which is linked to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `CANNOT_DELETE_PROFILE_WHILE_SERVICE_CONNECTED_ERROR`: Returned if the profile is connected to Berth service.
-   * 
+   *
    * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
-   * 
+   *
    * * `TODO`
    */
   readonly deleteMyProfile: DeleteMyProfile_deleteMyProfile | null;
@@ -89,11 +89,11 @@ export interface DeleteMyProfileVariables {
 export interface DownloadMyProfile {
   /**
    * Get the user information stored in the profile as machine readable JSON.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly downloadMyProfile: any | null;
@@ -145,6 +145,7 @@ export interface MyProfileQuery_myProfile {
   readonly firstName: string;
   readonly lastName: string;
   readonly nickname: string;
+  readonly language: Language | null;
   /**
    * Convenience field for the address which is marked as primary.
    */
@@ -162,11 +163,11 @@ export interface MyProfileQuery_myProfile {
 export interface MyProfileQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: MyProfileQuery_myProfile | null;
@@ -190,11 +191,11 @@ export interface NameQuery_myProfile {
 export interface NameQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: NameQuery_myProfile | null;
@@ -219,11 +220,11 @@ export interface ProfileExistsQuery_myProfile {
 export interface ProfileExistsQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: ProfileExistsQuery_myProfile | null;
@@ -304,11 +305,11 @@ export interface ServiceConnectionsQuery_myProfile {
 export interface ServiceConnectionsQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: ServiceConnectionsQuery_myProfile | null;
@@ -381,21 +382,21 @@ export interface UpdateMyProfile_updateMyProfile {
 export interface UpdateMyProfile {
   /**
    * Updates the profile which is linked to the currently authenticated user based on the given data.
-   * 
+   *
    * One or several of the following is possible to add, modify or remove:
-   * 
+   *
    * * Email
    * * Address
    * * Phone
-   * 
+   *
    * If youth data is given, a youth profile will also be created and linked to the
    * profile **or** the existing youth profile will be updated if the profile is
    * already linked to a youth profile.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly updateMyProfile: UpdateMyProfile_updateMyProfile | null;
@@ -456,11 +457,11 @@ export interface QueryMySubscriptions_myProfile {
 export interface QueryMySubscriptions {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: QueryMySubscriptions_myProfile | null;
