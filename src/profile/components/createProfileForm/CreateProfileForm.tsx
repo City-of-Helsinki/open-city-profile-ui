@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import Select from '../../../common/select/Select';
 import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
+import profileConstants from '../../constants/profileConstants';
 import { Language } from '../../../graphql/generatedTypes';
 
 const schema = yup.object().shape({
@@ -36,7 +37,7 @@ type Props = {
 
 function CreateProfileForm(props: Props) {
   const { t } = useTranslation();
-  const languages = ['FINNISH', 'ENGLISH', 'SWEDISH'];
+
   return (
     <Formik
       initialValues={{
@@ -92,7 +93,7 @@ function CreateProfileForm(props: Props) {
             <Field
               className={styles.formField}
               as={Select}
-              options={languages.map(language => {
+              options={profileConstants.LANGUAGES.map(language => {
                 return {
                   value: language,
                   label: t(`LANGUAGE_OPTIONS.${language}`),
