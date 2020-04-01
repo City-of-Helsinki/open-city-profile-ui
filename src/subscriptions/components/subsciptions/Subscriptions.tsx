@@ -68,6 +68,8 @@ function Subscriptions() {
     UpdateMyProfileVariables
   >(UPDATE_PROFILE);
 
+  // Refetch services when language changes, services are translated based on
+  // Accept-Language header which is set in the graphql-client (src/graphql/client).
   useEffect(() => {
     const cb = () => refetch();
     i18n.on('languageChanged', cb);
