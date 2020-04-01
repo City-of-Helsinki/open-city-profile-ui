@@ -50,11 +50,14 @@ function Subscriptions() {
   const [subscriptionData, setSubscriptionData] = useState<
     SubscriptionData[]
   >();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const { data, loading } = useQuery<QuerySubscriptions>(QUERY_SUBSCRIPTIONS, {
-    onError: () => setShowNotification(true),
-  });
+  const { data, loading, refetch } = useQuery<QuerySubscriptions>(
+    QUERY_SUBSCRIPTIONS,
+    {
+      onError: () => setShowNotification(true),
+    }
+  );
 
   const { data: profileData, loading: profileLoading } = useQuery<
     QueryMySubscriptions
@@ -66,11 +69,16 @@ function Subscriptions() {
   >(UPDATE_PROFILE);
 
   useEffect(() => {
-    if (!subscriptionData && !loading && !profileLoading) {
-      const subscriptions = getSubscriptionsData(data, profileData);
-      setSubscriptionData(subscriptions);
-    }
-  }, [data, profileData, subscriptionData, loading, profileLoading]);
+    const cb = () => refetch();
+    i18n.on('languageChanged', cb);
+
+    const subscriptions = getSubscriptionsData(data, profileData);
+    setSubscriptionData(subscriptions);
+
+    return () => {
+      i18n.off('languageChanged', cb);
+    };
+  }, [data, profileData, i18n, refetch]);
 
   const getSubscriptionVariables = () => {
     const subscriptionVariables: SubscriptionVariable[] = [];
