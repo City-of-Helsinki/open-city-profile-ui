@@ -51,9 +51,11 @@
     "address": "Kotiosoite",
     "city": "Kaupunki",
     "postalCode": "Postinumero",
+    "language": "Profiilin kieli",
     "terms": "Hyväksyn <0>palvelun ehdot</0>, ja että minuun voi olla yhteydessä antamaani osoitteeseen",
     "submit": "Tallenna",
-    "edit": "Muokkaa"
+    "edit": "Muokkaa",
+    "cancel": "Peruuta"
   },
   "validation": {
     "required": "Tämä kenttä on pakollinen",
@@ -128,5 +130,10 @@
     "terms8Text": "Helsinkiprofiiliin ja Ehtoihin sovelletaan Suomessa voimassa olevaa lainsäädäntöä pois lukien lainvalintaan liittyvät säädökset. Helsingin kaupunki pidättää oikeuden muuttaa Ehtoja milloin tahansa ilman ennakkoilmoitusta. Jos Ehtoja muutetaan merkittävästi, Helsingin kaupunki ilmoittaa tällaisesta muutoksesta erikseen etukäteen. Muutokset tulevat voimaan viikon kuluttua ilmoituksesta. Ehtojen muutoksista kerrotaan Helsinkiprofiilissa sekä eri palveluiden verkkosivuilla. (Voiko tähän laittaa “ja/tai sähköpostitse”) <br><br>Mikäli Ehtojen muutos johtuu lainsäädännön muutoksesta, viranomaismääräyksestä tai muusta ennalta arvaamattomasta syystä, Ehtojen muutos tulee voimaan välittömästi.",
     "terms9Title": "9. Yhteystiedot",
     "terms9Text": "Helsinki profiilin palveluntarjoajana toimii Helsingin kaupungin kanslia, osoitteessa YHTEYSTIEDOT TÄHÄN."
+  },
+  "LANGUAGE_OPTIONS": {
+    "FINNISH": "Suomi",
+    "ENGLISH": "Englanti",
+    "SWEDISH": "Ruotsi"
   }
 }
