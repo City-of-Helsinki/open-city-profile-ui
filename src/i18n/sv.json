@@ -107,7 +107,8 @@
     "privacy": "Integritetspolicy",
     "accessibility": "Tillgänglighetsdokument",
     "terms": "Användarvillkor",
-    "feedback": "Ge feedback"
+    "feedback": "Ge feedback",
+    "feedbackLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/delta/feedback"
   },
   "notification": {
     "defaultErrorTitle": "Fel",
