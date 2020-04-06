@@ -22,19 +22,19 @@ export interface CreateMyProfile_createMyProfile {
 export interface CreateMyProfile {
   /**
    * Creates a new profile based on the given data. The new profile is linked to the currently authenticated user.
-   * 
+   *
    * One or several of the following is possible to add:
-   * 
+   *
    * * Email
    * * Address
    * * Phone
-   * 
+   *
    * If youth data is given, a youth profile will also be created and linked to the profile.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly createMyProfile: CreateMyProfile_createMyProfile | null;
@@ -60,15 +60,15 @@ export interface DeleteMyProfile_deleteMyProfile {
 export interface DeleteMyProfile {
   /**
    * Deletes the data of the profile which is linked to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `CANNOT_DELETE_PROFILE_WHILE_SERVICE_CONNECTED_ERROR`: Returned if the profile is connected to Berth service.
-   * 
+   *
    * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
-   * 
+   *
    * * `TODO`
    */
   readonly deleteMyProfile: DeleteMyProfile_deleteMyProfile | null;
@@ -89,11 +89,11 @@ export interface DeleteMyProfileVariables {
 export interface DownloadMyProfile {
   /**
    * Get the user information stored in the profile as machine readable JSON.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly downloadMyProfile: any | null;
@@ -163,11 +163,11 @@ export interface MyProfileQuery_myProfile {
 export interface MyProfileQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: MyProfileQuery_myProfile | null;
@@ -191,11 +191,11 @@ export interface NameQuery_myProfile {
 export interface NameQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: NameQuery_myProfile | null;
@@ -220,11 +220,11 @@ export interface ProfileExistsQuery_myProfile {
 export interface ProfileExistsQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: ProfileExistsQuery_myProfile | null;
@@ -305,11 +305,11 @@ export interface ServiceConnectionsQuery_myProfile {
 export interface ServiceConnectionsQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: ServiceConnectionsQuery_myProfile | null;
@@ -382,21 +382,21 @@ export interface UpdateMyProfile_updateMyProfile {
 export interface UpdateMyProfile {
   /**
    * Updates the profile which is linked to the currently authenticated user based on the given data.
-   * 
+   *
    * One or several of the following is possible to add, modify or remove:
-   * 
+   *
    * * Email
    * * Address
    * * Phone
-   * 
+   *
    * If youth data is given, a youth profile will also be created and linked to the
    * profile **or** the existing youth profile will be updated if the profile is
    * already linked to a youth profile.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly updateMyProfile: UpdateMyProfile_updateMyProfile | null;
@@ -404,6 +404,132 @@ export interface UpdateMyProfile {
 
 export interface UpdateMyProfileVariables {
   readonly input: UpdateMyProfileMutationInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: QueryMySubscriptions
+// ====================================================
+
+export interface QueryMySubscriptions_myProfile_subscriptions_edges_node_subscriptionType {
+  readonly __typename: "SubscriptionTypeNode";
+  readonly code: string;
+}
+
+export interface QueryMySubscriptions_myProfile_subscriptions_edges_node {
+  readonly __typename: "SubscriptionNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly enabled: boolean;
+  readonly subscriptionType: QueryMySubscriptions_myProfile_subscriptions_edges_node_subscriptionType;
+}
+
+export interface QueryMySubscriptions_myProfile_subscriptions_edges {
+  readonly __typename: "SubscriptionNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: QueryMySubscriptions_myProfile_subscriptions_edges_node | null;
+}
+
+export interface QueryMySubscriptions_myProfile_subscriptions {
+  readonly __typename: "SubscriptionNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(QueryMySubscriptions_myProfile_subscriptions_edges | null)>;
+}
+
+export interface QueryMySubscriptions_myProfile {
+  readonly __typename: "ProfileNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly subscriptions: QueryMySubscriptions_myProfile_subscriptions | null;
+}
+
+export interface QueryMySubscriptions {
+  /**
+   * Get the profile belonging to the currently authenticated user.
+   *
+   * Requires authentication.
+   *
+   * Possible error codes:
+   *
+   * * `TODO`
+   */
+  readonly myProfile: QueryMySubscriptions_myProfile | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: QuerySubscriptions
+// ====================================================
+
+export interface QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes_edges_node {
+  readonly __typename: "SubscriptionTypeNode";
+  readonly label: string | null;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly code: string;
+}
+
+export interface QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes_edges {
+  readonly __typename: "SubscriptionTypeNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes_edges_node | null;
+}
+
+export interface QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes {
+  readonly __typename: "SubscriptionTypeNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes_edges | null)>;
+}
+
+export interface QuerySubscriptions_subscriptionTypeCategories_edges_node {
+  readonly __typename: "SubscriptionTypeCategoryNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly code: string;
+  readonly label: string | null;
+  readonly subscriptionTypes: QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes;
+}
+
+export interface QuerySubscriptions_subscriptionTypeCategories_edges {
+  readonly __typename: "SubscriptionTypeCategoryNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: QuerySubscriptions_subscriptionTypeCategories_edges_node | null;
+}
+
+export interface QuerySubscriptions_subscriptionTypeCategories {
+  readonly __typename: "SubscriptionTypeCategoryNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(QuerySubscriptions_subscriptionTypeCategories_edges | null)>;
+}
+
+export interface QuerySubscriptions {
+  readonly subscriptionTypeCategories: QuerySubscriptions_subscriptionTypeCategories | null;
 }
 
 /* tslint:disable */
@@ -519,12 +645,18 @@ export interface ProfileInput {
   readonly addAddresses?: ReadonlyArray<(AddressInput | null)> | null;
   readonly updateAddresses?: ReadonlyArray<(AddressInput | null)> | null;
   readonly removeAddresses?: ReadonlyArray<(string | null)> | null;
+  readonly subscriptions?: ReadonlyArray<(SubscriptionInputType | null)> | null;
   readonly youthProfile?: YouthProfileFields | null;
   readonly sensitivedata?: SensitiveDataFields | null;
 }
 
 export interface SensitiveDataFields {
   readonly ssn?: string | null;
+}
+
+export interface SubscriptionInputType {
+  readonly subscriptionTypeId?: string | null;
+  readonly enabled?: boolean | null;
 }
 
 export interface UpdateMyProfileMutationInput {

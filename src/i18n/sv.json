@@ -20,9 +20,16 @@
     "created": "Skapad",
     "clock": "kl."
   },
+  "subscriptions": {
+    "title": "Prenumerationer och nyhetsbrev",
+    "explanation": "Någon förklaring",
+    "empty": "Inga prenumerationer / nyhetsbrev",
+    "subscribed": "Prenumererar!"
+  },
   "nav": {
     "information": "Mina uppgifter",
     "services": "Anslutna servicer",
+    "subscriptions": "Prenumerationer",
     "signin": "Logga in",
     "signout": "Logga ut",
     "menuButtonLabel": "Profilmeny"

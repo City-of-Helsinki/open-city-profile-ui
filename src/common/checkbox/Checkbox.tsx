@@ -4,16 +4,18 @@ import classNames from 'classnames';
 import styles from './Checkbox.module.css';
 
 type Props = PropsWithChildren<{
-  onChange: () => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string | ReactNode;
   className?: string;
-  name: string;
+  name?: string;
+  checked?: boolean;
 }>;
 
 function Checkbox(props: Props) {
   return (
     <div className={classNames(styles.container, props.className)}>
       <input
+        checked={props.checked}
         className={styles.checkbox}
         type="checkbox"
         onChange={props.onChange}

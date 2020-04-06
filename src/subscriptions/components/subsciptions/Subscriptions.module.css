@@ -1,0 +1,44 @@
+.subscriptionsPage {
+    background: var(--hds-ui-color-black-5);
+    flex: 1;
+}
+
+.subscriptionsContainer {
+    background: var(--hds-ui-color-white);
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 50px;
+}
+
+.subscriptionsContainer h3 {
+    margin-top: 0;
+}
+
+.subscription {
+    margin-bottom: 40px;
+}
+
+.empty,
+.pageTitle {
+    padding: 25px 0;
+}
+
+
+.buttonRow {
+    max-height: 120px;
+    max-width: 480px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.button {
+    margin-top: 20px;
+}
+
+@media (min-width: 500px) {
+    .button {
+        margin: 0;
+    }
+}

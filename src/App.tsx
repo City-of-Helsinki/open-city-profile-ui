@@ -46,7 +46,7 @@ function App(props: Props) {
             <Route path="/login">
               <Login />
             </Route>
-            <Route path={['/', '/connected-services']} exact>
+            <Route path={['/', '/connected-services', '/subscriptions']} exact>
               <Profile />
             </Route>
             <Route path="/terms-of-service" exact>

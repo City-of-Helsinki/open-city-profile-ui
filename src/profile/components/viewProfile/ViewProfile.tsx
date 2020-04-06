@@ -12,6 +12,7 @@ import ProfileInformation from '../profileInformation/ProfileInformation';
 import EditProfile from '../editProfile/EditProfile';
 import getNicknameOrName from '../../helpers/getNicknameOrName';
 import ServiceConnections from '../serviceConnections/ServiceConnections';
+import Subscriptions from '../../../subscriptions/components/subsciptions/Subscriptions';
 import { MyProfileQuery } from '../../../graphql/generatedTypes';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
 
@@ -57,10 +58,21 @@ function ViewProfile() {
             >
               {t('nav.services')}
             </NavLink>
+            <NavLink
+              exact
+              to="/subscriptions"
+              className={styles.profileNavLink}
+              activeClassName={styles.activeProfileNavLink}
+            >
+              {t('nav.subscriptions')}
+            </NavLink>
           </nav>
           <Switch>
             <Route path="/connected-services">
               <ServiceConnections />
+            </Route>
+            <Route path="/subscriptions">
+              <Subscriptions />
             </Route>
             <Route path="/">
               <div className={styles.profileContent}>

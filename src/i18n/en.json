@@ -20,9 +20,16 @@
     "created": "Created",
     "clock": "at"
   },
+  "subscriptions": {
+    "title": "Subscriptions and newsletters",
+    "explanation": "Some explanation",
+    "empty": "No subscriptions / newsletters",
+    "subscribed": "Subscribed!"
+  },
   "nav": {
     "information": "Information",
     "services": "Connected services",
+    "subscriptions": "Subscriptions",
     "signin": "Log in",
     "signout": "Sign out",
     "menuButtonLabel": "Profile menu"
