@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -13,14 +13,19 @@ import {
   MyProfileQuery,
   UpdateMyProfile as UpdateMyProfileData,
   UpdateMyProfileVariables,
+  ServiceConnectionsQuery,
   AddressType,
   PhoneType,
   Language,
 } from '../../../graphql/generatedTypes';
 import Explanation from '../../../common/explanation/Explanation';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
+import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
+const SERVICE_CONNECTIONS = loader(
+  '../../graphql/ServiceConnectionsQuery.graphql'
+);
 
 type Props = {
   setEditing: () => void;
@@ -28,7 +33,12 @@ type Props = {
 };
 
 function EditProfile(props: Props) {
-  const [showNotification, setShowNotification] = useState(false);
+  const [showNotification, setShowNotification] = useState<boolean>(false);
+  const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
+  const [formData, setFormData] = useState<FormValues>();
+  const { data, loading: servicesLoading } = useQuery<ServiceConnectionsQuery>(
+    SERVICE_CONNECTIONS
+  );
   const { profileData } = props;
   const { t } = useTranslation();
   const [updateProfile, { loading }] = useMutation<
@@ -124,9 +134,21 @@ function EditProfile(props: Props) {
               profileData?.myProfile?.primaryAddress?.postalCode || '',
           }}
           isSubmitting={loading}
-          onValues={handleOnValues}
+          onValues={values => {
+            setFormData(values);
+            setConfirmationDialog(true);
+          }}
         />
       </div>
+      <ConfirmationModal
+        services={data}
+        isOpen={confirmationDialog}
+        onClose={() => setConfirmationDialog(false)}
+        onConfirm={() => ''}
+        modalTitle="Huom!"
+        modalText="Tallentamalla tiedot välittyvät palveluihin"
+        actionButtonText={t('confirmationDialog.save')}
+      />
       <NotificationComponent
         show={showNotification}
         onClose={() => setShowNotification(false)}
