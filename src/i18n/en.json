@@ -107,7 +107,8 @@
     "privacy": "Privacy policy",
     "accessibility": "Accessibility document",
     "terms": "Terms of Service",
-    "feedback": "GIVE FEEDBACK"
+    "feedback": "GIVE FEEDBACK",
+    "feedbackLink": "https://www.hel.fi/helsinki/en/administration/participate/feedback"
   },
   "notification": {
     "defaultErrorTitle": "Error",

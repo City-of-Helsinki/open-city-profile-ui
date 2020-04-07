@@ -107,7 +107,8 @@
     "privacy": "Rekisteriseloste",
     "accessibility": "Saavutettavuusseloste",
     "terms": "Palvelun käyttöehdot",
-    "feedback": "ANNA PALAUTETTA"
+    "feedback": "ANNA PALAUTETTA",
+    "feedbackLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/anna-palautetta"
   },
   "notification": {
     "defaultErrorTitle": "Virhe",
