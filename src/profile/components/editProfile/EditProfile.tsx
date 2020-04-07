@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -10,13 +10,13 @@ import EditProfileForm, {
   FormValues,
 } from '../editProfileForm/EditProfileForm';
 import {
+  AddressType,
+  Language,
   MyProfileQuery,
+  PhoneType,
+  ServiceConnectionsQuery,
   UpdateMyProfile as UpdateMyProfileData,
   UpdateMyProfileVariables,
-  ServiceConnectionsQuery,
-  AddressType,
-  PhoneType,
-  Language,
 } from '../../../graphql/generatedTypes';
 import Explanation from '../../../common/explanation/Explanation';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
@@ -35,10 +35,8 @@ type Props = {
 function EditProfile(props: Props) {
   const [showNotification, setShowNotification] = useState<boolean>(false);
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
-  const [formData, setFormData] = useState<FormValues>();
-  const { data, loading: servicesLoading } = useQuery<ServiceConnectionsQuery>(
-    SERVICE_CONNECTIONS
-  );
+  const [formData, setFormData] = useState();
+  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS);
   const { profileData } = props;
   const { t } = useTranslation();
   const [updateProfile, { loading }] = useMutation<
@@ -48,11 +46,12 @@ function EditProfile(props: Props) {
     refetchQueries: ['MyProfileQuery'],
   });
 
-  const handleOnValues = (formValues: FormValues) => {
+  const handleOnValues = (values?: FormValues) => {
+    const formValues = values?.email ? values : formData;
     const variables: UpdateMyProfileVariables = {
       input: {
         profile: {
-          firstName: formValues.firstName,
+          firstName: formValues?.firstName,
           lastName: formValues.lastName,
           language: formValues.profileLanguage,
           addPhones: [
@@ -110,6 +109,9 @@ function EditProfile(props: Props) {
       .catch(() => setShowNotification(true));
   };
 
+  const userHasServices =
+    data?.myProfile?.serviceConnections?.edges?.length !== 0;
+
   return (
     <section className={styles.editProfile}>
       <div className={styles.editProfileTitleRow}>
@@ -135,19 +137,24 @@ function EditProfile(props: Props) {
           }}
           isSubmitting={loading}
           onValues={values => {
-            setFormData(values);
-            setConfirmationDialog(true);
+            if (userHasServices) {
+              setFormData(values);
+              setConfirmationDialog(true);
+            } else {
+              handleOnValues(values);
+            }
           }}
+          userHasServices={userHasServices || false}
         />
       </div>
       <ConfirmationModal
         services={data}
         isOpen={confirmationDialog}
         onClose={() => setConfirmationDialog(false)}
-        onConfirm={() => ''}
-        modalTitle="Huom!"
-        modalText="Tallentamalla tiedot välittyvät palveluihin"
-        actionButtonText={t('confirmationDialog.save')}
+        onConfirm={handleOnValues}
+        modalTitle={t('confirmationModal.saveTitle')}
+        modalText={t('confirmationModal.saveMessage')}
+        actionButtonText={t('confirmationModal.save')}
       />
       <NotificationComponent
         show={showNotification}

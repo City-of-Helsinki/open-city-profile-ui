@@ -83,6 +83,12 @@
     "close": "Cancel deletion",
     "delete": "Delete Helsinki profile"
   },
+  "confirmationModal": {
+    "saveTitle": "Do you want to save your changes",
+    "saveMessage": "Saved data will transfer to following services",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
   "profileDeleted": {
     "title": "Your profile has been successfully removed!",
     "message": "You can recreate it later if you want. You will be logged out after {{time}} seconds."

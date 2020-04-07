@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import { useTranslation } from 'react-i18next';
+import IconClose from 'hds-react/lib/icons/IconClose';
 
 import styles from './ConfirmationModal.module.css';
-import IconClose from 'hds-react/lib/icons/IconClose';
 import { ServiceConnectionsQuery } from '../../../../graphql/generatedTypes';
 import getServices from '../../../helpers/getServices';
 import Button from '../../../../common/button/Button';
@@ -55,10 +55,10 @@ function ConfirmationModal({
 
       <div className={styles.actions}>
         <Button className={styles.button} variant="outlined" onClick={onClose}>
-          {actionButtonText}
+          {t('confirmationModal.cancel')}
         </Button>
         <Button className={styles.button} onClick={onConfirm}>
-          {t('confirmationModal.delete')}
+          {actionButtonText}
         </Button>
       </div>
     </ReactModal>

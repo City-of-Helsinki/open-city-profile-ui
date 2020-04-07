@@ -83,6 +83,12 @@
     "close": "Peru poistaminen",
     "delete": "Poista Helsinki profiili"
   },
+  "confirmationModal": {
+    "saveTitle": "Haluatko tallentaa tekemäsi muutokset",
+    "saveMessage": "Muutokset välittyvät seuraaviin palveluihin",
+    "save": "Tallenna",
+    "cancel": "Peruuta"
+  },
   "profileDeleted": {
     "title": "Profiilisi on poistettu onnistuneesti!",
     "message": "Jos haluat, voit luoda profiilis uudestaan myöhemmin. Sinut kirjataan ulos {{time}} sekunnin kuluttua."

@@ -83,6 +83,12 @@
     "close": "Avbryt borttagning",
     "delete": "Radera Helsingfors-profilen"
   },
+  "confirmationModal": {
+    "saveTitle": "Vill du spara dina ändringar",
+    "saveMessage": "Sparade data överförs till följande tjänster",
+    "save": "Spara",
+    "cancel": "Annullera"
+  },
   "profileDeleted": {
     "title": "Din profil har tagits bort!",
     "message": "Du kan återskapa det senare om du vill. Du kommer att loggas ut efter {{time}} sekunder."

@@ -39,6 +39,7 @@ type Props = {
   isSubmitting: boolean;
   profile: FormValues;
   onValues: (values: FormValues) => void;
+  userHasServices: boolean;
 };
 
 function EditProfileForm(props: Props) {
@@ -180,7 +181,11 @@ function EditProfileForm(props: Props) {
           </div>
           <Button
             type="submit"
-            disabled={Boolean(isSubmitting || props.isSubmitting)}
+            disabled={
+              props.userHasServices
+                ? false
+                : Boolean(isSubmitting || props.isSubmitting)
+            }
           >
             {t('profileForm.submit')}
           </Button>
