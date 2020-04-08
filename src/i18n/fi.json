@@ -80,7 +80,6 @@
     "title": "Haluatko varmasti poistaa Helsinki profiilisi",
     "explanation": "Poistamalla profiilisi menetät myös kaikki seuraaviin palveluihin tallennetut tiedot",
     "noServiceExplanation": "Poistamalla profiilisi menetät kaikki tallennetut tiedot.",
-    "close": "Peru poistaminen",
     "delete": "Poista Helsinki profiili"
   },
   "confirmationModal": {
