@@ -33,7 +33,9 @@ type Props = {
 
 function EditProfile(props: Props) {
   const [showNotification, setShowNotification] = useState<boolean>(false);
-  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS);
+  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS, {
+    onError: () => setShowNotification(true),
+  });
   const { profileData } = props;
   const { t } = useTranslation();
   const [updateProfile, { loading }] = useMutation<
@@ -47,7 +49,7 @@ function EditProfile(props: Props) {
     const variables: UpdateMyProfileVariables = {
       input: {
         profile: {
-          firstName: formValues?.firstName,
+          firstName: formValues.firstName,
           lastName: formValues.lastName,
           language: formValues.profileLanguage,
           addPhones: [
