@@ -1,29 +1,36 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import IconClose from 'hds-react/lib/icons/IconClose';
 import { useTranslation } from 'react-i18next';
+import IconClose from 'hds-react/lib/icons/IconClose';
 
+import styles from './ConfirmationModal.module.css';
 import { ServiceConnectionsQuery } from '../../../../graphql/generatedTypes';
 import getServices from '../../../helpers/getServices';
 import Button from '../../../../common/button/Button';
-import styles from './DeleteConfirmationModal.module.css';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onDelete: () => void;
+  onConfirm: () => void;
+  modalTitle?: string;
+  modalText?: string;
+  actionButtonText: string;
   services?: ServiceConnectionsQuery;
 };
 
-function DeleteConfirmationModal(props: Props) {
-  const { isOpen, onClose, onDelete } = props;
+function ConfirmationModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  modalTitle,
+  modalText,
+  actionButtonText,
+  services,
+}: Props) {
+  const servicesArray = getServices(services);
   const { t } = useTranslation();
-  const services = getServices(props.services);
-
-  if (!isOpen) return null;
   return (
     <ReactModal
-      ariaHideApp={false}
       isOpen={isOpen}
       onRequestClose={onClose}
       className={styles.container}
@@ -37,14 +44,10 @@ function DeleteConfirmationModal(props: Props) {
       </div>
 
       <div className={styles.content}>
-        <h3>{t('deleteProfileModal.title')}</h3>
-        <p>
-          {services.length > 0
-            ? t('deleteProfileModal.explanation')
-            : t('deleteProfileModal.noServiceExplanation')}
-        </p>
+        <h3>{modalTitle}</h3>
+        <p>{modalText}</p>
         <ul>
-          {services.map((service, index) => (
+          {servicesArray.map((service, index) => (
             <li key={index}>{service.title}</li>
           ))}
         </ul>
@@ -52,14 +55,14 @@ function DeleteConfirmationModal(props: Props) {
 
       <div className={styles.actions}>
         <Button className={styles.button} variant="outlined" onClick={onClose}>
-          {t('deleteProfileModal.close')}
+          {t('confirmationModal.cancel')}
         </Button>
-        <Button className={styles.button} onClick={onDelete}>
-          {t('deleteProfileModal.delete')}
+        <Button className={styles.button} onClick={onConfirm}>
+          {actionButtonText}
         </Button>
       </div>
     </ReactModal>
   );
 }
 
-export default DeleteConfirmationModal;
+export default ConfirmationModal;

@@ -80,8 +80,13 @@
     "title": "Are you sure you want to delete your Helsinki profile",
     "explanation": "By deleting your profile you also loose all the data saved to following services",
     "noServiceExplanation": "By removing your profile you will loose all of your stored data.",
-    "close": "Cancel deletion",
     "delete": "Delete Helsinki profile"
+  },
+  "confirmationModal": {
+    "saveTitle": "Do you want to save your changes",
+    "saveMessage": "Saved data will transfer to following services",
+    "save": "Save",
+    "cancel": "Cancel"
   },
   "profileDeleted": {
     "title": "Your profile has been successfully removed!",

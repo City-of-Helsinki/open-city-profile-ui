@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 
 import './index.css';
 import BrowserApp from './BrowserApp';
 import * as serviceWorker from './serviceWorker';
+
+Modal.setAppElement('#root');
 
 ReactDOM.render(<BrowserApp />, document.getElementById('root'));
 

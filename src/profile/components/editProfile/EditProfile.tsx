@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -10,17 +10,21 @@ import EditProfileForm, {
   FormValues,
 } from '../editProfileForm/EditProfileForm';
 import {
+  AddressType,
+  Language,
   MyProfileQuery,
+  PhoneType,
+  ServiceConnectionsQuery,
   UpdateMyProfile as UpdateMyProfileData,
   UpdateMyProfileVariables,
-  AddressType,
-  PhoneType,
-  Language,
 } from '../../../graphql/generatedTypes';
 import Explanation from '../../../common/explanation/Explanation';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
+const SERVICE_CONNECTIONS = loader(
+  '../../graphql/ServiceConnectionsQuery.graphql'
+);
 
 type Props = {
   setEditing: () => void;
@@ -28,7 +32,10 @@ type Props = {
 };
 
 function EditProfile(props: Props) {
-  const [showNotification, setShowNotification] = useState(false);
+  const [showNotification, setShowNotification] = useState<boolean>(false);
+  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS, {
+    onError: () => setShowNotification(true),
+  });
   const { profileData } = props;
   const { t } = useTranslation();
   const [updateProfile, { loading }] = useMutation<
@@ -111,6 +118,7 @@ function EditProfile(props: Props) {
         </div>
         <EditProfileForm
           setEditing={props.setEditing}
+          services={data}
           profile={{
             firstName: profileData?.myProfile?.firstName || '',
             lastName: profileData?.myProfile?.lastName || '',
@@ -127,6 +135,7 @@ function EditProfile(props: Props) {
           onValues={handleOnValues}
         />
       </div>
+
       <NotificationComponent
         show={showNotification}
         onClose={() => setShowNotification(false)}
