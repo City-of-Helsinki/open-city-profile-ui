@@ -22,7 +22,7 @@
   },
   "subscriptions": {
     "title": "Prenumerationer och nyhetsbrev",
-    "explanation": "Någon förklaring",
+    "explanation": "Prenumerera på meddelanden och nyhetsbrev",
     "empty": "Inga prenumerationer / nyhetsbrev",
     "subscribed": "Prenumererar!"
   },

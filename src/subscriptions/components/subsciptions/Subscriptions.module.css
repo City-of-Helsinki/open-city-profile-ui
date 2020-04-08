@@ -16,12 +16,14 @@
 }
 
 .subscription {
+    margin-top: 10px;
     margin-bottom: 40px;
 }
 
 .empty,
 .pageTitle {
     padding: 25px 0;
+    margin: 0 20px;
 }
 
 
@@ -39,6 +41,12 @@
 
 @media (min-width: 500px) {
     .button {
+        margin: 0;
+    }
+}
+
+@media (min-width: 1200px) {
+    .pageTitle {
         margin: 0;
     }
 }

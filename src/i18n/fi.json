@@ -22,7 +22,7 @@
   },
   "subscriptions": {
     "title": "Tilaukset ja uutiskirjeet",
-    "explanation": "Tähän joku kuvaus",
+    "explanation": "Tilaa ilmoituksia ja uutiskirjeitä",
     "empty": "Ei tilattavia palveluita / ilmoituksia",
     "subscribed": "Tilattu!"
   },

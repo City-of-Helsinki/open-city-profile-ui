@@ -47,6 +47,7 @@ type SubscriptionVariable = {
 
 function Subscriptions() {
   const [showNotification, setShowNotification] = useState<boolean>(false);
+  const [saveSuccessful, setSaveSuccessful] = useState<boolean>(false);
   const [subscriptionData, setSubscriptionData] = useState<
     SubscriptionData[]
   >();
@@ -61,12 +62,16 @@ function Subscriptions() {
 
   const { data: profileData, loading: profileLoading } = useQuery<
     QueryMySubscriptions
-  >(QUERY_MY_SUBSCRIPTIONS);
+  >(QUERY_MY_SUBSCRIPTIONS, {
+    onError: () => setShowNotification(true),
+  });
 
   const [updateSubscriptions] = useMutation<
     UpdateMyProfile,
     UpdateMyProfileVariables
-  >(UPDATE_PROFILE);
+  >(UPDATE_PROFILE, {
+    refetchQueries: ['QueryMySubscriptions'],
+  });
 
   // Refetch services when language changes, services are translated based on
   // Accept-Language header which is set in the graphql-client (src/graphql/client).
@@ -106,9 +111,9 @@ function Subscriptions() {
       },
     };
 
-    updateSubscriptions({ variables }).catch((error: Error) =>
-      setShowNotification(true)
-    );
+    updateSubscriptions({ variables })
+      .then(results => setSaveSuccessful(!!results.data))
+      .catch((error: Error) => setShowNotification(true));
   };
 
   const handleCheckboxValues = (
@@ -137,6 +142,11 @@ function Subscriptions() {
         setSubscriptionData([...newSubscriptionData]);
       }
     }
+  };
+
+  const resetEditedData = () => {
+    const subscriptions = getSubscriptionsData(data, profileData);
+    setSubscriptionData(subscriptions);
   };
 
   return (
@@ -187,7 +197,11 @@ function Subscriptions() {
                 <Button onClick={handleUpdate}>
                   {t('profileForm.submit')}
                 </Button>
-                <Button className={styles.button} variant="outlined">
+                <Button
+                  className={styles.button}
+                  variant="outlined"
+                  onClick={resetEditedData}
+                >
                   {t('profileForm.cancel')}
                 </Button>
               </div>
@@ -199,6 +213,14 @@ function Subscriptions() {
           show={showNotification}
           onClose={() => setShowNotification(false)}
         />
+
+        <NotificationComponent
+          show={saveSuccessful}
+          type="success"
+          labelText={'Onnistui!'}
+        >
+          {t('Tiedot tallennettu onnistuneesti')}
+        </NotificationComponent>
       </div>
     </Loading>
   );
