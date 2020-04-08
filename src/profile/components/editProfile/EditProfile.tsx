@@ -20,7 +20,6 @@ import {
 } from '../../../graphql/generatedTypes';
 import Explanation from '../../../common/explanation/Explanation';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
-import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
 const SERVICE_CONNECTIONS = loader(
@@ -34,8 +33,6 @@ type Props = {
 
 function EditProfile(props: Props) {
   const [showNotification, setShowNotification] = useState<boolean>(false);
-  const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
-  const [formData, setFormData] = useState();
   const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS);
   const { profileData } = props;
   const { t } = useTranslation();
@@ -46,8 +43,7 @@ function EditProfile(props: Props) {
     refetchQueries: ['MyProfileQuery'],
   });
 
-  const handleOnValues = (values?: FormValues) => {
-    const formValues = values?.email ? values : formData;
+  const handleOnValues = (formValues: FormValues) => {
     const variables: UpdateMyProfileVariables = {
       input: {
         profile: {
@@ -109,9 +105,6 @@ function EditProfile(props: Props) {
       .catch(() => setShowNotification(true));
   };
 
-  const userHasServices =
-    data?.myProfile?.serviceConnections?.edges?.length !== 0;
-
   return (
     <section className={styles.editProfile}>
       <div className={styles.editProfileTitleRow}>
@@ -123,6 +116,7 @@ function EditProfile(props: Props) {
         </div>
         <EditProfileForm
           setEditing={props.setEditing}
+          services={data}
           profile={{
             firstName: profileData?.myProfile?.firstName || '',
             lastName: profileData?.myProfile?.lastName || '',
@@ -136,26 +130,10 @@ function EditProfile(props: Props) {
               profileData?.myProfile?.primaryAddress?.postalCode || '',
           }}
           isSubmitting={loading}
-          onValues={values => {
-            if (userHasServices) {
-              setFormData(values);
-              setConfirmationDialog(true);
-            } else {
-              handleOnValues(values);
-            }
-          }}
-          userHasServices={userHasServices || false}
+          onValues={handleOnValues}
         />
       </div>
-      <ConfirmationModal
-        services={data}
-        isOpen={confirmationDialog}
-        onClose={() => setConfirmationDialog(false)}
-        onConfirm={handleOnValues}
-        modalTitle={t('confirmationModal.saveTitle')}
-        modalText={t('confirmationModal.saveMessage')}
-        actionButtonText={t('confirmationModal.save')}
-      />
+
       <NotificationComponent
         show={showNotification}
         onClose={() => setShowNotification(false)}

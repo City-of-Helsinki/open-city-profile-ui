@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextInput } from 'hds-react';
 import { Formik, Form, Field } from 'formik';
@@ -7,8 +7,12 @@ import * as yup from 'yup';
 import Select from '../../../common/select/Select';
 import Button from '../../../common/button/Button';
 import styles from './EditProfileForm.module.css';
-import { Language } from '../../../graphql/generatedTypes';
+import {
+  Language,
+  ServiceConnectionsQuery,
+} from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
+import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
@@ -39,12 +43,14 @@ type Props = {
   isSubmitting: boolean;
   profile: FormValues;
   onValues: (values: FormValues) => void;
-  userHasServices: boolean;
+  services?: ServiceConnectionsQuery;
 };
 
 function EditProfileForm(props: Props) {
   const { t } = useTranslation();
-
+  const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
+  const userHasServices =
+    props.services?.myProfile?.serviceConnections?.edges?.length !== 0;
   return (
     <Formik
       initialValues={{
@@ -64,140 +70,153 @@ function EditProfileForm(props: Props) {
       }}
       validationSchema={schema}
     >
-      {({ errors, isSubmitting, submitCount }) => (
-        <Form>
-          <div className={styles.formFields}>
-            <Field
-              className={styles.formField}
-              name="firstName"
-              id="firstName"
-              maxLength="255"
-              as={TextInput}
-              invalid={submitCount && errors.firstName}
-              invalidText={
-                submitCount &&
-                errors.firstName &&
-                t(errors.firstName, { max: 255 })
-              }
-              labelText={t('profileForm.firstName')}
-            />
+      {({ errors, isSubmitting, submitCount, handleSubmit }) => (
+        <React.Fragment>
+          <Form>
+            <div className={styles.formFields}>
+              <Field
+                className={styles.formField}
+                name="firstName"
+                id="firstName"
+                maxLength="255"
+                as={TextInput}
+                invalid={submitCount && errors.firstName}
+                invalidText={
+                  submitCount &&
+                  errors.firstName &&
+                  t(errors.firstName, { max: 255 })
+                }
+                labelText={t('profileForm.firstName')}
+              />
 
-            <Field
-              className={styles.formField}
-              name="lastName"
-              id="lastName"
-              maxLength="255"
-              as={TextInput}
-              invalid={submitCount && errors.lastName}
-              invalidText={
-                submitCount &&
-                errors.lastName &&
-                t(errors.lastName, { max: 255 })
-              }
-              labelText={t('profileForm.lastName')}
-            />
+              <Field
+                className={styles.formField}
+                name="lastName"
+                id="lastName"
+                maxLength="255"
+                as={TextInput}
+                invalid={submitCount && errors.lastName}
+                invalidText={
+                  submitCount &&
+                  errors.lastName &&
+                  t(errors.lastName, { max: 255 })
+                }
+                labelText={t('profileForm.lastName')}
+              />
 
-            <Field
-              id="profileLanguage"
-              name="profileLanguage"
-              className={styles.formField}
-              as={Select}
-              options={profileConstants.LANGUAGES.map(language => {
-                return {
-                  value: language,
-                  label: t(`LANGUAGE_OPTIONS.${language}`),
-                };
-              })}
-              labelText={t('profileForm.language')}
-            />
+              <Field
+                id="profileLanguage"
+                name="profileLanguage"
+                className={styles.formField}
+                as={Select}
+                options={profileConstants.LANGUAGES.map(language => {
+                  return {
+                    value: language,
+                    label: t(`LANGUAGE_OPTIONS.${language}`),
+                  };
+                })}
+                labelText={t('profileForm.language')}
+              />
 
-            <Field
-              className={styles.formField}
-              name="phone"
-              id="phone"
-              as={TextInput}
-              type="tel"
-              minLength="6"
-              maxLength="255"
-              invalid={submitCount && errors.phone}
-              invalidText={
-                submitCount &&
-                errors.phone &&
-                t(errors.phone, { min: 6, max: 255 })
-              }
-              labelText={t('profileForm.phone')}
-            />
+              <Field
+                className={styles.formField}
+                name="phone"
+                id="phone"
+                as={TextInput}
+                type="tel"
+                minLength="6"
+                maxLength="255"
+                invalid={submitCount && errors.phone}
+                invalidText={
+                  submitCount &&
+                  errors.phone &&
+                  t(errors.phone, { min: 6, max: 255 })
+                }
+                labelText={t('profileForm.phone')}
+              />
 
-            <div className={styles.formField}>
-              <label className={styles.label}>{t('profileForm.email')}</label>
-              <span className={styles.email}>{props.profile.email}</span>
+              <div className={styles.formField}>
+                <label className={styles.label}>{t('profileForm.email')}</label>
+                <span className={styles.email}>{props.profile.email}</span>
+              </div>
             </div>
-          </div>
 
-          <div className={styles.linebreak} />
+            <div className={styles.linebreak} />
 
-          <div className={styles.formFields}>
-            <Field
-              className={styles.formField}
-              name="address"
-              id="address"
-              maxLength="255"
-              as={TextInput}
-              invalid={submitCount && errors.address}
-              invalidText={
-                submitCount && errors.address && t(errors.address, { max: 255 })
+            <div className={styles.formFields}>
+              <Field
+                className={styles.formField}
+                name="address"
+                id="address"
+                maxLength="255"
+                as={TextInput}
+                invalid={submitCount && errors.address}
+                invalidText={
+                  submitCount &&
+                  errors.address &&
+                  t(errors.address, { max: 255 })
+                }
+                labelText={t('profileForm.address')}
+              />
+
+              <Field
+                className={styles.formField}
+                name="postalCode"
+                id="postalCode"
+                maxLength="5"
+                as={TextInput}
+                invalid={submitCount && errors.postalCode}
+                invalidText={
+                  submitCount &&
+                  errors.postalCode &&
+                  t(errors.postalCode, { max: 5 })
+                }
+                labelText={t('profileForm.postalCode')}
+              />
+
+              <Field
+                className={styles.formField}
+                name="city"
+                id="city"
+                maxLength="255"
+                as={TextInput}
+                invalid={submitCount && errors.city}
+                invalidText={
+                  submitCount && errors.city && t(errors.city, { max: 255 })
+                }
+                labelText={t('profileForm.city')}
+              />
+              <br />
+            </div>
+            <Button
+              type="button"
+              disabled={Boolean(isSubmitting || props.isSubmitting)}
+              onClick={() =>
+                userHasServices ? setConfirmationDialog(true) : handleSubmit()
               }
-              labelText={t('profileForm.address')}
-            />
+            >
+              {t('profileForm.submit')}
+            </Button>
+            <Button
+              type="button"
+              variant="outlined"
+              className={styles.button}
+              onClick={props.setEditing}
+            >
+              {t('profileForm.cancel')}
+            </Button>
+          </Form>
 
-            <Field
-              className={styles.formField}
-              name="postalCode"
-              id="postalCode"
-              maxLength="5"
-              as={TextInput}
-              invalid={submitCount && errors.postalCode}
-              invalidText={
-                submitCount &&
-                errors.postalCode &&
-                t(errors.postalCode, { max: 5 })
-              }
-              labelText={t('profileForm.postalCode')}
-            />
-
-            <Field
-              className={styles.formField}
-              name="city"
-              id="city"
-              maxLength="255"
-              as={TextInput}
-              invalid={submitCount && errors.city}
-              invalidText={
-                submitCount && errors.city && t(errors.city, { max: 255 })
-              }
-              labelText={t('profileForm.city')}
-            />
-            <br />
-          </div>
-          <Button
-            type="submit"
-            disabled={
-              props.userHasServices
-                ? false
-                : Boolean(isSubmitting || props.isSubmitting)
-            }
-          >
-            {t('profileForm.submit')}
-          </Button>
-          <Button
-            type="button"
-            variant="outlined"
-            className={styles.button}
-            onClick={props.setEditing}
-          >
-            {t('profileForm.cancel')}
-          </Button>
-        </Form>
+          <ConfirmationModal
+            services={props.services}
+            isOpen={confirmationDialog}
+            onClose={() => setConfirmationDialog(false)}
+            onConfirm={handleSubmit}
+            modalTitle={t('confirmationModal.saveTitle')}
+            modalText={t('confirmationModal.saveMessage')}
+            actionButtonText={t('confirmationModal.save')}
+          />
+        </React.Fragment>
       )}
     </Formik>
   );
