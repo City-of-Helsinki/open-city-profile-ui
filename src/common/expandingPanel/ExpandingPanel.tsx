@@ -1,6 +1,6 @@
 import React, { useState, PropsWithChildren } from 'react';
 import classNames from 'classnames';
-import IconAngleRight from 'hds-react/lib/icons/IconAngleRight';
+import { IconAngleRight } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './ExpandingPanel.module.css';

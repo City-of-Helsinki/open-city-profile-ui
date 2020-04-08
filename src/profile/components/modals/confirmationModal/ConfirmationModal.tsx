@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import { useTranslation } from 'react-i18next';
-import IconClose from 'hds-react/lib/icons/IconClose';
+import { IconClose } from 'hds-react';
 
 import styles from './ConfirmationModal.module.css';
 import { ServiceConnectionsQuery } from '../../../../graphql/generatedTypes';
