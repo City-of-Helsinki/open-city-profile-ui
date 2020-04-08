@@ -188,23 +188,25 @@ function EditProfileForm(props: Props) {
               />
               <br />
             </div>
-            <Button
-              type="button"
-              disabled={Boolean(isSubmitting || props.isSubmitting)}
-              onClick={() =>
-                userHasServices ? setConfirmationDialog(true) : handleSubmit()
-              }
-            >
-              {t('profileForm.submit')}
-            </Button>
-            <Button
-              type="button"
-              variant="outlined"
-              className={styles.button}
-              onClick={props.setEditing}
-            >
-              {t('profileForm.cancel')}
-            </Button>
+            <div className={styles.buttonRow}>
+              <Button
+                type="button"
+                disabled={Boolean(isSubmitting || props.isSubmitting)}
+                onClick={() =>
+                  userHasServices ? setConfirmationDialog(true) : handleSubmit()
+                }
+              >
+                {t('profileForm.submit')}
+              </Button>
+              <Button
+                type="button"
+                variant="outlined"
+                className={styles.button}
+                onClick={props.setEditing}
+              >
+                {t('profileForm.cancel')}
+              </Button>
+            </div>
           </Form>
 
           <ConfirmationModal

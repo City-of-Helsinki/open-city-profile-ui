@@ -53,38 +53,39 @@ function ServiceConnections(props: Props) {
     <div className={styles.serviceConnections}>
       <div className={responsive.maxWidthCentered}>
         <Explanation
-          className={styles.pageTitle}
           main={t('serviceConnections.title')}
           small={t('serviceConnections.explanation')}
         />
         {hasNoServices && (
           <p className={styles.empty}>{t('serviceConnections.empty')}</p>
         )}
-        {services.map((service, index) => (
-          <ExpandingPanel
-            key={index}
-            title={service.title || ''}
-            showInformationText
-          >
-            {service.description}
-            <p className={styles.serviceInformation}>
-              {t('serviceConnections.servicePersonalData')}
-            </p>
-            {getAllowedDataFieldsFromService(service).map(node => (
-              <CheckedLabel
-                key={node.fieldName}
-                value={node.label || node.fieldName}
-                className={styles.allowedDataField}
-              />
-            ))}
-            <p className={styles.createdAt}>
-              {t('serviceConnections.created')}
-            </p>
-            <p className={styles.dateAndTime}>
-              {getDateTime(service.createdAt)}
-            </p>
-          </ExpandingPanel>
-        ))}
+        <div className={styles.panelContainer}>
+          {services.map((service, index) => (
+            <ExpandingPanel
+              key={index}
+              title={service.title || ''}
+              showInformationText
+            >
+              {service.description}
+              <p className={styles.serviceInformation}>
+                {t('serviceConnections.servicePersonalData')}
+              </p>
+              {getAllowedDataFieldsFromService(service).map(node => (
+                <CheckedLabel
+                  key={node.fieldName}
+                  value={node.label || node.fieldName}
+                  className={styles.allowedDataField}
+                />
+              ))}
+              <p className={styles.createdAt}>
+                {t('serviceConnections.created')}
+              </p>
+              <p className={styles.dateAndTime}>
+                {getDateTime(service.createdAt)}
+              </p>
+            </ExpandingPanel>
+          ))}
+        </div>
       </div>
       <NotificationComponent
         show={showNotification}

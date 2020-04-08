@@ -158,7 +158,6 @@ function Subscriptions() {
       <div className={styles.subscriptionsPage}>
         <div className={responsive.maxWidthCentered}>
           <Explanation
-            className={styles.pageTitle}
             main={t('subscriptions.title')}
             small={t('subscriptions.explanation')}
           />

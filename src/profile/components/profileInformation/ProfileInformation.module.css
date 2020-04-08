@@ -1,3 +1,12 @@
+.pageTitleContainer {
+  margin: 0;
+}
+
+.pageTitle {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
 .edit {
   font-weight: bold;
 }
@@ -30,6 +39,5 @@
     width: 50%;
   }
 }
-
 
 
