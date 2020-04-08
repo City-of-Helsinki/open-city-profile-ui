@@ -5,7 +5,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { useHistory } from 'react-router';
 
 import checkBerthError from '../../helpers/checkBerthError';
-import DeleteConfirmationModal from '../modals/deleteConfirmation/DeleteConfirmationModal';
+import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
@@ -65,7 +65,8 @@ function DeleteProfile(props: Props) {
         }
       });
   };
-
+  const userHasServices =
+    data?.myProfile?.serviceConnections?.edges?.length !== 0;
   return (
     <React.Fragment>
       <ExpandingPanel title={t('deleteProfile.title')}>
@@ -92,11 +93,18 @@ function DeleteProfile(props: Props) {
         </Button>
       </ExpandingPanel>
 
-      <DeleteConfirmationModal
+      <ConfirmationModal
         isOpen={deleteConfirmationModal}
         onClose={handleConfirmationModal}
-        onDelete={handleProfileDelete}
+        onConfirm={handleProfileDelete}
         services={data}
+        modalTitle={t('deleteProfileModal.title')}
+        modalText={
+          userHasServices
+            ? t('deleteProfileModal.explanation')
+            : t('deleteProfileModal.noServiceExplanation')
+        }
+        actionButtonText={t('deleteProfileModal.delete')}
       />
 
       <BerthErrorModal
