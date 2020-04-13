@@ -149,5 +149,6 @@
     "FINNISH": "Finnish",
     "ENGLISH": "English",
     "SWEDISH": "Swedish"
-  }
+  },
+  "sanityCheck": "open-city-profile.en"
 }
