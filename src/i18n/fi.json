@@ -6,7 +6,7 @@
   },
   "login": {
     "title": "Yhdellä tunnuksella monta mahdollisuutta",
-    "description": "Rekisteröitymällä pääset käyttämään uusia palveluita yhdellä helpolla kirjautimisella. Yksi yhtenäinen tunnus tekee kaupunkilaisen arjesta helpompaa.",
+    "description": "Rekisteröitymällä pääset käyttämään uusia palveluita yhdellä helpolla kirjautumisella. Yksi yhtenäinen tunnus tekee kaupunkilaisen arjesta helpompaa.",
     "login": "Kirjaudu sisään"
   },
   "profile": {

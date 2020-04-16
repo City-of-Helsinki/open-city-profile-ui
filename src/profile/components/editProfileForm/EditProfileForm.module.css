@@ -38,10 +38,24 @@
     height: 1px;
     width: 100%;
     background: #333;
-    margin: 15px 0;
+    margin: 50px 0 15px;
+}
 
+.buttonRow {
+    margin-top: 50px;
+    max-height: 120px;
+    max-width: 480px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .button {
-    margin-left: 20px;
+    margin-top: 20px;
+}
+
+@media (min-width: 500px) {
+    .button {
+        margin: 0;
+    }
 }

@@ -17,7 +17,7 @@
 .title h2 {
     margin-top: 11px;
     font-size: 22px;
-    color: var(--hds-brand-color-bus-dark-50);
+    color: var(--hds-brand-color-bus);
 }
 
 .rightSideInformation {
@@ -50,21 +50,10 @@
 
 
 .content {
-    padding: 0 20px;
+    padding: 0 20px 20px;
     width: 80%;
     overflow: hidden;
 }
-
-.open {
-    overflow: auto;
-    height: 100%;
-    padding-bottom: 20px;
-}
-
-.closed {
-    height: 0;
-}
-
 
 @media (max-width: 400px) {
     .content {

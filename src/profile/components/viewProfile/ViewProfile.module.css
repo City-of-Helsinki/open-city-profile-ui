@@ -35,6 +35,7 @@
   padding-left: 20px;
   padding-right: 20px;
 }
+
 @media (min-width: 1200px) {
   .title {
     padding-left: 10px;

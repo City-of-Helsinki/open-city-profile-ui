@@ -15,6 +15,7 @@ import ServiceConnections from '../serviceConnections/ServiceConnections';
 import Subscriptions from '../../../subscriptions/components/subsciptions/Subscriptions';
 import { MyProfileQuery } from '../../../graphql/generatedTypes';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
+import Explanation from '../../../common/explanation/Explanation';
 
 const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
 
@@ -77,9 +78,7 @@ function ViewProfile() {
             <Route path="/">
               <div className={styles.profileContent}>
                 <div className={responsive.maxWidthCentered}>
-                  <h2 className={styles.title}>
-                    {t('profileInformation.title')}
-                  </h2>
+                  <Explanation main={t('profileInformation.title')} />
                   {!isEditing ? (
                     <ProfileInformation
                       data={data}

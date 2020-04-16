@@ -158,7 +158,6 @@ function Subscriptions() {
       <div className={styles.subscriptionsPage}>
         <div className={responsive.maxWidthCentered}>
           <Explanation
-            className={styles.pageTitle}
             main={t('subscriptions.title')}
             small={t('subscriptions.explanation')}
           />
@@ -171,7 +170,7 @@ function Subscriptions() {
               {subscriptionData.map(
                 (subscription: SubscriptionData, index: number) => (
                   <div key={subscription.code} className={styles.subscription}>
-                    <h3>{subscription.label}</h3>
+                    <h2>{subscription.label}</h2>
                     {subscription?.options?.map(
                       (option: SubscriptionOption) => (
                         <Checkbox
@@ -183,6 +182,7 @@ function Subscriptions() {
                             )
                           }
                           name={option.code}
+                          id={option.code}
                           checked={option.enabled}
                           label={option.label}
                           key={option.code}
