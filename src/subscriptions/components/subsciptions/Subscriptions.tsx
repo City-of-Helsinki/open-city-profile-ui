@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import * as Sentry from '@sentry/browser';
 
 import Explanation from '../../../common/explanation/Explanation';
 import Button from '../../../common/button/Button';
@@ -56,14 +57,20 @@ function Subscriptions() {
   const { data, loading, refetch } = useQuery<QuerySubscriptions>(
     QUERY_SUBSCRIPTIONS,
     {
-      onError: () => setShowNotification(true),
+      onError: (error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      },
     }
   );
 
   const { data: profileData, loading: profileLoading } = useQuery<
     QueryMySubscriptions
   >(QUERY_MY_SUBSCRIPTIONS, {
-    onError: () => setShowNotification(true),
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      setShowNotification(true);
+    },
   });
 
   const [updateSubscriptions] = useMutation<
@@ -113,7 +120,10 @@ function Subscriptions() {
 
     updateSubscriptions({ variables })
       .then(results => setSaveSuccessful(!!results.data))
-      .catch((error: Error) => setShowNotification(true));
+      .catch((error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      });
   };
 
   const handleCheckboxValues = (

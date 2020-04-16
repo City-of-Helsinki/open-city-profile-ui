@@ -2,6 +2,7 @@ import React from 'react';
 import { CallbackComponent } from 'redux-oidc';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import * as Sentry from '@sentry/browser';
 
 import userManager from '../../userManager';
 
@@ -13,9 +14,8 @@ function OidcCallback(props: Props) {
     history.push('/');
   };
   const onError = (error: object) => {
-    // TODO: do something about errors
-    // eslint-disable-next-line no-console
-    console.error(error);
+    Sentry.captureException(error);
+    history.push('/');
   };
   const { t } = useTranslation();
   return (
