@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation, Trans } from 'react-i18next';
 import { useHistory } from 'react-router';
+import * as Sentry from '@sentry/browser';
 
 import checkBerthError from '../../helpers/checkBerthError';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
@@ -32,7 +33,12 @@ function DeleteProfile(props: Props) {
 
   const history = useHistory();
   const { t } = useTranslation();
-  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS);
+  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS, {
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      setShowNotification(true);
+    },
+  });
   const [deleteProfile] = useMutation<
     DeleteMyProfileData,
     DeleteMyProfileVariables
@@ -61,6 +67,7 @@ function DeleteProfile(props: Props) {
         if (checkBerthError(error.graphQLErrors)) {
           setBerthError(true);
         } else {
+          Sentry.captureException(error);
           setShowNotification(true);
         }
       });

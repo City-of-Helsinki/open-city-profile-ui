@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { loader } from 'graphql.macro';
 import { User } from 'oidc-client';
+import * as Sentry from '@sentry/browser';
 
 import getAuthenticatedUser from '../../../auth/getAuthenticatedUser';
 import PageLayout from '../../../common/pageLayout/PageLayout';
@@ -25,7 +26,10 @@ function Profile(props: Props) {
     ProfileExistsQuery
   >(PROFILE_EXISTS, {
     fetchPolicy: 'no-cache',
-    onError: () => setShowNotification(true),
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      setShowNotification(true);
+    },
   });
   const [isCheckingAuthState, setIsCheckingAuthState] = useState(true);
   const [tunnistamoUser, setTunnistamoUser] = useState<User>();

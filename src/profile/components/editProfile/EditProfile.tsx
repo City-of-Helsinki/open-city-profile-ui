@@ -3,6 +3,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import * as Sentry from '@sentry/browser';
 
 import styles from './EditProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
@@ -34,7 +35,10 @@ type Props = {
 function EditProfile(props: Props) {
   const [showNotification, setShowNotification] = useState<boolean>(false);
   const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS, {
-    onError: () => setShowNotification(true),
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      setShowNotification(true);
+    },
   });
   const { profileData } = props;
   const { t } = useTranslation();
@@ -104,7 +108,10 @@ function EditProfile(props: Props) {
           props.setEditing();
         }
       })
-      .catch(() => setShowNotification(true));
+      .catch((error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      });
   };
 
   return (

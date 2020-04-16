@@ -4,6 +4,7 @@ import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import classNames from 'classnames';
+import * as Sentry from '@sentry/browser';
 
 import styles from './ViewProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
@@ -24,7 +25,10 @@ function ViewProfile() {
   const { t } = useTranslation();
 
   const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE, {
-    onError: () => setShowNotification(true),
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      setShowNotification(true);
+    },
   });
 
   const toggleEditing = () => {

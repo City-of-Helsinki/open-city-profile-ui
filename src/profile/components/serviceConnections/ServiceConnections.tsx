@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/react-hooks';
 import { format } from 'date-fns';
+import * as Sentry from '@sentry/browser';
 
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import Explanation from '../../../common/explanation/Explanation';
@@ -27,7 +28,10 @@ function ServiceConnections(props: Props) {
   const { data, loading, refetch } = useQuery<ServiceConnectionsQuery>(
     SERVICE_CONNECTIONS,
     {
-      onError: () => setShowNotification(true),
+      onError: (error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      },
     }
   );
 
