@@ -11,8 +11,10 @@
     margin-bottom: 50px;
 }
 
-.subscriptionsContainer h3 {
+.subscriptionsContainer h2 {
     margin-top: 0;
+    margin-bottom: 20px;
+    font-size: var(--hds-text-xl);
 }
 
 .subscription {

@@ -26,10 +26,7 @@ function ProfileInformation(props: Props) {
       <section className={styles.personalInformation}>
         <div className={styles.personalInformationTitleRow}>
           <Explanation
-            classes={{
-              container: styles.pageTitleContainer,
-              main: styles.pageTitle,
-            }}
+            className={styles.pageTitleContainer}
             main={t('profileInformation.personalData')}
             small={t('profileInformation.visibility')}
           />

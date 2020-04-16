@@ -8,6 +8,7 @@ type Props = PropsWithChildren<{
   label?: string | ReactNode;
   className?: string;
   name?: string;
+  id?: string;
   checked?: boolean;
 }>;
 
@@ -20,6 +21,7 @@ function Checkbox(props: Props) {
         type="checkbox"
         onChange={props.onChange}
         name={props.name}
+        id={props.id}
       />
       <label htmlFor={props.name} className={styles.label}>
         {props.label}
