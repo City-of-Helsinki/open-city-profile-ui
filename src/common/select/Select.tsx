@@ -15,6 +15,7 @@ type Props = {
   className?: string;
   labelText?: string;
   onChange?: () => void;
+  value?: string;
 };
 
 function Select(props: Props) {
@@ -23,7 +24,12 @@ function Select(props: Props) {
       <label htmlFor={props.name} className={styles.label}>
         {props.labelText}
       </label>
-      <select onChange={props.onChange} id={props.id} name={props.name}>
+      <select
+        onChange={props.onChange}
+        id={props.id}
+        name={props.name}
+        value={props.value}
+      >
         {props.options.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}

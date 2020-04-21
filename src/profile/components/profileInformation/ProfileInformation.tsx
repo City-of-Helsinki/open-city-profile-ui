@@ -49,12 +49,16 @@ function ProfileInformation(props: Props) {
                 value={getAddress(data)}
               />
               <LabeledValue
-                label={t('profileInformation.email')}
-                value={data.myProfile?.primaryEmail?.email}
+                label={t('profileForm.language')}
+                value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
               />
               <LabeledValue
                 label={t('profileInformation.phone')}
                 value={data.myProfile?.primaryPhone?.phone}
+              />
+              <LabeledValue
+                label={t('profileInformation.email')}
+                value={data.myProfile?.primaryEmail?.email}
               />
             </>
           )}
