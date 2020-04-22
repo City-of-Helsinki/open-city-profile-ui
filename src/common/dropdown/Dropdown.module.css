@@ -16,11 +16,11 @@
 }
 
 .navButton {
-    max-width: 180px;
+    max-width: 230px;
 }
 
 .label {
-    max-width: 150px;
+    max-width: 200px;
     display: block;
     white-space: nowrap;
     overflow: hidden;

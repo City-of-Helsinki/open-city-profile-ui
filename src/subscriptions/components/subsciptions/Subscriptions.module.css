@@ -11,8 +11,10 @@
     margin-bottom: 50px;
 }
 
-.subscriptionsContainer h3 {
+.subscriptionsContainer h2 {
     margin-top: 0;
+    margin-bottom: 20px;
+    font-size: var(--hds-text-xl);
 }
 
 .subscription {
@@ -20,8 +22,7 @@
     margin-bottom: 40px;
 }
 
-.empty,
-.pageTitle {
+.empty {
     padding: 25px 0;
     margin: 0 20px;
 }

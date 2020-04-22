@@ -26,6 +26,7 @@ function ProfileInformation(props: Props) {
       <section className={styles.personalInformation}>
         <div className={styles.personalInformationTitleRow}>
           <Explanation
+            className={styles.pageTitleContainer}
             main={t('profileInformation.personalData')}
             small={t('profileInformation.visibility')}
           />
@@ -48,12 +49,16 @@ function ProfileInformation(props: Props) {
                 value={getAddress(data)}
               />
               <LabeledValue
-                label={t('profileInformation.email')}
-                value={data.myProfile?.primaryEmail?.email}
+                label={t('profileForm.language')}
+                value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
               />
               <LabeledValue
                 label={t('profileInformation.phone')}
                 value={data.myProfile?.primaryPhone?.phone}
+              />
+              <LabeledValue
+                label={t('profileInformation.email')}
+                value={data.myProfile?.primaryEmail?.email}
               />
             </>
           )}

@@ -4,6 +4,7 @@ import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import classNames from 'classnames';
+import * as Sentry from '@sentry/browser';
 
 import styles from './ViewProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
@@ -15,6 +16,7 @@ import ServiceConnections from '../serviceConnections/ServiceConnections';
 import Subscriptions from '../../../subscriptions/components/subsciptions/Subscriptions';
 import { MyProfileQuery } from '../../../graphql/generatedTypes';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
+import Explanation from '../../../common/explanation/Explanation';
 
 const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
 
@@ -24,7 +26,10 @@ function ViewProfile() {
   const { t } = useTranslation();
 
   const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE, {
-    onError: () => setShowNotification(true),
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      setShowNotification(true);
+    },
   });
 
   const toggleEditing = () => {
@@ -77,9 +82,7 @@ function ViewProfile() {
             <Route path="/">
               <div className={styles.profileContent}>
                 <div className={responsive.maxWidthCentered}>
-                  <h2 className={styles.title}>
-                    {t('profileInformation.title')}
-                  </h2>
+                  <Explanation main={t('profileInformation.title')} />
                   {!isEditing ? (
                     <ProfileInformation
                       data={data}

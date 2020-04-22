@@ -1,5 +1,5 @@
 import React from 'react';
-import LeftIconArrow from 'hds-react/lib/icons/IconArrowLeft';
+import { IconArrowLeft } from 'hds-react/';
 import { useTranslation, Trans } from 'react-i18next';
 import { useHistory } from 'react-router';
 
@@ -26,7 +26,7 @@ function TermsOfService() {
           <div className={styles.container}>
             <div className={styles.back}>
               <button type="button" onClick={handleGoBack}>
-                <LeftIconArrow className={styles.icon} />
+                <IconArrowLeft className={styles.icon} />
               </button>
             </div>
             <div className={styles.content}>

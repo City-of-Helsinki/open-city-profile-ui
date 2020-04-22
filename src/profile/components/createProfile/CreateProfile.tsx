@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import classNames from 'classnames';
+import * as Sentry from '@sentry/browser';
 
 import CreateProfileForm, {
   FormValues,
@@ -68,7 +69,10 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
           onProfileCreated();
         }
       })
-      .catch(() => setShowNotification(true));
+      .catch((error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      });
   };
   return (
     <div className={styles.createProfile}>

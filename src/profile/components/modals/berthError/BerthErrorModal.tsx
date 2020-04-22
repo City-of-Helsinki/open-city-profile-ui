@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import IconClose from 'hds-react/lib/icons/IconClose';
+import { IconClose } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 
 import Button from '../../../../common/button/Button';

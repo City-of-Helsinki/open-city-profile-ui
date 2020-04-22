@@ -25,7 +25,7 @@ function Home(props: Props) {
         <div className={styles.content}>
           <HelsinkiLogo className={styles.logo} aria-label="Helsinki logo" />
           <h1>{t('login.title')}</h1>
-          <h5>{t('login.description')}</h5>
+          <h2>{t('login.description')}</h2>
           <Button
             variant="outlined"
             className={styles.button}

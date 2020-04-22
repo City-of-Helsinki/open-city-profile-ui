@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import * as Sentry from '@sentry/browser';
 
 import Explanation from '../../../common/explanation/Explanation';
 import Button from '../../../common/button/Button';
@@ -56,14 +57,20 @@ function Subscriptions() {
   const { data, loading, refetch } = useQuery<QuerySubscriptions>(
     QUERY_SUBSCRIPTIONS,
     {
-      onError: () => setShowNotification(true),
+      onError: (error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      },
     }
   );
 
   const { data: profileData, loading: profileLoading } = useQuery<
     QueryMySubscriptions
   >(QUERY_MY_SUBSCRIPTIONS, {
-    onError: () => setShowNotification(true),
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      setShowNotification(true);
+    },
   });
 
   const [updateSubscriptions] = useMutation<
@@ -113,7 +120,10 @@ function Subscriptions() {
 
     updateSubscriptions({ variables })
       .then(results => setSaveSuccessful(!!results.data))
-      .catch((error: Error) => setShowNotification(true));
+      .catch((error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      });
   };
 
   const handleCheckboxValues = (
@@ -158,7 +168,6 @@ function Subscriptions() {
       <div className={styles.subscriptionsPage}>
         <div className={responsive.maxWidthCentered}>
           <Explanation
-            className={styles.pageTitle}
             main={t('subscriptions.title')}
             small={t('subscriptions.explanation')}
           />
@@ -171,7 +180,7 @@ function Subscriptions() {
               {subscriptionData.map(
                 (subscription: SubscriptionData, index: number) => (
                   <div key={subscription.code} className={styles.subscription}>
-                    <h3>{subscription.label}</h3>
+                    <h2>{subscription.label}</h2>
                     {subscription?.options?.map(
                       (option: SubscriptionOption) => (
                         <Checkbox
@@ -183,6 +192,7 @@ function Subscriptions() {
                             )
                           }
                           name={option.code}
+                          id={option.code}
                           checked={option.enabled}
                           label={option.label}
                           key={option.code}

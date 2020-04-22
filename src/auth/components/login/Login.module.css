@@ -27,6 +27,10 @@
     margin-top: 50px;
 }
 
+.content h2 {
+    font-size: var(--hds-text-md);
+}
+
 .content button {
     min-width: auto;
 }

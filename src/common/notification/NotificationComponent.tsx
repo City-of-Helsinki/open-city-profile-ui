@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import DismissableNotification from 'hds-react/lib/components/notification/DismissableNotification';
+import { DismissableNotification } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './NotificationComponent.module.css';
