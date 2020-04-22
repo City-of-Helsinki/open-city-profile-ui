@@ -1,153 +1,153 @@
 {
   "appName": "Profile",
+  "berthErrors": {
+    "close": "Close",
+    "explanation": "To delete your profile, you must first terminate your berth billing agreement",
+    "title": "You cannot delete your Helsinki profile because Berth needs your information for billing"
+  },
+  "confirmationModal": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "saveMessage": "Saved data will transfer to following services",
+    "saveTitle": "Do you want to save your changes"
+  },
+  "createProfile": {
+    "heading": "Fill in your details to create a profile",
+    "helpText": "This information is only visible to you",
+    "pageTitle": "Create profile"
+  },
+  "deleteProfile": {
+    "accept": "I have read <0>guide</0> and understand what deleting my data means.",
+    "delete": "Delete Helsinki profile",
+    "explanation": "If desired you can delete all your information, but also means deleting your account. Read more from the guide. By deleting your Helsinki profile you also loose all information saved to connected services and can no longer log in",
+    "title": "Do you want to delete you Oma.helsinki account?"
+  },
+  "deleteProfileModal": {
+    "delete": "Delete Helsinki profile",
+    "explanation": "By deleting your profile you also loose all the data saved to following services",
+    "noServiceExplanation": "By removing your profile you will loose all of your stored data.",
+    "title": "Are you sure you want to delete your Helsinki profile"
+  },
+  "downloadData": {
+    "button": "Download my data",
+    "panelText": "Download your data to see all the information we have stored about you.",
+    "panelTitle": "Do you want to download your data?"
+  },
+  "expandingPanel": {
+    "hideInformation": "HIDE INFORMATION",
+    "showInformation": "SHOW INFORMATION"
+  },
+  "footer": {
+    "accessibility": "Accessibility document",
+    "copyright": "Copyright {{year}}",
+    "feedback": "GIVE FEEDBACK",
+    "feedbackLink": "https://www.hel.fi/helsinki/en/administration/participate/feedback",
+    "privacy": "Privacy policy",
+    "reserveRights": "All rights reserved",
+    "terms": "Terms of Service"
+  },
+  "LANGUAGE_OPTIONS": {
+    "ENGLISH": "English",
+    "FINNISH": "Finnish",
+    "SWEDISH": "Swedish"
+  },
   "loading": "Loading...",
+  "login": {
+    "description": "Registering gives you access to new services with one easy login. A single account makes the everyday life of a citizen easier.",
+    "login": "Log in",
+    "title": "Many opportunities with one account"
+  },
+  "nav": {
+    "information": "Information",
+    "menuButtonLabel": "Profile menu",
+    "services": "Connected services",
+    "signin": "Log in",
+    "signout": "Sign out",
+    "subscriptions": "Subscriptions"
+  },
+  "notification": {
+    "closeButtonText": "Close",
+    "defaultErrorText": "Something went wrong. Try again after a while.",
+    "defaultErrorTitle": "Error"
+  },
   "oidc": {
     "authenticating": "Authenticating..."
-  },
-  "login": {
-    "title": "Many opportunities with one account",
-    "description": "Registering gives you access to new services with one easy login. A single account makes the everyday life of a citizen easier.",
-    "login": "Log in"
   },
   "profile": {
     "loading": "Loading profile..."
   },
-  "serviceConnections": {
-    "title": "Connected services",
-    "explanation": "You may use several services in the City of Helsinki as well as certain third-party services for the same profile.",
-    "empty": "You currently don't have any active services connected to your profile.",
-    "servicePersonalData": "Data which the service will know about you:",
-    "created": "Created",
-    "clock": "at"
-  },
-  "subscriptions": {
-    "title": "Subscriptions and newsletters",
-    "explanation": "Subscribe to announcements and newsletters",
-    "empty": "No subscriptions / newsletters",
-    "subscribed": "Subscribed!"
-  },
-  "nav": {
-    "information": "Information",
-    "services": "Connected services",
-    "subscriptions": "Subscriptions",
-    "signin": "Log in",
-    "signout": "Sign out",
-    "menuButtonLabel": "Profile menu"
-  },
-  "profileInformation": {
-    "title": "My information",
-    "personalData": "Personal data",
-    "visibility": "The following information about you is stored in the service",
-    "deleteProfile": "Delete your profile",
-    "downloadData": "Download your data",
-    "name": "Name",
-    "address": "Address",
-    "email": "Email",
-    "phone": "Phone"
-  },
-  "createProfile": {
-    "pageTitle": "Create profile",
-    "heading": "Fill in your details to create a profile",
-    "helpText": "This information is only visible to you"
+  "profileDeleted": {
+    "message": "You can recreate it later if you want. You will be logged out after {{time}} seconds.",
+    "title": "Your profile has been successfully removed!"
   },
   "profileForm": {
-    "firstName": "First name",
-    "lastName": "Last name",
-    "email": "Email",
-    "phone": "Phone",
     "address": "Home address",
+    "cancel": "Cancel",
     "city": "City",
-    "postalCode": "Postal code",
-    "language": "Profile language",
-    "terms": "I agree to the <0>Terms of Service</0>, and that I may be contacted at the address I provide",
-    "submit": "Save",
     "edit": "Edit",
-    "cancel": "Cancel"
+    "email": "Email",
+    "firstName": "First name",
+    "language": "Profile language",
+    "lastName": "Last name",
+    "phone": "Phone",
+    "postalCode": "Postal code",
+    "submit": "Save",
+    "terms": "I agree to the <0>Terms of Service</0>, and that I may be contacted at the address I provide"
   },
-  "validation": {
-    "required": "This field is required",
-    "email": "The value must be an email-address",
-    "phoneMin": "The number must be at least {{min}} characters long",
-    "maxLength": "This field can be max {{max}} characters"
+  "profileInformation": {
+    "address": "Address",
+    "deleteProfile": "Delete your profile",
+    "downloadData": "Download your data",
+    "email": "Email",
+    "name": "Name",
+    "personalData": "Personal data",
+    "phone": "Phone",
+    "title": "My information",
+    "visibility": "The following information about you is stored in the service"
   },
-  "deleteProfile": {
-    "title": "Do you want to delete you Oma.helsinki account?",
-    "explanation": "If desired you can delete all your information, but also means deleting your account. Read more from the guide. By deleting your Helsinki profile you also loose all information saved to connected services and can no longer log in",
-    "accept": "I have read <0>guide</0> and understand what deleting my data means.",
-    "delete": "Delete Helsinki profile"
+  "sanityCheck": "open-city-profile.en",
+  "serviceConnections": {
+    "clock": "at",
+    "created": "Created",
+    "empty": "You currently don't have any active services connected to your profile.",
+    "explanation": "You may use several services in the City of Helsinki as well as certain third-party services for the same profile.",
+    "servicePersonalData": "Data which the service will know about you:",
+    "title": "Connected services"
   },
-  "deleteProfileModal": {
-    "title": "Are you sure you want to delete your Helsinki profile",
-    "explanation": "By deleting your profile you also loose all the data saved to following services",
-    "noServiceExplanation": "By removing your profile you will loose all of your stored data.",
-    "delete": "Delete Helsinki profile"
-  },
-  "confirmationModal": {
-    "saveTitle": "Do you want to save your changes",
-    "saveMessage": "Saved data will transfer to following services",
-    "save": "Save",
-    "cancel": "Cancel"
-  },
-  "profileDeleted": {
-    "title": "Your profile has been successfully removed!",
-    "message": "You can recreate it later if you want. You will be logged out after {{time}} seconds."
-  },
-  "berthErrors": {
-    "title": "You cannot delete your Helsinki profile because Berth needs your information for billing",
-    "explanation": "To delete your profile, you must first terminate your berth billing agreement",
-    "close": "Close"
-  },
-  "downloadData": {
-    "panelTitle": "Do you want to download your data?",
-    "panelText": "Download your data to see all the information we have stored about you.",
-    "button": "Download my data"
-  },
-  "expandingPanel": {
-    "showInformation": "SHOW INFORMATION",
-    "hideInformation": "HIDE INFORMATION"
-  },
-  "footer": {
-    "copyright": "Copyright {{year}}",
-    "reserveRights": "All rights reserved",
-    "privacy": "Privacy policy",
-    "accessibility": "Accessibility document",
-    "terms": "Terms of Service",
-    "feedback": "GIVE FEEDBACK",
-    "feedbackLink": "https://www.hel.fi/helsinki/en/administration/participate/feedback"
-  },
-  "notification": {
-    "defaultErrorTitle": "Error",
-    "defaultErrorText": "Something went wrong. Try again after a while.",
-    "closeButtonText": "Close"
-
+  "subscriptions": {
+    "empty": "No subscriptions / newsletters",
+    "explanation": "Subscribe to announcements and newsletters",
+    "subscribed": "Subscribed!",
+    "title": "Subscriptions and newsletters"
   },
   "tos": {
     "mainTitle": "Helsinkiprofiilin käyttöä koskevat käyttöehdot",
-    "updated": "Olemme päivittäneet käyttöehdot 14.1.2020",
-    "termsTitle": "Helsinki profiili - avain kaikkiin kaupungin palveluihin",
-    "termsText": "Luomalla Helsinkiprofiilin voit kirjautua kaikkiin Helsingin kaupungin digitaalisiin palveluihin. Tarjoamme sinulle parempaa henkilökohtaista palvelua, kun käytät kaikkiin palveluihin samaa kirjautumistapaa. Keräämme käytöstäsi tietoja tarjotaksemme sinulle sinua kiinnostavia palveluita ja tuotteita, ymmärtääksemme paremmin kaupunkilaistemme kiinnostuksen kohteita ja tarpeita sekä kehittääksemme palveluistamme jatkuvasti parempia. <br><br>Helsinkiprofiili on turvallinen. Pidämme kaiken keräämästämme tiedon itsellämme: emme luovuta tietoja ulkopuolisille tahoille. Emme käytä tietojasi muuhun kuin tässä kuvaaviimme tarkoituksiin. Voit ladata itsellesi kaikki sinusta keräämämme tiedot sekä halutessasi poistaa Helsinkiprofiilisi kokonaan. <br><br>Lähetämme sinulle ainoastaan olennaista palvelukohtaista tietoa. Voit itse hallita asiakasviestintää joko omassa profiilissasi tai käyttämiesi palveluiden kirjautuneen käyttäjän näkymässä.",
-    "terms1Title": "1. Soveltamisala",
     "terms1Text": "Helsinkiprofiili on Helsingin kaupungin tarjoama kirjautumistapa sen ja mahdollisten muiden palveluntarjoajien palveluihin (jäljempänä \"Palvelut\"). <br><br> Nämä Helsingin palveluiden käyttöehdot yhdessä Helsingin kaupungin tietosuojalausekkeen kanssa (yhdessä “Ehdot”) sääntelevät Helsinkiprofiilin käyttöä eri Palvelujen yhteydessä. Helsinkiprofiililla tarkoitetaan näissä ehdoissa käyttäjätunnuksen ja salasanan yhdistelmää tai muuta kirjautumisessa käytettyä tunnistautumistapaa ja niiden mahdollistamaa kirjautumispalvelua. Ehdot määrittelevät oikeutesi ja velvollisuutesi Helsinkiprofiiliin liittyen. Käyttö edellyttää, että noudatat näitä ehtoja. <br><br>Huomioithan, että Helsingin kaupungin eri palveluiden käyttöön tai niiden osiin voi soveltua lisäehtoja. Nämä ehdot kommunikoidaan käyttäjälle aina kirjautumisen yhteydessä. Luomalla Helsinkiprofiilin tiedostat ja hyväksyt myös, että Helsingin kaupunki kerää ja käyttää palveluiden kautta kerättyjä henkilötietoja Helsingin kaupungin tietosuojalausekkeessa ja evästekäytännöissä kuvatuilla tavoilla. Tietosuojalausekkeen löydät <0>TÄÄLTÄ</0>.",
-    "terms2Title": "2. Tunnuksen luominen ja poistaminen käytöstä",
+    "terms1Title": "1. Soveltamisala",
     "terms2Text": "Luodaksesi Helsinkiprofiilin sinun on oltava vähintään 13-vuotias. Profiilin luodaksesi sinun tulee antaa vaaditut rekisteröintitiedot, joiden avulla sinut voidaan tunnistaa.<br><br>Rekisteröidessäsi Helsinkiprofiilin luot käyttäjätunnuksen ja salasanan tai tunnistaudut jollain kirjautumispalvelun tarjoamalla kirjautumispalveluntarjoajalla. Olet henkilökohtaisesti vastuussa kaikesta käyttäjätunnuksellasi ja salasanallasi tapahtuvasta Palvelujen käytöstä. Sinun tulee säilyttää käyttäjätunnusta ja salasanaa huolellisesti ja ilmoittaa kaikista tietoosi tulleista väärinkäytöksistä. Voit poistaa profiilisi, mikäli et halua enää käyttää Helsinkiprofiilia palveluihin kirjautumisessa. Helsinkiprofiilin poistamisen jälkeen sinulla ei ole enää ole pääsyä palveluihin tai niiden ominaisuuksiin, jotka vaativat kirjautumista. Voit luoda Helsinkiprofiilin uudelleen, mutta tällöin aiemmin käytöstäsi kertyneet tiedot on poistettu eikä niitä voi enää palauttaa.",
-    "terms3Title": "3. Helsinki profiilin käyttäminen",
+    "terms2Title": "2. Tunnuksen luominen ja poistaminen käytöstä",
     "terms3Text": "Saat käyttää Helsinkiprofiilia näiden ehtojen mukaisesti. Helsinkiprofiili on henkilökohtainen, etkä saa luovuttaa sitä kenellekään muulle. Sinun pitää ilmoittaa viipymättä Helsingin kaupungille, mikäli huomaat väärinkäytöksiä. Helsinki Profiilin käyttö on omalla vastuullasi. Helsingin kaupunki vastaa tarjoamistaan palveluista ja niiden sisällöistä niihin kohdistuvien ehtojen mukaisesti. ",
-    "terms4Title": "4. Palvelun saatavuus",
+    "terms3Title": "3. Helsinki profiilin käyttäminen",
     "terms4Text": "Helsinkiprofiili on käytettävissä ympäri vuorokauden. Helsingin kaupunki varaa oikeuden harkintansa mukaan kehittää, muuttaa ja korjata Helsinkiprofiilia, sen ominaisuuksia, käyttökohteita tai taustajärjestelmiä. Helsinkiprofiili saattaa myös olla poissa käytöstä huoltotaukojen aikana ja muinakin ajankohtina esimerkiksi liiallisen kuormituksen vuoksi.",
-    "terms5Title": "5. Henkilötiedot",
+    "terms4Title": "4. Palvelun saatavuus",
     "terms5Text": "Helsinkiprofiiliin liittyvät henkilötietojen suojaperiaatteet on määritelty tietosuojalausekekkeessa. Tietosuojalausekkeen löydät <0>TÄÄLTÄ</0>. Helsingin kaupunki käsittelee henkilötietojasi voimassa olevan lainsäädännön ja tietosuojalausekkeen mukaisesti. Palveluissa saatetaan käyttää evästeitä tai vastaavia tunnisteita evästekäytännöissä kuvatulla tavalla. Evästekäytännöt löydät <1>TÄÄLTÄ</1>.",
-    "terms6Title": "6. Oikeudet",
+    "terms5Title": "5. Henkilötiedot",
     "terms6Text": "Helsinkiprofiiliin ja siihen liittyvät taustajärjestelmät ja ohjelmistot ovat tekijänoikeuslakien suojaamia ja tekijänoikeus niihin kuuluu Helsingin kaupungille. Kaikki oikeudet Helsinkiprofiiliin ja kaikkiin sen kautta tarjottaviin tai käytettävissä oleviin palveluihin kuuluvat Helsingin kaupungille.",
-    "terms7Title": "7. Vastuunrajoitus",
+    "terms6Title": "6. Oikeudet",
     "terms7Text": "Helsingin kaupunki tarjoaa Helsinkiprofiilin käytettäväksi “sellaisena kuin se on”. Helsingin kaupunki ei takaa, että palvelu on käytettävissä keskeytyksettä tai että se toimii virheettömästi. Helsingin kaupunki ei anna mitään Helsinkiprofiilin saatavuuteen, täydellisyyteen, luotettavuuteen, tietoihin tai sisältöön liittyvää nimenomaista tai välillistä takuuta. <br><br>Lukuun ottamatta törkeästä huolimattomuudesta tai tahallisuudesta aiheutuvaa vastuuta, Helsingin kaupunki ei ole vastuussa mistään suorasta, epäsuorasta, välillisestä tai yllättävästä vahingosta, joka on seurausta Helsinkiprofiilin käytöstä tai kykenemättömyydestä käyttää Helsinkiprofiilia.",
-    "terms8Title": "8. Muut ehdot",
+    "terms7Title": "7. Vastuunrajoitus",
     "terms8Text": "Helsinkiprofiiliin ja Ehtoihin sovelletaan Suomessa voimassa olevaa lainsäädäntöä pois lukien lainvalintaan liittyvät säädökset. Helsingin kaupunki pidättää oikeuden muuttaa Ehtoja milloin tahansa ilman ennakkoilmoitusta. Jos Ehtoja muutetaan merkittävästi, Helsingin kaupunki ilmoittaa tällaisesta muutoksesta erikseen etukäteen. Muutokset tulevat voimaan viikon kuluttua ilmoituksesta. Ehtojen muutoksista kerrotaan Helsinkiprofiilissa sekä eri palveluiden verkkosivuilla. (Voiko tähän laittaa “ja/tai sähköpostitse”) <br><br>Mikäli Ehtojen muutos johtuu lainsäädännön muutoksesta, viranomaismääräyksestä tai muusta ennalta arvaamattomasta syystä, Ehtojen muutos tulee voimaan välittömästi.",
+    "terms8Title": "8. Muut ehdot",
+    "terms9Text": "Helsinki profiilin palveluntarjoajana toimii Helsingin kaupungin kanslia, osoitteessa YHTEYSTIEDOT TÄHÄN.",
     "terms9Title": "9. Yhteystiedot",
-    "terms9Text": "Helsinki profiilin palveluntarjoajana toimii Helsingin kaupungin kanslia, osoitteessa YHTEYSTIEDOT TÄHÄN."
+    "termsText": "Luomalla Helsinkiprofiilin voit kirjautua kaikkiin Helsingin kaupungin digitaalisiin palveluihin. Tarjoamme sinulle parempaa henkilökohtaista palvelua, kun käytät kaikkiin palveluihin samaa kirjautumistapaa. Keräämme käytöstäsi tietoja tarjotaksemme sinulle sinua kiinnostavia palveluita ja tuotteita, ymmärtääksemme paremmin kaupunkilaistemme kiinnostuksen kohteita ja tarpeita sekä kehittääksemme palveluistamme jatkuvasti parempia. <br><br>Helsinkiprofiili on turvallinen. Pidämme kaiken keräämästämme tiedon itsellämme: emme luovuta tietoja ulkopuolisille tahoille. Emme käytä tietojasi muuhun kuin tässä kuvaaviimme tarkoituksiin. Voit ladata itsellesi kaikki sinusta keräämämme tiedot sekä halutessasi poistaa Helsinkiprofiilisi kokonaan. <br><br>Lähetämme sinulle ainoastaan olennaista palvelukohtaista tietoa. Voit itse hallita asiakasviestintää joko omassa profiilissasi tai käyttämiesi palveluiden kirjautuneen käyttäjän näkymässä.",
+    "termsTitle": "Helsinki profiili - avain kaikkiin kaupungin palveluihin",
+    "updated": "Olemme päivittäneet käyttöehdot 14.1.2020"
   },
-  "LANGUAGE_OPTIONS": {
-    "FINNISH": "Finnish",
-    "ENGLISH": "English",
-    "SWEDISH": "Swedish"
+  "validation": {
+    "email": "The value must be an email-address",
+    "maxLength": "This field can be max {{max}} characters",
+    "phoneMin": "The number must be at least {{min}} characters long",
+    "required": "This field is required"
   }
 }
