@@ -37,6 +37,7 @@ function DownloadData(props: Props) {
       Sentry.captureException(error);
       setShowNotification(true);
     },
+    fetchPolicy: 'network-only',
   });
   const downloadData = () => {
     setIsLoading(true);
