@@ -130,7 +130,7 @@ function CreateProfileForm(props: Props) {
             <Trans
               i18nKey="profileForm.terms"
               // eslint-disable-next-line jsx-a11y/anchor-has-content
-              components={[<a href="/#" ></a>]}
+              components={[<a href="/#"></a>]}
             />
           </label>
           <div>
