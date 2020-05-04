@@ -22,7 +22,7 @@ function Home(props: Props) {
   const { trackEvent } = useMatomo();
 
   return (
-    <PageLayout hideFooterLogo={true} title={t('login.login')}>
+    <PageLayout hideFooterLogo={true} title={'login.login'}>
       <div className={styles.wrapper}>
         <div className={styles.content}>
           <HelsinkiLogo className={styles.logo} aria-label="Helsinki logo" />
