@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { loader } from 'graphql.macro';
 import { User } from 'oidc-client';
 import * as Sentry from '@sentry/browser';
@@ -22,6 +22,8 @@ type Props = {};
 function Profile(props: Props) {
   const { t } = useTranslation();
   const history = useHistory();
+  const location = useLocation();
+
   const [checkProfileExists, { data, loading }] = useLazyQuery<
     ProfileExistsQuery
   >(PROFILE_EXISTS, {
@@ -48,8 +50,25 @@ function Profile(props: Props) {
   const isLoadingAnything = Boolean(isCheckingAuthState || loading);
   const isProfileFound = data && data.myProfile;
 
+  const getPageTitle = () => {
+    const pathname = location.pathname.substr(1);
+
+    if (!isLoadingAnything && pathname.length === 0) {
+      return isProfileFound ? 'nav.information' : 'profileForm.pageTitle';
+    }
+
+    switch (pathname) {
+      case 'connected-services':
+        return 'serviceConnections.title';
+      case 'subscriptions':
+        return 'subscriptions.title';
+      default:
+        return 'appName';
+    }
+  };
+
   return (
-    <PageLayout>
+    <PageLayout title={getPageTitle()}>
       <Loading
         loadingClassName={styles.loading}
         isLoading={isLoadingAnything}

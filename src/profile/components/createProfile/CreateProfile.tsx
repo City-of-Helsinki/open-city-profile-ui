@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import classNames from 'classnames';
 import * as Sentry from '@sentry/browser';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import CreateProfileForm, {
   FormValues,
@@ -31,11 +32,13 @@ type Props = {
 
 function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
   const { t } = useTranslation();
+  const { trackEvent } = useMatomo();
   const [showNotification, setShowNotification] = useState(false);
   const [createProfile, { loading }] = useMutation<
     CreateMyProfileData,
     CreateMyProfileVariables
   >(CREATE_PROFILE);
+
   const handleOnValues = (formValues: FormValues) => {
     const variables: CreateMyProfileVariables = {
       input: {
@@ -66,6 +69,7 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
     createProfile({ variables })
       .then(result => {
         if (result.data) {
+          trackEvent({ category: 'action', action: 'Register profile' });
           onProfileCreated();
         }
       })

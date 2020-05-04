@@ -81,6 +81,7 @@
     "title": "Profiilisi on poistettu onnistuneesti!"
   },
   "profileForm": {
+    "pageTitle": "Rekisteröitymislomake",
     "address": "Kotiosoite",
     "cancel": "Peruuta",
     "city": "Kaupunki",

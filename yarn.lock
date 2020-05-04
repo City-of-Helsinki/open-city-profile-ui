@@ -858,6 +858,18 @@
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
 
+"@datapunt/matomo-tracker-js@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@datapunt/matomo-tracker-js/-/matomo-tracker-js-0.1.2.tgz#27ca17789b3eb7675136e1ecb368cc43b3a937eb"
+  integrity sha512-oBcUpOLekfQeGWysr8Ha5C7SY6sXPa+8SczK6NIBE57nPSpG2gaWSDJnUJwI/HpmNKd7zQ7Az/OCSHe3C7463Q==
+
+"@datapunt/matomo-tracker-react@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@datapunt/matomo-tracker-react/-/matomo-tracker-react-0.1.2.tgz#04bc6752b6770bddaf68f37b3ba92384ab37f76f"
+  integrity sha512-bsEHKUj+cpSpXDvUsGMzGVL+FuCyZl6dlsbY17tuEbf/guKnG9k8lsyHvQkFB2PdGXcFz3tF9J1Sy51Crcf9Uw==
+  dependencies:
+    "@datapunt/matomo-tracker-js" "^0.1.2"
+
 "@endemolshinegroup/cosmiconfig-typescript-loader@^1.0.0":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@endemolshinegroup/cosmiconfig-typescript-loader/-/cosmiconfig-typescript-loader-1.0.1.tgz#484ee6f4e9209ffde5d3edbdacf03e0bc5ee0c67"

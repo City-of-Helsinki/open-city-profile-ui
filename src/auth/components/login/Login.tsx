@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import { RootState } from '../../../redux/rootReducer';
 import { AuthState, resetApiError } from '../../redux';
@@ -18,9 +19,10 @@ type Props = {
 
 function Home(props: Props) {
   const { t } = useTranslation();
+  const { trackEvent } = useMatomo();
 
   return (
-    <PageLayout hideFooterLogo={true}>
+    <PageLayout hideFooterLogo={true} title={'login.login'}>
       <div className={styles.wrapper}>
         <div className={styles.content}>
           <HelsinkiLogo className={styles.logo} aria-label="Helsinki logo" />
@@ -29,7 +31,10 @@ function Home(props: Props) {
           <Button
             variant="outlined"
             className={styles.button}
-            onClick={authenticate}
+            onClick={() => {
+              trackEvent({ category: 'action', action: 'Log in' });
+              authenticate();
+            }}
           >
             {t('login.login')}
           </Button>
