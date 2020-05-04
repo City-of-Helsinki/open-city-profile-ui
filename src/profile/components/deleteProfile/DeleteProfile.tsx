@@ -4,6 +4,7 @@ import { loader } from 'graphql.macro';
 import { useTranslation, Trans } from 'react-i18next';
 import { useHistory } from 'react-router';
 import * as Sentry from '@sentry/browser';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import checkBerthError from '../../helpers/checkBerthError';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
@@ -33,6 +34,8 @@ function DeleteProfile(props: Props) {
 
   const history = useHistory();
   const { t } = useTranslation();
+  const { trackEvent } = useMatomo();
+
   const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS, {
     onError: (error: Error) => {
       Sentry.captureException(error);
@@ -61,7 +64,10 @@ function DeleteProfile(props: Props) {
 
     deleteProfile({ variables })
       .then(result => {
-        if (result.data) history.push('/profile-deleted');
+        if (result.data) {
+          trackEvent({ category: 'action', action: 'Delete profile' });
+          history.push('/profile-deleted');
+        }
       })
       .catch(error => {
         if (checkBerthError(error.graphQLErrors)) {
