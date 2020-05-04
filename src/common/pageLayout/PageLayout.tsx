@@ -26,7 +26,7 @@ function PageLayout(props: Props) {
       documentTitle: pageTitle,
       href: window.location.href,
     });
-  });
+  }, [trackPageView, pageTitle]);
 
   return (
     <div className={styles.wrapper}>
