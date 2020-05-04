@@ -11,6 +11,7 @@ build-review:
   extends: .build
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-review"
+    DOCKER_BUILD_ARG_REACT_APP_ENVIRONMENT: 'review'
     DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.test.kuva.hel.ninja/"
     DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.test.kuva.hel.ninja/graphql/"
   only:
@@ -21,6 +22,7 @@ build-staging:
   extends: .build
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-staging"
+    DOCKER_BUILD_ARG_REACT_APP_ENVIRONMENT: 'staging'
     DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://api.hel.fi/sso-test/"
     DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.test.kuva.hel.ninja/graphql/"
   only:
@@ -31,6 +33,7 @@ build-production:
   extends: .build
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-production"
+    DOCKER_BUILD_ARG_REACT_APP_ENVIRONMENT: 'production'
     DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://api.hel.fi/sso/"
     DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.prod.kuva.hel.ninja/graphql/"
   only:

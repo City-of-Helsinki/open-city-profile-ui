@@ -81,6 +81,7 @@
     "title": "Din profil har tagits bort!"
   },
   "profileForm": {
+    "pageTitle": "Anmälningsblankett",
     "address": "Hemadress",
     "cancel": "Annullera",
     "city": "Stad",

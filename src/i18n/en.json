@@ -81,6 +81,7 @@
     "title": "Your profile has been successfully removed!"
   },
   "profileForm": {
+    "pageTitle": "Registration form",
     "address": "Home address",
     "cancel": "Cancel",
     "city": "City",

@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { Provider as ReduxProvider } from 'react-redux';
 import { OidcProvider, loadUser } from 'redux-oidc';
+import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
 
 import graphqlClient from './graphql/client';
 import store from './redux/store';
@@ -24,6 +25,18 @@ loadUser(store, userManager).then(async user => {
   }
 });
 
+const instance = createInstance({
+  urlBase: 'https://analytics.hel.ninja/',
+  siteId: 60,
+});
+
+// Prevent non-production data from being submitted to Matomo
+// by pretending to require consent to process analytics data and never ask for it.
+// https://developer.matomo.org/guides/tracking-javascript-guide#step-1-require-consent
+if (process.env.REACT_APP_ENVIRONMENT !== 'production') {
+  window._paq.push(['requireConsent']);
+}
+
 type Props = {};
 
 function App(props: Props) {
@@ -31,28 +44,33 @@ function App(props: Props) {
     <ReduxProvider store={store}>
       <OidcProvider store={store} userManager={userManager}>
         <ApolloProvider client={graphqlClient}>
-          <Switch>
-            <Route
-              path="/silent_renew"
-              render={() => {
-                userManager.signinSilentCallback();
-                return null;
-              }}
-            />
-            <Route path="/callback">
-              <OidcCallback />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path={['/', '/connected-services', '/subscriptions']} exact>
-              <Profile />
-            </Route>
-            <Route path="/profile-deleted" exact>
-              <ProfileDeleted />
-            </Route>
-            <Route path="*">404 - not found</Route>
-          </Switch>
+          <MatomoProvider value={instance}>
+            <Switch>
+              <Route
+                path="/silent_renew"
+                render={() => {
+                  userManager.signinSilentCallback();
+                  return null;
+                }}
+              />
+              <Route path="/callback">
+                <OidcCallback />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route
+                path={['/', '/connected-services', '/subscriptions']}
+                exact
+              >
+                <Profile />
+              </Route>
+              <Route path="/profile-deleted" exact>
+                <ProfileDeleted />
+              </Route>
+              <Route path="*">404 - not found</Route>
+            </Switch>
+          </MatomoProvider>
         </ApolloProvider>
       </OidcProvider>
     </ReduxProvider>
