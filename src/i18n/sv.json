@@ -18,9 +18,9 @@
   },
   "deleteProfile": {
     "accept": "Jag har läst <0>guide</0> och förstå vad att ta bort mina data betyder.",
-    "delete": "Radera Helsinki profilen",
+    "delete": "Radera Helsingfors-profilen",
     "explanation": "Om så önskas kan du ta bort all information, men betyder också att du tar bort ditt konto. Läs mer från guiden. Genom att ta bort din Helsingfors-profil tappar du också all information som sparats i anslutna tjänster och kan inte längre logga in.",
-    "title": "Vill du ta bort ditt Oma.helsinki-konto?"
+    "title": "Vill du ta bort ditt profil?"
   },
   "deleteProfileModal": {
     "delete": "Radera Helsingfors-profilen",
@@ -81,7 +81,6 @@
     "title": "Din profil har tagits bort!"
   },
   "profileForm": {
-    "pageTitle": "Anmälningsblankett",
     "address": "Hemadress",
     "cancel": "Annullera",
     "city": "Stad",
@@ -93,7 +92,7 @@
     "phone": "Telefonnummer",
     "postalCode": "Postnummer",
     "submit": "Spara",
-    "terms": "Jag godkänner <0>användarvillkorna</0>, och att man får kontakta mig i adressen jag givit"
+    "terms": "Jag har läst filen <0>beskrivningen</0> och stads <1>sekretesspolicy</1>"
   },
   "profileInformation": {
     "address": "Adress",
