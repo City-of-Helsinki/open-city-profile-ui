@@ -109,7 +109,6 @@
     "email": "Email",
     "name": "Name",
     "personalData": "Personal data",
-    "phone": "Phone",
     "title": "My information",
     "visibility": "The following information about you is stored in the service"
   },
@@ -131,6 +130,7 @@
     "subscribed": "Subscribed!",
     "title": "Subscriptions and newsletters"
   },
+  "#REF!": "#REF!",
   "validation": {
     "email": "The value must be an email-address",
     "maxLength": "This field can be max {{max}} characters",

@@ -42,6 +42,7 @@ function ViewProfile() {
         <React.Fragment>
           <PageHeading text={getNicknameOrName(data)} />
           <nav
+            aria-label={t('landmarks.navigation.main')}
             className={classNames(
               styles.profileNav,
               responsive.maxWidthCentered

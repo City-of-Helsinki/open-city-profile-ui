@@ -109,7 +109,6 @@
     "email": "Epost",
     "name": "Namn",
     "personalData": "Personuppgifter",
-    "phone": "Telefonnummer",
     "title": "Mina uppgifter",
     "visibility": "Följande information om dig lagras i tjänsten"
   },
@@ -131,6 +130,7 @@
     "subscribed": "Prenumererar!",
     "title": "Prenumerationer och nyhetsbrev"
   },
+  "#REF!": "#REF!",
   "validation": {
     "email": "Inte ett giltigt epost-adress",
     "maxLength": "Fältet får vara högst {{max}} tecken långt",

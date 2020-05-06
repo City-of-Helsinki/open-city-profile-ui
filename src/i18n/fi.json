@@ -109,7 +109,6 @@
     "email": "Sähköpostiosoite",
     "name": "Nimi",
     "personalData": "Henkilötiedot",
-    "phone": "Puhelinnumero",
     "title": "Omat tiedot",
     "visibility": "Palveluun on tallennettu sinusta seuraavat tiedot"
   },
@@ -131,6 +130,7 @@
     "subscribed": "Tilattu!",
     "title": "Tilaukset ja uutiskirjeet"
   },
+  "#REF!": "#REF!",
   "validation": {
     "email": "Epäkelpo sähköpostiosoite",
     "maxLength": "Kentän maksimipituus on {{max}} merkkiä",
