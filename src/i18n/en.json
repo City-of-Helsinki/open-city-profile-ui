@@ -3,7 +3,7 @@
   "berthErrors": {
     "close": "Close",
     "explanation": "To delete your profile, you must first terminate your berth billing agreement",
-    "title": "You cannot delete your Helsinki profile because Berth needs your information for billing"
+    "title": "You cannot delete your Helsinki-profile because Berth needs your information for billing"
   },
   "confirmationModal": {
     "cancel": "Cancel",
@@ -20,7 +20,7 @@
     "accept": "I have read <0>guide</0> and understand what deleting my data means.",
     "delete": "Delete Helsinki profile",
     "explanation": "If desired you can delete all your information, but also means deleting your account. Read more from the guide. By deleting your Helsinki profile you also loose all information saved to connected services and can no longer log in",
-    "title": "Do you want to delete you Oma.helsinki account?"
+    "title": "Do you want to delete you account?"
   },
   "deleteProfileModal": {
     "delete": "Delete Helsinki profile",
@@ -81,7 +81,6 @@
     "title": "Your profile has been successfully removed!"
   },
   "profileForm": {
-    "pageTitle": "Registration form",
     "address": "Home address",
     "cancel": "Cancel",
     "city": "City",
@@ -93,7 +92,7 @@
     "phone": "Phone",
     "postalCode": "Postal code",
     "submit": "Save",
-    "terms": "I agree to the <0>Terms of Service</0>, and that I may be contacted at the address I provide"
+    "terms": "I have read <0>file description</0> and  city's <1>data protection principles</1>"
   },
   "profileInformation": {
     "address": "Address",

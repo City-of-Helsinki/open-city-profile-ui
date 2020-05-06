@@ -3,7 +3,7 @@
   "berthErrors": {
     "close": "Sulje",
     "explanation": "Jotta voit poistaa profiilisi, sinun on ensin irtisanottava venepaikkasopimuksesi",
-    "title": "Et voi poistaa Helsinki profiiliasi, koska venepaikka tarvitsee tietojasi laskutukseen"
+    "title": "Et voi poistaa Helsinki-profiiliasi, koska venepaikka tarvitsee tietojasi laskutukseen"
   },
   "confirmationModal": {
     "cancel": "Peruuta",
@@ -18,15 +18,15 @@
   },
   "deleteProfile": {
     "accept": "Olen lukenut <0>ohjeet</0> ja ymmärrän mitä tietojeni poistaminen tarkoittaa",
-    "delete": "Poista Helsinki profiili",
-    "explanation": "Voit halutessasi poistaa kaikki tietosi, mutta se tarkoittaa myös käyttäjätilisi poistamista Lue lisää ohjeesta. Poistamalla Helsinki profiilisi menetätä myös kaikki yhdistettyihin palveluihin tallennetut tietosi, etkä voi enää kirjautua niihin.",
-    "title": "Haluatko poistaa Oma.helsinki tunnuksesi?"
+    "delete": "Poista Helsinki-profiili",
+    "explanation": "Voit halutessasi poistaa kaikki tietosi, mutta se tarkoittaa myös käyttäjätilisi poistamista. Lue lisää ohjeesta. Poistamalla Helsinki profiilisi menetätä myös kaikki yhdistettyihin palveluihin tallennetut tietosi, etkä voi enää kirjautua niihin.",
+    "title": "Haluatko poistaa profiilisi?"
   },
   "deleteProfileModal": {
-    "delete": "Poista Helsinki profiili",
+    "delete": "Poista Helsinki-profiili",
     "explanation": "Poistamalla profiilisi menetät myös kaikki seuraaviin palveluihin tallennetut tiedot",
     "noServiceExplanation": "Poistamalla profiilisi menetät kaikki tallennetut tiedot.",
-    "title": "Haluatko varmasti poistaa Helsinki profiilisi"
+    "title": "Haluatko varmasti poistaa Helsinki-profiilisi"
   },
   "downloadData": {
     "button": "Lataa kaikki palvelun tiedot",
@@ -81,7 +81,6 @@
     "title": "Profiilisi on poistettu onnistuneesti!"
   },
   "profileForm": {
-    "pageTitle": "Rekisteröitymislomake",
     "address": "Kotiosoite",
     "cancel": "Peruuta",
     "city": "Kaupunki",
@@ -93,7 +92,7 @@
     "phone": "Puhelinnumero",
     "postalCode": "Postinumero",
     "submit": "Tallenna",
-    "terms": "Hyväksyn <0>palvelun ehdot</0>, ja että minuun voi olla yhteydessä antamaani osoitteeseen"
+    "terms": "Olen tutustunut palvelun <0>rekisteriselosteeseen</0> ja kaupungin <1>tietosuojakäytäntöön</1> "
   },
   "profileInformation": {
     "address": "Osoite",
@@ -111,7 +110,7 @@
     "clock": "klo",
     "created": "Luotu",
     "empty": "Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi.",
-    "explanation": "Voit käyttää samalla profiilillasi useita helsingin kaupungin palveluita sekä tiettyjä kolmansien osapuolten palveluita.",
+    "explanation": "Voit käyttää samalla profiililla useita Helsingin kaupungin palveluita sekä tiettyjä kolmansien osapuolten palveluita.",
     "servicePersonalData": "Palvelu saa tietää sinusta:",
     "title": "Yhdistetyt palvelut"
   },
@@ -122,7 +121,7 @@
     "title": "Tilaukset ja uutiskirjeet"
   },
   "validation": {
-    "email": "Ei kelvollinen sähköpostiosoite",
+    "email": "Epäkelpo sähköpostiosoite",
     "maxLength": "Kentän maksimipituus on {{max}} merkkiä",
     "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä",
     "required": "Tämä kenttä on pakollinen"
