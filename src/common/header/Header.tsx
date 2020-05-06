@@ -16,13 +16,13 @@ function Header() {
       <div className={classNames(styles.inner, responsive.maxWidthCentered)}>
         <HelsinkiLogo className={styles.logo} aria-label="Helsinki logo" />
         <span className={`${styles.appName}`}>{t('appName')}</span>
-        <section className={styles.end}>
+        <div className={styles.end}>
           <FullscreenNavigation className={styles.mobileNav} />
           <div className={styles.desktopNav}>
             <LanguageSwitcher />
             <UserDropdown />
           </div>
-        </section>
+        </div>
       </div>
     </header>
   );
