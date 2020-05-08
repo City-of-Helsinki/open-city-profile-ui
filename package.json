@@ -53,7 +53,7 @@
     "ci": "CI=true yarn test --coverage",
     "lint": "eslint --ext js,ts,tsx src",
     "codegen": "apollo client:codegen ./src/graphql/generatedTypes.ts --outputFlat --includes=./src/**/*.graphql --target=typescript --endpoint=https://profiili-api.test.kuva.hel.ninja/graphql/ --useReadOnlyTypes --addTypename",
-    "update-translations": "ts-node  -P ./scripts/tsconfig.json -r dotenv/config scripts/update-translations.ts"
+    "update-translations": "ts-node -P ./scripts/tsconfig.json -r dotenv/config --files scripts/update-translations.ts"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -71,13 +71,11 @@
     ]
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.5.6",
     "apollo": "^2.21.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-prettier": "^3.1.1",
-    "i18next-json-csv-converter": "^0.2.0",
+    "helsinki-utils": "City-of-Helsinki/helsinki-utils-js#0.1.0",
     "jest-fetch-mock": "^2.1.2",
-    "node-fetch": "^2.6.0",
     "prettier": "^1.18.2",
     "ts-node": "^8.8.2"
   }
