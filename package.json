@@ -36,6 +36,7 @@
     "oidc-client": "^1.9.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-helmet": "^6.0.0",
     "react-i18next": "^10.13.1",
     "react-modal": "^3.11.1",
     "react-redux": "^7.1.1",
@@ -72,6 +73,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-helmet": "^5.0.15",
     "apollo": "^2.21.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-prettier": "^3.1.1",

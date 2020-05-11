@@ -18,6 +18,7 @@ import OidcCallback from './auth/components/oidcCallback/OidcCallback';
 import Profile from './profile/components/profile/Profile';
 import { fetchApiTokenThunk } from './auth/redux';
 import ProfileDeleted from './profile/components/profileDeleted/ProfileDeleted';
+import AppMeta from './AppMeta';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -53,6 +54,7 @@ function App(props: Props) {
       <OidcProvider store={store} userManager={userManager}>
         <ApolloProvider client={graphqlClient}>
           <MatomoProvider value={instance}>
+            <AppMeta />
             <Switch>
               <Route
                 path="/silent_renew"
