@@ -4,9 +4,6 @@ import { TextInput } from 'hds-react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
-import fi from 'i18n-iso-countries/langs/fi.json';
-import en from 'i18n-iso-countries/langs/en.json';
-import sv from 'i18n-iso-countries/langs/sv.json';
 
 import Select from '../../../common/select/Select';
 import Button from '../../../common/button/Button';
@@ -17,10 +14,6 @@ import {
 } from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
-
-countries.registerLocale(fi);
-countries.registerLocale(en);
-countries.registerLocale(sv);
 
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
