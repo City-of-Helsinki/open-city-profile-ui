@@ -16,6 +16,7 @@ import {
   QueryMySubscriptions,
   UpdateMyProfile,
   UpdateMyProfileVariables,
+  SubscriptionInputType,
 } from '../../../graphql/generatedTypes';
 import getSubscriptionsData from '../../helpers/getSubscriptionsData';
 
@@ -39,11 +40,6 @@ type SubscriptionData = {
   code?: string;
   label?: string | null;
   options?: SubscriptionOption[];
-};
-
-type SubscriptionVariable = {
-  subscriptionTypeId?: string;
-  enabled?: boolean;
 };
 
 function Subscriptions() {
@@ -95,14 +91,14 @@ function Subscriptions() {
   }, [data, profileData, i18n, refetch]);
 
   const getSubscriptionVariables = () => {
-    const subscriptionVariables: SubscriptionVariable[] = [];
+    const subscriptionVariables: SubscriptionInputType[] = [];
 
     subscriptionData?.forEach(subscription => {
-      subscription?.options?.forEach(option => {
+      subscription?.options?.forEach((option: SubscriptionOption) => {
         subscriptionVariables.push({
           subscriptionTypeId: option.id,
           enabled: option.enabled,
-        });
+        } as SubscriptionInputType);
       });
     });
 
