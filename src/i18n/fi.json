@@ -91,6 +91,7 @@
     "lastName": "Sukunimi",
     "phone": "Puhelinnumero",
     "postalCode": "Postinumero",
+    "country": "Maa",
     "submit": "Tallenna",
     "terms": "Olen tutustunut palvelun <0>rekisteriselosteeseen</0> ja kaupungin <1>tietosuojakäytäntöön</1> "
   },

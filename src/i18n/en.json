@@ -91,6 +91,7 @@
     "lastName": "Last name",
     "phone": "Phone",
     "postalCode": "Postal code",
+    "country": "Country",
     "submit": "Save",
     "terms": "I have read <0>file description</0> and  city's <1>data protection principles</1>"
   },

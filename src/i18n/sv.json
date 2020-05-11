@@ -91,6 +91,7 @@
     "lastName": "Efternamn",
     "phone": "Telefonnummer",
     "postalCode": "Postnummer",
+    "country": "Land",
     "submit": "Spara",
     "terms": "Jag har läst filen <0>beskrivningen</0> och stads <1>sekretesspolicy</1>"
   },

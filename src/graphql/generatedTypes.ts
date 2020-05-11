@@ -22,19 +22,19 @@ export interface CreateMyProfile_createMyProfile {
 export interface CreateMyProfile {
   /**
    * Creates a new profile based on the given data. The new profile is linked to the currently authenticated user.
-   *
+   * 
    * One or several of the following is possible to add:
-   *
+   * 
    * * Email
    * * Address
    * * Phone
-   *
+   * 
    * If youth data is given, a youth profile will also be created and linked to the profile.
-   *
+   * 
    * Requires authentication.
-   *
+   * 
    * Possible error codes:
-   *
+   * 
    * * `TODO`
    */
   readonly createMyProfile: CreateMyProfile_createMyProfile | null;
@@ -60,15 +60,15 @@ export interface DeleteMyProfile_deleteMyProfile {
 export interface DeleteMyProfile {
   /**
    * Deletes the data of the profile which is linked to the currently authenticated user.
-   *
+   * 
    * Requires authentication.
-   *
+   * 
    * Possible error codes:
-   *
+   * 
    * * `CANNOT_DELETE_PROFILE_WHILE_SERVICE_CONNECTED_ERROR`: Returned if the profile is connected to Berth service.
-   *
+   * 
    * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
-   *
+   * 
    * * `TODO`
    */
   readonly deleteMyProfile: DeleteMyProfile_deleteMyProfile | null;
@@ -89,11 +89,11 @@ export interface DeleteMyProfileVariables {
 export interface DownloadMyProfile {
   /**
    * Get the user information stored in the profile as machine readable JSON.
-   *
+   * 
    * Requires authentication.
-   *
+   * 
    * Possible error codes:
-   *
+   * 
    * * `TODO`
    */
   readonly downloadMyProfile: any | null;
@@ -116,6 +116,7 @@ export interface MyProfileQuery_myProfile_primaryAddress {
   readonly address: string;
   readonly postalCode: string;
   readonly city: string;
+  readonly countryCode: string;
 }
 
 export interface MyProfileQuery_myProfile_primaryEmail {
@@ -163,11 +164,11 @@ export interface MyProfileQuery_myProfile {
 export interface MyProfileQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   *
+   * 
    * Requires authentication.
-   *
+   * 
    * Possible error codes:
-   *
+   * 
    * * `TODO`
    */
   readonly myProfile: MyProfileQuery_myProfile | null;
@@ -191,11 +192,11 @@ export interface NameQuery_myProfile {
 export interface NameQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   *
+   * 
    * Requires authentication.
-   *
+   * 
    * Possible error codes:
-   *
+   * 
    * * `TODO`
    */
   readonly myProfile: NameQuery_myProfile | null;
@@ -220,11 +221,11 @@ export interface ProfileExistsQuery_myProfile {
 export interface ProfileExistsQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   *
+   * 
    * Requires authentication.
-   *
+   * 
    * Possible error codes:
-   *
+   * 
    * * `TODO`
    */
   readonly myProfile: ProfileExistsQuery_myProfile | null;
@@ -305,11 +306,11 @@ export interface ServiceConnectionsQuery_myProfile {
 export interface ServiceConnectionsQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   *
+   * 
    * Requires authentication.
-   *
+   * 
    * Possible error codes:
-   *
+   * 
    * * `TODO`
    */
   readonly myProfile: ServiceConnectionsQuery_myProfile | null;
@@ -382,21 +383,21 @@ export interface UpdateMyProfile_updateMyProfile {
 export interface UpdateMyProfile {
   /**
    * Updates the profile which is linked to the currently authenticated user based on the given data.
-   *
+   * 
    * One or several of the following is possible to add, modify or remove:
-   *
+   * 
    * * Email
    * * Address
    * * Phone
-   *
+   * 
    * If youth data is given, a youth profile will also be created and linked to the
    * profile **or** the existing youth profile will be updated if the profile is
    * already linked to a youth profile.
-   *
+   * 
    * Requires authentication.
-   *
+   * 
    * Possible error codes:
-   *
+   * 
    * * `TODO`
    */
   readonly updateMyProfile: UpdateMyProfile_updateMyProfile | null;
@@ -457,11 +458,11 @@ export interface QueryMySubscriptions_myProfile {
 export interface QueryMySubscriptions {
   /**
    * Get the profile belonging to the currently authenticated user.
-   *
+   * 
    * Requires authentication.
-   *
+   * 
    * Possible error codes:
-   *
+   * 
    * * `TODO`
    */
   readonly myProfile: QueryMySubscriptions_myProfile | null;
@@ -596,14 +597,19 @@ export enum YouthLanguage {
   SWEDISH = "SWEDISH",
 }
 
-export interface AddressInput {
-  readonly id?: string | null;
+export interface CreateAddressInput {
+  readonly countryCode?: string | null;
+  readonly primary?: boolean | null;
   readonly address: string;
   readonly postalCode: string;
   readonly city: string;
-  readonly countryCode?: string | null;
   readonly addressType: AddressType;
+}
+
+export interface CreateEmailInput {
   readonly primary?: boolean | null;
+  readonly email: string;
+  readonly emailType: EmailType;
 }
 
 export interface CreateMyProfileMutationInput {
@@ -611,22 +617,14 @@ export interface CreateMyProfileMutationInput {
   readonly clientMutationId?: string | null;
 }
 
-export interface DeleteMyProfileMutationInput {
-  readonly clientMutationId?: string | null;
-}
-
-export interface EmailInput {
-  readonly id?: string | null;
-  readonly email?: string | null;
-  readonly emailType: EmailType;
+export interface CreatePhoneInput {
   readonly primary?: boolean | null;
-}
-
-export interface PhoneInput {
-  readonly id?: string | null;
   readonly phone: string;
   readonly phoneType: PhoneType;
-  readonly primary?: boolean | null;
+}
+
+export interface DeleteMyProfileMutationInput {
+  readonly clientMutationId?: string | null;
 }
 
 export interface ProfileInput {
@@ -636,14 +634,14 @@ export interface ProfileInput {
   readonly image?: string | null;
   readonly language?: Language | null;
   readonly contactMethod?: ContactMethod | null;
-  readonly addEmails?: ReadonlyArray<(EmailInput | null)> | null;
-  readonly updateEmails?: ReadonlyArray<(EmailInput | null)> | null;
+  readonly addEmails?: ReadonlyArray<(CreateEmailInput | null)> | null;
+  readonly updateEmails?: ReadonlyArray<(UpdateEmailInput | null)> | null;
   readonly removeEmails?: ReadonlyArray<(string | null)> | null;
-  readonly addPhones?: ReadonlyArray<(PhoneInput | null)> | null;
-  readonly updatePhones?: ReadonlyArray<(PhoneInput | null)> | null;
+  readonly addPhones?: ReadonlyArray<(CreatePhoneInput | null)> | null;
+  readonly updatePhones?: ReadonlyArray<(UpdatePhoneInput | null)> | null;
   readonly removePhones?: ReadonlyArray<(string | null)> | null;
-  readonly addAddresses?: ReadonlyArray<(AddressInput | null)> | null;
-  readonly updateAddresses?: ReadonlyArray<(AddressInput | null)> | null;
+  readonly addAddresses?: ReadonlyArray<(CreateAddressInput | null)> | null;
+  readonly updateAddresses?: ReadonlyArray<(UpdateAddressInput | null)> | null;
   readonly removeAddresses?: ReadonlyArray<(string | null)> | null;
   readonly subscriptions?: ReadonlyArray<(SubscriptionInputType | null)> | null;
   readonly youthProfile?: YouthProfileFields | null;
@@ -655,13 +653,37 @@ export interface SensitiveDataFields {
 }
 
 export interface SubscriptionInputType {
-  readonly subscriptionTypeId?: string | null;
-  readonly enabled?: boolean | null;
+  readonly subscriptionTypeId: string;
+  readonly enabled: boolean;
+}
+
+export interface UpdateAddressInput {
+  readonly countryCode?: string | null;
+  readonly primary?: boolean | null;
+  readonly id: string;
+  readonly address?: string | null;
+  readonly postalCode?: string | null;
+  readonly city?: string | null;
+  readonly addressType?: AddressType | null;
+}
+
+export interface UpdateEmailInput {
+  readonly primary?: boolean | null;
+  readonly id: string;
+  readonly email?: string | null;
+  readonly emailType?: EmailType | null;
 }
 
 export interface UpdateMyProfileMutationInput {
   readonly profile: ProfileInput;
   readonly clientMutationId?: string | null;
+}
+
+export interface UpdatePhoneInput {
+  readonly primary?: boolean | null;
+  readonly id: string;
+  readonly phone?: string | null;
+  readonly phoneType?: PhoneType | null;
 }
 
 export interface YouthProfileFields {

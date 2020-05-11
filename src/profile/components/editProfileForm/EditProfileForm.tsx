@@ -3,6 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { TextInput } from 'hds-react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
+import countries from 'i18n-iso-countries';
+import fi from 'i18n-iso-countries/langs/fi.json';
+import en from 'i18n-iso-countries/langs/en.json';
+import sv from 'i18n-iso-countries/langs/sv.json';
 
 import Select from '../../../common/select/Select';
 import Button from '../../../common/button/Button';
@@ -13,6 +17,10 @@ import {
 } from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
+
+countries.registerLocale(fi);
+countries.registerLocale(en);
+countries.registerLocale(sv);
 
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
@@ -36,6 +44,7 @@ export type FormValues = {
   postalCode: string;
   city: string;
   profileLanguage: Language;
+  countryCode: string;
 };
 
 type Props = {
@@ -47,10 +56,19 @@ type Props = {
 };
 
 function EditProfileForm(props: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
   const userHasServices =
     props.services?.myProfile?.serviceConnections?.edges?.length !== 0;
+
+  const countryList = countries.getNames(i18n.languages[0]);
+  const countryOptions = Object.keys(countryList).map(key => {
+    return {
+      value: key,
+      label: countryList[key],
+    };
+  });
+
   return (
     <Formik
       initialValues={{
@@ -65,6 +83,7 @@ function EditProfileForm(props: Props) {
           address: values.address,
           city: values.city,
           postalCode: values.postalCode,
+          countryCode: values.countryCode,
           profileLanguage: values.profileLanguage,
         });
       }}
@@ -185,6 +204,15 @@ function EditProfileForm(props: Props) {
                   submitCount && errors.city && t(errors.city, { max: 255 })
                 }
                 labelText={t('profileForm.city')}
+              />
+
+              <Field
+                id="countryCode"
+                name="countryCode"
+                className={styles.formField}
+                as={Select}
+                options={countryOptions}
+                labelText={t('profileForm.country')}
               />
               <br />
             </div>

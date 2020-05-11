@@ -18,7 +18,7 @@ type Props = {
 };
 
 function ProfileInformation(props: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { isEditing, setEditing, loading, data } = props;
 
   return (
@@ -46,7 +46,7 @@ function ProfileInformation(props: Props) {
               />
               <LabeledValue
                 label={t('profileInformation.address')}
-                value={getAddress(data)}
+                value={getAddress(data, i18n.languages[0])}
               />
               <LabeledValue
                 label={t('profileForm.language')}
