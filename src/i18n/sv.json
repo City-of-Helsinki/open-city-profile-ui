@@ -109,6 +109,7 @@
     "email": "Epost",
     "name": "Namn",
     "personalData": "Personuppgifter",
+    "phone": "Telefonnummer",
     "title": "Mina uppgifter",
     "visibility": "Följande information om dig lagras i tjänsten"
   },

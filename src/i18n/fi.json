@@ -109,6 +109,7 @@
     "email": "Sähköpostiosoite",
     "name": "Nimi",
     "personalData": "Henkilötiedot",
+    "phone": "Puhelinnumero",
     "title": "Omat tiedot",
     "visibility": "Palveluun on tallennettu sinusta seuraavat tiedot"
   },

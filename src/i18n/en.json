@@ -109,6 +109,7 @@
     "email": "Email",
     "name": "Name",
     "personalData": "Personal data",
+    "phone": "Phone",
     "title": "My information",
     "visibility": "The following information about you is stored in the service"
   },
