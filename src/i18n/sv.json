@@ -46,6 +46,13 @@
     "reserveRights": "Alla rättigheter förbehållna",
     "terms": "Användarvillkor"
   },
+  "landmarks": {
+    "navigation": {
+      "language": "",
+      "main": "",
+      "user": ""
+    }
+  },
   "LANGUAGE_OPTIONS": {
     "ENGLISH": "Engelsk",
     "FINNISH": "Finska",
@@ -84,6 +91,7 @@
     "address": "Hemadress",
     "cancel": "Annullera",
     "city": "Stad",
+    "country": "Land",
     "edit": "Redigera",
     "email": "Epost-adress",
     "firstName": "Förnamn",
@@ -91,7 +99,6 @@
     "lastName": "Efternamn",
     "phone": "Telefonnummer",
     "postalCode": "Postnummer",
-    "country": "Land",
     "submit": "Spara",
     "terms": "Jag har läst filen <0>beskrivningen</0> och stads <1>sekretesspolicy</1>"
   },
@@ -102,7 +109,6 @@
     "email": "Epost",
     "name": "Namn",
     "personalData": "Personuppgifter",
-    "phone": "Telefonnummer",
     "title": "Mina uppgifter",
     "visibility": "Följande information om dig lagras i tjänsten"
   },

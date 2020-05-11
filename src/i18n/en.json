@@ -46,6 +46,13 @@
     "reserveRights": "All rights reserved",
     "terms": "Terms of Service"
   },
+  "landmarks": {
+    "navigation": {
+      "language": "Language",
+      "main": "Main",
+      "user": "User"
+    }
+  },
   "LANGUAGE_OPTIONS": {
     "ENGLISH": "English",
     "FINNISH": "Finnish",
@@ -84,6 +91,7 @@
     "address": "Home address",
     "cancel": "Cancel",
     "city": "City",
+    "country": "Country",
     "edit": "Edit",
     "email": "Email",
     "firstName": "First name",
@@ -91,7 +99,6 @@
     "lastName": "Last name",
     "phone": "Phone",
     "postalCode": "Postal code",
-    "country": "Country",
     "submit": "Save",
     "terms": "I have read <0>file description</0> and  city's <1>data protection principles</1>"
   },
@@ -102,7 +109,6 @@
     "email": "Email",
     "name": "Name",
     "personalData": "Personal data",
-    "phone": "Phone",
     "title": "My information",
     "visibility": "The following information about you is stored in the service"
   },
