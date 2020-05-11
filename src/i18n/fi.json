@@ -46,6 +46,13 @@
     "reserveRights": "Kaikki oikeudet pidätetään",
     "terms": "Palvelun käyttöehdot"
   },
+  "landmarks": {
+    "navigation": {
+      "language": "Kieli",
+      "main": "Pää",
+      "user": "Käyttäjä"
+    }
+  },
   "LANGUAGE_OPTIONS": {
     "ENGLISH": "Englanti",
     "FINNISH": "Suomi",
@@ -84,6 +91,7 @@
     "address": "Kotiosoite",
     "cancel": "Peruuta",
     "city": "Kaupunki",
+    "country": "Maa",
     "edit": "Muokkaa",
     "email": "Sähköpostiosoite",
     "firstName": "Etunimi",

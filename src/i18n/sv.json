@@ -46,6 +46,13 @@
     "reserveRights": "Alla rättigheter förbehållna",
     "terms": "Användarvillkor"
   },
+  "landmarks": {
+    "navigation": {
+      "language": "",
+      "main": "",
+      "user": ""
+    }
+  },
   "LANGUAGE_OPTIONS": {
     "ENGLISH": "Engelsk",
     "FINNISH": "Finska",
@@ -84,6 +91,7 @@
     "address": "Hemadress",
     "cancel": "Annullera",
     "city": "Stad",
+    "country": "Land",
     "edit": "Redigera",
     "email": "Epost-adress",
     "firstName": "Förnamn",

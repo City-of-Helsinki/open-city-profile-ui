@@ -84,6 +84,7 @@ function EditProfile(props: Props) {
                   postalCode: formValues.postalCode,
                   primary: true,
                   addressType: AddressType.OTHER,
+                  countryCode: formValues.countryCode,
                 }
               : null,
           ],
@@ -96,6 +97,7 @@ function EditProfile(props: Props) {
                   postalCode: formValues.postalCode,
                   primary: true,
                   addressType: AddressType.OTHER,
+                  countryCode: formValues.countryCode,
                 }
               : null,
           ],
@@ -137,6 +139,8 @@ function EditProfile(props: Props) {
             city: profileData?.myProfile?.primaryAddress?.city || '',
             postalCode:
               profileData?.myProfile?.primaryAddress?.postalCode || '',
+            countryCode:
+              profileData?.myProfile?.primaryAddress?.countryCode || 'FI',
           }}
           isSubmitting={loading}
           onValues={handleOnValues}

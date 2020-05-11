@@ -46,6 +46,13 @@
     "reserveRights": "All rights reserved",
     "terms": "Terms of Service"
   },
+  "landmarks": {
+    "navigation": {
+      "language": "Language",
+      "main": "Main",
+      "user": "User"
+    }
+  },
   "LANGUAGE_OPTIONS": {
     "ENGLISH": "English",
     "FINNISH": "Finnish",
@@ -84,6 +91,7 @@
     "address": "Home address",
     "cancel": "Cancel",
     "city": "City",
+    "country": "Country",
     "edit": "Edit",
     "email": "Email",
     "firstName": "First name",

@@ -10,6 +10,7 @@ query MyProfileQuery {
       address
       postalCode
       city
+      countryCode
     }
     primaryEmail {
       id
