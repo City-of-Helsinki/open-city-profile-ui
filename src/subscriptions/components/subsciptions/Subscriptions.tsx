@@ -223,9 +223,10 @@ function Subscriptions() {
         <NotificationComponent
           show={saveSuccessful}
           type="success"
-          labelText={'Onnistui!'}
+          labelText={t('subscriptions.saveSuccess')}
+          onClose={() => setSaveSuccessful(false)}
         >
-          {t('Tiedot tallennettu onnistuneesti')}
+          {t('subscriptions.saveSuccessMessage')}
         </NotificationComponent>
       </div>
     </Loading>
