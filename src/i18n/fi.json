@@ -122,9 +122,12 @@
     "servicePersonalData": "Palvelu saa tietää sinusta:",
     "title": "Yhdistetyt palvelut"
   },
+  "skipToContent": "Siirry suoraan sisältöön",
   "subscriptions": {
     "empty": "Ei tilattavia palveluita / ilmoituksia",
     "explanation": "Tilaa ilmoituksia ja uutiskirjeitä",
+    "saveSuccess": "Tallennettu!",
+    "saveSuccessMessage": "Tilaukset tallennettu onnistuneesti",
     "subscribed": "Tilattu!",
     "title": "Tilaukset ja uutiskirjeet"
   },

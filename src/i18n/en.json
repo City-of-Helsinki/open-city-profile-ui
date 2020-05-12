@@ -122,9 +122,12 @@
     "servicePersonalData": "Data which the service will know about you:",
     "title": "Connected services"
   },
+  "skipToContent": "Skip to content",
   "subscriptions": {
     "empty": "No subscriptions / newsletters",
     "explanation": "Subscribe to announcements and newsletters",
+    "saveSuccess": "Saved!",
+    "saveSuccessMessage": "Subscriptions saved succesfully",
     "subscribed": "Subscribed!",
     "title": "Subscriptions and newsletters"
   },

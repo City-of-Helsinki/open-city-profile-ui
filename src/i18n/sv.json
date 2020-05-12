@@ -122,9 +122,12 @@
     "servicePersonalData": "Data som tjänsten vet om dig:",
     "title": "Anslutna servicer"
   },
+  "skipToContent": "",
   "subscriptions": {
     "empty": "Inga prenumerationer / nyhetsbrev",
     "explanation": "Prenumerera på meddelanden och nyhetsbrev",
+    "saveSuccess": "Sparade!",
+    "saveSuccessMessage": "Prenumerationer sparades framgångsrikt",
     "subscribed": "Prenumererar!",
     "title": "Prenumerationer och nyhetsbrev"
   },
