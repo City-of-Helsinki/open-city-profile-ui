@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
 
-  font-size: var(--hds-text-md);
+  font-size: var(--fontsize-body-medium);
 
   background: var(--color-bus-light-20);
 }
