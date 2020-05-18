@@ -1,5 +1,5 @@
 .wrapper {
-    background-color: var(--hds-brand-color-bus);
+    background-color: var(--color-bus);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,7 +11,7 @@
     margin: 20px 10px;
     width: 95%;
     text-align: center;
-    color: var(--hds-ui-color-white);
+    color: var(--color-white);
 }
 
 .logo {
@@ -20,7 +20,7 @@
 }
 
 .logo g {
-    fill: var(--hds-ui-color-white);
+    fill: var(--color-white);
 }
 
 .button {
@@ -28,7 +28,7 @@
 }
 
 .content h2 {
-    font-size: var(--hds-text-md);
+    font-size: var(--fontsize-h-5);
 }
 
 .content button {

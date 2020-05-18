@@ -23,7 +23,7 @@
 }
 
 .label {
-  composes: text-bold text-sm from '~hds-core/lib/helsinki.css';
+  composes: text-bold text-sm from '~hds-core/lib/base.css';
   display: block;
 }
 @media (min-width: 768px) {
