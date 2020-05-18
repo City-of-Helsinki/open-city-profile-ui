@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { TextInput } from 'hds-react';
+import { TextInput, Checkbox } from 'hds-react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 
@@ -57,7 +57,7 @@ function CreateProfileForm(props: Props) {
       }}
       validationSchema={schema}
     >
-      {({ errors, isSubmitting, submitCount }) => (
+      {({ errors, isSubmitting, submitCount, ...formikProps }) => (
         <Form>
           <div className={styles.formFields}>
             <Field
@@ -125,14 +125,21 @@ function CreateProfileForm(props: Props) {
               <span className={styles.email}>{props.profile.email}</span>
             </div>
           </div>
-          <label className={styles.terms}>
-            <Field name="terms" type="checkbox" />{' '}
-            <Trans
-              i18nKey="profileForm.terms"
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
-              components={[<a href="/#"></a>, <a href="/#"></a>]}
-            />
-          </label>
+          <Field
+            as={Checkbox}
+            name="terms"
+            id="terms"
+            checked={formikProps.values.terms}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            labelText={
+              <Trans
+                i18nKey="profileForm.terms"
+                // eslint-disable-next-line jsx-a11y/anchor-has-content
+                components={[<a href="/#"></a>, <a href="/#"></a>]}
+              />
+            }
+          />
           <div>
             <Button
               type="submit"

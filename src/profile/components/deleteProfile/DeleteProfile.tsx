@@ -5,13 +5,13 @@ import { useTranslation, Trans } from 'react-i18next';
 import { useHistory } from 'react-router';
 import * as Sentry from '@sentry/browser';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
+import { Checkbox } from 'hds-react';
 
 import checkBerthError from '../../helpers/checkBerthError';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
-import Checkbox from '../../../common/checkbox/Checkbox';
 import Button from '../../../common/button/Button';
 import {
   DeleteMyProfile as DeleteMyProfileData,
@@ -87,8 +87,12 @@ function DeleteProfile(props: Props) {
 
         <Checkbox
           onChange={handleDeleteInstructions}
+          id="deleteInstructions"
           name="deleteInstructions"
-          label={
+          checked={deleteInstructions}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
+          labelText={
             <Trans
               i18nKey="deleteProfile.accept"
               // eslint-disable-next-line jsx-a11y/anchor-has-content

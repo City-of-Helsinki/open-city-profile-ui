@@ -88,7 +88,7 @@ describe('test with data', () => {
 
     await updateWrapper(wrapper);
 
-    const checkbox = wrapper.find('.checkbox');
+    const checkbox = wrapper.find('input[type="checkbox"]');
     expect(checkbox.props().checked).toBeFalsy();
   });
 
@@ -98,7 +98,7 @@ describe('test with data', () => {
 
     await updateWrapper(wrapper);
 
-    const checkbox = wrapper.find('.checkbox');
+    const checkbox = wrapper.find('input[type="checkbox"]');
     expect(checkbox.props().checked).toBeTruthy();
   });
 });
