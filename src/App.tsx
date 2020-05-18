@@ -18,6 +18,9 @@ import OidcCallback from './auth/components/oidcCallback/OidcCallback';
 import Profile from './profile/components/profile/Profile';
 import { fetchApiTokenThunk } from './auth/redux';
 import ProfileDeleted from './profile/components/profileDeleted/ProfileDeleted';
+import { MAIN_CONTENT_ID } from './common/constants';
+import AccessibilityShortcuts from './common/accessibilityShortcuts/AccessibilityShortcuts';
+import AppMeta from './AppMeta';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -53,6 +56,9 @@ function App(props: Props) {
       <OidcProvider store={store} userManager={userManager}>
         <ApolloProvider client={graphqlClient}>
           <MatomoProvider value={instance}>
+            <AppMeta />
+            {/* This should be the first focusable element */}
+            <AccessibilityShortcuts mainContentId={MAIN_CONTENT_ID} />
             <Switch>
               <Route
                 path="/silent_renew"

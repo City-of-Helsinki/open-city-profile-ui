@@ -16,13 +16,21 @@ function Header() {
       <div className={classNames(styles.inner, responsive.maxWidthCentered)}>
         <HelsinkiLogo className={styles.logo} aria-label="Helsinki logo" />
         <span className={`${styles.appName}`}>{t('appName')}</span>
-        <section className={styles.end}>
+        <div className={styles.end}>
           <FullscreenNavigation className={styles.mobileNav} />
           <div className={styles.desktopNav}>
-            <LanguageSwitcher />
-            <UserDropdown />
+            {/* The language switcher is a navigation element. Because */}
+            {/* there's a possibility that we have multiple navs on */}
+            {/* the same page, we need to give the element a label to */}
+            {/* distinct it from the other navs. */}
+            <nav aria-label={t('landmarks.navigation.language')}>
+              <LanguageSwitcher />
+            </nav>
+            <nav aria-label={t('landmarks.navigation.user')}>
+              <UserDropdown />
+            </nav>
           </div>
-        </section>
+        </div>
       </div>
     </header>
   );
