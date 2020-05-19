@@ -37,14 +37,17 @@ function ConfirmationModal({
       overlayClassName={styles.overlay}
       shouldCloseOnOverlayClick
     >
-      <div className={styles.close}>
-        <button type="button" onClick={onClose}>
-          <IconClose className={styles.icon} />
-        </button>
-      </div>
-
       <div className={styles.content}>
-        <h3>{modalTitle}</h3>
+        <div className={styles.titleRow}>
+          <h3>{modalTitle}</h3>
+          <button
+            className={styles.closeButton}
+            type="button"
+            onClick={onClose}
+          >
+            <IconClose className={styles.icon} />
+          </button>
+        </div>
         <p>{modalText}</p>
         <ul>
           {servicesArray.map((service, index) => (

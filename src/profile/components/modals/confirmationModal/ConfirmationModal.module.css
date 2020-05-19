@@ -24,10 +24,17 @@
     justify-content: center;
 }
 
-.close {
-    width: 100%;
+.titleRow {
     display: flex;
+    align-items: flex-start;
+}
+
+.closeButton {
+    display: flex;
+    align-items: flex-start;
     justify-content: flex-end;
+    width: var(--spacing-layout);
+    height: var(--spacing-layout);
 }
 
 .icon {
