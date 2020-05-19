@@ -1,4 +1,4 @@
-.container {
+.container.margin {
   margin: 0 15px;
 }
 
@@ -13,7 +13,7 @@
 }
 
 @media (min-width: 1200px) {
-  .container {
+  .container.margin {
     margin: 0;
   }
 }
