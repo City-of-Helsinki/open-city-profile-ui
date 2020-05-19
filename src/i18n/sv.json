@@ -7,6 +7,7 @@
   },
   "confirmationModal": {
     "cancel": "Annullera",
+    "close": "Stäng",
     "save": "Spara",
     "saveMessage": "Sparade data överförs till följande tjänster",
     "saveTitle": "Vill du spara dina ändringar"

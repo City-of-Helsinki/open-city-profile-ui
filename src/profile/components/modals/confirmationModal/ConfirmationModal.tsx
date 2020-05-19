@@ -44,6 +44,7 @@ function ConfirmationModal({
             className={styles.closeButton}
             type="button"
             onClick={onClose}
+            aria-label={t('confirmationModal.close')}
           >
             <IconClose className={styles.icon} />
           </button>

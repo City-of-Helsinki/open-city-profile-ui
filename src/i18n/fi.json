@@ -7,6 +7,7 @@
   },
   "confirmationModal": {
     "cancel": "Peruuta",
+    "close": "Sulje",
     "save": "Tallenna",
     "saveMessage": "Muutokset välittyvät seuraaviin palveluihin",
     "saveTitle": "Haluatko tallentaa tekemäsi muutokset"
@@ -60,7 +61,7 @@
   },
   "loading": "Ladataan...",
   "login": {
-    "description": "Rekisteröitymällä pääset käyttämään uusia palveluita yhdellä helpolla kirjautimisella. Yksi yhtenäinen tunnus tekee kaupunkilaisen arjesta helpompaa.",
+    "description": "Rekisteröitymällä pääset käyttämään uusia palveluita yhdellä helpolla kirjautumisella. Yksi yhtenäinen tunnus tekee kaupunkilaisen arjesta helpompaa.",
     "login": "Kirjaudu sisään",
     "title": "Yhdellä tunnuksella monta mahdollisuutta"
   },
