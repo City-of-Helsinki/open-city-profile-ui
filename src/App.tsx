@@ -18,6 +18,7 @@ import OidcCallback from './auth/components/oidcCallback/OidcCallback';
 import Profile from './profile/components/profile/Profile';
 import { fetchApiTokenThunk } from './auth/redux';
 import ProfileDeleted from './profile/components/profileDeleted/ProfileDeleted';
+import AccessibilityStatement from './accessibilityStatement/AccessibilityStatement';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -72,6 +73,9 @@ function App(props: Props) {
                 exact
               >
                 <Profile />
+              </Route>
+              <Route path="/accessibility">
+                <AccessibilityStatement />
               </Route>
               <Route path="/profile-deleted" exact>
                 <ProfileDeleted />

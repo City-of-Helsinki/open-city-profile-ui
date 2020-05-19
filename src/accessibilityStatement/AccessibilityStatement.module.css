@@ -1,0 +1,31 @@
+.pageWrapper {
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    margin: 20px 10px 0;
+    width: auto;
+    flex: 1 0 auto;
+}
+
+.innerWrapper {
+    width: auto;
+    margin-left: 10px;
+    margin-bottom: 50px;
+}
+
+@media (min-width: 800px) {
+    .innerWrapper {
+        width: 800px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        margin: 20px auto 0;
+        width: 1200px;
+    }
+}
