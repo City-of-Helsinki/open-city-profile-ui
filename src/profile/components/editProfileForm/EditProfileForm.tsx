@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextInput } from 'hds-react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
 
+import { getIsInvalid, getError } from '../../helpers/formik';
 import Select from '../../../common/select/Select';
 import Button from '../../../common/button/Button';
 import styles from './EditProfileForm.module.css';
@@ -62,6 +63,16 @@ function EditProfileForm(props: Props) {
     };
   });
 
+  const getFieldError = (
+    formikProps: FormikProps<FormValues>,
+    fieldName: keyof FormValues,
+    options: object
+  ) => {
+    const renderError = (message: string) => t(message, options);
+
+    return getError<FormValues>(formikProps, fieldName, renderError);
+  };
+
   return (
     <Formik
       initialValues={{
@@ -82,7 +93,7 @@ function EditProfileForm(props: Props) {
       }}
       validationSchema={schema}
     >
-      {({ errors, isSubmitting, submitCount, handleSubmit }) => (
+      {formikProps => (
         <React.Fragment>
           <Form>
             <div className={styles.formFields}>
@@ -92,12 +103,10 @@ function EditProfileForm(props: Props) {
                 id="firstName"
                 maxLength="255"
                 as={TextInput}
-                invalid={submitCount && errors.firstName}
-                invalidText={
-                  submitCount &&
-                  errors.firstName &&
-                  t(errors.firstName, { max: 255 })
-                }
+                invalid={getIsInvalid(formikProps, 'firstName')}
+                helperText={getFieldError(formikProps, 'firstName', {
+                  max: 255,
+                })}
                 labelText={t('profileForm.firstName')}
               />
 
@@ -107,12 +116,10 @@ function EditProfileForm(props: Props) {
                 id="lastName"
                 maxLength="255"
                 as={TextInput}
-                invalid={submitCount && errors.lastName}
-                invalidText={
-                  submitCount &&
-                  errors.lastName &&
-                  t(errors.lastName, { max: 255 })
-                }
+                invalid={getIsInvalid(formikProps, 'lastName')}
+                helperText={getFieldError(formikProps, 'lastName', {
+                  max: 255,
+                })}
                 labelText={t('profileForm.lastName')}
               />
 
@@ -138,12 +145,11 @@ function EditProfileForm(props: Props) {
                 type="tel"
                 minLength="6"
                 maxLength="255"
-                invalid={submitCount && errors.phone}
-                invalidText={
-                  submitCount &&
-                  errors.phone &&
-                  t(errors.phone, { min: 6, max: 255 })
-                }
+                invalid={getIsInvalid(formikProps, 'phone')}
+                helperText={getFieldError(formikProps, 'phone', {
+                  min: 6,
+                  max: 255,
+                })}
                 labelText={t('profileForm.phone')}
               />
 
@@ -162,12 +168,10 @@ function EditProfileForm(props: Props) {
                 id="address"
                 maxLength="255"
                 as={TextInput}
-                invalid={submitCount && errors.address}
-                invalidText={
-                  submitCount &&
-                  errors.address &&
-                  t(errors.address, { max: 255 })
-                }
+                invalid={getIsInvalid(formikProps, 'address')}
+                helperText={getFieldError(formikProps, 'address', {
+                  max: 255,
+                })}
                 labelText={t('profileForm.address')}
               />
 
@@ -177,12 +181,10 @@ function EditProfileForm(props: Props) {
                 id="postalCode"
                 maxLength="5"
                 as={TextInput}
-                invalid={submitCount && errors.postalCode}
-                invalidText={
-                  submitCount &&
-                  errors.postalCode &&
-                  t(errors.postalCode, { max: 5 })
-                }
+                invalid={getIsInvalid(formikProps, 'postalCode')}
+                helperText={getFieldError(formikProps, 'postalCode', {
+                  max: 5,
+                })}
                 labelText={t('profileForm.postalCode')}
               />
 
@@ -192,10 +194,10 @@ function EditProfileForm(props: Props) {
                 id="city"
                 maxLength="255"
                 as={TextInput}
-                invalid={submitCount && errors.city}
-                invalidText={
-                  submitCount && errors.city && t(errors.city, { max: 255 })
-                }
+                invalid={getIsInvalid(formikProps, 'city')}
+                helperText={getFieldError(formikProps, 'city', {
+                  max: 255,
+                })}
                 labelText={t('profileForm.city')}
               />
 
@@ -212,9 +214,13 @@ function EditProfileForm(props: Props) {
             <div className={styles.buttonRow}>
               <Button
                 type="button"
-                disabled={Boolean(isSubmitting || props.isSubmitting)}
+                disabled={Boolean(
+                  formikProps.isSubmitting || props.isSubmitting
+                )}
                 onClick={() =>
-                  userHasServices ? setConfirmationDialog(true) : handleSubmit()
+                  userHasServices
+                    ? setConfirmationDialog(true)
+                    : formikProps.handleSubmit()
                 }
               >
                 {t('profileForm.submit')}
@@ -234,7 +240,7 @@ function EditProfileForm(props: Props) {
             services={props.services}
             isOpen={confirmationDialog}
             onClose={() => setConfirmationDialog(false)}
-            onConfirm={handleSubmit}
+            onConfirm={formikProps.handleSubmit}
             modalTitle={t('confirmationModal.saveTitle')}
             modalText={t('confirmationModal.saveMessage')}
             actionButtonText={t('confirmationModal.save')}

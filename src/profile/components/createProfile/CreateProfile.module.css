@@ -1,5 +1,8 @@
 .createProfile {
   padding: 0 15px 50px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .front {

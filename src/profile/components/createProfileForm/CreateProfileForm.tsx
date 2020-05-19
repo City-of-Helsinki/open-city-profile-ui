@@ -1,9 +1,10 @@
 import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { TextInput } from 'hds-react';
-import { Formik, Form, Field } from 'formik';
+import { TextInput, Checkbox } from 'hds-react';
+import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 
+import { getIsInvalid, getError } from '../../helpers/formik';
 import Select from '../../../common/select/Select';
 import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
@@ -28,6 +29,10 @@ export type FormValues = {
   profileLanguage: Language;
 };
 
+type FormikFormValues = FormValues & {
+  terms: boolean;
+};
+
 type Props = {
   profile: FormValues;
   onValues: (values: FormValues) => void;
@@ -36,6 +41,16 @@ type Props = {
 
 function CreateProfileForm(props: Props) {
   const { t } = useTranslation();
+
+  const getFieldError = (
+    formikProps: FormikProps<FormikFormValues>,
+    fieldName: keyof FormikFormValues,
+    options: object
+  ) => {
+    const renderError = (message: string) => t(message, options);
+
+    return getError<FormikFormValues>(formikProps, fieldName, renderError);
+  };
 
   return (
     <Formik
@@ -57,7 +72,7 @@ function CreateProfileForm(props: Props) {
       }}
       validationSchema={schema}
     >
-      {({ errors, isSubmitting, submitCount }) => (
+      {formikProps => (
         <Form>
           <div className={styles.formFields}>
             <Field
@@ -66,12 +81,10 @@ function CreateProfileForm(props: Props) {
               id="firstName"
               maxlength="255"
               as={TextInput}
-              invalid={submitCount && errors.firstName}
-              invalidText={
-                submitCount &&
-                errors.firstName &&
-                t(errors.firstName, { max: 255 })
-              }
+              invalid={getIsInvalid(formikProps, 'firstName')}
+              helperText={getFieldError(formikProps, 'firstName', {
+                max: 255,
+              })}
               labelText={t('profileForm.firstName')}
             />
             <Field
@@ -80,12 +93,8 @@ function CreateProfileForm(props: Props) {
               id="lastName"
               maxlength="255"
               as={TextInput}
-              invalid={submitCount && errors.lastName}
-              invalidText={
-                submitCount &&
-                errors.lastName &&
-                t(errors.lastName, { max: 255 })
-              }
+              invalid={getIsInvalid(formikProps, 'lastName')}
+              helperText={getFieldError(formikProps, 'lastName', { max: 255 })}
               labelText={t('profileForm.lastName')}
             />
 
@@ -111,12 +120,11 @@ function CreateProfileForm(props: Props) {
               type="tel"
               minlength="6"
               maxlength="255"
-              invalid={submitCount && errors.phone}
-              invalidText={
-                submitCount &&
-                errors.phone &&
-                t(errors.phone, { min: 6, max: 255 })
-              }
+              invalid={getIsInvalid(formikProps, 'phone')}
+              helperText={getFieldError(formikProps, 'phone', {
+                min: 6,
+                max: 255,
+              })}
               labelText={t('profileForm.phone')}
             />
 
@@ -125,19 +133,28 @@ function CreateProfileForm(props: Props) {
               <span className={styles.email}>{props.profile.email}</span>
             </div>
           </div>
-          <label className={styles.terms}>
-            <Field name="terms" type="checkbox" />{' '}
-            <Trans
-              i18nKey="profileForm.terms"
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
-              components={[<a href="/#"></a>, <a href="/#"></a>]}
-            />
-          </label>
+          <Field
+            as={Checkbox}
+            name="terms"
+            id="terms"
+            checked={formikProps.values.terms}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            labelText={
+              <Trans
+                i18nKey="profileForm.terms"
+                // eslint-disable-next-line jsx-a11y/anchor-has-content
+                components={[<a href="/#"></a>, <a href="/#"></a>]}
+              />
+            }
+          />
           <div>
             <Button
               type="submit"
               disabled={Boolean(
-                isSubmitting || errors.terms || props.isSubmitting
+                formikProps.isSubmitting ||
+                  formikProps.errors.terms ||
+                  props.isSubmitting
               )}
             >
               {t('profileForm.submit')}
