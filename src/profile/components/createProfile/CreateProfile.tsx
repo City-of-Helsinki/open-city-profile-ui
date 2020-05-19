@@ -86,6 +86,7 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
       />
       <div className={classNames(styles.front, responsive.maxWidthCentered)}>
         <Explanation
+          variant="flush"
           main={t('createProfile.heading')}
           small={t('createProfile.helpText')}
         />
