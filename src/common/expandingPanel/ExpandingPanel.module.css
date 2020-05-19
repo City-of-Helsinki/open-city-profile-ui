@@ -51,12 +51,18 @@
 
 .content {
     padding: 0 20px 20px;
-    width: 80%;
+    width: 100%;
     overflow: hidden;
 }
 
 @media (max-width: 400px) {
     .content {
         overflow-x: hidden;
+    }
+}
+
+@media (min-width: var(--mobile-breakpoint)) {
+    .content {
+        width: 80%;
     }
 }
