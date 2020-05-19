@@ -9,14 +9,14 @@
     min-width: 20px;
     min-height: 20px;
     -webkit-appearance: none;
-    background-color: var(--hds-ui-color-white);
-    border: 1px solid var(--hds-brand-color-bus-dark-50);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-bus-dark-50);
     position: relative;
 }
 
 .checkbox:checked {
-    background-color: var(--hds-brand-color-bus-dark-50);
-    color: var(--hds-ui-color-white)
+    background-color: var(--color-bus-dark-50);
+    color: var(--color-white)
 }
 
 .checkbox:checked:after {
@@ -25,7 +25,7 @@
     position: absolute;
     top: 0;
     left: 3px;
-    color: var(--hds-ui-color-white);
+    color: var(--color-white);
 }
 
 .checkbox:checked:focus {

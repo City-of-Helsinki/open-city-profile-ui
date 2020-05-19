@@ -1,10 +1,10 @@
 .subscriptionsPage {
-    background: var(--hds-ui-color-black-5);
+    background: var(--color-black-5);
     flex: 1;
 }
 
 .subscriptionsContainer {
-    background: var(--hds-ui-color-white);
+    background: var(--color-white);
     border-radius: 2px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -14,7 +14,7 @@
 .subscriptionsContainer h2 {
     margin-top: 0;
     margin-bottom: 20px;
-    font-size: var(--hds-text-xl);
+    font-size: var(--fontsize-h-3);
 }
 
 .subscription {

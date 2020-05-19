@@ -5,7 +5,7 @@
 }
 
 .content {
-  background: var(--hds-brand-color-coat-of-arms-blue-light-20);
+  background: var(--color-coat-of-arms-blue-light-20);
   flex: 1;
   display: flex;
 }
