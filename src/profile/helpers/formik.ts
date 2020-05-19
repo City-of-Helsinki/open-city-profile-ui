@@ -16,7 +16,7 @@ const defaultErrorRender = (error: string) => error;
 export function getError<FormValues>(
   formikProps: FormikProps<FormValues>,
   fieldName: keyof FormValues,
-  render: (error: string) => React.ReactNode = defaultErrorRender
+  render: (error: string) => ReactNode = defaultErrorRender
 ) {
   const errorMessage = formikProps.errors[fieldName];
 
