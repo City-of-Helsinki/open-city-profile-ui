@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button, IconFill } from 'hds-react';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -32,9 +33,14 @@ function ProfileInformation(props: Props) {
             small={t('profileInformation.visibility')}
           />
           {!isEditing && (
-            <button onClick={setEditing} className={styles.edit}>
-              {t('profileForm.edit').toUpperCase()}
-            </button>
+            <Button
+              variant="supplementary"
+              onClick={setEditing}
+              iconRight={<IconFill />}
+              className={styles.edit}
+            >
+              {t('profileForm.edit')}
+            </Button>
           )}
         </div>
         <div className={styles.storedInformation}>
