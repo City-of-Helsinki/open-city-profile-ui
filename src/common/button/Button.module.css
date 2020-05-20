@@ -8,7 +8,6 @@
   text-align: center;
   padding: 15px;
   min-width: 230px;
-  width: 100%;
 }
 
 .button:hover {
@@ -30,12 +29,4 @@
   text-align: center;
   padding: 14px;
   min-width: 230px;
-  width: 100%;
-}
-
-@media (min-width: 600px) {
-  .button,
-  .outlined {
-    width: unset;
-  }
 }

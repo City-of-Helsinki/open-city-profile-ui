@@ -1,15 +1,12 @@
 .container {
-    --ep-horizontal-whitespace: var(--spacing-m);
-    --ep-vertical-whitespace: var(--spacing-l);
-    --ep-background: var(--color-white);
     width: 100%;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-    background: var(--ep-background);
-    margin: 0 0 var(--spacing-m) 0;
+    background: var(--color-white);
+    margin: 15px 0;
 }
 
 .title {
-    padding: 0 var(--ep-horizontal-whitespace);
+    padding: 0 20px;
     min-height: 60px;
     height: auto;
     display: flex;
@@ -18,7 +15,7 @@
 }
 
 .title h2 {
-    margin: var(--ep-vertical-whitespace) 0;
+    margin-top: 11px;
     font-size: 22px;
     color: var(--color-bus);
 }
@@ -53,33 +50,13 @@
 
 
 .content {
-    padding: 0 var(--ep-horizontal-whitespace) var(--ep-vertical-whitespace);
-    width: 100%;
+    padding: 0 20px 20px;
+    width: 80%;
     overflow: hidden;
-
-    font-size: var(--fontsize-body-medium);
-
-    /* Negates some of the padding has in order to place the content */
-    /* closer to the title. Makes sure that content overlaps the */
-    /* title in order to avoid focus outline obstructing content. */
-    margin-top: calc(-1 * var(--ep-vertical-whitespace));
-    background: var(--ep-background);
-    position: relative;
-    z-index: 1;
 }
 
 @media (max-width: 400px) {
     .content {
         overflow-x: hidden;
-    }
-}
-
-@media (min-width: 600px) {
-    .container {
-        --ep-horizontal-whitespace: var(--spacing-xl);
-    }
-
-    .content {
-        width: 80%;
     }
 }
