@@ -1,5 +1,5 @@
 import { createUserManager } from 'redux-oidc';
-import { UserManagerSettings } from 'oidc-client';
+import { UserManagerSettings, WebStorageStateStore } from 'oidc-client';
 
 import store from '../redux/store';
 import { fetchApiTokenThunk } from './redux';
@@ -11,6 +11,7 @@ const location = `${window.location.protocol}//${window.location.hostname}${
 
 /* eslint-disable @typescript-eslint/camelcase */
 const settings: UserManagerSettings = {
+  userStore: new WebStorageStateStore({ store: window.localStorage }),
   authority: process.env.REACT_APP_OIDC_AUTHORITY,
   automaticSilentRenew: true,
   client_id: process.env.REACT_APP_OIDC_CLIENT_ID,
