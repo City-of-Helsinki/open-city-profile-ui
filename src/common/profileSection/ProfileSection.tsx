@@ -8,15 +8,23 @@ type Props = {
   description?: string;
   titleButton?: React.ReactNode;
   title: string;
+  titleVariant?: 'h2' | 'h3';
 };
 
-function ProfileSection({ children, description, titleButton, title }: Props) {
+function ProfileSection({
+  children,
+  description,
+  titleButton,
+  titleVariant,
+  title,
+}: Props) {
   return (
     <section className={styles.profileSection}>
       <div className={styles.profileSectionTitleRow}>
         <Explanation
           variant="flush"
           className={styles.profileSectionTitle}
+          titleVariant={titleVariant}
           main={title}
           small={description}
         />

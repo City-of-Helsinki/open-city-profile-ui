@@ -13,13 +13,17 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: var(--spacing-m);
+  margin-bottom: var(--spacing-l);
 }
 
 .profileSectionTitle h1 {
   font-size: var(--title-fontsize);
   margin-top: 0;
   margin-bottom: var(--spacing-s);
+}
+
+.profileSectionTitle p {
+  margin-bottom: 0;
 }
 
 @media (min-width: 600px) {

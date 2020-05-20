@@ -1,10 +1,20 @@
+.container {
+  --h2-fontsize: var(--fontsize-h-2);
+  --h3-fontsize: var(--fontsize-h-3);
+}
+
 .container.margin {
   margin: 0 15px;
 }
 
 .main {
-  font-size: 36px;
   margin-bottom: 30px;
+}
+.main.h2 {
+  font-size: var(--h2-fontsize);
+}
+.main.h3 {
+  font-size: var(--h3-fontsize);
 }
 .small {
   margin-top: 0;
