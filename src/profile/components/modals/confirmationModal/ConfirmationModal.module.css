@@ -24,10 +24,17 @@
     justify-content: center;
 }
 
-.close {
-    width: 100%;
+.titleRow {
     display: flex;
+    align-items: flex-start;
+}
+
+.closeButton {
+    display: flex;
+    align-items: flex-start;
     justify-content: flex-end;
+    width: var(--spacing-layout);
+    height: var(--spacing-layout);
 }
 
 .icon {
@@ -38,7 +45,7 @@
 .content {
     width: 100%;
     display: flex;
-    margin: 15px 0;
+    margin: var(--spacing-s) 0 var(--spacing-m) 0;
     flex-direction: column;
 }
 
@@ -64,12 +71,12 @@
     }
 
     .actions {
-        flex-direction: column;
+        flex-direction: column-reverse;
         justify-content: center;
     }
 
-    .button {
-        margin: 3px 0;
+    .button:last-of-type {
+        margin: 0 0 var(--spacing-2-xs) 0;
     }
 }
 

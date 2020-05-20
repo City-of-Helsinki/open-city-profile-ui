@@ -7,6 +7,7 @@
   },
   "confirmationModal": {
     "cancel": "Cancel",
+    "close": "Close",
     "save": "Save",
     "saveMessage": "Saved data will transfer to following services",
     "saveTitle": "Do you want to save your changes"
