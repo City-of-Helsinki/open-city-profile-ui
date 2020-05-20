@@ -55,7 +55,7 @@ function AccessibilityStatementSv() {
       <p>
         Stadskansliet, Helsingfors
         <br />
-        +358 9 310 1641
+        <a href="tel:+35893101641">+358 9 310 1641</a>
       </p>
 
       <h2>Helsingfors stad och tillgänglighet</h2>

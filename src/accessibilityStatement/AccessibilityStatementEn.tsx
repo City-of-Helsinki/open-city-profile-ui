@@ -46,7 +46,7 @@ function AccessibilityStatementEn() {
       <p>
         City Executive Office, Helsinki
         <br />
-        +358 9 310 1641
+        <a href="tel:+35893101641">+358 9 310 1641</a>
       </p>
 
       <h2>The City of Helsinki and accessibility</h2>
