@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 import * as Sentry from '@sentry/browser';
 
-import styles from './EditProfile.module.css';
-import responsive from '../../../common/cssHelpers/responsive.module.css';
 import EditProfileForm, {
   FormValues,
 } from '../editProfileForm/EditProfileForm';
@@ -19,8 +16,8 @@ import {
   UpdateMyProfile as UpdateMyProfileData,
   UpdateMyProfileVariables,
 } from '../../../graphql/generatedTypes';
-import Explanation from '../../../common/explanation/Explanation';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
+import ProfileSection from '../../../common/profileSection/ProfileSection';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
 const SERVICE_CONNECTIONS = loader(
@@ -117,42 +114,33 @@ function EditProfile(props: Props) {
   };
 
   return (
-    <section className={styles.editProfile}>
-      <div className={styles.editProfileTitleRow}>
-        <div className={classNames(styles.font, responsive.maxWidthCentered)}>
-          <Explanation
-            variant="flush"
-            main={t('profileInformation.personalData')}
-            small={t('profileInformation.visibility')}
-          />
-        </div>
-        <EditProfileForm
-          setEditing={props.setEditing}
-          services={data}
-          profile={{
-            firstName: profileData?.myProfile?.firstName || '',
-            lastName: profileData?.myProfile?.lastName || '',
-            profileLanguage:
-              profileData?.myProfile?.language || Language.FINNISH,
-            email: profileData?.myProfile?.primaryEmail?.email || '',
-            phone: profileData?.myProfile?.primaryPhone?.phone || '',
-            address: profileData?.myProfile?.primaryAddress?.address || '',
-            city: profileData?.myProfile?.primaryAddress?.city || '',
-            postalCode:
-              profileData?.myProfile?.primaryAddress?.postalCode || '',
-            countryCode:
-              profileData?.myProfile?.primaryAddress?.countryCode || 'FI',
-          }}
-          isSubmitting={loading}
-          onValues={handleOnValues}
-        />
-      </div>
-
+    <ProfileSection
+      title={t('profileInformation.personalData')}
+      description={t('profileInformation.visibility')}
+    >
+      <EditProfileForm
+        setEditing={props.setEditing}
+        services={data}
+        profile={{
+          firstName: profileData?.myProfile?.firstName || '',
+          lastName: profileData?.myProfile?.lastName || '',
+          profileLanguage: profileData?.myProfile?.language || Language.FINNISH,
+          email: profileData?.myProfile?.primaryEmail?.email || '',
+          phone: profileData?.myProfile?.primaryPhone?.phone || '',
+          address: profileData?.myProfile?.primaryAddress?.address || '',
+          city: profileData?.myProfile?.primaryAddress?.city || '',
+          postalCode: profileData?.myProfile?.primaryAddress?.postalCode || '',
+          countryCode:
+            profileData?.myProfile?.primaryAddress?.countryCode || 'FI',
+        }}
+        isSubmitting={loading}
+        onValues={handleOnValues}
+      />
       <NotificationComponent
         show={showNotification}
         onClose={() => setShowNotification(false)}
       />
-    </section>
+    </ProfileSection>
   );
 }
 
