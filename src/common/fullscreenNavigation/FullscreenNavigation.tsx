@@ -42,17 +42,21 @@ function FullscreenNavigation(props: Props) {
           />
         </div>
         <div className={styles.navItems}>
-          <NavLink to="/" className={styles.navLink} onClick={closeNav}>
-            {t('nav.information')}
-          </NavLink>
-          <NavLink
-            to="/connected-services"
-            className={styles.navLink}
-            onClick={closeNav}
-          >
-            {t('nav.services')}
-          </NavLink>
           {isAuthenticated && (
+            <React.Fragment>
+              <NavLink to="/" className={styles.navLink} onClick={closeNav}>
+                {t('nav.information')}
+              </NavLink>
+              <NavLink
+                to="/connected-services"
+                className={styles.navLink}
+                onClick={closeNav}
+              >
+                {t('nav.services')}
+              </NavLink>
+            </React.Fragment>
+          )}
+          {isAuthenticated ? (
             <span
               role="button"
               className={styles.navLink}
@@ -63,8 +67,7 @@ function FullscreenNavigation(props: Props) {
             >
               {t('nav.signout')}
             </span>
-          )}
-          {!isAuthenticated && (
+          ) : (
             <span
               role="button"
               className={styles.navLink}
@@ -76,6 +79,7 @@ function FullscreenNavigation(props: Props) {
               {t('nav.signin')}
             </span>
           )}
+
           <LanguageSwitcher
             className={styles.languageSwitcher}
             onLanguageChanged={closeNav}
