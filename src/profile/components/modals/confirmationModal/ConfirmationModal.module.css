@@ -28,6 +28,9 @@
     display: flex;
     align-items: flex-start;
 }
+.titleRow > *:first-child {
+    flex-grow: 1;
+}
 
 .closeButton {
     display: flex;
