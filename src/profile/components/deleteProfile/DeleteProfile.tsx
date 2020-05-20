@@ -18,7 +18,6 @@ import {
   DeleteMyProfileVariables,
   ServiceConnectionsQuery,
 } from '../../../graphql/generatedTypes';
-import styles from './deleteProfile.module.css';
 
 const DELETE_PROFILE = loader('../../graphql/DeleteMyProfile.graphql');
 const SERVICE_CONNECTIONS = loader(
@@ -106,7 +105,6 @@ function DeleteProfile(props: Props) {
           type="button"
           onClick={handleConfirmationModal}
           disabled={!deleteInstructions}
-          className={styles.button}
         >
           {t('deleteProfile.delete')}
         </Button>

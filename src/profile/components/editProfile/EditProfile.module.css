@@ -1,0 +1,15 @@
+.editProfile {
+    background: var(--color-white);
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.personalProfileTitleRow {
+    align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+

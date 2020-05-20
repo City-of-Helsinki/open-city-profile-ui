@@ -1,9 +1,28 @@
+.pageTitleContainer h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
 .edit {
-  /* These styles allow the button to better fit on the screen on */
-  /* mobile. */
-  padding-left: 0;
-  padding-right: 0;
-  min-width: 0;
+  font-weight: bold;
+}
+
+.edit:hover {
+  cursor: pointer;
+}
+
+.personalInformation {
+  background: var(--color-white);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.personalInformationTitleRow {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {
