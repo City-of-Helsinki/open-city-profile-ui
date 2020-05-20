@@ -1,4 +1,4 @@
-.container {
+.container.margin {
   margin: 0 15px;
 }
 
@@ -8,12 +8,12 @@
 }
 .small {
   margin-top: 0;
-  color: var(--hds-ui-color-black-70);
+  color: var(--color-black-70);
   font-size: 20px;
 }
 
 @media (min-width: 1200px) {
-  .container {
+  .container.margin {
     margin: 0;
   }
 }

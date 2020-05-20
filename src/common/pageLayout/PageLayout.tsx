@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { useTranslation } from 'react-i18next';
 
+import { MAIN_CONTENT_ID } from '../constants';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import styles from './PageLayout.module.css';
@@ -31,7 +32,10 @@ function PageLayout(props: Props) {
   return (
     <div className={styles.wrapper}>
       <Header />
-      <main className={classNames(styles.content, props.className)}>
+      <main
+        id={MAIN_CONTENT_ID}
+        className={classNames(styles.content, props.className)}
+      >
         {props.children}
       </main>
       <Footer hideFooterLogo={props.hideFooterLogo} />

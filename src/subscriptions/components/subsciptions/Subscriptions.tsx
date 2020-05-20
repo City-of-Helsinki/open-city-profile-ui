@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import * as Sentry from '@sentry/browser';
+import { Checkbox } from 'hds-react';
 
 import Explanation from '../../../common/explanation/Explanation';
 import Button from '../../../common/button/Button';
-import Checkbox from '../../../common/checkbox/Checkbox';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
 import Loading from '../../../common/loading/Loading';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
@@ -178,7 +178,7 @@ function Subscriptions() {
                   <div key={subscription.code} className={styles.subscription}>
                     <h2>{subscription.label}</h2>
                     {subscription?.options?.map(
-                      (option: SubscriptionOption) => (
+                      (option: SubscriptionOption, j: number) => (
                         <Checkbox
                           onChange={() =>
                             handleCheckboxValues(
@@ -188,9 +188,9 @@ function Subscriptions() {
                             )
                           }
                           name={option.code}
-                          id={option.code}
+                          id={option.code || j.toString()}
                           checked={option.enabled}
-                          label={option.label}
+                          labelText={option.label || undefined}
                           key={option.code}
                         />
                       )

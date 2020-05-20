@@ -1,7 +1,7 @@
 .container {
     width: 100%;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-    background: var(--hds-ui-color-white);
+    background: var(--color-white);
     margin: 15px 0;
 }
 
@@ -17,7 +17,7 @@
 .title h2 {
     margin-top: 11px;
     font-size: 22px;
-    color: var(--hds-brand-color-bus-dark-50);
+    color: var(--color-bus-dark-50);
 }
 
 .title:hover {
@@ -26,7 +26,7 @@
 
 .informationText {
     margin-right: 10px;
-    color: var(--hds-brand-color-bus-dark-50);
+    color: var(--color-bus-dark-50);
 
 }
 

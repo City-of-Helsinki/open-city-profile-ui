@@ -24,7 +24,7 @@
 }
 
 .navItems {
-  background: var(--hds-ui-color-white);
+  background: var(--color-white);
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -44,7 +44,7 @@
 }
 
 .navLink {
-  color: var(--hds-ui-color-black);
+  color: var(--color-black);
   cursor: pointer;
   font-size: 20px;
   font-weight: bold;

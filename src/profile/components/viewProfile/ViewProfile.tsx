@@ -42,6 +42,7 @@ function ViewProfile() {
         <React.Fragment>
           <PageHeading text={getNicknameOrName(data)} />
           <nav
+            aria-label={t('landmarks.navigation.main')}
             className={classNames(
               styles.profileNav,
               responsive.maxWidthCentered
@@ -63,22 +64,26 @@ function ViewProfile() {
             >
               {t('nav.services')}
             </NavLink>
-            <NavLink
-              exact
-              to="/subscriptions"
-              className={styles.profileNavLink}
-              activeClassName={styles.activeProfileNavLink}
-            >
-              {t('nav.subscriptions')}
-            </NavLink>
+            {process.env.REACT_APP_ENVIRONMENT !== 'production' && (
+              <NavLink
+                exact
+                to="/subscriptions"
+                className={styles.profileNavLink}
+                activeClassName={styles.activeProfileNavLink}
+              >
+                {t('nav.subscriptions')}
+              </NavLink>
+            )}
           </nav>
           <Switch>
             <Route path="/connected-services">
               <ServiceConnections />
             </Route>
-            <Route path="/subscriptions">
-              <Subscriptions />
-            </Route>
+            {process.env.REACT_APP_ENVIRONMENT !== 'production' && (
+              <Route path="/subscriptions">
+                <Subscriptions />
+              </Route>
+            )}
             <Route path="/">
               <div className={styles.profileContent}>
                 <div className={responsive.maxWidthCentered}>

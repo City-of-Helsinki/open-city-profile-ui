@@ -5,8 +5,8 @@
 }
 
 .label {
-    font-size: var(--hds-text-sm);
-    line-height: var(--hds-text-sm-line-height);
+    font-size: var(--fontsize-body-small);
+    line-height: var(--lineheight-xl);
     font-weight: bold;
     margin-bottom: 0.2em;
 }
@@ -18,10 +18,10 @@
     max-width: 100%;
     box-sizing: border-box;
     margin: 0;
-    font-size: var(--hds-text-md);
-    border: 2px solid var(--hds-ui-color-black-20);
+    font-size: var(--fontsize-h-5);
+    border: 2px solid var(--color-black-20);
     border-radius: 0;
-    background-color: var(--hds-ui-color-white);
+    background-color: var(--color-white);
     background-image: url("../svg/ChevronDown.svg");
     background-repeat: no-repeat, repeat;
     background-position: right .7em top 50%, 0 0;
@@ -34,12 +34,12 @@
     display: none;
 }
 .select select:hover {
-    border-color: var(--hds-ui-color-black-40);
+    border-color: var(--color-black-40);
 }
 .select select:focus {
-    border-color: var(--hds-ui-color-black);
+    border-color: var(--color-black);
     box-shadow: 0 0 0 3px -moz-mac-focusring;
-    color: var(--hds-ui-color-black-80);
+    color: var(--color-black-80);
     outline: none;
 }
 .select select option {
@@ -49,8 +49,8 @@
 .select select:disabled, .select select[aria-disabled=true] {
     color: graytext;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22graytext%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
-    linear-gradient(to bottom, var(--hds-ui-color-white) 0%, var(--hds-ui-color-black-10) 100%);
+    linear-gradient(to bottom, var(--color-white) 0%, var(--color-black-10) 100%);
 }
 .select select:disabled:hover, .select select[aria-disabled=true] {
-    border-color: var(--hds-ui-color-black-30);
+    border-color: var(--color-black-30);
 }

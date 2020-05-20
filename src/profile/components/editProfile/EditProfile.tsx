@@ -121,6 +121,7 @@ function EditProfile(props: Props) {
       <div className={styles.editProfileTitleRow}>
         <div className={classNames(styles.font, responsive.maxWidthCentered)}>
           <Explanation
+            variant="flush"
             main={t('profileInformation.personalData')}
             small={t('profileInformation.visibility')}
           />
