@@ -79,7 +79,7 @@ function CreateProfileForm(props: Props) {
               className={styles.formField}
               name="firstName"
               id="firstName"
-              maxlength="255"
+              maxLength="255"
               as={TextInput}
               invalid={getIsInvalid(formikProps, 'firstName')}
               helperText={getFieldError(formikProps, 'firstName', {
@@ -91,7 +91,7 @@ function CreateProfileForm(props: Props) {
               className={styles.formField}
               name="lastName"
               id="lastName"
-              maxlength="255"
+              maxLength="255"
               as={TextInput}
               invalid={getIsInvalid(formikProps, 'lastName')}
               helperText={getFieldError(formikProps, 'lastName', { max: 255 })}
@@ -118,8 +118,8 @@ function CreateProfileForm(props: Props) {
               id="phone"
               as={TextInput}
               type="tel"
-              minlength="6"
-              maxlength="255"
+              minLength="6"
+              maxLength="255"
               invalid={getIsInvalid(formikProps, 'phone')}
               helperText={getFieldError(formikProps, 'phone', {
                 min: 6,
