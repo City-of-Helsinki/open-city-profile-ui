@@ -7,9 +7,9 @@ export default function getAddress(data: MyProfileQuery, lang: string) {
     const address = data.myProfile.primaryAddress;
     const country = countries.getName(address.countryCode || 'FI', lang);
 
-    return [address.address, address.city, address.postalCode, country].join(
-      ', '
-    );
+    return [address.address, address.city, address.postalCode, country]
+      .filter(addressPart => addressPart)
+      .join(', ');
   }
   return '';
 }
