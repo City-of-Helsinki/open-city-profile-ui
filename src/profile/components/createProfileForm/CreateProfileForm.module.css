@@ -34,13 +34,13 @@
 }
 
 .terms {
-  display: inline-block;
-  margin-bottom: 20px;
-  user-select: none;
+  --terms-margin-top: var(--spacing-m);
+  --terms-margin-bottom: var(--spacing-l);
+  margin: var(--terms-margin-top) 0 var(--terms-margin-bottom) 0;
 }
 @media (min-width: 768px) {
   .terms {
-    margin-bottom: 30px;
-    margin-top: 30px;
+    --terms-margin-top: var(--spacing-l);
+    --terms-margin-bottom: var(--spacing-xl);
   }
 }

@@ -133,21 +133,24 @@ function CreateProfileForm(props: Props) {
               <span className={styles.email}>{props.profile.email}</span>
             </div>
           </div>
-          <Field
-            as={Checkbox}
-            name="terms"
-            id="terms"
-            checked={formikProps.values.terms}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            labelText={
-              <Trans
-                i18nKey="profileForm.terms"
-                // eslint-disable-next-line jsx-a11y/anchor-has-content
-                components={[<a href="/#"></a>, <a href="/#"></a>]}
-              />
-            }
-          />
+
+          <div className={styles.terms}>
+            <Field
+              as={Checkbox}
+              name="terms"
+              id="terms"
+              checked={formikProps.values.terms}
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              labelText={
+                <Trans
+                  i18nKey="profileForm.terms"
+                  // eslint-disable-next-line jsx-a11y/anchor-has-content
+                  components={[<a href="/#"></a>, <a href="/#"></a>]}
+                />
+              }
+            />
+          </div>
           <div>
             <Button
               type="submit"
