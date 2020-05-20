@@ -18,6 +18,7 @@ import OidcCallback from './auth/components/oidcCallback/OidcCallback';
 import Profile from './profile/components/profile/Profile';
 import { fetchApiTokenThunk } from './auth/redux';
 import ProfileDeleted from './profile/components/profileDeleted/ProfileDeleted';
+import AccessibilityStatement from './accessibilityStatement/AccessibilityStatement';
 import { MAIN_CONTENT_ID } from './common/constants';
 import AccessibilityShortcuts from './common/accessibilityShortcuts/AccessibilityShortcuts';
 import AppMeta from './AppMeta';
@@ -78,6 +79,9 @@ function App(props: Props) {
                 exact
               >
                 <Profile />
+              </Route>
+              <Route path="/accessibility">
+                <AccessibilityStatement />
               </Route>
               <Route path="/profile-deleted" exact>
                 <ProfileDeleted />
