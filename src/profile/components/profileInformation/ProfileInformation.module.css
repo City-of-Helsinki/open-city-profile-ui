@@ -1,6 +1,7 @@
 .pageTitleContainer h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: var(--fontsize-h-3);
+  margin-top: 0;
+  margin-bottom: var(--spacing-s);
 }
 
 .edit {
@@ -12,17 +13,25 @@
 }
 
 .personalInformation {
+  --pi-horizontal-whitespace: var(--spacing-m);
   background: var(--color-white);
   border-radius: 2px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: var(--spacing-l) var(--pi-horizontal-whitespace);
+  margin-bottom: var(--spacing-xl);
 }
 
 .personalInformationTitleRow {
   align-items: baseline;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-m);
+}
+
+@media (min-width: 600px) {
+  .personalInformation {
+    --pi-horizontal-whitespace: var(--spacing-xl);
+  }
 }
 
 @media (min-width: 768px) {
