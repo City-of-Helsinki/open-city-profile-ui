@@ -1,14 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button, IconFill } from 'hds-react';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import DownloadData from '../downloadData/DownloadData';
 import styles from './ProfileInformation.module.css';
-import Explanation from '../../../common/explanation/Explanation';
 import getName from '../../helpers/getName';
 import getAddress from '../../helpers/getAddress';
 import { MyProfileQuery } from '../../../graphql/generatedTypes';
+import ProfileSection from '../../../common/profileSection/ProfileSection';
 
 type Props = {
   loading: boolean;
@@ -23,20 +24,22 @@ function ProfileInformation(props: Props) {
 
   return (
     <React.Fragment>
-      <section className={styles.personalInformation}>
-        <div className={styles.personalInformationTitleRow}>
-          <Explanation
-            variant="flush"
-            className={styles.pageTitleContainer}
-            main={t('profileInformation.personalData')}
-            small={t('profileInformation.visibility')}
-          />
-          {!isEditing && (
-            <button onClick={setEditing} className={styles.edit}>
-              {t('profileForm.edit').toUpperCase()}
-            </button>
-          )}
-        </div>
+      <ProfileSection
+        title={t('profileInformation.personalData')}
+        description={t('profileInformation.visibility')}
+        titleButton={
+          !isEditing && (
+            <Button
+              variant="supplementary"
+              onClick={setEditing}
+              iconRight={<IconFill />}
+              className={styles.edit}
+            >
+              {t('profileForm.edit')}
+            </Button>
+          )
+        }
+      >
         <div className={styles.storedInformation}>
           {loading && t('loading')}
           {data && !isEditing && (
@@ -50,10 +53,6 @@ function ProfileInformation(props: Props) {
                 value={getAddress(data, i18n.languages[0])}
               />
               <LabeledValue
-                label={t('profileForm.language')}
-                value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
-              />
-              <LabeledValue
                 label={t('profileInformation.phone')}
                 value={data.myProfile?.primaryPhone?.phone}
               />
@@ -61,10 +60,14 @@ function ProfileInformation(props: Props) {
                 label={t('profileInformation.email')}
                 value={data.myProfile?.primaryEmail?.email}
               />
+              <LabeledValue
+                label={t('profileForm.language')}
+                value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
+              />
             </>
           )}
         </div>
-      </section>
+      </ProfileSection>
       <DownloadData />
       <DeleteProfile />
     </React.Fragment>
