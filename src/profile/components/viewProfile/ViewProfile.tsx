@@ -75,39 +75,41 @@ function ViewProfile() {
               </NavLink>
             )}
           </nav>
-          <Switch>
-            <Route path="/connected-services">
-              <ServiceConnections />
-            </Route>
-            {process.env.REACT_APP_ENVIRONMENT !== 'production' && (
-              <Route path="/subscriptions">
-                <Subscriptions />
+          <div className={styles.contentWrapper}>
+            <Switch>
+              <Route path="/connected-services">
+                <ServiceConnections />
               </Route>
-            )}
-            <Route path="/">
-              <div className={styles.profileContent}>
-                <div className={responsive.maxWidthCentered}>
-                  <Explanation
-                    main={t('profileInformation.title')}
-                    titleVariant="h2"
-                  />
-                  {!isEditing ? (
-                    <ProfileInformation
-                      data={data}
-                      loading={loading}
-                      isEditing={isEditing}
-                      setEditing={toggleEditing}
+              {process.env.REACT_APP_ENVIRONMENT !== 'production' && (
+                <Route path="/subscriptions">
+                  <Subscriptions />
+                </Route>
+              )}
+              <Route path="/">
+                <div className={styles.profileContent}>
+                  <div className={responsive.maxWidthCentered}>
+                    <Explanation
+                      main={t('profileInformation.title')}
+                      titleVariant="h2"
                     />
-                  ) : (
-                    <EditProfile
-                      setEditing={toggleEditing}
-                      profileData={data}
-                    />
-                  )}
+                    {!isEditing ? (
+                      <ProfileInformation
+                        data={data}
+                        loading={loading}
+                        isEditing={isEditing}
+                        setEditing={toggleEditing}
+                      />
+                    ) : (
+                      <EditProfile
+                        setEditing={toggleEditing}
+                        profileData={data}
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Route>
-          </Switch>
+              </Route>
+            </Switch>
+          </div>
         </React.Fragment>
       )}
 
