@@ -87,7 +87,10 @@ function ViewProfile() {
             <Route path="/">
               <div className={styles.profileContent}>
                 <div className={responsive.maxWidthCentered}>
-                  <Explanation main={t('profileInformation.title')} />
+                  <Explanation
+                    main={t('profileInformation.title')}
+                    titleVariant="h2"
+                  />
                   {!isEditing ? (
                     <ProfileInformation
                       data={data}
