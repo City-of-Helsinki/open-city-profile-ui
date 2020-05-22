@@ -5,6 +5,7 @@ import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
 
+import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import { getIsInvalid, getError } from '../../helpers/formik';
 import Select from '../../../common/select/Select';
 import Button from '../../../common/button/Button';
@@ -55,7 +56,8 @@ function EditProfileForm(props: Props) {
   const userHasServices =
     props.services?.myProfile?.serviceConnections?.edges?.length !== 0;
 
-  const countryList = countries.getNames(i18n.languages[0]);
+  const applicationLanguage = getLanguageCode(i18n.languages[0]);
+  const countryList = countries.getNames(applicationLanguage);
   const countryOptions = Object.keys(countryList).map(key => {
     return {
       value: key,
