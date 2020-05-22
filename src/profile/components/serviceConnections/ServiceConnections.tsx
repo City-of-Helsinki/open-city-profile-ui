@@ -70,7 +70,7 @@ function ServiceConnections(props: Props) {
               title={service.title || ''}
               showInformationText
             >
-              {service.description}
+              <p>{service.description}</p>
               <p className={styles.serviceInformation}>
                 {t('serviceConnections.servicePersonalData')}
               </p>
