@@ -79,7 +79,7 @@ function CreateProfileForm(props: Props) {
               className={styles.formField}
               name="firstName"
               id="firstName"
-              maxlength="255"
+              maxLength="255"
               as={TextInput}
               invalid={getIsInvalid(formikProps, 'firstName')}
               helperText={getFieldError(formikProps, 'firstName', {
@@ -91,7 +91,7 @@ function CreateProfileForm(props: Props) {
               className={styles.formField}
               name="lastName"
               id="lastName"
-              maxlength="255"
+              maxLength="255"
               as={TextInput}
               invalid={getIsInvalid(formikProps, 'lastName')}
               helperText={getFieldError(formikProps, 'lastName', { max: 255 })}
@@ -118,8 +118,8 @@ function CreateProfileForm(props: Props) {
               id="phone"
               as={TextInput}
               type="tel"
-              minlength="6"
-              maxlength="255"
+              minLength="6"
+              maxLength="255"
               invalid={getIsInvalid(formikProps, 'phone')}
               helperText={getFieldError(formikProps, 'phone', {
                 min: 6,
@@ -133,21 +133,24 @@ function CreateProfileForm(props: Props) {
               <span className={styles.email}>{props.profile.email}</span>
             </div>
           </div>
-          <Field
-            as={Checkbox}
-            name="terms"
-            id="terms"
-            checked={formikProps.values.terms}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            labelText={
-              <Trans
-                i18nKey="profileForm.terms"
-                // eslint-disable-next-line jsx-a11y/anchor-has-content
-                components={[<a href="/#"></a>, <a href="/#"></a>]}
-              />
-            }
-          />
+
+          <div className={styles.terms}>
+            <Field
+              as={Checkbox}
+              name="terms"
+              id="terms"
+              checked={formikProps.values.terms}
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              labelText={
+                <Trans
+                  i18nKey="profileForm.terms"
+                  // eslint-disable-next-line jsx-a11y/anchor-has-content
+                  components={[<a href="/#"></a>, <a href="/#"></a>]}
+                />
+              }
+            />
+          </div>
           <div>
             <Button
               type="submit"
