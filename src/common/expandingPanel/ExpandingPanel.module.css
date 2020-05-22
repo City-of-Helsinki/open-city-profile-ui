@@ -2,6 +2,7 @@
     --ep-horizontal-whitespace: var(--spacing-m);
     --ep-vertical-whitespace: var(--spacing-l);
     --ep-background: var(--color-white);
+    --ep-accent-color: var(--color-bus);
     width: 100%;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     background: var(--ep-background);
@@ -29,20 +30,23 @@
 }
 
 .showInformation {
-    margin-right: 15px;
-    font-size: 14px;
+    margin-right: var(--spacing-s);
+    font-size: var(--fontsize-body-small);
     font-weight: bold;
+    color: var(--ep-accent-color);
+}
+
+.icon {
+    height: var(--spacing-s);
+    width: var(--spacing-s);
+    fill: var(--ep-accent-color);
 }
 
 .iconDown {
-    height: 15px;
-    width: 15px;
     transform: rotateZ(90deg);
 }
 
 .iconUp {
-    height: 15px;
-    width: 15px;
     transform: rotateZ(-90deg);
 }
 
