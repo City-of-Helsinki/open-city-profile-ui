@@ -1,6 +1,7 @@
 import React, { useState, PropsWithChildren } from 'react';
 import { IconAngleRight } from 'hds-react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import styles from './ExpandingPanel.module.css';
 
@@ -44,7 +45,10 @@ function ExpandingPanel(props: Props) {
             </p>
           )}
           <IconAngleRight
-            className={expanded ? styles.iconUp : styles.iconDown}
+            className={classNames(
+              styles.icon,
+              expanded ? styles.iconUp : styles.iconDown
+            )}
           />
         </div>
       </div>
