@@ -2,36 +2,36 @@
   "appName": "Profiili",
   "berthErrors": {
     "close": "Sulje",
-    "explanation": "Jotta voit poistaa profiilisi, sinun on ensin irtisanottava venepaikkasopimuksesi",
-    "title": "Et voi poistaa Helsinki-profiiliasi, koska venepaikka tarvitsee tietojasi laskutukseen"
+    "explanation": "Et voi poistaa tietojasi, koska Venepaikka-palvelu tarvitsee tietojasi laskutukseen. Ota yhteyttä Venepaikka-palvelun asiakaspalveluun irtisanoaksesi sopimuksesi ja yritä sen jälkeen poistoa uudelleen.",
+    "title": "Toimintoa ei voi suorittaa."
   },
   "confirmationModal": {
     "cancel": "Peruuta",
     "close": "Sulje",
     "save": "Tallenna",
-    "saveMessage": "Muutokset välittyvät seuraaviin palveluihin",
-    "saveTitle": "Haluatko tallentaa tekemäsi muutokset"
+    "saveMessage": "Muuttamasi tiedot ovat heti käytössä seuraavissa Helsingin kaupungin palveluissa:",
+    "saveTitle": "Haluatko tallentaa tekemäsi muutokset?"
   },
   "createProfile": {
     "heading": "Täydennä tietosi luodaksesi profiili",
-    "helpText": "Nämä tiedot näkyvät vain sinulle",
+    "helpText": "Luomalla profiilin voit hallinnoida omia tietojasi yhdestä paikasta.",
     "pageTitle": "Uusi profiili"
   },
   "deleteProfile": {
-    "accept": "Olen lukenut <0>ohjeet</0> ja ymmärrän mitä tietojeni poistaminen tarkoittaa",
-    "delete": "Poista Helsinki-profiili",
-    "explanation": "Voit halutessasi poistaa kaikki tietosi, mutta se tarkoittaa myös käyttäjätilisi poistamista. Lue lisää ohjeesta. Poistamalla Helsinki profiilisi menetätä myös kaikki yhdistettyihin palveluihin tallennetut tietosi, etkä voi enää kirjautua niihin.",
-    "title": "Haluatko poistaa profiilisi?"
+    "accept": "Ymmärrän mitä tietojeni poistaminen tarkoittaa ja haluan jatkaa.",
+    "delete": "Poista omat tiedot",
+    "explanation": "Jos haluat, voit poistaa kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Jos olet yhdistänyt profiilisi johonkin Helsingin kaupungin palveluun, et enää pysty käyttämään kyseistä palvelua ennen kuin luot uuden profiilin. Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta. Huomaa, että kirjautumiseen käyttämääsi tiliä (esim. Google, Facebook) ei poisteta.",
+    "title": "Haluatko poistaa omat tietosi?"
   },
   "deleteProfileModal": {
-    "delete": "Poista Helsinki-profiili",
-    "explanation": "Poistamalla profiilisi menetät myös kaikki seuraaviin palveluihin tallennetut tiedot",
-    "noServiceExplanation": "Poistamalla profiilisi menetät kaikki tallennetut tiedot.",
-    "title": "Haluatko varmasti poistaa Helsinki-profiilisi"
+    "delete": "Poista omat tiedot",
+    "explanation": "Jatkamalla menetät kaikki tallennetut tietosi etkä voi enää käyttää seuraavia Helsingin kaupungin palveluita:",
+    "noServiceExplanation": "Jatkamalla menetät kaikki tallennetut tietosi.",
+    "title": "Haluatko varmasti poistaa kaikki tietosi?"
   },
   "downloadData": {
-    "button": "Lataa kaikki palvelun tiedot",
-    "panelText": "Jos haluat nähdä kaikki sinusta tallentamamme tiedot, voit ladata ne seuraavasta napista.",
+    "button": "Lataa omat tiedot",
+    "panelText": "Jos haluat nähdä kaikki sinusta tallentamamme tiedot, voit ladata ne tästä. Tiedot toimitetaan määrämuotoisena tiedostona, jotta voit halutessasi siirtää tiedot johonkin toiseen järjestelmään.",
     "panelTitle": "Haluatko ladata omat tietosi?"
   },
   "expandingPanel": {
@@ -67,7 +67,7 @@
   },
   "nav": {
     "information": "Omat tiedot",
-    "menuButtonLabel": "Profiili valikko",
+    "menuButtonLabel": "Profiilivalikko",
     "services": "Yhdistetyt palvelut",
     "signin": "Kirjaudu sisään",
     "signout": "Kirjaudu ulos",
@@ -85,7 +85,7 @@
     "loading": "Ladataan profiilia..."
   },
   "profileDeleted": {
-    "message": "Jos haluat, voit luoda profiilis uudestaan myöhemmin. Sinut kirjataan ulos {{time}} sekunnin kuluttua.",
+    "message": "Jos haluat, voit luoda profiilisi uudestaan myöhemmin. Sinut kirjataan ulos {{time}} sekunnin kuluttua.",
     "title": "Profiilisi on poistettu onnistuneesti!"
   },
   "profileForm": {
@@ -112,30 +112,30 @@
     "personalData": "Henkilötiedot",
     "phone": "Puhelinnumero",
     "title": "Omat tiedot",
-    "visibility": "Palveluun on tallennettu sinusta seuraavat tiedot"
+    "visibility": "Helsinki-profiiliin on tallennettu sinusta alla olevat tiedot."
   },
   "sanityCheck": "open-city-profile.fi",
   "serviceConnections": {
     "clock": "klo",
-    "created": "Luotu",
+    "created": "Luotu:",
     "empty": "Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi.",
-    "explanation": "Voit käyttää samalla profiililla useita Helsingin kaupungin palveluita sekä tiettyjä kolmansien osapuolten palveluita.",
+    "explanation": "Profiilisi on yhdistetty alla oleviin Helsingin kaupungin palveluihin. Muutokset omissa tiedoissasi ovat heti palveluiden käytössä. Sinun ei tarvitse muuttaa tietojasi jokaisessa palvelussa erikseen.",
     "servicePersonalData": "Palvelu saa tietää sinusta:",
     "title": "Yhdistetyt palvelut"
   },
   "skipToContent": "Siirry suoraan sisältöön",
   "subscriptions": {
     "empty": "Ei tilattavia palveluita / ilmoituksia",
-    "explanation": "Tilaa ilmoituksia ja uutiskirjeitä",
+    "explanation": "Tilaa ilmoituksia ja uutiskirjeitä.",
     "saveSuccess": "Tallennettu!",
-    "saveSuccessMessage": "Tilaukset tallennettu onnistuneesti",
+    "saveSuccessMessage": "Tilaukset tallennettu onnistuneesti.",
     "subscribed": "Tilattu!",
     "title": "Tilaukset ja uutiskirjeet"
   },
   "validation": {
-    "email": "Epäkelpo sähköpostiosoite",
-    "maxLength": "Kentän maksimipituus on {{max}} merkkiä",
-    "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä",
-    "required": "Tämä kenttä on pakollinen"
+    "email": "Sähköpostiosoite ei kelpaa.",
+    "maxLength": "Kentän maksimipituus on {{max}} merkkiä.",
+    "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä.",
+    "required": "Tämä kenttä on pakollinen."
   }
 }

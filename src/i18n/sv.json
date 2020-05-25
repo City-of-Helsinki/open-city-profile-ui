@@ -2,37 +2,37 @@
   "appName": "Profil",
   "berthErrors": {
     "close": "Stänga",
-    "explanation": "För att radera din profil måste du först säga upp betalningsavtal för kaj",
-    "title": "Du kan inte ta bort din Helsingfors-profil eftersom Berth behöver din information för fakturering"
+    "explanation": "Du kan inte radera din information eftersom Båtplatser-tjänsten behöver din faktureringsinformation. Kontakta Båtplatsers kundservice för att säga upp ditt kontrakt. När det är gjort kan du försöka igen.",
+    "title": "Operationen kan inte slutföras."
   },
   "confirmationModal": {
     "cancel": "Annullera",
     "close": "Stäng",
     "save": "Spara",
-    "saveMessage": "Sparade data överförs till följande tjänster",
-    "saveTitle": "Vill du spara dina ändringar"
+    "saveMessage": "Informationen som du har ändrat är omedelbart tillgänglig för följande Helsingfors stads tjänster:",
+    "saveTitle": "Vill du spara dina ändringar?"
   },
   "createProfile": {
     "heading": "Fyll i detaljerna för att skapa en profil",
-    "helpText": "Denna information syns endast åt dig",
+    "helpText": "Genom att skapa en profil kan du hantera din information på ett ställe.",
     "pageTitle": "Skapa profil"
   },
   "deleteProfile": {
-    "accept": "Jag har läst <0>guide</0> och förstå vad att ta bort mina data betyder.",
-    "delete": "Radera Helsingfors-profilen",
-    "explanation": "Om så önskas kan du ta bort all information, men betyder också att du tar bort ditt konto. Läs mer från guiden. Genom att ta bort din Helsingfors-profil tappar du också all information som sparats i anslutna tjänster och kan inte längre logga in.",
-    "title": "Vill du ta bort ditt profil?"
+    "accept": "Jag förstår vad att radera min information betyder och vill fortsätta.",
+    "delete": "Radera min information",
+    "explanation": "Om du vill, kan du radera all information som vi har lagrat om dig. Informationen kan inte återställas efter att den har raderats. Om du har anslutit din profil till en av Helsingfors stads tjänster kan du inte längre använda tjänsten förrän du skapar en ny profil. Efter radering kommer du automatiskt att logga ut från den här tjänsten. Observera att kontot du har använt för att logga in (till exempel Google eller Facebook) inte kommer att raderas.",
+    "title": "Vill du radera din information?"
   },
   "deleteProfileModal": {
-    "delete": "Radera Helsingfors-profilen",
-    "explanation": "Genom att ta bort din profil tappar du också all data som sparats till följande tjänster",
-    "noServiceExplanation": "Genom, att ta bort din profil kommer du att förlora alla dina lagrade data.",
-    "title": "Är du säker på att du vill ta bort din Helsingfors-profil"
+    "delete": "Radera min information",
+    "explanation": "Genom att fortsätta kommer du att förlora alla dina lagrade information och du kan inte längre använda följande Helsingfors stads tjänster:",
+    "noServiceExplanation": "Genom att fortsätta kommer du att förlora alla dina lagrade information.",
+    "title": "Är du säker på att du vill radera din information?"
   },
   "downloadData": {
-    "button": "Ladda ner informationen om mig",
-    "panelText": "Du kan ladda ner all information vi har om dig från följande knapp.",
-    "panelTitle": "Vill du ladda ner dina uppgifter?"
+    "button": "Ladda ner min information",
+    "panelText": "Om du vill se all vår lagrad information om dig, kan du ladda ner dem här. Informationen levereras som en fil i ett fast format så att du kan flytta den till något annat system om du vill.",
+    "panelTitle": "Vill du ladda ner din information?"
   },
   "expandingPanel": {
     "hideInformation": "GÖM INFORMATION",
@@ -106,36 +106,36 @@
   "profileInformation": {
     "address": "Adress",
     "deleteProfile": "Radera profil",
-    "downloadData": "Ladda ner min data",
+    "downloadData": "Ladda ner min information",
     "email": "Epost",
     "name": "Namn",
     "personalData": "Personuppgifter",
     "phone": "Telefonnummer",
-    "title": "Mina uppgifter",
-    "visibility": "Följande information om dig lagras i tjänsten"
+    "title": "Min information",
+    "visibility": "Följande information om dig lagras i Helsingfors profilen."
   },
   "sanityCheck": "open-city-profile.sv",
   "serviceConnections": {
     "clock": "kl.",
-    "created": "Skapad",
+    "created": "Skapad:",
     "empty": "Du har för närvarande inga tjänster anslutna till din profil.",
-    "explanation": "Du kan använda många av Helsingfors stads tjänster samt vissa tjänster från tredje parter med samma profil.",
-    "servicePersonalData": "Data som tjänsten vet om dig:",
-    "title": "Anslutna servicer"
+    "explanation": "Din profil har anslutits till Helsingfors stads tjänster listade nedan. Alla ändringar i din information är omedelbart tillgängliga för tjänsterna. Du behöver inte ändra din information separat i varje tjänst.",
+    "servicePersonalData": "Information som tjänsten vet om dig:",
+    "title": "Anslutna tjänster"
   },
-  "skipToContent": "",
+  "skipToContent": "Hoppa till innehåll",
   "subscriptions": {
     "empty": "Inga prenumerationer / nyhetsbrev",
-    "explanation": "Prenumerera på meddelanden och nyhetsbrev",
+    "explanation": "Prenumerera på meddelanden och nyhetsbrev.",
     "saveSuccess": "Sparade!",
-    "saveSuccessMessage": "Prenumerationer sparades framgångsrikt",
+    "saveSuccessMessage": "Prenumerationer sparades framgångsrikt.",
     "subscribed": "Prenumererar!",
     "title": "Prenumerationer och nyhetsbrev"
   },
   "validation": {
     "email": "Inte ett giltigt epost-adress",
-    "maxLength": "Fältet får vara högst {{max}} tecken långt",
-    "phoneMin": "Telefonnumret måste vara mint {{min}} tecken långt",
-    "required": "Detta fält krävs"
+    "maxLength": "Fältet får vara högst {{max}} tecken långt.",
+    "phoneMin": "Telefonnumret måste vara mint {{min}} tecken långt.",
+    "required": "Detta fält krävs."
   }
 }
