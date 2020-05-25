@@ -11,10 +11,12 @@ Modal.setAppElement('#root');
 
 const ENVS_WITH_SENTRY = ['staging', 'production'];
 
-if (ENVS_WITH_SENTRY.includes(process.env.NODE_ENV)) {
+if (
+  ENVS_WITH_SENTRY.includes(process.env.REACT_APP_ENVIRONMENT || 'development')
+) {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_DSN,
-    environment: process.env.NODE_ENV,
+    environment: process.env.REACT_APP_ENVIRONMENT,
   });
 }
 
