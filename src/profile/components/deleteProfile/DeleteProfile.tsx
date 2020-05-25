@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import * as Sentry from '@sentry/browser';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
@@ -92,13 +92,7 @@ function DeleteProfile(props: Props) {
           checked={deleteInstructions}
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
-          labelText={
-            <Trans
-              i18nKey="deleteProfile.accept"
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
-              components={[<a href="/#"></a>]}
-            />
-          }
+          labelText={t('deleteProfile.accept')}
         />
 
         <Button
