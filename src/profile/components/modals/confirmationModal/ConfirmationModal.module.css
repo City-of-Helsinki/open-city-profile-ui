@@ -6,6 +6,7 @@
     background-color: var(--color-white);
     border-radius: 2px;
     border: none;
+    z-index: 100;
 }
 
 .container:focus {
@@ -22,6 +23,7 @@
     background-color: rgba(0, 0, 0, 0.75);
     align-items: center;
     justify-content: center;
+    z-index: 99;
 }
 
 .titleRow {
