@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
-import FileSaver from 'file-saver';
 
 import { RootState } from '../../../redux/rootReducer';
 import { AuthState, resetApiError } from '../../redux';
@@ -22,14 +21,6 @@ function Home(props: Props) {
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
 
-  // TODO remove this after review testing.
-  const downloadTest = () => {
-    const blob = new Blob(['Amazing test data!'], {
-      type: 'application/json',
-    });
-    FileSaver.saveAs(blob, 'test_data.json');
-  };
-
   return (
     <PageLayout hideFooterLogo={true} title={'login.login'}>
       <div className={styles.wrapper}>
@@ -47,19 +38,6 @@ function Home(props: Props) {
           >
             {t('login.login')}
           </Button>
-
-          <br />
-          {/* This is only for testing and will be removed before merge */}
-          {/* Just to be save I restricted this to work only in 'review' environment */}
-          {process.env.REACT_APP_ENVIRONMENT === 'review' && (
-            <Button
-              variant="outlined"
-              className={styles.button}
-              onClick={downloadTest}
-            >
-              DownloadTest
-            </Button>
-          )}
         </div>
       </div>
       <NotificationComponent
