@@ -93,7 +93,7 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
             profile={{
               firstName: tunnistamoUser.profile.given_name || '',
               lastName: tunnistamoUser.profile.family_name || '',
-              email: tunnistamoUser.profile.email,
+              email: tunnistamoUser.profile.email || '',
               profileLanguage: Language.FINNISH,
               phone: '',
             }}
