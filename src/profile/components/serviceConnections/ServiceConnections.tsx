@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/react-hooks';
 import { format } from 'date-fns';
+import * as Sentry from '@sentry/browser';
 
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import Explanation from '../../../common/explanation/Explanation';
@@ -27,7 +28,10 @@ function ServiceConnections(props: Props) {
   const { data, loading, refetch } = useQuery<ServiceConnectionsQuery>(
     SERVICE_CONNECTIONS,
     {
-      onError: () => setShowNotification(true),
+      onError: (error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      },
     }
   );
 
@@ -53,38 +57,39 @@ function ServiceConnections(props: Props) {
     <div className={styles.serviceConnections}>
       <div className={responsive.maxWidthCentered}>
         <Explanation
-          className={styles.pageTitle}
           main={t('serviceConnections.title')}
           small={t('serviceConnections.explanation')}
         />
         {hasNoServices && (
           <p className={styles.empty}>{t('serviceConnections.empty')}</p>
         )}
-        {services.map((service, index) => (
-          <ExpandingPanel
-            key={index}
-            title={service.title || ''}
-            showInformationText
-          >
-            {service.description}
-            <p className={styles.serviceInformation}>
-              {t('serviceConnections.servicePersonalData')}
-            </p>
-            {getAllowedDataFieldsFromService(service).map(node => (
-              <CheckedLabel
-                key={node.fieldName}
-                value={node.label || node.fieldName}
-                className={styles.allowedDataField}
-              />
-            ))}
-            <p className={styles.createdAt}>
-              {t('serviceConnections.created')}
-            </p>
-            <p className={styles.dateAndTime}>
-              {getDateTime(service.createdAt)}
-            </p>
-          </ExpandingPanel>
-        ))}
+        <div className={styles.panelContainer}>
+          {services.map((service, index) => (
+            <ExpandingPanel
+              key={index}
+              title={service.title || ''}
+              showInformationText
+            >
+              {service.description}
+              <p className={styles.serviceInformation}>
+                {t('serviceConnections.servicePersonalData')}
+              </p>
+              {getAllowedDataFieldsFromService(service).map(node => (
+                <CheckedLabel
+                  key={node.fieldName}
+                  value={node.label || node.fieldName}
+                  className={styles.allowedDataField}
+                />
+              ))}
+              <p className={styles.createdAt}>
+                {t('serviceConnections.created')}
+              </p>
+              <p className={styles.dateAndTime}>
+                {getDateTime(service.createdAt)}
+              </p>
+            </ExpandingPanel>
+          ))}
+        </div>
       </div>
       <NotificationComponent
         show={showNotification}

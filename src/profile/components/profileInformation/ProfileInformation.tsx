@@ -18,7 +18,7 @@ type Props = {
 };
 
 function ProfileInformation(props: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { isEditing, setEditing, loading, data } = props;
 
   return (
@@ -26,6 +26,8 @@ function ProfileInformation(props: Props) {
       <section className={styles.personalInformation}>
         <div className={styles.personalInformationTitleRow}>
           <Explanation
+            variant="flush"
+            className={styles.pageTitleContainer}
             main={t('profileInformation.personalData')}
             small={t('profileInformation.visibility')}
           />
@@ -45,15 +47,19 @@ function ProfileInformation(props: Props) {
               />
               <LabeledValue
                 label={t('profileInformation.address')}
-                value={getAddress(data)}
+                value={getAddress(data, i18n.languages[0])}
               />
               <LabeledValue
-                label={t('profileInformation.email')}
-                value={data.myProfile?.primaryEmail?.email}
+                label={t('profileForm.language')}
+                value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
               />
               <LabeledValue
                 label={t('profileInformation.phone')}
                 value={data.myProfile?.primaryPhone?.phone}
+              />
+              <LabeledValue
+                label={t('profileInformation.email')}
+                value={data.myProfile?.primaryEmail?.email}
               />
             </>
           )}

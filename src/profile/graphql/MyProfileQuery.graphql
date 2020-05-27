@@ -4,11 +4,13 @@ query MyProfileQuery {
     firstName
     lastName
     nickname
+    language
     primaryAddress {
       id
       address
       postalCode
       city
+      countryCode
     }
     primaryEmail {
       id

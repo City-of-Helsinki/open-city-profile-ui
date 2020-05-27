@@ -1,5 +1,10 @@
-.checkedLabel::before {
-  content: '\2714';
-  display: inline-block;
+.checkLabel {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
   margin-right: 10px;
 }

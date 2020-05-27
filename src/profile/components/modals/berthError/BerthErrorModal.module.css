@@ -3,7 +3,7 @@
     padding: 30px;
     width: 18%;
     position: relative;
-    background-color: var(--hds-ui-color-white);
+    background-color: var(--color-white);
     border-radius: 2px;
     border: none;
 }

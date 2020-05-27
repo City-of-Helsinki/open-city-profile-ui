@@ -1,11 +1,11 @@
 .serviceConnections {
-  background: var(--hds-ui-color-black-5);
+  background: var(--color-black-5);
   flex: 1;
 }
 
-.empty,
-.pageTitle {
-  padding: 25px;
+.empty {
+  margin-top: 45px;
+  margin-left: 15px;
 }
 
 .serviceInformation {
@@ -31,4 +31,14 @@
 .dateAndTime {
   margin-left: 25px;
   margin-top: 0;
+}
+
+.panelContainer {
+  margin: 50px 0;
+}
+
+@media (min-width: 1200px) {
+  .empty {
+    margin-left: 0;
+  }
 }

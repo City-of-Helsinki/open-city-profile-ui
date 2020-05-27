@@ -1,0 +1,16 @@
+query QueryMySubscriptions {
+  myProfile {
+    id
+    subscriptions {
+      edges {
+        node {
+          id
+          enabled
+          subscriptionType {
+            code
+          }
+        }
+      }
+    }
+  }
+}

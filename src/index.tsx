@@ -1,9 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
+import * as Sentry from '@sentry/browser';
 
 import './index.css';
 import BrowserApp from './BrowserApp';
 import * as serviceWorker from './serviceWorker';
+
+Modal.setAppElement('#root');
+
+const ENVS_WITH_SENTRY = ['staging', 'production'];
+
+if (ENVS_WITH_SENTRY.includes(process.env.NODE_ENV)) {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_DSN,
+    environment: process.env.NODE_ENV,
+  });
+}
 
 ReactDOM.render(<BrowserApp />, document.getElementById('root'));
 

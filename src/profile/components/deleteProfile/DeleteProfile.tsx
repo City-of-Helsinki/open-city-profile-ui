@@ -3,13 +3,15 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation, Trans } from 'react-i18next';
 import { useHistory } from 'react-router';
+import * as Sentry from '@sentry/browser';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
+import { Checkbox } from 'hds-react';
 
 import checkBerthError from '../../helpers/checkBerthError';
-import DeleteConfirmationModal from '../modals/deleteConfirmation/DeleteConfirmationModal';
+import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
-import Checkbox from '../../../common/checkbox/Checkbox';
 import Button from '../../../common/button/Button';
 import {
   DeleteMyProfile as DeleteMyProfileData,
@@ -32,7 +34,14 @@ function DeleteProfile(props: Props) {
 
   const history = useHistory();
   const { t } = useTranslation();
-  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS);
+  const { trackEvent } = useMatomo();
+
+  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS, {
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      setShowNotification(true);
+    },
+  });
   const [deleteProfile] = useMutation<
     DeleteMyProfileData,
     DeleteMyProfileVariables
@@ -55,17 +64,22 @@ function DeleteProfile(props: Props) {
 
     deleteProfile({ variables })
       .then(result => {
-        if (result.data) history.push('/profile-deleted');
+        if (result.data) {
+          trackEvent({ category: 'action', action: 'Delete profile' });
+          history.push('/profile-deleted');
+        }
       })
       .catch(error => {
         if (checkBerthError(error.graphQLErrors)) {
           setBerthError(true);
         } else {
+          Sentry.captureException(error);
           setShowNotification(true);
         }
       });
   };
-
+  const userHasServices =
+    data?.myProfile?.serviceConnections?.edges?.length !== 0;
   return (
     <React.Fragment>
       <ExpandingPanel title={t('deleteProfile.title')}>
@@ -73,8 +87,12 @@ function DeleteProfile(props: Props) {
 
         <Checkbox
           onChange={handleDeleteInstructions}
+          id="deleteInstructions"
           name="deleteInstructions"
-          label={
+          checked={deleteInstructions}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
+          labelText={
             <Trans
               i18nKey="deleteProfile.accept"
               // eslint-disable-next-line jsx-a11y/anchor-has-content
@@ -92,11 +110,18 @@ function DeleteProfile(props: Props) {
         </Button>
       </ExpandingPanel>
 
-      <DeleteConfirmationModal
+      <ConfirmationModal
         isOpen={deleteConfirmationModal}
         onClose={handleConfirmationModal}
-        onDelete={handleProfileDelete}
+        onConfirm={handleProfileDelete}
         services={data}
+        modalTitle={t('deleteProfileModal.title')}
+        modalText={
+          userHasServices
+            ? t('deleteProfileModal.explanation')
+            : t('deleteProfileModal.noServiceExplanation')
+        }
+        actionButtonText={t('deleteProfileModal.delete')}
       />
 
       <BerthErrorModal

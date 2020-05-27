@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import PersonIcon from '../../svg/Person.svg';
 import { NameQuery } from '../../../graphql/generatedTypes';
@@ -25,6 +26,7 @@ function UserDropdown(props: Props) {
     fetchPolicy: 'cache-only',
   });
   const { t } = useTranslation();
+  const { trackEvent } = useMatomo();
 
   const isAuthenticated = useSelector(isAuthenticatedSelector);
 
@@ -53,7 +55,10 @@ function UserDropdown(props: Props) {
   const login = {
     id: 'loginButton',
     label: t('nav.signin'),
-    onClick: () => authenticate(),
+    onClick: () => {
+      trackEvent({ category: 'action', action: 'Log in' });
+      authenticate();
+    },
   };
 
   const user = {
@@ -68,7 +73,10 @@ function UserDropdown(props: Props) {
   const logOut = {
     id: 'logoutButton',
     label: t('nav.signout'),
-    onClick: () => logout(),
+    onClick: () => {
+      trackEvent({ category: 'action', action: 'Log out' });
+      logout();
+    },
   };
 
   const dropdownOptions = getDropdownOptions();
