@@ -4,6 +4,7 @@ import {
   CreateEmailInput,
   EmailType,
   MyProfileQuery,
+  MyProfileQuery_myProfile_emails_edges_node as Email,
   PhoneType,
   UpdateEmailInput,
 } from '../../graphql/generatedTypes';
@@ -66,9 +67,9 @@ const getPhone = (formValues: FormValues, profile?: MyProfileQuery) => {
     ],
   };
 };
-const getEmail = (formValues: FormValues) => {
+const getEmail = (emails: Email[]) => {
   // Map values to get rid of __typeName field (backend won't allow it)
-  const updateEmails: UpdateEmailInput[] = formValues.emails
+  const updateEmails: UpdateEmailInput[] = emails
     .filter(email => email.id)
     .map(email => {
       return {
@@ -81,7 +82,7 @@ const getEmail = (formValues: FormValues) => {
 
   // This needed to be mapped as well, for some reason emailType field in Email & CreateEmailInput
   // are incompatible
-  const addEmails: CreateEmailInput[] = formValues.emails
+  const addEmails: CreateEmailInput[] = emails
     .filter(email => !email.id)
     .map(email => {
       return {
@@ -109,7 +110,7 @@ const updateMutationVariables = (
         language: formValues.profileLanguage,
         ...getPhone(formValues, profile),
         ...getAddress(formValues, profile),
-        ...getEmail(formValues),
+        ...getEmail(formValues.emails),
       },
     },
   };
