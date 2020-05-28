@@ -1,10 +1,10 @@
 .pageHeading {
   align-items: center;
-  color: var(--hds-brand-color-coat-of-arms-blue-dark-50);
+  color: var(--color-bus);
   display: flex;
   min-height: 120px;
   padding: 20px 10px 10px;
-  font-size: var(--hds-text-xxxl);
+  font-size: var(--fontsize-h-1);
   font-weight: bold;
   width: 100%;
 }

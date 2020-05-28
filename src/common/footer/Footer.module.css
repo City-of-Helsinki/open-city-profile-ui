@@ -1,5 +1,5 @@
 .footer {
-  background: var(--hds-brand-color-bus);
+  background: var(--color-bus);
 }
 
 .logo {
@@ -8,12 +8,12 @@
 }
 
 .logo g {
-  fill: var(--hds-ui-color-white);
+  fill: var(--color-white);
 }
 
 .textContainer {
-  border-top: 1px solid var(--hds-ui-color-black-50);
-  color: var(--hds-ui-color-white);
+  border-top: 1px solid var(--color-black-50);
+  color: var(--color-white);
   font-size: 14px;
   margin: 0 3px;
   padding: 20px 10px;
@@ -24,13 +24,13 @@
 
 .links a {
   font-weight: bold;
-  color: var(--hds-ui-color-white);
+  color: var(--color-white);
   text-decoration: none;
 }
 
 .feedback {
   font-weight: bold;
-  color: var(--hds-ui-color-white);
+  color: var(--color-white);
   margin-top: 10px;
 }
 

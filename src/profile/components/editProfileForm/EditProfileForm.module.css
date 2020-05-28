@@ -24,7 +24,7 @@
 }
 
 .label {
-    composes: text-bold text-sm from '~hds-core/lib/helsinki.css';
+    composes: text-bold text-sm from '~hds-core/lib/base.css';
     display: block;
 }
 @media (min-width: 768px) {
@@ -38,7 +38,24 @@
     height: 1px;
     width: 100%;
     background: #333;
-    margin: 15px 0;
-
+    margin: 50px 0 15px;
 }
 
+.buttonRow {
+    margin-top: 50px;
+    max-height: 120px;
+    max-width: 480px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.button {
+    margin-top: 20px;
+}
+
+@media (min-width: 500px) {
+    .button {
+        margin: 0;
+    }
+}

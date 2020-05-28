@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { ReactComponent as HelsinkiLogo } from '../svg/HelsinkiLogo.svg';
@@ -25,9 +24,14 @@ function Footer(props: Props) {
             <Copyright />
             <FooterLinks className={styles.links} />
           </div>
-          <Link to="/#" className={styles.feedback}>
+          <a
+            href={t('footer.feedbackLink')}
+            target="_blank"
+            rel="noreferrer noopener"
+            className={styles.feedback}
+          >
             {t('footer.feedback')}
-          </Link>
+          </a>
         </div>
       </div>
     </footer>

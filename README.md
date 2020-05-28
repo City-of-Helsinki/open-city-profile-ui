@@ -4,19 +4,13 @@ UI for citizen-profile - This project was bootstrapped with [Create React App](h
 
 ## Environments
 
-Test: https://omahelsinki.test.kuva.hel.ninja/
+Test: https://profiili.test.kuva.hel.ninja/
 
-Staging: None
+Production: https://profiili.prod.kuva.hel.ninja/
 
-Production: None
+## Issues board
 
-## Development
-
-If running on Linux or MacOS, easiest way is to just run the app without docker. Any semi-new version of node should probably work, the docker-image is set to use node 12.
-
-Run `yarn` to install dependencies, start app with `yarn start`.
-
-The graphql-backend for development is located at https://helsinkiprofile.test.kuva.hel.ninja/graphql/, it has graphiql installed so you can browse it in your browser!
+https://helsinkisolutionoffice.atlassian.net/projects/OM/issues/?filter=allissues&=
 
 ## CI
 
@@ -49,13 +43,16 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Running with docker
+### `yarn codegen`
 
-If you really must, you can run this app with docker locally.
+Generate static types for GraphQL queries by using the schema from the backend server.
 
-Run `docker-compose up` to start the app in docker.
+### `yarn update-translations`
 
-`docker-compose down` stops the container.
+Fetches translation data from our Google Spreadsheet and updates translation files. See `.env` for configuration.
+
+You still need to update tests and add the translation files to the git repository manually.
+
 
 ## Environment variables
 
@@ -68,12 +65,39 @@ The following envs are used:
 - REACT_APP_PROFILE_AUDIENCE - name of the api-token that client uses profile-api with
 - REACT_APP_PROFILE_GRAPHQL - URL to the profile graphql
 - REACT_APP_OIDC_SCOPE - which scopes the app requires
-- REACT_APP_SENTRY_DSN - not yet used
+- REACT_APP_SENTRY_DSN - sentry public dns-key
 
 
-## Tunnistamo configuration
+## Setting up local development environment with Docker
 
-This app uses tunnistamo for authentication. Tunnistamo needs to have the following things set up:
+### Set tunnistamo hostname
+
+Add the following line to your hosts file (`/etc/hosts` on mac and linux):
+
+    127.0.0.1 tunnistamo-backend
+
+### Create a new OAuth app on GitHub
+
+Go to https://github.com/settings/developers/ and add a new app with the following settings:
+
+- Application name: can be anything, e.g. local tunnistamo
+- Homepage URL: http://tunnistamo-backend:8000
+- Authorization callback URL: http://tunnistamo-backend:8000/accounts/github/login/callback/
+
+Save. You'll need the created **Client ID** and **Client Secret** for configuring tunnistamo in the next step.
+
+### Install local tunnistamo
+
+Clone https://github.com/City-of-Helsinki/tunnistamo/.
+
+Follow the instructions for setting up tunnistamo locally. Before running `docker-compose up` set the following settings in tunnistamo roots `docker-compose.env.yaml`:
+
+- SOCIAL_AUTH_GITHUB_KEY: **Client ID** from the GitHub OAuth app
+- SOCIAL_AUTH_GITHUB_SECRET: **Client Secret** from the GitHub OAuth app
+
+Run `docker-compose up`
+
+After container is up and running, few things need to be set up at http://localhost:8000/admin
 
 **OIDC client**
 
@@ -88,6 +112,33 @@ Requires the following things:
 **API Scopes**
 
 The scopes this app uses are set with the REACT_APP_OIDC_SCOPE environment variable.
+
+### Install local open-city-profile
+Clone https://github.com/City-of-Helsinki/open-city-profile/.
+
+1. Create a `docker-compose.env.yaml` file in the project folder:
+   * Use `docker-compose.env.yaml.example` as a base, it does not need any changes
+     for getting the project running.
+   * Change `DEBUG` and the rest of the Django settings if needed.
+     * `TOKEN_AUTH_*`, settings for [tunnistamo](https://github.com/City-of-Helsinki/tunnistamo) authentication service
+   * Set entrypoint/startup variables according to taste.
+     * `CREATE_SUPERUSER`, creates a superuser with credentials `admin`:`admin` (admin@example.com)
+     * `APPLY_MIGRATIONS`, applies migrations on startup
+     * `BOOTSTRAP_DIVISIONS`, bootstrap data import for divisions
+     
+2. Run `docker-compose up`
+
+### open-city-profile-ui
+
+If running on Linux or MacOS, easiest way is to just run the app without docker. Any semi-new version of node should probably work, the docker-image is set to use node 12.
+
+`docker-compose up` starts the container.
+
+OR
+
+Run `yarn` to install dependencies, start app with `yarn start`.
+
+The graphql-backend for development is located at https://profiili-api.test.kuva.hel.ninja/graphql/, it has graphiql installed so you can browse it in your browser!
 
 ## Learn More
 

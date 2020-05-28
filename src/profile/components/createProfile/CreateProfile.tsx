@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import classNames from 'classnames';
+import * as Sentry from '@sentry/browser';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import CreateProfileForm, {
   FormValues,
@@ -16,6 +18,7 @@ import {
   CreateMyProfile as CreateMyProfileData,
   CreateMyProfileVariables,
   EmailType,
+  Language,
   PhoneType,
 } from '../../../graphql/generatedTypes';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
@@ -29,17 +32,20 @@ type Props = {
 
 function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
   const { t } = useTranslation();
+  const { trackEvent } = useMatomo();
   const [showNotification, setShowNotification] = useState(false);
   const [createProfile, { loading }] = useMutation<
     CreateMyProfileData,
     CreateMyProfileVariables
   >(CREATE_PROFILE);
+
   const handleOnValues = (formValues: FormValues) => {
     const variables: CreateMyProfileVariables = {
       input: {
         profile: {
           firstName: formValues.firstName,
           lastName: formValues.lastName,
+          language: formValues.profileLanguage,
           addEmails: [
             {
               email: formValues.email,
@@ -59,13 +65,18 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
         },
       },
     };
+
     createProfile({ variables })
       .then(result => {
         if (result.data) {
+          trackEvent({ category: 'action', action: 'Register profile' });
           onProfileCreated();
         }
       })
-      .catch(() => setShowNotification(true));
+      .catch((error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      });
   };
   return (
     <div className={styles.createProfile}>
@@ -75,14 +86,16 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
       />
       <div className={classNames(styles.front, responsive.maxWidthCentered)}>
         <Explanation
+          variant="flush"
           main={t('createProfile.heading')}
           small={t('createProfile.helpText')}
         />
         <CreateProfileForm
           profile={{
-            firstName: tunnistamoUser.profile.given_name,
-            lastName: tunnistamoUser.profile.family_name,
+            firstName: tunnistamoUser.profile.given_name || '',
+            lastName: tunnistamoUser.profile.family_name || '',
             email: tunnistamoUser.profile.email,
+            profileLanguage: Language.FINNISH,
             phone: '',
           }}
           isSubmitting={loading}

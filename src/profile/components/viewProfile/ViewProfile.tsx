@@ -4,6 +4,7 @@ import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import classNames from 'classnames';
+import * as Sentry from '@sentry/browser';
 
 import styles from './ViewProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
@@ -12,8 +13,10 @@ import ProfileInformation from '../profileInformation/ProfileInformation';
 import EditProfile from '../editProfile/EditProfile';
 import getNicknameOrName from '../../helpers/getNicknameOrName';
 import ServiceConnections from '../serviceConnections/ServiceConnections';
+import Subscriptions from '../../../subscriptions/components/subsciptions/Subscriptions';
 import { MyProfileQuery } from '../../../graphql/generatedTypes';
 import NotificationComponent from '../../../common/notification/NotificationComponent';
+import Explanation from '../../../common/explanation/Explanation';
 
 const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
 
@@ -23,7 +26,10 @@ function ViewProfile() {
   const { t } = useTranslation();
 
   const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE, {
-    onError: () => setShowNotification(true),
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      setShowNotification(true);
+    },
   });
 
   const toggleEditing = () => {
@@ -36,6 +42,7 @@ function ViewProfile() {
         <React.Fragment>
           <PageHeading text={getNicknameOrName(data)} />
           <nav
+            aria-label={t('landmarks.navigation.main')}
             className={classNames(
               styles.profileNav,
               responsive.maxWidthCentered
@@ -57,17 +64,30 @@ function ViewProfile() {
             >
               {t('nav.services')}
             </NavLink>
+            {process.env.REACT_APP_ENVIRONMENT !== 'production' && (
+              <NavLink
+                exact
+                to="/subscriptions"
+                className={styles.profileNavLink}
+                activeClassName={styles.activeProfileNavLink}
+              >
+                {t('nav.subscriptions')}
+              </NavLink>
+            )}
           </nav>
           <Switch>
             <Route path="/connected-services">
               <ServiceConnections />
             </Route>
+            {process.env.REACT_APP_ENVIRONMENT !== 'production' && (
+              <Route path="/subscriptions">
+                <Subscriptions />
+              </Route>
+            )}
             <Route path="/">
               <div className={styles.profileContent}>
                 <div className={responsive.maxWidthCentered}>
-                  <h2 className={styles.title}>
-                    {t('profileInformation.title')}
-                  </h2>
+                  <Explanation main={t('profileInformation.title')} />
                   {!isEditing ? (
                     <ProfileInformation
                       data={data}

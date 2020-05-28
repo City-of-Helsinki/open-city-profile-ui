@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useLazyQuery } from '@apollo/react-hooks';
+import * as Sentry from '@sentry/browser';
 
 import Button from '../../../common/button/Button';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
@@ -32,7 +33,11 @@ function DownloadData(props: Props) {
       document.body.removeChild(a);
       setIsLoading(false);
     },
-    onError: () => setShowNotification(true),
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      setShowNotification(true);
+    },
+    fetchPolicy: 'network-only',
   });
   const downloadData = () => {
     setIsLoading(true);

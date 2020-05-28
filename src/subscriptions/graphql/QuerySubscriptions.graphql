@@ -1,0 +1,20 @@
+query QuerySubscriptions {
+  subscriptionTypeCategories {
+    edges {
+      node {
+        id
+        code
+        label
+        subscriptionTypes {
+          edges {
+            node {
+              label
+              id
+              code
+            }
+          }
+        }
+      }
+    }
+  }
+}
