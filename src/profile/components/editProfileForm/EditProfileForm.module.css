@@ -50,12 +50,18 @@
     justify-content: space-between;
 }
 
+.removeButton {
+    margin: 5px 0 0 3px;
+    color: var(--color-bus)
+}
+
 .button {
     margin-top: 20px;
 }
 
 @media (min-width: 500px) {
     .button {
+        width: 230px;
         margin: 0;
     }
 }

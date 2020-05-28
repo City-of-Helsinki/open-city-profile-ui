@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextInput } from 'hds-react';
-import { Formik, Form, Field, FormikProps } from 'formik';
+import { TextInput, Button } from 'hds-react';
+import {
+  Formik,
+  Form,
+  Field,
+  FormikProps,
+  FieldArray,
+  ArrayHelpers,
+} from 'formik';
 import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
 
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import { getIsInvalid, getError } from '../../helpers/formik';
 import Select from '../../../common/select/Select';
-import Button from '../../../common/button/Button';
 import styles from './EditProfileForm.module.css';
 import {
+  EmailType,
   Language,
   ServiceConnectionsQuery,
+  MyProfileQuery_myProfile_emails_edges_node as Email,
+  MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
 } from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
+//import { Email } from '../../helpers/getEmailsFromNode';
 
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
@@ -33,6 +43,7 @@ const schema = yup.object().shape({
 export type FormValues = {
   firstName: string;
   lastName: string;
+  primaryEmail: PrimaryEmail;
   email: string;
   phone: string;
   address: string;
@@ -40,6 +51,7 @@ export type FormValues = {
   city: string;
   profileLanguage: Language;
   countryCode: string;
+  emails: Email[];
 };
 
 type Props = {
@@ -82,15 +94,8 @@ function EditProfileForm(props: Props) {
       }}
       onSubmit={values => {
         props.onValues({
-          firstName: values.firstName,
-          lastName: values.lastName,
-          email: props.profile.email,
-          phone: values.phone,
-          address: values.address,
-          city: values.city,
-          postalCode: values.postalCode,
-          countryCode: values.countryCode,
-          profileLanguage: values.profileLanguage,
+          ...values,
+          emails: [...values.emails, values.primaryEmail],
         });
       }}
       validationSchema={schema}
@@ -213,9 +218,53 @@ function EditProfileForm(props: Props) {
               />
               <br />
             </div>
+            <div className={styles.linebreak} />
+
+            <FieldArray
+              name="emails"
+              render={(arrayHelpers: ArrayHelpers) => (
+                <React.Fragment>
+                  <div className={styles.formFields}>
+                    {formikProps?.values?.emails.map(
+                      (email: Email | PrimaryEmail, index: number) => (
+                        <span key={index} className={styles.formField}>
+                          <Field
+                            as={TextInput}
+                            name={`emails.${index}.email`}
+                            id={`emails.${index}.email`}
+                            labelText={t('profileForm.email')}
+                          />
+                          <button
+                            className={styles.removeButton}
+                            onClick={() => arrayHelpers.remove(index)}
+                          >
+                            Poista
+                          </button>
+                        </span>
+                      )
+                    )}
+                  </div>
+
+                  <br />
+                  <Button
+                    variant="supplementary"
+                    onClick={() =>
+                      arrayHelpers.push({
+                        email: '',
+                        emailType: EmailType.OTHER,
+                        primary: false,
+                      })
+                    }
+                  >
+                    Lisää toinen sähköposti
+                  </Button>
+                </React.Fragment>
+              )}
+            />
+
             <div className={styles.buttonRow}>
               <Button
-                type="button"
+                className={styles.button}
                 disabled={Boolean(
                   formikProps.isSubmitting || props.isSubmitting
                 )}
@@ -228,8 +277,7 @@ function EditProfileForm(props: Props) {
                 {t('profileForm.submit')}
               </Button>
               <Button
-                type="button"
-                variant="outlined"
+                variant="secondary"
                 className={styles.button}
                 onClick={props.setEditing}
               >
