@@ -90,6 +90,7 @@
   },
   "profileForm": {
     "addAnotherEmail": "Lägg till en annan e-postadress",
+    "additionalInfo": "Ytterligare information",
     "address": "Hemadress",
     "cancel": "Annullera",
     "city": "Stad",
