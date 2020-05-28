@@ -230,7 +230,7 @@ function EditProfileForm(props: Props) {
                   <div className={styles.formFields}>
                     {formikProps?.values?.emails.map(
                       (email: Email | PrimaryEmail, index: number) => (
-                        <span key={index} className={styles.formField}>
+                        <div key={index} className={styles.formField}>
                           <Field
                             as={TextInput}
                             name={`emails.${index}.email`}
@@ -243,7 +243,7 @@ function EditProfileForm(props: Props) {
                           >
                             {t('profileForm.delete')}
                           </button>
-                        </span>
+                        </div>
                       )
                     )}
                   </div>
