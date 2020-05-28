@@ -61,13 +61,6 @@ function App(props: Props) {
             {/* This should be the first focusable element */}
             <AccessibilityShortcuts mainContentId={MAIN_CONTENT_ID} />
             <Switch>
-              <Route
-                path="/silent_renew"
-                render={() => {
-                  userManager.signinSilentCallback();
-                  return null;
-                }}
-              />
               <Route path="/callback">
                 <OidcCallback />
               </Route>
