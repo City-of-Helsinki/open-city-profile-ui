@@ -237,12 +237,14 @@ function EditProfileForm(props: Props) {
                             id={`emails.${index}.email`}
                             labelText={t('profileForm.email')}
                           />
-                          <button
-                            className={styles.removeButton}
-                            onClick={() => arrayHelpers.remove(index)}
-                          >
-                            {t('profileForm.delete')}
-                          </button>
+                          {!email.id && (
+                            <button
+                              className={styles.removeButton}
+                              onClick={() => arrayHelpers.remove(index)}
+                            >
+                              {t('profileForm.delete')}
+                            </button>
+                          )}
                         </div>
                       )
                     )}
