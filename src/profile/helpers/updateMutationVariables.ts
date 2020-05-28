@@ -92,7 +92,7 @@ const getEmail = (formValues: FormValues) => {
     });
 
   return {
-    addEmails: addEmails.length > 0 ? addEmails : null,
+    addEmails: addEmails.length > 0 ? addEmails : [null],
     updateEmails,
   };
 };

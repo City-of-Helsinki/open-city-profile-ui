@@ -34,11 +34,20 @@
     }
 }
 
+.additionalInfo {
+    margin-top: var(--spacing-layout-m);
+    font-size: var(--fontsize-h-3);
+}
+
 .linebreak {
     height: 1px;
     width: 100%;
     background: #333;
     margin: 50px 0 15px;
+}
+
+.addressFields {
+    margin-top: var(--spacing-l);
 }
 
 .buttonRow {

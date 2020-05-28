@@ -79,7 +79,6 @@ function EditProfile(props: Props) {
           profileLanguage: profileData?.myProfile?.language || Language.FINNISH,
           primaryEmail:
             profileData?.myProfile?.primaryEmail || ({} as PrimaryEmail),
-          email: profileData?.myProfile?.primaryEmail?.email || '',
           phone: profileData?.myProfile?.primaryPhone?.phone || '',
           address: profileData?.myProfile?.primaryAddress?.address || '',
           city: profileData?.myProfile?.primaryAddress?.city || '',

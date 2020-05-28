@@ -11,6 +11,7 @@ import {
 } from 'formik';
 import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
+import classNames from 'classnames';
 
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import { getIsInvalid, getError } from '../../helpers/formik';
@@ -44,7 +45,6 @@ export type FormValues = {
   firstName: string;
   lastName: string;
   primaryEmail: PrimaryEmail;
-  email: string;
   phone: string;
   address: string;
   postalCode: string;
@@ -162,13 +162,15 @@ function EditProfileForm(props: Props) {
 
               <div className={styles.formField}>
                 <label className={styles.label}>{t('profileForm.email')}</label>
-                <span className={styles.email}>{props.profile.email}</span>
+                <span className={styles.email}>
+                  {props.profile.primaryEmail.email}
+                </span>
               </div>
             </div>
 
-            <div className={styles.linebreak} />
-
-            <div className={styles.formFields}>
+            <div
+              className={classNames(styles.formFields, styles.addressFields)}
+            >
               <Field
                 className={styles.formField}
                 name="address"
@@ -216,10 +218,11 @@ function EditProfileForm(props: Props) {
                 options={countryOptions}
                 labelText={t('profileForm.country')}
               />
-              <br />
             </div>
             <div className={styles.linebreak} />
-
+            <h2 className={styles.additionalInfo}>
+              {t('profileForm.additionalInfo')}
+            </h2>
             <FieldArray
               name="emails"
               render={(arrayHelpers: ArrayHelpers) => (
