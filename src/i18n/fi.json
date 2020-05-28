@@ -89,10 +89,12 @@
     "title": "Profiilisi on poistettu onnistuneesti!"
   },
   "profileForm": {
+    "addAnotherEmail": "Lisää toinen sähköpostiosoite",
     "address": "Kotiosoite",
     "cancel": "Peruuta",
     "city": "Kaupunki",
     "country": "Maa",
+    "delete": "Poista",
     "edit": "Muokkaa",
     "email": "Sähköpostiosoite",
     "firstName": "Etunimi",

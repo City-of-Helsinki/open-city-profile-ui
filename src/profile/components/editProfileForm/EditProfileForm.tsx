@@ -238,7 +238,7 @@ function EditProfileForm(props: Props) {
                             className={styles.removeButton}
                             onClick={() => arrayHelpers.remove(index)}
                           >
-                            Poista
+                            {t('profileForm.delete')}
                           </button>
                         </span>
                       )
@@ -256,7 +256,7 @@ function EditProfileForm(props: Props) {
                       })
                     }
                   >
-                    Lisää toinen sähköposti
+                    {t('profileForm.addAnotherEmail')}
                   </Button>
                 </React.Fragment>
               )}
