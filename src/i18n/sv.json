@@ -89,10 +89,13 @@
     "title": "Din profil har tagits bort!"
   },
   "profileForm": {
+    "addAnotherEmail": "Lägg till en annan e-postadress",
+    "additionalInfo": "Ytterligare information",
     "address": "Hemadress",
     "cancel": "Annullera",
     "city": "Stad",
     "country": "Land",
+    "delete": "Radera",
     "edit": "Redigera",
     "email": "Epost-adress",
     "firstName": "Förnamn",

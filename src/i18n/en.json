@@ -89,10 +89,13 @@
     "title": "Your profile has been successfully removed!"
   },
   "profileForm": {
+    "addAnotherEmail": "Add another email address",
+    "additionalInfo": "Additional Information",
     "address": "Home address",
     "cancel": "Cancel",
     "city": "City",
     "country": "Country",
+    "delete": "Delete",
     "edit": "Edit",
     "email": "Email",
     "firstName": "First name",
