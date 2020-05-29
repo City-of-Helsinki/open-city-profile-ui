@@ -6,7 +6,7 @@ import {
 const getEmailsFromNode = (data?: MyProfileQuery) => {
   const edge = data?.myProfile?.emails?.edges || [];
   return edge
-    .filter(edge => edge?.node?.primary)
+    .filter(edge => !edge?.node?.primary)
     .map(
       edge =>
         ({

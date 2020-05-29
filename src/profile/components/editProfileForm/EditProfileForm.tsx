@@ -7,7 +7,7 @@ import {
   Field,
   FormikProps,
   FieldArray,
-  ArrayHelpers,
+  FieldArrayRenderProps,
 } from 'formik';
 import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
@@ -26,7 +26,6 @@ import {
 } from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
-//import { Email } from '../../helpers/getEmailsFromNode';
 
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
@@ -39,6 +38,11 @@ const schema = yup.object().shape({
   address: yup.string().max(128, 'validation.maxLength'),
   city: yup.string().max(64, 'validation.maxLength'),
   postalCode: yup.string().max(5, 'validation.maxLength'),
+  emails: yup.array().of(
+    yup.object().shape({
+      email: yup.string().email('validation.email'),
+    })
+  ),
 });
 
 export type FormValues = {
@@ -60,6 +64,10 @@ type Props = {
   profile: FormValues;
   onValues: (values: FormValues) => void;
   services?: ServiceConnectionsQuery;
+};
+
+type EmailArrayError = {
+  [index: number]: { email: string };
 };
 
 function EditProfileForm(props: Props) {
@@ -225,7 +233,7 @@ function EditProfileForm(props: Props) {
             </h2>
             <FieldArray
               name="emails"
-              render={(arrayHelpers: ArrayHelpers) => (
+              render={(arrayHelpers: FieldArrayRenderProps) => (
                 <React.Fragment>
                   <div className={styles.formFields}>
                     {formikProps?.values?.emails.map(
@@ -236,6 +244,20 @@ function EditProfileForm(props: Props) {
                             name={`emails.${index}.email`}
                             id={`emails.${index}.email`}
                             labelText={t('profileForm.email')}
+                            invalid={
+                              formikProps.submitCount > 0 &&
+                              arrayHelpers.form.errors.emails &&
+                              (arrayHelpers.form.errors
+                                .emails as EmailArrayError)[index]
+                            }
+                            helperText={
+                              formikProps.submitCount > 0 &&
+                              arrayHelpers.form.errors.emails &&
+                              t(
+                                (arrayHelpers.form.errors
+                                  .emails as EmailArrayError)[index]?.email
+                              )
+                            }
                           />
                           {!email.id && (
                             <button
@@ -273,11 +295,12 @@ function EditProfileForm(props: Props) {
                 disabled={Boolean(
                   formikProps.isSubmitting || props.isSubmitting
                 )}
-                onClick={() =>
-                  userHasServices
+                onClick={() => {
+                  userHasServices &&
+                  Object.keys(formikProps.errors)?.length === 0
                     ? setConfirmationDialog(true)
-                    : formikProps.handleSubmit()
-                }
+                    : formikProps.handleSubmit();
+                }}
               >
                 {t('profileForm.submit')}
               </Button>
