@@ -87,7 +87,7 @@ function EditProfileForm(props: Props) {
 
   const getFieldError = (
     formikProps: FormikProps<FormValues>,
-    fieldName: keyof FormValues,
+    fieldName: string,
     options: object
   ) => {
     const renderError = (message: string) => t(message, options);
@@ -244,20 +244,15 @@ function EditProfileForm(props: Props) {
                             name={`emails.${index}.email`}
                             id={`emails.${index}.email`}
                             labelText={t('profileForm.email')}
-                            invalid={
-                              formikProps.submitCount > 0 &&
-                              arrayHelpers.form.errors.emails &&
-                              (arrayHelpers.form.errors
-                                .emails as EmailArrayError)[index]
-                            }
-                            helperText={
-                              formikProps.submitCount > 0 &&
-                              arrayHelpers.form.errors.emails &&
-                              t(
-                                (arrayHelpers.form.errors
-                                  .emails as EmailArrayError)[index]?.email
-                              )
-                            }
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `emails[${index}].email`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `emails[${index}].email`,
+                              {}
+                            )}
                           />
                           {!email.id && (
                             <button
