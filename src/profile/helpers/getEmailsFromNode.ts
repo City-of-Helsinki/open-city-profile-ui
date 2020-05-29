@@ -4,23 +4,18 @@ import {
 } from '../../graphql/generatedTypes';
 
 const getEmailsFromNode = (data?: MyProfileQuery) => {
-  if (data?.myProfile?.emails?.edges) {
-    return data.myProfile.emails.edges
-      .map(edge => {
-        if (edge?.node) {
-          return {
-            email: edge.node.email,
-            id: edge.node.id,
-            primary: edge.node.primary,
-            emailType: edge.node.emailType,
-          } as Email;
-        }
-        return false;
-      })
-      .filter((email): email is Email => Boolean(email))
-      .filter((email: Email) => !email.primary);
-  }
-  return [];
+  const edge = data?.myProfile?.emails?.edges || [];
+  return edge
+    .filter(edge => edge?.node?.primary)
+    .map(
+      edge =>
+        ({
+          email: edge?.node?.email,
+          id: edge?.node?.id,
+          primary: edge?.node?.primary,
+          emailType: edge?.node?.emailType,
+        } as Email)
+    );
 };
 
 export default getEmailsFromNode;
