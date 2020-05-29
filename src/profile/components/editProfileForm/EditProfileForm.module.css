@@ -26,11 +26,10 @@
 .buttonRow {
     margin-top: 50px;
     margin-bottom: 30px;
-    max-height: 120px;
+    max-height: 160px;
     max-width: 500px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 .removeButton {
@@ -53,6 +52,7 @@
     .buttonRow {
         flex-direction: row;
         margin-bottom: 0;
+        justify-content: space-between;
     }
 }
 
