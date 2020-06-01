@@ -17,4 +17,6 @@
   }
 }
 
-
+.title {
+  font-size: var(--fontsize-h-3);
+}
