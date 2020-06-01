@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconFill } from 'hds-react';
 
@@ -8,8 +8,12 @@ import DownloadData from '../downloadData/DownloadData';
 import styles from './ProfileInformation.module.css';
 import getName from '../../helpers/getName';
 import getAddress from '../../helpers/getAddress';
-import { MyProfileQuery } from '../../../graphql/generatedTypes';
+import {
+  MyProfileQuery,
+  MyProfileQuery_myProfile_emails_edges_node as Email,
+} from '../../../graphql/generatedTypes';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
+import getEmailsFromNode from '../../helpers/getEmailsFromNode';
 
 type Props = {
   loading: boolean;
@@ -22,8 +26,9 @@ function ProfileInformation(props: Props) {
   const { t, i18n } = useTranslation();
   const { isEditing, setEditing, loading, data } = props;
 
+  const emails = getEmailsFromNode(data);
   return (
-    <React.Fragment>
+    <Fragment>
       <ProfileSection
         title={t('profileInformation.personalData')}
         description={t('profileInformation.visibility')}
@@ -40,10 +45,10 @@ function ProfileInformation(props: Props) {
           )
         }
       >
-        <div className={styles.storedInformation}>
-          {loading && t('loading')}
-          {data && !isEditing && (
-            <>
+        {loading && t('loading')}
+        {data && !isEditing && (
+          <Fragment>
+            <div className={styles.storedInformation}>
               <LabeledValue
                 label={t('profileInformation.name')}
                 value={getName(data)}
@@ -64,13 +69,23 @@ function ProfileInformation(props: Props) {
                 label={t('profileForm.language')}
                 value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
               />
-            </>
-          )}
-        </div>
+            </div>
+            <h2 className={styles.title}>{t('profileForm.additionalInfo')}</h2>
+            <div className={styles.storedInformation}>
+              {emails.map((email: Email, index: number) => (
+                <LabeledValue
+                  key={index}
+                  label={t('profileInformation.email')}
+                  value={email.email}
+                />
+              ))}
+            </div>
+          </Fragment>
+        )}
       </ProfileSection>
       <DownloadData />
       <DeleteProfile />
-    </React.Fragment>
+    </Fragment>
   );
 }
 
