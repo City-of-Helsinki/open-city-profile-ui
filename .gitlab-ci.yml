@@ -35,7 +35,7 @@ build-production:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-production"
     DOCKER_BUILD_ARG_REACT_APP_ENVIRONMENT: 'production'
     DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://api.hel.fi/sso/"
-    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.prod.kuva.hel.ninja/graphql/"
+    DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://api.hel.fi/profiili/graphql/"
   only:
     refs:
       - master
