@@ -241,6 +241,7 @@ function EditProfileForm(props: Props) {
                             name={`emails.${index}.email`}
                             id={`emails.${index}.email`}
                             labelText={t('profileForm.email')}
+                            readOnly={email.id}
                             invalid={getIsInvalid(
                               formikProps,
                               `emails[${index}].email`
