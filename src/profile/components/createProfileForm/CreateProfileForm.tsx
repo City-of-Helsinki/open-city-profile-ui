@@ -140,13 +140,23 @@ function CreateProfileForm(props: Props) {
               name="terms"
               id="terms"
               checked={formikProps.values.terms}
-              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // @ts-ignore
               labelText={
                 <Trans
                   i18nKey="profileForm.terms"
-                  // eslint-disable-next-line jsx-a11y/anchor-has-content
-                  components={[<a href="/#"></a>, <a href="/#"></a>]}
+                  components={[
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
+                    <a
+                      href={t('profileForm.termsDataProtectionLink')}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />,
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
+                    <a
+                      href={t('profileForm.termsFileDescriptionLink')}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />,
+                  ]}
                 />
               }
             />

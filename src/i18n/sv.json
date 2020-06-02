@@ -104,7 +104,9 @@
     "phone": "Telefonnummer",
     "postalCode": "Postnummer",
     "submit": "Spara",
-    "terms": "Jag har läst filen <0>beskrivningen</0> och stads <1>sekretesspolicy</1>"
+    "terms": "Jag har läst filen <0>beskrivningen</0> och stads <1>sekretesspolicy</1>",
+    "termsDataProtectionLink": "https://www.hel.fi/static/liitteet/kanslia/rekisteriselosteet/Keha/Kanslia-EU-Sahkoisten-asiointipalveluiden-rekisteri.pdf",
+    "termsFileDescriptionLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/dataskydd"
   },
   "profileInformation": {
     "address": "Adress",
