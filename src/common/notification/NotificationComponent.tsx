@@ -22,7 +22,9 @@ function NotificationComponent(props: Props) {
         closeButtonLabelText={t('notification.closeButtonText')}
         onClose={props.onClose}
       >
-        {props.children || t('notification.defaultErrorText')}
+        <div className={styles.messageWrapper}>
+          {props.children || t('notification.defaultErrorText')}
+        </div>
       </DismissableNotification>
     </div>
   );
