@@ -4,6 +4,7 @@ import {
   MyProfileQuery_myProfile_emails_edges_node as Email,
 } from '../../../graphql/generatedTypes';
 import { getEmail } from '../updateMutationVariables';
+import { myProfile } from '../../../common/test/myProfileQueryData';
 
 // TODO add tests for getAddress & getEmail after support for multiple entities is added
 
@@ -27,59 +28,14 @@ const emails: Email[] = [
     primary: false,
     emailType: EmailType.OTHER,
     id: '234',
-    __typename: 'EmailNode',
-  },
+  } as Email,
 ];
 
-const getMyProfileQuery = (variables?: MyProfileQuery) => {
-  return {
-    myProfile: {
-      firstName: 'Teemu',
-      lastName: 'Testaaja',
-      primaryEmail: {
-        email: 'ensimmainen@testi.fi',
-        primary: true,
-        id: '123',
-        __typename: 'EmailNode',
-      },
-      emails: {
-        edges: [
-          {
-            node: {
-              email: 'toinen@testi.fi',
-              primary: false,
-              emailType: EmailType.OTHER,
-              id: '',
-              __typename: 'EmailNode',
-            },
-            __typename: 'EmailNodeEdge',
-          },
-          {
-            node: {
-              email: 'kolmas@testi.fi',
-              primary: false,
-              emailType: EmailType.OTHER,
-              id: '234',
-              __typename: 'EmailNode',
-            },
-            __typename: 'EmailNodeEdge',
-          },
-        ],
-        __typename: 'EmailNodeConnection',
-      },
-
-      __typename: 'ProfileNode',
-      ...variables?.myProfile,
-    },
-  } as MyProfileQuery;
-};
-
 describe('test getEmails function', () => {
-  test('add and update arrays are formed correctly', () => {
+  test('add array is formed correctly', () => {
     const emailObj = getEmail(emails);
 
     expect(emailObj.addEmails.length).toEqual(1);
-    expect(emailObj.updateEmails.length).toEqual(2);
   });
 
   test('add array is null', () => {
@@ -87,15 +43,51 @@ describe('test getEmails function', () => {
     expect(emailObj.addEmails).toEqual([null]);
   });
 
+  test('update array is formed correctly', () => {
+    const emailObj = getEmail(emails, myProfile);
+    expect(emailObj.updateEmails).toEqual([
+      {
+        email: 'kolmas@testi.fi',
+        emailType: 'OTHER',
+        id: '234',
+        primary: false,
+      },
+    ]);
+  });
+
+  test('update array is empty (emails & profileEmails are equal)', () => {
+    const profileWithSameEmails = {
+      myProfile: {
+        ...myProfile.myProfile,
+        emails: {
+          edges: [
+            {
+              node: {
+                email: 'kolmas@testi.fi',
+                primary: false,
+                emailType: EmailType.OTHER,
+                id: '234',
+                __typename: 'EmailNode',
+              },
+              __typename: 'EmailNodeEdge',
+            },
+          ],
+          __typename: 'EmailNodeConnection',
+        },
+      },
+    } as MyProfileQuery;
+
+    const emailObj = getEmail(emails, profileWithSameEmails);
+    expect(emailObj.updateEmails).toEqual([]);
+  });
+
   test('removeEmails field doesnt exist', () => {
-    const myProfile = getMyProfileQuery();
     const emailObj = getEmail(emails, myProfile);
     expect(emailObj.removeEmails).toBeFalsy();
   });
 
   test('removeEmails exists', () => {
-    const myProfile = getMyProfileQuery();
-    const emailObj = getEmail([{ ...emails[0] }], myProfile);
-    expect(emailObj.removeEmails).toEqual(['234']);
+    const emailObj = getEmail([], myProfile);
+    expect(emailObj.removeEmails).toEqual(['123', '234']);
   });
 });
