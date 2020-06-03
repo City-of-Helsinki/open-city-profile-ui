@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
@@ -32,19 +32,30 @@ type Props = {
 
 function EditProfile(props: Props) {
   const [showNotification, setShowNotification] = useState<boolean>(false);
-  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS, {
-    onError: (error: Error) => {
-      Sentry.captureException(error);
-      setShowNotification(true);
-    },
-  });
+  const { data, refetch } = useQuery<ServiceConnectionsQuery>(
+    SERVICE_CONNECTIONS,
+    {
+      onError: (error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      },
+    }
+  );
   const { profileData } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [updateProfile, { loading }] = useMutation<
     UpdateMyProfileData,
     UpdateMyProfileVariables
   >(UPDATE_PROFILE, {
     refetchQueries: ['MyProfileQuery'],
+  });
+
+  useEffect(() => {
+    const cb = () => refetch();
+    i18n.on('languageChanged', cb);
+    return () => {
+      i18n.off('languageChanged', cb);
+    };
   });
 
   const handleOnValues = (formValues: FormValues) => {

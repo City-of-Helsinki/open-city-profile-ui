@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
@@ -34,19 +34,30 @@ function DeleteProfile(props: Props) {
   const [showNotification, setShowNotification] = useState(false);
 
   const history = useHistory();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { trackEvent } = useMatomo();
 
-  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS, {
-    onError: (error: Error) => {
-      Sentry.captureException(error);
-      setShowNotification(true);
-    },
-  });
+  const { data, refetch } = useQuery<ServiceConnectionsQuery>(
+    SERVICE_CONNECTIONS,
+    {
+      onError: (error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      },
+    }
+  );
   const [deleteProfile] = useMutation<
     DeleteMyProfileData,
     DeleteMyProfileVariables
   >(DELETE_PROFILE);
+
+  useEffect(() => {
+    const cb = () => refetch();
+    i18n.on('languageChanged', cb);
+    return () => {
+      i18n.off('languageChanged', cb);
+    };
+  });
 
   const handleDeleteInstructions = () => {
     setDeleteInstructions(prevState => !prevState);
