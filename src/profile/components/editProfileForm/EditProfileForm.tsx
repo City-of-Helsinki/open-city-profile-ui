@@ -13,6 +13,7 @@ import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
 
+import { ReactComponent as PlusIcon } from '../../../common/svg/PlusIcon.svg';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import { getIsInvalid, getError } from '../../helpers/formik';
 import Select from '../../../common/select/Select';
@@ -64,10 +65,6 @@ type Props = {
   profile: FormValues;
   onValues: (values: FormValues) => void;
   services?: ServiceConnectionsQuery;
-};
-
-type EmailArrayError = {
-  [index: number]: { email: string };
 };
 
 function EditProfileForm(props: Props) {
@@ -244,6 +241,7 @@ function EditProfileForm(props: Props) {
                             name={`emails.${index}.email`}
                             id={`emails.${index}.email`}
                             labelText={t('profileForm.email')}
+                            readOnly={email.id}
                             invalid={getIsInvalid(
                               formikProps,
                               `emails[${index}].email`
@@ -254,14 +252,15 @@ function EditProfileForm(props: Props) {
                               {}
                             )}
                           />
-                          {!email.id && (
-                            <button
-                              className={styles.removeButton}
-                              onClick={() => arrayHelpers.remove(index)}
-                            >
-                              {t('profileForm.delete')}
-                            </button>
-                          )}
+                          <button
+                            type="button"
+                            className={styles.removeButton}
+                            onClick={() => {
+                              arrayHelpers.remove(index);
+                            }}
+                          >
+                            {t('profileForm.delete')}
+                          </button>
                         </div>
                       )
                     )}
@@ -269,7 +268,9 @@ function EditProfileForm(props: Props) {
 
                   <br />
                   <Button
+                    iconLeft={<PlusIcon className={styles.plusIcon} />}
                     variant="supplementary"
+                    type="button"
                     onClick={() =>
                       arrayHelpers.push({
                         email: '',

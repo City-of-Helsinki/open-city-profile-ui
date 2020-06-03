@@ -8,6 +8,13 @@ import {
   PhoneType,
   UpdateEmailInput,
 } from '../../graphql/generatedTypes';
+import getEmailsFromNode from './getEmailsFromNode';
+
+type EmailInputs = {
+  addEmails: CreateEmailInput[] | null[];
+  updateEmails: UpdateEmailInput[];
+  removeEmails?: (string | null)[] | null | undefined;
+};
 
 const getAddress = (formValues: FormValues, profile?: MyProfileQuery) => {
   if (profile?.myProfile?.primaryAddress?.id) {
@@ -67,7 +74,8 @@ const getPhone = (formValues: FormValues, profile?: MyProfileQuery) => {
     ],
   };
 };
-const getEmail = (emails: Email[]) => {
+
+const getEmail = (emails: Email[], profile?: MyProfileQuery) => {
   // Map values to get rid of __typeName field (backend won't allow it)
   const updateEmails: UpdateEmailInput[] = emails
     .filter(email => email.id)
@@ -92,10 +100,24 @@ const getEmail = (emails: Email[]) => {
       };
     });
 
-  return {
+  const profileEmails: Email[] = [
+    profile?.myProfile?.primaryEmail as Email,
+    ...getEmailsFromNode(profile),
+  ];
+  const emailIDs = emails.map(email => email.id);
+
+  const removeEmails = profileEmails
+    .filter(email => email?.id && !emailIDs.includes(email.id))
+    .map(email => email.id);
+
+  const emailInputs: EmailInputs = {
     addEmails: addEmails.length > 0 ? addEmails : [null],
     updateEmails,
   };
+  // If there is something to delete, add removeEmails field
+  // otherwise we will get backend error.
+  if (removeEmails.length > 0) emailInputs.removeEmails = removeEmails;
+  return emailInputs;
 };
 
 const updateMutationVariables = (
@@ -110,7 +132,7 @@ const updateMutationVariables = (
         language: formValues.profileLanguage,
         ...getPhone(formValues, profile),
         ...getAddress(formValues, profile),
-        ...getEmail(formValues.emails),
+        ...getEmail(formValues.emails, profile),
       },
     },
   };
