@@ -70,16 +70,22 @@ function ProfileInformation(props: Props) {
                 value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
               />
             </div>
-            <h2 className={styles.title}>{t('profileForm.additionalInfo')}</h2>
-            <div className={styles.storedInformation}>
-              {emails.map((email: Email, index: number) => (
-                <LabeledValue
-                  key={index}
-                  label={t('profileInformation.email')}
-                  value={email.email}
-                />
-              ))}
-            </div>
+            {emails.length > 0 && (
+              <Fragment>
+                <h2 className={styles.title}>
+                  {t('profileForm.additionalInfo')}
+                </h2>
+                <div className={styles.storedInformation}>
+                  {emails.map((email: Email, index: number) => (
+                    <LabeledValue
+                      key={index}
+                      label={t('profileInformation.email')}
+                      value={email.email}
+                    />
+                  ))}
+                </div>
+              </Fragment>
+            )}
           </Fragment>
         )}
       </ProfileSection>

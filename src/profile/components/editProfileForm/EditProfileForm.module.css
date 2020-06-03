@@ -32,9 +32,12 @@
     flex-direction: column;
 }
 
+.additionalActionsWrapper {
+    color: var(--color-bus)
+}
+
 .removeButton {
     margin: 5px 0 0 3px;
-    color: var(--color-bus)
 }
 
 .button {

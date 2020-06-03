@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextInput, Button } from 'hds-react';
 import {
@@ -8,6 +8,7 @@ import {
   FormikProps,
   FieldArray,
   FieldArrayRenderProps,
+  ArrayHelpers,
 } from 'formik';
 import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
@@ -92,6 +93,19 @@ function EditProfileForm(props: Props) {
     return getError<FormValues>(formikProps, fieldName, renderError);
   };
 
+  const changePrimaryEmail = (
+    formProps: FormikProps<FormValues>,
+    arrayHelpers: ArrayHelpers,
+    index: number
+  ) => {
+    const oldPrimary = { ...formProps.values.primaryEmail, primary: false };
+    const newPrimary = { ...formProps.values.emails[index], primary: true };
+
+    formProps.setFieldValue('primaryEmail', newPrimary);
+    arrayHelpers.remove(index);
+    arrayHelpers.push(oldPrimary);
+  };
+
   return (
     <Formik
       initialValues={{
@@ -168,7 +182,7 @@ function EditProfileForm(props: Props) {
               <div className={styles.formField}>
                 <label className={styles.label}>{t('profileForm.email')}</label>
                 <span className={styles.email}>
-                  {props.profile.primaryEmail.email}
+                  {formikProps.values.primaryEmail.email}
                 </span>
               </div>
             </div>
@@ -252,15 +266,35 @@ function EditProfileForm(props: Props) {
                               {}
                             )}
                           />
-                          <button
-                            type="button"
-                            className={styles.removeButton}
-                            onClick={() => {
-                              arrayHelpers.remove(index);
-                            }}
-                          >
-                            {t('profileForm.delete')}
-                          </button>
+                          <div className={styles.additionalActionsWrapper}>
+                            <button
+                              type="button"
+                              className={styles.removeButton}
+                              onClick={() => {
+                                arrayHelpers.remove(index);
+                              }}
+                            >
+                              {t('profileForm.delete')}
+                            </button>
+                            {email.id && (
+                              <Fragment>
+                                {' | '}
+                                <button
+                                  type="button"
+                                  className={styles.removeButton}
+                                  onClick={() =>
+                                    changePrimaryEmail(
+                                      formikProps,
+                                      arrayHelpers,
+                                      index
+                                    )
+                                  }
+                                >
+                                  Make primary
+                                </button>
+                              </Fragment>
+                            )}
+                          </div>
                         </div>
                       )
                     )}

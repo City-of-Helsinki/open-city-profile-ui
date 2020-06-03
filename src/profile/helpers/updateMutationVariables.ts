@@ -1,3 +1,5 @@
+import { isEqual } from 'lodash';
+
 import { FormValues } from '../components/editProfileForm/EditProfileForm';
 import {
   AddressType,
@@ -76,9 +78,21 @@ const getPhone = (formValues: FormValues, profile?: MyProfileQuery) => {
 };
 
 const getEmail = (emails: Email[], profile?: MyProfileQuery) => {
+  const profileEmails: Email[] = [
+    profile?.myProfile?.primaryEmail as Email,
+    ...getEmailsFromNode(profile),
+  ];
+
+  // Compare formValues against profileEmails => filter values that are not changed
   // Map values to get rid of __typeName field (backend won't allow it)
   const updateEmails: UpdateEmailInput[] = emails
-    .filter(email => email.id)
+    .filter(email => {
+      const profileEmail = profileEmails.find(
+        profileEmail => profileEmail?.id === email.id
+      );
+
+      return email.id && !isEqual(email, profileEmail);
+    })
     .map(email => {
       return {
         email: email.email,
@@ -100,10 +114,6 @@ const getEmail = (emails: Email[], profile?: MyProfileQuery) => {
       };
     });
 
-  const profileEmails: Email[] = [
-    profile?.myProfile?.primaryEmail as Email,
-    ...getEmailsFromNode(profile),
-  ];
   const emailIDs = emails.map(email => email.id);
 
   const removeEmails = profileEmails
