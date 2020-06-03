@@ -29,6 +29,10 @@ import {
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 
+// This regex makes matching email much more accurate than just using .email()
+//eslint-disable-next-line
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
   lastName: yup.string().max(255, 'validation.maxLength'),
@@ -42,7 +46,7 @@ const schema = yup.object().shape({
   postalCode: yup.string().max(5, 'validation.maxLength'),
   emails: yup.array().of(
     yup.object().shape({
-      email: yup.string().email('validation.email'),
+      email: yup.string().matches(emailRegex, 'validation.email'),
     })
   ),
 });
