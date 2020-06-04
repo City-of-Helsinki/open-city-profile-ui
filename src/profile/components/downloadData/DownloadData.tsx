@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useLazyQuery } from '@apollo/react-hooks';
 import * as Sentry from '@sentry/browser';
+import FileSaver from 'file-saver';
 
 import Button from '../../../common/button/Button';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
@@ -21,16 +22,10 @@ function DownloadData(props: Props) {
 
   const [loadData] = useLazyQuery<DownloadMyProfile>(ALL_DATA, {
     onCompleted: data => {
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.href = window.URL.createObjectURL(
-        new Blob([data.downloadMyProfile], { type: 'application/json' })
-      );
-      a.setAttribute('download', 'helsinkiprofile_data.json');
-      a.click();
-      window.URL.revokeObjectURL(a.href);
-      document.body.removeChild(a);
+      const blob = new Blob([data.downloadMyProfile], {
+        type: 'application/json',
+      });
+      FileSaver.saveAs(blob, 'helsinkiprofile_data.json');
       setIsLoading(false);
     },
     onError: (error: Error) => {

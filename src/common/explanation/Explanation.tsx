@@ -16,9 +16,17 @@ type Props = {
   // margin. Flush means that it does not--that it's flush with the
   // other content on that level of the hierarchy.
   variant?: 'margin' | 'flush';
+  // In essence the size of the title.
+  titleVariant?: 'h2' | 'h3';
 };
 
-function Explanation({ className, main, small, variant = 'margin' }: Props) {
+function Explanation({
+  className,
+  main,
+  small,
+  variant = 'margin',
+  titleVariant = 'h3',
+}: Props) {
   return (
     <div
       className={classNames(
@@ -30,7 +38,14 @@ function Explanation({ className, main, small, variant = 'margin' }: Props) {
         className
       )}
     >
-      <h1 className={styles.main}>{main}</h1>
+      <h1
+        className={classNames(styles.main, {
+          [styles.h2]: titleVariant === 'h2',
+          [styles.h3]: titleVariant === 'h3',
+        })}
+      >
+        {main}
+      </h1>
       {small && <p className={styles.small}>{small}</p>}
     </div>
   );

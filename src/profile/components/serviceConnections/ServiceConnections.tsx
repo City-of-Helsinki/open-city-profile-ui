@@ -59,6 +59,7 @@ function ServiceConnections(props: Props) {
         <Explanation
           main={t('serviceConnections.title')}
           small={t('serviceConnections.explanation')}
+          titleVariant="h2"
         />
         {hasNoServices && (
           <p className={styles.empty}>{t('serviceConnections.empty')}</p>
@@ -70,7 +71,7 @@ function ServiceConnections(props: Props) {
               title={service.title || ''}
               showInformationText
             >
-              {service.description}
+              <p>{service.description}</p>
               <p className={styles.serviceInformation}>
                 {t('serviceConnections.servicePersonalData')}
               </p>

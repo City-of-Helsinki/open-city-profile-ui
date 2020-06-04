@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -18,9 +19,11 @@ import OidcCallback from './auth/components/oidcCallback/OidcCallback';
 import Profile from './profile/components/profile/Profile';
 import { fetchApiTokenThunk } from './auth/redux';
 import ProfileDeleted from './profile/components/profileDeleted/ProfileDeleted';
+import AccessibilityStatement from './accessibilityStatement/AccessibilityStatement';
 import { MAIN_CONTENT_ID } from './common/constants';
 import AccessibilityShortcuts from './common/accessibilityShortcuts/AccessibilityShortcuts';
 import AppMeta from './AppMeta';
+import authenticate from './auth/authenticate';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -51,6 +54,12 @@ if (process.env.REACT_APP_ENVIRONMENT !== 'production') {
 type Props = {};
 
 function App(props: Props) {
+  const location = useLocation();
+
+  if (location.pathname === '/loginsso') {
+    authenticate();
+  }
+
   return (
     <ReduxProvider store={store}>
       <OidcProvider store={store} userManager={userManager}>
@@ -60,13 +69,6 @@ function App(props: Props) {
             {/* This should be the first focusable element */}
             <AccessibilityShortcuts mainContentId={MAIN_CONTENT_ID} />
             <Switch>
-              <Route
-                path="/silent_renew"
-                render={() => {
-                  userManager.signinSilentCallback();
-                  return null;
-                }}
-              />
               <Route path="/callback">
                 <OidcCallback />
               </Route>
@@ -79,9 +81,13 @@ function App(props: Props) {
               >
                 <Profile />
               </Route>
+              <Route path="/accessibility">
+                <AccessibilityStatement />
+              </Route>
               <Route path="/profile-deleted" exact>
                 <ProfileDeleted />
               </Route>
+              <Route path="/loginsso" exact />
               <Route path="*">404 - not found</Route>
             </Switch>
           </MatomoProvider>

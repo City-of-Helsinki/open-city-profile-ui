@@ -166,6 +166,7 @@ function Subscriptions() {
           <Explanation
             main={t('subscriptions.title')}
             small={t('subscriptions.explanation')}
+            titleVariant="h2"
           />
 
           {subscriptionData?.length === 0 && (

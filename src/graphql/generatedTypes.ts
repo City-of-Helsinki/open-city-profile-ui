@@ -126,6 +126,35 @@ export interface MyProfileQuery_myProfile_primaryEmail {
    */
   readonly id: string;
   readonly email: string;
+  readonly primary: boolean;
+  readonly emailType: EmailType | null;
+}
+
+export interface MyProfileQuery_myProfile_emails_edges_node {
+  readonly __typename: "EmailNode";
+  readonly primary: boolean;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly email: string;
+  readonly emailType: EmailType | null;
+}
+
+export interface MyProfileQuery_myProfile_emails_edges {
+  readonly __typename: "EmailNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: MyProfileQuery_myProfile_emails_edges_node | null;
+}
+
+export interface MyProfileQuery_myProfile_emails {
+  readonly __typename: "EmailNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(MyProfileQuery_myProfile_emails_edges | null)>;
 }
 
 export interface MyProfileQuery_myProfile_primaryPhone {
@@ -155,6 +184,10 @@ export interface MyProfileQuery_myProfile {
    * Convenience field for the email which is marked as primary.
    */
   readonly primaryEmail: MyProfileQuery_myProfile_primaryEmail | null;
+  /**
+   * List of email addresses of the profile.
+   */
+  readonly emails: MyProfileQuery_myProfile_emails | null;
   /**
    * Convenience field for the phone which is marked as primary.
    */

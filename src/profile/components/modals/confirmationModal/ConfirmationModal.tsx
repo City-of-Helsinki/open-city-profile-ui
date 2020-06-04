@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import { useTranslation } from 'react-i18next';
-import { IconClose } from 'hds-react';
+import { IconCross } from 'hds-react';
 
 import styles from './ConfirmationModal.module.css';
 import { ServiceConnectionsQuery } from '../../../../graphql/generatedTypes';
@@ -37,14 +37,18 @@ function ConfirmationModal({
       overlayClassName={styles.overlay}
       shouldCloseOnOverlayClick
     >
-      <div className={styles.close}>
-        <button type="button" onClick={onClose}>
-          <IconClose className={styles.icon} />
-        </button>
-      </div>
-
       <div className={styles.content}>
-        <h3>{modalTitle}</h3>
+        <div className={styles.titleRow}>
+          <h3>{modalTitle}</h3>
+          <button
+            className={styles.closeButton}
+            type="button"
+            onClick={onClose}
+            aria-label={t('confirmationModal.close')}
+          >
+            <IconCross className={styles.icon} />
+          </button>
+        </div>
         <p>{modalText}</p>
         <ul>
           {servicesArray.map((service, index) => (
