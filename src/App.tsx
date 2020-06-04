@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -22,6 +23,7 @@ import AccessibilityStatement from './accessibilityStatement/AccessibilityStatem
 import { MAIN_CONTENT_ID } from './common/constants';
 import AccessibilityShortcuts from './common/accessibilityShortcuts/AccessibilityShortcuts';
 import AppMeta from './AppMeta';
+import authenticate from './auth/authenticate';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -52,6 +54,12 @@ if (process.env.REACT_APP_ENVIRONMENT !== 'production') {
 type Props = {};
 
 function App(props: Props) {
+  const location = useLocation();
+
+  if (location.pathname === '/loginsso') {
+    authenticate();
+  }
+
   return (
     <ReduxProvider store={store}>
       <OidcProvider store={store} userManager={userManager}>
@@ -79,6 +87,7 @@ function App(props: Props) {
               <Route path="/profile-deleted" exact>
                 <ProfileDeleted />
               </Route>
+              <Route path="/loginsso" exact />
               <Route path="*">404 - not found</Route>
             </Switch>
           </MatomoProvider>
