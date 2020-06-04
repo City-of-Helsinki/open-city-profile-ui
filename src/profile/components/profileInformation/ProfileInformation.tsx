@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button, IconPenLine } from 'hds-react';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import DownloadData from '../downloadData/DownloadData';
 import styles from './ProfileInformation.module.css';
-import Explanation from '../../../common/explanation/Explanation';
 import getName from '../../helpers/getName';
 import getAddress from '../../helpers/getAddress';
-import { MyProfileQuery } from '../../../graphql/generatedTypes';
+import {
+  MyProfileQuery,
+  MyProfileQuery_myProfile_emails_edges_node as Email,
+} from '../../../graphql/generatedTypes';
+import ProfileSection from '../../../common/profileSection/ProfileSection';
+import getEmailsFromNode from '../../helpers/getEmailsFromNode';
 
 type Props = {
   loading: boolean;
@@ -21,26 +26,32 @@ function ProfileInformation(props: Props) {
   const { t, i18n } = useTranslation();
   const { isEditing, setEditing, loading, data } = props;
 
+  const emails = getEmailsFromNode(data);
+
+  // Add checks for multiple addresses & phones later
+  const showAdditionalInformation = emails.length > 0;
   return (
-    <React.Fragment>
-      <section className={styles.personalInformation}>
-        <div className={styles.personalInformationTitleRow}>
-          <Explanation
-            variant="flush"
-            className={styles.pageTitleContainer}
-            main={t('profileInformation.personalData')}
-            small={t('profileInformation.visibility')}
-          />
-          {!isEditing && (
-            <button onClick={setEditing} className={styles.edit}>
-              {t('profileForm.edit').toUpperCase()}
-            </button>
-          )}
-        </div>
-        <div className={styles.storedInformation}>
-          {loading && t('loading')}
-          {data && !isEditing && (
-            <>
+    <Fragment>
+      <ProfileSection
+        title={t('profileInformation.personalData')}
+        description={t('profileInformation.visibility')}
+        titleButton={
+          !isEditing && (
+            <Button
+              variant="supplementary"
+              onClick={setEditing}
+              iconRight={<IconPenLine />}
+              className={styles.edit}
+            >
+              {t('profileForm.edit')}
+            </Button>
+          )
+        }
+      >
+        {loading && t('loading')}
+        {data && !isEditing && (
+          <Fragment>
+            <div className={styles.storedInformation}>
               <LabeledValue
                 label={t('profileInformation.name')}
                 value={getName(data)}
@@ -50,10 +61,6 @@ function ProfileInformation(props: Props) {
                 value={getAddress(data, i18n.languages[0])}
               />
               <LabeledValue
-                label={t('profileForm.language')}
-                value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
-              />
-              <LabeledValue
                 label={t('profileInformation.phone')}
                 value={data.myProfile?.primaryPhone?.phone}
               />
@@ -61,13 +68,33 @@ function ProfileInformation(props: Props) {
                 label={t('profileInformation.email')}
                 value={data.myProfile?.primaryEmail?.email}
               />
-            </>
-          )}
-        </div>
-      </section>
+              <LabeledValue
+                label={t('profileForm.language')}
+                value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
+              />
+            </div>
+            {showAdditionalInformation && (
+              <h2 className={styles.title}>
+                {t('profileForm.additionalInfo')}
+              </h2>
+            )}
+            {emails.length > 0 && (
+              <div className={styles.storedInformation}>
+                {emails.map((email: Email, index: number) => (
+                  <LabeledValue
+                    key={index}
+                    label={t('profileInformation.email')}
+                    value={email.email}
+                  />
+                ))}
+              </div>
+            )}
+          </Fragment>
+        )}
+      </ProfileSection>
       <DownloadData />
       <DeleteProfile />
-    </React.Fragment>
+    </Fragment>
   );
 }
 

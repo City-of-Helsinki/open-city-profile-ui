@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import * as Sentry from '@sentry/browser';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
@@ -18,6 +18,7 @@ import {
   DeleteMyProfileVariables,
   ServiceConnectionsQuery,
 } from '../../../graphql/generatedTypes';
+import styles from './deleteProfile.module.css';
 
 const DELETE_PROFILE = loader('../../graphql/DeleteMyProfile.graphql');
 const SERVICE_CONNECTIONS = loader(
@@ -33,19 +34,30 @@ function DeleteProfile(props: Props) {
   const [showNotification, setShowNotification] = useState(false);
 
   const history = useHistory();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { trackEvent } = useMatomo();
 
-  const { data } = useQuery<ServiceConnectionsQuery>(SERVICE_CONNECTIONS, {
-    onError: (error: Error) => {
-      Sentry.captureException(error);
-      setShowNotification(true);
-    },
-  });
+  const { data, refetch } = useQuery<ServiceConnectionsQuery>(
+    SERVICE_CONNECTIONS,
+    {
+      onError: (error: Error) => {
+        Sentry.captureException(error);
+        setShowNotification(true);
+      },
+    }
+  );
   const [deleteProfile] = useMutation<
     DeleteMyProfileData,
     DeleteMyProfileVariables
   >(DELETE_PROFILE);
+
+  useEffect(() => {
+    const cb = () => refetch();
+    i18n.on('languageChanged', cb);
+    return () => {
+      i18n.off('languageChanged', cb);
+    };
+  });
 
   const handleDeleteInstructions = () => {
     setDeleteInstructions(prevState => !prevState);
@@ -92,19 +104,14 @@ function DeleteProfile(props: Props) {
           checked={deleteInstructions}
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
-          labelText={
-            <Trans
-              i18nKey="deleteProfile.accept"
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
-              components={[<a href="/#"></a>]}
-            />
-          }
+          labelText={t('deleteProfile.accept')}
         />
 
         <Button
           type="button"
           onClick={handleConfirmationModal}
           disabled={!deleteInstructions}
+          className={styles.button}
         >
           {t('deleteProfile.delete')}
         </Button>

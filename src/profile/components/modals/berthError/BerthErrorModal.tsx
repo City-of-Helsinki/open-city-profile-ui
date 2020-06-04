@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import { IconClose } from 'hds-react';
+import { IconCross } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 
 import Button from '../../../../common/button/Button';
@@ -27,7 +27,7 @@ function BerthErrorModal(props: Props) {
     >
       <div className={styles.close}>
         <button type="button" onClick={onClose}>
-          <IconClose className={styles.icon} />
+          <IconCross className={styles.icon} />
         </button>
       </div>
 

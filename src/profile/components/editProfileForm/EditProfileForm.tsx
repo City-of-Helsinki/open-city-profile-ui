@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextInput } from 'hds-react';
-import { Formik, Form, Field, FormikProps } from 'formik';
+import { Button, IconPlusCircle, TextInput } from 'hds-react';
+import {
+  ArrayHelpers,
+  Field,
+  FieldArray,
+  FieldArrayRenderProps,
+  Form,
+  Formik,
+  FormikProps,
+} from 'formik';
 import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
+import classNames from 'classnames';
+import validator from 'validator';
 
-import { getIsInvalid, getError } from '../../helpers/formik';
+import getLanguageCode from '../../../common/helpers/getLanguageCode';
+import { getError, getIsInvalid } from '../../helpers/formik';
 import Select from '../../../common/select/Select';
-import Button from '../../../common/button/Button';
 import styles from './EditProfileForm.module.css';
 import {
+  EmailType,
   Language,
+  MyProfileQuery_myProfile_emails_edges_node as Email,
+  MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
   ServiceConnectionsQuery,
 } from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
@@ -27,18 +40,28 @@ const schema = yup.object().shape({
   address: yup.string().max(128, 'validation.maxLength'),
   city: yup.string().max(64, 'validation.maxLength'),
   postalCode: yup.string().max(5, 'validation.maxLength'),
+  emails: yup.array().of(
+    yup.object().shape({
+      email: yup.mixed().test('isValidEmail', 'validation.email', function() {
+        return this.parent?.email
+          ? validator.isEmail(this.parent?.email)
+          : false;
+      }),
+    })
+  ),
 });
 
 export type FormValues = {
   firstName: string;
   lastName: string;
-  email: string;
+  primaryEmail: PrimaryEmail;
   phone: string;
   address: string;
   postalCode: string;
   city: string;
   profileLanguage: Language;
   countryCode: string;
+  emails: Email[];
 };
 
 type Props = {
@@ -55,7 +78,8 @@ function EditProfileForm(props: Props) {
   const userHasServices =
     props.services?.myProfile?.serviceConnections?.edges?.length !== 0;
 
-  const countryList = countries.getNames(i18n.languages[0]);
+  const applicationLanguage = getLanguageCode(i18n.languages[0]);
+  const countryList = countries.getNames(applicationLanguage);
   const countryOptions = Object.keys(countryList).map(key => {
     return {
       value: key,
@@ -65,12 +89,25 @@ function EditProfileForm(props: Props) {
 
   const getFieldError = (
     formikProps: FormikProps<FormValues>,
-    fieldName: keyof FormValues,
+    fieldName: string,
     options: object
   ) => {
     const renderError = (message: string) => t(message, options);
 
     return getError<FormValues>(formikProps, fieldName, renderError);
+  };
+
+  const changePrimaryEmail = (
+    formProps: FormikProps<FormValues>,
+    arrayHelpers: ArrayHelpers,
+    index: number
+  ) => {
+    const oldPrimary = { ...formProps.values.primaryEmail, primary: false };
+    const newPrimary = { ...formProps.values.emails[index], primary: true };
+
+    formProps.setFieldValue('primaryEmail', newPrimary);
+    arrayHelpers.remove(index);
+    arrayHelpers.push(oldPrimary);
   };
 
   return (
@@ -80,15 +117,8 @@ function EditProfileForm(props: Props) {
       }}
       onSubmit={values => {
         props.onValues({
-          firstName: values.firstName,
-          lastName: values.lastName,
-          email: props.profile.email,
-          phone: values.phone,
-          address: values.address,
-          city: values.city,
-          postalCode: values.postalCode,
-          countryCode: values.countryCode,
-          profileLanguage: values.profileLanguage,
+          ...values,
+          emails: [...values.emails, values.primaryEmail],
         });
       }}
       validationSchema={schema}
@@ -155,13 +185,15 @@ function EditProfileForm(props: Props) {
 
               <div className={styles.formField}>
                 <label className={styles.label}>{t('profileForm.email')}</label>
-                <span className={styles.email}>{props.profile.email}</span>
+                <span className={styles.email}>
+                  {formikProps.values.primaryEmail.email}
+                </span>
               </div>
             </div>
 
-            <div className={styles.linebreak} />
-
-            <div className={styles.formFields}>
+            <div
+              className={classNames(styles.formFields, styles.addressFields)}
+            >
               <Field
                 className={styles.formField}
                 name="address"
@@ -209,25 +241,105 @@ function EditProfileForm(props: Props) {
                 options={countryOptions}
                 labelText={t('profileForm.country')}
               />
-              <br />
             </div>
+            <div className={styles.linebreak} />
+            <h2 className={styles.additionalInfo}>
+              {t('profileForm.additionalInfo')}
+            </h2>
+            <FieldArray
+              name="emails"
+              render={(arrayHelpers: FieldArrayRenderProps) => (
+                <React.Fragment>
+                  <div className={styles.formFields}>
+                    {formikProps?.values?.emails.map(
+                      (email: Email | PrimaryEmail, index: number) => (
+                        <div key={index} className={styles.formField}>
+                          <Field
+                            as={TextInput}
+                            name={`emails.${index}.email`}
+                            id={`emails.${index}.email`}
+                            labelText={t('profileForm.email')}
+                            readOnly={email.id}
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `emails[${index}].email`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `emails[${index}].email`,
+                              {}
+                            )}
+                          />
+                          <div className={styles.additionalActionsWrapper}>
+                            <button
+                              type="button"
+                              className={styles.additionalActionButton}
+                              onClick={() => {
+                                arrayHelpers.remove(index);
+                              }}
+                            >
+                              {t('profileForm.delete')}
+                            </button>
+                            {email.id && (
+                              <Fragment>
+                                {' | '}
+                                <button
+                                  type="button"
+                                  className={styles.additionalActionButton}
+                                  onClick={() =>
+                                    changePrimaryEmail(
+                                      formikProps,
+                                      arrayHelpers,
+                                      index
+                                    )
+                                  }
+                                >
+                                  {t('profileForm.makeEmailPrimary')}
+                                </button>
+                              </Fragment>
+                            )}
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+
+                  <br />
+                  <Button
+                    iconLeft={<IconPlusCircle />}
+                    variant="supplementary"
+                    type="button"
+                    onClick={() =>
+                      arrayHelpers.push({
+                        email: '',
+                        emailType: EmailType.OTHER,
+                        primary: false,
+                      })
+                    }
+                  >
+                    {t('profileForm.addAnotherEmail')}
+                  </Button>
+                </React.Fragment>
+              )}
+            />
+
             <div className={styles.buttonRow}>
               <Button
-                type="button"
+                className={styles.button}
                 disabled={Boolean(
                   formikProps.isSubmitting || props.isSubmitting
                 )}
-                onClick={() =>
-                  userHasServices
+                onClick={() => {
+                  userHasServices &&
+                  Object.keys(formikProps.errors)?.length === 0
                     ? setConfirmationDialog(true)
-                    : formikProps.handleSubmit()
-                }
+                    : formikProps.handleSubmit();
+                }}
               >
                 {t('profileForm.submit')}
               </Button>
               <Button
-                type="button"
-                variant="outlined"
+                variant="secondary"
                 className={styles.button}
                 onClick={props.setEditing}
               >

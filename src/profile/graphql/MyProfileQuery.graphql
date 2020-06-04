@@ -15,6 +15,18 @@ query MyProfileQuery {
     primaryEmail {
       id
       email
+      primary
+      emailType
+    }
+    emails {
+      edges {
+        node {
+          primary
+          id
+          email
+          emailType
+        }
+      }
     }
     primaryPhone {
       id

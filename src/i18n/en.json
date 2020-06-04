@@ -2,36 +2,37 @@
   "appName": "Profile",
   "berthErrors": {
     "close": "Close",
-    "explanation": "To delete your profile, you must first terminate your berth billing agreement",
-    "title": "You cannot delete your Helsinki-profile because Berth needs your information for billing"
+    "explanation": "You cannot delete your information because Boat berths service needs your information for billing. Contact the customer service of Berth service to terminate your contract. After that has been done, you can try again.",
+    "title": "The operation cannot be completed."
   },
   "confirmationModal": {
     "cancel": "Cancel",
+    "close": "Close",
     "save": "Save",
-    "saveMessage": "Saved data will transfer to following services",
-    "saveTitle": "Do you want to save your changes"
+    "saveMessage": "The information you have changed is immediately available to the following City of Helsinki services:",
+    "saveTitle": "Do you want to save your changes?"
   },
   "createProfile": {
     "heading": "Fill in your details to create a profile",
-    "helpText": "This information is only visible to you",
+    "helpText": "By creating a profile you can manage your information in one place.",
     "pageTitle": "Create profile"
   },
   "deleteProfile": {
-    "accept": "I have read <0>guide</0> and understand what deleting my data means.",
-    "delete": "Delete Helsinki profile",
-    "explanation": "If desired you can delete all your information, but also means deleting your account. Read more from the guide. By deleting your Helsinki profile you also loose all information saved to connected services and can no longer log in",
-    "title": "Do you want to delete you account?"
+    "accept": "I understand what deleting my data means and wish to proceed.",
+    "delete": "Delete my information",
+    "explanation": "If you want to, you can delete all information we have stored about you. The information cannot be restored after it has been deleted. If you have connected your profile to one of the services of the City of Helsinki, you can no longer use the service until you create a new profile. After deleting you will be automatically logged out of this service. Note that the account you have used to log in (for example Google or Facebook) will not be deleted.",
+    "title": "Do you want to delete your information?"
   },
   "deleteProfileModal": {
-    "delete": "Delete Helsinki profile",
-    "explanation": "By deleting your profile you also loose all the data saved to following services",
-    "noServiceExplanation": "By removing your profile you will loose all of your stored data.",
-    "title": "Are you sure you want to delete your Helsinki profile"
+    "delete": "Delete my information",
+    "explanation": "By continuing you will lose all of your stored data and you can no longer use the following City of Helsinki services:",
+    "noServiceExplanation": "By continuing you will lose all of your stored data.",
+    "title": "Are you sure you want to delete your information?"
   },
   "downloadData": {
-    "button": "Download my data",
-    "panelText": "Download your data to see all the information we have stored about you.",
-    "panelTitle": "Do you want to download your data?"
+    "button": "Download my information",
+    "panelText": "If you want to see all our stored information about you, you can download them here. The information will be delivered as a file in a fixed format so you can move it into some other system if you want to.",
+    "panelTitle": "Do you want to download your information?"
   },
   "expandingPanel": {
     "hideInformation": "HIDE INFORMATION",
@@ -88,19 +89,25 @@
     "title": "Your profile has been successfully removed!"
   },
   "profileForm": {
+    "addAnotherEmail": "Add another email address",
+    "additionalInfo": "Additional Information",
     "address": "Home address",
     "cancel": "Cancel",
     "city": "City",
     "country": "Country",
+    "delete": "Delete",
     "edit": "Edit",
     "email": "Email",
     "firstName": "First name",
     "language": "Profile language",
     "lastName": "Last name",
+    "makeEmailPrimary": "Change to your primary email address",
     "phone": "Phone",
     "postalCode": "Postal code",
     "submit": "Save",
-    "terms": "I have read <0>file description</0> and  city's <1>data protection principles</1>"
+    "terms": "I have read <0>file description</0> and  city's <1>data protection principles</1>",
+    "termsDataProtectionLink": "https://www.hel.fi/static/liitteet/kanslia/rekisteriselosteet/Keha/Kanslia-EU-Sahkoisten-asiointipalveluiden-rekisteri.pdf",
+    "termsFileDescriptionLink": "https://www.hel.fi/helsinki/en/administration/information/data-protection"
   },
   "profileInformation": {
     "address": "Address",
@@ -111,30 +118,30 @@
     "personalData": "Personal data",
     "phone": "Phone",
     "title": "My information",
-    "visibility": "The following information about you is stored in the service"
+    "visibility": "The following information about you is stored in Helsinki profile."
   },
   "sanityCheck": "open-city-profile.en",
   "serviceConnections": {
     "clock": "at",
-    "created": "Created",
-    "empty": "You currently don't have any active services connected to your profile.",
-    "explanation": "You may use several services in the City of Helsinki as well as certain third-party services for the same profile.",
-    "servicePersonalData": "Data which the service will know about you:",
+    "created": "Created:",
+    "empty": "You currently don't have any services connected to your profile.",
+    "explanation": "Your profile has been connected to the City of Helsinki services listed below. Any changes in your information are immediately available to the services. You don't have to change your information separately in each service.",
+    "servicePersonalData": "Information which the service will know about you:",
     "title": "Connected services"
   },
   "skipToContent": "Skip to content",
   "subscriptions": {
     "empty": "No subscriptions / newsletters",
-    "explanation": "Subscribe to announcements and newsletters",
+    "explanation": "Subscribe to announcements and newsletters.",
     "saveSuccess": "Saved!",
-    "saveSuccessMessage": "Subscriptions saved succesfully",
+    "saveSuccessMessage": "Subscriptions saved succesfully.",
     "subscribed": "Subscribed!",
     "title": "Subscriptions and newsletters"
   },
   "validation": {
-    "email": "The value must be an email-address",
-    "maxLength": "This field can be max {{max}} characters",
-    "phoneMin": "The number must be at least {{min}} characters long",
-    "required": "This field is required"
+    "email": "The value must be an email-address.",
+    "maxLength": "This field can be max {{max}} characters.",
+    "phoneMin": "The number must be at least {{min}} characters long.",
+    "required": "This field is required."
   }
 }

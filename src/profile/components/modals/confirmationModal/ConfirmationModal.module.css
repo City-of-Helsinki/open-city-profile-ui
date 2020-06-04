@@ -6,6 +6,7 @@
     background-color: var(--color-white);
     border-radius: 2px;
     border: none;
+    z-index: 100;
 }
 
 .container:focus {
@@ -22,12 +23,23 @@
     background-color: rgba(0, 0, 0, 0.75);
     align-items: center;
     justify-content: center;
+    z-index: 99;
 }
 
-.close {
-    width: 100%;
+.titleRow {
     display: flex;
+    align-items: flex-start;
+}
+.titleRow > *:first-child {
+    flex-grow: 1;
+}
+
+.closeButton {
+    display: flex;
+    align-items: flex-start;
     justify-content: flex-end;
+    width: var(--spacing-layout);
+    height: var(--spacing-layout);
 }
 
 .icon {
@@ -38,7 +50,7 @@
 .content {
     width: 100%;
     display: flex;
-    margin: 15px 0;
+    margin: var(--spacing-s) 0 var(--spacing-m) 0;
     flex-direction: column;
 }
 
@@ -64,12 +76,12 @@
     }
 
     .actions {
-        flex-direction: column;
+        flex-direction: column-reverse;
         justify-content: center;
     }
 
-    .button {
-        margin: 3px 0;
+    .button:last-of-type {
+        margin: 0 0 var(--spacing-2-xs) 0;
     }
 }
 
