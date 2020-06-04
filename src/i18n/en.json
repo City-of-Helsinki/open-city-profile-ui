@@ -101,6 +101,7 @@
     "firstName": "First name",
     "language": "Profile language",
     "lastName": "Last name",
+    "makeEmailPrimary": "Change to your primary email address",
     "phone": "Phone",
     "postalCode": "Postal code",
     "submit": "Save",

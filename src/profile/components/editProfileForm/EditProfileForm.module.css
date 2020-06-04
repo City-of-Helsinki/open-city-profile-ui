@@ -33,10 +33,11 @@
 }
 
 .additionalActionsWrapper {
-    color: var(--color-bus)
+    color: var(--color-bus);
+    font-size: var(--fontsize-body-small);
 }
 
-.removeButton {
+.additionalActionButton {
     margin: 5px 0 0 3px;
 }
 

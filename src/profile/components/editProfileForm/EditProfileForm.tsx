@@ -273,7 +273,7 @@ function EditProfileForm(props: Props) {
                           <div className={styles.additionalActionsWrapper}>
                             <button
                               type="button"
-                              className={styles.removeButton}
+                              className={styles.additionalActionButton}
                               onClick={() => {
                                 arrayHelpers.remove(index);
                               }}
@@ -285,7 +285,7 @@ function EditProfileForm(props: Props) {
                                 {' | '}
                                 <button
                                   type="button"
-                                  className={styles.removeButton}
+                                  className={styles.additionalActionButton}
                                   onClick={() =>
                                     changePrimaryEmail(
                                       formikProps,
@@ -294,7 +294,7 @@ function EditProfileForm(props: Props) {
                                     )
                                   }
                                 >
-                                  Make primary
+                                  {t('profileForm.makeEmailPrimary')}
                                 </button>
                               </Fragment>
                             )}
