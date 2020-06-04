@@ -101,6 +101,7 @@
     "firstName": "Etunimi",
     "language": "Profiilin kieli",
     "lastName": "Sukunimi",
+    "makeEmailPrimary": "Muuta ensisijaiseksi sähköpostiosoitteeksi",
     "phone": "Puhelinnumero",
     "postalCode": "Postinumero",
     "submit": "Tallenna",

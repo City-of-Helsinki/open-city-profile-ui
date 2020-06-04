@@ -1,29 +1,30 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextInput, Button } from 'hds-react';
+import { Button, IconPlusCircle, TextInput } from 'hds-react';
 import {
-  Formik,
-  Form,
+  ArrayHelpers,
   Field,
-  FormikProps,
   FieldArray,
   FieldArrayRenderProps,
+  Form,
+  Formik,
+  FormikProps,
 } from 'formik';
 import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
+import validator from 'validator';
 
-import { ReactComponent as PlusIcon } from '../../../common/svg/PlusIcon.svg';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
-import { getIsInvalid, getError } from '../../helpers/formik';
+import { getError, getIsInvalid } from '../../helpers/formik';
 import Select from '../../../common/select/Select';
 import styles from './EditProfileForm.module.css';
 import {
   EmailType,
   Language,
-  ServiceConnectionsQuery,
   MyProfileQuery_myProfile_emails_edges_node as Email,
   MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
+  ServiceConnectionsQuery,
 } from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
@@ -41,7 +42,11 @@ const schema = yup.object().shape({
   postalCode: yup.string().max(5, 'validation.maxLength'),
   emails: yup.array().of(
     yup.object().shape({
-      email: yup.string().email('validation.email'),
+      email: yup.mixed().test('isValidEmail', 'validation.email', function() {
+        return this.parent?.email
+          ? validator.isEmail(this.parent?.email)
+          : false;
+      }),
     })
   ),
 });
@@ -90,6 +95,19 @@ function EditProfileForm(props: Props) {
     const renderError = (message: string) => t(message, options);
 
     return getError<FormValues>(formikProps, fieldName, renderError);
+  };
+
+  const changePrimaryEmail = (
+    formProps: FormikProps<FormValues>,
+    arrayHelpers: ArrayHelpers,
+    index: number
+  ) => {
+    const oldPrimary = { ...formProps.values.primaryEmail, primary: false };
+    const newPrimary = { ...formProps.values.emails[index], primary: true };
+
+    formProps.setFieldValue('primaryEmail', newPrimary);
+    arrayHelpers.remove(index);
+    arrayHelpers.push(oldPrimary);
   };
 
   return (
@@ -168,7 +186,7 @@ function EditProfileForm(props: Props) {
               <div className={styles.formField}>
                 <label className={styles.label}>{t('profileForm.email')}</label>
                 <span className={styles.email}>
-                  {props.profile.primaryEmail.email}
+                  {formikProps.values.primaryEmail.email}
                 </span>
               </div>
             </div>
@@ -252,15 +270,35 @@ function EditProfileForm(props: Props) {
                               {}
                             )}
                           />
-                          <button
-                            type="button"
-                            className={styles.removeButton}
-                            onClick={() => {
-                              arrayHelpers.remove(index);
-                            }}
-                          >
-                            {t('profileForm.delete')}
-                          </button>
+                          <div className={styles.additionalActionsWrapper}>
+                            <button
+                              type="button"
+                              className={styles.additionalActionButton}
+                              onClick={() => {
+                                arrayHelpers.remove(index);
+                              }}
+                            >
+                              {t('profileForm.delete')}
+                            </button>
+                            {email.id && (
+                              <Fragment>
+                                {' | '}
+                                <button
+                                  type="button"
+                                  className={styles.additionalActionButton}
+                                  onClick={() =>
+                                    changePrimaryEmail(
+                                      formikProps,
+                                      arrayHelpers,
+                                      index
+                                    )
+                                  }
+                                >
+                                  {t('profileForm.makeEmailPrimary')}
+                                </button>
+                              </Fragment>
+                            )}
+                          </div>
                         </div>
                       )
                     )}
@@ -268,7 +306,7 @@ function EditProfileForm(props: Props) {
 
                   <br />
                   <Button
-                    iconLeft={<PlusIcon className={styles.plusIcon} />}
+                    iconLeft={<IconPlusCircle />}
                     variant="supplementary"
                     type="button"
                     onClick={() =>

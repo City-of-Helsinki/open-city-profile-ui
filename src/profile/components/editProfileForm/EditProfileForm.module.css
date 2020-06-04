@@ -32,9 +32,13 @@
     flex-direction: column;
 }
 
-.removeButton {
+.additionalActionsWrapper {
+    color: var(--color-bus);
+    font-size: var(--fontsize-body-small);
+}
+
+.additionalActionButton {
     margin: 5px 0 0 3px;
-    color: var(--color-bus)
 }
 
 .button {
@@ -54,12 +58,6 @@
         margin-bottom: 0;
         justify-content: space-between;
     }
-}
-
-.plusIcon {
-    width: 20px;
-    height: 20px;
-    margin-top: 2px;
 }
 
 @media (min-width: 768px) {

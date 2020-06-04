@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, IconFill } from 'hds-react';
+import { Button, IconPenLine } from 'hds-react';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -27,6 +27,9 @@ function ProfileInformation(props: Props) {
   const { isEditing, setEditing, loading, data } = props;
 
   const emails = getEmailsFromNode(data);
+
+  // Add checks for multiple addresses & phones later
+  const showAdditionalInformation = emails.length > 0;
   return (
     <Fragment>
       <ProfileSection
@@ -37,7 +40,7 @@ function ProfileInformation(props: Props) {
             <Button
               variant="supplementary"
               onClick={setEditing}
-              iconRight={<IconFill />}
+              iconRight={<IconPenLine />}
               className={styles.edit}
             >
               {t('profileForm.edit')}
@@ -70,16 +73,22 @@ function ProfileInformation(props: Props) {
                 value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
               />
             </div>
-            <h2 className={styles.title}>{t('profileForm.additionalInfo')}</h2>
-            <div className={styles.storedInformation}>
-              {emails.map((email: Email, index: number) => (
-                <LabeledValue
-                  key={index}
-                  label={t('profileInformation.email')}
-                  value={email.email}
-                />
-              ))}
-            </div>
+            {showAdditionalInformation && (
+              <h2 className={styles.title}>
+                {t('profileForm.additionalInfo')}
+              </h2>
+            )}
+            {emails.length > 0 && (
+              <div className={styles.storedInformation}>
+                {emails.map((email: Email, index: number) => (
+                  <LabeledValue
+                    key={index}
+                    label={t('profileInformation.email')}
+                    value={email.email}
+                  />
+                ))}
+              </div>
+            )}
           </Fragment>
         )}
       </ProfileSection>

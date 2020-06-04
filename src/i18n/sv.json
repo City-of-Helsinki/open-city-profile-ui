@@ -101,6 +101,7 @@
     "firstName": "Förnamn",
     "language": "Profilspråk",
     "lastName": "Efternamn",
+    "makeEmailPrimary": "Byt till din primära e-postadress",
     "phone": "Telefonnummer",
     "postalCode": "Postnummer",
     "submit": "Spara",
