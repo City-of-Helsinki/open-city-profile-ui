@@ -27,6 +27,9 @@ function ProfileInformation(props: Props) {
   const { isEditing, setEditing, loading, data } = props;
 
   const emails = getEmailsFromNode(data);
+
+  // Add checks for multiple addresses & phones later
+  const showAdditionalInformation = emails.length > 0;
   return (
     <Fragment>
       <ProfileSection
@@ -70,21 +73,21 @@ function ProfileInformation(props: Props) {
                 value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
               />
             </div>
+            {showAdditionalInformation && (
+              <h2 className={styles.title}>
+                {t('profileForm.additionalInfo')}
+              </h2>
+            )}
             {emails.length > 0 && (
-              <Fragment>
-                <h2 className={styles.title}>
-                  {t('profileForm.additionalInfo')}
-                </h2>
-                <div className={styles.storedInformation}>
-                  {emails.map((email: Email, index: number) => (
-                    <LabeledValue
-                      key={index}
-                      label={t('profileInformation.email')}
-                      value={email.email}
-                    />
-                  ))}
-                </div>
-              </Fragment>
+              <div className={styles.storedInformation}>
+                {emails.map((email: Email, index: number) => (
+                  <LabeledValue
+                    key={index}
+                    label={t('profileInformation.email')}
+                    value={email.email}
+                  />
+                ))}
+              </div>
             )}
           </Fragment>
         )}
