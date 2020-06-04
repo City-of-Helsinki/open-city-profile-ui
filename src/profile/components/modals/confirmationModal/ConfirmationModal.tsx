@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import { useTranslation } from 'react-i18next';
-import { IconClose } from 'hds-react';
+import { IconCross } from 'hds-react';
 
 import styles from './ConfirmationModal.module.css';
 import { ServiceConnectionsQuery } from '../../../../graphql/generatedTypes';
@@ -46,7 +46,7 @@ function ConfirmationModal({
             onClick={onClose}
             aria-label={t('confirmationModal.close')}
           >
-            <IconClose className={styles.icon} />
+            <IconCross className={styles.icon} />
           </button>
         </div>
         <p>{modalText}</p>

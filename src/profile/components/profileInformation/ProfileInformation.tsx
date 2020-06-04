@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, IconFill } from 'hds-react';
+import { Button, IconPenLine } from 'hds-react';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -37,7 +37,7 @@ function ProfileInformation(props: Props) {
             <Button
               variant="supplementary"
               onClick={setEditing}
-              iconRight={<IconFill />}
+              iconRight={<IconPenLine />}
               className={styles.edit}
             >
               {t('profileForm.edit')}

@@ -5235,23 +5235,24 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hds-core@0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-0.10.1.tgz#ace566bb235c6fe16f8d306507e675f29588b1d7"
-  integrity sha512-2IXAs2JyC0KBYTyE9lKr6MR017XMZjPbX+578W8iQFmCOI+Q1v80CTF6bTl07U8OCJdopvVrxQyzjI9fGkg/Ag==
+hds-core@0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-0.11.1.tgz#db748bf73ea0bcdb5bb8ee3dfec62d8614d7f995"
+  integrity sha512-5GJyRzf3sKSzjHlyq+TlDzHFlhbRM/gel30ePICfmwm1sGQ+ORtGY/XslxVoSRMESLVULLZsF97C/dsAyBSvrw==
 
-hds-design-tokens@0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-0.10.1.tgz#445d823ce5bfde4e8c10f91536f07090ec039c96"
-  integrity sha512-i/qMShvlV0otsHqK5GTM9xN5U/gKkmRvwFwABNvoQ1ncH2Jo/QwoJbYp8NnyqLs34Abj7PabRmnEhOobOYHksg==
+hds-design-tokens@0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-0.11.1.tgz#08be994ce942b63cdc5ed6ca193571d5aa483606"
+  integrity sha512-Dl6utiA6o/rIZje4q0l0SKnR5NzGugeMQ/ng0Vp8w6YyXjfOw4iGkfR3uHnev0huNhoB3r7IJuWGMHZoNLzWaQ==
 
-hds-react@0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-0.10.1.tgz#ea80f80790d3e2ca6dcda871fcdae696e2c494a7"
-  integrity sha512-WnjNVt2uTyQ1cci+/Lt19qXzSDEa8KYon75/0kwlTB/REMfvBHJgWVc3b9vVnrwVZa//Xok8ES7hkUAPWmV02g==
+hds-react@0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-0.11.1.tgz#8ed0fa5d53e95c81812a0faa140f36159d0b8149"
+  integrity sha512-jwUAGuivnpXnOhOMk5mb/rEifYXHyW6O82uKmF5fAsd1GX0g2pKxtHiu8J9HheYanvpVo8LtTvv0Vv5BC1UulQ==
   dependencies:
     downshift "5.4.0"
-    hds-core "0.10.1"
+    hds-core "0.11.1"
+    lodash.isequal "4.5.0"
     lodash.uniqueid "4.0.1"
     react-spring "8.0.27"
 
@@ -6787,7 +6788,7 @@ lodash.identity@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash.identity/-/lodash.identity-3.0.0.tgz#ad7bc6a4e647d79c972e1b80feef7af156267876"
 
-lodash.isequal@^4.5.0:
+lodash.isequal@4.5.0, lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
   integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextInput, Button } from 'hds-react';
+import { TextInput, Button, IconPlusCircle } from 'hds-react';
 import {
   Formik,
   Form,
@@ -14,7 +14,6 @@ import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
 
-import { ReactComponent as PlusIcon } from '../../../common/svg/PlusIcon.svg';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import { getIsInvalid, getError } from '../../helpers/formik';
 import Select from '../../../common/select/Select';
@@ -306,7 +305,7 @@ function EditProfileForm(props: Props) {
 
                   <br />
                   <Button
-                    iconLeft={<PlusIcon className={styles.plusIcon} />}
+                    iconLeft={<IconPlusCircle />}
                     variant="supplementary"
                     type="button"
                     onClick={() =>
