@@ -1,36 +1,33 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextInput, Button, IconPlusCircle } from 'hds-react';
+import { Button, IconPlusCircle, TextInput } from 'hds-react';
 import {
-  Formik,
-  Form,
+  ArrayHelpers,
   Field,
-  FormikProps,
   FieldArray,
   FieldArrayRenderProps,
-  ArrayHelpers,
+  Form,
+  Formik,
+  FormikProps,
 } from 'formik';
 import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
+import validator from 'validator';
 
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
-import { getIsInvalid, getError } from '../../helpers/formik';
+import { getError, getIsInvalid } from '../../helpers/formik';
 import Select from '../../../common/select/Select';
 import styles from './EditProfileForm.module.css';
 import {
   EmailType,
   Language,
-  ServiceConnectionsQuery,
   MyProfileQuery_myProfile_emails_edges_node as Email,
   MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
+  ServiceConnectionsQuery,
 } from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
-
-// This regex makes matching email much more accurate than just using .email()
-//eslint-disable-next-line
-const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
@@ -45,7 +42,11 @@ const schema = yup.object().shape({
   postalCode: yup.string().max(5, 'validation.maxLength'),
   emails: yup.array().of(
     yup.object().shape({
-      email: yup.string().matches(emailRegex, 'validation.email'),
+      email: yup.mixed().test('isValidEmail', 'validation.email', function() {
+        return this.parent?.email
+          ? validator.isEmail(this.parent?.email)
+          : false;
+      }),
     })
   ),
 });
