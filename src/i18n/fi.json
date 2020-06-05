@@ -106,6 +106,7 @@
     "postalCode": "Postinumero",
     "submit": "Tallenna",
     "terms": "Olen tutustunut palvelun <0>rekisteriselosteeseen</0> ja kaupungin <1>tietosuojakäytäntöön</1> ",
+    "termsDataProtectionLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietosuoja/",
     "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet/kanslia/rekisteriselosteet/Keha/Kanslia-EU-Sahkoisten-asiointipalveluiden-rekisteri.pdf"
   },
   "profileInformation": {

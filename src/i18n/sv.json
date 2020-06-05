@@ -106,6 +106,7 @@
     "postalCode": "Postnummer",
     "submit": "Spara",
     "terms": "Jag har läst filen <0>beskrivningen</0> och stads <1>sekretesspolicy</1>",
+    "termsDataProtectionLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/dataskydd",
     "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet/kanslia/rekisteriselosteet/Keha/Kanslia-EU-Sahkoisten-asiointipalveluiden-rekisteri.pdf"
   },
   "profileInformation": {
