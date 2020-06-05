@@ -146,13 +146,13 @@ function CreateProfileForm(props: Props) {
                   components={[
                     // eslint-disable-next-line jsx-a11y/anchor-has-content
                     <a
-                      href={t('profileForm.termsDataProtectionLink')}
+                      href={t('profileForm.termsFileDescriptionLink')}
                       target="_blank"
                       rel="noopener noreferrer"
                     />,
                     // eslint-disable-next-line jsx-a11y/anchor-has-content
                     <a
-                      href={t('profileForm.termsFileDescriptionLink')}
+                      href={t('profileForm.termsDataProtectionLink')}
                       target="_blank"
                       rel="noopener noreferrer"
                     />,
