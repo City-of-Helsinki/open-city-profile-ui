@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconPlusCircle, TextInput } from 'hds-react';
 import {
-  ArrayHelpers,
   Field,
   FieldArray,
   FieldArrayRenderProps,
@@ -15,14 +14,16 @@ import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
 import validator from 'validator';
 
+import { formConstants } from '../../constants/formConstants';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import { getError, getIsInvalid } from '../../helpers/formik';
 import Select from '../../../common/select/Select';
 import styles from './EditProfileForm.module.css';
 import {
-  EmailType,
   Language,
+  MyProfileQuery_myProfile_addresses_edges_node as Address,
   MyProfileQuery_myProfile_emails_edges_node as Email,
+  MyProfileQuery_myProfile_primaryAddress as PrimaryAddress,
   MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
   ServiceConnectionsQuery,
 } from '../../../graphql/generatedTypes';
@@ -55,12 +56,10 @@ export type FormValues = {
   firstName: string;
   lastName: string;
   primaryEmail: PrimaryEmail;
+  primaryAddress: PrimaryAddress;
   phone: string;
-  address: string;
-  postalCode: string;
-  city: string;
   profileLanguage: Language;
-  countryCode: string;
+  addresses: Address[];
   emails: Email[];
 };
 
@@ -97,28 +96,49 @@ function EditProfileForm(props: Props) {
     return getError<FormValues>(formikProps, fieldName, renderError);
   };
 
-  const changePrimaryEmail = (
+  const changePrimary = (
     formProps: FormikProps<FormValues>,
-    arrayHelpers: ArrayHelpers,
-    index: number
+    arrayHelpers: FieldArrayRenderProps,
+    index: number,
+    primary: 'primaryEmail' | 'primaryAddress'
   ) => {
-    const oldPrimary = { ...formProps.values.primaryEmail, primary: false };
-    const newPrimary = { ...formProps.values.emails[index], primary: true };
+    const arrayName: 'emails' | 'addresses' =
+      arrayHelpers.name === 'emails' ? 'emails' : 'addresses';
+    const oldPrimary = { ...formProps.values[primary], primary: false };
+    const newPrimary = { ...formProps.values[arrayName][index], primary: true };
 
-    formProps.setFieldValue('primaryEmail', newPrimary);
+    formProps.setFieldValue(primary, newPrimary);
     arrayHelpers.remove(index);
     arrayHelpers.push(oldPrimary);
   };
 
+  const addNewValueToArray = (
+    formProps: FormikProps<FormValues>,
+    fieldName: keyof FormValues
+  ) => {
+    const previous: (Email | Address)[] = formProps.getFieldProps(fieldName)
+      .value;
+
+    previous.push(formConstants.EMPTY_VALUES[fieldName]);
+
+    formProps.setFieldValue(fieldName, previous);
+  };
+  // TODO FIX CHANGING UNCONTROLLED aka spreat values
   return (
     <Formik
       initialValues={{
         ...props.profile,
+        primaryAddress: {
+          ...props.profile.primaryAddress,
+          primary: props.profile.primaryAddress.primary || true,
+          countryCode: props.profile.primaryAddress.countryCode || 'FI',
+        },
       }}
       onSubmit={values => {
         props.onValues({
           ...values,
           emails: [...values.emails, values.primaryEmail],
+          addresses: [...values.addresses, values.primaryAddress],
         });
       }}
       validationSchema={schema}
@@ -196,8 +216,8 @@ function EditProfileForm(props: Props) {
             >
               <Field
                 className={styles.formField}
-                name="address"
-                id="address"
+                name="primaryAddress.address"
+                id="primaryAddress.address"
                 maxLength="255"
                 as={TextInput}
                 invalid={getIsInvalid(formikProps, 'address')}
@@ -209,8 +229,8 @@ function EditProfileForm(props: Props) {
 
               <Field
                 className={styles.formField}
-                name="postalCode"
-                id="postalCode"
+                name="primaryAddress.postalCode"
+                id="primaryAddress.postalCode"
                 maxLength="5"
                 as={TextInput}
                 invalid={getIsInvalid(formikProps, 'postalCode')}
@@ -222,8 +242,8 @@ function EditProfileForm(props: Props) {
 
               <Field
                 className={styles.formField}
-                name="city"
-                id="city"
+                name="primaryAddress.city"
+                id="primaryAddress.city"
                 maxLength="255"
                 as={TextInput}
                 invalid={getIsInvalid(formikProps, 'city')}
@@ -234,8 +254,8 @@ function EditProfileForm(props: Props) {
               />
 
               <Field
-                id="countryCode"
-                name="countryCode"
+                id="primaryAddress.countryCode"
+                name="primaryAddress.countryCode"
                 className={styles.formField}
                 as={Select}
                 options={countryOptions}
@@ -287,10 +307,11 @@ function EditProfileForm(props: Props) {
                                   type="button"
                                   className={styles.additionalActionButton}
                                   onClick={() =>
-                                    changePrimaryEmail(
+                                    changePrimary(
                                       formikProps,
                                       arrayHelpers,
-                                      index
+                                      index,
+                                      'primaryEmail'
                                     )
                                   }
                                 >
@@ -303,26 +324,108 @@ function EditProfileForm(props: Props) {
                       )
                     )}
                   </div>
-
-                  <br />
-                  <Button
-                    iconLeft={<IconPlusCircle />}
-                    variant="supplementary"
-                    type="button"
-                    onClick={() =>
-                      arrayHelpers.push({
-                        email: '',
-                        emailType: EmailType.OTHER,
-                        primary: false,
-                      })
-                    }
-                  >
-                    {t('profileForm.addAnotherEmail')}
-                  </Button>
                 </React.Fragment>
               )}
             />
 
+            <FieldArray
+              name="addresses"
+              render={(arrayHelpers: FieldArrayRenderProps) => (
+                <React.Fragment>
+                  {formikProps?.values?.addresses.map(
+                    (address: Address, index: number) => (
+                      <div key={index} className={styles.multipleAddresses}>
+                        <div
+                          className={classNames(
+                            styles.formFields,
+                            styles.addressFields
+                          )}
+                        >
+                          <Field
+                            className={styles.formField}
+                            as={TextInput}
+                            name={`addresses.${index}.address`}
+                            id={`addresses.${index}.address`}
+                            labelText={t('profileForm.address')}
+                          />
+
+                          <Field
+                            className={styles.formField}
+                            as={TextInput}
+                            name={`addresses.${index}.postalCode`}
+                            id={`addresses.${index}.postalCode`}
+                            labelText={t('profileForm.postalCode')}
+                          />
+
+                          <Field
+                            className={styles.formField}
+                            as={TextInput}
+                            name={`addresses.${index}.city`}
+                            id={`addresses.${index}.city`}
+                            labelText={t('profileForm.city')}
+                          />
+
+                          <Field
+                            className={styles.formField}
+                            as={Select}
+                            name={`addresses.${index}.countryCode`}
+                            id={`addresses.${index}.countryCode`}
+                            options={countryOptions}
+                            labelText={t('profileForm.country')}
+                          />
+                        </div>
+                        <div className={styles.additionalActionsWrapper}>
+                          <button
+                            type="button"
+                            className={styles.additionalActionButton}
+                            onClick={() => {
+                              arrayHelpers.remove(index);
+                            }}
+                          >
+                            {t('profileForm.delete')}
+                          </button>
+
+                          {' | '}
+                          <button
+                            type="button"
+                            className={styles.additionalActionButton}
+                            onClick={() =>
+                              changePrimary(
+                                formikProps,
+                                arrayHelpers,
+                                index,
+                                'primaryAddress'
+                              )
+                            }
+                          >
+                            {t('profileForm.makeAddressPrimary')}
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  )}
+                </React.Fragment>
+              )}
+            />
+            {/* Add additional field buttons */}
+            <Button
+              iconLeft={<IconPlusCircle />}
+              variant="supplementary"
+              type="button"
+              onClick={() => addNewValueToArray(formikProps, 'emails')}
+            >
+              {t('profileForm.addAnotherEmail')}
+            </Button>
+            <Button
+              iconLeft={<IconPlusCircle />}
+              variant="supplementary"
+              type="button"
+              onClick={() => addNewValueToArray(formikProps, 'addresses')}
+            >
+              {t('profileForm.addAnotherAddress')}
+            </Button>
+
+            {/* Form control buttons */}
             <div className={styles.buttonRow}>
               <Button
                 className={styles.button}

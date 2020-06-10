@@ -11,6 +11,7 @@ import {
   Language,
   MyProfileQuery,
   MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
+  MyProfileQuery_myProfile_primaryAddress as PrimaryAddress,
   ServiceConnectionsQuery,
   UpdateMyProfile as UpdateMyProfileData,
   UpdateMyProfileVariables,
@@ -18,6 +19,7 @@ import {
 import NotificationComponent from '../../../common/notification/NotificationComponent';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import getEmailsFromNode from '../../helpers/getEmailsFromNode';
+import getAddressesFromNode from '../../helpers/getAddressesFromNode';
 import { updateMutationVariables } from '../../helpers/updateMutationVariables';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
@@ -90,12 +92,10 @@ function EditProfile(props: Props) {
           profileLanguage: profileData?.myProfile?.language || Language.FINNISH,
           primaryEmail:
             profileData?.myProfile?.primaryEmail || ({} as PrimaryEmail),
+          primaryAddress:
+            profileData?.myProfile?.primaryAddress || ({} as PrimaryAddress),
           phone: profileData?.myProfile?.primaryPhone?.phone || '',
-          address: profileData?.myProfile?.primaryAddress?.address || '',
-          city: profileData?.myProfile?.primaryAddress?.city || '',
-          postalCode: profileData?.myProfile?.primaryAddress?.postalCode || '',
-          countryCode:
-            profileData?.myProfile?.primaryAddress?.countryCode || 'FI',
+          addresses: getAddressesFromNode(profileData),
           emails: getEmailsFromNode(profileData),
         }}
         isSubmitting={loading}

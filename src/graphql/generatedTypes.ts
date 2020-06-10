@@ -113,10 +113,42 @@ export interface MyProfileQuery_myProfile_primaryAddress {
    * The ID of the object.
    */
   readonly id: string;
+  readonly primary: boolean;
   readonly address: string;
   readonly postalCode: string;
   readonly city: string;
   readonly countryCode: string;
+  readonly addressType: AddressType | null;
+}
+
+export interface MyProfileQuery_myProfile_addresses_edges_node {
+  readonly __typename: "AddressNode";
+  readonly primary: boolean;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly address: string;
+  readonly postalCode: string;
+  readonly city: string;
+  readonly countryCode: string;
+  readonly addressType: AddressType | null;
+}
+
+export interface MyProfileQuery_myProfile_addresses_edges {
+  readonly __typename: "AddressNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: MyProfileQuery_myProfile_addresses_edges_node | null;
+}
+
+export interface MyProfileQuery_myProfile_addresses {
+  readonly __typename: "AddressNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(MyProfileQuery_myProfile_addresses_edges | null)>;
 }
 
 export interface MyProfileQuery_myProfile_primaryEmail {
@@ -180,6 +212,10 @@ export interface MyProfileQuery_myProfile {
    * Convenience field for the address which is marked as primary.
    */
   readonly primaryAddress: MyProfileQuery_myProfile_primaryAddress | null;
+  /**
+   * List of addresses of the profile.
+   */
+  readonly addresses: MyProfileQuery_myProfile_addresses | null;
   /**
    * Convenience field for the email which is marked as primary.
    */

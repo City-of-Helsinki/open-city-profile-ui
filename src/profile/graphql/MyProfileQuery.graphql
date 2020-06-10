@@ -7,10 +7,25 @@ query MyProfileQuery {
     language
     primaryAddress {
       id
+      primary
       address
       postalCode
       city
       countryCode
+      addressType
+    }
+    addresses {
+      edges {
+        node {
+          primary
+          id
+          address
+          postalCode
+          city
+          countryCode
+          addressType
+        }
+      }
     }
     primaryEmail {
       id
