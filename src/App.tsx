@@ -24,6 +24,8 @@ import { MAIN_CONTENT_ID } from './common/constants';
 import AccessibilityShortcuts from './common/accessibilityShortcuts/AccessibilityShortcuts';
 import AppMeta from './AppMeta';
 import authenticate from './auth/authenticate';
+import logout from './auth/logout';
+import authConstants from './auth/constants/authConstants';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -59,6 +61,22 @@ function App(props: Props) {
   if (location.pathname === '/loginsso') {
     authenticate();
   }
+
+  window.addEventListener('storage', event => {
+    if (
+      event.key === authConstants.OIDC_KEY &&
+      event.oldValue &&
+      !event.newValue
+    ) {
+      logout();
+    }
+    if (
+      event.key === authConstants.OIDC_KEY &&
+      !event.oldValue &&
+      event.newValue
+    )
+      authenticate();
+  });
 
   return (
     <ReduxProvider store={store}>

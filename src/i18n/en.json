@@ -106,8 +106,8 @@
     "postalCode": "Postal code",
     "submit": "Save",
     "terms": "I have read <0>file description</0> and  city's <1>data protection principles</1>",
-    "termsDataProtectionLink": "https://www.hel.fi/static/liitteet/kanslia/rekisteriselosteet/Keha/Kanslia-EU-Sahkoisten-asiointipalveluiden-rekisteri.pdf",
-    "termsFileDescriptionLink": "https://www.hel.fi/helsinki/en/administration/information/data-protection"
+    "termsDataProtectionLink": "https://www.hel.fi/helsinki/en/administration/information/data-protection",
+    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet/kanslia/rekisteriselosteet/Keha/Kanslia-EU-Sahkoisten-asiointipalveluiden-rekisteri.pdf"
   },
   "profileInformation": {
     "address": "Address",
