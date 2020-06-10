@@ -29,6 +29,7 @@ import {
 } from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
+import AdditionalInformationActions from './AdditionalInformationActions';
 
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
@@ -71,6 +72,8 @@ type Props = {
   services?: ServiceConnectionsQuery;
 };
 
+export type Primary = 'primaryEmail' | 'primaryAddress';
+
 function EditProfileForm(props: Props) {
   const { t, i18n } = useTranslation();
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
@@ -100,7 +103,7 @@ function EditProfileForm(props: Props) {
     formProps: FormikProps<FormValues>,
     arrayHelpers: FieldArrayRenderProps,
     index: number,
-    primary: 'primaryEmail' | 'primaryAddress'
+    primary: Primary
   ) => {
     const arrayName: 'emails' | 'addresses' =
       arrayHelpers.name === 'emails' ? 'emails' : 'addresses';
@@ -123,13 +126,16 @@ function EditProfileForm(props: Props) {
 
     formProps.setFieldValue(fieldName, previous);
   };
-  // TODO FIX CHANGING UNCONTROLLED aka spreat values
+
   return (
     <Formik
       initialValues={{
         ...props.profile,
         primaryAddress: {
           ...props.profile.primaryAddress,
+          address: props.profile.primaryAddress.address || '',
+          postalCode: props.profile.primaryAddress.postalCode || '',
+          city: props.profile.primaryAddress.city || '',
           primary: props.profile.primaryAddress.primary || true,
           countryCode: props.profile.primaryAddress.countryCode || 'FI',
         },
@@ -144,7 +150,7 @@ function EditProfileForm(props: Props) {
       validationSchema={schema}
     >
       {formikProps => (
-        <React.Fragment>
+        <Fragment>
           <Form>
             <div className={styles.formFields}>
               <Field
@@ -290,36 +296,21 @@ function EditProfileForm(props: Props) {
                               {}
                             )}
                           />
-                          <div className={styles.additionalActionsWrapper}>
-                            <button
-                              type="button"
-                              className={styles.additionalActionButton}
-                              onClick={() => {
-                                arrayHelpers.remove(index);
-                              }}
-                            >
-                              {t('profileForm.delete')}
-                            </button>
-                            {email.id && (
-                              <Fragment>
-                                {' | '}
-                                <button
-                                  type="button"
-                                  className={styles.additionalActionButton}
-                                  onClick={() =>
-                                    changePrimary(
-                                      formikProps,
-                                      arrayHelpers,
-                                      index,
-                                      'primaryEmail'
-                                    )
-                                  }
-                                >
-                                  {t('profileForm.makeEmailPrimary')}
-                                </button>
-                              </Fragment>
-                            )}
-                          </div>
+                          <AdditionalInformationActions
+                            tDelete="profileForm.delete"
+                            tPrimary="profileForm.makeEmailPrimary"
+                            index={index}
+                            arrayHelpers={arrayHelpers}
+                            canBeMadePrimary={!!email?.id}
+                            makePrimary={() => {
+                              changePrimary(
+                                formikProps,
+                                arrayHelpers,
+                                index,
+                                'primaryEmail'
+                              );
+                            }}
+                          />
                         </div>
                       )
                     )}
@@ -374,33 +365,21 @@ function EditProfileForm(props: Props) {
                             labelText={t('profileForm.country')}
                           />
                         </div>
-                        <div className={styles.additionalActionsWrapper}>
-                          <button
-                            type="button"
-                            className={styles.additionalActionButton}
-                            onClick={() => {
-                              arrayHelpers.remove(index);
-                            }}
-                          >
-                            {t('profileForm.delete')}
-                          </button>
-
-                          {' | '}
-                          <button
-                            type="button"
-                            className={styles.additionalActionButton}
-                            onClick={() =>
-                              changePrimary(
-                                formikProps,
-                                arrayHelpers,
-                                index,
-                                'primaryAddress'
-                              )
-                            }
-                          >
-                            {t('profileForm.makeAddressPrimary')}
-                          </button>
-                        </div>
+                        <AdditionalInformationActions
+                          tDelete="profileForm.delete"
+                          tPrimary="profileForm.makeAddressPrimary"
+                          index={index}
+                          arrayHelpers={arrayHelpers}
+                          canBeMadePrimary={!!address?.id}
+                          makePrimary={() => {
+                            changePrimary(
+                              formikProps,
+                              arrayHelpers,
+                              index,
+                              'primaryAddress'
+                            );
+                          }}
+                        />
                       </div>
                     )
                   )}
@@ -460,7 +439,7 @@ function EditProfileForm(props: Props) {
             modalText={t('confirmationModal.saveMessage')}
             actionButtonText={t('confirmationModal.save')}
           />
-        </React.Fragment>
+        </Fragment>
       )}
     </Formik>
   );
