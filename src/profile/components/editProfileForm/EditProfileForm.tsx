@@ -31,6 +31,12 @@ import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import AdditionalInformationActions from './AdditionalInformationActions';
 
+const address = yup.object().shape({
+  address: yup.string().max(128, 'validation.maxLength'),
+  city: yup.string().max(64, 'validation.maxLength'),
+  postalCode: yup.string().max(5, 'validation.maxLength'),
+});
+
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
   lastName: yup.string().max(255, 'validation.maxLength'),
@@ -39,9 +45,8 @@ const schema = yup.object().shape({
     .string()
     .min(6, 'validation.phoneMin')
     .max(255, 'validation.maxLength'),
-  address: yup.string().max(128, 'validation.maxLength'),
-  city: yup.string().max(64, 'validation.maxLength'),
-  postalCode: yup.string().max(5, 'validation.maxLength'),
+  primaryAddress: address,
+  addresses: yup.array().of(address),
   emails: yup.array().of(
     yup.object().shape({
       email: yup.mixed().test('isValidEmail', 'validation.email', function() {

@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FieldArrayRenderProps } from 'formik';
 
 import styles from './EditProfileForm.module.css';
-import { FieldArrayRenderProps } from 'formik';
 
 type Props = {
   tDelete: string;
