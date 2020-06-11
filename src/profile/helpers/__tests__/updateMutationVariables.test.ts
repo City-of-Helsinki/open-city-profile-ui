@@ -1,9 +1,11 @@
 import {
+  AddressType,
   EmailType,
   MyProfileQuery,
+  MyProfileQuery_myProfile_addresses_edges_node as Address,
   MyProfileQuery_myProfile_emails_edges_node as Email,
 } from '../../../graphql/generatedTypes';
-import { getEmail } from '../updateMutationVariables';
+import { getEmail, getAddress } from '../updateMutationVariables';
 import { myProfile } from '../../../common/test/myProfileQueryData';
 
 // TODO add tests for getAddress & getEmail after support for multiple entities is added
@@ -29,6 +31,39 @@ const emails: Email[] = [
     emailType: EmailType.OTHER,
     id: '234',
   } as Email,
+];
+
+const addresses: Address[] = [
+  {
+    id: '123',
+    primary: true,
+    address: 'Testikatu 55',
+    city: 'Helsinki',
+    countryCode: 'FI',
+    postalCode: '00100',
+    addressType: AddressType.OTHER,
+    __typename: 'AddressNode',
+  },
+  {
+    id: '',
+    address: 'Testikatu 66',
+    city: 'Helsinki',
+    countryCode: 'FI',
+    postalCode: '00000',
+    primary: false,
+    addressType: AddressType.OTHER,
+    __typename: 'AddressNode',
+  },
+  {
+    id: '234',
+    address: 'Muokkauskatu 66',
+    city: 'Helsinki',
+    countryCode: 'FI',
+    postalCode: '12345',
+    primary: false,
+    addressType: AddressType.OTHER,
+    __typename: 'AddressNode',
+  },
 ];
 
 describe('test getEmails function', () => {
@@ -89,5 +124,55 @@ describe('test getEmails function', () => {
   test('removeEmails exists', () => {
     const emailObj = getEmail([], myProfile);
     expect(emailObj.removeEmails).toEqual(['123', '234']);
+  });
+});
+
+describe('tests for getAddress function', () => {
+  test('', () => {
+    const addressObj = getAddress(addresses);
+
+    expect(addressObj.addAddresses.length).toEqual(1);
+  });
+
+  test('add array is null', () => {
+    const addressObj = getAddress([{ ...addresses[0] }]);
+
+    expect(addressObj.addAddresses).toEqual([]);
+  });
+
+  test('update array is formed correctly', () => {
+    const addressObj = getAddress(addresses, myProfile);
+
+    expect(addressObj.updateAddresses).toEqual([
+      {
+        id: '234',
+        address: 'Muokkauskatu 66',
+        postalCode: '12345',
+        city: 'Helsinki',
+        countryCode: 'FI',
+        primary: false,
+        addressType: 'OTHER',
+      },
+    ]);
+  });
+
+  test('update array is emty', () => {
+    const addressesAreSame: Address[] = [
+      { ...addresses[0] },
+      { ...addresses[1] },
+      { ...addresses[2], address: 'Muokkauskatu 55' },
+    ];
+    const addressObj = getAddress(addressesAreSame, myProfile);
+    expect(addressObj.updateAddresses).toEqual([]);
+  });
+
+  test('removeAddress field doesnt exist', () => {
+    const addressObj = getAddress(addresses, myProfile);
+    expect(addressObj.removeAddresses).toBeFalsy();
+  });
+
+  test('removeAddress exists', () => {
+    const addressObj = getAddress([], myProfile);
+    expect(addressObj.removeAddresses).toEqual(['123', '234']);
   });
 });

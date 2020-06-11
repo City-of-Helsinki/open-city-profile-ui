@@ -28,7 +28,7 @@ type AddressInputs = {
   removeAddresses?: (string | null)[] | null | undefined;
 };
 
-const getAddress = (addresses: Address[], profile?: MyProfileQuery) => {
+export const getAddress = (addresses: Address[], profile?: MyProfileQuery) => {
   const profileAddresses: Address[] = [
     profile?.myProfile?.primaryAddress as Address,
     ...getAddressesFromNode(profile),

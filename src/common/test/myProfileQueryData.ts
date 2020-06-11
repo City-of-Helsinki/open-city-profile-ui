@@ -39,8 +39,8 @@ export const myProfile: MyProfileQuery = {
         {
           node: {
             id: '234',
-            address: 'Katu',
-            city: 'Kaupunki',
+            address: 'Muokkauskatu 55',
+            city: 'Helsinki',
             countryCode: 'FI',
             postalCode: '12345',
             primary: false,
