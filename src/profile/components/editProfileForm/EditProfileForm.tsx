@@ -363,7 +363,7 @@ function EditProfileForm(props: Props) {
                           />
                           <AdditionalInformationActions
                             tDelete="profileForm.delete"
-                            tPrimary="profileForm.makeAddressPrimary"
+                            tPrimary="profileForm.makePhonePrimary"
                             index={index}
                             arrayHelpers={arrayHelpers}
                             canBeMadePrimary={!!phone.id}
