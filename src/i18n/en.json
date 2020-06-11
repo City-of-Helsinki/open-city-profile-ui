@@ -61,9 +61,9 @@
   },
   "loading": "Loading...",
   "login": {
-    "description": "Registering gives you access to new services with one easy login. A single account makes the everyday life of a citizen easier.",
+    "description": "By signing in to the new Helsinki city services, a Helsinki profile is created for you. Here you can easily find your profile information and see all the services you have signed in with it. ",
     "login": "Log in",
-    "title": "Many opportunities with one account"
+    "title": "Your profile information in one address!"
   },
   "nav": {
     "information": "Information",
@@ -89,6 +89,7 @@
     "title": "Your profile has been successfully removed!"
   },
   "profileForm": {
+    "addAnotherAddress": "Add another address",
     "addAnotherEmail": "Add another email address",
     "additionalInfo": "Additional Information",
     "address": "Home address",
@@ -101,6 +102,7 @@
     "firstName": "First name",
     "language": "Profile language",
     "lastName": "Last name",
+    "makeAddressPrimary": "Change to your primary address",
     "makeEmailPrimary": "Change to your primary email address",
     "phone": "Phone",
     "postalCode": "Postal code",

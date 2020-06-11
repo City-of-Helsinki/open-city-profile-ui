@@ -61,10 +61,11 @@
   },
   "loading": "Laddar...",
   "login": {
-    "description": "Registrering ger dig tillgång till nya tjänster med en enkel inloggning. Ett enda konto gör en medborgares vardagsliv enklare.",
+    "description": "Genom att logga in på de nya Helsingfors stadstjänster skapas en Helsingfors-profil för dig. Här kan du enkelt hitta din profilinformation och se alla tjänster du har loggat in med den.",
     "login": "Logga in",
-    "title": "Många möjligheter med ett konto"
+    "title": ""
   },
+  "Din profilinformation på en adress!": "",
   "nav": {
     "information": "Mina uppgifter",
     "menuButtonLabel": "Profilmeny",
@@ -89,6 +90,7 @@
     "title": "Din profil har tagits bort!"
   },
   "profileForm": {
+    "addAnotherAddress": "Lägg till en annan adress",
     "addAnotherEmail": "Lägg till en annan e-postadress",
     "additionalInfo": "Ytterligare information",
     "address": "Hemadress",
@@ -101,6 +103,7 @@
     "firstName": "Förnamn",
     "language": "Profilspråk",
     "lastName": "Efternamn",
+    "makeAddressPrimary": "Ändra till din primära adress",
     "makeEmailPrimary": "Byt till din primära e-postadress",
     "phone": "Telefonnummer",
     "postalCode": "Postnummer",

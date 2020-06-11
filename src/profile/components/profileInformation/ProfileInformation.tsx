@@ -1,19 +1,23 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconPenLine } from 'hds-react';
+import countries from 'i18n-iso-countries';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import DownloadData from '../downloadData/DownloadData';
 import styles from './ProfileInformation.module.css';
-import getName from '../../helpers/getName';
 import getAddress from '../../helpers/getAddress';
+import getLanguageCode from '../../../common/helpers/getLanguageCode';
+import getName from '../../helpers/getName';
 import {
   MyProfileQuery,
+  MyProfileQuery_myProfile_addresses_edges_node as Address,
   MyProfileQuery_myProfile_emails_edges_node as Email,
 } from '../../../graphql/generatedTypes';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import getEmailsFromNode from '../../helpers/getEmailsFromNode';
+import getAddressesFromNode from '../../helpers/getAddressesFromNode';
 
 type Props = {
   loading: boolean;
@@ -27,9 +31,20 @@ function ProfileInformation(props: Props) {
   const { isEditing, setEditing, loading, data } = props;
 
   const emails = getEmailsFromNode(data);
+  const addresses = getAddressesFromNode(data);
+
+  const getAdditionalAddresses = (address: Address) => {
+    const country = countries.getName(
+      address.countryCode || 'FI',
+      getLanguageCode(getLanguageCode(i18n.languages[0]))
+    );
+    return [address.address, address.city, address.postalCode, country]
+      .filter(addressPart => addressPart)
+      .join(', ');
+  };
 
   // Add checks for multiple addresses & phones later
-  const showAdditionalInformation = emails.length > 0;
+  const showAdditionalInformation = emails.length > 0 || addresses.length > 0;
   return (
     <Fragment>
       <ProfileSection
@@ -85,6 +100,17 @@ function ProfileInformation(props: Props) {
                     key={index}
                     label={t('profileInformation.email')}
                     value={email.email}
+                  />
+                ))}
+              </div>
+            )}
+            {addresses.length > 0 && (
+              <div className={styles.storedInformation}>
+                {addresses.map((address: Address, index: number) => (
+                  <LabeledValue
+                    key={index}
+                    label={t('profileInformation.address')}
+                    value={getAdditionalAddresses(address)}
                   />
                 ))}
               </div>

@@ -61,9 +61,9 @@
   },
   "loading": "Ladataan...",
   "login": {
-    "description": "Rekisteröitymällä pääset käyttämään uusia palveluita yhdellä helpolla kirjautumisella. Yksi yhtenäinen tunnus tekee kaupunkilaisen arjesta helpompaa.",
+    "description": "Rekisteröitymällä Helsingin kaupungin uusiin palveluihin, sinulle luodaan Helsinki-profiili, jonka kautta näet vaivattomasti tietosi, joita sinusta keräämme sekä palvelut joihin olet tunnistautunut. ",
     "login": "Kirjaudu sisään",
-    "title": "Yhdellä tunnuksella monta mahdollisuutta"
+    "title": "Profiilitietosi yhdessä osoitteessa! "
   },
   "nav": {
     "information": "Omat tiedot",
@@ -89,6 +89,7 @@
     "title": "Profiilisi on poistettu onnistuneesti!"
   },
   "profileForm": {
+    "addAnotherAddress": "Lisää toinen osoite",
     "addAnotherEmail": "Lisää toinen sähköpostiosoite",
     "additionalInfo": "Lisätiedot",
     "address": "Kotiosoite",
@@ -101,6 +102,7 @@
     "firstName": "Etunimi",
     "language": "Profiilin kieli",
     "lastName": "Sukunimi",
+    "makeAddressPrimary": "Muuta ensisijaiseksi osoitteeksi",
     "makeEmailPrimary": "Muuta ensisijaiseksi sähköpostiosoitteeksi",
     "phone": "Puhelinnumero",
     "postalCode": "Postinumero",

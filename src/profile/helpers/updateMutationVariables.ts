@@ -3,14 +3,18 @@ import { isEqual } from 'lodash';
 import { FormValues } from '../components/editProfileForm/EditProfileForm';
 import {
   AddressType,
+  CreateAddressInput,
   CreateEmailInput,
   EmailType,
   MyProfileQuery,
+  MyProfileQuery_myProfile_addresses_edges_node as Address,
   MyProfileQuery_myProfile_emails_edges_node as Email,
   PhoneType,
+  UpdateAddressInput,
   UpdateEmailInput,
 } from '../../graphql/generatedTypes';
 import getEmailsFromNode from './getEmailsFromNode';
+import getAddressesFromNode from './getAddressesFromNode';
 
 type EmailInputs = {
   addEmails: CreateEmailInput[] | null[];
@@ -18,37 +22,65 @@ type EmailInputs = {
   removeEmails?: (string | null)[] | null | undefined;
 };
 
-const getAddress = (formValues: FormValues, profile?: MyProfileQuery) => {
-  if (profile?.myProfile?.primaryAddress?.id) {
-    return {
-      updateAddresses: [
-        {
-          id: profile.myProfile.primaryAddress.id,
-          address: formValues.address,
-          city: formValues.city,
-          postalCode: formValues.postalCode,
-          primary: true,
-          addressType: AddressType.OTHER,
-          countryCode: formValues.countryCode,
-        },
-      ],
-    };
-  }
+type AddressInputs = {
+  addAddresses: CreateAddressInput[];
+  updateAddresses: UpdateAddressInput[];
+  removeAddresses?: (string | null)[] | null | undefined;
+};
 
-  return {
-    addAddresses: [
-      formValues.address || formValues.postalCode || formValues.city
-        ? {
-            address: formValues.address,
-            city: formValues.city,
-            postalCode: formValues.postalCode,
-            primary: true,
-            addressType: AddressType.OTHER,
-            countryCode: formValues.countryCode,
-          }
-        : null,
-    ],
+export const getAddress = (addresses: Address[], profile?: MyProfileQuery) => {
+  const profileAddresses: Address[] = [
+    profile?.myProfile?.primaryAddress as Address,
+    ...getAddressesFromNode(profile),
+  ];
+
+  const updateAddresses: UpdateAddressInput[] = addresses
+    .filter(address => {
+      const profileAddress = profileAddresses.find(
+        profileAddress => profileAddress?.id === address.id
+      );
+
+      return address.id && !isEqual(address, profileAddress);
+    })
+    .map(address => {
+      return {
+        id: address.id,
+        address: address.address,
+        postalCode: address.postalCode,
+        city: address.city,
+        countryCode: address.countryCode,
+        primary: address.primary,
+        addressType: address.addressType,
+      };
+    });
+
+  const addAddresses: CreateAddressInput[] = addresses
+    .filter(address => !address.id)
+    .map(address => {
+      return {
+        address: address.address,
+        postalCode: address.postalCode,
+        city: address.city,
+        countryCode: address.countryCode,
+        primary: address.primary,
+        addressType: address.addressType || AddressType.OTHER,
+      };
+    });
+
+  const addressIDs = addresses.map(address => address.id);
+  const removeAddresses = profileAddresses
+    .filter(address => address?.id && !addressIDs.includes(address.id))
+    .map(address => address.id);
+
+  const addressInputs: AddressInputs = {
+    addAddresses: addAddresses,
+    updateAddresses,
   };
+
+  if (removeAddresses.length > 0)
+    addressInputs.removeAddresses = removeAddresses;
+
+  return addressInputs;
 };
 const getPhone = (formValues: FormValues, profile?: MyProfileQuery) => {
   if (profile?.myProfile?.primaryPhone?.id) {
@@ -141,7 +173,7 @@ const updateMutationVariables = (
         lastName: formValues.lastName,
         language: formValues.profileLanguage,
         ...getPhone(formValues, profile),
-        ...getAddress(formValues, profile),
+        ...getAddress(formValues.addresses, profile),
         ...getEmail(formValues.emails, profile),
       },
     },
