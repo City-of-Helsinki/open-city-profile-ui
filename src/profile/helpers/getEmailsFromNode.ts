@@ -14,6 +14,7 @@ const getEmailsFromNode = (data?: MyProfileQuery) => {
           id: edge?.node?.id,
           primary: edge?.node?.primary,
           emailType: edge?.node?.emailType,
+          __typename: 'EmailNode',
         } as Email)
     );
 };
