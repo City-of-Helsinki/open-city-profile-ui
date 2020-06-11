@@ -82,6 +82,8 @@ export const getAddress = (addresses: Address[], profile?: MyProfileQuery) => {
 
   return addressInputs;
 };
+
+/*
 const getPhone = (formValues: FormValues, profile?: MyProfileQuery) => {
   if (profile?.myProfile?.primaryPhone?.id) {
     return {
@@ -109,6 +111,8 @@ const getPhone = (formValues: FormValues, profile?: MyProfileQuery) => {
   };
 };
 
+
+ */
 const getEmail = (emails: Email[], profile?: MyProfileQuery) => {
   const profileEmails: Email[] = [
     profile?.myProfile?.primaryEmail as Email,
@@ -172,7 +176,6 @@ const updateMutationVariables = (
         firstName: formValues.firstName,
         lastName: formValues.lastName,
         language: formValues.profileLanguage,
-        ...getPhone(formValues, profile),
         ...getAddress(formValues.addresses, profile),
         ...getEmail(formValues.emails, profile),
       },

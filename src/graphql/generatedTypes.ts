@@ -196,6 +196,35 @@ export interface MyProfileQuery_myProfile_primaryPhone {
    */
   readonly id: string;
   readonly phone: string | null;
+  readonly primary: boolean;
+  readonly phoneType: PhoneType | null;
+}
+
+export interface MyProfileQuery_myProfile_phones_edges_node {
+  readonly __typename: "PhoneNode";
+  readonly primary: boolean;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly phone: string | null;
+  readonly phoneType: PhoneType | null;
+}
+
+export interface MyProfileQuery_myProfile_phones_edges {
+  readonly __typename: "PhoneNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: MyProfileQuery_myProfile_phones_edges_node | null;
+}
+
+export interface MyProfileQuery_myProfile_phones {
+  readonly __typename: "PhoneNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(MyProfileQuery_myProfile_phones_edges | null)>;
 }
 
 export interface MyProfileQuery_myProfile {
@@ -228,6 +257,10 @@ export interface MyProfileQuery_myProfile {
    * Convenience field for the phone which is marked as primary.
    */
   readonly primaryPhone: MyProfileQuery_myProfile_primaryPhone | null;
+  /**
+   * List of phone numbers of the profile.
+   */
+  readonly phones: MyProfileQuery_myProfile_phones | null;
 }
 
 export interface MyProfileQuery {

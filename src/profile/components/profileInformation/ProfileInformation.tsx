@@ -14,10 +14,12 @@ import {
   MyProfileQuery,
   MyProfileQuery_myProfile_addresses_edges_node as Address,
   MyProfileQuery_myProfile_emails_edges_node as Email,
+  MyProfileQuery_myProfile_phones_edges_node as Phone,
 } from '../../../graphql/generatedTypes';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import getEmailsFromNode from '../../helpers/getEmailsFromNode';
 import getAddressesFromNode from '../../helpers/getAddressesFromNode';
+import getPhonesFromNode from '../../helpers/getPhonesFromNode';
 
 type Props = {
   loading: boolean;
@@ -32,6 +34,7 @@ function ProfileInformation(props: Props) {
 
   const emails = getEmailsFromNode(data);
   const addresses = getAddressesFromNode(data);
+  const phones = getPhonesFromNode(data);
 
   const getAdditionalAddresses = (address: Address) => {
     const country = countries.getName(
@@ -44,7 +47,8 @@ function ProfileInformation(props: Props) {
   };
 
   // Add checks for multiple addresses & phones later
-  const showAdditionalInformation = emails.length > 0 || addresses.length > 0;
+  const showAdditionalInformation =
+    emails.length > 0 || addresses.length > 0 || phones.length > 0;
   return (
     <Fragment>
       <ProfileSection
@@ -100,6 +104,17 @@ function ProfileInformation(props: Props) {
                     key={index}
                     label={t('profileInformation.email')}
                     value={email.email}
+                  />
+                ))}
+              </div>
+            )}
+            {phones.length > 0 && (
+              <div className={styles.storedInformation}>
+                {phones.map((phone: Phone, index: number) => (
+                  <LabeledValue
+                    key={index}
+                    label={t('profileInformation.phone')}
+                    value={phone.phone}
                   />
                 ))}
               </div>

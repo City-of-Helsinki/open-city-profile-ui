@@ -3,6 +3,7 @@ import {
   EmailType,
   Language,
   MyProfileQuery,
+  PhoneType,
 } from '../../graphql/generatedTypes';
 
 export const myProfile: MyProfileQuery = {
@@ -32,6 +33,8 @@ export const myProfile: MyProfileQuery = {
     primaryPhone: {
       id: '123',
       phone: '0501234567',
+      phoneType: PhoneType.OTHER,
+      primary: true,
       __typename: 'PhoneNode',
     },
     addresses: {
@@ -66,6 +69,21 @@ export const myProfile: MyProfileQuery = {
         },
       ],
       __typename: 'EmailNodeConnection',
+    },
+    phones: {
+      edges: [
+        {
+          node: {
+            id: '234',
+            phone: '0501234567',
+            phoneType: PhoneType.OTHER,
+            primary: false,
+            __typename: 'PhoneNode',
+          },
+          __typename: 'PhoneNodeEdge',
+        },
+      ],
+      __typename: 'PhoneNodeConnection',
     },
     __typename: 'ProfileNode',
   },

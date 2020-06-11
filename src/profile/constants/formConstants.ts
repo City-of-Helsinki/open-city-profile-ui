@@ -1,13 +1,15 @@
 import {
-  MyProfileQuery_myProfile_addresses_edges_node as Address,
-  MyProfileQuery_myProfile_emails_edges_node as Email,
   AddressType,
   EmailType,
+  MyProfileQuery_myProfile_phones_edges_node as Phone,
+  MyProfileQuery_myProfile_addresses_edges_node as Address,
+  MyProfileQuery_myProfile_emails_edges_node as Email,
+  PhoneType,
 } from '../../graphql/generatedTypes';
 
 type FormConstants = {
   EMPTY_VALUES: {
-    [index: string]: Address | Email;
+    [index: string]: Address | Email | Phone;
   };
 };
 
@@ -29,6 +31,13 @@ export const formConstants: FormConstants = {
       primary: false,
       id: '',
       __typename: 'EmailNode',
+    }),
+    phones: Object.freeze({
+      phone: '',
+      id: '',
+      phoneType: PhoneType.OTHER,
+      primary: false,
+      __typename: 'PhoneNode',
     }),
   },
 };

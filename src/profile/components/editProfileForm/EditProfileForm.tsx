@@ -23,8 +23,10 @@ import {
   Language,
   MyProfileQuery_myProfile_addresses_edges_node as Address,
   MyProfileQuery_myProfile_emails_edges_node as Email,
+  MyProfileQuery_myProfile_phones_edges_node as Phone,
   MyProfileQuery_myProfile_primaryAddress as PrimaryAddress,
   MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
+  MyProfileQuery_myProfile_primaryPhone as PrimaryPhone,
   ServiceConnectionsQuery,
 } from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
@@ -37,14 +39,18 @@ const address = yup.object().shape({
   postalCode: yup.string().max(5, 'validation.maxLength'),
 });
 
-const schema = yup.object().shape({
-  firstName: yup.string().max(255, 'validation.maxLength'),
-  lastName: yup.string().max(255, 'validation.maxLength'),
-  language: yup.string(),
+const phone = yup.object().shape({
   phone: yup
     .string()
     .min(6, 'validation.phoneMin')
     .max(255, 'validation.maxLength'),
+});
+
+const schema = yup.object().shape({
+  firstName: yup.string().max(255, 'validation.maxLength'),
+  lastName: yup.string().max(255, 'validation.maxLength'),
+  language: yup.string(),
+  primaryPhone: phone,
   primaryAddress: address,
   addresses: yup.array().of(address),
   emails: yup.array().of(
@@ -56,6 +62,7 @@ const schema = yup.object().shape({
       }),
     })
   ),
+  phones: yup.array().of(phone),
 });
 
 export type FormValues = {
@@ -63,10 +70,11 @@ export type FormValues = {
   lastName: string;
   primaryEmail: PrimaryEmail;
   primaryAddress: PrimaryAddress;
-  phone: string;
+  primaryPhone: PrimaryPhone;
   profileLanguage: Language;
   addresses: Address[];
   emails: Email[];
+  phones: Phone[];
 };
 
 type Props = {
@@ -77,7 +85,7 @@ type Props = {
   services?: ServiceConnectionsQuery;
 };
 
-export type Primary = 'primaryEmail' | 'primaryAddress';
+export type Primary = 'primaryEmail' | 'primaryAddress' | 'primaryPhone';
 
 function EditProfileForm(props: Props) {
   const { t, i18n } = useTranslation();
@@ -124,8 +132,9 @@ function EditProfileForm(props: Props) {
     formProps: FormikProps<FormValues>,
     fieldName: keyof FormValues
   ) => {
-    const previous: (Email | Address)[] = formProps.getFieldProps(fieldName)
-      .value;
+    const previous: (Email | Address | Phone)[] = formProps.getFieldProps(
+      fieldName
+    ).value;
 
     previous.push(formConstants.EMPTY_VALUES[fieldName]);
 
@@ -144,17 +153,22 @@ function EditProfileForm(props: Props) {
           primary: props.profile.primaryAddress.primary || true,
           countryCode: props.profile.primaryAddress.countryCode || 'FI',
         },
+        primaryPhone: {
+          ...props.profile.primaryPhone,
+          phone: props.profile.primaryPhone.phone || '',
+        },
       }}
       onSubmit={values => {
         props.onValues({
           ...values,
           emails: [...values.emails, values.primaryEmail],
           addresses: [...values.addresses, values.primaryAddress],
+          phones: [...values.phones, values.primaryPhone],
         });
       }}
       validationSchema={schema}
     >
-      {formikProps => (
+      {(formikProps: FormikProps<FormValues>) => (
         <Fragment>
           <Form>
             <div className={styles.formFields}>
@@ -200,14 +214,14 @@ function EditProfileForm(props: Props) {
 
               <Field
                 className={styles.formField}
-                name="phone"
-                id="phone"
+                name="primaryPhone.phone"
+                id="primaryPhone.phone"
                 as={TextInput}
                 type="tel"
                 minLength="6"
                 maxLength="255"
-                invalid={getIsInvalid(formikProps, 'phone')}
-                helperText={getFieldError(formikProps, 'phone', {
+                invalid={getIsInvalid(formikProps, 'primaryPhone.phone')}
+                helperText={getFieldError(formikProps, 'primaryPhone.phone', {
                   min: 6,
                   max: 255,
                 })}
@@ -231,10 +245,14 @@ function EditProfileForm(props: Props) {
                 id="primaryAddress.address"
                 maxLength="255"
                 as={TextInput}
-                invalid={getIsInvalid(formikProps, 'address')}
-                helperText={getFieldError(formikProps, 'address', {
-                  max: 255,
-                })}
+                invalid={getIsInvalid(formikProps, 'primaryAddress.address')}
+                helperText={getFieldError(
+                  formikProps,
+                  'primaryAddress.address',
+                  {
+                    max: 255,
+                  }
+                )}
                 labelText={t('profileForm.address')}
               />
 
@@ -244,10 +262,14 @@ function EditProfileForm(props: Props) {
                 id="primaryAddress.postalCode"
                 maxLength="5"
                 as={TextInput}
-                invalid={getIsInvalid(formikProps, 'postalCode')}
-                helperText={getFieldError(formikProps, 'postalCode', {
-                  max: 5,
-                })}
+                invalid={getIsInvalid(formikProps, 'primaryAddress.postalCode')}
+                helperText={getFieldError(
+                  formikProps,
+                  'primaryAddress.postalCode',
+                  {
+                    max: 5,
+                  }
+                )}
                 labelText={t('profileForm.postalCode')}
               />
 
@@ -257,8 +279,8 @@ function EditProfileForm(props: Props) {
                 id="primaryAddress.city"
                 maxLength="255"
                 as={TextInput}
-                invalid={getIsInvalid(formikProps, 'city')}
-                helperText={getFieldError(formikProps, 'city', {
+                invalid={getIsInvalid(formikProps, 'primaryAddress.city')}
+                helperText={getFieldError(formikProps, 'primaryAddress.city', {
                   max: 255,
                 })}
                 labelText={t('profileForm.city')}
@@ -324,6 +346,43 @@ function EditProfileForm(props: Props) {
               )}
             />
 
+            <FieldArray
+              name="phones"
+              render={(arrayHelpers: FieldArrayRenderProps) => (
+                <React.Fragment>
+                  <div className={styles.formFields}>
+                    {formikProps.values.phones.map(
+                      (phone: Phone, index: number) => (
+                        <div className={styles.formField} key={index}>
+                          <Field
+                            className={styles.formField}
+                            as={TextInput}
+                            name={`phones.${index}.phone`}
+                            id={`phones.${index}.phone`}
+                            labelText={t('profileForm.phone')}
+                          />
+                          <AdditionalInformationActions
+                            tDelete="profileForm.delete"
+                            tPrimary="profileForm.makeAddressPrimary"
+                            index={index}
+                            arrayHelpers={arrayHelpers}
+                            canBeMadePrimary={!!phone.id}
+                            makePrimary={() =>
+                              changePrimary(
+                                formikProps,
+                                arrayHelpers,
+                                index,
+                                'primaryPhone'
+                              )
+                            }
+                          />
+                        </div>
+                      )
+                    )}
+                  </div>
+                </React.Fragment>
+              )}
+            />
             <FieldArray
               name="addresses"
               render={(arrayHelpers: FieldArrayRenderProps) => (
@@ -400,6 +459,16 @@ function EditProfileForm(props: Props) {
             >
               {t('profileForm.addAnotherEmail')}
             </Button>
+
+            <Button
+              iconLeft={<IconPlusCircle />}
+              variant="supplementary"
+              type="button"
+              onClick={() => addNewValueToArray(formikProps, 'phones')}
+            >
+              {t('profileForm.addAnotherPhone')}
+            </Button>
+
             <Button
               iconLeft={<IconPlusCircle />}
               variant="supplementary"
