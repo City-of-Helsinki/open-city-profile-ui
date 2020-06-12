@@ -91,6 +91,7 @@
   "profileForm": {
     "addAnotherAddress": "Add another address",
     "addAnotherEmail": "Add another email address",
+    "addAnotherPhone": "Add another phone number",
     "additionalInfo": "Additional Information",
     "address": "Home address",
     "cancel": "Cancel",
@@ -104,6 +105,7 @@
     "lastName": "Last name",
     "makeAddressPrimary": "Change to your primary address",
     "makeEmailPrimary": "Change to your primary email address",
+    "makePhonePrimary": "Change to your primary phone",
     "phone": "Phone",
     "postalCode": "Postal code",
     "submit": "Save",

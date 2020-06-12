@@ -1,21 +1,23 @@
 import {
   AddressType,
   EmailType,
-  MyProfileQuery,
+  Language,
+  UpdateMyProfileVariables,
   MyProfileQuery_myProfile_addresses_edges_node as Address,
   MyProfileQuery_myProfile_emails_edges_node as Email,
+  MyProfileQuery_myProfile_phones_edges_node as Phone,
+  PhoneType,
 } from '../../../graphql/generatedTypes';
-import { getEmail, getAddress } from '../updateMutationVariables';
+import { FormValues } from '../../components/editProfileForm/EditProfileForm';
+import { updateMutationVariables } from '../updateMutationVariables';
 import { myProfile } from '../../../common/test/myProfileQueryData';
-
-// TODO add tests for getAddress & getEmail after support for multiple entities is added
 
 const emails: Email[] = [
   {
     email: 'ensimmainen@testi.fi',
-    primary: true,
-    id: '123',
     emailType: EmailType.OTHER,
+    id: '123',
+    primary: true,
     __typename: 'EmailNode',
   },
   {
@@ -30,7 +32,8 @@ const emails: Email[] = [
     primary: false,
     emailType: EmailType.OTHER,
     id: '234',
-  } as Email,
+    __typename: 'EmailNode',
+  },
 ];
 
 const addresses: Address[] = [
@@ -66,113 +69,176 @@ const addresses: Address[] = [
   },
 ];
 
-describe('test getEmails function', () => {
-  test('add array is formed correctly', () => {
-    const emailObj = getEmail(emails);
+const phones: Phone[] = [
+  {
+    id: '123',
+    phone: '0501234567',
+    phoneType: PhoneType.OTHER,
+    primary: true,
+    __typename: 'PhoneNode',
+  },
+  {
+    id: '',
+    phone: '0507654321',
+    phoneType: PhoneType.OTHER,
+    primary: false,
+    __typename: 'PhoneNode',
+  },
+  {
+    id: '234',
+    phone: '0505472568',
+    phoneType: PhoneType.OTHER,
+    primary: false,
+    __typename: 'PhoneNode',
+  },
+];
 
-    expect(emailObj.addEmails.length).toEqual(1);
-  });
+const formValues: FormValues = {
+  firstName: 'Teemu',
+  lastName: 'Testaaja',
+  profileLanguage: Language.FINNISH,
+  primaryEmail: {
+    email: 'ensimmainen@testi.fi',
+    primary: true,
+    id: '123',
+    emailType: EmailType.OTHER,
+    __typename: 'EmailNode',
+  },
+  emails: emails,
+  phones: phones,
+  primaryPhone: {
+    id: '123',
+    phone: '0501234567',
+    phoneType: PhoneType.OTHER,
+    primary: true,
+    __typename: 'PhoneNode',
+  },
+  addresses: addresses,
+  primaryAddress: {
+    id: '123',
+    primary: true,
+    address: 'Testikatu 55',
+    city: 'Helsinki',
+    countryCode: 'FI',
+    postalCode: '00100',
+    addressType: AddressType.OTHER,
+    __typename: 'AddressNode',
+  },
+};
 
-  test('add array is null', () => {
-    const emailObj = getEmail([{ ...emails[0] }]);
-    expect(emailObj.addEmails).toEqual([null]);
-  });
+test('add arrays are formed correctly', () => {
+  const variables: UpdateMyProfileVariables = updateMutationVariables(
+    formValues,
+    myProfile
+  );
 
-  test('update array is formed correctly', () => {
-    const emailObj = getEmail(emails, myProfile);
-    expect(emailObj.updateEmails).toEqual([
-      {
-        email: 'kolmas@testi.fi',
-        emailType: 'OTHER',
-        id: '234',
-        primary: false,
-      },
-    ]);
-  });
+  expect(variables.input.profile.addAddresses).toEqual([
+    {
+      address: 'Testikatu 66',
+      postalCode: '00000',
+      city: 'Helsinki',
+      countryCode: 'FI',
+      primary: false,
+      addressType: 'OTHER',
+    },
+  ]);
 
-  test('update array is empty (emails & profileEmails are equal)', () => {
-    const profileWithSameEmails = {
-      myProfile: {
-        ...myProfile.myProfile,
-        emails: {
-          edges: [
-            {
-              node: {
-                email: 'kolmas@testi.fi',
-                primary: false,
-                emailType: EmailType.OTHER,
-                id: '234',
-                __typename: 'EmailNode',
-              },
-              __typename: 'EmailNodeEdge',
-            },
-          ],
-          __typename: 'EmailNodeConnection',
-        },
-      },
-    } as MyProfileQuery;
+  expect(variables.input.profile.addEmails).toEqual([
+    { email: 'toinen@testi.fi', emailType: 'OTHER', primary: false },
+  ]);
 
-    const emailObj = getEmail(emails, profileWithSameEmails);
-    expect(emailObj.updateEmails).toEqual([]);
-  });
-
-  test('removeEmails field doesnt exist', () => {
-    const emailObj = getEmail(emails, myProfile);
-    expect(emailObj.removeEmails).toBeFalsy();
-  });
-
-  test('removeEmails exists', () => {
-    const emailObj = getEmail([], myProfile);
-    expect(emailObj.removeEmails).toEqual(['123', '234']);
-  });
+  expect(variables.input.profile.addPhones).toEqual([
+    { phone: '0507654321', primary: false, phoneType: 'OTHER' },
+  ]);
 });
 
-describe('tests for getAddress function', () => {
-  test('', () => {
-    const addressObj = getAddress(addresses);
+test('add arrays are empty', () => {
+  const variables: UpdateMyProfileVariables = updateMutationVariables(
+    {
+      ...formValues,
+      phones: [phones[2]],
+      emails: [emails[2]],
+      addresses: [addresses[2]],
+    },
+    myProfile
+  );
 
-    expect(addressObj.addAddresses.length).toEqual(1);
-  });
+  expect(variables.input.profile.addPhones).toEqual([]);
+  expect(variables.input.profile.addEmails).toEqual([]);
+  expect(variables.input.profile.addAddresses).toEqual([]);
+});
 
-  test('add array is null', () => {
-    const addressObj = getAddress([{ ...addresses[0] }]);
+test('update arrays are formed correctly', () => {
+  const variables: UpdateMyProfileVariables = updateMutationVariables(
+    formValues,
+    myProfile
+  );
 
-    expect(addressObj.addAddresses).toEqual([]);
-  });
+  expect(variables.input.profile.addAddresses).toEqual([
+    {
+      address: 'Testikatu 66',
+      postalCode: '00000',
+      city: 'Helsinki',
+      countryCode: 'FI',
+      primary: false,
+      addressType: 'OTHER',
+    },
+  ]);
+  expect(variables.input.profile.updateEmails).toEqual([
+    {
+      email: 'kolmas@testi.fi',
+      id: 'kolmas@testi.fi',
+      emailType: 'OTHER',
+      primary: false,
+    },
+  ]);
+  expect(variables.input.profile.updatePhones).toEqual([
+    {
+      id: '234',
+      phone: '0505472568',
+      primary: false,
+      phoneType: 'OTHER',
+    },
+  ]);
+});
 
-  test('update array is formed correctly', () => {
-    const addressObj = getAddress(addresses, myProfile);
+test('update arrays are empty', () => {
+  const variables: UpdateMyProfileVariables = updateMutationVariables(
+    {
+      ...formValues,
+      addresses: [
+        addresses[0],
+        { ...addresses[1], address: 'Muokkauskatu 55' },
+      ],
+      emails: [emails[0], { ...emails[1], email: 'test@email.com' }],
+      phones: [phones[0], { ...phones[1], phone: '0501234567' }],
+    },
+    myProfile
+  );
 
-    expect(addressObj.updateAddresses).toEqual([
-      {
-        id: '234',
-        address: 'Muokkauskatu 66',
-        postalCode: '12345',
-        city: 'Helsinki',
-        countryCode: 'FI',
-        primary: false,
-        addressType: 'OTHER',
-      },
-    ]);
-  });
+  expect(variables.input.profile.updateAddresses).toEqual([]);
+  expect(variables.input.profile.updateEmails).toEqual([]);
+  expect(variables.input.profile.updatePhones).toEqual([]);
+});
 
-  test('update array is emty', () => {
-    const addressesAreSame: Address[] = [
-      { ...addresses[0] },
-      { ...addresses[1] },
-      { ...addresses[2], address: 'Muokkauskatu 55' },
-    ];
-    const addressObj = getAddress(addressesAreSame, myProfile);
-    expect(addressObj.updateAddresses).toEqual([]);
-  });
+test('remove arrays are formed correctly', () => {
+  const variables: UpdateMyProfileVariables = updateMutationVariables(
+    { ...formValues, addresses: [], emails: [], phones: [] },
+    myProfile
+  );
 
-  test('removeAddress field doesnt exist', () => {
-    const addressObj = getAddress(addresses, myProfile);
-    expect(addressObj.removeAddresses).toBeFalsy();
-  });
+  expect(variables.input.profile.removeAddresses).toEqual(['123', '234']);
+  expect(variables.input.profile.removeEmails).toEqual(['123', '234']);
+  expect(variables.input.profile.removePhones).toEqual(['123', '234']);
+});
 
-  test('removeAddress exists', () => {
-    const addressObj = getAddress([], myProfile);
-    expect(addressObj.removeAddresses).toEqual(['123', '234']);
-  });
+test('remove arrays do not exists', () => {
+  const variables: UpdateMyProfileVariables = updateMutationVariables(
+    formValues,
+    myProfile
+  );
+
+  expect(variables.input.profile.removeAddresses).toBeFalsy();
+  expect(variables.input.profile.removeEmails).toBeFalsy();
+  expect(variables.input.profile.removePhones).toBeFalsy();
 });

@@ -1,20 +1,28 @@
 import { isEqual } from 'lodash';
 
-import { FormValues } from '../components/editProfileForm/EditProfileForm';
+import {
+  FormValues,
+  Primary,
+} from '../components/editProfileForm/EditProfileForm';
 import {
   AddressType,
   CreateAddressInput,
   CreateEmailInput,
+  CreatePhoneInput,
   EmailType,
   MyProfileQuery,
   MyProfileQuery_myProfile_addresses_edges_node as Address,
   MyProfileQuery_myProfile_emails_edges_node as Email,
+  MyProfileQuery_myProfile_phones_edges_node as Phone,
   PhoneType,
   UpdateAddressInput,
   UpdateEmailInput,
+  UpdatePhoneInput,
 } from '../../graphql/generatedTypes';
+import getPhonesFromNode from './getPhonesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
 import getAddressesFromNode from './getAddressesFromNode';
+import { formConstants } from '../constants/formConstants';
 
 type EmailInputs = {
   addEmails: CreateEmailInput[] | null[];
@@ -28,139 +36,155 @@ type AddressInputs = {
   removeAddresses?: (string | null)[] | null | undefined;
 };
 
-export const getAddress = (addresses: Address[], profile?: MyProfileQuery) => {
-  const profileAddresses: Address[] = [
-    profile?.myProfile?.primaryAddress as Address,
-    ...getAddressesFromNode(profile),
-  ];
-
-  const updateAddresses: UpdateAddressInput[] = addresses
-    .filter(address => {
-      const profileAddress = profileAddresses.find(
-        profileAddress => profileAddress?.id === address.id
-      );
-
-      return address.id && !isEqual(address, profileAddress);
-    })
-    .map(address => {
-      return {
-        id: address.id,
-        address: address.address,
-        postalCode: address.postalCode,
-        city: address.city,
-        countryCode: address.countryCode,
-        primary: address.primary,
-        addressType: address.addressType,
-      };
-    });
-
-  const addAddresses: CreateAddressInput[] = addresses
-    .filter(address => !address.id)
-    .map(address => {
-      return {
-        address: address.address,
-        postalCode: address.postalCode,
-        city: address.city,
-        countryCode: address.countryCode,
-        primary: address.primary,
-        addressType: address.addressType || AddressType.OTHER,
-      };
-    });
-
-  const addressIDs = addresses.map(address => address.id);
-  const removeAddresses = profileAddresses
-    .filter(address => address?.id && !addressIDs.includes(address.id))
-    .map(address => address.id);
-
-  const addressInputs: AddressInputs = {
-    addAddresses: addAddresses,
-    updateAddresses,
-  };
-
-  if (removeAddresses.length > 0)
-    addressInputs.removeAddresses = removeAddresses;
-
-  return addressInputs;
+type PhoneInputs = {
+  addPhones: CreatePhoneInput[];
+  updatePhones: UpdatePhoneInput[];
+  removePhones?: (string | null)[] | null | undefined;
 };
-const getPhone = (formValues: FormValues, profile?: MyProfileQuery) => {
-  if (profile?.myProfile?.primaryPhone?.id) {
-    return {
-      updatePhones: [
-        {
-          phone: formValues.phone,
-          primary: true,
-          phoneType: PhoneType.OTHER,
-          id: profile.myProfile.primaryPhone.id,
-        },
-      ],
-    };
+
+const getPrimaryValue = (primary: Primary, profile?: MyProfileQuery) => {
+  const primaryValue = profile?.myProfile && profile.myProfile[primary];
+  return primaryValue || { id: '' };
+};
+
+// This will return empty object that is the same one that is added
+// while editing. Return value is used to determine if user has made any
+// modifications to values so we can filter them before saving.
+const getEmptyObject = (primary: Primary) => {
+  switch (primary) {
+    case 'primaryEmail':
+      return formConstants.EMPTY_VALUES['emails'];
+    case 'primaryAddress':
+      return formConstants.EMPTY_VALUES['addresses'];
+    case 'primaryPhone':
+      return formConstants.EMPTY_VALUES['phones'];
+    default:
+      return {};
   }
-
-  return {
-    addPhones: [
-      formValues.phone
-        ? {
-            phone: formValues.phone,
-            primary: true,
-            phoneType: PhoneType.OTHER,
-          }
-        : null,
-    ],
-  };
 };
 
-const getEmail = (emails: Email[], profile?: MyProfileQuery) => {
-  const profileEmails: Email[] = [
-    profile?.myProfile?.primaryEmail as Email,
-    ...getEmailsFromNode(profile),
+const getNodesFromProfile = (primary: Primary, profile?: MyProfileQuery) => {
+  switch (primary) {
+    case 'primaryPhone':
+      return getPhonesFromNode(profile);
+    case 'primaryEmail':
+      return getEmailsFromNode(profile);
+    case 'primaryAddress':
+      return getAddressesFromNode(profile);
+    default:
+      return [];
+  }
+};
+
+const getObjectFields = (value: Address | Email | Phone) => {
+  switch (value.__typename) {
+    case 'EmailNode': {
+      return {
+        email: value.email,
+        id: value.email,
+        emailType: value.emailType || EmailType.OTHER,
+        primary: value.primary,
+      };
+    }
+    case 'AddressNode': {
+      return {
+        id: value.id,
+        address: value.address,
+        postalCode: value.postalCode,
+        city: value.city,
+        countryCode: value.countryCode,
+        primary: value.primary,
+        addressType: value.addressType || AddressType.OTHER,
+      };
+    }
+    case 'PhoneNode': {
+      return {
+        id: value.id,
+        phone: value.phone,
+        primary: value.primary,
+        phoneType: value.phoneType || PhoneType.OTHER,
+      };
+    }
+    default:
+      return { id: '' };
+  }
+};
+
+function formMutationArrays<T extends Address | Email | Phone>(
+  formValueArray: T[],
+  primary: Primary,
+  profile?: MyProfileQuery
+) {
+  const profileValues = [
+    getPrimaryValue(primary, profile),
+    ...getNodesFromProfile(primary, profile),
   ];
 
-  // Compare formValues against profileEmails => filter values that are not changed
-  // Map values to get rid of __typeName field (backend won't allow it)
-  const updateEmails: UpdateEmailInput[] = emails
-    .filter(email => {
-      const profileEmail = profileEmails.find(
-        profileEmail => profileEmail?.id === email.id
+  // Filter empty values (e.g user added new phone and pressed save without typing anything)
+  const formValues: T[] = formValueArray.filter(
+    value => !isEqual(value, getEmptyObject(primary))
+  );
+
+  // Form array that contains values that needs to be updated.
+  // Filter values that are not changed.
+  const updateValues = formValues
+    .filter(value => {
+      const profileValue = profileValues.find(
+        profileValue => profileValue?.id === value.id
       );
 
-      return email.id && !isEqual(email, profileEmail);
+      return value.id && !isEqual(value, profileValue);
     })
-    .map(email => {
-      return {
-        email: email.email,
-        emailType: email.emailType,
-        id: email.id,
-        primary: email.primary,
-      };
+    .map(value => getObjectFields(value));
+
+  // From array that contains values that are new
+  // Filter values that contain id
+  const addValues = formValues
+    .filter(value => !value.id)
+    .map(value => {
+      const val = getObjectFields(value);
+      // Sending empty id will cause backend error so we remove it
+      delete val.id;
+      return val;
     });
 
-  // This needed to be mapped as well, for some reason emailType field in Email & CreateEmailInput
-  // are incompatible
-  const addEmails: CreateEmailInput[] = emails
-    .filter(email => !email.id)
-    .map(email => {
-      return {
-        email: email.email,
-        emailType: EmailType.OTHER,
-        primary: email.primary,
+  const formValueIDs = formValues.map(value => value.id);
+
+  // Form array that contains values that are to be removed
+  // Checks new array against old one. If value is missing from new one, add it to array
+  const removeValues = profileValues
+    .filter(value => value?.id && !formValueIDs.includes(value.id))
+    .map(value => value.id);
+
+  switch (primary) {
+    case 'primaryAddress': {
+      const addressInputs: AddressInputs = {
+        addAddresses: addValues as CreateAddressInput[],
+        updateAddresses: updateValues as UpdateAddressInput[],
       };
-    });
-
-  const emailIDs = emails.map(email => email.id);
-
-  const removeEmails = profileEmails
-    .filter(email => email?.id && !emailIDs.includes(email.id))
-    .map(email => email.id);
-
-  const emailInputs: EmailInputs = {
-    addEmails: addEmails.length > 0 ? addEmails : [null],
-    updateEmails,
-  };
-  // If there is something to delete, add removeEmails field
-  // otherwise we will get backend error.
-  if (removeEmails.length > 0) emailInputs.removeEmails = removeEmails;
-  return emailInputs;
-};
+      if (removeValues.length > 0) addressInputs.removeAddresses = removeValues;
+      return addressInputs;
+    }
+    case 'primaryEmail': {
+      const emailInputs: EmailInputs = {
+        addEmails: addValues as CreateEmailInput[],
+        updateEmails: updateValues as UpdateEmailInput[],
+      };
+      if (removeValues.length > 0) emailInputs.removeEmails = removeValues;
+      return emailInputs;
+    }
+    case 'primaryPhone': {
+      const phoneInputs: PhoneInputs = {
+        addPhones: addValues as CreatePhoneInput[],
+        updatePhones: updateValues as UpdatePhoneInput[],
+      };
+      if (removeValues.length > 0) phoneInputs.removePhones = removeValues;
+      return phoneInputs;
+    }
+    default:
+      return {};
+  }
+}
 
 const updateMutationVariables = (
   formValues: FormValues,
@@ -172,12 +196,24 @@ const updateMutationVariables = (
         firstName: formValues.firstName,
         lastName: formValues.lastName,
         language: formValues.profileLanguage,
-        ...getPhone(formValues, profile),
-        ...getAddress(formValues.addresses, profile),
-        ...getEmail(formValues.emails, profile),
+        ...formMutationArrays<Address>(
+          formValues.addresses,
+          'primaryAddress',
+          profile
+        ),
+        ...formMutationArrays<Phone>(
+          formValues.phones,
+          'primaryPhone',
+          profile
+        ),
+        ...formMutationArrays<Email>(
+          formValues.emails,
+          'primaryEmail',
+          profile
+        ),
       },
     },
   };
 };
 
-export { getEmail, updateMutationVariables };
+export { formMutationArrays, updateMutationVariables };

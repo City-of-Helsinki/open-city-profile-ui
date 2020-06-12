@@ -12,6 +12,7 @@ import {
   MyProfileQuery,
   MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
   MyProfileQuery_myProfile_primaryAddress as PrimaryAddress,
+  MyProfileQuery_myProfile_primaryPhone as PrimaryPhone,
   ServiceConnectionsQuery,
   UpdateMyProfile as UpdateMyProfileData,
   UpdateMyProfileVariables,
@@ -21,6 +22,7 @@ import ProfileSection from '../../../common/profileSection/ProfileSection';
 import getEmailsFromNode from '../../helpers/getEmailsFromNode';
 import getAddressesFromNode from '../../helpers/getAddressesFromNode';
 import { updateMutationVariables } from '../../helpers/updateMutationVariables';
+import getPhonesFromNode from '../../helpers/getPhonesFromNode';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
 const SERVICE_CONNECTIONS = loader(
@@ -94,7 +96,9 @@ function EditProfile(props: Props) {
             profileData?.myProfile?.primaryEmail || ({} as PrimaryEmail),
           primaryAddress:
             profileData?.myProfile?.primaryAddress || ({} as PrimaryAddress),
-          phone: profileData?.myProfile?.primaryPhone?.phone || '',
+          primaryPhone:
+            profileData?.myProfile?.primaryPhone || ({} as PrimaryPhone),
+          phones: getPhonesFromNode(profileData),
           addresses: getAddressesFromNode(profileData),
           emails: getEmailsFromNode(profileData),
         }}

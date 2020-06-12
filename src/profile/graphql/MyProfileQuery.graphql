@@ -46,6 +46,18 @@ query MyProfileQuery {
     primaryPhone {
       id
       phone
+      primary
+      phoneType
+    }
+    phones {
+      edges {
+        node {
+          primary
+          id
+          phone
+          phoneType
+        }
+      }
     }
   }
 }
