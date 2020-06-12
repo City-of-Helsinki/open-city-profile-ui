@@ -8,8 +8,8 @@
 .logoSv {
     background-size: contain;
     background-color: var(--color-black);
-    -webkit-mask: url("../svg/HelsinkiLogoFi.svg") no-repeat;
-    mask: url("../svg/HelsinkiLogoFi.svg") no-repeat;
+    -webkit-mask: url("../svg/HelsinkiLogoSv.svg") no-repeat;
+    mask: url("../svg/HelsinkiLogoSv.svg") no-repeat;
 }
 
 @media (min-width: 400px) {

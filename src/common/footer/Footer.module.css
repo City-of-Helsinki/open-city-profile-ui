@@ -12,7 +12,7 @@
   background-color: var(--color-white);
   width: 120px;
   height: 42px;
-  margin: 20px 0;
+  margin: 20px 10px;
 }
 
 .textContainer {
@@ -39,6 +39,11 @@
 }
 
 @media (min-width: 1200px) {
+  .content {
+    margin: 0 auto;
+    width: 1140px;
+  }
+
   .textContainer {
     margin: 0;
     padding: 20px 0 50px 3px;
@@ -46,17 +51,16 @@
 }
 
 @media (min-width: 650px) {
-  .content {
-    margin: 0 auto;
-    width: 1140px;
-  }
-
   .textContainer {
     flex-direction: row;
   }
 
   .feedback {
     margin-top: 0;
+  }
+
+  .logo {
+    margin: 20px 0;
   }
 }
 
