@@ -44,9 +44,9 @@
     "feedback": "GE FEEDBACK",
     "feedbackLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/delta/feedback",
     "privacy": "Integritetspolicy",
-    "reserveRights": "Alla rättigheter förbehållna",
-    "terms": "Användarvillkor"
+    "reserveRights": "Alla rättigheter förbehållna"
   },
+  "helsinkiLogo": "Helsingfors logotyp",
   "landmarks": {
     "navigation": {
       "language": "",
@@ -92,6 +92,7 @@
   "profileForm": {
     "addAnotherAddress": "Lägg till en annan adress",
     "addAnotherEmail": "Lägg till en annan e-postadress",
+    "addAnotherPhone": "Lägg till ett nytt telefonnummer",
     "additionalInfo": "Ytterligare information",
     "address": "Hemadress",
     "cancel": "Annullera",
@@ -105,6 +106,7 @@
     "lastName": "Efternamn",
     "makeAddressPrimary": "Ändra till din primära adress",
     "makeEmailPrimary": "Byt till din primära e-postadress",
+    "makePhonePrimary": "Byt till din primära telefon",
     "phone": "Telefonnummer",
     "postalCode": "Postnummer",
     "submit": "Spara",

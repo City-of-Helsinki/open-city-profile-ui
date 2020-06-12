@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ReactComponent as HelsinkiLogo } from '../svg/HelsinkiLogo.svg';
+import HelsinkiLogo from '../helsinkiLogo/HelsinkiLogo';
 import Copyright from '../copyright/Copyright';
 import styles from './Footer.module.css';
 import responsive from '../cssHelpers/responsive.module.css';
@@ -15,10 +15,8 @@ function Footer(props: Props) {
   const { t } = useTranslation();
   return (
     <footer className={styles.footer}>
-      <div className={responsive.maxWidthCentered}>
-        {!props.hideFooterLogo && (
-          <HelsinkiLogo className={styles.logo} aria-label="Helsinki logo" />
-        )}
+      <div className={styles.content}>
+        {!props.hideFooterLogo && <HelsinkiLogo className={styles.logo} />}
         <div className={styles.textContainer}>
           <div>
             <Copyright />

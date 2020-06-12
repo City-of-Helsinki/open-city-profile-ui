@@ -44,9 +44,9 @@
     "feedback": "ANNA PALAUTETTA",
     "feedbackLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/anna-palautetta",
     "privacy": "Rekisteriseloste",
-    "reserveRights": "Kaikki oikeudet pidätetään",
-    "terms": "Palvelun käyttöehdot"
+    "reserveRights": "Kaikki oikeudet pidätetään"
   },
+  "helsinkiLogo": "Helsinki-logo",
   "landmarks": {
     "navigation": {
       "language": "Kieli",
@@ -91,6 +91,7 @@
   "profileForm": {
     "addAnotherAddress": "Lisää toinen osoite",
     "addAnotherEmail": "Lisää toinen sähköpostiosoite",
+    "addAnotherPhone": "Lisää toinen puhelinnumero",
     "additionalInfo": "Lisätiedot",
     "address": "Kotiosoite",
     "cancel": "Peruuta",
@@ -104,6 +105,7 @@
     "lastName": "Sukunimi",
     "makeAddressPrimary": "Muuta ensisijaiseksi osoitteeksi",
     "makeEmailPrimary": "Muuta ensisijaiseksi sähköpostiosoitteeksi",
+    "makePhonePrimary": "Muuta ensisijaiseksi puhelinnumeroksi",
     "phone": "Puhelinnumero",
     "postalCode": "Postinumero",
     "submit": "Tallenna",

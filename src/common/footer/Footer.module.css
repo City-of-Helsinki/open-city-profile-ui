@@ -2,13 +2,17 @@
   background: var(--color-bus);
 }
 
-.logo {
-  height: 58px;
-  margin: 20px;
+.content {
+  display: flex;
+  flex-direction: column;
+  width: auto;
 }
 
-.logo g {
-  fill: var(--color-white);
+.logo {
+  background-color: var(--color-white);
+  width: 120px;
+  height: 42px;
+  margin: 20px 0;
 }
 
 .textContainer {
@@ -39,14 +43,14 @@
     margin: 0;
     padding: 20px 0 50px 3px;
   }
-
-  .logo {
-    height: 84px;
-    margin: 40px 0 20px;
-  }
 }
 
 @media (min-width: 650px) {
+  .content {
+    margin: 0 auto;
+    width: 1140px;
+  }
+
   .textContainer {
     flex-direction: row;
   }
