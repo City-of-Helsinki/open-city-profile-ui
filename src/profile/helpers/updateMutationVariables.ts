@@ -22,6 +22,7 @@ import {
 import getPhonesFromNode from './getPhonesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
 import getAddressesFromNode from './getAddressesFromNode';
+import { formConstants } from '../constants/formConstants';
 
 type EmailInputs = {
   addEmails: CreateEmailInput[] | null[];
@@ -44,6 +45,19 @@ type PhoneInputs = {
 const getPrimaryValue = (primary: Primary, profile?: MyProfileQuery) => {
   const primaryValue = profile?.myProfile && profile.myProfile[primary];
   return primaryValue || { id: '' };
+};
+
+const getEmptyObject = (primary: Primary) => {
+  switch (primary) {
+    case 'primaryEmail':
+      return formConstants.EMPTY_VALUES['emails'];
+    case 'primaryAddress':
+      return formConstants.EMPTY_VALUES['addresses'];
+    case 'primaryPhone':
+      return formConstants.EMPTY_VALUES['phones'];
+    default:
+      return {};
+  }
 };
 
 const getNodesFromProfile = (primary: Primary, profile?: MyProfileQuery) => {
@@ -94,7 +108,7 @@ const getObjectFields = (value: Address | Email | Phone) => {
 };
 
 function formMutationArrays<T extends Address | Email | Phone>(
-  formValues: T[],
+  formValueArray: T[],
   primary: Primary,
   profile?: MyProfileQuery
 ) {
@@ -102,6 +116,11 @@ function formMutationArrays<T extends Address | Email | Phone>(
     getPrimaryValue(primary, profile),
     ...getNodesFromProfile(primary, profile),
   ];
+
+  // Filter empty values (e.g user added new phone and pressed save without typing anything)
+  const formValues: T[] = formValueArray.filter(
+    value => !isEqual(value, getEmptyObject(primary))
+  );
 
   const updateValues = formValues
     .filter(value => {
