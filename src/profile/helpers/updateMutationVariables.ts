@@ -47,6 +47,9 @@ const getPrimaryValue = (primary: Primary, profile?: MyProfileQuery) => {
   return primaryValue || { id: '' };
 };
 
+// This will return empty object that is the same one that is added
+// while editing. Return value is used to determine if user has made any
+// modifications to values so we can filter them before saving.
 const getEmptyObject = (primary: Primary) => {
   switch (primary) {
     case 'primaryEmail':
@@ -122,6 +125,8 @@ function formMutationArrays<T extends Address | Email | Phone>(
     value => !isEqual(value, getEmptyObject(primary))
   );
 
+  // Form array that contains values that needs to be updated.
+  // Filter values that are not changed.
   const updateValues = formValues
     .filter(value => {
       const profileValue = profileValues.find(
@@ -132,6 +137,8 @@ function formMutationArrays<T extends Address | Email | Phone>(
     })
     .map(value => getObjectFields(value));
 
+  // From array that contains values that are new
+  // Filter values that contain id
   const addValues = formValues
     .filter(value => !value.id)
     .map(value => {
@@ -143,6 +150,8 @@ function formMutationArrays<T extends Address | Email | Phone>(
 
   const formValueIDs = formValues.map(value => value.id);
 
+  // Form array that contains values that are to be removed
+  // Checks new array against old one. If value is missing from new one, add it to array
   const removeValues = profileValues
     .filter(value => value?.id && !formValueIDs.includes(value.id))
     .map(value => value.id);
