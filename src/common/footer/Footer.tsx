@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import HelsinkiLogo from '../helsinkiLogo/HelsinkiLogo';
 import Copyright from '../copyright/Copyright';
 import styles from './Footer.module.css';
-import responsive from '../cssHelpers/responsive.module.css';
 import FooterLinks from '../footerLinks/FooterLinks';
 
 type Props = {
