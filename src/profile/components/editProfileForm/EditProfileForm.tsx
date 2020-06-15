@@ -152,10 +152,13 @@ function EditProfileForm(props: Props) {
           city: props.profile.primaryAddress.city || '',
           primary: props.profile.primaryAddress.primary || true,
           countryCode: props.profile.primaryAddress.countryCode || 'FI',
+          __typename: props.profile.primaryAddress.__typename || 'AddressNode',
         },
         primaryPhone: {
           ...props.profile.primaryPhone,
+          primary: props.profile.primaryPhone.primary || true,
           phone: props.profile.primaryPhone.phone || '',
+          __typename: props.profile.primaryPhone.__typename || 'PhoneNode',
         },
       }}
       onSubmit={values => {

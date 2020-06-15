@@ -119,7 +119,6 @@ function formMutationArrays<T extends Address | Email | Phone>(
     getPrimaryValue(primary, profile),
     ...getNodesFromProfile(primary, profile),
   ];
-
   // Filter empty values (e.g user added new phone and pressed save without typing anything)
   const formValues: T[] = formValueArray.filter(
     value => !isEqual(value, getEmptyObject(primary))
@@ -140,9 +139,10 @@ function formMutationArrays<T extends Address | Email | Phone>(
   // From array that contains values that are new
   // Filter values that contain id
   const addValues = formValues
-    .filter(value => !value.id)
+    .filter(value => !value?.id)
     .map(value => {
       const val = getObjectFields(value);
+
       // Sending empty id will cause backend error so we remove it
       delete val.id;
       return val;
