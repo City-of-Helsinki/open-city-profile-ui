@@ -86,6 +86,7 @@ type Props = {
 };
 
 export type Primary = 'primaryEmail' | 'primaryAddress' | 'primaryPhone';
+type ArrayName = 'emails' | 'addresses' | 'phones';
 
 function EditProfileForm(props: Props) {
   const { t, i18n } = useTranslation();
@@ -118,8 +119,8 @@ function EditProfileForm(props: Props) {
     index: number,
     primary: Primary
   ) => {
-    const arrayName: 'emails' | 'addresses' =
-      arrayHelpers.name === 'emails' ? 'emails' : 'addresses';
+    const arrayName: ArrayName = arrayHelpers.name as ArrayName;
+
     const oldPrimary = { ...formProps.values[primary], primary: false };
     const newPrimary = { ...formProps.values[arrayName][index], primary: true };
 
@@ -367,6 +368,21 @@ function EditProfileForm(props: Props) {
                             name={`phones.${index}.phone`}
                             id={`phones.${index}.phone`}
                             labelText={t('profileForm.phone')}
+                            type="tel"
+                            minLength="6"
+                            maxLength="255"
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `phones.${index}.phone`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `phones.${index}.phone`,
+                              {
+                                min: 6,
+                                max: 255,
+                              }
+                            )}
                           />
                           <AdditionalInformationActions
                             tDelete="profileForm.delete"
@@ -406,25 +422,61 @@ function EditProfileForm(props: Props) {
                           <Field
                             className={styles.formField}
                             as={TextInput}
+                            maxLength="128"
                             name={`addresses.${index}.address`}
                             id={`addresses.${index}.address`}
                             labelText={t('profileForm.address')}
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `addresses.${index}.address`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `addresses.${index}.address`,
+                              {
+                                max: 128,
+                              }
+                            )}
                           />
 
                           <Field
                             className={styles.formField}
+                            maxLength="5"
                             as={TextInput}
                             name={`addresses.${index}.postalCode`}
                             id={`addresses.${index}.postalCode`}
                             labelText={t('profileForm.postalCode')}
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `addresses.${index}.postalCode`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `addresses.${index}.postalCode`,
+                              {
+                                max: 5,
+                              }
+                            )}
                           />
 
                           <Field
                             className={styles.formField}
                             as={TextInput}
+                            maxLength="64"
                             name={`addresses.${index}.city`}
                             id={`addresses.${index}.city`}
                             labelText={t('profileForm.city')}
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `addresses.${index}.city`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `addresses.${index}.city`,
+                              {
+                                max: 64,
+                              }
+                            )}
                           />
 
                           <Field
