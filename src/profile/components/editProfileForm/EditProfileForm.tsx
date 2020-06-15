@@ -406,25 +406,61 @@ function EditProfileForm(props: Props) {
                           <Field
                             className={styles.formField}
                             as={TextInput}
+                            maxLength="128"
                             name={`addresses.${index}.address`}
                             id={`addresses.${index}.address`}
                             labelText={t('profileForm.address')}
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `addresses.${index}.address`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `addresses.${index}.address`,
+                              {
+                                max: 128,
+                              }
+                            )}
                           />
 
                           <Field
                             className={styles.formField}
+                            maxLength="5"
                             as={TextInput}
                             name={`addresses.${index}.postalCode`}
                             id={`addresses.${index}.postalCode`}
                             labelText={t('profileForm.postalCode')}
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `addresses.${index}.postalCode`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `addresses.${index}.postalCode`,
+                              {
+                                max: 5,
+                              }
+                            )}
                           />
 
                           <Field
                             className={styles.formField}
                             as={TextInput}
+                            maxLength="64"
                             name={`addresses.${index}.city`}
                             id={`addresses.${index}.city`}
                             labelText={t('profileForm.city')}
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `addresses.${index}.city`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `addresses.${index}.city`,
+                              {
+                                max: 64,
+                              }
+                            )}
                           />
 
                           <Field
