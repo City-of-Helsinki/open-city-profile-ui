@@ -150,12 +150,16 @@ function EditProfileForm(props: Props) {
           address: props.profile.primaryAddress.address || '',
           postalCode: props.profile.primaryAddress.postalCode || '',
           city: props.profile.primaryAddress.city || '',
+          // User can not add address when registering. Set primary field to true by default
+          // so it gets added to correct place
           primary: props.profile.primaryAddress.primary || true,
           countryCode: props.profile.primaryAddress.countryCode || 'FI',
           __typename: props.profile.primaryAddress.__typename || 'AddressNode',
         },
         primaryPhone: {
           ...props.profile.primaryPhone,
+          // Phone is not required while registering. Set primary field to true by default
+          // so it gets added to correct place
           primary: props.profile.primaryPhone.primary || true,
           phone: props.profile.primaryPhone.phone || '',
           __typename: props.profile.primaryPhone.__typename || 'PhoneNode',
