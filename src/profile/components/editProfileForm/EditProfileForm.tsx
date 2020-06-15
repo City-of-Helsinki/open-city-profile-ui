@@ -86,6 +86,7 @@ type Props = {
 };
 
 export type Primary = 'primaryEmail' | 'primaryAddress' | 'primaryPhone';
+type ArrayName = 'emails' | 'addresses' | 'phones';
 
 function EditProfileForm(props: Props) {
   const { t, i18n } = useTranslation();
@@ -118,8 +119,8 @@ function EditProfileForm(props: Props) {
     index: number,
     primary: Primary
   ) => {
-    const arrayName: 'emails' | 'addresses' =
-      arrayHelpers.name === 'emails' ? 'emails' : 'addresses';
+    const arrayName: ArrayName = arrayHelpers.name as ArrayName;
+
     const oldPrimary = { ...formProps.values[primary], primary: false };
     const newPrimary = { ...formProps.values[arrayName][index], primary: true };
 
