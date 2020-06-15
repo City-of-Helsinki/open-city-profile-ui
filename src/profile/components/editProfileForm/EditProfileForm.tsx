@@ -368,6 +368,21 @@ function EditProfileForm(props: Props) {
                             name={`phones.${index}.phone`}
                             id={`phones.${index}.phone`}
                             labelText={t('profileForm.phone')}
+                            type="tel"
+                            minLength="6"
+                            maxLength="255"
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `phones.${index}.phone`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `phones.${index}.phone`,
+                              {
+                                min: 6,
+                                max: 255,
+                              }
+                            )}
                           />
                           <AdditionalInformationActions
                             tDelete="profileForm.delete"
