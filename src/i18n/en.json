@@ -44,9 +44,9 @@
     "feedback": "GIVE FEEDBACK",
     "feedbackLink": "https://www.hel.fi/helsinki/en/administration/participate/feedback",
     "privacy": "Privacy policy",
-    "reserveRights": "All rights reserved",
-    "terms": "Terms of Service"
+    "reserveRights": "All rights reserved"
   },
+  "helsinkiLogo": "Helsinki logo",
   "landmarks": {
     "navigation": {
       "language": "Language",

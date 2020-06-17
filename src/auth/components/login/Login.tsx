@@ -5,7 +5,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import { RootState } from '../../../redux/rootReducer';
 import { AuthState, resetApiError } from '../../redux';
-import { ReactComponent as HelsinkiLogo } from '../../../common/svg/HelsinkiLogo.svg';
+import HelsinkiLogo from '../../../common/helsinkiLogo/HelsinkiLogo';
 import styles from './Login.module.css';
 import authenticate from '../../authenticate';
 import PageLayout from '../../../common/pageLayout/PageLayout';
@@ -25,7 +25,7 @@ function Home(props: Props) {
     <PageLayout hideFooterLogo={true} title={'login.login'}>
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <HelsinkiLogo className={styles.logo} aria-label="Helsinki logo" />
+          <HelsinkiLogo className={styles.logo} />
           <h1>{t('login.title')}</h1>
           <h2>{t('login.description')}</h2>
           <Button

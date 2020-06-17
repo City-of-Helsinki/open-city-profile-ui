@@ -44,9 +44,9 @@
     "feedback": "ANNA PALAUTETTA",
     "feedbackLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/anna-palautetta",
     "privacy": "Rekisteriseloste",
-    "reserveRights": "Kaikki oikeudet pidätetään",
-    "terms": "Palvelun käyttöehdot"
+    "reserveRights": "Kaikki oikeudet pidätetään"
   },
+  "helsinkiLogo": "Helsinki-logo",
   "landmarks": {
     "navigation": {
       "language": "Kieli",

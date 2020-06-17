@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { ReactComponent as HelsinkiLogo } from '../svg/HelsinkiLogo.svg';
+import HelsinkiLogo from '../helsinkiLogo/HelsinkiLogo';
 import FullscreenNavigation from '../fullscreenNavigation/FullscreenNavigation';
 import styles from './Header.module.css';
 import responsive from '../cssHelpers/responsive.module.css';
@@ -14,8 +15,10 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={classNames(styles.inner, responsive.maxWidthCentered)}>
-        <HelsinkiLogo className={styles.logo} aria-label="Helsinki logo" />
-        <span className={`${styles.appName}`}>{t('appName')}</span>
+        <HelsinkiLogo className={styles.logo} isLinkToFrontPage />
+        <Link to="/" className={styles.appName}>
+          {t('appName')}
+        </Link>
         <div className={styles.end}>
           <FullscreenNavigation className={styles.mobileNav} />
           <div className={styles.desktopNav}>

@@ -6,8 +6,8 @@ import styles from './LanguageSwitcher.module.css';
 
 const languages = [
   { code: 'fi', label: 'Suomi' },
-  { code: 'en', label: 'English' },
   { code: 'sv', label: 'Svenska' },
+  { code: 'en', label: 'English' },
 ];
 
 type Props = {
