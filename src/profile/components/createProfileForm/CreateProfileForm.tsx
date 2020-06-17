@@ -164,11 +164,7 @@ function CreateProfileForm(props: Props) {
           <div>
             <Button
               type="submit"
-              disabled={Boolean(
-                formikProps.isSubmitting ||
-                  formikProps.errors.terms ||
-                  props.isSubmitting
-              )}
+              disabled={Boolean(formikProps.errors.terms || props.isSubmitting)}
             >
               {t('profileForm.submit')}
             </Button>

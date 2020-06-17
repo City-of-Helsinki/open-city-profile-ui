@@ -541,9 +541,7 @@ function EditProfileForm(props: Props) {
             <div className={styles.buttonRow}>
               <Button
                 className={styles.button}
-                disabled={Boolean(
-                  formikProps.isSubmitting || props.isSubmitting
-                )}
+                disabled={Boolean(props.isSubmitting)}
                 onClick={() => {
                   userHasServices &&
                   Object.keys(formikProps.errors)?.length === 0
