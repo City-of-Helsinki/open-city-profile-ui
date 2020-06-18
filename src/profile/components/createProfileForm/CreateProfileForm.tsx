@@ -61,7 +61,7 @@ function CreateProfileForm(props: Props) {
       initialErrors={{
         terms: 'validation.required',
       }}
-      onSubmit={values => {
+      onSubmit={async values => {
         props.onValues({
           firstName: values.firstName,
           lastName: values.lastName,
@@ -164,7 +164,11 @@ function CreateProfileForm(props: Props) {
           <div>
             <Button
               type="submit"
-              disabled={Boolean(formikProps.errors.terms || props.isSubmitting)}
+              disabled={Boolean(
+                formikProps.isSubmitting ||
+                  formikProps.errors.terms ||
+                  props.isSubmitting
+              )}
             >
               {t('profileForm.submit')}
             </Button>

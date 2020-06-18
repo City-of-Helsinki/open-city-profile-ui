@@ -166,7 +166,7 @@ function EditProfileForm(props: Props) {
           __typename: props.profile.primaryPhone.__typename || 'PhoneNode',
         },
       }}
-      onSubmit={values => {
+      onSubmit={async values => {
         props.onValues({
           ...values,
           emails: [...values.emails, values.primaryEmail],
@@ -541,7 +541,9 @@ function EditProfileForm(props: Props) {
             <div className={styles.buttonRow}>
               <Button
                 className={styles.button}
-                disabled={Boolean(props.isSubmitting)}
+                disabled={Boolean(
+                  formikProps.isSubmitting || props.isSubmitting
+                )}
                 onClick={() => {
                   userHasServices &&
                   Object.keys(formikProps.errors)?.length === 0
