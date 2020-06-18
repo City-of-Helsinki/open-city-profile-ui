@@ -4,7 +4,6 @@
     --ep-background: var(--color-white);
     --ep-accent-color: var(--color-bus);
     width: 100%;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     background: var(--ep-background);
     margin: 0 0 var(--spacing-m) 0;
 }
