@@ -6,8 +6,7 @@ function AccessibilityStatementSv() {
       <h1>Tillgänglighetsutlåtande</h1>
       <p>
         Detta tillgänglighetsutlåtande gäller Helsingfors stads webbplats
-        Ungdomstjänsternas medlem ansökan . Webbplatsens adress är
-        https://hel.fi/profiili
+        Helsingfors-profil. Webbplatsens adress är https://hel.fi/profiili
       </p>
 
       <h2>Lagbestämmelser som gäller webbplatsen</h2>
