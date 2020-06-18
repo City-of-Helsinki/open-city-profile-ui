@@ -166,7 +166,7 @@ function EditProfileForm(props: Props) {
           __typename: props.profile.primaryPhone.__typename || 'PhoneNode',
         },
       }}
-      onSubmit={values => {
+      onSubmit={async values => {
         props.onValues({
           ...values,
           emails: [...values.emails, values.primaryEmail],

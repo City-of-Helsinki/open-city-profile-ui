@@ -61,7 +61,7 @@ function CreateProfileForm(props: Props) {
       initialErrors={{
         terms: 'validation.required',
       }}
-      onSubmit={values => {
+      onSubmit={async values => {
         props.onValues({
           firstName: values.firstName,
           lastName: values.lastName,
