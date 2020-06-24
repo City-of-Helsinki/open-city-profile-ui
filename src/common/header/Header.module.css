@@ -1,6 +1,10 @@
+:root {
+  --header-height: 64px;
+}
+
 .header {
   background: var(--color-white);
-  height: 64px;
+  height: var(--header-height);
   position: sticky;
   z-index: 1;
 }

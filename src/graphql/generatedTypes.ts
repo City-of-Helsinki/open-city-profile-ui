@@ -3,6 +3,107 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: GdprDeleteMyProfileMutation
+// ====================================================
+
+export interface GdprDeleteMyProfileMutation_deleteMyProfile {
+  readonly __typename: "DeleteMyProfileMutationPayload";
+  readonly clientMutationId: string | null;
+}
+
+export interface GdprDeleteMyProfileMutation {
+  /**
+   * Deletes the data of the profile which is linked to the currently authenticated user.
+   * 
+   * Requires authentication.
+   * 
+   * Possible error codes:
+   * 
+   * * `CANNOT_DELETE_PROFILE_WHILE_SERVICE_CONNECTED_ERROR`: Returned if the profile is connected to Berth service.
+   * 
+   * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
+   * 
+   * * `TODO`
+   */
+  readonly deleteMyProfile: GdprDeleteMyProfileMutation_deleteMyProfile | null;
+}
+
+export interface GdprDeleteMyProfileMutationVariables {
+  readonly input: DeleteMyProfileMutationInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GdprServiceConnectionsQuery
+// ====================================================
+
+export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
+  readonly __typename: "ServiceNode";
+  readonly type: ServiceType | null;
+  /**
+   * GDPR API query operation scope
+   */
+  readonly gdprQueryScope: string;
+  /**
+   * GDPR API delete operation scope
+   */
+  readonly gdprDeleteScope: string;
+}
+
+export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
+  readonly __typename: "ServiceConnectionType";
+  readonly service: GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
+}
+
+export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges {
+  readonly __typename: "ServiceConnectionTypeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node | null;
+}
+
+export interface GdprServiceConnectionsQuery_myProfile_serviceConnections {
+  readonly __typename: "ServiceConnectionTypeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(GdprServiceConnectionsQuery_myProfile_serviceConnections_edges | null)>;
+}
+
+export interface GdprServiceConnectionsQuery_myProfile {
+  readonly __typename: "ProfileNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  /**
+   * List of the profile's connected services.
+   */
+  readonly serviceConnections: GdprServiceConnectionsQuery_myProfile_serviceConnections | null;
+}
+
+export interface GdprServiceConnectionsQuery {
+  /**
+   * Get the profile belonging to the currently authenticated user.
+   * 
+   * Requires authentication.
+   * 
+   * Possible error codes:
+   * 
+   * * `TODO`
+   */
+  readonly myProfile: GdprServiceConnectionsQuery_myProfile | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CreateMyProfile
 // ====================================================
 
@@ -49,44 +150,10 @@ export interface CreateMyProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: DeleteMyProfile
+// GraphQL query operation: DownloadMyProfileQuery
 // ====================================================
 
-export interface DeleteMyProfile_deleteMyProfile {
-  readonly __typename: "DeleteMyProfileMutationPayload";
-  readonly clientMutationId: string | null;
-}
-
-export interface DeleteMyProfile {
-  /**
-   * Deletes the data of the profile which is linked to the currently authenticated user.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `CANNOT_DELETE_PROFILE_WHILE_SERVICE_CONNECTED_ERROR`: Returned if the profile is connected to Berth service.
-   * 
-   * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
-   * 
-   * * `TODO`
-   */
-  readonly deleteMyProfile: DeleteMyProfile_deleteMyProfile | null;
-}
-
-export interface DeleteMyProfileVariables {
-  readonly input: DeleteMyProfileMutationInput;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: DownloadMyProfile
-// ====================================================
-
-export interface DownloadMyProfile {
+export interface DownloadMyProfileQuery {
   /**
    * Get the user information stored in the profile as machine readable JSON.
    * 
@@ -97,6 +164,10 @@ export interface DownloadMyProfile {
    * * `TODO`
    */
   readonly downloadMyProfile: any | null;
+}
+
+export interface DownloadMyProfileQueryVariables {
+  readonly authorizationCode: string;
 }
 
 /* tslint:disable */
@@ -726,6 +797,7 @@ export interface CreatePhoneInput {
 }
 
 export interface DeleteMyProfileMutationInput {
+  readonly authorizationCode: string;
   readonly clientMutationId?: string | null;
 }
 
