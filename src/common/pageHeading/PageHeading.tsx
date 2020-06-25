@@ -12,7 +12,7 @@ type Props = {
 function PageHeading(props: Props) {
   return (
     <div className={classNames(styles.pageHeading, props.className)}>
-      <UserIcon />
+      <UserIcon className={styles.userIcon} />
       <div className={styles.titleWrapper}>{props.text}</div>
     </div>
   );
