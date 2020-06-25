@@ -63,9 +63,8 @@
   "login": {
     "description": "Genom att logga in på de nya Helsingfors stadstjänster skapas en Helsingfors-profil för dig. Här kan du enkelt hitta din profilinformation och se alla tjänster du har loggat in med den.",
     "login": "Logga in",
-    "title": ""
+    "title": "Din profilinformation på en adress!"
   },
-  "Din profilinformation på en adress!": "",
   "nav": {
     "information": "Mina uppgifter",
     "menuButtonLabel": "Profilmeny",
