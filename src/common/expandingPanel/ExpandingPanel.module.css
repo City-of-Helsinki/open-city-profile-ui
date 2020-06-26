@@ -67,8 +67,6 @@
     /* title in order to avoid focus outline obstructing content. */
     margin-top: calc(-1 * var(--ep-vertical-whitespace));
     background: var(--ep-background);
-    position: relative;
-    z-index: 1;
 }
 
 @media (max-width: 400px) {
