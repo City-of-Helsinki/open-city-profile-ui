@@ -44,16 +44,21 @@ function ExpandingPanel({
     container.current = ref;
   };
 
+  const handleContentClick = (event: React.SyntheticEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+  };
+
   return (
-    <div className={styles.container} ref={handleContainerRef}>
-      <div
-        className={styles.title}
-        onClick={toggleExpanding}
-        onKeyDown={onKeyDown}
-        tabIndex={0}
-        role="button"
-        aria-expanded={expanded ? 'true' : 'false'}
-      >
+    <div
+      className={styles.container}
+      ref={handleContainerRef}
+      onClick={toggleExpanding}
+      onKeyDown={onKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-expanded={expanded ? 'true' : 'false'}
+    >
+      <div className={styles.title}>
         <h2>{title}</h2>
         <div className={styles.rightSideInformation}>
           {showInformationText && (
@@ -71,7 +76,11 @@ function ExpandingPanel({
           />
         </div>
       </div>
-      {expanded && <div className={styles.content}>{children}</div>}
+      {expanded && (
+        <div className={styles.content} onClick={handleContentClick}>
+          {children}
+        </div>
+      )}
     </div>
   );
 }
