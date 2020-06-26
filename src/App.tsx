@@ -26,6 +26,7 @@ import AppMeta from './AppMeta';
 import authenticate from './auth/authenticate';
 import logout from './auth/logout';
 import authConstants from './auth/constants/authConstants';
+import GdprAuthorizationCodeManagerCallback from './gdprApi/GdprAuthorizationCodeManagerCallback';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -89,6 +90,9 @@ function App(props: Props) {
             <Switch>
               <Route path="/callback">
                 <OidcCallback />
+              </Route>
+              <Route path="/gdpr-callback">
+                <GdprAuthorizationCodeManagerCallback />
               </Route>
               <Route path="/login">
                 <Login />
