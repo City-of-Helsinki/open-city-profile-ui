@@ -24,13 +24,13 @@
     background-color: var(--color-white);
 }
 
-.button {
+button.button {
     margin-top: 50px;
     background-color: var(--color-white);
     width: 100%;
 }
 
-.button:hover {
+button.button:hover {
     background-color: var(--color-background-button-secondary-hover);
 }
 
@@ -44,7 +44,7 @@
 }
 
 @media(min-width: 450px) {
-    .button {
+    button.button {
         width: 230px;
     }
 
