@@ -122,7 +122,9 @@
     "personalData": "Personal data",
     "phone": "Phone",
     "title": "My information",
-    "visibility": "The following information about you is stored in Helsinki profile."
+    "visibility": "The following information about you is stored in Helsinki profile.",
+    "doGoToAccountManagement": "Go to account management",
+    "authenticationMethod": "Authentication method"
   },
   "sanityCheck": "open-city-profile.en",
   "serviceConnections": {
@@ -147,5 +149,12 @@
     "maxLength": "This field can be max {{max}} characters.",
     "phoneMin": "The number must be at least {{min}} characters long.",
     "required": "This field is required."
+  },
+  "identityProvider": {
+    "helsinkiAccount": "Helsinki account",
+    "github": "GitHub",
+    "google": "Google",
+    "facebook": "Facebook",
+    "yle": "Yle"
   }
 }

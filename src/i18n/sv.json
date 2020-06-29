@@ -122,7 +122,9 @@
     "personalData": "Personuppgifter",
     "phone": "Telefonnummer",
     "title": "Min information",
-    "visibility": "Följande information om dig lagras i Helsingfors profilen."
+    "visibility": "Följande information om dig lagras i Helsingfors profilen.",
+    "doGoToAccountManagement": "Gå till kontohantering",
+    "authenticationMethod": "Autentiseringsmetod"
   },
   "sanityCheck": "open-city-profile.sv",
   "serviceConnections": {
@@ -147,5 +149,12 @@
     "maxLength": "Fältet får vara högst {{max}} tecken långt.",
     "phoneMin": "Telefonnumret måste vara mint {{min}} tecken långt.",
     "required": "Detta fält krävs."
+  },
+  "identityProvider": {
+    "helsinkiAccount": "Helsinfors-kontot",
+    "github": "GitHub",
+    "google": "Google",
+    "facebook": "Facebook",
+    "yle": "Yle"
   }
 }
