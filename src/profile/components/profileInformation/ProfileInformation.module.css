@@ -20,3 +20,9 @@
 .title {
   font-size: var(--fontsize-h-3);
 }
+
+.boxGrid {
+  display: grid;
+  grid-row-gap: var(--spacing-m);
+  grid-template-rows: auto;
+}

@@ -34,6 +34,9 @@
 }
 
 .panelContainer {
+  display: grid;
+  grid-row-gap: var(--spacing-m);
+  grid-template-rows: auto;
   margin: 50px 0;
 }
 

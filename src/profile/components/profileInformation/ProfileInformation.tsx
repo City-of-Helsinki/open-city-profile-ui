@@ -189,15 +189,17 @@ function ProfileInformation(props: Props) {
           </Fragment>
         )}
       </ProfileSection>
-      <DownloadData
-        isDownloadingData={isDownloadingProfile}
-        isOpenByDefault={isDownloadingProfile}
-        onDownloadClick={downloadProfileData}
-      />
-      <DeleteProfile
-        onDelete={deleteProfile}
-        isOpenByDefault={isDeletingProfile}
-      />
+      <div className={styles.boxGrid}>
+        <DownloadData
+          isDownloadingData={isDownloadingProfile}
+          isOpenByDefault={isDownloadingProfile}
+          onDownloadClick={downloadProfileData}
+        />
+        <DeleteProfile
+          onDelete={deleteProfile}
+          isOpenByDefault={isDeletingProfile}
+        />
+      </div>
       <NotificationComponent
         show={showNotification}
         onClose={() => setShowNotification(false)}
