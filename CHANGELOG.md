@@ -10,5 +10,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 - Focus indicator being partially hidden with elements used for downloading and deleting profile
+- Notifications rendering on top of each other
 
 ## [1.0.0-rc.1]

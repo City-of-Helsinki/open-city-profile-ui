@@ -7,7 +7,6 @@ import { Checkbox } from 'hds-react';
 
 import Explanation from '../../../common/explanation/Explanation';
 import Button from '../../../common/button/Button';
-import NotificationComponent from '../../../common/notification/NotificationComponent';
 import Loading from '../../../common/loading/Loading';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import styles from './Subscriptions.module.css';
@@ -19,6 +18,7 @@ import {
   SubscriptionInputType,
 } from '../../../graphql/generatedTypes';
 import getSubscriptionsData from '../../helpers/getSubscriptionsData';
+import useToast from '../../../toast/useToast';
 
 const QUERY_SUBSCRIPTIONS = loader('../../graphql/QuerySubscriptions.graphql');
 const QUERY_MY_SUBSCRIPTIONS = loader(
@@ -43,19 +43,18 @@ type SubscriptionData = {
 };
 
 function Subscriptions() {
-  const [showNotification, setShowNotification] = useState<boolean>(false);
-  const [saveSuccessful, setSaveSuccessful] = useState<boolean>(false);
   const [subscriptionData, setSubscriptionData] = useState<
     SubscriptionData[]
   >();
   const { t, i18n } = useTranslation();
+  const { createToast } = useToast();
 
   const { data, loading, refetch } = useQuery<QuerySubscriptions>(
     QUERY_SUBSCRIPTIONS,
     {
       onError: (error: Error) => {
         Sentry.captureException(error);
-        setShowNotification(true);
+        createToast({ type: 'error' });
       },
     }
   );
@@ -65,7 +64,7 @@ function Subscriptions() {
   >(QUERY_MY_SUBSCRIPTIONS, {
     onError: (error: Error) => {
       Sentry.captureException(error);
-      setShowNotification(true);
+      createToast({ type: 'error' });
     },
   });
 
@@ -115,10 +114,18 @@ function Subscriptions() {
     };
 
     updateSubscriptions({ variables })
-      .then(results => setSaveSuccessful(!!results.data))
+      .then(results => {
+        if (!!results.data) {
+          createToast({
+            type: 'success',
+            title: t('subscriptions.saveSuccess'),
+            description: t('subscriptions.saveSuccessMessage'),
+          });
+        }
+      })
       .catch((error: Error) => {
         Sentry.captureException(error);
-        setShowNotification(true);
+        createToast({ type: 'error' });
       });
   };
 
@@ -215,20 +222,6 @@ function Subscriptions() {
             </div>
           )}
         </div>
-
-        <NotificationComponent
-          show={showNotification}
-          onClose={() => setShowNotification(false)}
-        />
-
-        <NotificationComponent
-          show={saveSuccessful}
-          type="success"
-          labelText={t('subscriptions.saveSuccess')}
-          onClose={() => setSaveSuccessful(false)}
-        >
-          {t('subscriptions.saveSuccessMessage')}
-        </NotificationComponent>
       </div>
     </Loading>
   );

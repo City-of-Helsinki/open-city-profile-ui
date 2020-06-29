@@ -4,11 +4,12 @@ import { useTranslation } from 'react-i18next';
 import styles from './ProfileDeleted.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import PageLayout from '../../../common/pageLayout/PageLayout';
-import logout from '../../../auth/logout';
+import useAuthenticate from '../../../auth/useAuthenticate';
 
 function ProfileDeleted() {
   const [timeUntilLogout, setTimeUntilLogout] = useState(10);
   const { t } = useTranslation();
+  const [, logout] = useAuthenticate();
 
   useEffect(() => {
     if (timeUntilLogout > 0) {
@@ -17,7 +18,7 @@ function ProfileDeleted() {
       }, 1000);
       return () => clearInterval(interval);
     } else logout();
-  }, [timeUntilLogout]);
+  }, [logout, timeUntilLogout]);
 
   return (
     <PageLayout>

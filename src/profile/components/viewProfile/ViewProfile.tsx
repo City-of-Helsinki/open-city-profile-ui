@@ -15,20 +15,20 @@ import getNicknameOrName from '../../helpers/getNicknameOrName';
 import ServiceConnections from '../serviceConnections/ServiceConnections';
 import Subscriptions from '../../../subscriptions/components/subsciptions/Subscriptions';
 import { MyProfileQuery } from '../../../graphql/generatedTypes';
-import NotificationComponent from '../../../common/notification/NotificationComponent';
 import Explanation from '../../../common/explanation/Explanation';
+import useToast from '../../../toast/useToast';
 
 const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
 
 function ViewProfile() {
   const [isEditing, setEditing] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
   const { t } = useTranslation();
+  const { createToast } = useToast();
 
   const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE, {
     onError: (error: Error) => {
       Sentry.captureException(error);
-      setShowNotification(true);
+      createToast({ type: 'error' });
     },
   });
 
@@ -112,11 +112,6 @@ function ViewProfile() {
           </div>
         </React.Fragment>
       )}
-
-      <NotificationComponent
-        show={showNotification}
-        onClose={() => setShowNotification(false)}
-      />
     </div>
   );
 }
