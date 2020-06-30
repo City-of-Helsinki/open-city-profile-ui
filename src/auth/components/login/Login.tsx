@@ -8,9 +8,8 @@ import { RootState } from '../../../redux/rootReducer';
 import { AuthState, resetApiError } from '../../redux';
 import HelsinkiLogo from '../../../common/helsinkiLogo/HelsinkiLogo';
 import styles from './Login.module.css';
-import authenticate from '../../authenticate';
 import PageLayout from '../../../common/pageLayout/PageLayout';
-import NotificationComponent from '../../../common/notification/NotificationComponent';
+import useAuthenticate from '../../../auth/useAuthenticate';
 
 type Props = {
   auth: AuthState;
@@ -20,6 +19,7 @@ type Props = {
 function Home(props: Props) {
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
+  const [authenticate] = useAuthenticate();
 
   return (
     <PageLayout hideFooterLogo={true} title={'login.login'}>
@@ -40,10 +40,6 @@ function Home(props: Props) {
           </Button>
         </div>
       </div>
-      <NotificationComponent
-        show={props?.auth?.error !== null}
-        onClose={() => props.resetApiError()}
-      />
     </PageLayout>
   );
 }

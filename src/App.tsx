@@ -23,10 +23,10 @@ import AccessibilityStatement from './accessibilityStatement/AccessibilityStatem
 import { MAIN_CONTENT_ID } from './common/constants';
 import AccessibilityShortcuts from './common/accessibilityShortcuts/AccessibilityShortcuts';
 import AppMeta from './AppMeta';
-import authenticate from './auth/authenticate';
-import logout from './auth/logout';
+import useAuthenticate from './auth/useAuthenticate';
 import authConstants from './auth/constants/authConstants';
 import GdprAuthorizationCodeManagerCallback from './gdprApi/GdprAuthorizationCodeManagerCallback';
+import ToastProvider from './toast/ToastProvider';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -58,6 +58,7 @@ type Props = {};
 
 function App(props: Props) {
   const location = useLocation();
+  const [authenticate, logout] = useAuthenticate();
 
   if (location.pathname === '/loginsso') {
     authenticate();
@@ -83,36 +84,38 @@ function App(props: Props) {
     <ReduxProvider store={store}>
       <OidcProvider store={store} userManager={userManager}>
         <ApolloProvider client={graphqlClient}>
-          <MatomoProvider value={instance}>
-            <AppMeta />
-            {/* This should be the first focusable element */}
-            <AccessibilityShortcuts mainContentId={MAIN_CONTENT_ID} />
-            <Switch>
-              <Route path="/callback">
-                <OidcCallback />
-              </Route>
-              <Route path="/gdpr-callback">
-                <GdprAuthorizationCodeManagerCallback />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route
-                path={['/', '/connected-services', '/subscriptions']}
-                exact
-              >
-                <Profile />
-              </Route>
-              <Route path="/accessibility">
-                <AccessibilityStatement />
-              </Route>
-              <Route path="/profile-deleted" exact>
-                <ProfileDeleted />
-              </Route>
-              <Route path="/loginsso" exact />
-              <Route path="*">404 - not found</Route>
-            </Switch>
-          </MatomoProvider>
+          <ToastProvider>
+            <MatomoProvider value={instance}>
+              <AppMeta />
+              {/* This should be the first focusable element */}
+              <AccessibilityShortcuts mainContentId={MAIN_CONTENT_ID} />
+              <Switch>
+                <Route path="/callback">
+                  <OidcCallback />
+                </Route>
+                <Route path="/gdpr-callback">
+                  <GdprAuthorizationCodeManagerCallback />
+                </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route
+                  path={['/', '/connected-services', '/subscriptions']}
+                  exact
+                >
+                  <Profile />
+                </Route>
+                <Route path="/accessibility">
+                  <AccessibilityStatement />
+                </Route>
+                <Route path="/profile-deleted" exact>
+                  <ProfileDeleted />
+                </Route>
+                <Route path="/loginsso" exact />
+                <Route path="*">404 - not found</Route>
+              </Switch>
+            </MatomoProvider>
+          </ToastProvider>
         </ApolloProvider>
       </OidcProvider>
     </ReduxProvider>

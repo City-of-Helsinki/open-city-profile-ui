@@ -13,7 +13,7 @@ import ViewProfile from '../viewProfile/ViewProfile';
 import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
 import { ProfileExistsQuery } from '../../../graphql/generatedTypes';
-import NotificationComponent from '../../../common/notification/NotificationComponent';
+import useToast from '../../../toast/useToast';
 
 const PROFILE_EXISTS = loader('../../graphql/ProfileExistsQuery.graphql');
 
@@ -23,6 +23,7 @@ function Profile(props: Props) {
   const { t } = useTranslation();
   const history = useHistory();
   const location = useLocation();
+  const { createToast } = useToast();
 
   const [checkProfileExists, { data, loading }] = useLazyQuery<
     ProfileExistsQuery
@@ -30,12 +31,11 @@ function Profile(props: Props) {
     fetchPolicy: 'no-cache',
     onError: (error: Error) => {
       Sentry.captureException(error);
-      setShowNotification(true);
+      createToast({ type: 'error' });
     },
   });
   const [isCheckingAuthState, setIsCheckingAuthState] = useState(true);
   const [tunnistamoUser, setTunnistamoUser] = useState<User>();
-  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     getAuthenticatedUser()
@@ -83,11 +83,6 @@ function Profile(props: Props) {
           />
         )}
       </Loading>
-
-      <NotificationComponent
-        show={showNotification}
-        onClose={() => setShowNotification(false)}
-      />
     </PageLayout>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/react-hooks';
@@ -13,7 +13,7 @@ import styles from './ServiceConnections.module.css';
 import { ServiceConnectionsQuery } from '../../../graphql/generatedTypes';
 import getServices from '../../helpers/getServices';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
-import NotificationComponent from '../../../common/notification/NotificationComponent';
+import useToast from '../../../toast/useToast';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -23,14 +23,14 @@ type Props = {};
 
 function ServiceConnections(props: Props) {
   const { t, i18n } = useTranslation();
-  const [showNotification, setShowNotification] = useState(false);
+  const { createToast } = useToast();
 
   const { data, loading, refetch } = useQuery<ServiceConnectionsQuery>(
     SERVICE_CONNECTIONS,
     {
       onError: (error: Error) => {
         Sentry.captureException(error);
-        setShowNotification(true);
+        createToast({ type: 'error' });
       },
     }
   );
@@ -92,10 +92,6 @@ function ServiceConnections(props: Props) {
           ))}
         </div>
       </div>
-      <NotificationComponent
-        show={showNotification}
-        onClose={() => setShowNotification(false)}
-      />
     </div>
   );
 }

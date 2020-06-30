@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
@@ -17,12 +17,12 @@ import {
   UpdateMyProfile as UpdateMyProfileData,
   UpdateMyProfileVariables,
 } from '../../../graphql/generatedTypes';
-import NotificationComponent from '../../../common/notification/NotificationComponent';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import getEmailsFromNode from '../../helpers/getEmailsFromNode';
 import getAddressesFromNode from '../../helpers/getAddressesFromNode';
 import { updateMutationVariables } from '../../helpers/updateMutationVariables';
 import getPhonesFromNode from '../../helpers/getPhonesFromNode';
+import useToast from '../../../toast/useToast';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
 const SERVICE_CONNECTIONS = loader(
@@ -35,13 +35,13 @@ type Props = {
 };
 
 function EditProfile(props: Props) {
-  const [showNotification, setShowNotification] = useState<boolean>(false);
+  const { createToast } = useToast();
   const { data, refetch } = useQuery<ServiceConnectionsQuery>(
     SERVICE_CONNECTIONS,
     {
       onError: (error: Error) => {
         Sentry.captureException(error);
-        setShowNotification(true);
+        createToast({ type: 'error' });
       },
     }
   );
@@ -76,7 +76,7 @@ function EditProfile(props: Props) {
       })
       .catch((error: Error) => {
         Sentry.captureException(error);
-        setShowNotification(true);
+        createToast({ type: 'error' });
       });
   };
 
@@ -104,10 +104,6 @@ function EditProfile(props: Props) {
         }}
         isSubmitting={loading}
         onValues={handleOnValues}
-      />
-      <NotificationComponent
-        show={showNotification}
-        onClose={() => setShowNotification(false)}
       />
     </ProfileSection>
   );

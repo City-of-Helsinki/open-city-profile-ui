@@ -1,0 +1,12 @@
+.toastContainer {
+  /* 99 is the z-index for modals */
+  --toast-z-index: calc(99 + 1);
+  --top-whitespace: var(--spacing-layout-xl);
+
+  position: fixed;
+  top: var(--top-whitespace);
+  right: var(--spacing-layout-s);
+  z-index: var(--toast-z-index);
+  display: flex;
+  flex-direction: column;
+}

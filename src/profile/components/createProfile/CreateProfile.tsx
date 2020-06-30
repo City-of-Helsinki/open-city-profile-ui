@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { User } from 'oidc-client';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
@@ -19,8 +19,8 @@ import {
   Language,
   PhoneType,
 } from '../../../graphql/generatedTypes';
-import NotificationComponent from '../../../common/notification/NotificationComponent';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
+import useToast from '../../../toast/useToast';
 
 const CREATE_PROFILE = loader('../../graphql/CreateMyProfile.graphql');
 
@@ -32,11 +32,11 @@ type Props = {
 function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
-  const [showNotification, setShowNotification] = useState(false);
   const [createProfile, { loading }] = useMutation<
     CreateMyProfileData,
     CreateMyProfileVariables
   >(CREATE_PROFILE);
+  const { createToast } = useToast();
 
   const handleOnValues = (formValues: FormValues) => {
     const variables: CreateMyProfileVariables = {
@@ -74,7 +74,7 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
       })
       .catch((error: Error) => {
         Sentry.captureException(error);
-        setShowNotification(true);
+        createToast({ type: 'error' });
       });
   };
   return (
@@ -102,10 +102,6 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
           />
         </ProfileSection>
       </div>
-      <NotificationComponent
-        show={showNotification}
-        onClose={() => setShowNotification(false)}
-      />
     </div>
   );
 }

@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import logout from '../../auth/logout';
-import authenticate from '../../auth/authenticate';
+import useAuthenticate from '../../auth/useAuthenticate';
 import { isAuthenticatedSelector } from '../../auth/redux';
 import { ReactComponent as HamburgerMenu } from '../svg/HamburgerMenu.svg';
 import { ReactComponent as Close } from '../svg/Close.svg';
@@ -19,6 +18,7 @@ type Props = {
 function FullscreenNavigation(props: Props) {
   const { t } = useTranslation();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [authenticate, logout] = useAuthenticate();
 
   const isAuthenticated = useSelector(isAuthenticatedSelector);
 

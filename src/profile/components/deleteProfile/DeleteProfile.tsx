@@ -6,10 +6,10 @@ import * as Sentry from '@sentry/browser';
 import { Checkbox } from 'hds-react';
 
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
-import NotificationComponent from '../../../common/notification/NotificationComponent';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import Button from '../../../common/button/Button';
 import { ServiceConnectionsQuery } from '../../../graphql/generatedTypes';
+import useToast from '../../../toast/useToast';
 import styles from './deleteProfile.module.css';
 
 const SERVICE_CONNECTIONS = loader(
@@ -24,7 +24,7 @@ type Props = {
 function DeleteProfile({ isOpenByDefault, onDelete }: Props) {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [deleteInstructions, setDeleteInstructions] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
+  const { createToast } = useToast();
 
   const { t, i18n } = useTranslation();
 
@@ -33,7 +33,7 @@ function DeleteProfile({ isOpenByDefault, onDelete }: Props) {
     {
       onError: (error: Error) => {
         Sentry.captureException(error);
-        setShowNotification(true);
+        createToast({ type: 'error' });
       },
     }
   );
@@ -107,11 +107,6 @@ function DeleteProfile({ isOpenByDefault, onDelete }: Props) {
             : t('deleteProfileModal.noServiceExplanation')
         }
         actionButtonText={t('deleteProfileModal.delete')}
-      />
-
-      <NotificationComponent
-        show={showNotification}
-        onClose={() => setShowNotification(false)}
       />
     </React.Fragment>
   );

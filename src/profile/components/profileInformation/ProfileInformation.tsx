@@ -26,12 +26,12 @@ import ProfileSection from '../../../common/profileSection/ProfileSection';
 import getEmailsFromNode from '../../helpers/getEmailsFromNode';
 import getAddressesFromNode from '../../helpers/getAddressesFromNode';
 import getPhonesFromNode from '../../helpers/getPhonesFromNode';
-import NotificationComponent from '../../../common/notification/NotificationComponent';
 import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import checkBerthError from '../../helpers/checkBerthError';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
 import ProfileInformationAccountManagementLink from './ProfileInformationAccountManagementLink';
+import useToast from '../../../toast/useToast';
 
 const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
@@ -46,8 +46,8 @@ function ProfileInformation(props: Props) {
   const history = useHistory();
   const { t, i18n } = useTranslation();
   const { trackEvent } = useMatomo();
-  const [showNotification, setShowNotification] = useState(false);
   const [berthError, setBerthError] = useState(false);
+  const { createToast } = useToast();
 
   // useDownloadProfile and useDeleteProfile need to be mounted when
   // the page they are on is first rendered. That's why it's sensible to
@@ -63,7 +63,7 @@ function ProfileInformation(props: Props) {
     },
     onError: (error: Error) => {
       Sentry.captureException(error);
-      setShowNotification(true);
+      createToast({ type: 'error' });
     },
     fetchPolicy: 'network-only',
   });
@@ -79,7 +79,7 @@ function ProfileInformation(props: Props) {
         setBerthError(true);
       } else {
         Sentry.captureException(error);
-        setShowNotification(true);
+        createToast({ type: 'error' });
       }
     },
   });
@@ -202,10 +202,6 @@ function ProfileInformation(props: Props) {
           isOpenByDefault={isDeletingProfile}
         />
       </div>
-      <NotificationComponent
-        show={showNotification}
-        onClose={() => setShowNotification(false)}
-      />
       <BerthErrorModal
         isOpen={berthError}
         onClose={() => setBerthError(prevState => !prevState)}
