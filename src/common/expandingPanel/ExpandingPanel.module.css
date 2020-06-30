@@ -5,7 +5,6 @@
     --ep-accent-color: var(--color-bus);
     width: 100%;
     background: var(--ep-background);
-    margin: 0 0 var(--spacing-m) 0;
 }
 
 .title {

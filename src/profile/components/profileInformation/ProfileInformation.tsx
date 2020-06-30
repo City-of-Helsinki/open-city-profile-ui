@@ -31,6 +31,7 @@ import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import checkBerthError from '../../helpers/checkBerthError';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
+import ProfileInformationAccountManagementLink from './ProfileInformationAccountManagementLink';
 
 const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
@@ -189,15 +190,18 @@ function ProfileInformation(props: Props) {
           </Fragment>
         )}
       </ProfileSection>
-      <DownloadData
-        isDownloadingData={isDownloadingProfile}
-        isOpenByDefault={isDownloadingProfile}
-        onDownloadClick={downloadProfileData}
-      />
-      <DeleteProfile
-        onDelete={deleteProfile}
-        isOpenByDefault={isDeletingProfile}
-      />
+      <div className={styles.boxGrid}>
+        <ProfileInformationAccountManagementLink />
+        <DownloadData
+          isDownloadingData={isDownloadingProfile}
+          isOpenByDefault={isDownloadingProfile}
+          onDownloadClick={downloadProfileData}
+        />
+        <DeleteProfile
+          onDelete={deleteProfile}
+          isOpenByDefault={isDeletingProfile}
+        />
+      </div>
       <NotificationComponent
         show={showNotification}
         onClose={() => setShowNotification(false)}

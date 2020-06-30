@@ -122,7 +122,9 @@
     "personalData": "Henkilötiedot",
     "phone": "Puhelinnumero",
     "title": "Omat tiedot",
-    "visibility": "Helsinki-profiiliin on tallennettu sinusta alla olevat tiedot."
+    "visibility": "Helsinki-profiiliin on tallennettu sinusta alla olevat tiedot.",
+    "doGoToAccountManagement": "Siirry tunnuksen hallintaan",
+    "authenticationMethod": "Tunnistautumistapa"
   },
   "sanityCheck": "open-city-profile.fi",
   "serviceConnections": {
@@ -147,5 +149,12 @@
     "maxLength": "Kentän maksimipituus on {{max}} merkkiä.",
     "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä.",
     "required": "Tämä kenttä on pakollinen."
+  },
+  "identityProvider": {
+    "helsinkiAccount": "Helsinki-tunnus",
+    "github": "GitHub",
+    "google": "Google",
+    "facebook": "Facebook",
+    "yle": "Yle"
   }
 }
