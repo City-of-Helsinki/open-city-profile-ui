@@ -1,43 +1,44 @@
 import React from 'react';
-import classNames from 'classnames';
+import { Dropdown, DropdownProps } from 'hds-react';
+import { Field, FieldProps } from 'formik';
 
-import styles from './Select.module.css';
+import { Language } from '../../graphql/generatedTypes';
 
-type Option = {
+type Props = {
+  name: string;
+  default: string | Language;
+} & DropdownProps;
+
+export type OptionType = {
   value: string;
   label: string;
 };
 
-type Props = {
-  name: string;
-  id?: string;
-  options: Option[];
-  className?: string;
-  labelText?: string;
-  onChange?: () => void;
-  value?: string;
+export type HdsOptionType = {
+  //eslint-disable-next-line
+  [key: string]: any;
 };
 
-function Select(props: Props) {
+function FormikDropdown(props: Props) {
+  // HDS Dropdown expects default value to be an object. Find correct option object from array.
+  const getSelectDefault = (options: OptionType[], value?: string) => {
+    return options.find((option: OptionType) => option.value === value);
+  };
+
   return (
-    <div className={classNames(styles.select, props.className)}>
-      <label htmlFor={props.name} className={styles.label}>
-        {props.labelText}
-      </label>
-      <select
-        onChange={props.onChange}
-        id={props.id}
-        name={props.name}
-        value={props.value}
-      >
-        {props.options.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Field name={props.name}>
+      {(fieldProps: FieldProps<string>) => (
+        <Dropdown
+          {...fieldProps.field}
+          {...props}
+          defaultValue={getSelectDefault(
+            props.options as OptionType[],
+            props.default
+          )}
+        />
+      )}
+    </Field>
   );
 }
 
-export default Select;
+export default FormikDropdown;

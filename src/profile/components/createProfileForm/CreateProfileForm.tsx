@@ -5,7 +5,7 @@ import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 
 import { getIsInvalid, getError } from '../../helpers/formik';
-import Select from '../../../common/select/Select';
+import FormikDropdown, { HdsOptionType } from '../../../common/select/Select';
 import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
@@ -51,6 +51,13 @@ function CreateProfileForm(props: Props) {
 
     return getError<FormikFormValues>(formikProps, fieldName, renderError);
   };
+
+  const profileLanguageOptions = profileConstants.LANGUAGES.map(language => {
+    return {
+      value: language,
+      label: t(`LANGUAGE_OPTIONS.${language}`),
+    };
+  });
 
   return (
     <Formik
@@ -98,18 +105,19 @@ function CreateProfileForm(props: Props) {
               labelText={t('profileForm.lastName')}
             />
 
-            <Field
+            <FormikDropdown
               className={styles.formField}
-              as={Select}
-              options={profileConstants.LANGUAGES.map(language => {
-                return {
-                  value: language,
-                  label: t(`LANGUAGE_OPTIONS.${language}`),
-                };
-              })}
-              labelText={t('profileForm.language')}
-              name="profileLanguage"
-              id="profileLanguage"
+              name={'profileLanguage'}
+              options={profileLanguageOptions}
+              default={formikProps.values.profileLanguage}
+              label={t('profileForm.language')}
+              // onChange option type needs to match HDS that's why its set to OptionType | OptionType.
+              onChange={(option: HdsOptionType | HdsOptionType[]) =>
+                formikProps.setFieldValue(
+                  'profileLanguage',
+                  !Array.isArray(option) && option.value
+                )
+              }
             />
 
             <Field
