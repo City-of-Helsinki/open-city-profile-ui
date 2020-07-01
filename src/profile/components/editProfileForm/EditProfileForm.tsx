@@ -34,7 +34,7 @@ import AdditionalInformationActions from './AdditionalInformationActions';
 import FormikDropdown, {
   OptionType,
   HdsOptionType,
-} from '../../../common/select/Select';
+} from '../../../common/formikDropdown/FormikDropdown';
 
 const address = yup.object().shape({
   address: yup.string().max(128, 'validation.maxLength'),

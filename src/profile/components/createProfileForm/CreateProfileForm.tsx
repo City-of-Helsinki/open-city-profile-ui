@@ -5,7 +5,9 @@ import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 
 import { getIsInvalid, getError } from '../../helpers/formik';
-import FormikDropdown, { HdsOptionType } from '../../../common/select/Select';
+import FormikDropdown, {
+  HdsOptionType,
+} from '../../../common/formikDropdown/FormikDropdown';
 import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
