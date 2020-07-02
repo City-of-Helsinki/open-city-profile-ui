@@ -223,7 +223,7 @@ function EditProfileForm(props: Props) {
                 options={profileLanguageOptions}
                 default={formikProps.values.profileLanguage}
                 label={t('profileForm.language')}
-                // onChange option type needs to match HDS that's why its set to OptionType | OptionType.
+                // onChange is set to OptionType | OptionType[] in order to match hds typing
                 onChange={(option: HdsOptionType | HdsOptionType[]) =>
                   formikProps.setFieldValue(
                     'profileLanguage',
@@ -312,7 +312,7 @@ function EditProfileForm(props: Props) {
                 options={countryOptions}
                 default={formikProps.values.primaryAddress.countryCode}
                 label={t('profileForm.country')}
-                // onChange option type needs to match HDS that's why its set to OptionType | OptionType.
+                // onChange is set to OptionType | OptionType[] in order to match hds typing
                 onChange={(option: HdsOptionType | HdsOptionType[]) =>
                   formikProps.setFieldValue(
                     'primaryAddress.countryCode' as 'primaryAddress',
@@ -506,7 +506,7 @@ function EditProfileForm(props: Props) {
                             default={
                               formikProps.values.addresses[index].countryCode
                             }
-                            // onChange option type needs to match HDS that's why its set to OptionType | OptionType.
+                            // onChange is set to OptionType | OptionType[] in order to match hds typing
                             onChange={(
                               option: HdsOptionType | HdsOptionType[]
                             ) =>
