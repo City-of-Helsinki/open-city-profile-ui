@@ -113,12 +113,8 @@ function CreateProfileForm(props: Props) {
               options={profileLanguageOptions}
               default={formikProps.values.profileLanguage}
               label={t('profileForm.language')}
-              // onChange is set to OptionType | OptionType[] in order to match hds typing
-              onChange={(option: HdsOptionType | HdsOptionType[]) =>
-                formikProps.setFieldValue(
-                  'profileLanguage',
-                  !Array.isArray(option) && option.value
-                )
+              onChange={(option: HdsOptionType) =>
+                formikProps.setFieldValue('profileLanguage', option.value)
               }
             />
 

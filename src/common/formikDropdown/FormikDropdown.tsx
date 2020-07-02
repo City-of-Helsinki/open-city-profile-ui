@@ -35,6 +35,7 @@ function FormikDropdown(props: Props) {
             props.options as OptionType[],
             props.default
           )}
+          multiselect={false}
         />
       )}
     </Field>

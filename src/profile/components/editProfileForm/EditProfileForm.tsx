@@ -223,12 +223,8 @@ function EditProfileForm(props: Props) {
                 options={profileLanguageOptions}
                 default={formikProps.values.profileLanguage}
                 label={t('profileForm.language')}
-                // onChange is set to OptionType | OptionType[] in order to match hds typing
-                onChange={(option: HdsOptionType | HdsOptionType[]) =>
-                  formikProps.setFieldValue(
-                    'profileLanguage',
-                    !Array.isArray(option) && option.value
-                  )
+                onChange={(option: HdsOptionType) =>
+                  formikProps.setFieldValue('profileLanguage', option.value)
                 }
               />
 
@@ -312,11 +308,10 @@ function EditProfileForm(props: Props) {
                 options={countryOptions}
                 default={formikProps.values.primaryAddress.countryCode}
                 label={t('profileForm.country')}
-                // onChange is set to OptionType | OptionType[] in order to match hds typing
-                onChange={(option: HdsOptionType | HdsOptionType[]) =>
+                onChange={(option: HdsOptionType) =>
                   formikProps.setFieldValue(
                     'primaryAddress.countryCode' as 'primaryAddress',
-                    !Array.isArray(option) && option.value
+                    option.value
                   )
                 }
               />
@@ -506,13 +501,10 @@ function EditProfileForm(props: Props) {
                             default={
                               formikProps.values.addresses[index].countryCode
                             }
-                            // onChange is set to OptionType | OptionType[] in order to match hds typing
-                            onChange={(
-                              option: HdsOptionType | HdsOptionType[]
-                            ) =>
+                            onChange={(option: HdsOptionType) =>
                               formikProps.setFieldValue(
                                 `addresses.${index}.countryCode` as 'addresses',
-                                !Array.isArray(option) && option.value
+                                option.value
                               )
                             }
                           />
