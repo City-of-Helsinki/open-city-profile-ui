@@ -17,7 +17,6 @@ import validator from 'validator';
 import { formConstants } from '../../constants/formConstants';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import { getError, getIsInvalid } from '../../helpers/formik';
-import Select from '../../../common/select/Select';
 import styles from './EditProfileForm.module.css';
 import {
   Language,
@@ -32,6 +31,10 @@ import {
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import AdditionalInformationActions from './AdditionalInformationActions';
+import FormikDropdown, {
+  OptionType,
+  HdsOptionType,
+} from '../../../common/formikDropdown/FormikDropdown';
 
 const address = yup.object().shape({
   address: yup.string().max(128, 'validation.maxLength'),
@@ -142,6 +145,14 @@ function EditProfileForm(props: Props) {
     formProps.setFieldValue(fieldName, previous);
   };
 
+  const profileLanguageOptions: OptionType[] = profileConstants.LANGUAGES.map(
+    language => {
+      return {
+        value: language,
+        label: t(`LANGUAGE_OPTIONS.${language}`),
+      };
+    }
+  );
   return (
     <Formik
       initialValues={{
@@ -206,18 +217,15 @@ function EditProfileForm(props: Props) {
                 labelText={t('profileForm.lastName')}
               />
 
-              <Field
-                id="profileLanguage"
-                name="profileLanguage"
+              <FormikDropdown
                 className={styles.formField}
-                as={Select}
-                options={profileConstants.LANGUAGES.map(language => {
-                  return {
-                    value: language,
-                    label: t(`LANGUAGE_OPTIONS.${language}`),
-                  };
-                })}
-                labelText={t('profileForm.language')}
+                name={'profileLanguage'}
+                options={profileLanguageOptions}
+                default={formikProps.values.profileLanguage}
+                label={t('profileForm.language')}
+                onChange={(option: HdsOptionType) =>
+                  formikProps.setFieldValue('profileLanguage', option.value)
+                }
               />
 
               <Field
@@ -293,14 +301,19 @@ function EditProfileForm(props: Props) {
                 })}
                 labelText={t('profileForm.city')}
               />
-
-              <Field
+              <FormikDropdown
+                className={styles.formField}
                 id="primaryAddress.countryCode"
                 name="primaryAddress.countryCode"
-                className={styles.formField}
-                as={Select}
                 options={countryOptions}
-                labelText={t('profileForm.country')}
+                default={formikProps.values.primaryAddress.countryCode}
+                label={t('profileForm.country')}
+                onChange={(option: HdsOptionType) =>
+                  formikProps.setFieldValue(
+                    'primaryAddress.countryCode' as 'primaryAddress',
+                    option.value
+                  )
+                }
               />
             </div>
             <div className={styles.linebreak} />
@@ -479,13 +492,21 @@ function EditProfileForm(props: Props) {
                             )}
                           />
 
-                          <Field
+                          <FormikDropdown
                             className={styles.formField}
-                            as={Select}
                             name={`addresses.${index}.countryCode`}
                             id={`addresses.${index}.countryCode`}
                             options={countryOptions}
-                            labelText={t('profileForm.country')}
+                            label={t('profileForm.country')}
+                            default={
+                              formikProps.values.addresses[index].countryCode
+                            }
+                            onChange={(option: HdsOptionType) =>
+                              formikProps.setFieldValue(
+                                `addresses.${index}.countryCode` as 'addresses',
+                                option.value
+                              )
+                            }
                           />
                         </div>
                         <AdditionalInformationActions
