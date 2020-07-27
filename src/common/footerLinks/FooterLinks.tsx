@@ -12,7 +12,11 @@ function FooterLinks(props: Props) {
   return (
     <span className={props.className}>
       {' '}
-      <a href={t('profileForm.termsFileDescriptionLink')}>
+      <a
+        href={t('profileForm.termsFileDescriptionLink')}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {t('footer.privacy')}
       </a>{' '}
       | <Link to="/accessibility">{t('footer.accessibility')}</Link>
