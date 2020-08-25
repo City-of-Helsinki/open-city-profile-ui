@@ -41,12 +41,12 @@
   "footer": {
     "accessibility": "Saavutettavuusseloste",
     "copyright": "Tekijänoikeus {{year}}",
-    "feedback": "ANNA PALAUTETTA",
+    "feedback": "Anna palautetta",
     "feedbackLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/anna-palautetta",
     "privacy": "Rekisteriseloste",
-    "reserveRights": "Kaikki oikeudet pidätetään",
-    "terms": "Palvelun käyttöehdot"
+    "reserveRights": "Kaikki oikeudet pidätetään"
   },
+  "helsinkiLogo": "Helsinki-logo",
   "landmarks": {
     "navigation": {
       "language": "Kieli",
@@ -61,9 +61,9 @@
   },
   "loading": "Ladataan...",
   "login": {
-    "description": "Rekisteröitymällä pääset käyttämään uusia palveluita yhdellä helpolla kirjautumisella. Yksi yhtenäinen tunnus tekee kaupunkilaisen arjesta helpompaa.",
+    "description": "Rekisteröitymällä Helsingin kaupungin uusiin palveluihin, sinulle luodaan Helsinki-profiili, jonka kautta näet vaivattomasti tietosi, joita sinusta keräämme sekä palvelut joihin olet tunnistautunut. ",
     "login": "Kirjaudu sisään",
-    "title": "Yhdellä tunnuksella monta mahdollisuutta"
+    "title": "Profiilitietosi yhdessä osoitteessa! "
   },
   "nav": {
     "information": "Omat tiedot",
@@ -89,7 +89,9 @@
     "title": "Profiilisi on poistettu onnistuneesti!"
   },
   "profileForm": {
+    "addAnotherAddress": "Lisää toinen osoite",
     "addAnotherEmail": "Lisää toinen sähköpostiosoite",
+    "addAnotherPhone": "Lisää toinen puhelinnumero",
     "additionalInfo": "Lisätiedot",
     "address": "Kotiosoite",
     "cancel": "Peruuta",
@@ -101,7 +103,9 @@
     "firstName": "Etunimi",
     "language": "Profiilin kieli",
     "lastName": "Sukunimi",
+    "makeAddressPrimary": "Muuta ensisijaiseksi osoitteeksi",
     "makeEmailPrimary": "Muuta ensisijaiseksi sähköpostiosoitteeksi",
+    "makePhonePrimary": "Muuta ensisijaiseksi puhelinnumeroksi",
     "phone": "Puhelinnumero",
     "postalCode": "Postinumero",
     "submit": "Tallenna",
@@ -118,7 +122,9 @@
     "personalData": "Henkilötiedot",
     "phone": "Puhelinnumero",
     "title": "Omat tiedot",
-    "visibility": "Helsinki-profiiliin on tallennettu sinusta alla olevat tiedot."
+    "visibility": "Helsinki-profiiliin on tallennettu sinusta alla olevat tiedot.",
+    "doGoToAccountManagement": "Siirry tunnuksen hallintaan",
+    "authenticationMethod": "Tunnistautumistapa"
   },
   "sanityCheck": "open-city-profile.fi",
   "serviceConnections": {
@@ -143,5 +149,12 @@
     "maxLength": "Kentän maksimipituus on {{max}} merkkiä.",
     "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä.",
     "required": "Tämä kenttä on pakollinen."
+  },
+  "identityProvider": {
+    "helsinkiAccount": "Helsinki-tunnus",
+    "github": "GitHub",
+    "google": "Google",
+    "facebook": "Facebook",
+    "yle": "Yle"
   }
 }

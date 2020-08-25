@@ -1,0 +1,332 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toast should render correct toast 1`] = `
+<ToastProvider>
+  <Portal
+    containerInfo={
+      <div
+        id="toast-root"
+      >
+        <div
+          class="toastContainer"
+        >
+          <div
+            class="notification"
+          >
+            <div
+              style="height: 0px; overflow-y: hidden; position: relative;"
+            >
+              <div
+                class="Notification-module_notification__2hN3H notification_hds-notification__2DQPN Notification-module_error__2sn9y notification_hds-notification--error__3T1Of"
+              >
+                <div
+                  class="Notification-module_label__1bhNu notification_hds-notification__label__2t1lR"
+                >
+                  <span
+                    aria-hidden="true"
+                    class="Notification-module_icon__1ans7 notification_hds-icon__29HQM"
+                  >
+                    <svg
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Notification-module_iconWarning__2bF7u undefined"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                        />
+                        <path
+                          d="M11.128 2.51a1 1 0 011.7-.07l.044.07 9.562 17a1 1 0 01-.796 1.487l-.076.003H2.438a1 1 0 01-.906-1.423l.035-.067 9.562-17zM12 5.04L4.147 19h15.705L12 5.04zM13 16v2h-2v-2h2zm0-6.5v5h-2v-5h2z"
+                          fill="currentColor"
+                        />
+                      </g>
+                    </svg>
+                  </span>
+                  <span
+                    class="Notification-module_labelText__1qBt6 helpers_text-bold__1mCMR helpers_text-md__2Td0C"
+                  >
+                    test title
+                  </span>
+                </div>
+                <div
+                  class="Notification-module_bodyText__2seBK notification_hds-notification__body__3cobH helpers_text-body__1PMI3"
+                >
+                  <button
+                    aria-label="notification.closeButtonText"
+                    class="DismissableNotification-module_buttonClose__2HSH1 notification_hds-notification__close-button__1yGIj DismissableNotification-module_error__1lYkg notification_hds-notification--error__3T1Of"
+                    title="notification.closeButtonText"
+                    type="button"
+                  >
+                    <svg
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik DismissableNotification-module_iconClose__1JHO3 notification_hds-icon__29HQM"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                        />
+                        <path
+                          d="M17.657 7.757L13.414 12l4.243 4.243-1.414 1.414L12 13.414l-4.243 4.243-1.414-1.414L10.586 12 6.343 7.757l1.414-1.414L12 10.586l4.243-4.243z"
+                          fill="currentColor"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <div
+                    class="messageWrapper"
+                  >
+                    notification.defaultErrorText
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  >
+    <div
+      className="toastContainer"
+    >
+      <Toast
+        hidden={false}
+        id="test-1"
+        key="test-1"
+        onClose={[Function]}
+        title="test title"
+        type="error"
+      >
+        <NotificationComponent
+          labelText="test title"
+          onClose={[Function]}
+          show={true}
+          type="error"
+        >
+          <div
+            className="notification"
+          >
+            <DismissableNotification
+              closeButtonLabelText="notification.closeButtonText"
+              labelText="test title"
+              onClose={[Function]}
+              type="error"
+            >
+              <Transition
+                config={
+                  Object {
+                    "friction": 30,
+                    "tension": 300,
+                  }
+                }
+                enter={
+                  Object {
+                    "height": "auto",
+                  }
+                }
+                items={true}
+                keys={[Function]}
+                leave={
+                  Object {
+                    "height": 0,
+                  }
+                }
+                onDestroyed={[Function]}
+                reset={false}
+                unique={false}
+              >
+                <ForwardRef
+                  config={
+                    Object {
+                      "friction": 30,
+                      "tension": 300,
+                    }
+                  }
+                  delay={0}
+                  filter={[Function]}
+                  key="0"
+                  primitive={[Function]}
+                  reset={false}
+                  state="enter"
+                  states={
+                    Object {
+                      "enter": Object {
+                        "height": "auto",
+                      },
+                    }
+                  }
+                >
+                  <KeyframesImpl
+                    config={
+                      Object {
+                        "friction": 30,
+                        "tension": 300,
+                      }
+                    }
+                    delay={0}
+                    filter={[Function]}
+                    forwardRef={null}
+                    primitive={[Function]}
+                    reset={false}
+                    state="enter"
+                    states={
+                      Object {
+                        "enter": Object {
+                          "height": "auto",
+                        },
+                      }
+                    }
+                  >
+                    <Spring
+                      config={
+                        Object {
+                          "friction": 30,
+                          "tension": 300,
+                        }
+                      }
+                      delay={0}
+                      force={false}
+                      from={Object {}}
+                      immediate={false}
+                      inject={[Function]}
+                      native={false}
+                      onRest={[Function]}
+                      reset={false}
+                      to={
+                        Object {
+                          "height": "auto",
+                        }
+                      }
+                    >
+                      <div
+                        style={
+                          Object {
+                            "height": 0,
+                            "overflowY": "hidden",
+                            "position": "relative",
+                          }
+                        }
+                      >
+                        <Notification
+                          closeButtonLabelText="notification.closeButtonText"
+                          labelText="test title"
+                          onClose={[Function]}
+                          type="error"
+                        >
+                          <div
+                            className="Notification-module_notification__2hN3H notification_hds-notification__2DQPN Notification-module_error__2sn9y notification_hds-notification--error__3T1Of"
+                          >
+                            <div
+                              className="Notification-module_label__1bhNu notification_hds-notification__label__2t1lR"
+                            >
+                              <span
+                                aria-hidden="true"
+                                className="Notification-module_icon__1ans7 notification_hds-icon__29HQM"
+                              >
+                                <IconError
+                                  className="Notification-module_iconWarning__2bF7u undefined"
+                                >
+                                  <svg
+                                    className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Notification-module_iconWarning__2bF7u undefined"
+                                    style={Object {}}
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <g
+                                      fill="none"
+                                      fillRule="evenodd"
+                                    >
+                                      <path
+                                        d="M0 0h24v24H0z"
+                                      />
+                                      <path
+                                        d="M11.128 2.51a1 1 0 011.7-.07l.044.07 9.562 17a1 1 0 01-.796 1.487l-.076.003H2.438a1 1 0 01-.906-1.423l.035-.067 9.562-17zM12 5.04L4.147 19h15.705L12 5.04zM13 16v2h-2v-2h2zm0-6.5v5h-2v-5h2z"
+                                        fill="currentColor"
+                                      />
+                                    </g>
+                                  </svg>
+                                </IconError>
+                              </span>
+                              <span
+                                className="Notification-module_labelText__1qBt6 helpers_text-bold__1mCMR helpers_text-md__2Td0C"
+                              >
+                                test title
+                              </span>
+                            </div>
+                            <div
+                              className="Notification-module_bodyText__2seBK notification_hds-notification__body__3cobH helpers_text-body__1PMI3"
+                            >
+                              <button
+                                aria-label="notification.closeButtonText"
+                                className="DismissableNotification-module_buttonClose__2HSH1 notification_hds-notification__close-button__1yGIj DismissableNotification-module_error__1lYkg notification_hds-notification--error__3T1Of"
+                                onClick={[Function]}
+                                title="notification.closeButtonText"
+                                type="button"
+                              >
+                                <IconCross
+                                  className="DismissableNotification-module_iconClose__1JHO3 notification_hds-icon__29HQM"
+                                >
+                                  <svg
+                                    className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik DismissableNotification-module_iconClose__1JHO3 notification_hds-icon__29HQM"
+                                    style={Object {}}
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <g
+                                      fill="none"
+                                      fillRule="evenodd"
+                                    >
+                                      <path
+                                        d="M0 0h24v24H0z"
+                                      />
+                                      <path
+                                        d="M17.657 7.757L13.414 12l4.243 4.243-1.414 1.414L12 13.414l-4.243 4.243-1.414-1.414L10.586 12 6.343 7.757l1.414-1.414L12 10.586l4.243-4.243z"
+                                        fill="currentColor"
+                                      />
+                                    </g>
+                                  </svg>
+                                </IconCross>
+                              </button>
+                              <div
+                                className="messageWrapper"
+                              >
+                                notification.defaultErrorText
+                              </div>
+                            </div>
+                          </div>
+                        </Notification>
+                      </div>
+                    </Spring>
+                  </KeyframesImpl>
+                </ForwardRef>
+              </Transition>
+            </DismissableNotification>
+          </div>
+        </NotificationComponent>
+      </Toast>
+    </div>
+  </Portal>
+  <TestInvoker
+    toast={
+      Object {
+        "id": "test-1",
+        "title": "test title",
+        "type": "error",
+      }
+    }
+  >
+    <button
+      id="create"
+      onClick={[Function]}
+    >
+      test create
+    </button>
+  </TestInvoker>
+</ToastProvider>
+`;

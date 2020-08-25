@@ -41,12 +41,12 @@
   "footer": {
     "accessibility": "Tillgänglighetsdokument",
     "copyright": "Upphovsrätt {{year}}",
-    "feedback": "GE FEEDBACK",
+    "feedback": "Ge feedback",
     "feedbackLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/delta/feedback",
     "privacy": "Integritetspolicy",
-    "reserveRights": "Alla rättigheter förbehållna",
-    "terms": "Användarvillkor"
+    "reserveRights": "Alla rättigheter förbehållna"
   },
+  "helsinkiLogo": "Helsingfors logotyp",
   "landmarks": {
     "navigation": {
       "language": "",
@@ -61,9 +61,9 @@
   },
   "loading": "Laddar...",
   "login": {
-    "description": "Registrering ger dig tillgång till nya tjänster med en enkel inloggning. Ett enda konto gör en medborgares vardagsliv enklare.",
+    "description": "Genom att logga in på de nya Helsingfors stadstjänster skapas en Helsingfors-profil för dig. Här kan du enkelt hitta din profilinformation och se alla tjänster du har loggat in med den.",
     "login": "Logga in",
-    "title": "Många möjligheter med ett konto"
+    "title": "Din profilinformation på en adress!"
   },
   "nav": {
     "information": "Mina uppgifter",
@@ -89,7 +89,9 @@
     "title": "Din profil har tagits bort!"
   },
   "profileForm": {
+    "addAnotherAddress": "Lägg till en annan adress",
     "addAnotherEmail": "Lägg till en annan e-postadress",
+    "addAnotherPhone": "Lägg till ett nytt telefonnummer",
     "additionalInfo": "Ytterligare information",
     "address": "Hemadress",
     "cancel": "Annullera",
@@ -101,7 +103,9 @@
     "firstName": "Förnamn",
     "language": "Profilspråk",
     "lastName": "Efternamn",
+    "makeAddressPrimary": "Ändra till din primära adress",
     "makeEmailPrimary": "Byt till din primära e-postadress",
+    "makePhonePrimary": "Byt till din primära telefon",
     "phone": "Telefonnummer",
     "postalCode": "Postnummer",
     "submit": "Spara",
@@ -118,7 +122,9 @@
     "personalData": "Personuppgifter",
     "phone": "Telefonnummer",
     "title": "Min information",
-    "visibility": "Följande information om dig lagras i Helsingfors profilen."
+    "visibility": "Följande information om dig lagras i Helsingfors profilen.",
+    "doGoToAccountManagement": "Gå till kontohantering",
+    "authenticationMethod": "Autentiseringsmetod"
   },
   "sanityCheck": "open-city-profile.sv",
   "serviceConnections": {
@@ -143,5 +149,12 @@
     "maxLength": "Fältet får vara högst {{max}} tecken långt.",
     "phoneMin": "Telefonnumret måste vara mint {{min}} tecken långt.",
     "required": "Detta fält krävs."
+  },
+  "identityProvider": {
+    "helsinkiAccount": "Helsinfors-kontot",
+    "github": "GitHub",
+    "google": "Google",
+    "facebook": "Facebook",
+    "yle": "Yle"
   }
 }

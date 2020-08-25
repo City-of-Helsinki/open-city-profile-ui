@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
@@ -8,25 +8,25 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import PersonIcon from '../../svg/Person.svg';
 import { NameQuery } from '../../../graphql/generatedTypes';
 import Dropdown from '../../dropdown/Dropdown';
-import authenticate from '../../../auth/authenticate';
-import logout from '../../../auth/logout';
+import useAuthenticate from '../../../auth/useAuthenticate';
 import { isAuthenticatedSelector } from '../../../auth/redux';
-import NotificationComponent from '../../notification/NotificationComponent';
+import useToast from '../../../toast/useToast';
 
 const NAME_QUERY = loader('../../../profile/graphql/NameQuery.graphql');
 
 type Props = {};
 
 function UserDropdown(props: Props) {
-  const [showNotification, setShowNotification] = useState(false);
+  const { createToast } = useToast();
   const [nameQuery, { data, loading }] = useLazyQuery<NameQuery>(NAME_QUERY, {
     onError: () => {
-      setShowNotification(true);
+      createToast({ type: 'error' });
     },
     fetchPolicy: 'cache-only',
   });
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
+  const [authenticate, logout] = useAuthenticate();
 
   const isAuthenticated = useSelector(isAuthenticatedSelector);
 
@@ -84,10 +84,6 @@ function UserDropdown(props: Props) {
   return (
     <React.Fragment>
       <Dropdown options={dropdownOptions} />
-      <NotificationComponent
-        show={showNotification}
-        onClose={() => setShowNotification(false)}
-      />
     </React.Fragment>
   );
 }

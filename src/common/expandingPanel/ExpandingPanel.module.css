@@ -4,9 +4,7 @@
     --ep-background: var(--color-white);
     --ep-accent-color: var(--color-bus);
     width: 100%;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     background: var(--ep-background);
-    margin: 0 0 var(--spacing-m) 0;
 }
 
 .title {
@@ -68,8 +66,6 @@
     /* title in order to avoid focus outline obstructing content. */
     margin-top: calc(-1 * var(--ep-vertical-whitespace));
     background: var(--ep-background);
-    position: relative;
-    z-index: 1;
 }
 
 @media (max-width: 400px) {

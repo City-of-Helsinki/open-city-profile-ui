@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.fakeNavigation {
+  height: var(--header-height);
+  background: var(--color-white);
+}
+
+.fakePageHeading {
+  height: 170px;
+  background: var(--color-coat-of-arms-blue-light-20);
+}
+
+.fakeContent {
+  flex-grow: 1;
+  background: var(--color-black-5);
+}
