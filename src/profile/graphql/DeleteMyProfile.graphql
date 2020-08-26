@@ -1,5 +1,0 @@
-mutation DeleteMyProfile($input:DeleteMyProfileMutationInput!) {
-  deleteMyProfile(input: $input) {
-    clientMutationId
-  }
-}

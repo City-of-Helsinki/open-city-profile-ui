@@ -5,8 +5,8 @@ function AccessibilityStatementEn() {
     <Fragment>
       <h1>Accessibility Statement</h1>
       <p>
-        This accessibility statement applies to the website Youth membership
-        registration. The site address is https://hel.fi/profiili
+        This accessibility statement applies to the Helsinki Profile website.
+        The site address is https://hel.fi/profiili
       </p>
       <h2>Statutory provisions applicable to the website</h2>
       <p>

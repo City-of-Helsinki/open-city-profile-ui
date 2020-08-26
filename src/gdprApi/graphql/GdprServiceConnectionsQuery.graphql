@@ -1,0 +1,16 @@
+query GdprServiceConnectionsQuery {
+  myProfile {
+    id
+    serviceConnections {
+      edges {
+        node {
+          service {
+            type
+            gdprQueryScope
+            gdprDeleteScope
+          }
+        }
+      }
+    }
+  }
+}

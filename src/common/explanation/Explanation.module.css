@@ -11,15 +11,25 @@
   margin-bottom: 30px;
 }
 .main.h2 {
-  font-size: var(--h2-fontsize);
+  font-size: var(--fontsize-h-3);
 }
 .main.h3 {
-  font-size: var(--h3-fontsize);
+  font-size: var(--fontsize-h-4);
 }
 .small {
   margin-top: 0;
   color: var(--color-black-70);
   font-size: 20px;
+}
+
+@media (min-width: 450px) {
+  .main.h2 {
+    font-size: var(--fontsize-h-2);
+  }
+
+  .main.h3 {
+    font-size: var(--fontsize-h-3);
+  }
 }
 
 @media (min-width: 1200px) {

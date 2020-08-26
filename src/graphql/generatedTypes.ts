@@ -3,6 +3,107 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: GdprDeleteMyProfileMutation
+// ====================================================
+
+export interface GdprDeleteMyProfileMutation_deleteMyProfile {
+  readonly __typename: "DeleteMyProfileMutationPayload";
+  readonly clientMutationId: string | null;
+}
+
+export interface GdprDeleteMyProfileMutation {
+  /**
+   * Deletes the data of the profile which is linked to the currently authenticated user.
+   * 
+   * Requires authentication.
+   * 
+   * Possible error codes:
+   * 
+   * * `CANNOT_DELETE_PROFILE_WHILE_SERVICE_CONNECTED_ERROR`: Returned if the profile is connected to Berth service.
+   * 
+   * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
+   * 
+   * * `TODO`
+   */
+  readonly deleteMyProfile: GdprDeleteMyProfileMutation_deleteMyProfile | null;
+}
+
+export interface GdprDeleteMyProfileMutationVariables {
+  readonly input: DeleteMyProfileMutationInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GdprServiceConnectionsQuery
+// ====================================================
+
+export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
+  readonly __typename: "ServiceNode";
+  readonly type: ServiceType | null;
+  /**
+   * GDPR API query operation scope
+   */
+  readonly gdprQueryScope: string;
+  /**
+   * GDPR API delete operation scope
+   */
+  readonly gdprDeleteScope: string;
+}
+
+export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
+  readonly __typename: "ServiceConnectionType";
+  readonly service: GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
+}
+
+export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges {
+  readonly __typename: "ServiceConnectionTypeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node | null;
+}
+
+export interface GdprServiceConnectionsQuery_myProfile_serviceConnections {
+  readonly __typename: "ServiceConnectionTypeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(GdprServiceConnectionsQuery_myProfile_serviceConnections_edges | null)>;
+}
+
+export interface GdprServiceConnectionsQuery_myProfile {
+  readonly __typename: "ProfileNode";
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  /**
+   * List of the profile's connected services.
+   */
+  readonly serviceConnections: GdprServiceConnectionsQuery_myProfile_serviceConnections | null;
+}
+
+export interface GdprServiceConnectionsQuery {
+  /**
+   * Get the profile belonging to the currently authenticated user.
+   * 
+   * Requires authentication.
+   * 
+   * Possible error codes:
+   * 
+   * * `TODO`
+   */
+  readonly myProfile: GdprServiceConnectionsQuery_myProfile | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CreateMyProfile
 // ====================================================
 
@@ -49,44 +150,10 @@ export interface CreateMyProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: DeleteMyProfile
+// GraphQL query operation: DownloadMyProfileQuery
 // ====================================================
 
-export interface DeleteMyProfile_deleteMyProfile {
-  readonly __typename: "DeleteMyProfileMutationPayload";
-  readonly clientMutationId: string | null;
-}
-
-export interface DeleteMyProfile {
-  /**
-   * Deletes the data of the profile which is linked to the currently authenticated user.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `CANNOT_DELETE_PROFILE_WHILE_SERVICE_CONNECTED_ERROR`: Returned if the profile is connected to Berth service.
-   * 
-   * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
-   * 
-   * * `TODO`
-   */
-  readonly deleteMyProfile: DeleteMyProfile_deleteMyProfile | null;
-}
-
-export interface DeleteMyProfileVariables {
-  readonly input: DeleteMyProfileMutationInput;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: DownloadMyProfile
-// ====================================================
-
-export interface DownloadMyProfile {
+export interface DownloadMyProfileQuery {
   /**
    * Get the user information stored in the profile as machine readable JSON.
    * 
@@ -97,6 +164,10 @@ export interface DownloadMyProfile {
    * * `TODO`
    */
   readonly downloadMyProfile: any | null;
+}
+
+export interface DownloadMyProfileQueryVariables {
+  readonly authorizationCode: string;
 }
 
 /* tslint:disable */
@@ -113,10 +184,42 @@ export interface MyProfileQuery_myProfile_primaryAddress {
    * The ID of the object.
    */
   readonly id: string;
+  readonly primary: boolean;
   readonly address: string;
   readonly postalCode: string;
   readonly city: string;
   readonly countryCode: string;
+  readonly addressType: AddressType | null;
+}
+
+export interface MyProfileQuery_myProfile_addresses_edges_node {
+  readonly __typename: "AddressNode";
+  readonly primary: boolean;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly address: string;
+  readonly postalCode: string;
+  readonly city: string;
+  readonly countryCode: string;
+  readonly addressType: AddressType | null;
+}
+
+export interface MyProfileQuery_myProfile_addresses_edges {
+  readonly __typename: "AddressNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: MyProfileQuery_myProfile_addresses_edges_node | null;
+}
+
+export interface MyProfileQuery_myProfile_addresses {
+  readonly __typename: "AddressNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(MyProfileQuery_myProfile_addresses_edges | null)>;
 }
 
 export interface MyProfileQuery_myProfile_primaryEmail {
@@ -164,6 +267,35 @@ export interface MyProfileQuery_myProfile_primaryPhone {
    */
   readonly id: string;
   readonly phone: string | null;
+  readonly primary: boolean;
+  readonly phoneType: PhoneType | null;
+}
+
+export interface MyProfileQuery_myProfile_phones_edges_node {
+  readonly __typename: "PhoneNode";
+  readonly primary: boolean;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly phone: string | null;
+  readonly phoneType: PhoneType | null;
+}
+
+export interface MyProfileQuery_myProfile_phones_edges {
+  readonly __typename: "PhoneNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: MyProfileQuery_myProfile_phones_edges_node | null;
+}
+
+export interface MyProfileQuery_myProfile_phones {
+  readonly __typename: "PhoneNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(MyProfileQuery_myProfile_phones_edges | null)>;
 }
 
 export interface MyProfileQuery_myProfile {
@@ -181,6 +313,10 @@ export interface MyProfileQuery_myProfile {
    */
   readonly primaryAddress: MyProfileQuery_myProfile_primaryAddress | null;
   /**
+   * List of addresses of the profile.
+   */
+  readonly addresses: MyProfileQuery_myProfile_addresses | null;
+  /**
    * Convenience field for the email which is marked as primary.
    */
   readonly primaryEmail: MyProfileQuery_myProfile_primaryEmail | null;
@@ -192,6 +328,10 @@ export interface MyProfileQuery_myProfile {
    * Convenience field for the phone which is marked as primary.
    */
   readonly primaryPhone: MyProfileQuery_myProfile_primaryPhone | null;
+  /**
+   * List of phone numbers of the profile.
+   */
+  readonly phones: MyProfileQuery_myProfile_phones | null;
 }
 
 export interface MyProfileQuery {
@@ -657,6 +797,7 @@ export interface CreatePhoneInput {
 }
 
 export interface DeleteMyProfileMutationInput {
+  readonly authorizationCode: string;
   readonly clientMutationId?: string | null;
 }
 

@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconPlusCircle, TextInput } from 'hds-react';
 import {
-  ArrayHelpers,
   Field,
   FieldArray,
   FieldArrayRenderProps,
@@ -15,31 +14,48 @@ import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
 import validator from 'validator';
 
+import { formConstants } from '../../constants/formConstants';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import { getError, getIsInvalid } from '../../helpers/formik';
-import Select from '../../../common/select/Select';
 import styles from './EditProfileForm.module.css';
 import {
-  EmailType,
   Language,
+  MyProfileQuery_myProfile_addresses_edges_node as Address,
   MyProfileQuery_myProfile_emails_edges_node as Email,
+  MyProfileQuery_myProfile_phones_edges_node as Phone,
+  MyProfileQuery_myProfile_primaryAddress as PrimaryAddress,
   MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
+  MyProfileQuery_myProfile_primaryPhone as PrimaryPhone,
   ServiceConnectionsQuery,
 } from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
+import AdditionalInformationActions from './AdditionalInformationActions';
+import FormikDropdown, {
+  OptionType,
+  HdsOptionType,
+} from '../../../common/formikDropdown/FormikDropdown';
+
+const address = yup.object().shape({
+  address: yup.string().max(128, 'validation.maxLength'),
+  city: yup.string().max(64, 'validation.maxLength'),
+  postalCode: yup.string().max(5, 'validation.maxLength'),
+});
+
+const phone = yup.object().shape({
+  phone: yup
+    .string()
+    .min(6, 'validation.phoneMin')
+    .max(255, 'validation.maxLength'),
+});
 
 const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
   lastName: yup.string().max(255, 'validation.maxLength'),
   language: yup.string(),
-  phone: yup
-    .string()
-    .min(6, 'validation.phoneMin')
-    .max(255, 'validation.maxLength'),
-  address: yup.string().max(128, 'validation.maxLength'),
-  city: yup.string().max(64, 'validation.maxLength'),
-  postalCode: yup.string().max(5, 'validation.maxLength'),
+  primaryPhone: phone,
+  primaryAddress: address,
+  addresses: yup.array().of(address),
   emails: yup.array().of(
     yup.object().shape({
       email: yup.mixed().test('isValidEmail', 'validation.email', function() {
@@ -49,19 +65,19 @@ const schema = yup.object().shape({
       }),
     })
   ),
+  phones: yup.array().of(phone),
 });
 
 export type FormValues = {
   firstName: string;
   lastName: string;
   primaryEmail: PrimaryEmail;
-  phone: string;
-  address: string;
-  postalCode: string;
-  city: string;
+  primaryAddress: PrimaryAddress;
+  primaryPhone: PrimaryPhone;
   profileLanguage: Language;
-  countryCode: string;
+  addresses: Address[];
   emails: Email[];
+  phones: Phone[];
 };
 
 type Props = {
@@ -71,6 +87,9 @@ type Props = {
   onValues: (values: FormValues) => void;
   services?: ServiceConnectionsQuery;
 };
+
+export type Primary = 'primaryEmail' | 'primaryAddress' | 'primaryPhone';
+type ArrayName = 'emails' | 'addresses' | 'phones';
 
 function EditProfileForm(props: Props) {
   const { t, i18n } = useTranslation();
@@ -97,34 +116,79 @@ function EditProfileForm(props: Props) {
     return getError<FormValues>(formikProps, fieldName, renderError);
   };
 
-  const changePrimaryEmail = (
+  const changePrimary = (
     formProps: FormikProps<FormValues>,
-    arrayHelpers: ArrayHelpers,
-    index: number
+    arrayHelpers: FieldArrayRenderProps,
+    index: number,
+    primary: Primary
   ) => {
-    const oldPrimary = { ...formProps.values.primaryEmail, primary: false };
-    const newPrimary = { ...formProps.values.emails[index], primary: true };
+    const arrayName: ArrayName = arrayHelpers.name as ArrayName;
 
-    formProps.setFieldValue('primaryEmail', newPrimary);
+    const oldPrimary = { ...formProps.values[primary], primary: false };
+    const newPrimary = { ...formProps.values[arrayName][index], primary: true };
+
+    formProps.setFieldValue(primary, newPrimary);
     arrayHelpers.remove(index);
     arrayHelpers.push(oldPrimary);
   };
 
+  const addNewValueToArray = (
+    formProps: FormikProps<FormValues>,
+    fieldName: keyof FormValues
+  ) => {
+    const previous: (Email | Address | Phone)[] = formProps.getFieldProps(
+      fieldName
+    ).value;
+
+    previous.push(formConstants.EMPTY_VALUES[fieldName]);
+
+    formProps.setFieldValue(fieldName, previous);
+  };
+
+  const profileLanguageOptions: OptionType[] = profileConstants.LANGUAGES.map(
+    language => {
+      return {
+        value: language,
+        label: t(`LANGUAGE_OPTIONS.${language}`),
+      };
+    }
+  );
   return (
     <Formik
       initialValues={{
         ...props.profile,
+        primaryAddress: {
+          ...props.profile.primaryAddress,
+          address: props.profile.primaryAddress.address || '',
+          postalCode: props.profile.primaryAddress.postalCode || '',
+          city: props.profile.primaryAddress.city || '',
+          // User can not add address when registering. Set primary field to true by default
+          // so it gets added to correct place
+          primary: props.profile.primaryAddress.primary || true,
+          countryCode: props.profile.primaryAddress.countryCode || 'FI',
+          __typename: props.profile.primaryAddress.__typename || 'AddressNode',
+        },
+        primaryPhone: {
+          ...props.profile.primaryPhone,
+          // Phone is not required while registering. Set primary field to true by default
+          // so it gets added to correct place
+          primary: props.profile.primaryPhone.primary || true,
+          phone: props.profile.primaryPhone.phone || '',
+          __typename: props.profile.primaryPhone.__typename || 'PhoneNode',
+        },
       }}
-      onSubmit={values => {
+      onSubmit={async values => {
         props.onValues({
           ...values,
           emails: [...values.emails, values.primaryEmail],
+          addresses: [...values.addresses, values.primaryAddress],
+          phones: [...values.phones, values.primaryPhone],
         });
       }}
       validationSchema={schema}
     >
-      {formikProps => (
-        <React.Fragment>
+      {(formikProps: FormikProps<FormValues>) => (
+        <Fragment>
           <Form>
             <div className={styles.formFields}>
               <Field
@@ -153,30 +217,27 @@ function EditProfileForm(props: Props) {
                 labelText={t('profileForm.lastName')}
               />
 
-              <Field
-                id="profileLanguage"
-                name="profileLanguage"
+              <FormikDropdown
                 className={styles.formField}
-                as={Select}
-                options={profileConstants.LANGUAGES.map(language => {
-                  return {
-                    value: language,
-                    label: t(`LANGUAGE_OPTIONS.${language}`),
-                  };
-                })}
-                labelText={t('profileForm.language')}
+                name={'profileLanguage'}
+                options={profileLanguageOptions}
+                default={formikProps.values.profileLanguage}
+                label={t('profileForm.language')}
+                onChange={(option: HdsOptionType) =>
+                  formikProps.setFieldValue('profileLanguage', option.value)
+                }
               />
 
               <Field
                 className={styles.formField}
-                name="phone"
-                id="phone"
+                name="primaryPhone.phone"
+                id="primaryPhone.phone"
                 as={TextInput}
                 type="tel"
                 minLength="6"
                 maxLength="255"
-                invalid={getIsInvalid(formikProps, 'phone')}
-                helperText={getFieldError(formikProps, 'phone', {
+                invalid={getIsInvalid(formikProps, 'primaryPhone.phone')}
+                helperText={getFieldError(formikProps, 'primaryPhone.phone', {
                   min: 6,
                   max: 255,
                 })}
@@ -196,50 +257,63 @@ function EditProfileForm(props: Props) {
             >
               <Field
                 className={styles.formField}
-                name="address"
-                id="address"
+                name="primaryAddress.address"
+                id="primaryAddress.address"
                 maxLength="255"
                 as={TextInput}
-                invalid={getIsInvalid(formikProps, 'address')}
-                helperText={getFieldError(formikProps, 'address', {
-                  max: 255,
-                })}
+                invalid={getIsInvalid(formikProps, 'primaryAddress.address')}
+                helperText={getFieldError(
+                  formikProps,
+                  'primaryAddress.address',
+                  {
+                    max: 255,
+                  }
+                )}
                 labelText={t('profileForm.address')}
               />
 
               <Field
                 className={styles.formField}
-                name="postalCode"
-                id="postalCode"
+                name="primaryAddress.postalCode"
+                id="primaryAddress.postalCode"
                 maxLength="5"
                 as={TextInput}
-                invalid={getIsInvalid(formikProps, 'postalCode')}
-                helperText={getFieldError(formikProps, 'postalCode', {
-                  max: 5,
-                })}
+                invalid={getIsInvalid(formikProps, 'primaryAddress.postalCode')}
+                helperText={getFieldError(
+                  formikProps,
+                  'primaryAddress.postalCode',
+                  {
+                    max: 5,
+                  }
+                )}
                 labelText={t('profileForm.postalCode')}
               />
 
               <Field
                 className={styles.formField}
-                name="city"
-                id="city"
+                name="primaryAddress.city"
+                id="primaryAddress.city"
                 maxLength="255"
                 as={TextInput}
-                invalid={getIsInvalid(formikProps, 'city')}
-                helperText={getFieldError(formikProps, 'city', {
+                invalid={getIsInvalid(formikProps, 'primaryAddress.city')}
+                helperText={getFieldError(formikProps, 'primaryAddress.city', {
                   max: 255,
                 })}
                 labelText={t('profileForm.city')}
               />
-
-              <Field
-                id="countryCode"
-                name="countryCode"
+              <FormikDropdown
                 className={styles.formField}
-                as={Select}
+                id="primaryAddress.countryCode"
+                name="primaryAddress.countryCode"
                 options={countryOptions}
-                labelText={t('profileForm.country')}
+                default={formikProps.values.primaryAddress.countryCode}
+                label={t('profileForm.country')}
+                onChange={(option: HdsOptionType) =>
+                  formikProps.setFieldValue(
+                    'primaryAddress.countryCode' as 'primaryAddress',
+                    option.value
+                  )
+                }
               />
             </div>
             <div className={styles.linebreak} />
@@ -270,59 +344,221 @@ function EditProfileForm(props: Props) {
                               {}
                             )}
                           />
-                          <div className={styles.additionalActionsWrapper}>
-                            <button
-                              type="button"
-                              className={styles.additionalActionButton}
-                              onClick={() => {
-                                arrayHelpers.remove(index);
-                              }}
-                            >
-                              {t('profileForm.delete')}
-                            </button>
-                            {email.id && (
-                              <Fragment>
-                                {' | '}
-                                <button
-                                  type="button"
-                                  className={styles.additionalActionButton}
-                                  onClick={() =>
-                                    changePrimaryEmail(
-                                      formikProps,
-                                      arrayHelpers,
-                                      index
-                                    )
-                                  }
-                                >
-                                  {t('profileForm.makeEmailPrimary')}
-                                </button>
-                              </Fragment>
-                            )}
-                          </div>
+                          <AdditionalInformationActions
+                            tDelete="profileForm.delete"
+                            tPrimary="profileForm.makeEmailPrimary"
+                            index={index}
+                            arrayHelpers={arrayHelpers}
+                            canBeMadePrimary={!!email?.id}
+                            makePrimary={() => {
+                              changePrimary(
+                                formikProps,
+                                arrayHelpers,
+                                index,
+                                'primaryEmail'
+                              );
+                            }}
+                          />
                         </div>
                       )
                     )}
                   </div>
-
-                  <br />
-                  <Button
-                    iconLeft={<IconPlusCircle />}
-                    variant="supplementary"
-                    type="button"
-                    onClick={() =>
-                      arrayHelpers.push({
-                        email: '',
-                        emailType: EmailType.OTHER,
-                        primary: false,
-                      })
-                    }
-                  >
-                    {t('profileForm.addAnotherEmail')}
-                  </Button>
                 </React.Fragment>
               )}
             />
 
+            <FieldArray
+              name="phones"
+              render={(arrayHelpers: FieldArrayRenderProps) => (
+                <React.Fragment>
+                  <div className={styles.formFields}>
+                    {formikProps.values.phones.map(
+                      (phone: Phone, index: number) => (
+                        <div className={styles.formField} key={index}>
+                          <Field
+                            className={styles.formField}
+                            as={TextInput}
+                            name={`phones.${index}.phone`}
+                            id={`phones.${index}.phone`}
+                            labelText={t('profileForm.phone')}
+                            type="tel"
+                            minLength="6"
+                            maxLength="255"
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `phones.${index}.phone`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `phones.${index}.phone`,
+                              {
+                                min: 6,
+                                max: 255,
+                              }
+                            )}
+                          />
+                          <AdditionalInformationActions
+                            tDelete="profileForm.delete"
+                            tPrimary="profileForm.makePhonePrimary"
+                            index={index}
+                            arrayHelpers={arrayHelpers}
+                            canBeMadePrimary={!!phone.id}
+                            makePrimary={() =>
+                              changePrimary(
+                                formikProps,
+                                arrayHelpers,
+                                index,
+                                'primaryPhone'
+                              )
+                            }
+                          />
+                        </div>
+                      )
+                    )}
+                  </div>
+                </React.Fragment>
+              )}
+            />
+            <FieldArray
+              name="addresses"
+              render={(arrayHelpers: FieldArrayRenderProps) => (
+                <React.Fragment>
+                  {formikProps?.values?.addresses.map(
+                    (address: Address, index: number) => (
+                      <div key={index} className={styles.multipleAddresses}>
+                        <div
+                          className={classNames(
+                            styles.formFields,
+                            styles.addressFields
+                          )}
+                        >
+                          <Field
+                            className={styles.formField}
+                            as={TextInput}
+                            maxLength="128"
+                            name={`addresses.${index}.address`}
+                            id={`addresses.${index}.address`}
+                            labelText={t('profileForm.address')}
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `addresses.${index}.address`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `addresses.${index}.address`,
+                              {
+                                max: 128,
+                              }
+                            )}
+                          />
+
+                          <Field
+                            className={styles.formField}
+                            maxLength="5"
+                            as={TextInput}
+                            name={`addresses.${index}.postalCode`}
+                            id={`addresses.${index}.postalCode`}
+                            labelText={t('profileForm.postalCode')}
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `addresses.${index}.postalCode`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `addresses.${index}.postalCode`,
+                              {
+                                max: 5,
+                              }
+                            )}
+                          />
+
+                          <Field
+                            className={styles.formField}
+                            as={TextInput}
+                            maxLength="64"
+                            name={`addresses.${index}.city`}
+                            id={`addresses.${index}.city`}
+                            labelText={t('profileForm.city')}
+                            invalid={getIsInvalid(
+                              formikProps,
+                              `addresses.${index}.city`
+                            )}
+                            helperText={getFieldError(
+                              formikProps,
+                              `addresses.${index}.city`,
+                              {
+                                max: 64,
+                              }
+                            )}
+                          />
+
+                          <FormikDropdown
+                            className={styles.formField}
+                            name={`addresses.${index}.countryCode`}
+                            id={`addresses.${index}.countryCode`}
+                            options={countryOptions}
+                            label={t('profileForm.country')}
+                            default={
+                              formikProps.values.addresses[index].countryCode
+                            }
+                            onChange={(option: HdsOptionType) =>
+                              formikProps.setFieldValue(
+                                `addresses.${index}.countryCode` as 'addresses',
+                                option.value
+                              )
+                            }
+                          />
+                        </div>
+                        <AdditionalInformationActions
+                          tDelete="profileForm.delete"
+                          tPrimary="profileForm.makeAddressPrimary"
+                          index={index}
+                          arrayHelpers={arrayHelpers}
+                          canBeMadePrimary={!!address?.id}
+                          makePrimary={() => {
+                            changePrimary(
+                              formikProps,
+                              arrayHelpers,
+                              index,
+                              'primaryAddress'
+                            );
+                          }}
+                        />
+                      </div>
+                    )
+                  )}
+                </React.Fragment>
+              )}
+            />
+            {/* Add additional field buttons */}
+            <Button
+              iconLeft={<IconPlusCircle />}
+              variant="supplementary"
+              type="button"
+              onClick={() => addNewValueToArray(formikProps, 'emails')}
+            >
+              {t('profileForm.addAnotherEmail')}
+            </Button>
+
+            <Button
+              iconLeft={<IconPlusCircle />}
+              variant="supplementary"
+              type="button"
+              onClick={() => addNewValueToArray(formikProps, 'phones')}
+            >
+              {t('profileForm.addAnotherPhone')}
+            </Button>
+
+            <Button
+              iconLeft={<IconPlusCircle />}
+              variant="supplementary"
+              type="button"
+              onClick={() => addNewValueToArray(formikProps, 'addresses')}
+            >
+              {t('profileForm.addAnotherAddress')}
+            </Button>
+
+            {/* Form control buttons */}
             <div className={styles.buttonRow}>
               <Button
                 className={styles.button}
@@ -357,7 +593,7 @@ function EditProfileForm(props: Props) {
             modalText={t('confirmationModal.saveMessage')}
             actionButtonText={t('confirmationModal.save')}
           />
-        </React.Fragment>
+        </Fragment>
       )}
     </Formik>
   );

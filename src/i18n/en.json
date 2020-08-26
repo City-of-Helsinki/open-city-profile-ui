@@ -41,12 +41,12 @@
   "footer": {
     "accessibility": "Accessibility document",
     "copyright": "Copyright {{year}}",
-    "feedback": "GIVE FEEDBACK",
+    "feedback": "Give feedback",
     "feedbackLink": "https://www.hel.fi/helsinki/en/administration/participate/feedback",
     "privacy": "Privacy policy",
-    "reserveRights": "All rights reserved",
-    "terms": "Terms of Service"
+    "reserveRights": "All rights reserved"
   },
+  "helsinkiLogo": "Helsinki logo",
   "landmarks": {
     "navigation": {
       "language": "Language",
@@ -61,9 +61,9 @@
   },
   "loading": "Loading...",
   "login": {
-    "description": "Registering gives you access to new services with one easy login. A single account makes the everyday life of a citizen easier.",
+    "description": "By signing in to the new Helsinki city services, a Helsinki profile is created for you. Here you can easily find your profile information and see all the services you have signed in with it. ",
     "login": "Log in",
-    "title": "Many opportunities with one account"
+    "title": "Your profile information in one address!"
   },
   "nav": {
     "information": "Information",
@@ -89,7 +89,9 @@
     "title": "Your profile has been successfully removed!"
   },
   "profileForm": {
+    "addAnotherAddress": "Add another address",
     "addAnotherEmail": "Add another email address",
+    "addAnotherPhone": "Add another phone number",
     "additionalInfo": "Additional Information",
     "address": "Home address",
     "cancel": "Cancel",
@@ -101,7 +103,9 @@
     "firstName": "First name",
     "language": "Profile language",
     "lastName": "Last name",
+    "makeAddressPrimary": "Change to your primary address",
     "makeEmailPrimary": "Change to your primary email address",
+    "makePhonePrimary": "Change to your primary phone",
     "phone": "Phone",
     "postalCode": "Postal code",
     "submit": "Save",
@@ -118,7 +122,9 @@
     "personalData": "Personal data",
     "phone": "Phone",
     "title": "My information",
-    "visibility": "The following information about you is stored in Helsinki profile."
+    "visibility": "The following information about you is stored in Helsinki profile.",
+    "doGoToAccountManagement": "Go to account management",
+    "authenticationMethod": "Authentication method"
   },
   "sanityCheck": "open-city-profile.en",
   "serviceConnections": {
@@ -143,5 +149,12 @@
     "maxLength": "This field can be max {{max}} characters.",
     "phoneMin": "The number must be at least {{min}} characters long.",
     "required": "This field is required."
+  },
+  "identityProvider": {
+    "helsinkiAccount": "Helsinki account",
+    "github": "GitHub",
+    "google": "Google",
+    "facebook": "Facebook",
+    "yle": "Yle"
   }
 }

@@ -5,7 +5,9 @@ import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 
 import { getIsInvalid, getError } from '../../helpers/formik';
-import Select from '../../../common/select/Select';
+import FormikDropdown, {
+  HdsOptionType,
+} from '../../../common/formikDropdown/FormikDropdown';
 import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
@@ -52,6 +54,13 @@ function CreateProfileForm(props: Props) {
     return getError<FormikFormValues>(formikProps, fieldName, renderError);
   };
 
+  const profileLanguageOptions = profileConstants.LANGUAGES.map(language => {
+    return {
+      value: language,
+      label: t(`LANGUAGE_OPTIONS.${language}`),
+    };
+  });
+
   return (
     <Formik
       initialValues={{
@@ -61,7 +70,7 @@ function CreateProfileForm(props: Props) {
       initialErrors={{
         terms: 'validation.required',
       }}
-      onSubmit={values => {
+      onSubmit={async values => {
         props.onValues({
           firstName: values.firstName,
           lastName: values.lastName,
@@ -98,18 +107,15 @@ function CreateProfileForm(props: Props) {
               labelText={t('profileForm.lastName')}
             />
 
-            <Field
+            <FormikDropdown
               className={styles.formField}
-              as={Select}
-              options={profileConstants.LANGUAGES.map(language => {
-                return {
-                  value: language,
-                  label: t(`LANGUAGE_OPTIONS.${language}`),
-                };
-              })}
-              labelText={t('profileForm.language')}
-              name="profileLanguage"
-              id="profileLanguage"
+              name={'profileLanguage'}
+              options={profileLanguageOptions}
+              default={formikProps.values.profileLanguage}
+              label={t('profileForm.language')}
+              onChange={(option: HdsOptionType) =>
+                formikProps.setFieldValue('profileLanguage', option.value)
+              }
             />
 
             <Field

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
@@ -11,14 +11,18 @@ import {
   Language,
   MyProfileQuery,
   MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
+  MyProfileQuery_myProfile_primaryAddress as PrimaryAddress,
+  MyProfileQuery_myProfile_primaryPhone as PrimaryPhone,
   ServiceConnectionsQuery,
   UpdateMyProfile as UpdateMyProfileData,
   UpdateMyProfileVariables,
 } from '../../../graphql/generatedTypes';
-import NotificationComponent from '../../../common/notification/NotificationComponent';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import getEmailsFromNode from '../../helpers/getEmailsFromNode';
+import getAddressesFromNode from '../../helpers/getAddressesFromNode';
 import { updateMutationVariables } from '../../helpers/updateMutationVariables';
+import getPhonesFromNode from '../../helpers/getPhonesFromNode';
+import useToast from '../../../toast/useToast';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
 const SERVICE_CONNECTIONS = loader(
@@ -31,13 +35,13 @@ type Props = {
 };
 
 function EditProfile(props: Props) {
-  const [showNotification, setShowNotification] = useState<boolean>(false);
+  const { createToast } = useToast();
   const { data, refetch } = useQuery<ServiceConnectionsQuery>(
     SERVICE_CONNECTIONS,
     {
       onError: (error: Error) => {
         Sentry.captureException(error);
-        setShowNotification(true);
+        createToast({ type: 'error' });
       },
     }
   );
@@ -72,7 +76,7 @@ function EditProfile(props: Props) {
       })
       .catch((error: Error) => {
         Sentry.captureException(error);
-        setShowNotification(true);
+        createToast({ type: 'error' });
       });
   };
 
@@ -90,20 +94,16 @@ function EditProfile(props: Props) {
           profileLanguage: profileData?.myProfile?.language || Language.FINNISH,
           primaryEmail:
             profileData?.myProfile?.primaryEmail || ({} as PrimaryEmail),
-          phone: profileData?.myProfile?.primaryPhone?.phone || '',
-          address: profileData?.myProfile?.primaryAddress?.address || '',
-          city: profileData?.myProfile?.primaryAddress?.city || '',
-          postalCode: profileData?.myProfile?.primaryAddress?.postalCode || '',
-          countryCode:
-            profileData?.myProfile?.primaryAddress?.countryCode || 'FI',
+          primaryAddress:
+            profileData?.myProfile?.primaryAddress || ({} as PrimaryAddress),
+          primaryPhone:
+            profileData?.myProfile?.primaryPhone || ({} as PrimaryPhone),
+          phones: getPhonesFromNode(profileData),
+          addresses: getAddressesFromNode(profileData),
           emails: getEmailsFromNode(profileData),
         }}
         isSubmitting={loading}
         onValues={handleOnValues}
-      />
-      <NotificationComponent
-        show={showNotification}
-        onClose={() => setShowNotification(false)}
       />
     </ProfileSection>
   );

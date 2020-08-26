@@ -10,6 +10,7 @@ test('returns correct array of emails', () => {
       id: '234',
       primary: false,
       emailType: 'OTHER',
+      __typename: 'EmailNode',
     },
   ]);
 });
