@@ -1,5 +1,16 @@
 {
   "appName": "Profil",
+  "authentication": {
+    "deviceTimeError": {
+      "message": "Tro det eller ej, men du kan inte logga in eftersom din enhets klocka går mer än 5 minuter fel. Justera klockan och försök igen."
+    },
+    "permissionRequestDenied": {
+      "message": "Du måste godkänna begäran om åtkomst till din Tunnistamo-profil för att kunna använda den här tjänsten. Försök att logga in igen."
+    },
+    "genericError": {
+      "message": "Ett fel uppstod. Försök igen"
+    }
+  },
   "berthErrors": {
     "close": "Stänga",
     "explanation": "Du kan inte radera din information eftersom Båtplatser-tjänsten behöver din faktureringsinformation. Kontakta Båtplatsers kundservice för att säga upp ditt kontrakt. När det är gjort kan du försöka igen.",
@@ -31,7 +42,7 @@
   },
   "downloadData": {
     "button": "Ladda ner min information",
-    "panelText": "Om du vill se all vår lagrad information om dig, kan du ladda ner dem här. Informationen levereras som en fil i ett fast format så att du kan flytta den till något annat system om du vill.",
+    "panelText": "Om du vill se alla uppgifter som vi lagrat om dig, kan du ladda ned dem här. Informationen levereras som en formbunden fil så att du kan överföra uppgifterna till ett annat system om du vill.",
     "panelTitle": "Vill du ladda ner din information?"
   },
   "expandingPanel": {
@@ -68,7 +79,7 @@
   "nav": {
     "information": "Mina uppgifter",
     "menuButtonLabel": "Profilmeny",
-    "services": "Anslutna servicer",
+    "services": "Anslutna tjänster",
     "signin": "Logga in",
     "signout": "Logga ut",
     "subscriptions": "Prenumerationer"
@@ -131,7 +142,7 @@
     "clock": "kl.",
     "created": "Skapad:",
     "empty": "Du har för närvarande inga tjänster anslutna till din profil.",
-    "explanation": "Din profil har anslutits till Helsingfors stads tjänster listade nedan. Alla ändringar i din information är omedelbart tillgängliga för tjänsterna. Du behöver inte ändra din information separat i varje tjänst.",
+    "explanation": "Din profil har anslutits till Helsingfors stads tjänster som är listade nedan. Alla ändringar i som du gör i dina uppgifter är omedelbart tillgängliga för dessa tjänster. Du behöver inte ändra dina uppgifter separat i varje tjänst.",
     "servicePersonalData": "Information som tjänsten vet om dig:",
     "title": "Anslutna tjänster"
   },
