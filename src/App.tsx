@@ -90,9 +90,7 @@ function App(props: Props) {
               {/* This should be the first focusable element */}
               <AccessibilityShortcuts mainContentId={MAIN_CONTENT_ID} />
               <Switch>
-                <Route path="/callback">
-                  <OidcCallback />
-                </Route>
+                <Route path="/callback" component={OidcCallback} />
                 <Route path="/gdpr-callback">
                   <GdprAuthorizationCodeManagerCallback />
                 </Route>
