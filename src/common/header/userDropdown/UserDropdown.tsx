@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
@@ -8,8 +7,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import PersonIcon from '../../svg/Person.svg';
 import { NameQuery } from '../../../graphql/generatedTypes';
 import Dropdown from '../../dropdown/Dropdown';
-import useAuthenticate from '../../../auth/useAuthenticate';
-import { isAuthenticatedSelector } from '../../../auth/redux';
+import authService from '../../../auth/authService';
 import useToast from '../../../toast/useToast';
 
 const NAME_QUERY = loader('../../../profile/graphql/NameQuery.graphql');
@@ -26,9 +24,8 @@ function UserDropdown(props: Props) {
   });
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
-  const [authenticate, logout] = useAuthenticate();
 
-  const isAuthenticated = useSelector(isAuthenticatedSelector);
+  const isAuthenticated = authService.isAuthenticated();
 
   React.useEffect(() => {
     if (isAuthenticated) {
@@ -57,7 +54,7 @@ function UserDropdown(props: Props) {
     label: t('nav.signin'),
     onClick: () => {
       trackEvent({ category: 'action', action: 'Log in' });
-      authenticate();
+      authService.login();
     },
   };
 
@@ -75,7 +72,7 @@ function UserDropdown(props: Props) {
     label: t('nav.signout'),
     onClick: () => {
       trackEvent({ category: 'action', action: 'Log out' });
-      logout();
+      authService.logout();
     },
   };
 

@@ -1,15 +1,11 @@
-import React, { ReactElement } from 'react';
-import { Provider } from 'react-redux';
+import { ReactElement } from 'react';
 import { mount, shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 
-import store from '../../redux/store';
-
-export const mountWithProvider = (children: ReactElement) =>
-  mount(<Provider store={store}>{children}</Provider>);
+export const mountWithProvider = (children: ReactElement) => mount(children);
 
 export const shallowWithProvider = (children: ReactElement) =>
-  shallow(<Provider store={store}>{children}</Provider>);
+  shallow(children);
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 export const updateWrapper = async (wrapper: any) => {

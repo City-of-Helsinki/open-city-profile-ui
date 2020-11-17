@@ -6,7 +6,6 @@ import { loader } from 'graphql.macro';
 import { User } from 'oidc-client';
 import * as Sentry from '@sentry/browser';
 
-import getAuthenticatedUser from '../../../auth/getAuthenticatedUser';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import CreateProfile from '../createProfile/CreateProfile';
 import ViewProfile from '../viewProfile/ViewProfile';
@@ -14,12 +13,11 @@ import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
 import { ProfileExistsQuery } from '../../../graphql/generatedTypes';
 import useToast from '../../../toast/useToast';
+import authService from '../../../auth/authService';
 
 const PROFILE_EXISTS = loader('../../graphql/ProfileExistsQuery.graphql');
 
-type Props = {};
-
-function Profile(props: Props) {
+function Profile() {
   const { t } = useTranslation();
   const history = useHistory();
   const location = useLocation();
@@ -38,8 +36,13 @@ function Profile(props: Props) {
   const [tunnistamoUser, setTunnistamoUser] = useState<User>();
 
   useEffect(() => {
-    getAuthenticatedUser()
+    authService
+      .getUser()
       .then(user => {
+        if (!user) {
+          return history.push('/login');
+        }
+
         checkProfileExists();
         setTunnistamoUser(user);
         setIsCheckingAuthState(false);

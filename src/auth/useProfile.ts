@@ -1,7 +1,7 @@
 import React from 'react';
 
-import getAuthenticatedUser from './getAuthenticatedUser';
 import config from '../config';
+import authService from './authService';
 
 export type AMR =
   | 'github'
@@ -46,13 +46,14 @@ function useProfile(): ProfileState {
     function getUser() {
       setIsLoading(true);
 
-      getAuthenticatedUser()
+      authService
+        .getUser()
         .then(user => {
           if (ignore) {
             return;
           }
 
-          setProfile(user.profile);
+          setProfile(user?.profile);
         })
         .catch(() => {
           if (ignore) {

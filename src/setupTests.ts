@@ -1,6 +1,7 @@
 import Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 import { GlobalWithFetchMock } from 'jest-fetch-mock';
+import 'jest-localstorage-mock';
 import './common/test/testi18nInit';
 
 const customGlobal: GlobalWithFetchMock = global as GlobalWithFetchMock;
