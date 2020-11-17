@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
-import useAuthenticate from '../../auth/useAuthenticate';
-import { isAuthenticatedSelector } from '../../auth/redux';
+import authService from '../../auth/authService';
 import { ReactComponent as HamburgerMenu } from '../svg/HamburgerMenu.svg';
 import { ReactComponent as Close } from '../svg/Close.svg';
 import styles from './FullscreenNavigation.module.css';
@@ -18,9 +16,8 @@ type Props = {
 function FullscreenNavigation(props: Props) {
   const { t } = useTranslation();
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [authenticate, logout] = useAuthenticate();
 
-  const isAuthenticated = useSelector(isAuthenticatedSelector);
+  const isAuthenticated = authService.isAuthenticated();
 
   const closeNav = () => {
     setIsNavOpen(false);
@@ -62,7 +59,7 @@ function FullscreenNavigation(props: Props) {
               className={styles.navLink}
               onClick={() => {
                 setIsNavOpen(false);
-                logout();
+                authService.logout();
               }}
             >
               {t('nav.signout')}
@@ -73,7 +70,7 @@ function FullscreenNavigation(props: Props) {
               className={styles.navLink}
               onClick={() => {
                 setIsNavOpen(false);
-                authenticate();
+                authService.login();
               }}
             >
               {t('nav.signin')}
