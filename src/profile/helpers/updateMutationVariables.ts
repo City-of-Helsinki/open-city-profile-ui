@@ -144,6 +144,8 @@ function formMutationArrays<T extends Address | Email | Phone>(
     .map(value => {
       const val = getObjectFields(value);
       // Sending empty id will cause backend error so we remove it
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       delete val.id;
       return val;
     });

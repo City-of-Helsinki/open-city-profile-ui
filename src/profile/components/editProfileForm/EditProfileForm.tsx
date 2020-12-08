@@ -109,6 +109,7 @@ function EditProfileForm(props: Props) {
   const getFieldError = (
     formikProps: FormikProps<FormValues>,
     fieldName: string,
+    // eslint-disable-next-line @typescript-eslint/ban-types
     options: object
   ) => {
     const renderError = (message: string) => t(message, options);

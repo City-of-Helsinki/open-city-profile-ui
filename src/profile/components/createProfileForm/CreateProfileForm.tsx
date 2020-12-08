@@ -47,6 +47,7 @@ function CreateProfileForm(props: Props) {
   const getFieldError = (
     formikProps: FormikProps<FormikFormValues>,
     fieldName: keyof FormikFormValues,
+    // eslint-disable-next-line @typescript-eslint/ban-types
     options: object
   ) => {
     const renderError = (message: string) => t(message, options);
