@@ -1,16 +1,12 @@
 import { gql } from 'apollo-boost';
 
+import authService from '../../auth/authService';
 import client from '../client';
-
-jest.mock('../../auth/redux', () => {
-  return {
-    profileApiTokenSelector: () => 'foo.bar.baz',
-  };
-});
 
 describe('graphql client', () => {
   beforeEach(() => {
     global.fetch.resetMocks();
+    jest.spyOn(authService, 'getToken').mockReturnValue('foo.bar.baz');
   });
 
   it('sets Authorization-header to requests', async () => {

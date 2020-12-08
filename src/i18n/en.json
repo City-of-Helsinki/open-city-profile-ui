@@ -1,5 +1,16 @@
 {
   "appName": "Profile",
+  "authentication": {
+    "deviceTimeError": {
+      "message": "Believe it or not, but we can’t allow you to log in because the clock on your device is off by more than five minutes. Please set the time and try again."
+    },
+    "permissionRequestDenied": {
+      "message": "You need to approve our request to access your Tunnistamo profile in order to use this service. Please try logging in again."
+    },
+    "genericError": {
+      "message": "An error occured while logging in. Please try again"
+    }
+  },
   "berthErrors": {
     "close": "Close",
     "explanation": "You cannot delete your information because Boat berths service needs your information for billing. Contact the customer service of Berth service to terminate your contract. After that has been done, you can try again.",
