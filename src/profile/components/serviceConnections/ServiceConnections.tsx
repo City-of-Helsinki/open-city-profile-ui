@@ -19,6 +19,7 @@ const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
 );
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 type Props = {};
 
 function ServiceConnections(props: Props) {
