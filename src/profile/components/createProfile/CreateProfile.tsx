@@ -29,7 +29,10 @@ type Props = {
   onProfileCreated: () => void;
 };
 
-function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
+function CreateProfile({
+  tunnistamoUser,
+  onProfileCreated,
+}: Props): React.ReactElement {
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
   const [createProfile, { loading }] = useMutation<

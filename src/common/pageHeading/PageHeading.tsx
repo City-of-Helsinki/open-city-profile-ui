@@ -9,7 +9,7 @@ type Props = {
   className?: string;
 };
 
-function PageHeading(props: Props) {
+function PageHeading(props: Props): React.ReactElement {
   return (
     <div className={classNames(styles.pageHeading, props.className)}>
       <UserIcon className={styles.userIcon} />

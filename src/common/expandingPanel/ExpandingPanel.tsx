@@ -18,7 +18,7 @@ function ExpandingPanel({
   showInformationText,
   scrollIntoViewOnMount,
   title,
-}: Props) {
+}: Props): React.ReactElement {
   const container = useRef<HTMLDivElement | null>(null);
   const [expanded, setExpanded] = useState(defaultExpanded);
   const toggleExpanding = () => setExpanded(prevState => !prevState);

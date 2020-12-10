@@ -10,7 +10,7 @@ type AuthenticationError =
   | 'permissionDeniedByUserError'
   | 'unknown';
 
-function OidcCallback({ history }: RouteChildrenProps) {
+function OidcCallback({ history }: RouteChildrenProps): React.ReactElement {
   const { t } = useTranslation();
   const [
     authenticationError,

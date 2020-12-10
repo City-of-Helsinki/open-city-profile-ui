@@ -11,7 +11,7 @@ type Props = PropsWithChildren<{
   variant?: string;
 }>;
 
-function Button(props: Props) {
+function Button(props: Props): React.ReactElement {
   const {
     type = 'button',
     className = '',

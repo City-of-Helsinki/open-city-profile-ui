@@ -17,7 +17,7 @@ function ProfileSection({
   titleButton,
   titleVariant,
   title,
-}: Props) {
+}: Props): React.ReactElement {
   return (
     <section className={styles.profileSection}>
       <div className={styles.profileSectionTitleRow}>

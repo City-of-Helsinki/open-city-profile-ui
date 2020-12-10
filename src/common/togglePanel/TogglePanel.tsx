@@ -9,7 +9,7 @@ type Props = PropsWithChildren<{
   informationText?: string;
 }>;
 
-function TogglePanel(props: Props) {
+function TogglePanel(props: Props): React.ReactElement {
   const [toggled, setToggled] = useState<boolean>(false);
   const togglePanel = () => setToggled(prevState => !prevState);
   return (

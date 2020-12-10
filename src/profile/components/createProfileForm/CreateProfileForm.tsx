@@ -41,7 +41,7 @@ type Props = {
   isSubmitting: boolean;
 };
 
-function CreateProfileForm(props: Props) {
+function CreateProfileForm(props: Props): React.ReactElement {
   const { t } = useTranslation();
 
   const getFieldError = (

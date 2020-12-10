@@ -26,7 +26,7 @@ function Explanation({
   small,
   variant = 'margin',
   titleVariant = 'h3',
-}: Props) {
+}: Props): React.ReactElement {
   return (
     <div
       className={classNames(

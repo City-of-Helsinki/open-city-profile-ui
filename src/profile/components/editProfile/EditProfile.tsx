@@ -34,7 +34,7 @@ type Props = {
   profileData: MyProfileQuery;
 };
 
-function EditProfile(props: Props) {
+function EditProfile(props: Props): React.ReactElement {
   const { createToast } = useToast();
   const { data, refetch } = useQuery<ServiceConnectionsQuery>(
     SERVICE_CONNECTIONS,

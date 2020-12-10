@@ -16,7 +16,7 @@ type Props = {
   options: DropdownOptions;
 };
 
-function Dropdown(props: Props) {
+function Dropdown(props: Props): React.ReactElement {
   const [isOpen, toggleDropdown] = useState(false);
 
   const isDropdown = props.options.length > 1;

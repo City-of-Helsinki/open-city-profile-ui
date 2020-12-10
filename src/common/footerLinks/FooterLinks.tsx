@@ -6,7 +6,7 @@ type Props = {
   className?: string;
 };
 
-function FooterLinks(props: Props) {
+function FooterLinks(props: Props): React.ReactElement {
   const { t } = useTranslation();
 
   return (

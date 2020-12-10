@@ -11,7 +11,7 @@ type Props = {
   onClose: () => void;
 };
 
-function BerthErrorModal(props: Props) {
+function BerthErrorModal(props: Props): React.ReactElement | null {
   const { isOpen, onClose } = props;
   const { t } = useTranslation();
 

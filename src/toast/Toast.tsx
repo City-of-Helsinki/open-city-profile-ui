@@ -6,13 +6,20 @@ import { ToastTypes } from './types';
 interface Props {
   title?: string;
   description?: string;
+  // eslint-disable-next-line react/no-unused-prop-types
   id: string;
   type?: ToastTypes;
   onClose: () => void;
   hidden: boolean;
 }
 
-function Toast({ title, type, onClose, hidden, description }: Props) {
+function Toast({
+  title,
+  type,
+  onClose,
+  hidden,
+  description,
+}: Props): React.ReactElement {
   return (
     <Notification
       show={!hidden}

@@ -16,7 +16,8 @@ class GdprAuthorizationCodeManager {
   }
 
   get code(): string | null {
-    return this.get('authorization_code');
+    const code = this.get('authorization_code');
+    return code ? (code as string) : null;
   }
 
   set code(code: string | null) {
@@ -27,7 +28,7 @@ class GdprAuthorizationCodeManager {
     }
   }
 
-  get(key: string) {
+  get(key: string): Record<string, unknown> | string | null {
     const value = localStorage.getItem(`${PREFIX}.${key}`);
 
     if (value === null) {
@@ -38,11 +39,11 @@ class GdprAuthorizationCodeManager {
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  set(key: string, value: object | string) {
+  set(key: string, value: object | string): void {
     localStorage.setItem(`${PREFIX}.${key}`, JSON.stringify(value));
   }
 
-  clear(key: string) {
+  clear(key: string): void {
     localStorage.removeItem(`${PREFIX}.${key}`);
   }
 
@@ -63,7 +64,7 @@ class GdprAuthorizationCodeManager {
     scopes: string[],
     redirectUri: string,
     state: string
-  ) {
+  ): string {
     const scope = scopes.join(' ');
     const params = new URLSearchParams();
 
@@ -76,7 +77,7 @@ class GdprAuthorizationCodeManager {
     return params.toString();
   }
 
-  makeAuthorizationUrl(scopes: string[], state: string) {
+  makeAuthorizationUrl(scopes: string[], state: string): string {
     const params = this.makeAuthorizationUrlParams(
       this.config.clientId,
       scopes,
@@ -87,21 +88,21 @@ class GdprAuthorizationCodeManager {
     return `${this.config.oidcAuthority}openid/authorize?${params}`;
   }
 
-  cacheApplicationState(stateId: string, deferredAction: string) {
+  cacheApplicationState(stateId: string, deferredAction: string): void {
     this.set(stateId, {
       redirectUrl: window.location.href,
       deferredAction,
     });
   }
 
-  loadApplicationState(stateId: string) {
-    const state = this.get(stateId);
+  loadApplicationState(stateId: string): void {
+    const state = this.get(stateId) as Record<string, unknown>;
 
     this.clear(stateId);
     window.location.href = `${state.redirectUrl}?a=${state.deferredAction}`;
   }
 
-  fetchAuthorizationCode(deferredAction: string, scopes: string[]) {
+  fetchAuthorizationCode(deferredAction: string, scopes: string[]): void {
     const codeStateId = uuidv4();
 
     this.cacheApplicationState(codeStateId, deferredAction);
@@ -111,7 +112,7 @@ class GdprAuthorizationCodeManager {
     window.location.href = authorizationCodeUrl;
   }
 
-  authorizationCodeFetchCallback() {
+  authorizationCodeFetchCallback(): void {
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
     const state = params.get('state');

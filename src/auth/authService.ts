@@ -73,7 +73,7 @@ export class AuthService {
     return localStorage.getItem(API_TOKEN);
   }
 
-  public isAuthenticated() {
+  public isAuthenticated(): boolean {
     const userKey = `oidc.user:${process.env.REACT_APP_OIDC_AUTHORITY}:${process.env.REACT_APP_OIDC_CLIENT_ID}`;
     const oidcStorage = localStorage.getItem(userKey);
     const apiTokens = this.getToken();

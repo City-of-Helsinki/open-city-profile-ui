@@ -4,7 +4,9 @@ import {
   ServiceType,
 } from '../../graphql/generatedTypes';
 
-export default function getServiceTypes(data?: ServiceConnectionsQuery) {
+export default function getServiceTypes(
+  data?: ServiceConnectionsQuery
+): Service[] {
   if (data?.myProfile?.serviceConnections) {
     return data.myProfile.serviceConnections.edges
       .map(edge => {

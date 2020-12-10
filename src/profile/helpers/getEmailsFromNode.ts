@@ -3,7 +3,7 @@ import {
   MyProfileQuery_myProfile_emails_edges_node as Email,
 } from '../../graphql/generatedTypes';
 
-const getEmailsFromNode = (data?: MyProfileQuery) => {
+const getEmailsFromNode = (data?: MyProfileQuery): Email[] => {
   const edge = data?.myProfile?.emails?.edges || [];
   return edge
     .filter(edge => !edge?.node?.primary)

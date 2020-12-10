@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, ReactElement } from 'react';
 
-function AccessibilityStatementEn() {
+function AccessibilityStatementEn(): ReactElement {
   return (
     <Fragment>
       <h1>Accessibility Statement</h1>

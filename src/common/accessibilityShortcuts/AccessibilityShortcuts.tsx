@@ -8,7 +8,7 @@ interface Props {
   mainContentId: string;
 }
 
-function AccessibilityShortcuts({ mainContentId }: Props) {
+function AccessibilityShortcuts({ mainContentId }: Props): React.ReactElement {
   const mainContentHref = `#${mainContentId}`;
   const { t } = useTranslation();
 
