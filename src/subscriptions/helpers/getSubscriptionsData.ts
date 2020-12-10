@@ -3,10 +3,17 @@ import {
   QuerySubscriptions,
 } from '../../graphql/generatedTypes';
 
+type SubscriptionsData = {
+  id: string | undefined;
+  code: string | undefined;
+  label: string | undefined | null;
+  options: (Record<string, unknown> & { enabled: boolean })[] | undefined;
+};
+// options: (Record<string, unknown> & { enabled: boolean })[];
 export default function getSubscriptionsData(
   data?: QuerySubscriptions,
   profileData?: QueryMySubscriptions
-) {
+): SubscriptionsData[] {
   if (
     !data?.subscriptionTypeCategories ||
     !profileData?.myProfile?.subscriptions

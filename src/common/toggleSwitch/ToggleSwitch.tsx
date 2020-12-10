@@ -6,7 +6,7 @@ import styles from './ToggleSwitch.module.css';
 type Props = {
   checked?: boolean;
 };
-function ToggleSwitch(props: Props) {
+function ToggleSwitch(props: Props): React.ReactElement {
   return (
     <div className={styles.switch}>
       <input type="checkbox" checked={props.checked} />

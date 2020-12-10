@@ -2,7 +2,9 @@ import { GraphQLError } from 'graphql';
 
 import profileConstants from '../constants/profileConstants';
 
-export default function checkBerthError(errors: Readonly<Array<GraphQLError>>) {
+export default function checkBerthError(
+  errors: Readonly<Array<GraphQLError>>
+): GraphQLError | boolean | undefined {
   if (!errors) return false;
 
   return errors.find(

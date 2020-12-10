@@ -11,7 +11,7 @@ type Props = PropsWithChildren<{
   onClose?: () => void;
 }>;
 
-function NotificationComponent(props: Props) {
+function NotificationComponent(props: Props): React.ReactElement | null {
   const { t } = useTranslation();
   if (!props.show) return null;
   return (

@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, ReactElement } from 'react';
 
-function AccessibilityStatementFi() {
+function AccessibilityStatementFi(): ReactElement {
   return (
     <Fragment>
       <h1>Saavutettavuusseloste</h1>

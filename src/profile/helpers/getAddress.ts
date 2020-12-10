@@ -3,7 +3,7 @@ import countries from 'i18n-iso-countries';
 import getLanguageCode from '../../common/helpers/getLanguageCode';
 import { MyProfileQuery } from '../../graphql/generatedTypes';
 
-export default function getAddress(data: MyProfileQuery, lang: string) {
+export default function getAddress(data: MyProfileQuery, lang: string): string {
   if (data.myProfile?.primaryAddress) {
     const address = data.myProfile.primaryAddress;
     const country = countries.getName(

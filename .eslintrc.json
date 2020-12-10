@@ -8,6 +8,8 @@
     "plugin:import/typescript"
   ],
   "rules": {
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
     "@typescript-eslint/brace-style": ["error", "1tbs", { "allowSingleLine": true }],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/func-call-spacing": ["error"],
@@ -29,7 +31,7 @@
     "max-len": ["warn", { "code": 120 }],
     "no-console": "warn",
     "no-plusplus": "error",
-    "no-undef": "warn",
+    "no-undef": "error",
     "object-curly-spacing": ["warn", "always"]
   }
 }

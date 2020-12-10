@@ -7,7 +7,7 @@ type Props = {
   value: string | null | undefined;
 };
 
-function LabeledValue({ label, value }: Props) {
+function LabeledValue({ label, value }: Props): React.ReactElement {
   return (
     <div className={styles.wrapper}>
       <strong className={styles.label}>{label}</strong>

@@ -20,7 +20,7 @@ import useToast from '../../../toast/useToast';
 
 const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
 
-function ViewProfile() {
+function ViewProfile(): React.ReactElement {
   const [isEditing, setEditing] = useState(false);
   const { t } = useTranslation();
   const { createToast } = useToast();

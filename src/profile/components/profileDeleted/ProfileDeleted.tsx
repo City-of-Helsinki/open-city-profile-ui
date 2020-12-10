@@ -6,7 +6,7 @@ import responsive from '../../../common/cssHelpers/responsive.module.css';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import authService from '../../../auth/authService';
 
-function ProfileDeleted() {
+function ProfileDeleted(): React.ReactElement {
   const [timeUntilLogout, setTimeUntilLogout] = useState(10);
   const { t } = useTranslation();
 

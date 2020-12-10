@@ -21,7 +21,10 @@ type Props = {
   onDelete: () => void;
 };
 
-function DeleteProfile({ isOpenByDefault, onDelete }: Props) {
+function DeleteProfile({
+  isOpenByDefault,
+  onDelete,
+}: Props): React.ReactElement {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [deleteInstructions, setDeleteInstructions] = useState(false);
   const { createToast } = useToast();

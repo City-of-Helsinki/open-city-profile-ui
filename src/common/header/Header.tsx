@@ -10,7 +10,7 @@ import responsive from '../cssHelpers/responsive.module.css';
 import LanguageSwitcher from '../../i18n/components/languageSwitcher/LanguageSwitcher';
 import UserDropdown from './userDropdown/UserDropdown';
 
-function Header() {
+function Header(): React.ReactElement {
   const { t } = useTranslation();
   return (
     <header className={styles.header}>

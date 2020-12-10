@@ -42,7 +42,7 @@ type SubscriptionData = {
   options?: SubscriptionOption[];
 };
 
-function Subscriptions() {
+function Subscriptions(): React.ReactElement {
   const [subscriptionData, setSubscriptionData] = useState<
     SubscriptionData[]
   >();

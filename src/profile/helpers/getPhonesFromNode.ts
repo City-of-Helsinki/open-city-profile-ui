@@ -3,7 +3,7 @@ import {
   MyProfileQuery_myProfile_phones_edges_node as Phone,
 } from '../../graphql/generatedTypes';
 
-const getPhonesFromNode = (data?: MyProfileQuery) => {
+const getPhonesFromNode = (data?: MyProfileQuery): Phone[] => {
   const edge = data?.myProfile?.phones?.edges || [];
   return edge
     .filter(edge => !edge?.node?.primary)
