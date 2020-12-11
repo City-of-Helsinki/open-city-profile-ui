@@ -38,8 +38,7 @@ class GdprAuthorizationCodeManager {
     return JSON.parse(value);
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  set(key: string, value: object | string): void {
+  set(key: string, value: Record<string, unknown> | string): void {
     localStorage.setItem(`${PREFIX}.${key}`, JSON.stringify(value));
   }
 

@@ -19,8 +19,7 @@ const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
 );
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type Props = {};
+type Props = Record<string, unknown>;
 
 function ServiceConnections(props: Props): React.ReactElement {
   const { t, i18n } = useTranslation();

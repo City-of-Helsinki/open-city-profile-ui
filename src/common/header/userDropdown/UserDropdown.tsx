@@ -12,8 +12,7 @@ import useToast from '../../../toast/useToast';
 
 const NAME_QUERY = loader('../../../profile/graphql/NameQuery.graphql');
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type Props = {};
+type Props = Record<string, unknown>;
 
 function UserDropdown(props: Props): React.ReactElement {
   const { createToast } = useToast();

@@ -83,8 +83,6 @@ function DeleteProfile({
           id="deleteInstructions"
           name="deleteInstructions"
           checked={deleteInstructions}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           labelText={t('deleteProfile.accept')}
         />
 
