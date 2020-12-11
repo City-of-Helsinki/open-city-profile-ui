@@ -12,14 +12,10 @@ jest.mock('../../../../config', () => ({
 jest.mock('../../../../auth/useProfile', () => () => ({
   profile: {
     amr: 'helusername-test',
-    // eslint-disable-next-line @typescript-eslint/camelcase
     auth_time: 1593431180,
     email: 'email@email.com',
-    // eslint-disable-next-line @typescript-eslint/camelcase
     email_verified: false,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     family_name: 'Betty',
-    // eslint-disable-next-line @typescript-eslint/camelcase
     given_name: 'Smith',
     name: 'Betty Smith',
     nickname: 'Betty',

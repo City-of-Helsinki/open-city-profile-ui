@@ -9,7 +9,6 @@ type SubscriptionsData = {
   label: string | undefined | null;
   options: (Record<string, unknown> & { enabled: boolean })[] | undefined;
 };
-// options: (Record<string, unknown> & { enabled: boolean })[];
 export default function getSubscriptionsData(
   data?: QuerySubscriptions,
   profileData?: QueryMySubscriptions
