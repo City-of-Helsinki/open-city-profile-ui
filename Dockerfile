@@ -62,7 +62,7 @@ COPY . /app
 RUN yarn build
 
 # =============================
-FROM rhel8/nginx-116 as production
+FROM registry.access.redhat.com/ubi8/nginx-118 as production
 # =============================
 
 USER root
