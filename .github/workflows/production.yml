@@ -29,8 +29,8 @@ jobs:
         env:
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-production
           DOCKER_BUILD_ARG_REACT_APP_ENVIRONMENT: 'production'
-          DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://api.hel.fi/sso/"
-          DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://api.hel.fi/profiili/graphql/"
+          DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: 'https://api.hel.fi/sso/'
+          DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: 'https://api.hel.fi/profiili/graphql/'
 
   production:
     if: startsWith(github.ref, 'refs/tags')

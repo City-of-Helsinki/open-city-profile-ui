@@ -44,5 +44,5 @@ jobs:
           ENVIRONMENT_URL: https://${{ secrets.ENVIRONMENT_URL_STAGING }}
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-staging
           K8S_SECRET_REACT_APP_ENVIRONMENT: 'staging'
-          K8S_SECRET_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.${{ env.BASE_DOMAIN }}/"
-          K8S_SECRET_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.${{ env.BASE_DOMAIN }}/graphql/"
+          K8S_SECRET_REACT_APP_OIDC_AUTHORITY: 'https://tunnistamo.${{ env.BASE_DOMAIN }}/'
+          K8S_SECRET_REACT_APP_PROFILE_GRAPHQL: 'https://profiili-api.${{ env.BASE_DOMAIN }}/graphql/'
