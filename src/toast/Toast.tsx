@@ -1,16 +1,10 @@
 import React from 'react';
 
 import Notification from '../common/notification/NotificationComponent';
-import { ToastTypes } from './types';
+import { Toast as ToastType } from './types';
 
-interface Props {
-  title?: string;
-  description?: string;
-  // eslint-disable-next-line react/no-unused-prop-types
-  id: string;
-  type?: ToastTypes;
+interface Props extends ToastType {
   onClose: () => void;
-  hidden: boolean;
 }
 
 function Toast({
