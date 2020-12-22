@@ -23,7 +23,6 @@ do
   value=$(printf '%s\n' "${!varname}")
   # Otherwise use value from .env file
   [[ -z $value ]] && value=${varvalue}
-
   #Remove quotes around the value to make it easier to use value
   value=${value%\"}
   value=${value#\"}
