@@ -80,8 +80,6 @@ function DeleteProfile({ isOpenByDefault, onDelete }: Props) {
           id="deleteInstructions"
           name="deleteInstructions"
           checked={deleteInstructions}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
           labelText={t('deleteProfile.accept')}
         />
 

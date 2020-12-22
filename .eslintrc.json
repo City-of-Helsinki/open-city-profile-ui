@@ -13,7 +13,12 @@
     "@typescript-eslint/func-call-spacing": ["error"],
     "@typescript-eslint/member-ordering": ["warn"],
     "@typescript-eslint/no-require-imports": ["error"],
-    "react/no-unused-prop-types": ["warn", { "skipShapeProps": true }],
+    "@typescript-eslint/ban-types":"off",
+    "@typescript-eslint/explicit-module-boundary-types":"off",
+    "@typescript-eslint/ban-ts-ignore":"off",
+    "@typescript-eslint/ban-ts-comment":"off",
+    "import/no-anonymous-default-export":"off",
+    "react/no-unused-prop-types":"off",
     "array-bracket-spacing": ["warn", "never"],
     "import/order": [
       "error",
