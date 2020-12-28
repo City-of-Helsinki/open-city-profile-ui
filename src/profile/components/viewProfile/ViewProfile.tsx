@@ -64,7 +64,7 @@ function ViewProfile(): React.ReactElement {
             >
               {t('nav.services')}
             </NavLink>
-            {process.env.REACT_APP_ENVIRONMENT !== 'production' && (
+            {window._env_.REACT_APP_ENVIRONMENT !== 'production' && (
               <NavLink
                 exact
                 to="/subscriptions"
@@ -80,7 +80,7 @@ function ViewProfile(): React.ReactElement {
               <Route path="/connected-services">
                 <ServiceConnections />
               </Route>
-              {process.env.REACT_APP_ENVIRONMENT !== 'production' && (
+              {window._env_.REACT_APP_ENVIRONMENT !== 'production' && (
                 <Route path="/subscriptions">
                   <Subscriptions />
                 </Route>

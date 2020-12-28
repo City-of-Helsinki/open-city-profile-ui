@@ -25,9 +25,6 @@ jobs:
         uses: andersinno/kolga-build-action@v2
         env:
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-staging
-          DOCKER_BUILD_ARG_REACT_APP_ENVIRONMENT: 'staging'
-          DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://api.hel.fi/sso-test/"
-          DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.test.kuva.hel.ninja/graphql/"
 
   staging:
     runs-on: ubuntu-latest
@@ -45,3 +42,6 @@ jobs:
           K8S_NAMESPACE: ${{ secrets.K8S_NAMESPACE_STAGING }}
           ENVIRONMENT_URL: https://${{ secrets.ENVIRONMENT_URL_STAGING }}
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-staging
+          K8S_SECRET_REACT_APP_ENVIRONMENT: 'staging'
+          K8S_SECRET_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.newtest.kuva.hel.ninja/"
+          K8S_SECRET_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.test.kuva.hel.ninja/graphql/"

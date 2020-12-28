@@ -9,15 +9,21 @@ import * as serviceWorker from './serviceWorker';
 
 Modal.setAppElement('#root');
 
+declare global {
+  interface Window {
+      _env_:any;
+  }
+}
+
 const ENVS_WITH_SENTRY = ['staging', 'production'];
 
 if (
-  process.env.REACT_APP_ENVIRONMENT &&
-  ENVS_WITH_SENTRY.includes(process.env.REACT_APP_ENVIRONMENT)
+  window._env_.REACT_APP_ENVIRONMENT &&
+  ENVS_WITH_SENTRY.includes(window._env_.REACT_APP_ENVIRONMENT)
 ) {
   Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN,
-    environment: process.env.REACT_APP_ENVIRONMENT,
+    dsn: window._env_.REACT_APP_SENTRY_DSN,
+    environment: window._env_.REACT_APP_ENVIRONMENT,
   });
 }
 

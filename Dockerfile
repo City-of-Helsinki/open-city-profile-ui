@@ -53,11 +53,6 @@ CMD ["react-scripts", "start"]
 FROM appbase as staticbuilder
 # ===================================
 
-ARG REACT_APP_PROFILE_GRAPHQL
-ARG REACT_APP_OIDC_AUTHORITY
-ARG REACT_APP_ENVIRONMENT
-
-
 COPY . /app
 RUN yarn build
 
@@ -76,6 +71,11 @@ COPY --from=staticbuilder /app/build /usr/share/nginx/html
 # Copy nginx config
 COPY .prod/nginx.conf  /etc/nginx/
 
-CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+# Copy default environment config and setup script
+COPY ./scripts/env.sh /opt/env.sh
+COPY .env /opt/.env
+RUN chmod +x /opt/env.sh
 
 EXPOSE 8080
+
+CMD ["/bin/bash", "-c", "/opt/env.sh /usr/share/nginx/html && nginx -g \"daemon off;\""]
