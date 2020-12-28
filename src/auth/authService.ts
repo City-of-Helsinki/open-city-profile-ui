@@ -19,12 +19,12 @@ export class AuthService {
     const settings: UserManagerSettings = {
       automaticSilentRenew: true,
       userStore: new WebStorageStateStore({ store: window.localStorage }),
-      authority: process.env.REACT_APP_OIDC_AUTHORITY,
-      client_id: process.env.REACT_APP_OIDC_CLIENT_ID,
+      authority: window._env_.REACT_APP_OIDC_AUTHORITY,
+      client_id: window._env_.REACT_APP_OIDC_CLIENT_ID,
       redirect_uri: `${origin}/callback`,
       silent_redirect_uri: `${origin}/silent_renew.html`,
       response_type: 'id_token token',
-      scope: process.env.REACT_APP_OIDC_SCOPE,
+      scope: window._env_.REACT_APP_OIDC_SCOPE,
       post_logout_redirect_uri: `${origin}/`,
       // This calculates to 1 minute, good for debugging:
       // eslint-disable-next-line max-len
@@ -33,7 +33,7 @@ export class AuthService {
     };
 
     // Show oidc debugging info in the console only while developing
-    if (process.env.NODE_ENV === 'development') {
+    if (window._env_.NODE_ENV === 'development') {
       Log.logger = console;
       Log.level = Log.INFO;
     }
@@ -74,7 +74,7 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    const userKey = `oidc.user:${process.env.REACT_APP_OIDC_AUTHORITY}:${process.env.REACT_APP_OIDC_CLIENT_ID}`;
+    const userKey = `oidc.user:${window._env_.REACT_APP_OIDC_AUTHORITY}:${window._env_.REACT_APP_OIDC_CLIENT_ID}`;
     const oidcStorage = localStorage.getItem(userKey);
     const apiTokens = this.getToken();
 
@@ -112,7 +112,7 @@ export class AuthService {
   }
 
   async fetchApiToken(user: User): Promise<void> {
-    const url = `${process.env.REACT_APP_OIDC_AUTHORITY}api-tokens/`;
+    const url = `${window._env_.REACT_APP_OIDC_AUTHORITY}api-tokens/`;
     const response = await fetch(url, {
       headers: {
         Authorization: `bearer ${user.access_token}`,

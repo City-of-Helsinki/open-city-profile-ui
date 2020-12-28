@@ -4,8 +4,8 @@ import * as path from 'path';
 /// <reference types="./helsinki-utils" />
 import fetchTranslations from 'helsinki-utils/scripts/fetch-translations';
 
-const languages = process.env.TRANSLATION_LANGUAGES.split(',');
-const sheetId = process.env.TRANSLATIONS_SHEET_ID;
+const languages = window._env_.TRANSLATION_LANGUAGES.split(',');
+const sheetId = window._env_.TRANSLATIONS_SHEET_ID;
 
 const pathToLocales: string = path.join(__dirname, '../src/i18n');
 

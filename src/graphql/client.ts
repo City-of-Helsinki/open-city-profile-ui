@@ -16,5 +16,5 @@ export default new ApolloClient({
       });
     }
   },
-  uri: process.env.REACT_APP_PROFILE_GRAPHQL,
+  uri: window._env_.REACT_APP_PROFILE_GRAPHQL,
 });
