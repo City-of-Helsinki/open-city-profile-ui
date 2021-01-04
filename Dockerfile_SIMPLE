@@ -1,0 +1,19 @@
+# ===============================================
+FROM node:12.14.0-alpine as appbase
+# ===============================================
+
+WORKDIR /usr/src/app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json yarn.lock ./
+RUN yarn && yarn cache clean --force
+COPY . ./
+RUN yarn build
+
+FROM nginx:stable-alpine
+COPY --from=appbase /usr/src/app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+# USAGE
+# docker build -t open-city-ui-test .
+# docker run -it --rm -p 1337:80 open-city-ui-test
