@@ -58,9 +58,9 @@
     "yup": "^0.32.5"
   },
   "scripts": {
-    "start": "NODE_ENV=development npm run update-runtime-env && react-scripts start",
+    "start": "npm run update-runtime-env && react-scripts start",
     "build": "react-scripts build",
-    "test": "NODE_ENV=test npm run update-runtime-env && react-scripts test",
+    "test": "TEST=true npm run update-runtime-env && react-scripts test",
     "ci": "CI=true yarn test --coverage",
     "lint": "eslint --ext js,ts,tsx src",
     "codegen": "apollo client:codegen ./src/graphql/generatedTypes.ts --outputFlat --includes=./src/**/*.graphql --target=typescript --endpoint=https://profiili-api.test.kuva.hel.ninja/graphql/ --useReadOnlyTypes --addTypename",

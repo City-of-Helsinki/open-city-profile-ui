@@ -28,10 +28,18 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
+Scripts generates first environment variables to `public/env-config.js` with `scripts/update-runtime-env.ts`, which contains the 
+actual used variables when running the app. App is not using CRA's default `process.env` way to refer of variables but 
+`window._env_` object.
+
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+Scripts generates first environment variables to `public/env-config.js` with `scripts/update-runtime-env.ts`, which contains the 
+actual used variables when running the app. App is not using CRA's default `process.env` way to refer of variables but 
+`window._env_` object.
 
 ### `yarn build`
 
@@ -43,6 +51,9 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+Note that running built application locally you need to generate also `public/env-config.js` file. It can be done with
+`yarn update-runtime-env`. By default it's generated for development environment if no `NODE_ENV` is set.
+
 ### `yarn codegen`
 
 Generate static types for GraphQL queries by using the schema from the backend server.
@@ -53,6 +64,15 @@ Fetches translation data from our Google Spreadsheet and updates translation fil
 
 You still need to update tests and add the translation files to the git repository manually.
 
+### `yarn update-runtime-env`
+
+Generates variable object used when app is running. Generated object is stored at `public/env-config.js` and available
+as `window._env_` object.
+
+Generation uses `react-scripts` internals, so values come from either environment variables or files (according
+[reac-scripts documentation](https://create-react-app.dev/docs/adding-custom-environment-variables/#what-other-env-files-can-be-used)).
+
+At the production deployment same generation is done with [`env.sh`](scripts/env.sh).
 
 ## Environment variables
 

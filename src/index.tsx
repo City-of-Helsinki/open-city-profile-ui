@@ -11,7 +11,7 @@ Modal.setAppElement('#root');
 
 declare global {
   interface Window {
-      _env_:any;
+    _env_: any;
   }
 }
 

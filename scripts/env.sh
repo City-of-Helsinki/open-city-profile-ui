@@ -1,11 +1,13 @@
 #!/bin/bash
 
+ENVDIR=${1:-.}
+TARGETDIR=${2:-.}
 # Recreate config file
-rm -rf ./env-config.js
-touch ./env-config.js
+rm -f $TARGETDIR/env-config.js
+touch $TARGETDIR/env-config.js
 
-# Add assignment 
-echo "window._env_ = {" >> ./env-config.js
+# Add assignment
+echo "window._env_ = {" >> $TARGETDIR/env-config.js
 
 # Read each line in .env file
 # Each line represents key=value pairs
@@ -21,15 +23,15 @@ do
   value=$(printf '%s\n' "${!varname}")
   # Otherwise use value from .env file
   [[ -z $value ]] && value=${varvalue}
-  
+
   #Remove quotes around the value to make it easier to use value
   value=${value%\"}
   value=${value#\"}
   # Append configuration property to JS file
-  echo "  $varname: \"$(echo ${value} | envsubst)\"," >> ./env-config.js
+  echo "  $varname: \"$(echo ${value} | envsubst)\"," >> $TARGETDIR/env-config.js
 
   # Store value to current subshell to allow usage of it at later values
   export $varname="$(echo ${value} | envsubst)"
-done < .env
+done < $ENVDIR/.env
 
-echo "}" >> ./env-config.js
+echo "}" >> $TARGETDIR/env-config.js

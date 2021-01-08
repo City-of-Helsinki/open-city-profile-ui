@@ -78,4 +78,4 @@ RUN chmod +x /opt/env.sh
 
 EXPOSE 8080
 
-CMD ["/bin/bash", "-c", "/opt/env.sh /usr/share/nginx/html && nginx -g \"daemon off;\""]
+CMD ["/bin/bash", "-c", "/opt/env.sh /opt /usr/share/nginx/html && nginx -g \"daemon off;\""]
