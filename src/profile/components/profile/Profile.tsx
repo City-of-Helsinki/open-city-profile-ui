@@ -46,6 +46,7 @@ function Profile(): React.ReactElement {
         checkProfileExists();
         setTunnistamoUser(user);
         setIsCheckingAuthState(false);
+        return undefined;
       })
       .catch(() => history.push('/login'));
   }, [checkProfileExists, history]);

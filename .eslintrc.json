@@ -33,6 +33,7 @@
     "no-plusplus": "error",
     "no-undef": "error",
     "object-curly-spacing": ["warn", "always"],
-    "curly":"error"
+    "curly":"error",
+    "consistent-return":"error"
   }
 }
