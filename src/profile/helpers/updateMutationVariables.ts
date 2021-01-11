@@ -28,19 +28,19 @@ import { formConstants } from '../constants/formConstants';
 type EmailInputs = {
   addEmails: CreateEmailInput[] | null[];
   updateEmails: UpdateEmailInput[];
-  removeEmails?: (string | null)[] | null | undefined;
+  removeEmails?: (string | null)[] | null;
 };
 
 type AddressInputs = {
   addAddresses: CreateAddressInput[];
   updateAddresses: UpdateAddressInput[];
-  removeAddresses?: (string | null)[] | null | undefined;
+  removeAddresses?: (string | null)[] | null;
 };
 
 type PhoneInputs = {
   addPhones: CreatePhoneInput[];
   updatePhones: UpdatePhoneInput[];
-  removePhones?: (string | null)[] | null | undefined;
+  removePhones?: (string | null)[] | null;
 };
 
 const getPrimaryValue = (primary: Primary, profile?: MyProfileQuery) => {
