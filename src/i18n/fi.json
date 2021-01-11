@@ -79,7 +79,7 @@
   "nav": {
     "information": "Omat tiedot",
     "menuButtonLabel": "Profiilivalikko",
-    "services": "Yhdistetyt palvelut",
+    "services": "Käyttämäsi palvelut",
     "signin": "Kirjaudu sisään",
     "signout": "Kirjaudu ulos",
     "subscriptions": "Tilaukset"
@@ -142,9 +142,9 @@
     "clock": "klo",
     "created": "Luotu:",
     "empty": "Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi.",
-    "explanation": "Profiilisi on yhdistetty alla oleviin Helsingin kaupungin palveluihin. Muutokset omissa tiedoissasi ovat heti palveluiden käytössä. Sinun ei tarvitse muuttaa tietojasi jokaisessa palvelussa erikseen.",
+    "explanation": "Olet antanut seuraaville palveluille oikeuden käyttää Helsinki Profiili -tietojasi.",
     "servicePersonalData": "Palvelu saa tietää sinusta:",
-    "title": "Yhdistetyt palvelut"
+    "title": "Palvelut, joilla on lupa käyttää tietojasi"
   },
   "skipToContent": "Siirry suoraan sisältöön",
   "subscriptions": {
