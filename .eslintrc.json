@@ -40,6 +40,10 @@
     "sonarjs/no-duplicate-string": "error",
     "arrow-parens": ["error", "as-needed"],
     "arrow-body-style": ["error", "as-needed"],
-    "object-shorthand": ["error", "properties"]
+    "object-shorthand": ["error", "properties"],
+    "@typescript-eslint/no-unnecessary-type-assertion": "error"
+  },
+  "parserOptions": {
+    "project":"./tsconfig.json"
   }
 }
