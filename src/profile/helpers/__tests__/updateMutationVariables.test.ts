@@ -104,8 +104,8 @@ const formValues: FormValues = {
     emailType: EmailType.OTHER,
     __typename: 'EmailNode',
   },
-  emails: emails,
-  phones: phones,
+  emails,
+  phones,
   primaryPhone: {
     id: '123',
     phone: '0501234567',
@@ -113,7 +113,7 @@ const formValues: FormValues = {
     primary: true,
     __typename: 'PhoneNode',
   },
-  addresses: addresses,
+  addresses,
   primaryAddress: {
     id: '123',
     primary: true,
