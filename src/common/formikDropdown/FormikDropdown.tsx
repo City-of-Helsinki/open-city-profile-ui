@@ -15,8 +15,7 @@ export type OptionType = {
 };
 
 export type HdsOptionType = {
-  //eslint-disable-next-line
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 function FormikDropdown(props: Props): React.ReactElement {
