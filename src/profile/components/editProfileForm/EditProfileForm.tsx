@@ -36,13 +36,13 @@ import FormikDropdown, {
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
 
-const address = yup.object().shape({
+const addressSchema = yup.object().shape({
   address: yup.string().max(128, 'validation.maxLength'),
   city: yup.string().max(64, 'validation.maxLength'),
   postalCode: yup.string().max(5, 'validation.maxLength'),
 });
 
-const phone = yup.object().shape({
+const phoneSchema = yup.object().shape({
   phone: yup
     .string()
     .min(6, 'validation.phoneMin')
@@ -53,9 +53,9 @@ const schema = yup.object().shape({
   firstName: yup.string().max(255, 'validation.maxLength'),
   lastName: yup.string().max(255, 'validation.maxLength'),
   language: yup.string(),
-  primaryPhone: phone,
-  primaryAddress: address,
-  addresses: yup.array().of(address),
+  primaryPhone: phoneSchema,
+  primaryAddress: addressSchema,
+  addresses: yup.array().of(addressSchema),
   emails: yup.array().of(
     yup.object().shape({
       email: yup.mixed().test('isValidEmail', 'validation.email', function() {
@@ -65,7 +65,7 @@ const schema = yup.object().shape({
       }),
     })
   ),
-  phones: yup.array().of(phone),
+  phones: yup.array().of(phoneSchema),
 });
 
 export type FormValues = {

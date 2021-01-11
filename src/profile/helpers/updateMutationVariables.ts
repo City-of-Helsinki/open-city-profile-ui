@@ -131,7 +131,7 @@ function formMutationArrays<T extends Address | Email | Phone>(
   const updateValues = formValues
     .filter(value => {
       const profileValue = profileValues.find(
-        profileValue => profileValue?.id === value.id
+        profileValueItem => profileValueItem?.id === value.id
       );
 
       return value.id && !isEqual(value, profileValue);

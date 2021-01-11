@@ -34,6 +34,7 @@
     "no-undef": "error",
     "object-curly-spacing": ["warn", "always"],
     "curly":"error",
-    "consistent-return":"error"
+    "consistent-return":"error",
+    "no-shadow":["error", { "hoist": "all"}]
   }
 }

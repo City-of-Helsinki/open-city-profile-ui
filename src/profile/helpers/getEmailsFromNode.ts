@@ -4,8 +4,8 @@ import {
 } from '../../graphql/generatedTypes';
 
 const getEmailsFromNode = (data?: MyProfileQuery): Email[] => {
-  const edge = data?.myProfile?.emails?.edges || [];
-  return edge
+  const edges = data?.myProfile?.emails?.edges || [];
+  return edges
     .filter(edge => !edge?.node?.primary)
     .map(
       edge =>
