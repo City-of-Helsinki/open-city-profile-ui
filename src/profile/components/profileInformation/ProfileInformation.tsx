@@ -160,7 +160,7 @@ function ProfileInformation(props: Props): React.ReactElement {
                   <LabeledValue
                     key={index}
                     label={t('profileInformation.email')}
-                    value={email.email as string}
+                    value={email.email}
                   />
                 ))}
               </div>
