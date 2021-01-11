@@ -34,7 +34,9 @@ function UserDropdown(props: Props): React.ReactElement {
   }, [isAuthenticated, nameQuery]);
 
   const getDropdownOptions = () => {
-    if (loading) return [login];
+    if (loading) {
+      return [login];
+    }
 
     // Shows logout in registration form
     if (isAuthenticated && !loading && !data?.myProfile) {

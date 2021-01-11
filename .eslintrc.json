@@ -32,6 +32,7 @@
     "no-console": "warn",
     "no-plusplus": "error",
     "no-undef": "error",
-    "object-curly-spacing": ["warn", "always"]
+    "object-curly-spacing": ["warn", "always"],
+    "curly":"error"
   }
 }
