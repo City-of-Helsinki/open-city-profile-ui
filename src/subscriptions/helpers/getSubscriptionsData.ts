@@ -16,8 +16,9 @@ export default function getSubscriptionsData(
   if (
     !data?.subscriptionTypeCategories ||
     !profileData?.myProfile?.subscriptions
-  )
+  ) {
     return [];
+  }
 
   return data.subscriptionTypeCategories.edges.map(edge => {
     return {

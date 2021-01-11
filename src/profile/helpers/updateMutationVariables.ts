@@ -163,7 +163,9 @@ function formMutationArrays<T extends Address | Email | Phone>(
         addAddresses: addValues as CreateAddressInput[],
         updateAddresses: updateValues as UpdateAddressInput[],
       };
-      if (removeValues.length > 0) addressInputs.removeAddresses = removeValues;
+      if (removeValues.length > 0) {
+        addressInputs.removeAddresses = removeValues;
+      }
       return addressInputs;
     }
     case 'primaryEmail': {
@@ -171,7 +173,9 @@ function formMutationArrays<T extends Address | Email | Phone>(
         addEmails: addValues as CreateEmailInput[],
         updateEmails: updateValues as UpdateEmailInput[],
       };
-      if (removeValues.length > 0) emailInputs.removeEmails = removeValues;
+      if (removeValues.length > 0) {
+        emailInputs.removeEmails = removeValues;
+      }
       return emailInputs;
     }
     case 'primaryPhone': {
@@ -179,7 +183,9 @@ function formMutationArrays<T extends Address | Email | Phone>(
         addPhones: addValues as CreatePhoneInput[],
         updatePhones: updateValues as UpdatePhoneInput[],
       };
-      if (removeValues.length > 0) phoneInputs.removePhones = removeValues;
+      if (removeValues.length > 0) {
+        phoneInputs.removePhones = removeValues;
+      }
       return phoneInputs;
     }
     default:

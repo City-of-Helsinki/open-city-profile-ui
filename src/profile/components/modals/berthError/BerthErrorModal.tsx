@@ -15,7 +15,9 @@ function BerthErrorModal(props: Props): React.ReactElement | null {
   const { isOpen, onClose } = props;
   const { t } = useTranslation();
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
   return (
     <ReactModal
       ariaHideApp={false}
