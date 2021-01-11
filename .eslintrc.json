@@ -37,6 +37,8 @@
     "curly":"error",
     "consistent-return":"error",
     "no-shadow":["error", { "hoist": "all"}],
-    "sonarjs/no-duplicate-string": "error"
+    "sonarjs/no-duplicate-string": "error",
+    "arrow-parens": ["error", "as-needed"],
+    "arrow-body-style": ["error", "as-needed"]
   }
 }

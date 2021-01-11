@@ -20,21 +20,19 @@ export default function getSubscriptionsData(
     return [];
   }
 
-  return data.subscriptionTypeCategories.edges.map(edge => {
-    return {
-      id: edge?.node?.id,
-      code: edge?.node?.code,
-      label: edge?.node?.label,
-      options: edge?.node?.subscriptionTypes.edges.map(typeEdge => {
-        const profileSubscription = profileData?.myProfile?.subscriptions?.edges.find(
-          profileEdge =>
-            profileEdge?.node?.subscriptionType?.code === typeEdge?.node?.code
-        );
-        return {
-          ...typeEdge?.node,
-          enabled: profileSubscription?.node?.enabled || false,
-        };
-      }),
-    };
-  });
+  return data.subscriptionTypeCategories.edges.map(edge => ({
+    id: edge?.node?.id,
+    code: edge?.node?.code,
+    label: edge?.node?.label,
+    options: edge?.node?.subscriptionTypes.edges.map(typeEdge => {
+      const profileSubscription = profileData?.myProfile?.subscriptions?.edges.find(
+        profileEdge =>
+          profileEdge?.node?.subscriptionType?.code === typeEdge?.node?.code
+      );
+      return {
+        ...typeEdge?.node,
+        enabled: profileSubscription?.node?.enabled || false,
+      };
+    }),
+  }));
 }

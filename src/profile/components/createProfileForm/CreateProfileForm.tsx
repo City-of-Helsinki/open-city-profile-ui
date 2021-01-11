@@ -55,12 +55,10 @@ function CreateProfileForm(props: Props): React.ReactElement {
     return getError<FormikFormValues>(formikProps, fieldName, renderError);
   };
 
-  const profileLanguageOptions = profileConstants.LANGUAGES.map(language => {
-    return {
-      value: language,
-      label: t(`LANGUAGE_OPTIONS.${language}`),
-    };
-  });
+  const profileLanguageOptions = profileConstants.LANGUAGES.map(language => ({
+    value: language,
+    label: t(`LANGUAGE_OPTIONS.${language}`),
+  }));
 
   return (
     <Formik
