@@ -101,12 +101,10 @@ function EditProfileForm(props: Props): React.ReactElement {
 
   const applicationLanguage = getLanguageCode(i18n.languages[0]);
   const countryList = countries.getNames(applicationLanguage);
-  const countryOptions = Object.keys(countryList).map(key => {
-    return {
-      value: key,
-      label: countryList[key],
-    };
-  });
+  const countryOptions = Object.keys(countryList).map(key => ({
+    value: key,
+    label: countryList[key],
+  }));
 
   const getFieldError = (
     formikProps: FormikProps<FormValues>,
@@ -148,12 +146,10 @@ function EditProfileForm(props: Props): React.ReactElement {
   };
 
   const profileLanguageOptions: OptionType[] = profileConstants.LANGUAGES.map(
-    language => {
-      return {
-        value: language,
-        label: t(`LANGUAGE_OPTIONS.${language}`),
-      };
-    }
+    language => ({
+      value: language,
+      label: t(`LANGUAGE_OPTIONS.${language}`),
+    })
   );
   return (
     <Formik
@@ -225,8 +221,11 @@ function EditProfileForm(props: Props): React.ReactElement {
                 options={profileLanguageOptions}
                 default={formikProps.values.profileLanguage}
                 label={t('profileForm.language')}
-                onChange={(option: HdsOptionType) =>
-                  formikProps.setFieldValue('profileLanguage', option.value)
+                onChange={option =>
+                  formikProps.setFieldValue(
+                    'profileLanguage',
+                    (option as HdsOptionType).value
+                  )
                 }
               />
 
@@ -310,10 +309,10 @@ function EditProfileForm(props: Props): React.ReactElement {
                 options={countryOptions}
                 default={formikProps.values.primaryAddress.countryCode}
                 label={t('profileForm.country')}
-                onChange={(option: HdsOptionType) =>
+                onChange={option =>
                   formikProps.setFieldValue(
                     'primaryAddress.countryCode' as 'primaryAddress',
-                    option.value
+                    (option as HdsOptionType).value
                   )
                 }
               />
@@ -503,10 +502,10 @@ function EditProfileForm(props: Props): React.ReactElement {
                             default={
                               formikProps.values.addresses[index].countryCode
                             }
-                            onChange={(option: HdsOptionType) =>
+                            onChange={option =>
                               formikProps.setFieldValue(
                                 `addresses.${index}.countryCode` as 'addresses',
-                                option.value
+                                (option as HdsOptionType).value
                               )
                             }
                           />

@@ -20,9 +20,8 @@ export type HdsOptionType = {
 
 function FormikDropdown(props: Props): React.ReactElement {
   // HDS Dropdown expects default value to be an object. Find correct option object from array.
-  const getSelectDefault = (options: OptionType[], value?: string) => {
-    return options.find((option: OptionType) => option.value === value);
-  };
+  const getSelectDefault = (options: OptionType[], value?: string) =>
+    options.find((option: OptionType) => option.value === value);
 
   return (
     <Field name={props.name}>

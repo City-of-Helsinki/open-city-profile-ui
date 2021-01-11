@@ -26,50 +26,47 @@ const QUERY_MY_SUBSCRIPTIONS = loader(
 const getMocks = (
   subscriptionEdges: SubscriptionEdges[],
   profileEdges: ProfileEdges[]
-) => {
-  return [
-    {
-      request: {
-        query: QUERY_SUBSCRIPTIONS,
-        variables: {},
-      },
-      result: {
-        data: {
-          subscriptionTypeCategories: {
-            edges: [...subscriptionEdges],
-            __typename: 'SubscriptionTypeCategoryNodeConnection',
-          },
-        } as QuerySubscriptions,
-      },
+) => [
+  {
+    request: {
+      query: QUERY_SUBSCRIPTIONS,
+      variables: {},
     },
-    {
-      request: {
-        query: QUERY_MY_SUBSCRIPTIONS,
-        variables: {},
-      },
-      result: {
-        data: {
-          myProfile: {
-            subscriptions: {
-              edges: [...profileEdges],
-              __typename: 'SubscriptionNodeConnection',
-            },
-            id: '123',
-            __typename: 'ProfileNode',
-          },
-        } as QueryMySubscriptions,
-      },
+    result: {
+      data: {
+        subscriptionTypeCategories: {
+          edges: [...subscriptionEdges],
+          __typename: 'SubscriptionTypeCategoryNodeConnection',
+        },
+      } as QuerySubscriptions,
     },
-  ];
-};
+  },
+  {
+    request: {
+      query: QUERY_MY_SUBSCRIPTIONS,
+      variables: {},
+    },
+    result: {
+      data: {
+        myProfile: {
+          subscriptions: {
+            edges: [...profileEdges],
+            __typename: 'SubscriptionNodeConnection',
+          },
+          id: '123',
+          __typename: 'ProfileNode',
+        },
+      } as QueryMySubscriptions,
+    },
+  },
+];
 
-const getWrapper = (mocks: MockedResponse[]) => {
-  return mount(
+const getWrapper = (mocks: MockedResponse[]) =>
+  mount(
     <MockedProvider mocks={mocks}>
       <Subscriptions />
     </MockedProvider>
   );
-};
 
 it('data is empty', async () => {
   const mocks = getMocks([], []);

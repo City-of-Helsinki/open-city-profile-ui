@@ -196,31 +196,21 @@ function formMutationArrays<T extends Address | Email | Phone>(
 const updateMutationVariables = (
   formValues: FormValues,
   profile?: MyProfileQuery
-): UpdateMyProfileVariables => {
-  return {
-    input: {
-      profile: {
-        firstName: formValues.firstName,
-        lastName: formValues.lastName,
-        language: formValues.profileLanguage,
-        ...formMutationArrays<Address>(
-          formValues.addresses,
-          'primaryAddress',
-          profile
-        ),
-        ...formMutationArrays<Phone>(
-          formValues.phones,
-          'primaryPhone',
-          profile
-        ),
-        ...formMutationArrays<Email>(
-          formValues.emails,
-          'primaryEmail',
-          profile
-        ),
-      },
+): UpdateMyProfileVariables => ({
+  input: {
+    profile: {
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      language: formValues.profileLanguage,
+      ...formMutationArrays<Address>(
+        formValues.addresses,
+        'primaryAddress',
+        profile
+      ),
+      ...formMutationArrays<Phone>(formValues.phones, 'primaryPhone', profile),
+      ...formMutationArrays<Email>(formValues.emails, 'primaryEmail', profile),
     },
-  };
-};
+  },
+});
 
 export { formMutationArrays, updateMutationVariables };
