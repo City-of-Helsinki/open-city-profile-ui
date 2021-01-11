@@ -134,7 +134,7 @@ test('add arrays are formed correctly', () => {
 
   expect(variables.input.profile.addAddresses).toEqual([
     {
-      address: 'Testikatu 66',
+      address: addresses[1].address,
       postalCode: '00000',
       city: 'Helsinki',
       countryCode: 'FI',
@@ -186,8 +186,8 @@ test('update arrays are formed correctly', () => {
   ]);
   expect(variables.input.profile.updateEmails).toEqual([
     {
-      email: 'kolmas@testi.fi',
-      id: 'kolmas@testi.fi',
+      email: emails[2].email,
+      id: emails[2].email,
       emailType: 'OTHER',
       primary: false,
     },

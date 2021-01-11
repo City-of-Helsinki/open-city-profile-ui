@@ -7,6 +7,7 @@
     "plugin:import/warnings",
     "plugin:import/typescript"
   ],
+  "plugins": ["sonarjs"],
   "rules": {
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
@@ -35,6 +36,7 @@
     "object-curly-spacing": ["warn", "always"],
     "curly":"error",
     "consistent-return":"error",
-    "no-shadow":["error", { "hoist": "all"}]
+    "no-shadow":["error", { "hoist": "all"}],
+    "sonarjs/no-duplicate-string": "error"
   }
 }

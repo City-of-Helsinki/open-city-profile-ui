@@ -47,7 +47,7 @@ describe('authService', () => {
     });
 
     it("should return false if oidc user from sessionStorage doesn't have an access_token property", () => {
-      const apiTokens = '5ed3abc5-9b65-4879-8d09-3cd8499650ef';
+      const apiTokens = '5ed3abc5-9b65-4879-8d09-3cd8499650eg';
       const invalidUser = JSON.stringify({});
 
       jest.spyOn(authService, 'getToken').mockReturnValue(apiTokens);
@@ -57,10 +57,10 @@ describe('authService', () => {
     });
 
     it('should return true if oidc user is valid and tokens are returned from getToken', () => {
-      const apiToken = '5ed3abc5-9b65-4879-8d09-3cd8499650ef';
+      const apiToken = '5ed3abc5-9b65-4879-8d09-3cd8499650eh';
       const validUser = JSON.stringify({
         name: 'Mr. Louisa Tromp',
-        access_token: '5ed3abc5-9b65-4879-8d09-3cd8499650ef',
+        access_token: '5ed3abc5-9b65-4879-8d09-3cd8499650eh',
       });
 
       jest.spyOn(authService, 'getToken').mockReturnValue(apiToken);
