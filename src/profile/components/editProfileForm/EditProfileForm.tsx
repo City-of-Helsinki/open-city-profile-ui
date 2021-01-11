@@ -91,7 +91,7 @@ type Props = {
 export type Primary = 'primaryEmail' | 'primaryAddress' | 'primaryPhone';
 type ArrayName = 'emails' | 'addresses' | 'phones';
 
-function EditProfileForm(props: Props) {
+function EditProfileForm(props: Props): React.ReactElement {
   const { t, i18n } = useTranslation();
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
   const userHasServices =
@@ -109,7 +109,7 @@ function EditProfileForm(props: Props) {
   const getFieldError = (
     formikProps: FormikProps<FormValues>,
     fieldName: string,
-    options: object
+    options: Record<string, unknown>
   ) => {
     const renderError = (message: string) => t(message, options);
 

@@ -3,7 +3,9 @@ import {
   ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node as Node,
 } from '../../graphql/generatedTypes';
 
-export default function getAllowedDataFieldsFromService(service: Service) {
+export default function getAllowedDataFieldsFromService(
+  service: Service
+): Node[] {
   return service.allowedDataFields.edges
     .map(edge => {
       if (edge?.node) {

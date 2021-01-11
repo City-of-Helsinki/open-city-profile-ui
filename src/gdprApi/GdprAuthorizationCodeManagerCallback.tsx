@@ -3,7 +3,7 @@ import React from 'react';
 import gdprAuthCodeManager from './gdprAuthCodeManager';
 import styles from './gdprAuthorizationCodeManagerCallback.module.css';
 
-function GdprAuthorizationCodeManagerCallback() {
+function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
   React.useEffect(() => {
     gdprAuthCodeManager.authorizationCodeFetchCallback();
   }, []);

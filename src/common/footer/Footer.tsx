@@ -10,7 +10,7 @@ type Props = {
   hideFooterLogo?: boolean;
 };
 
-function Footer(props: Props) {
+function Footer(props: Props): React.ReactElement {
   const { t } = useTranslation();
   return (
     <footer className={styles.footer}>

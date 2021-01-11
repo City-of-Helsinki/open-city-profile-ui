@@ -8,7 +8,7 @@ type Props = React.PropsWithChildren<{
   loadingText: string;
   loadingClassName: string;
 }>;
-function Loading(props: Props) {
+function Loading(props: Props): React.ReactElement {
   return (
     <>
       {props.isLoading ? (

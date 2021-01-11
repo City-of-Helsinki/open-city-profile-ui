@@ -53,7 +53,7 @@ function useProfile(): ProfileState {
             return;
           }
 
-          setProfile(user?.profile);
+          setProfile(user ? ((user.profile as unknown) as Profile) : null);
         })
         .catch(() => {
           if (ignore) {

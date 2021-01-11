@@ -8,7 +8,7 @@ import AccessibilityStatementFi from './AccessibilityStatementFi';
 import AccessibilityStatementSv from './AccessibilityStatementSv';
 import AccessibilityStatementEn from './AccessibilityStatementEn';
 
-function AccessibilityStatement() {
+function AccessibilityStatement(): React.ReactElement {
   const { i18n } = useTranslation();
   const selectStatement = () => {
     const lang =

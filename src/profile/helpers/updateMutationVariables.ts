@@ -17,6 +17,7 @@ import {
   PhoneType,
   UpdateAddressInput,
   UpdateEmailInput,
+  UpdateMyProfileVariables,
   UpdatePhoneInput,
 } from '../../graphql/generatedTypes';
 import getPhonesFromNode from './getPhonesFromNode';
@@ -114,7 +115,7 @@ function formMutationArrays<T extends Address | Email | Phone>(
   formValueArray: T[],
   primary: Primary,
   profile?: MyProfileQuery
-) {
+): Record<string, unknown> {
   const profileValues = [
     getPrimaryValue(primary, profile),
     ...getNodesFromProfile(primary, profile),
@@ -143,7 +144,7 @@ function formMutationArrays<T extends Address | Email | Phone>(
     .filter(value => !value.id)
     .map(value => {
       const val = getObjectFields(value);
-      // Sending empty id will cause backend error so we remove it
+      // @ts-expect-error: Sending empty id will cause backend error so we remove it
       delete val.id;
       return val;
     });
@@ -189,7 +190,7 @@ function formMutationArrays<T extends Address | Email | Phone>(
 const updateMutationVariables = (
   formValues: FormValues,
   profile?: MyProfileQuery
-) => {
+): UpdateMyProfileVariables => {
   return {
     input: {
       profile: {

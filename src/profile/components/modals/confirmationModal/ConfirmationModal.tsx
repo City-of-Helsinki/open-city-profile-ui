@@ -26,7 +26,7 @@ function ConfirmationModal({
   modalText,
   actionButtonText,
   services,
-}: Props) {
+}: Props): React.ReactElement {
   const servicesArray = getServices(services);
   const { t } = useTranslation();
   return (

@@ -41,13 +41,13 @@ type Props = {
   isSubmitting: boolean;
 };
 
-function CreateProfileForm(props: Props) {
+function CreateProfileForm(props: Props): React.ReactElement {
   const { t } = useTranslation();
 
   const getFieldError = (
     formikProps: FormikProps<FormikFormValues>,
     fieldName: keyof FormikFormValues,
-    options: object
+    options: Record<string, unknown>
   ) => {
     const renderError = (message: string) => t(message, options);
 

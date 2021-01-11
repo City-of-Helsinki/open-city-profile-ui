@@ -5,7 +5,7 @@ type Props = {
   className?: string;
 };
 
-function Copyright(props: Props) {
+function Copyright(props: Props): React.ReactElement {
   const { t } = useTranslation();
   const year = new Date().getFullYear();
 

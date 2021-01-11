@@ -19,7 +19,7 @@ interface Props {
   children: React.ReactElement;
 }
 
-function ToastProvider({ children }: Props) {
+function ToastProvider({ children }: Props): React.ReactElement {
   const [state, dispatch] = React.useReducer(toastReducer, { toasts: [] });
 
   const createToast = React.useCallback((toast: LaxToast = {}): string => {

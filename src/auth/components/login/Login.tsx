@@ -8,7 +8,7 @@ import styles from './Login.module.css';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import authService from '../../authService';
 
-function Login() {
+function Login(): React.ReactElement {
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 
-function AppMeta() {
+function AppMeta(): React.ReactElement {
   const { i18n } = useTranslation();
 
   return (

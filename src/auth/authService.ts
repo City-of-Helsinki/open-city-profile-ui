@@ -16,7 +16,6 @@ export class AuthService {
   userManager: UserManager;
 
   constructor() {
-    /* eslint-disable @typescript-eslint/camelcase */
     const settings: UserManagerSettings = {
       automaticSilentRenew: true,
       userStore: new WebStorageStateStore({ store: window.localStorage }),
@@ -32,7 +31,6 @@ export class AuthService {
       // https://github.com/City-of-Helsinki/kukkuu-ui/blob/8029ed64c3d0496fa87fa57837c73520e8cbe37f/src/domain/auth/userManager.ts#L18
       // accessTokenExpiringNotificationTime: 59.65 * 60,
     };
-    /* eslint-enable @typescript-eslint/camelcase */
 
     // Show oidc debugging info in the console only while developing
     if (process.env.NODE_ENV === 'development') {
@@ -75,7 +73,7 @@ export class AuthService {
     return localStorage.getItem(API_TOKEN);
   }
 
-  public isAuthenticated() {
+  public isAuthenticated(): boolean {
     const userKey = `oidc.user:${process.env.REACT_APP_OIDC_AUTHORITY}:${process.env.REACT_APP_OIDC_CLIENT_ID}`;
     const oidcStorage = localStorage.getItem(userKey);
     const apiTokens = this.getToken();

@@ -15,7 +15,7 @@ type Props = {
   className?: string;
 };
 
-function LanguageSwitcher(props: Props) {
+function LanguageSwitcher(props: Props): React.ReactElement {
   const { i18n } = useTranslation();
   const setLanguage = (code: string) => {
     i18n.changeLanguage(code);

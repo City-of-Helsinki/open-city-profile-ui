@@ -15,7 +15,7 @@ function DownloadData({
   isDownloadingData,
   isOpenByDefault,
   onDownloadClick,
-}: Props) {
+}: Props): React.ReactElement {
   const { t } = useTranslation();
 
   return (

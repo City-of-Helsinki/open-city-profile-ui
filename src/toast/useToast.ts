@@ -1,8 +1,8 @@
 import React from 'react';
 
-import ToastContext from './ToastContext';
+import ToastContext, { ToastContextType } from './ToastContext';
 
-function useToast() {
+function useToast(): ToastContextType {
   return React.useContext(ToastContext);
 }
 

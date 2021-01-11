@@ -38,7 +38,7 @@ if (process.env.REACT_APP_ENVIRONMENT !== 'production') {
   window._paq.push(['requireConsent']);
 }
 
-function App() {
+function App(): React.ReactElement {
   const location = useLocation();
 
   if (location.pathname === '/loginsso') {

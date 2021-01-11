@@ -10,7 +10,7 @@ import {
 } from './profileInformationAccountManagementLinkUtils';
 import styles from './profileInformationAccountManagementLink.module.css';
 
-function ProfileInformationAccountManagementLink() {
+function ProfileInformationAccountManagementLink(): React.ReactElement | null {
   const { t } = useTranslation();
   const { profile } = useProfile();
 

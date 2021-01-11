@@ -1,6 +1,6 @@
 import defaultTo from 'lodash/defaultTo';
 
-export default {
+const config = {
   clientId: process.env.REACT_APP_OIDC_CLIENT_ID,
   environment: process.env.REACT_APP_ENVIRONMENT,
   helsinkiAccountAMR: defaultTo(
@@ -33,3 +33,5 @@ export default {
     'https://tunnus.yle.fi/#omat-tiedot'
   ),
 };
+
+export default config;

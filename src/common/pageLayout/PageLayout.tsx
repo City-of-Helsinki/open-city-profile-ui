@@ -14,7 +14,7 @@ type Props = React.PropsWithChildren<{
   title?: string;
 }>;
 
-function PageLayout(props: Props) {
+function PageLayout(props: Props): React.ReactElement {
   const { trackPageView } = useMatomo();
   const { t } = useTranslation();
   const { title = 'appName' } = props;

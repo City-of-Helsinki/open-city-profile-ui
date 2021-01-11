@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 import { LaxToast } from './types';
 
-interface ToastContextType {
+export interface ToastContextType {
   createToast: (toast?: LaxToast) => string;
   hideToast: (toastId: string) => void;
   deleteToast: (toastId: string) => void;

@@ -5,7 +5,7 @@ import lodash from 'lodash';
 export function getIsInvalid<FormValues>(
   formikProps: FormikProps<FormValues>,
   fieldName: string
-) {
+): boolean {
   const isSubmitted = formikProps.submitCount > 0;
   const isError = Boolean(lodash.get(formikProps.errors, fieldName));
 
@@ -18,7 +18,7 @@ export function getError<FormValues>(
   formikProps: FormikProps<FormValues>,
   fieldName: string,
   render: (error: string) => ReactNode = defaultErrorRender
-) {
+): ReactNode | undefined {
   const errorMessage = lodash.get(formikProps.errors, fieldName);
 
   if (

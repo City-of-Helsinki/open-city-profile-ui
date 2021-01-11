@@ -12,9 +12,9 @@ import useToast from '../../../toast/useToast';
 
 const NAME_QUERY = loader('../../../profile/graphql/NameQuery.graphql');
 
-type Props = {};
+type Props = Record<string, unknown>;
 
-function UserDropdown(props: Props) {
+function UserDropdown(props: Props): React.ReactElement {
   const { createToast } = useToast();
   const [nameQuery, { data, loading }] = useLazyQuery<NameQuery>(NAME_QUERY, {
     onError: () => {

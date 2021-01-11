@@ -3,7 +3,7 @@ import {
   MyProfileQuery_myProfile_addresses_edges_node as Address,
 } from '../../graphql/generatedTypes';
 
-const getAddressesFromNode = (data?: MyProfileQuery) => {
+const getAddressesFromNode = (data?: MyProfileQuery): Address[] => {
   const edge = data?.myProfile?.addresses?.edges || [];
   return edge
     .filter(edge => !edge?.node?.primary)

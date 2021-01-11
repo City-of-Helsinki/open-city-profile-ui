@@ -13,7 +13,7 @@ type Props = {
   className?: string;
 };
 
-function FullscreenNavigation(props: Props) {
+function FullscreenNavigation(props: Props): React.ReactElement {
   const { t } = useTranslation();
   const [isNavOpen, setIsNavOpen] = useState(false);
 

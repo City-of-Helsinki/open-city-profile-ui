@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-function AccessibilityStatementSv() {
+function AccessibilityStatementSv(): React.ReactElement {
   return (
     <Fragment>
       <h1>Tillgänglighetsutlåtande</h1>

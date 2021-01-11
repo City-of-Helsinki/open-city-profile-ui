@@ -21,7 +21,10 @@ type Props = {
   onDelete: () => void;
 };
 
-function DeleteProfile({ isOpenByDefault, onDelete }: Props) {
+function DeleteProfile({
+  isOpenByDefault,
+  onDelete,
+}: Props): React.ReactElement {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [deleteInstructions, setDeleteInstructions] = useState(false);
   const { createToast } = useToast();
@@ -80,8 +83,6 @@ function DeleteProfile({ isOpenByDefault, onDelete }: Props) {
           id="deleteInstructions"
           name="deleteInstructions"
           checked={deleteInstructions}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
           labelText={t('deleteProfile.accept')}
         />
 

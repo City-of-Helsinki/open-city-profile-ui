@@ -6,7 +6,6 @@ describe('authService', () => {
 
   afterEach(() => {
     localStorage.clear();
-    localStorage.setItem.mockClear();
     jest.restoreAllMocks();
   });
 
@@ -25,9 +24,10 @@ describe('authService', () => {
 
   describe('getToken', () => {
     it('should get API_TOKENS from localStorage', () => {
+      const getSpy = jest.spyOn(Storage.prototype, 'getItem');
       authService.getToken();
 
-      expect(localStorage.getItem).toHaveBeenNthCalledWith(3, API_TOKEN);
+      expect(getSpy).toHaveBeenNthCalledWith(1, API_TOKEN);
     });
   });
 
@@ -60,7 +60,6 @@ describe('authService', () => {
       const apiToken = '5ed3abc5-9b65-4879-8d09-3cd8499650ef';
       const validUser = JSON.stringify({
         name: 'Mr. Louisa Tromp',
-        /* eslint-disable-next-line @typescript-eslint/camelcase */
         access_token: '5ed3abc5-9b65-4879-8d09-3cd8499650ef',
       });
 
@@ -83,12 +82,12 @@ describe('authService', () => {
   });
 
   describe('endLogin', () => {
-    global.fetch.mockResponse(JSON.stringify({ data: {} }));
-    /* eslint-disable-next-line @typescript-eslint/camelcase */
+    beforeEach(() => {
+      global.fetch.mockResponse(JSON.stringify({ data: {} }));
+    });
     const access_token = 'db237bc3-e197-43de-8c86-3feea4c5f886';
     const mockUser = {
       name: 'Penelope Krajcik',
-      /* eslint-disable-next-line @typescript-eslint/camelcase */
       access_token,
     };
 
@@ -126,6 +125,7 @@ describe('authService', () => {
     });
 
     it('should set the user in localStorage before the function returns', async () => {
+      const setSpy = jest.spyOn(Storage.prototype, 'setItem');
       expect.assertions(1);
       jest
         .spyOn(userManager, 'signinRedirectCallback')
@@ -134,7 +134,7 @@ describe('authService', () => {
 
       await authService.endLogin();
 
-      expect(localStorage.setItem).toHaveBeenCalledTimes(1);
+      expect(setSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -193,11 +193,9 @@ describe('authService', () => {
   });
 
   describe('fetchApiToken', () => {
-    /* eslint-disable-next-line @typescript-eslint/camelcase */
     const access_token = 'db237bc3-e197-43de-8c86-3feea4c5f886';
     const mockUser = {
       name: 'Penelope Krajcik',
-      /* eslint-disable-next-line @typescript-eslint/camelcase */
       access_token,
     };
 
@@ -230,11 +228,12 @@ describe('authService', () => {
     });
 
     it('should call localStorage.setItem with the right arguments', async () => {
+      const setSpy = jest.spyOn(Storage.prototype, 'setItem');
       expect.assertions(2);
       await authService.fetchApiToken(mockUser);
 
-      expect(localStorage.setItem).toHaveBeenCalledTimes(1);
-      expect(localStorage.setItem.mock.calls[0]).toMatchInlineSnapshot(`
+      expect(setSpy).toHaveBeenCalledTimes(1);
+      expect(setSpy.mock.calls[0]).toMatchInlineSnapshot(`
         Array [
           "apiToken",
           "71ffd52c-5985-46d3-b445-490554f4012a",

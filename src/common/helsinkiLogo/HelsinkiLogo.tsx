@@ -10,7 +10,10 @@ type Props = {
   className?: string;
   isLinkToFrontPage?: boolean;
 };
-function HelsinkiLogo({ className, isLinkToFrontPage }: Props) {
+function HelsinkiLogo({
+  className,
+  isLinkToFrontPage,
+}: Props): React.ReactElement {
   const { t, i18n } = useTranslation();
 
   const lang = getLanguageCode(i18n.languages[0]);

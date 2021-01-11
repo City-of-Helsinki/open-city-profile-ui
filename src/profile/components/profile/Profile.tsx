@@ -17,7 +17,7 @@ import authService from '../../../auth/authService';
 
 const PROFILE_EXISTS = loader('../../graphql/ProfileExistsQuery.graphql');
 
-function Profile() {
+function Profile(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const location = useLocation();

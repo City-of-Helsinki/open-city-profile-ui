@@ -20,7 +20,7 @@ const AdditionalInformationActions = ({
   index,
   canBeMadePrimary,
   makePrimary,
-}: Props) => {
+}: Props): React.ReactElement => {
   const { t } = useTranslation();
   return (
     <div className={styles.additionalActionsWrapper}>

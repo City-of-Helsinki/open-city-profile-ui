@@ -42,7 +42,7 @@ type Props = {
   setEditing: () => void;
 };
 
-function ProfileInformation(props: Props) {
+function ProfileInformation(props: Props): React.ReactElement {
   const history = useHistory();
   const { t, i18n } = useTranslation();
   const { trackEvent } = useMatomo();
@@ -160,7 +160,7 @@ function ProfileInformation(props: Props) {
                   <LabeledValue
                     key={index}
                     label={t('profileInformation.email')}
-                    value={email.email}
+                    value={email.email as string}
                   />
                 ))}
               </div>

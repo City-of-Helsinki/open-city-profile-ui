@@ -19,9 +19,9 @@ const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
 );
 
-type Props = {};
+type Props = Record<string, unknown>;
 
-function ServiceConnections(props: Props) {
+function ServiceConnections(props: Props): React.ReactElement {
   const { t, i18n } = useTranslation();
   const { createToast } = useToast();
 
