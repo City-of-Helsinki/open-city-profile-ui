@@ -22,7 +22,7 @@ function removeActionFromParams() {
 
 function useActionResumer(
   deferredAction: string,
-  onActionInitialization: (...args: unknown[]) => void,
+  onActionInitialization: (...args: string[][]) => void,
   callback: () => void
 ): [() => void, boolean] {
   const isActionSearchParamEvoked = getIsActionSearchParamEvoked(
@@ -33,7 +33,7 @@ function useActionResumer(
   );
 
   const startAction = React.useCallback(
-    (...args: unknown[]) => {
+    (...args: string[][]) => {
       setIsActionOngoing(true);
 
       onActionInitialization(...args);
