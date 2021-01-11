@@ -82,6 +82,7 @@
   "devDependencies": {
     "apollo": "^2.21.1",
     "cross-env": "^7.0.3",
+    "eslint-plugin-sonarjs": "^0.5.0",
     "helsinki-utils": "City-of-Helsinki/helsinki-utils-js#0.1.0",
     "jest-fetch-mock": "^2.1.2",
     "prettier": "^1.18.2",

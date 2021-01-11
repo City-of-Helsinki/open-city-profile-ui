@@ -36,22 +36,24 @@ import FormikDropdown, {
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
 
+const maxLengthValidation = 'validation.maxLength';
+
 const addressSchema = yup.object().shape({
-  address: yup.string().max(128, 'validation.maxLength'),
-  city: yup.string().max(64, 'validation.maxLength'),
-  postalCode: yup.string().max(5, 'validation.maxLength'),
+  address: yup.string().max(128, maxLengthValidation),
+  city: yup.string().max(64, maxLengthValidation),
+  postalCode: yup.string().max(5, maxLengthValidation),
 });
 
 const phoneSchema = yup.object().shape({
   phone: yup
     .string()
     .min(6, 'validation.phoneMin')
-    .max(255, 'validation.maxLength'),
+    .max(255, maxLengthValidation),
 });
 
 const schema = yup.object().shape({
-  firstName: yup.string().max(255, 'validation.maxLength'),
-  lastName: yup.string().max(255, 'validation.maxLength'),
+  firstName: yup.string().max(255, maxLengthValidation),
+  lastName: yup.string().max(255, maxLengthValidation),
   language: yup.string(),
   primaryPhone: phoneSchema,
   primaryAddress: addressSchema,
