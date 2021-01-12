@@ -81,10 +81,12 @@ function Profile(): React.ReactElement {
         {isProfileFound ? (
           <ViewProfile />
         ) : (
-          <CreateProfile
-            tunnistamoUser={tunnistamoUser as User}
-            onProfileCreated={() => checkProfileExists()}
-          />
+          tunnistamoUser && (
+            <CreateProfile
+              tunnistamoUser={tunnistamoUser}
+              onProfileCreated={() => checkProfileExists()}
+            />
+          )
         )}
       </Loading>
     </PageLayout>
