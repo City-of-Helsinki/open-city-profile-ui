@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <title>Silent renewal</title>
 </head>
 <body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.10.1/oidc-client.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.10.1/oidc-client.min.js" integrity="sha512-J+l1VucK7pEidJ+w1fYQfo0Yq4LGkTXwKQ3w9Y9/c4O2NoQe+DgiIwvh2ocNVv4ost5H6W4uhy1K2sw5tWO+ew==" crossorigin="anonymous"></script>
 <script>
   var mgr = new Oidc.UserManager();
   mgr.signinSilentCallback().catch(error => {
