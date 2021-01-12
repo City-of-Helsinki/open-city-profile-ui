@@ -132,7 +132,7 @@ function Subscriptions(): React.ReactElement {
   const handleCheckboxValues = (
     index: number,
     code?: string,
-    value?: boolean
+    value = false
   ) => {
     const newSubscriptionData = subscriptionData || [];
 
