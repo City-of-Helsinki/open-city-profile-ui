@@ -12,14 +12,53 @@ import { FormValues } from '../../components/editProfileForm/EditProfileForm';
 import { updateMutationVariables } from '../updateMutationVariables';
 import { myProfile } from '../../../common/test/myProfileQueryData';
 
+type ClonedObject = Record<string, unknown>;
+type ReplacerFunction = (key: string, value: unknown) => unknown;
+
+const JSONReplacer: ReplacerFunction = (
+  key: string,
+  value: unknown
+): unknown => {
+  if (key === 'id' && value === '') {
+    return undefined;
+  }
+  return key.indexOf('_') === 0 || key === 'id' ? undefined : value;
+};
+
+const cloneObject = <T>(source: T, replacer?: ReplacerFunction): T =>
+  JSON.parse(JSON.stringify(source, replacer));
+
+const cloneAndReplace = <T>(source: T): ClonedObject =>
+  cloneObject<T>(source, JSONReplacer) as ClonedObject;
+
+const getAddressAsComparisonObject = (source: Address): Partial<Address> =>
+  cloneAndReplace<Address>(source);
+
+const getPhoneAsComparisonObject = (source: Phone): Partial<Phone> => {
+  const clone = cloneAndReplace<Phone>(source);
+  if (source.id) {
+    clone.id = source.id;
+  }
+  return clone;
+};
+
+const getEmailAsComparisonObject = (source: Email): Partial<Email> => {
+  const clone = cloneAndReplace<Email>(source);
+  if (source.email && source.id) {
+    clone.id = source.email;
+  }
+  return clone;
+};
+
+const primaryEmail = myProfile.myProfile?.primaryEmail as Email;
+const primaryPhone = myProfile.myProfile?.primaryPhone as Phone;
+const primaryAddress = myProfile.myProfile?.primaryAddress as Address;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+const secondaryAddress = myProfile.myProfile.addresses.edges[0].node as Address;
+
 const emails: Email[] = [
-  {
-    email: 'ensimmainen@testi.fi',
-    emailType: EmailType.OTHER,
-    id: '123',
-    primary: true,
-    __typename: 'EmailNode',
-  },
+  cloneObject(primaryEmail),
   {
     email: 'toinen@testi.fi',
     primary: false,
@@ -37,16 +76,7 @@ const emails: Email[] = [
 ];
 
 const addresses: Address[] = [
-  {
-    id: '123',
-    primary: true,
-    address: 'Testikatu 55',
-    city: 'Helsinki',
-    countryCode: 'FI',
-    postalCode: '00100',
-    addressType: AddressType.OTHER,
-    __typename: 'AddressNode',
-  },
+  cloneObject(primaryAddress),
   {
     id: '',
     address: 'Testikatu 66',
@@ -57,26 +87,11 @@ const addresses: Address[] = [
     addressType: AddressType.OTHER,
     __typename: 'AddressNode',
   },
-  {
-    id: '234',
-    address: 'Muokkauskatu 66',
-    city: 'Helsinki',
-    countryCode: 'FI',
-    postalCode: '12345',
-    primary: false,
-    addressType: AddressType.OTHER,
-    __typename: 'AddressNode',
-  },
+  cloneObject(secondaryAddress),
 ];
 
 const phones: Phone[] = [
-  {
-    id: '123',
-    phone: '0501234567',
-    phoneType: PhoneType.OTHER,
-    primary: true,
-    __typename: 'PhoneNode',
-  },
+  cloneObject(primaryPhone),
   {
     id: '',
     phone: '0507654321',
@@ -97,33 +112,12 @@ const formValues: FormValues = {
   firstName: 'Teemu',
   lastName: 'Testaaja',
   profileLanguage: Language.FINNISH,
-  primaryEmail: {
-    email: 'ensimmainen@testi.fi',
-    primary: true,
-    id: '123',
-    emailType: EmailType.OTHER,
-    __typename: 'EmailNode',
-  },
+  primaryEmail: cloneObject(emails[0]),
   emails,
   phones,
-  primaryPhone: {
-    id: '123',
-    phone: '0501234567',
-    phoneType: PhoneType.OTHER,
-    primary: true,
-    __typename: 'PhoneNode',
-  },
+  primaryPhone: cloneObject(phones[0]),
   addresses,
-  primaryAddress: {
-    id: '123',
-    primary: true,
-    address: 'Testikatu 55',
-    city: 'Helsinki',
-    countryCode: 'FI',
-    postalCode: '00100',
-    addressType: AddressType.OTHER,
-    __typename: 'AddressNode',
-  },
+  primaryAddress: cloneObject(addresses[0]),
 };
 
 test('add arrays are formed correctly', () => {
@@ -133,22 +127,15 @@ test('add arrays are formed correctly', () => {
   );
 
   expect(variables.input.profile.addAddresses).toEqual([
-    {
-      address: addresses[1].address,
-      postalCode: '00000',
-      city: 'Helsinki',
-      countryCode: 'FI',
-      primary: false,
-      addressType: 'OTHER',
-    },
+    getAddressAsComparisonObject(addresses[1]),
   ]);
 
   expect(variables.input.profile.addEmails).toEqual([
-    { email: 'toinen@testi.fi', emailType: 'OTHER', primary: false },
+    getEmailAsComparisonObject(emails[1]),
   ]);
 
   expect(variables.input.profile.addPhones).toEqual([
-    { phone: '0507654321', primary: false, phoneType: 'OTHER' },
+    getPhoneAsComparisonObject(phones[1]),
   ]);
 });
 
@@ -175,30 +162,13 @@ test('update arrays are formed correctly', () => {
   );
 
   expect(variables.input.profile.addAddresses).toEqual([
-    {
-      address: 'Testikatu 66',
-      postalCode: '00000',
-      city: 'Helsinki',
-      countryCode: 'FI',
-      primary: false,
-      addressType: 'OTHER',
-    },
+    getAddressAsComparisonObject(addresses[1]),
   ]);
   expect(variables.input.profile.updateEmails).toEqual([
-    {
-      email: emails[2].email,
-      id: emails[2].email,
-      emailType: 'OTHER',
-      primary: false,
-    },
+    getEmailAsComparisonObject(emails[2]),
   ]);
   expect(variables.input.profile.updatePhones).toEqual([
-    {
-      id: '234',
-      phone: '0505472568',
-      primary: false,
-      phoneType: 'OTHER',
-    },
+    getPhoneAsComparisonObject(phones[2]),
   ]);
 });
 
@@ -227,9 +197,18 @@ test('remove arrays are formed correctly', () => {
     myProfile
   );
 
-  expect(variables.input.profile.removeAddresses).toEqual(['123', '234']);
-  expect(variables.input.profile.removeEmails).toEqual(['123', '234']);
-  expect(variables.input.profile.removePhones).toEqual(['123', '234']);
+  expect(variables.input.profile.removeAddresses).toEqual([
+    addresses[0].id,
+    addresses[2].id,
+  ]);
+  expect(variables.input.profile.removeEmails).toEqual([
+    emails[0].id,
+    emails[2].id,
+  ]);
+  expect(variables.input.profile.removePhones).toEqual([
+    phones[0].id,
+    phones[2].id,
+  ]);
 });
 
 test('remove arrays do not exists', () => {
