@@ -2,7 +2,7 @@ import authService, { API_TOKEN } from '../authService';
 
 describe('authService', () => {
   const userManager = authService.userManager;
-  const oidcUserKey = `oidc.user:${process.env.REACT_APP_OIDC_AUTHORITY}:${process.env.REACT_APP_OIDC_CLIENT_ID}`;
+  const oidcUserKey = `oidc.user:${window._env_.REACT_APP_OIDC_AUTHORITY}:${window._env_.REACT_APP_OIDC_CLIENT_ID}`;
 
   afterEach(() => {
     localStorage.clear();
@@ -204,7 +204,7 @@ describe('authService', () => {
 
       global.fetch.mockResponse(
         JSON.stringify({
-          [process.env.REACT_APP_PROFILE_AUDIENCE]:
+          [window._env_.REACT_APP_PROFILE_AUDIENCE]:
             '71ffd52c-5985-46d3-b445-490554f4012a',
         })
       );

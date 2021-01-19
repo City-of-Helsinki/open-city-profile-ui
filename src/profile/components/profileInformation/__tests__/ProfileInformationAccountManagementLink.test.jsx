@@ -34,11 +34,11 @@ describe('<ProfileInformationAuthenticationSourceBackLink />', () => {
     );
 
   beforeAll(() => {
-    process.env.REACT_APP_HELSINKI_ACCOUNT_AMR = 'helusername-test';
+    window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = "helusername-test"
   });
 
   afterAll(() => {
-    process.env.REACT_APP_HELSINKI_ACCOUNT_AMR = 'helusername';
+    window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = "helusername"
   });
 
   it('should render helsinki account link as expected based on config', () => {

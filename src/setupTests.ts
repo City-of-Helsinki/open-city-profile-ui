@@ -8,6 +8,10 @@ const customGlobal: GlobalWithFetchMock = global as GlobalWithFetchMock;
 customGlobal.fetch = require('jest-fetch-mock');
 customGlobal.fetchMock = customGlobal.fetch;
 
+// Load generated runtime configuration to be available in tests
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require('../public/test-env-config');
+
 configure({ adapter: new Adapter() });
 
 jest.mock('react-router', () => ({

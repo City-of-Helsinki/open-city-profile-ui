@@ -23,9 +23,6 @@ jobs:
         uses: andersinno/kolga-build-action@v2
         env:
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-review
-          DOCKER_BUILD_ARG_REACT_APP_ENVIRONMENT: 'review'
-          DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://api.hel.fi/sso-test/"
-          DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.test.kuva.hel.ninja/graphql/"
 
   review:
     runs-on: ubuntu-latest
@@ -40,3 +37,7 @@ jobs:
         env:
           ENVIRONMENT_URL: https://${{ env.K8S_NAMESPACE }}.${{ env.BASE_DOMAIN }}
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-review
+          K8S_SECRET_REACT_APP_ENVIRONMENT: 'review'
+          K8S_SECRET_REACT_APP_OIDC_AUTHORITY: "https://api.hel.fi/sso-test/"
+          K8S_SECRET_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.test.kuva.hel.ninja/graphql/"
+          K8S_SECRET_REACT_APP_OIDC_CLIENT_ID: ${{ env.K8S_NAMESPACE }}
