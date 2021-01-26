@@ -31,8 +31,13 @@ const cloneObject = <T>(source: T, replacer?: ReplacerFunction): T =>
 const cloneAndReplace = <T>(source: T): ClonedObject =>
   cloneObject<T>(source, JSONReplacer) as ClonedObject;
 
-const getAddressAsComparisonObject = (source: Address): Partial<Address> =>
-  cloneAndReplace<Address>(source);
+const getAddressAsComparisonObject = (source: Address): Partial<Address> => {
+  const clone = cloneAndReplace<Address>(source);
+  if (source.id) {
+    clone.id = source.id;
+  }
+  return clone;
+};
 
 const getPhoneAsComparisonObject = (source: Phone): Partial<Phone> => {
   const clone = cloneAndReplace<Phone>(source);
@@ -50,102 +55,94 @@ const getEmailAsComparisonObject = (source: Email): Partial<Email> => {
   return clone;
 };
 
-const primaryEmail = myProfile.myProfile?.primaryEmail as Email;
-const primaryPhone = myProfile.myProfile?.primaryPhone as Phone;
-const primaryAddress = myProfile.myProfile?.primaryAddress as Address;
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
-const secondaryAddress = myProfile.myProfile.addresses.edges[0].node as Address;
+const primaryEmail = cloneObject(myProfile.myProfile?.primaryEmail as Email);
+const updatedSecondaryEmail = {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  ...cloneObject(myProfile.myProfile.emails.edges[0].node),
+  ...{ email: 'kolmas@testi.fi' },
+} as Email;
+const newEmail = {
+  email: 'toinen@testi.fi',
+  primary: false,
+  emailType: EmailType.OTHER,
+  id: '',
+  __typename: 'EmailNode',
+} as Email;
 
-const emails: Email[] = [
-  cloneObject(primaryEmail),
-  {
-    email: 'toinen@testi.fi',
-    primary: false,
-    emailType: EmailType.OTHER,
-    id: '',
-    __typename: 'EmailNode',
-  },
-  {
-    email: 'kolmas@testi.fi',
-    primary: false,
-    emailType: EmailType.OTHER,
-    id: '234',
-    __typename: 'EmailNode',
-  },
-];
+const primaryPhone = cloneObject(myProfile.myProfile?.primaryPhone as Phone);
+const updatedSecondaryPhone = {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  ...cloneObject(myProfile.myProfile?.phones.edges[0].node),
+  ...{ phone: '0505472568' },
+} as Phone;
+const newPhone = {
+  id: '',
+  phone: '0507654321',
+  phoneType: PhoneType.OTHER,
+  primary: false,
+  __typename: 'PhoneNode',
+} as Phone;
 
-const addresses: Address[] = [
-  cloneObject(primaryAddress),
-  {
-    id: '',
-    address: 'Testikatu 66',
-    city: 'Helsinki',
-    countryCode: 'FI',
-    postalCode: '00000',
-    primary: false,
-    addressType: AddressType.OTHER,
-    __typename: 'AddressNode',
-  },
-  cloneObject(secondaryAddress),
-];
-
-const phones: Phone[] = [
-  cloneObject(primaryPhone),
-  {
-    id: '',
-    phone: '0507654321',
-    phoneType: PhoneType.OTHER,
-    primary: false,
-    __typename: 'PhoneNode',
-  },
-  {
-    id: '234',
-    phone: '0505472568',
-    phoneType: PhoneType.OTHER,
-    primary: false,
-    __typename: 'PhoneNode',
-  },
-];
+const primaryAddress = cloneObject(
+  myProfile.myProfile?.primaryAddress as Address
+);
+const updatedSecondaryAddress = {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  ...cloneObject(myProfile.myProfile?.addresses.edges[0].node as Address),
+  ...{ address: 'Testaajaraitti' },
+} as Address;
+const newAddress = {
+  id: '',
+  address: 'Testikatu 66',
+  city: 'Helsinki',
+  countryCode: 'FI',
+  postalCode: '00000',
+  primary: false,
+  addressType: AddressType.OTHER,
+  __typename: 'AddressNode',
+} as Address;
 
 const formValues: FormValues = {
   firstName: 'Teemu',
   lastName: 'Testaaja',
   profileLanguage: Language.FINNISH,
-  primaryEmail: cloneObject(emails[0]),
-  emails,
-  phones,
-  primaryPhone: cloneObject(phones[0]),
-  addresses,
-  primaryAddress: cloneObject(addresses[0]),
+  primaryEmail,
+  emails: [primaryEmail, newEmail, updatedSecondaryEmail],
+  phones: [primaryPhone, newPhone, updatedSecondaryPhone],
+  primaryPhone,
+  addresses: [primaryAddress, newAddress, updatedSecondaryAddress],
+  primaryAddress,
 };
 
-test('add arrays are formed correctly', () => {
+test('add arrays are formed correctly with new data', () => {
   const variables: UpdateMyProfileVariables = updateMutationVariables(
     formValues,
     myProfile
   );
 
   expect(variables.input.profile.addAddresses).toEqual([
-    getAddressAsComparisonObject(addresses[1]),
+    getAddressAsComparisonObject(newAddress),
   ]);
 
   expect(variables.input.profile.addEmails).toEqual([
-    getEmailAsComparisonObject(emails[1]),
+    getEmailAsComparisonObject(newEmail),
   ]);
 
   expect(variables.input.profile.addPhones).toEqual([
-    getPhoneAsComparisonObject(phones[1]),
+    getPhoneAsComparisonObject(newPhone),
   ]);
 });
 
-test('add arrays are empty', () => {
+test('add arrays are empty when using existing data', () => {
   const variables: UpdateMyProfileVariables = updateMutationVariables(
     {
       ...formValues,
-      phones: [phones[2]],
-      emails: [emails[2]],
-      addresses: [addresses[2]],
+      addresses: [primaryAddress, updatedSecondaryAddress],
+      emails: [primaryEmail, updatedSecondaryEmail],
+      phones: [primaryPhone, updatedSecondaryPhone],
     },
     myProfile
   );
@@ -155,33 +152,29 @@ test('add arrays are empty', () => {
   expect(variables.input.profile.addAddresses).toEqual([]);
 });
 
-test('update arrays are formed correctly', () => {
+test('update arrays are formed correctly with updated data objects', () => {
   const variables: UpdateMyProfileVariables = updateMutationVariables(
     formValues,
     myProfile
   );
-
-  expect(variables.input.profile.addAddresses).toEqual([
-    getAddressAsComparisonObject(addresses[1]),
+  expect(variables.input.profile.updateAddresses).toEqual([
+    getAddressAsComparisonObject(updatedSecondaryAddress),
   ]);
   expect(variables.input.profile.updateEmails).toEqual([
-    getEmailAsComparisonObject(emails[2]),
+    getEmailAsComparisonObject(updatedSecondaryEmail),
   ]);
   expect(variables.input.profile.updatePhones).toEqual([
-    getPhoneAsComparisonObject(phones[2]),
+    getPhoneAsComparisonObject(updatedSecondaryPhone),
   ]);
 });
 
-test('update arrays are empty', () => {
+test('update arrays are empty when using unchanged or new data', () => {
   const variables: UpdateMyProfileVariables = updateMutationVariables(
     {
       ...formValues,
-      addresses: [
-        addresses[0],
-        { ...addresses[1], address: 'Muokkauskatu 55' },
-      ],
-      emails: [emails[0], { ...emails[1], email: 'test@email.com' }],
-      phones: [phones[0], { ...phones[1], phone: '0501234567' }],
+      addresses: [primaryAddress, newAddress],
+      emails: [primaryEmail, newEmail],
+      phones: [primaryPhone, newPhone],
     },
     myProfile
   );
@@ -191,27 +184,27 @@ test('update arrays are empty', () => {
   expect(variables.input.profile.updatePhones).toEqual([]);
 });
 
-test('remove arrays are formed correctly', () => {
+test('remove arrays are formed correctly with existing data', () => {
   const variables: UpdateMyProfileVariables = updateMutationVariables(
     { ...formValues, addresses: [], emails: [], phones: [] },
     myProfile
   );
 
   expect(variables.input.profile.removeAddresses).toEqual([
-    addresses[0].id,
-    addresses[2].id,
+    primaryAddress.id,
+    updatedSecondaryAddress.id,
   ]);
   expect(variables.input.profile.removeEmails).toEqual([
-    emails[0].id,
-    emails[2].id,
+    primaryEmail.id,
+    updatedSecondaryEmail.id,
   ]);
   expect(variables.input.profile.removePhones).toEqual([
-    phones[0].id,
-    phones[2].id,
+    primaryPhone.id,
+    updatedSecondaryPhone.id,
   ]);
 });
 
-test('remove arrays do not exists', () => {
+test('remove arrays do not exists when data is not changed', () => {
   const variables: UpdateMyProfileVariables = updateMutationVariables(
     formValues,
     myProfile
