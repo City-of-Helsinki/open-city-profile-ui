@@ -79,7 +79,7 @@
   "nav": {
     "information": "Information",
     "menuButtonLabel": "Profile menu",
-    "services": "Connected services",
+    "services": "EN: Käyttämäsi palvelut",
     "signin": "Log in",
     "signout": "Sign out",
     "subscriptions": "Subscriptions"
@@ -142,9 +142,9 @@
     "clock": "at",
     "created": "Created:",
     "empty": "You currently don't have any services connected to your profile.",
-    "explanation": "Your profile has been connected to the City of Helsinki services listed below. Any changes in your information are immediately available to the services. You don't have to change your information separately in each service.",
+    "explanation": "EN: Olet antanut seuraaville palveluille oikeuden käyttää Helsinki Profiili -tietojasi.",
     "servicePersonalData": "Information which the service will know about you:",
-    "title": "Connected services"
+    "title": "EN: Palvelut, joilla on lupa käyttää tietojasi"
   },
   "skipToContent": "Skip to content",
   "subscriptions": {

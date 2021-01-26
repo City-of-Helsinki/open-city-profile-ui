@@ -79,7 +79,7 @@
   "nav": {
     "information": "Mina uppgifter",
     "menuButtonLabel": "Profilmeny",
-    "services": "Anslutna tjänster",
+    "services": "SV: Käyttämäsi palvelut",
     "signin": "Logga in",
     "signout": "Logga ut",
     "subscriptions": "Prenumerationer"
@@ -142,9 +142,9 @@
     "clock": "kl.",
     "created": "Skapad:",
     "empty": "Du har för närvarande inga tjänster anslutna till din profil.",
-    "explanation": "Din profil har anslutits till Helsingfors stads tjänster som är listade nedan. Alla ändringar i som du gör i dina uppgifter är omedelbart tillgängliga för dessa tjänster. Du behöver inte ändra dina uppgifter separat i varje tjänst.",
+    "explanation": "SV: Olet antanut seuraaville palveluille oikeuden käyttää Helsinki Profiili -tietojasi.",
     "servicePersonalData": "Information som tjänsten vet om dig:",
-    "title": "Anslutna tjänster"
+    "title": "SV: Palvelut, joilla on lupa käyttää tietojasi"
   },
   "skipToContent": "Hoppa till innehåll",
   "subscriptions": {
