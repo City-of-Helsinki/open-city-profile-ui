@@ -46,6 +46,7 @@ function Profile(): React.ReactElement {
         checkProfileExists();
         setTunnistamoUser(user);
         setIsCheckingAuthState(false);
+        return undefined;
       })
       .catch(() => history.push('/login'));
   }, [checkProfileExists, history]);
@@ -80,10 +81,12 @@ function Profile(): React.ReactElement {
         {isProfileFound ? (
           <ViewProfile />
         ) : (
-          <CreateProfile
-            tunnistamoUser={tunnistamoUser as User}
-            onProfileCreated={() => checkProfileExists()}
-          />
+          tunnistamoUser && (
+            <CreateProfile
+              tunnistamoUser={tunnistamoUser}
+              onProfileCreated={() => checkProfileExists()}
+            />
+          )
         )}
       </Loading>
     </PageLayout>

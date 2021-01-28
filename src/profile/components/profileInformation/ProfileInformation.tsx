@@ -55,8 +55,8 @@ function ProfileInformation(props: Props): React.ReactElement {
   const [downloadProfileData, downloadQueryResult] = useDownloadProfile<
     DownloadMyProfileQuery
   >(ALL_DATA, {
-    onCompleted: data => {
-      const blob = new Blob([data.downloadMyProfile], {
+    onCompleted: returnedData => {
+      const blob = new Blob([returnedData.downloadMyProfile], {
         type: 'application/json',
       });
       FileSaver.saveAs(blob, 'helsinkiprofile_data.json');
@@ -68,8 +68,8 @@ function ProfileInformation(props: Props): React.ReactElement {
     fetchPolicy: 'network-only',
   });
   const [deleteProfile, deleteProfileResult] = useDeleteProfile({
-    onCompleted: data => {
-      if (data) {
+    onCompleted: returnedData => {
+      if (returnedData) {
         trackEvent({ category: 'action', action: 'Delete profile' });
         history.push('/profile-deleted');
       }
@@ -160,7 +160,7 @@ function ProfileInformation(props: Props): React.ReactElement {
                   <LabeledValue
                     key={index}
                     label={t('profileInformation.email')}
-                    value={email.email as string}
+                    value={email.email}
                   />
                 ))}
               </div>

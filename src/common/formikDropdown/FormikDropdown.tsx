@@ -15,15 +15,13 @@ export type OptionType = {
 };
 
 export type HdsOptionType = {
-  //eslint-disable-next-line
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 function FormikDropdown(props: Props): React.ReactElement {
   // HDS Dropdown expects default value to be an object. Find correct option object from array.
-  const getSelectDefault = (options: OptionType[], value?: string) => {
-    return options.find((option: OptionType) => option.value === value);
-  };
+  const getSelectDefault = (options: OptionType[], value?: string) =>
+    options.find((option: OptionType) => option.value === value);
 
   return (
     <Field name={props.name}>

@@ -10,17 +10,16 @@ import {
   profile,
 } from '../../../common/test/subscriptionTestData';
 
-const getSubscriptions = (edges: SubscriptionEdge[]) => {
-  return {
+const getSubscriptions = (edges: SubscriptionEdge[]) =>
+  ({
     subscriptionTypeCategories: {
       edges: [...edges],
       __typename: 'SubscriptionTypeCategoryNodeConnection',
     },
-  } as QuerySubscriptions;
-};
+  } as QuerySubscriptions);
 
-const getProfileData = (edges: ProfileEdge[]) => {
-  return {
+const getProfileData = (edges: ProfileEdge[]) =>
+  ({
     myProfile: {
       id: '123',
       subscriptions: {
@@ -29,8 +28,7 @@ const getProfileData = (edges: ProfileEdge[]) => {
       },
       __typename: 'ProfileNode',
     },
-  } as QueryMySubscriptions;
-};
+  } as QueryMySubscriptions);
 
 it('returns empty array', () => {
   const testData = getSubscriptionsData(

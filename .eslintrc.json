@@ -7,6 +7,7 @@
     "plugin:import/warnings",
     "plugin:import/typescript"
   ],
+  "plugins": ["sonarjs"],
   "rules": {
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
@@ -32,6 +33,17 @@
     "no-console": "warn",
     "no-plusplus": "error",
     "no-undef": "error",
-    "object-curly-spacing": ["warn", "always"]
+    "object-curly-spacing": ["warn", "always"],
+    "curly":"error",
+    "consistent-return":"error",
+    "no-shadow":["error", { "hoist": "all"}],
+    "sonarjs/no-duplicate-string": "error",
+    "arrow-parens": ["error", "as-needed"],
+    "arrow-body-style": ["error", "as-needed"],
+    "object-shorthand": ["error", "properties"],
+    "@typescript-eslint/no-unnecessary-type-assertion": "error"
+  },
+  "parserOptions": {
+    "project":"./tsconfig.json"
   }
 }

@@ -8,9 +8,7 @@ type Props = {
   isLinkToFrontPage?: boolean;
 };
 
-const getWrapper = (props?: Props) => {
-  return shallow(<HelsinkiLogo {...props} />);
-};
+const getWrapper = (props?: Props) => shallow(<HelsinkiLogo {...props} />);
 
 describe('renders correct logo based on language', () => {
   test('finnish logo', () => {

@@ -84,13 +84,14 @@ export class AuthService {
   }
 
   public async login(path = '/'): Promise<void> {
-    try {
-      return this.userManager.signinRedirect({ data: { path } });
-    } catch (error) {
+    let success = true;
+    await this.userManager.signinRedirect({ data: { path } }).catch(error => {
+      success = false;
       if (error.message !== 'Network Error') {
         Sentry.captureException(error);
       }
-    }
+    });
+    return success ? Promise.resolve() : Promise.reject();
   }
 
   public async endLogin(): Promise<User> {

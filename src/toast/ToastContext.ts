@@ -9,9 +9,7 @@ export interface ToastContextType {
 }
 
 const ToastContext = createContext<ToastContextType>({
-  createToast: (toast?: LaxToast): string => {
-    return '';
-  },
+  createToast: (toast?: LaxToast): string => '',
   hideToast: (toastId: string) => {
     // pass
   },

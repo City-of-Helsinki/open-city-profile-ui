@@ -13,7 +13,9 @@ type Props = PropsWithChildren<{
 
 function NotificationComponent(props: Props): React.ReactElement | null {
   const { t } = useTranslation();
-  if (!props.show) return null;
+  if (!props.show) {
+    return null;
+  }
   return (
     <div className={styles.notification}>
       <DismissableNotification

@@ -16,7 +16,10 @@ function ProfileDeleted(): React.ReactElement {
         setTimeUntilLogout(time => time - 1);
       }, 1000);
       return () => clearInterval(interval);
-    } else authService.logout();
+    } else {
+      authService.logout();
+      return undefined;
+    }
   }, [timeUntilLogout]);
 
   return (

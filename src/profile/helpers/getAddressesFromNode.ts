@@ -4,8 +4,8 @@ import {
 } from '../../graphql/generatedTypes';
 
 const getAddressesFromNode = (data?: MyProfileQuery): Address[] => {
-  const edge = data?.myProfile?.addresses?.edges || [];
-  return edge
+  const edges = data?.myProfile?.addresses?.edges || [];
+  return edges
     .filter(edge => !edge?.node?.primary)
     .map(
       edge =>

@@ -13,13 +13,14 @@ import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
 import { Language } from '../../../graphql/generatedTypes';
 
+const maxLengthValidation = 'validation.maxLength';
 const schema = yup.object().shape({
-  firstName: yup.string().max(255, 'validation.maxLength'),
-  lastName: yup.string().max(255, 'validation.maxLength'),
+  firstName: yup.string().max(255, maxLengthValidation),
+  lastName: yup.string().max(255, maxLengthValidation),
   phone: yup
     .string()
     .min(6, 'validation.phoneMin')
-    .max(255, 'validation.maxLength'),
+    .max(255, maxLengthValidation),
   terms: yup.boolean().oneOf([true], 'validation.required'),
 });
 
@@ -54,12 +55,10 @@ function CreateProfileForm(props: Props): React.ReactElement {
     return getError<FormikFormValues>(formikProps, fieldName, renderError);
   };
 
-  const profileLanguageOptions = profileConstants.LANGUAGES.map(language => {
-    return {
-      value: language,
-      label: t(`LANGUAGE_OPTIONS.${language}`),
-    };
-  });
+  const profileLanguageOptions = profileConstants.LANGUAGES.map(language => ({
+    value: language,
+    label: t(`LANGUAGE_OPTIONS.${language}`),
+  }));
 
   return (
     <Formik
@@ -113,8 +112,11 @@ function CreateProfileForm(props: Props): React.ReactElement {
               options={profileLanguageOptions}
               default={formikProps.values.profileLanguage}
               label={t('profileForm.language')}
-              onChange={(option: HdsOptionType) =>
-                formikProps.setFieldValue('profileLanguage', option.value)
+              onChange={option =>
+                formikProps.setFieldValue(
+                  'profileLanguage',
+                  (option as HdsOptionType).value
+                )
               }
             />
 
