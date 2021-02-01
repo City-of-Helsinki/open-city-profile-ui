@@ -3,7 +3,6 @@
   color: var(--color-bus);
   display: flex;
   min-height: 120px;
-  padding: 20px 10px 10px;
   font-size: var(--fontsize-heading-l);
   font-weight: bold;
   width: 100%;

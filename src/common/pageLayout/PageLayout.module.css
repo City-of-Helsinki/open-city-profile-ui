@@ -5,7 +5,6 @@
 }
 
 .content {
-  background: var(--color-coat-of-arms-light);
   flex: 1;
   display: flex;
 }

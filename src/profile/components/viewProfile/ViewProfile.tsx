@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import * as Sentry from '@sentry/browser';
+import { Section } from 'hds-react';
 
 import styles from './ViewProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
@@ -40,7 +41,6 @@ function ViewProfile(): React.ReactElement {
     <div className={styles.viewProfile}>
       {data && (
         <React.Fragment>
-          <PageHeading text={getNicknameOrName(data)} />
           <nav
             aria-label={t('landmarks.navigation.main')}
             className={classNames(
@@ -75,6 +75,9 @@ function ViewProfile(): React.ReactElement {
               </NavLink>
             )}
           </nav>
+          <Section korosType="basic">
+            <PageHeading text={getNicknameOrName(data)} />
+          </Section>
           <div className={styles.contentWrapper}>
             <Switch>
               <Route path="/connected-services">
