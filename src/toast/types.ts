@@ -1,6 +1,8 @@
+import { NotificationType } from 'hds-react';
+
 import { PUSH_TOAST, DELETE_TOAST, HIDE_TOAST } from './toastActions';
 
-export type ToastTypes = 'error' | 'success' | 'warning' | 'notification';
+export type ToastTypes = NotificationType;
 
 export interface Toast {
   title?: string;

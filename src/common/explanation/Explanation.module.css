@@ -1,6 +1,6 @@
 .container {
-  --h2-fontsize: var(--fontsize-h-2);
-  --h3-fontsize: var(--fontsize-h-3);
+  --h2-fontsize: var(--fontsize-heading-l);
+  --h3-fontsize: var(--fontsize-heading-m);
 }
 
 .container.margin {
@@ -11,10 +11,10 @@
   margin-bottom: 30px;
 }
 .main.h2 {
-  font-size: var(--fontsize-h-3);
+  font-size: var(--fontsize-heading-m);
 }
 .main.h3 {
-  font-size: var(--fontsize-h-4);
+  font-size: var(--fontsize-heading-s);
 }
 .small {
   margin-top: 0;
@@ -24,11 +24,11 @@
 
 @media (min-width: 450px) {
   .main.h2 {
-    font-size: var(--fontsize-h-2);
+    font-size: var(--fontsize-heading-l);
   }
 
   .main.h3 {
-    font-size: var(--fontsize-h-3);
+    font-size: var(--fontsize-heading-m);
   }
 }
 

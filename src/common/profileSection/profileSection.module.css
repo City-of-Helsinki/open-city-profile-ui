@@ -1,6 +1,6 @@
 .profileSection {
   --horizontal-whitespace: var(--spacing-m);
-  --title-fontsize: var(--fontsize-h-3);
+  --title-fontsize: var(--fontsize-heading-m);
   background: var(--color-white);
   border-radius: 2px;
   padding: var(--spacing-l) var(--horizontal-whitespace);
