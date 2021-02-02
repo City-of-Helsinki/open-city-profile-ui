@@ -28,6 +28,9 @@ jobs:
         uses: andersinno/kolga-build-action@v2
         env:
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-production
+          DOCKER_BUILD_ARG_REACT_APP_ENVIRONMENT: 'production'
+          DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://api.hel.fi/sso/"
+          DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://api.hel.fi/profiili/graphql/"
 
   production:
     if: startsWith(github.ref, 'refs/tags')
@@ -47,7 +50,3 @@ jobs:
           K8S_ADDITIONAL_HOSTNAMES: ${{ secrets.K8S_ADDITIONAL_HOSTNAMES }}
           ENVIRONMENT_URL: https://${{ secrets.ENVIRONMENT_URL_STABLE }}
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-production
-          K8S_SECRET_REACT_APP_ENVIRONMENT: 'production'
-          K8S_SECRET_REACT_APP_OIDC_AUTHORITY: "https://api.hel.fi/sso/"
-          K8S_SECRET_REACT_APP_PROFILE_GRAPHQL: "https://api.hel.fi/profiili/graphql/"
-
