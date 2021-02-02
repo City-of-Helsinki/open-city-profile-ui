@@ -1,31 +1,35 @@
 import React from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
-import { loader } from 'graphql.macro';
+import { IconSignout, Navigation } from 'hds-react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
+import { loader } from 'graphql.macro';
+import { useLazyQuery } from '@apollo/react-hooks';
 
-import PersonIcon from '../../svg/Person.svg';
 import { NameQuery } from '../../../graphql/generatedTypes';
-import Dropdown from '../../dropdown/Dropdown';
 import authService from '../../../auth/authService';
 import useToast from '../../../toast/useToast';
 
+type UserDataWithActions = {
+  userName: string;
+  label: string;
+  ariaLabel: string;
+  onClick: () => Promise<void>;
+};
+
 const NAME_QUERY = loader('../../../profile/graphql/NameQuery.graphql');
 
-type Props = Record<string, unknown>;
-
-function UserDropdown(props: Props): React.ReactElement {
+function UserDropdown(): React.ReactElement {
+  const { t } = useTranslation();
+  const { trackEvent } = useMatomo();
   const { createToast } = useToast();
+
+  const isAuthenticated = authService.isAuthenticated();
   const [nameQuery, { data, loading }] = useLazyQuery<NameQuery>(NAME_QUERY, {
     onError: () => {
       createToast({ type: 'error' });
     },
     fetchPolicy: 'cache-only',
   });
-  const { t } = useTranslation();
-  const { trackEvent } = useMatomo();
-
-  const isAuthenticated = authService.isAuthenticated();
 
   React.useEffect(() => {
     if (isAuthenticated) {
@@ -33,57 +37,66 @@ function UserDropdown(props: Props): React.ReactElement {
     }
   }, [isAuthenticated, nameQuery]);
 
-  const getDropdownOptions = () => {
-    if (loading) {
-      return [login];
-    }
-
-    // Shows logout in registration form
-    if (isAuthenticated && !loading && !data?.myProfile) {
-      return [logOut];
-    }
-
-    // Shows login
-    if (!isAuthenticated && !loading && !data?.myProfile) {
-      return [login];
-    }
-
-    return [user, logOut];
-  };
-
-  const login = {
-    id: 'loginButton',
-    label: t('nav.signin'),
-    onClick: () => {
-      trackEvent({ category: 'action', action: 'Log in' });
-      authService.login();
-    },
-  };
-
-  const user = {
-    id: 'userButton',
-    icon: PersonIcon,
-    altText: t('nav.menuButtonLabel'),
-    label: !loading
+  const getUserDataWithActions = (): UserDataWithActions => {
+    const userLoaded = isAuthenticated && !loading && data?.myProfile;
+    // eslint-disable-next-line no-shadow
+    const userName = userLoaded
       ? `${data?.myProfile?.firstName} ${data?.myProfile?.lastName}`
-      : '',
-  };
+      : '';
 
-  const logOut = {
-    id: 'logoutButton',
-    label: t('nav.signout'),
-    onClick: () => {
+    const logoutAction = (): Promise<void> => {
       trackEvent({ category: 'action', action: 'Log out' });
-      authService.logout();
-    },
+      return authService.logout();
+    };
+    const loginAction = (): Promise<void> => {
+      trackEvent({ category: 'action', action: 'Log in' });
+      return authService.login();
+    };
+
+    const loginLabel = t('nav.signin');
+    const logoutLabel = t('nav.signout');
+    const ariaLabel = !isAuthenticated
+      ? loginLabel
+      : `${t('landmarks.navigation.user')}: ${userName}`;
+
+    if (!isAuthenticated) {
+      return {
+        userName,
+        onClick: loginAction,
+        label: loginLabel,
+        ariaLabel,
+      };
+    }
+
+    return {
+      userName,
+      onClick: logoutAction,
+      label: logoutLabel,
+      ariaLabel,
+    };
   };
-
-  const dropdownOptions = getDropdownOptions();
-
+  const { label, userName, onClick } = getUserDataWithActions();
   return (
-    <React.Fragment>
-      <Dropdown options={dropdownOptions} />
-    </React.Fragment>
+    <Navigation.User
+      authenticated={isAuthenticated}
+      label={label}
+      onSignIn={(): Promise<void> => authService.login()}
+      userName={userName}
+      buttonAriaLabel={label}
+    >
+      <Navigation.Item
+        label={userName}
+        href="/"
+        target="_blank"
+        variant="primary"
+      />
+      <Navigation.Item
+        onClick={(): Promise<void> => onClick()}
+        variant="secondary"
+        label={label}
+        icon={<IconSignout aria-hidden />}
+      />
+    </Navigation.User>
   );
 }
 
