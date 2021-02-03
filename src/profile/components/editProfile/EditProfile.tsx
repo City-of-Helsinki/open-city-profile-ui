@@ -4,9 +4,7 @@ import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
 
-import EditProfileForm, {
-  FormValues,
-} from '../editProfileForm/EditProfileForm';
+import EditProfileForm from '../editProfileForm/EditProfileForm';
 import {
   Language,
   MyProfileQuery,
@@ -23,6 +21,7 @@ import getAddressesFromNode from '../../helpers/getAddressesFromNode';
 import { updateMutationVariables } from '../../helpers/updateMutationVariables';
 import getPhonesFromNode from '../../helpers/getPhonesFromNode';
 import useToast from '../../../toast/useToast';
+import { FormValues } from '../../helpers/mutationEditor';
 
 const UPDATE_PROFILE = loader('../../graphql/UpdateMyProfile.graphql');
 const SERVICE_CONNECTIONS = loader(
@@ -46,7 +45,7 @@ function EditProfile(props: Props): React.ReactElement {
     }
   );
   const { profileData } = props;
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const [updateProfile, { loading }] = useMutation<
     UpdateMyProfileData,
     UpdateMyProfileVariables
@@ -81,15 +80,13 @@ function EditProfile(props: Props): React.ReactElement {
   };
 
   return (
-    <ProfileSection
-      title={t('profileInformation.personalData')}
-      description={t('profileInformation.visibility')}
-    >
+    <ProfileSection title={''}>
       <EditProfileForm
         setEditing={props.setEditing}
         services={data}
         profile={{
           firstName: profileData?.myProfile?.firstName || '',
+          nickname: profileData?.myProfile?.nickname || '',
           lastName: profileData?.myProfile?.lastName || '',
           profileLanguage: profileData?.myProfile?.language || Language.FINNISH,
           primaryEmail:

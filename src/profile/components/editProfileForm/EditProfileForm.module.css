@@ -51,6 +51,17 @@
     width: 100%;
 }
 
+.sectionTitle {
+  font-size: var(--fontsize-heading-s);
+  border-bottom: 1px solid var(--color-black-30);
+  width:100%;
+  padding-bottom: var(--spacing-layout-2-xs);
+} 
+
+.sectionTitle:first-of-type {
+  margin-top:0;
+}
+
 @media (min-width: 500px) {
     .button {
         margin: 0;
@@ -69,18 +80,13 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        max-width: 750px;
     }
 
     .formField {
-        flex-basis: 50%;
+        flex-basis: 33.333%;
         max-width: 350px;
         padding: 10px 10px 10px 0;
-    }
-
-    .formField:nth-of-type(even) {
-        padding-right: 0;
-        padding-left: 10px;
+        box-sizing: border-box;
     }
 
     .email {

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import styles from './profileSection.module.css';
 import Explanation from '../explanation/Explanation';
+import styles from './profileSection.module.css';
 
 type Props = {
   children?: React.ReactNode;
@@ -13,22 +13,24 @@ type Props = {
 
 function ProfileSection({
   children,
-  description,
   titleButton,
   titleVariant,
+  description,
   title,
 }: Props): React.ReactElement {
   return (
     <section className={styles.profileSection}>
       <div className={styles.profileSectionTitleRow}>
-        <Explanation
-          variant="flush"
-          className={styles.profileSectionTitle}
-          titleVariant={titleVariant}
-          main={title}
-          small={description}
-        />
-        {titleButton}
+        {(title || description) && (
+          <Explanation
+            variant="flush"
+            className={styles.profileSectionTitle}
+            titleVariant={titleVariant}
+            main={title}
+            small={description}
+          />
+        )}
+        <div className={styles.buttonContainer}>{titleButton}</div>
       </div>
       {children}
     </section>

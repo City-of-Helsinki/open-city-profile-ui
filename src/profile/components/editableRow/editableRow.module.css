@@ -1,0 +1,63 @@
+
+.container {
+  display:flex;
+  flex: 1;
+  padding: 20px;
+  background:var(--color-black-10);
+  margin: 0 0 10px 0;
+  align-items: center;
+}
+.container form {
+  width:100%;
+}
+.editableRow{
+  padding: 0;
+  
+}
+.editableRow > div:first-child {
+  width:50%;
+}
+
+.value{
+  font-size: 18px;
+  padding: 0 10px 0 0;
+}
+.actions{
+  display: flex;
+  flex: 1 1;
+  align-items: center;
+  justify-content: flex-end;
+}
+.editActions{
+  display: flex;
+  flex: 1 1;
+  padding: var(--spacing-xs) 0;
+  justify-content: flex-end;
+}
+.editActions button{
+  margin: 0 var(--spacing-xs) 0 0;
+}  
+
+.actions button{
+  font-size: 16px;
+  padding: 0 0 0 10px;
+}
+
+.primaryContainer{
+  align-content: flex-start;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  padding: 0 var(--spacing-2-xs);
+  position: relative;
+  vertical-align: top;
+  color:var(--color-bus);
+}
+
+.primaryContainer span{
+  padding-left: var(--spacing-2-xs);
+}
+
+.actions button span{
+  padding: 0;
+}

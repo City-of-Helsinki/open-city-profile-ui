@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { loader } from 'graphql.macro';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route } from 'react-router-dom';
 import * as Sentry from '@sentry/browser';
@@ -10,31 +8,23 @@ import styles from './ViewProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import PageHeading from '../../../common/pageHeading/PageHeading';
 import ProfileInformation from '../profileInformation/ProfileInformation';
-import EditProfile from '../editProfile/EditProfile';
 import getNicknameOrName from '../../helpers/getNicknameOrName';
 import ServiceConnections from '../serviceConnections/ServiceConnections';
 import Subscriptions from '../../../subscriptions/components/subsciptions/Subscriptions';
-import { MyProfileQuery } from '../../../graphql/generatedTypes';
 import Explanation from '../../../common/explanation/Explanation';
 import useToast from '../../../toast/useToast';
-
-const MY_PROFILE = loader('../../graphql/MyProfileQuery.graphql');
+import { useProfileQuery } from '../../helpers/hooks';
 
 function ViewProfile(): React.ReactElement {
-  const [isEditing, setEditing] = useState(false);
   const { t } = useTranslation();
   const { createToast } = useToast();
 
-  const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE, {
+  const { data, loading } = useProfileQuery({
     onError: (error: Error) => {
       Sentry.captureException(error);
       createToast({ type: 'error' });
     },
   });
-
-  const toggleEditing = () => {
-    setEditing(prevState => !prevState);
-  };
 
   return (
     <div className={styles.viewProfile}>
@@ -59,20 +49,9 @@ function ViewProfile(): React.ReactElement {
                     <Explanation
                       main={t('profileInformation.title')}
                       titleVariant="h2"
+                      small={t('profileInformation.description')}
                     />
-                    {!isEditing ? (
-                      <ProfileInformation
-                        data={data}
-                        loading={loading}
-                        isEditing={isEditing}
-                        setEditing={toggleEditing}
-                      />
-                    ) : (
-                      <EditProfile
-                        setEditing={toggleEditing}
-                        profileData={data}
-                      />
-                    )}
+                    <ProfileInformation data={data} loading={loading} />
                   </div>
                 </div>
               </Route>

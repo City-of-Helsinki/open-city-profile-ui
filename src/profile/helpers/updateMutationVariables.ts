@@ -1,9 +1,6 @@
 import { isEqual } from 'lodash';
 
-import {
-  FormValues,
-  Primary,
-} from '../components/editProfileForm/EditProfileForm';
+import { Primary } from '../components/editProfileForm/EditProfileForm';
 import {
   AddressType,
   CreateAddressInput,
@@ -24,6 +21,7 @@ import getPhonesFromNode from './getPhonesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
 import getAddressesFromNode from './getAddressesFromNode';
 import { formConstants } from '../constants/formConstants';
+import { FormValues } from './mutationEditor';
 
 type EmailInputs = {
   addEmails: CreateEmailInput[] | null[];
@@ -42,6 +40,16 @@ type PhoneInputs = {
   updatePhones: UpdatePhoneInput[];
   removePhones?: (string | null)[] | null;
 };
+
+type CreateFullProfileUpdateData = (
+  formValues: FormValues,
+  profile?: MyProfileQuery
+) => UpdateMyProfileVariables;
+
+type CreatePartialProfileUpdateData = (
+  formValues: Partial<FormValues>,
+  profile?: MyProfileQuery
+) => UpdateMyProfileVariables;
 
 const getPrimaryValue = (primary: Primary, profile?: MyProfileQuery) => {
   const primaryValue = profile?.myProfile && profile.myProfile[primary];
@@ -81,8 +89,8 @@ const getObjectFields = (value: Address | Email | Phone) => {
   switch (value.__typename) {
     case 'EmailNode': {
       return {
+        id: value.id,
         email: value.email,
-        id: value.email,
         emailType: value.emailType || EmailType.OTHER,
         primary: value.primary,
       };
@@ -193,10 +201,10 @@ function formMutationArrays<T extends Address | Email | Phone>(
   }
 }
 
-const updateMutationVariables = (
-  formValues: FormValues,
-  profile?: MyProfileQuery
-): UpdateMyProfileVariables => ({
+const updateMutationVariables: CreateFullProfileUpdateData = (
+  formValues,
+  profile
+) => ({
   input: {
     profile: {
       firstName: formValues.firstName,
@@ -213,4 +221,44 @@ const updateMutationVariables = (
   },
 });
 
-export { formMutationArrays, updateMutationVariables };
+const updatePartialMutationVariables: CreatePartialProfileUpdateData = (
+  formValues,
+  profile
+) => {
+  const phoneData = formValues.phones
+    ? formMutationArrays<Phone>(formValues.phones, 'primaryPhone', profile)
+    : null;
+  const emailData = formValues.emails
+    ? formMutationArrays<Email>(formValues.emails, 'primaryEmail', profile)
+    : null;
+  const addressData = formValues.addresses
+    ? formMutationArrays<Address>(
+        formValues.addresses,
+        'primaryAddress',
+        profile
+      )
+    : null;
+  const userData = formValues.firstName
+    ? {
+        firstName: formValues.firstName,
+        lastName: formValues.lastName,
+        nickname: formValues.nickname,
+      }
+    : null;
+  return {
+    input: {
+      profile: {
+        ...userData,
+        ...phoneData,
+        ...emailData,
+        ...addressData,
+      },
+    },
+  };
+};
+
+export {
+  formMutationArrays,
+  updateMutationVariables,
+  updatePartialMutationVariables,
+};

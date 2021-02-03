@@ -1,0 +1,127 @@
+
+.container {
+  display:flex;
+  flex: 1;
+  padding: 20px;
+  background:var(--color-black-10);
+  margin: 0 0 10px 0;
+}
+
+.value{
+  font-size: 18px;
+  padding: 0 10px 0 0;
+}
+
+.actions___{
+  flex-grow: 1;
+  text-align: right;
+}
+
+.actions button{
+  font-size: 16px;
+  padding: 0 0 0 10px;
+}
+.actions span{
+  color:var(--color-bus)
+}
+
+.edit____ {
+  /* These styles allow the button to better fit on the screen on */
+  /* mobile. */
+  padding-left: 0;
+  padding-right: 0;
+  min-width: 0;
+}
+
+.title___ {
+  font-size: var(--fontsize-heading-m);
+}
+
+.sectionTitle {
+  font-size: var(--fontsize-heading-s);
+  border-bottom: 1px solid var(--color-black-30);
+  width:100%;
+  padding-bottom: var(--spacing-layout-2-xs);
+} 
+
+.sectionTitle:first-of-type {
+  margin-top:0;
+}
+
+.formFields {
+  padding-bottom: 50px;
+}
+
+.formField {
+  padding-bottom: 20px;
+}
+
+.addressFormFields{
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+}
+
+.addressFormFieldGroup{
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+  position: relative;
+}
+
+.addressFormActions{
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.addressFormActions button{
+  padding:0;
+}  
+
+.addressFormActions button span{
+  padding:0;
+}  
+
+.editActions{
+  display: flex;
+  flex: 1 1;
+  padding: var(--spacing-xs) 0;
+}
+
+.editActions button{
+  margin: 0 var(--spacing-xs) 0 0;
+}  
+
+.storedInformation {
+  margin-bottom: 50px;
+}
+
+@media (min-width: 768px) {
+  .storedInformation {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .storedInformation > * {
+    width: 33.33%;
+  }
+  .formFields {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .formFields > div{
+      flex-basis: 33.333%;
+      max-width: 350px;
+      padding: 10px 40px 10px 0;
+      box-sizing: border-box;
+  }
+  /* fixes bug in HDS TextInput when it is wrapped to an element with display:flex: */
+  .formFields > div > div { 
+    height:auto;
+  }
+}
+

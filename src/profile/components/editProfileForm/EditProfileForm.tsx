@@ -19,13 +19,10 @@ import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import { getError, getIsInvalid } from '../../helpers/formik';
 import styles from './EditProfileForm.module.css';
 import {
-  Language,
   MyProfileQuery_myProfile_addresses_edges_node as Address,
   MyProfileQuery_myProfile_emails_edges_node as Email,
   MyProfileQuery_myProfile_phones_edges_node as Phone,
-  MyProfileQuery_myProfile_primaryAddress as PrimaryAddress,
   MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
-  MyProfileQuery_myProfile_primaryPhone as PrimaryPhone,
   ServiceConnectionsQuery,
 } from '../../../graphql/generatedTypes';
 import profileConstants from '../../constants/profileConstants';
@@ -35,6 +32,7 @@ import FormikDropdown, {
   OptionType,
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
+import { FormValues } from '../../helpers/mutationEditor';
 
 const maxLengthValidation = 'validation.maxLength';
 
@@ -69,18 +67,6 @@ const schema = yup.object().shape({
   ),
   phones: yup.array().of(phoneSchema),
 });
-
-export type FormValues = {
-  firstName: string;
-  lastName: string;
-  primaryEmail: PrimaryEmail;
-  primaryAddress: PrimaryAddress;
-  primaryPhone: PrimaryPhone;
-  profileLanguage: Language;
-  addresses: Address[];
-  emails: Email[];
-  phones: Phone[];
-};
 
 type Props = {
   setEditing: () => void;
