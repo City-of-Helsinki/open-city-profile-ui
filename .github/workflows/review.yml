@@ -23,6 +23,10 @@ jobs:
         uses: andersinno/kolga-build-action@v2
         env:
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-review
+          DOCKER_BUILD_ARG_REACT_APP_ENVIRONMENT: 'review'
+          DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.${{ env.BASE_DOMAIN }}/"
+          DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.${{ env.BASE_DOMAIN }}/graphql/"
+          DOCKER_BUILD_ARG_REACT_APP_OIDC_CLIENT_ID: ${{ env.K8S_NAMESPACE }}
 
   review:
     runs-on: ubuntu-latest
@@ -37,10 +41,6 @@ jobs:
         env:
           ENVIRONMENT_URL: https://${{ env.K8S_NAMESPACE }}.${{ env.BASE_DOMAIN }}
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-review
-          K8S_SECRET_REACT_APP_ENVIRONMENT: 'review'
-          K8S_SECRET_REACT_APP_OIDC_AUTHORITY: "https://tunnistamo.${{ env.BASE_DOMAIN }}/"
-          K8S_SECRET_REACT_APP_PROFILE_GRAPHQL: "https://profiili-api.${{ env.BASE_DOMAIN }}/graphql/"
-          K8S_SECRET_REACT_APP_OIDC_CLIENT_ID: ${{ env.K8S_NAMESPACE }}
 
       - name: Setup Tunnistamo
         uses: City-of-Helsinki/setup-tunnistamo-action@main
