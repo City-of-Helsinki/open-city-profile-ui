@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.1.3] - 2021-02-03
+### Fixed
+- Broken privacy policy link
+
 ## [1.1.0] - 2020-08-25
 ### Added
 - Support for authorization code generation for GDPR API related calls (profile download and deletion) [#108](https://github.com/City-of-Helsinki/open-city-profile-ui/pull/108)
