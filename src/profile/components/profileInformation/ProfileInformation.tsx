@@ -23,6 +23,7 @@ import ProfileInformationAccountManagementLink from './ProfileInformationAccount
 import useToast from '../../../toast/useToast';
 import ProfileDataEditor from '../ProfileDataEditor/ProfileDataEditor';
 import EditableBasicData from '../editableBasicData/EditableBasicData';
+import EditableAdditionalInformation from '../editableAdditionalInformation/EditableAdditionalInformation';
 
 const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
@@ -85,17 +86,7 @@ function ProfileInformation(props: Props): React.ReactElement {
           <EditableBasicData />
           <ProfileDataEditor dataType="emails" />
           <ProfileDataEditor dataType="phones" />
-          <ProfileSection title={''}>
-            <h3 className={styles.sectionTitle}>
-              {t('profileForm.additionalInfo')}
-            </h3>
-            <div className={styles.storedInformation}>
-              <LabeledValue
-                label={t('profileForm.language')}
-                value={t(`LANGUAGE_OPTIONS.${data.myProfile?.language}`)}
-              />
-            </div>
-          </ProfileSection>
+          <EditableAdditionalInformation />
         </Fragment>
       )}
       <div className={styles.boxGrid}>

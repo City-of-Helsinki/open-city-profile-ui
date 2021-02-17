@@ -245,10 +245,16 @@ const updatePartialMutationVariables: CreatePartialProfileUpdateData = (
         nickname: formValues.nickname,
       }
     : null;
+  const additionalInformation = formValues.profileLanguage
+    ? {
+        language: formValues.profileLanguage,
+      }
+    : null;
   return {
     input: {
       profile: {
         ...userData,
+        ...additionalInformation,
         ...phoneData,
         ...emailData,
         ...addressData,

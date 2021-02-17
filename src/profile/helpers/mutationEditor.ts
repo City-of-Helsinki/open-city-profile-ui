@@ -14,6 +14,7 @@ import {
   MyProfileQuery_myProfile,
 } from '../../graphql/generatedTypes';
 import { formConstants } from '../constants/formConstants';
+import profileConstants from '../constants/profileConstants';
 import getAddressesFromNode from './getAddressesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
 import getPhonesFromNode from './getPhonesFromNode';
@@ -26,6 +27,14 @@ type UserData = Pick<
 >;
 
 type EditableUserData = Mutable<UserData>;
+
+type AdditionalInformation = {
+  id: string;
+  profileLanguage: Language;
+};
+
+export type EditableAdditionalInformation = Mutable<AdditionalInformation>;
+
 export type UpdateResult = ExecutionResult<UpdateMyProfileData> | null | void;
 
 export interface BasicData extends UserData {
@@ -45,15 +54,26 @@ export interface EditableBasicData extends EditableUserData {
 }
 
 export const basicDataType = 'basic-data-with-addresses';
+export const additionalInformationType = 'additional-information';
 
 export type EditData = {
   editable?: boolean;
   removable?: boolean;
   primary?: boolean;
-  profileData: Phone | Email | Address | BasicData;
-  value: string | undefined | EditableAddress | EditableBasicData;
+  profileData: Phone | Email | Address | BasicData | AdditionalInformation;
+  value:
+    | string
+    | undefined
+    | EditableAddress
+    | EditableBasicData
+    | EditableAdditionalInformation;
   status: 'new' | 'removed' | 'edited' | undefined;
-  dataType: 'phones' | 'emails' | 'addresses' | typeof basicDataType;
+  dataType:
+    | 'phones'
+    | 'emails'
+    | 'addresses'
+    | typeof basicDataType
+    | typeof additionalInformationType;
 };
 
 export type MatchResults = {
@@ -120,6 +140,16 @@ export function getTargetData(
         nickname,
         lastName,
         addresses,
+      },
+    ];
+  }
+  if (dataType === additionalInformationType) {
+    const { language: profileLanguage } = profile;
+    return [
+      {
+        id: '',
+        profileLanguage:
+          profileLanguage || (profileConstants.LANGUAGES[0] as Language),
       },
     ];
   }
@@ -211,6 +241,13 @@ function getValue(
       })),
     };
   }
+  if (dataType === additionalInformationType) {
+    const { profileLanguage } = profileDataItem as AdditionalInformation;
+    return {
+      id: '',
+      profileLanguage,
+    };
+  }
   return '';
 }
 
@@ -279,6 +316,11 @@ export function updateProfileDataValue(
       target.addresses.push(newAddress);
     }
   }
+  if (dataType === additionalInformationType) {
+    const target = profileData as EditableAdditionalInformation;
+    const source = item.value as EditableAdditionalInformation;
+    target.profileLanguage = source.profileLanguage;
+  }
   return profileData;
 }
 
@@ -329,6 +371,20 @@ export function matchEditDataToProfileData(
     if (userDataChanged || arrayDataChanged) {
       stats.hasChanged = true;
     }
+    stats.items.push(editDataItem);
+    return stats;
+  }
+
+  if (dataType === additionalInformationType) {
+    const editDataItem = dataItems[0];
+    const {
+      profileLanguage,
+    } = editDataItem.value as EditableAdditionalInformation;
+    const { addresses: newLanguage } = getValue(
+      profileDataItems[0],
+      dataType
+    ) as EditableBasicData;
+    stats.hasChanged = !_.isEqual(profileLanguage, newLanguage);
     stats.items.push(editDataItem);
     return stats;
   }
@@ -393,6 +449,10 @@ export function collect(
     return {
       addresses: data as Address[],
     };
+  }
+  if (dataType === additionalInformationType) {
+    const { profileLanguage } = data[0] as AdditionalInformation;
+    return { profileLanguage };
   }
   const { firstName, nickname, lastName, addresses } = data[0] as BasicData;
   return { firstName, nickname, lastName, addresses };
