@@ -16,6 +16,9 @@ import FormikDropdown, {
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
+import to from '../../../common/awaitTo';
+import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
+import { useConfirmationModal } from '../modals/confirmationModal/hooks';
 
 type FormikValues = EditableBasicData;
 
@@ -24,6 +27,7 @@ type Props = { formikProps: FormikProps<FormikValues> };
 function EditableAddressForm(props: Props): React.ReactElement {
   const { formikProps } = props;
   const { t, i18n } = useTranslation();
+  const { showModal, modalProps } = useConfirmationModal();
   const [newAddressIndex, setNewAddressIndex] = useState(-1);
   const applicationLanguage = getLanguageCode(i18n.languages[0]);
   const countryList = countries.getNames(applicationLanguage);
@@ -40,7 +44,16 @@ function EditableAddressForm(props: Props): React.ReactElement {
     formikProps.setFieldValue('addresses', previous);
   };
 
-  const removeAddress = (index: number) => {
+  const removeAddress = async (index: number) => {
+    const [rejected] = await to(
+      showModal({
+        actionButtonText: t('confirmationModal.remove'),
+        modalTitle: t('confirmationModal.removeAddress'),
+      })
+    );
+    if (rejected) {
+      return Promise.resolve();
+    }
     const previous = formikProps.getFieldProps('addresses').value;
     if (index < newAddressIndex) {
       setNewAddressIndex(newAddressIndex - 1);
@@ -49,6 +62,7 @@ function EditableAddressForm(props: Props): React.ReactElement {
     }
     previous.splice(index, 1);
     formikProps.setFieldValue('addresses', previous);
+    return Promise.resolve();
   };
 
   const invalidChecker = (fieldName: string, index: number) => {
@@ -165,7 +179,7 @@ function EditableAddressForm(props: Props): React.ReactElement {
                       variant="supplementary"
                       type="button"
                       disabled={index === 0}
-                      onClick={() => removeAddress(index)}
+                      onClick={async () => removeAddress(index)}
                     >
                       {t('remove')}
                     </Button>
@@ -187,6 +201,7 @@ function EditableAddressForm(props: Props): React.ReactElement {
           {t('profileForm.addAnotherAddress')}
         </Button>
       </div>
+      <ConfirmationModal {...modalProps} />
     </React.Fragment>
   );
 }

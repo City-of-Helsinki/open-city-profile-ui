@@ -7,14 +7,12 @@ import { useHistory } from 'react-router';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
-import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import DownloadData from '../downloadData/DownloadData';
 import styles from './ProfileInformation.module.css';
 import {
   DownloadMyProfileQuery,
   MyProfileQuery,
 } from '../../../graphql/generatedTypes';
-import ProfileSection from '../../../common/profileSection/ProfileSection';
 import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import checkBerthError from '../../helpers/checkBerthError';

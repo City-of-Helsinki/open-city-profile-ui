@@ -15,6 +15,8 @@ import {
   EditData,
   hasNewItem,
 } from '../../helpers/mutationEditor';
+import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
+import { useConfirmationModal } from '../modals/confirmationModal/hooks';
 
 type Props = {
   dataType: EditData['dataType'];
@@ -33,6 +35,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
     clearMessage,
   } = useNotificationContent();
 
+  const { showModal, modalProps } = useConfirmationModal();
   const isAddButtonDisabled = hasNewItem(data);
 
   const executeActionAndNotifyUser: ActionListener = async (action, item) => {
@@ -57,7 +60,21 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
         await remove(item);
       }
     } else if (action === 'remove' || action === 'save') {
-      executeActionAndNotifyUser(action, item);
+      if (action === 'remove') {
+        const [rejected] = await to(
+          showModal({
+            actionButtonText: t('confirmationModal.remove'),
+            modalTitle:
+              dataType === 'emails'
+                ? t('confirmationModal.removeEmail')
+                : t('confirmationModal.removePhone'),
+          })
+        );
+        if (rejected) {
+          return Promise.resolve();
+        }
+      }
+      return executeActionAndNotifyUser(action, item);
     }
     return Promise.resolve();
   };
@@ -101,6 +118,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
       >
         {t('profileForm.addNew')}
       </Button>
+      <ConfirmationModal {...modalProps} />
     </ProfileSection>
   );
 }
