@@ -68,7 +68,7 @@ function EditableAdditionalInformation(): React.ReactElement | null {
   return (
     <ProfileSection title={''}>
       <h3 className={commonFormStyles.sectionTitle}>
-        {t('profileForm.additionalInfo')}
+        {t('profileForm.language')}
       </h3>
       <div className={commonFormStyles.storedInformation}>
         <Formik
@@ -84,7 +84,7 @@ function EditableAdditionalInformation(): React.ReactElement | null {
                 name={'profileLanguage'}
                 options={profileLanguageOptions}
                 default={formikProps.values.profileLanguage || ''}
-                label={t('profileForm.language')}
+                label={''}
                 onChange={option => {
                   const languageValue = (option as HdsOptionType)
                     .value as FormValues['profileLanguage'];
