@@ -23,6 +23,7 @@ import {
   addNewAddressToBasicData,
   basicDataType,
   UpdateResult,
+  setNewPrimary,
 } from './mutationEditor';
 import { updatePartialMutationVariables } from './updateMutationVariables';
 
@@ -64,6 +65,7 @@ type MutationHandlerReturnType = {
   add: () => void;
   save: (item: EditData) => Promise<void>;
   remove: (item: EditData) => Promise<UpdateResult>;
+  setPrimary: (item: EditData) => Promise<void>;
   loading: boolean;
 };
 
@@ -104,7 +106,7 @@ export function useProfileQuery(props?: {
   }
   return {
     refetch,
-    data,
+    data: profileData, // prevents bug(?) when network status changes, but data is old
     error,
     loading,
     networkStatus,
@@ -148,7 +150,7 @@ export function useProfileMutationHandler({
 }): MutationHandlerReturnType {
   const { data, updateTime } = useProfileQuery();
   const { update: mutationUpdate } = useProfileMutation();
-  const [currentData, updateData] = useState<EditData[]>(
+  const [currentData, updateData] = useState<EditData[]>(() =>
     getData(data, dataType)
   );
   const loadStateTracker = useRef({ updateTime: data ? updateTime : 0 });
@@ -220,6 +222,14 @@ export function useProfileMutationHandler({
       return update().promise;
     }
   };
+  const setPrimary = async (item: EditData) => {
+    const newData = setNewPrimary(currentData, item);
+    if (newData) {
+      updateData(newData);
+      await update().promise;
+    }
+    return Promise.resolve();
+  };
 
   return {
     update,
@@ -228,5 +238,6 @@ export function useProfileMutationHandler({
     loading: !data,
     save,
     remove,
+    setPrimary,
   };
 }

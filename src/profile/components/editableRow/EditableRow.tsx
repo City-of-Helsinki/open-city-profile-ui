@@ -3,6 +3,7 @@ import {
   IconPenLine,
   IconMinusCircle,
   IconStarFill,
+  IconStar,
   TextInput,
 } from 'hds-react';
 import React, { useState } from 'react';
@@ -100,6 +101,17 @@ function EditableRow(props: Props): React.ReactElement {
             <IconStarFill />
             <span>Ensijainen</span>
           </div>
+        )}
+        {!primary && (
+          <Button
+            variant="supplementary"
+            iconLeft={<IconStar />}
+            onClick={async () => {
+              await onAction('set-primary', data);
+            }}
+          >
+            Aseta ensisijaiseksi
+          </Button>
         )}
         {editable && (
           <Button

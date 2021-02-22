@@ -23,7 +23,14 @@ type Props = {
 };
 
 function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
-  const { data, add, loading, remove, save } = useProfileMutationHandler({
+  const {
+    data,
+    add,
+    loading,
+    remove,
+    save,
+    setPrimary,
+  } = useProfileMutationHandler({
     dataType,
   });
   const { t } = useTranslation();
@@ -75,6 +82,9 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
         }
       }
       return executeActionAndNotifyUser(action, item);
+    }
+    if (action === 'set-primary') {
+      await setPrimary(item);
     }
     return Promise.resolve();
   };

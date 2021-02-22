@@ -78,12 +78,12 @@ function ProfileInformation(props: Props): React.ReactElement {
   const { loading, data } = props;
   return (
     <Fragment>
-      {loading && t('loading')}
+      {loading && !data && t('loading')}
       {data && (
         <Fragment>
           <EditableBasicData />
-          <ProfileDataEditor dataType="emails" />
           <ProfileDataEditor dataType="phones" />
+          <ProfileDataEditor dataType="emails" />
           <EditableAdditionalInformation />
         </Fragment>
       )}

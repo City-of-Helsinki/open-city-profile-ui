@@ -43,7 +43,7 @@ export interface BasicData extends UserData {
 }
 
 export type EditableAddress = Mutable<
-  Pick<Address, 'address' | 'city' | 'postalCode' | 'countryCode'>
+  Pick<Address, 'address' | 'city' | 'postalCode' | 'countryCode' | 'primary'>
 >;
 
 export type EditableEmail = Mutable<Email>;
@@ -84,7 +84,7 @@ export type MatchResults = {
 export type Action =
   | 'edit'
   | 'remove'
-  | 'prioritize'
+  | 'set-primary'
   | 'cancel'
   | 'save'
   | 'add';
@@ -214,12 +214,14 @@ function getValue(
       address,
       city,
       countryCode,
+      primary,
     } = profileDataItem as Address;
     return {
       postalCode,
       address,
       city,
       countryCode,
+      primary,
     };
   }
   if (dataType === basicDataType) {
@@ -238,6 +240,7 @@ function getValue(
         address: address.address,
         city: address.city,
         countryCode: address.countryCode,
+        primary: address.primary,
       })),
     };
   }
@@ -501,4 +504,42 @@ export function createEditableData(
 
 export function hasNewItem(data: EditData[]): boolean {
   return !!findEditItem(data, '', 'new');
+}
+
+export function setNewPrimary(
+  dataItems: EditData[],
+  newPrimary: EditData
+): EditData[] | null {
+  const currentPrimary = dataItems[0];
+  const newPrimaryIndex = dataItems.findIndex(
+    item => item.profileData.id === newPrimary.profileData.id
+  );
+  if (
+    currentPrimary.primary === false ||
+    newPrimaryIndex === -1 ||
+    !newPrimary.profileData.id
+  ) {
+    throw new Error(
+      'currentPrimary or newPrimary not found or newPrimary is new'
+    );
+  }
+  if (currentPrimary.profileData.id === newPrimary.profileData.id) {
+    return null;
+  }
+  const newDataItems = [...dataItems];
+  currentPrimary.primary = false;
+  newPrimary.primary = true;
+  (currentPrimary.profileData as
+    | EditableEmail
+    | EditablePhone
+    | EditableAddress).primary = false;
+
+  (newPrimary.profileData as
+    | EditableEmail
+    | EditablePhone
+    | EditableAddress).primary = true;
+
+  newDataItems.splice(newPrimaryIndex, 1);
+  newDataItems.unshift(newPrimary);
+  return newDataItems;
 }
