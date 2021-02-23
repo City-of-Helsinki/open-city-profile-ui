@@ -7,6 +7,10 @@
   margin-bottom: var(--spacing-xl);
 }
 
+.verifiedData{
+  background: none;
+}
+
 .profileSectionTitleRow {
   display: flex;
   justify-content: space-between;

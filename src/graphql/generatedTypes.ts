@@ -301,6 +301,98 @@ export interface MyProfileQuery_myProfile_phones {
   readonly edges: ReadonlyArray<(MyProfileQuery_myProfile_phones_edges | null)>;
 }
 
+export interface MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress {
+  readonly __typename: "VerifiedPersonalInformationAddressNode";
+  /**
+   * Street address with possible house number etc.
+   */
+  readonly streetAddress: string;
+  /**
+   * Postal code.
+   */
+  readonly postalCode: string;
+  /**
+   * Post office.
+   */
+  readonly postOffice: string;
+}
+
+export interface MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress {
+  readonly __typename: "VerifiedPersonalInformationAddressNode";
+  /**
+   * Street address with possible house number etc.
+   */
+  readonly streetAddress: string;
+  /**
+   * Postal code.
+   */
+  readonly postalCode: string;
+  /**
+   * Post office.
+   */
+  readonly postOffice: string;
+}
+
+export interface MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress {
+  readonly __typename: "VerifiedPersonalInformationForeignAddressNode";
+  /**
+   * Street address or whatever is the _first part_ of the address.
+   */
+  readonly streetAddress: string;
+  /**
+   * Additional address information, perhaps town, county, state, country etc.
+   */
+  readonly additionalAddress: string;
+  /**
+   * An ISO 3166-1 country code.
+   */
+  readonly countryCode: string;
+}
+
+export interface MyProfileQuery_myProfile_verifiedPersonalInformation {
+  readonly __typename: "VerifiedPersonalInformationNode";
+  /**
+   * First name(s).
+   */
+  readonly firstName: string;
+  /**
+   * Last name.
+   */
+  readonly lastName: string;
+  /**
+   * The name the person is called with.
+   */
+  readonly givenName: string;
+  /**
+   * Finnish national identification number.
+   */
+  readonly nationalIdentificationNumber: string;
+  /**
+   * Email.
+   */
+  readonly email: string;
+  /**
+   * Official municipality of residence in Finland as a free form text.
+   */
+  readonly municipalityOfResidence: string;
+  /**
+   * Official municipality of residence in Finland as an official number.
+   */
+  readonly municipalityOfResidenceNumber: string;
+  /**
+   * The permanent residency address in Finland.
+   */
+  readonly permanentAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress | null;
+  /**
+   * The temporary residency address in Finland.
+   */
+  readonly temporaryAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress | null;
+  /**
+   * The temporary foreign (i.e. not in Finland) residency address.
+   */
+  readonly permanentForeignAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress | null;
+}
+
 export interface MyProfileQuery_myProfile {
   readonly __typename: "ProfileWithVerifiedPersonalInformationNode";
   /**
@@ -335,6 +427,10 @@ export interface MyProfileQuery_myProfile {
    * List of phone numbers of the profile.
    */
   readonly phones: MyProfileQuery_myProfile_phones | null;
+  /**
+   * Personal information that has been verified to be true.
+   */
+  readonly verifiedPersonalInformation: MyProfileQuery_myProfile_verifiedPersonalInformation | null;
 }
 
 export interface MyProfileQuery {

@@ -1,11 +1,10 @@
 import _ from 'lodash';
-import countries from 'i18n-iso-countries';
 
-import getLanguageCode from '../../common/helpers/getLanguageCode';
 import {
   MyProfileQuery,
   MyProfileQuery_myProfile_addresses_edges_node,
 } from '../../graphql/generatedTypes';
+import getCountry from './getCountry';
 
 type AddressObject = Pick<
   MyProfileQuery_myProfile_addresses_edges_node,
@@ -25,10 +24,7 @@ export default function getAddress(
   };
   if (data.myProfile?.primaryAddress) {
     const address = data.myProfile.primaryAddress;
-    const country = countries.getName(
-      address.countryCode || 'FI',
-      getLanguageCode(lang)
-    );
+    const country = getCountry(address.countryCode, lang);
     return _.assign(
       addressObject,
       address,

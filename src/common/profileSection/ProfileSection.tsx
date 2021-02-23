@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import Explanation from '../explanation/Explanation';
 import styles from './profileSection.module.css';
@@ -9,6 +10,7 @@ type Props = {
   titleButton?: React.ReactNode;
   title: string;
   titleVariant?: 'h2' | 'h3';
+  hasVerifiedUserData?: boolean;
 };
 
 function ProfileSection({
@@ -17,9 +19,15 @@ function ProfileSection({
   titleVariant,
   description,
   title,
+  hasVerifiedUserData,
 }: Props): React.ReactElement {
   return (
-    <section className={styles.profileSection}>
+    <section
+      className={classNames(
+        styles.profileSection,
+        hasVerifiedUserData && styles.verifiedData
+      )}
+    >
       <div className={styles.profileSectionTitleRow}>
         {(title || description) && (
           <Explanation

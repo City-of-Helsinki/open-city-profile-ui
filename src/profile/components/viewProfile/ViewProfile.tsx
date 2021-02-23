@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Switch, Route } from 'react-router-dom';
 import * as Sentry from '@sentry/browser';
 import { Section } from 'hds-react';
+import { ApolloError } from 'apollo-boost';
 
 import styles from './ViewProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
@@ -14,18 +15,21 @@ import Subscriptions from '../../../subscriptions/components/subsciptions/Subscr
 import Explanation from '../../../common/explanation/Explanation';
 import useToast from '../../../toast/useToast';
 import { useProfileQuery } from '../../helpers/hooks';
+import parseGraphQLError from '../../helpers/parseGraphQLError';
 
 function ViewProfile(): React.ReactElement {
   const { t } = useTranslation();
   const { createToast } = useToast();
 
   const { data, loading } = useProfileQuery({
-    onError: (error: Error) => {
+    onError: (error: ApolloError) => {
+      if (parseGraphQLError(error).isAllowedError) {
+        return;
+      }
       Sentry.captureException(error);
       createToast({ type: 'error' });
     },
   });
-
   return (
     <div className={styles.viewProfile}>
       {data && (

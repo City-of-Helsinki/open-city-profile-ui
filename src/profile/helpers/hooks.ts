@@ -90,6 +90,7 @@ export function useProfileQuery(props?: {
       }
     },
     notifyOnNetworkStatusChange: true,
+    errorPolicy: 'all',
   });
   const loadStateTracker = useRef({ isLoading: loading });
   const loadStarted = loadStateTracker.current.isLoading;

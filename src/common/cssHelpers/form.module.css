@@ -125,3 +125,8 @@
   }
 }
 
+.icon {
+  color:var(--color-success);
+  height: 24px;
+}
+

@@ -22,6 +22,7 @@ import useToast from '../../../toast/useToast';
 import ProfileDataEditor from '../ProfileDataEditor/ProfileDataEditor';
 import EditableBasicData from '../editableBasicData/EditableBasicData';
 import EditableAdditionalInformation from '../editableAdditionalInformation/EditableAdditionalInformation';
+import VerifiedPersonalInformation from '../verifiedPersonalInformation/VerifiedPersonalInformation';
 
 const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
@@ -81,6 +82,7 @@ function ProfileInformation(props: Props): React.ReactElement {
       {loading && !data && t('loading')}
       {data && (
         <Fragment>
+          <VerifiedPersonalInformation />
           <EditableBasicData />
           <ProfileDataEditor dataType="phones" />
           <ProfileDataEditor dataType="emails" />
