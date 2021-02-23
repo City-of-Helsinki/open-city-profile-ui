@@ -5,6 +5,8 @@ import { useHistory, useLocation } from 'react-router';
 import { loader } from 'graphql.macro';
 import { User } from 'oidc-client';
 import * as Sentry from '@sentry/browser';
+import { ApolloError } from 'apollo-boost';
+import { Notification } from 'hds-react';
 
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import CreateProfile from '../createProfile/CreateProfile';
@@ -12,8 +14,8 @@ import ViewProfile from '../viewProfile/ViewProfile';
 import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
 import { ProfileExistsQuery } from '../../../graphql/generatedTypes';
-import useToast from '../../../toast/useToast';
 import authService from '../../../auth/authService';
+import responsive from '../../../common/cssHelpers/responsive.module.css';
 
 const PROFILE_EXISTS = loader('../../graphql/ProfileExistsQuery.graphql');
 
@@ -21,15 +23,13 @@ function Profile(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const location = useLocation();
-  const { createToast } = useToast();
 
-  const [checkProfileExists, { data, loading }] = useLazyQuery<
+  const [checkProfileExists, { data, loading, error }] = useLazyQuery<
     ProfileExistsQuery
   >(PROFILE_EXISTS, {
     fetchPolicy: 'no-cache',
-    onError: (error: Error) => {
-      Sentry.captureException(error);
-      createToast({ type: 'error' });
+    onError: (apolloError: ApolloError) => {
+      Sentry.captureException(apolloError);
     },
   });
   const [isCheckingAuthState, setIsCheckingAuthState] = useState(true);
@@ -53,6 +53,7 @@ function Profile(): React.ReactElement {
 
   const isLoadingAnything = Boolean(isCheckingAuthState || loading);
   const isProfileFound = data && data.myProfile;
+  const hasGraphQLError = error && error.graphQLErrors.length;
 
   const getPageTitle = () => {
     const pathname = location.pathname.substr(1);
@@ -70,6 +71,23 @@ function Profile(): React.ReactElement {
         return 'appName';
     }
   };
+
+  if (!isProfileFound && tunnistamoUser && hasGraphQLError) {
+    return (
+      <PageLayout title={getPageTitle()}>
+        <div className={styles.errorWrapper}>
+          <div className={responsive.maxWidthCentered}>
+            <Notification
+              type={'error'}
+              label={t('notification.defaultErrorTitle')}
+            >
+              {t('notification.defaultErrorText')}
+            </Notification>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout title={getPageTitle()}>
