@@ -99,7 +99,7 @@ function EditableRow(props: Props): React.ReactElement {
         {primary && (
           <div className={styles.primaryContainer}>
             <IconStarFill />
-            <span>Ensijainen</span>
+            <span>{t('profileForm.primary')}</span>
           </div>
         )}
         {!primary && (
@@ -110,7 +110,7 @@ function EditableRow(props: Props): React.ReactElement {
               await onAction('set-primary', data);
             }}
           >
-            Aseta ensisijaiseksi
+            {t('profileForm.setPrimary')}
           </Button>
         )}
         {editable && (
@@ -124,7 +124,7 @@ function EditableRow(props: Props): React.ReactElement {
               }
             }}
           >
-            Muokkaa
+            {t('profileForm.edit')}
           </Button>
         )}
         {editable && (
@@ -136,7 +136,7 @@ function EditableRow(props: Props): React.ReactElement {
               await onAction('remove', data);
             }}
           >
-            Poista
+            {t('profileForm.remove')}
           </Button>
         )}
       </div>

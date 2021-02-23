@@ -197,7 +197,9 @@ function EditableBasicData(): React.ReactElement | null {
       {addresses.map((address, index) => (
         <React.Fragment key={address.address}>
           <h3 className={commonFormStyles.sectionTitle}>
-            {index === 0 ? 'Vakinainen osoite' : 'Muu osoite'}
+            {address.primary
+              ? t('profileInformation.primaryAddress')
+              : `${t('profileInformation.address')} ${index + 1}`}
           </h3>
           <div className={commonFormStyles.storedInformation}>
             <LabeledValue

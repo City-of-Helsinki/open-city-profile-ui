@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { IconCheckCircleFill } from 'hds-react';
 import classNames from 'classnames';
 
@@ -61,10 +61,10 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
       <React.Fragment key={type}>
         <h3 className={commonFormStyles.sectionTitle}>
           {type === 'permanent'
-            ? 'Vakinainen osoite'
+            ? t('profileInformation.permanentAddress')
             : type === 'temporary'
-            ? 'Väliaikainen osoite'
-            : 'Vakinainen ulkomainen osoite'}
+            ? t('profileInformation.temporaryAddress')
+            : t('profileInformation.permanentForeignAddress')}
         </h3>
         <div className={commonFormStyles.storedInformation}>
           <LabeledValue
@@ -74,7 +74,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
           />
           {address.additionalAddress && (
             <LabeledValue
-              label={t('profileForm.additionalAddress')}
+              label={t('profileForm.additionalInfo')}
               value={address.additionalAddress}
               showCheckIcon
             />
@@ -141,7 +141,19 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
         <span className={commonFormStyles.icon}>
           <IconCheckCircleFill />
         </span>
-        <p>{t('profileForm.verifiedDataIconInformation')}</p>
+        <p>
+          <Trans
+            i18nKey="profileInformation.verifiedDataIconInformation"
+            components={[
+              // eslint-disable-next-line jsx-a11y/anchor-has-content
+              <a
+                href={t('profileInformation.verifiedDataIconInformationLink')}
+                target="_blank"
+                rel="noopener noreferrer"
+              />,
+            ]}
+          />
+        </p>
       </div>
     </ProfileSection>
   );

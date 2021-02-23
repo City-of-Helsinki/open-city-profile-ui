@@ -23,6 +23,11 @@
     "saveMessage": "Muuttamasi tiedot ovat heti käytössä seuraavissa Helsingin kaupungin palveluissa:",
     "saveTitle": "Haluatko tallentaa tekemäsi muutokset?"
   },
+  "confirmationModal l": {
+    "remove": "Poista",
+    "removeEmail": "Poistetaanko sähköpostiosoite?",
+    "removePhone": "Poistetaanko puhelinnumero?"
+  },
   "createProfile": {
     "heading": "Täydennä tietosi luodaksesi profiili",
     "helpText": "Luomalla profiilin voit hallinnoida omia tietojasi yhdestä paikasta.",
@@ -112,13 +117,19 @@
     "edit": "Muokkaa",
     "email": "Sähköpostiosoite",
     "firstName": "Etunimi",
+    "givenName": "Kutsumanimi",
     "language": "Profiilin kieli",
     "lastName": "Sukunimi",
     "makeAddressPrimary": "Muuta ensisijaiseksi osoitteeksi",
     "makeEmailPrimary": "Muuta ensisijaiseksi sähköpostiosoitteeksi",
     "makePhonePrimary": "Muuta ensisijaiseksi puhelinnumeroksi",
+    "nickname": "Lempinimi",
     "phone": "Puhelinnumero",
     "postalCode": "Postinumero",
+    "postOffice": "Postitoimipaikka",
+    "primary": "Ensisijainen",
+    "remove": "Poista",
+    "setPrimary": "Aseta ensisijaiseksi",
     "submit": "Tallenna",
     "terms": "Olen tutustunut palvelun <0>rekisteriselosteeseen</0> ja kaupungin <1>tietosuojakäytäntöön</1> ",
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietosuoja/",
@@ -127,6 +138,7 @@
   "profileInformation": {
     "address": "Osoite",
     "deleteProfile": "Poista omat tietosi",
+    "description": "Helsinki Profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa. Kätevää eikö?",
     "downloadData": "Lataa omat tietosi",
     "email": "Sähköpostiosoite",
     "name": "Nimi",
@@ -135,7 +147,13 @@
     "title": "Omat tiedot",
     "visibility": "Helsinki-profiiliin on tallennettu sinusta alla olevat tiedot.",
     "doGoToAccountManagement": "Siirry tunnuksen hallintaan",
-    "authenticationMethod": "Tunnistautumistapa"
+    "authenticationMethod": "Tunnistautumistapa",
+    "primaryAddress": "Ensisijainen osoite",
+    "permanentAddress": "Vakinainen osoite",
+    "temporaryAddress": "Väliaikainen osoite",
+    "permanentForeignAddress": "Väliaikainen ulkomainen osoite",
+    "verifiedDataIconInformation": "Merkityt tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <0>siirry suomi.fi palveluun </0>",
+    "verifiedDataIconInformationLink": "https://www.suomi.fi/"
   },
   "sanityCheck": "open-city-profile.fi",
   "serviceConnections": {

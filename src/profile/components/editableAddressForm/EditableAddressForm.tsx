@@ -98,7 +98,9 @@ function EditableAddressForm(props: Props): React.ReactElement {
                   key={index}
                 >
                   <h3 className={commonFormStyles.sectionTitle}>
-                    {index === 0 ? 'Vakinainen osoite' : 'Muu osoite'}
+                    {address.primary
+                      ? t('profileInformation.primaryAddress')
+                      : `${t('profileInformation.address')} ${index + 1}`}
                   </h3>
                   <div className={commonFormStyles.formFields}>
                     <Field
@@ -174,15 +176,16 @@ function EditableAddressForm(props: Props): React.ReactElement {
                     />
                   </div>
                   <div className={styles.addressFormActions}>
-                    <Button
-                      iconLeft={<IconMinusCircle />}
-                      variant="supplementary"
-                      type="button"
-                      disabled={index === 0}
-                      onClick={async () => removeAddress(index)}
-                    >
-                      {t('remove')}
-                    </Button>
+                    {index > 0 && (
+                      <Button
+                        iconLeft={<IconMinusCircle />}
+                        variant="supplementary"
+                        type="button"
+                        onClick={async () => removeAddress(index)}
+                      >
+                        {t('profileForm.remove')}
+                      </Button>
+                    )}
                   </div>
                 </div>
               )

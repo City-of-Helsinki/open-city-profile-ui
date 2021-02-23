@@ -93,10 +93,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
     if (dataType === 'emails') {
       return t('profileForm.email');
     }
-    if (dataType === 'phones') {
-      return t('profileForm.phone');
-    }
-    return t('profileForm.address');
+    return t('profileForm.phone');
   };
 
   if (loading) {
@@ -126,7 +123,9 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
         variant="secondary"
         disabled={isAddButtonDisabled}
       >
-        {t('profileForm.addNew')}
+        {dataType === 'emails'
+          ? t('profileForm.addAnotherEmail')
+          : t('profileForm.addAnotherPhone')}
       </Button>
       <ConfirmationModal {...modalProps} />
     </ProfileSection>
