@@ -13,6 +13,7 @@ import {
   MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress as PermanentForeignAddress,
   MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress as PermanentAddress,
 } from '../../../graphql/generatedTypes';
+import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
 
 type CommonAddress = {
   streetAddress: PermanentAddress['streetAddress'];
@@ -34,7 +35,9 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
   const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];
 
-  if (!data?.myProfile?.verifiedPersonalInformation) {
+  const verifiedPersonalInformation = getVerifiedPersonalInformation(data);
+
+  if (!verifiedPersonalInformation) {
     return null;
   }
 
@@ -45,7 +48,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     permanentAddress,
     temporaryAddress,
     permanentForeignAddress,
-  } = data.myProfile.verifiedPersonalInformation;
+  } = verifiedPersonalInformation;
 
   const AddressComponent = (props: AddressProps): React.ReactElement | null => {
     const { type } = props;
