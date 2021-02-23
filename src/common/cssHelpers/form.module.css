@@ -12,11 +12,6 @@
   padding: 0 10px 0 0;
 }
 
-.actions___{
-  flex-grow: 1;
-  text-align: right;
-}
-
 .actions button{
   font-size: 16px;
   padding: 0 0 0 10px;
@@ -25,17 +20,6 @@
   color:var(--color-bus)
 }
 
-.edit____ {
-  /* These styles allow the button to better fit on the screen on */
-  /* mobile. */
-  padding-left: 0;
-  padding-right: 0;
-  min-width: 0;
-}
-
-.title___ {
-  font-size: var(--fontsize-heading-m);
-}
 
 .sectionTitle {
   font-size: var(--fontsize-heading-s);

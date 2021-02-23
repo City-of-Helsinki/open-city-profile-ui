@@ -12,7 +12,6 @@
 }
 .editableRow{
   padding: 0;
-  
 }
 .editableRow > div:first-child {
   width:50%;
@@ -21,6 +20,7 @@
 .value{
   font-size: 18px;
   padding: 0 10px 0 0;
+  word-break: break-all;
 }
 .actions{
   display: flex;
