@@ -20,13 +20,11 @@
     "cancel": "Annullera",
     "close": "Stäng",
     "save": "Spara",
-    "saveMessage": "Informationen som du har ändrat är omedelbart tillgänglig för följande Helsingfors stads tjänster:",
-    "saveTitle": "Vill du spara dina ändringar?"
-  },
-  "confirmationModal l": {
     "remove": "SV: Poista",
     "removeEmail": "SV: Poistetaanko sähköpostiosoite?",
-    "removePhone": "SV: Poistetaanko puhelinnumero?"
+    "removePhone": "SV: Poistetaanko puhelinnumero?",
+    "saveMessage": "Informationen som du har ändrat är omedelbart tillgänglig för följande Helsingfors stads tjänster:",
+    "saveTitle": "Vill du spara dina ändringar?"
   },
   "createProfile": {
     "heading": "Fyll i detaljerna för att skapa en profil",
@@ -110,6 +108,7 @@
     "addAnotherPhone": "Lägg till ett nytt telefonnummer",
     "additionalInfo": "Ytterligare information",
     "address": "Hemadress",
+    "basicData": "SV: Perustiedot",
     "cancel": "Annullera",
     "city": "Stad",
     "country": "Land",

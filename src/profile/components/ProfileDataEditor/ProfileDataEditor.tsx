@@ -103,16 +103,14 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
   return (
     <ProfileSection title="">
       <h3 className={commonFormStyles.sectionTitle}>{getTitle()}</h3>
-      <div>
-        {data.map(item => (
-          <EditableRow
-            key={item.profileData.id || item.status}
-            data={item}
-            onAction={onAction}
-          />
-        ))}
-        <EditingNotifications content={content} />
-      </div>
+      {data.map(item => (
+        <EditableRow
+          key={item.profileData.id || item.status}
+          data={item}
+          onAction={onAction}
+        />
+      ))}
+      <EditingNotifications content={content} />
       <Button
         iconLeft={<IconPlusCircle />}
         onClick={async () => {
@@ -122,6 +120,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
         }}
         variant="secondary"
         disabled={isAddButtonDisabled}
+        className={commonFormStyles.responsiveButton}
       >
         {dataType === 'emails'
           ? t('profileForm.addAnotherEmail')

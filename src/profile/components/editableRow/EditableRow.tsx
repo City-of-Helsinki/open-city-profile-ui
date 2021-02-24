@@ -16,6 +16,7 @@ import styles from './editableRow.module.css';
 import { ActionListener, EditData } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { phoneSchema, emailSchema } from '../../../common/schemas/schemas';
+import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
 type FormikValue = { value: EditData['value'] };
 
@@ -56,9 +57,7 @@ function EditableRow(props: Props): React.ReactElement {
         >
           {(formikProps: FormikProps<FormikValue>) => (
             <Form>
-              <div
-                className={classNames([styles.container, styles.editableRow])}
-              >
+              <div className={styles.editableRow}>
                 <Field
                   name="value"
                   id="value"
@@ -68,12 +67,18 @@ function EditableRow(props: Props): React.ReactElement {
                   helperText={getFieldErrorMessage(formikProps)}
                   autoFocus
                 />
-                <div className={styles.editActions}>
+                <div
+                  className={classNames([
+                    commonFormStyles.editActions,
+                    styles.editActions,
+                  ])}
+                >
                   <Button
                     type="submit"
                     disabled={editable && Boolean(formikProps.isSubmitting)}
+                    className={commonFormStyles.responsiveButton}
                   >
-                    Tallenna
+                    {t('profileForm.submit')}
                   </Button>
                   <Button
                     variant="secondary"
@@ -81,8 +86,9 @@ function EditableRow(props: Props): React.ReactElement {
                       await onAction('cancel', data);
                       setEditing(false);
                     }}
+                    className={commonFormStyles.responsiveButton}
                   >
-                    Peruuta
+                    {t('profileForm.cancel')}
                   </Button>
                 </div>
               </div>
@@ -109,6 +115,7 @@ function EditableRow(props: Props): React.ReactElement {
             onClick={async () => {
               await onAction('set-primary', data);
             }}
+            className={commonFormStyles.supplementaryButton}
           >
             {t('profileForm.setPrimary')}
           </Button>
@@ -123,6 +130,7 @@ function EditableRow(props: Props): React.ReactElement {
                 setEditing(true);
               }
             }}
+            className={commonFormStyles.supplementaryButton}
           >
             {t('profileForm.edit')}
           </Button>
@@ -135,6 +143,7 @@ function EditableRow(props: Props): React.ReactElement {
             onClick={async () => {
               await onAction('remove', data);
             }}
+            className={commonFormStyles.supplementaryButton}
           >
             {t('profileForm.remove')}
           </Button>

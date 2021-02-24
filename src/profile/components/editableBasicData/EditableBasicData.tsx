@@ -109,7 +109,9 @@ function EditableBasicData(): React.ReactElement | null {
           <ProfileSection title={''}>
             <Form>
               <div className={commonFormStyles.formFields}>
-                <h3 className={commonFormStyles.sectionTitle}>Perustiedot</h3>
+                <h3 className={commonFormStyles.sectionTitle}>
+                  {t('profileForm.basicData')}
+                </h3>
                 <Field
                   className={commonFormStyles.formField}
                   name="firstName"
@@ -149,8 +151,9 @@ function EditableBasicData(): React.ReactElement | null {
                 <Button
                   type="submit"
                   disabled={Boolean(formikProps.isSubmitting)}
+                  className={commonFormStyles.responsiveButton}
                 >
-                  Tallenna
+                  {t('profileForm.submit')}
                 </Button>
                 <Button
                   disabled={Boolean(formikProps.isSubmitting)}
@@ -159,8 +162,9 @@ function EditableBasicData(): React.ReactElement | null {
                     onAction('cancel', editData);
                     setEditing(false);
                   }}
+                  className={commonFormStyles.responsiveButton}
                 >
-                  Peruuta
+                  {t('profileForm.cancel')}
                 </Button>
               </div>
             </Form>
@@ -182,13 +186,16 @@ function EditableBasicData(): React.ReactElement | null {
               clearMessage();
               setEditing(true);
             }}
+            className={commonFormStyles.supplementaryButton}
           >
             {t('profileForm.edit')}
           </Button>
         )
       }
     >
-      <h3 className={commonFormStyles.sectionTitle}>Perustiedot</h3>
+      <h3 className={commonFormStyles.sectionTitle}>
+        {t('profileForm.basicData')}
+      </h3>
       <div className={commonFormStyles.storedInformation}>
         <LabeledValue label={t('profileForm.firstName')} value={firstName} />
         <LabeledValue label={t('profileForm.nickname')} value={nickname} />

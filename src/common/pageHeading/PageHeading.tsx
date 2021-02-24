@@ -13,7 +13,7 @@ function PageHeading(props: Props): React.ReactElement {
   return (
     <div className={classNames(styles.pageHeading, props.className)}>
       <UserIcon className={styles.userIcon} />
-      <div className={styles.titleWrapper}>{props.text}</div>
+      <div className={styles.title}>{props.text}</div>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Field, FormikProps, FieldArray } from 'formik';
 import countries from 'i18n-iso-countries';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import styles from './editableAddressForm.module.css';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
@@ -182,6 +183,10 @@ function EditableAddressForm(props: Props): React.ReactElement {
                         variant="supplementary"
                         type="button"
                         onClick={async () => removeAddress(index)}
+                        className={classNames([
+                          commonFormStyles.supplementaryButton,
+                          commonFormStyles.responsiveButton,
+                        ])}
                       >
                         {t('profileForm.remove')}
                       </Button>
@@ -193,13 +198,14 @@ function EditableAddressForm(props: Props): React.ReactElement {
           </React.Fragment>
         )}
       />
-      <div>
+      <div className={styles.addActions}>
         <Button
           iconLeft={<IconPlusCircle />}
-          variant="supplementary"
+          variant="secondary"
           type="button"
           disabled={newAddressIndex > -1}
           onClick={() => addAddress()}
+          className={commonFormStyles.responsiveButton}
         >
           {t('profileForm.addAnotherAddress')}
         </Button>

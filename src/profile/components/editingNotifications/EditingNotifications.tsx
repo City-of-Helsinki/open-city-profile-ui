@@ -2,6 +2,7 @@ import React from 'react';
 import { Notification } from 'hds-react';
 
 import { NotificationContent } from './useNotificationContent';
+import styles from './EditingNotifications.module.css';
 
 type Props = {
   content: NotificationContent;
@@ -12,10 +13,12 @@ function EditingNotifications({ content }: Props): React.ReactElement | null {
     return null;
   }
   return (
-    <Notification
-      type={content.error ? 'error' : 'success'}
-      label={content.text}
-    />
+    <div className={styles.wrapper}>
+      <Notification
+        type={content.error ? 'error' : 'success'}
+        label={content.text}
+      />
+    </div>
   );
 }
 

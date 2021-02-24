@@ -20,13 +20,11 @@
     "cancel": "Peruuta",
     "close": "Sulje",
     "save": "Tallenna",
-    "saveMessage": "Muuttamasi tiedot ovat heti käytössä seuraavissa Helsingin kaupungin palveluissa:",
-    "saveTitle": "Haluatko tallentaa tekemäsi muutokset?"
-  },
-  "confirmationModal l": {
     "remove": "Poista",
     "removeEmail": "Poistetaanko sähköpostiosoite?",
-    "removePhone": "Poistetaanko puhelinnumero?"
+    "removePhone": "Poistetaanko puhelinnumero?",
+    "saveMessage": "Muuttamasi tiedot ovat heti käytössä seuraavissa Helsingin kaupungin palveluissa:",
+    "saveTitle": "Haluatko tallentaa tekemäsi muutokset?"
   },
   "createProfile": {
     "heading": "Täydennä tietosi luodaksesi profiili",
@@ -110,6 +108,7 @@
     "addAnotherPhone": "Lisää toinen puhelinnumero",
     "additionalInfo": "Lisätiedot",
     "address": "Kotiosoite",
+    "basicData": "Perustiedot",
     "cancel": "Peruuta",
     "city": "Kaupunki",
     "country": "Maa",

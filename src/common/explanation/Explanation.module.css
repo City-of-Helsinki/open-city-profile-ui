@@ -4,7 +4,7 @@
 }
 
 .container.margin {
-  margin: 0 15px;
+  margin: 0 var(--spacing-layout-xs);
 }
 
 .main {
@@ -19,10 +19,10 @@
 .small {
   margin-top: 0;
   color: var(--color-black-70);
-  font-size: 20px;
+  font-size: var(--fontsize-body-l);
 }
 
-@media (min-width: 450px) {
+@media (min-width: 768px) {
   .main.h2 {
     font-size: var(--fontsize-heading-l);
   }
