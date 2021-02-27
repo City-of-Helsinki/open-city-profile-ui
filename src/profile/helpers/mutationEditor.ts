@@ -25,8 +25,14 @@ type UserData = Pick<
   MyProfileQuery_myProfile,
   'firstName' | 'nickname' | 'lastName'
 >;
+export type AddressData = Mutable<
+  Pick<Address, 'address' | 'city' | 'postalCode' | 'countryCode' | 'primary'>
+>;
 
-type EditableUserData = Mutable<UserData>;
+export type EditableUserData = Mutable<UserData>;
+export type EditableAddress = Mutable<AddressData>;
+export type EditableEmail = Mutable<Email>;
+export type EditablePhone = Mutable<Phone>;
 
 type AdditionalInformation = {
   id: string;
@@ -39,21 +45,9 @@ export type UpdateResult = ExecutionResult<UpdateMyProfileData> | null | void;
 
 export interface BasicData extends UserData {
   id: string;
-  addresses: Address[];
 }
 
-export type EditableAddress = Mutable<
-  Pick<Address, 'address' | 'city' | 'postalCode' | 'countryCode' | 'primary'>
->;
-
-export type EditableEmail = Mutable<Email>;
-export type EditablePhone = Mutable<Phone>;
-
-export interface EditableBasicData extends EditableUserData {
-  addresses: EditableAddress[];
-}
-
-export const basicDataType = 'basic-data-with-addresses';
+export const basicDataType = 'basic-data';
 export const additionalInformationType = 'additional-information';
 
 export type EditData = {
@@ -65,7 +59,7 @@ export type EditData = {
     | string
     | undefined
     | EditableAddress
-    | EditableBasicData
+    | EditableUserData
     | EditableAdditionalInformation;
   status: 'new' | 'removed' | 'edited' | undefined;
   dataType:
@@ -127,11 +121,6 @@ export function getTargetData(
     return list;
   }
   if (dataType === basicDataType) {
-    const addresses: Address[] = getAddressesFromNode(myProfileQuery);
-    const primary = profile.primaryAddress;
-    if (primary) {
-      addresses.unshift({ ...primary });
-    }
     const { firstName, nickname, lastName, id } = profile;
     return [
       {
@@ -139,7 +128,6 @@ export function getTargetData(
         firstName,
         nickname,
         lastName,
-        addresses,
       },
     ];
   }
@@ -225,23 +213,11 @@ function getValue(
     };
   }
   if (dataType === basicDataType) {
-    const {
-      firstName,
-      nickname,
-      lastName,
-      addresses,
-    } = profileDataItem as BasicData;
+    const { firstName, nickname, lastName } = profileDataItem as BasicData;
     return {
       firstName,
       nickname,
       lastName,
-      addresses: addresses.map(address => ({
-        postalCode: address.postalCode,
-        address: address.address,
-        city: address.city,
-        countryCode: address.countryCode,
-        primary: address.primary,
-      })),
     };
   }
   if (dataType === additionalInformationType) {
@@ -290,34 +266,11 @@ export function updateProfileDataValue(
     target.city = source.city;
   }
   if (dataType === basicDataType) {
-    const target = profileData as EditableBasicData;
-    const source = item.value as EditableBasicData;
+    const target = profileData as EditableUserData;
+    const source = item.value as EditableUserData;
     target.firstName = source.firstName;
     target.nickname = source.nickname;
     target.lastName = source.lastName;
-
-    if (source.addresses.length < target.addresses.length) {
-      target.addresses.length = source.addresses.length;
-    }
-
-    target.addresses.forEach((address, index) => {
-      address.address = source.addresses[index].address;
-      address.postalCode = source.addresses[index].postalCode;
-      address.city = source.addresses[index].city;
-      address.countryCode = source.addresses[index].countryCode;
-    });
-
-    if (source.addresses.length > target.addresses.length) {
-      const newAddressValues = source.addresses[source.addresses.length - 1];
-      const newAddress = {
-        ...(formConstants.EMPTY_VALUES['addresses'] as EditableAddress),
-      };
-      newAddress.address = newAddressValues.address;
-      newAddress.postalCode = newAddressValues.postalCode;
-      newAddress.city = newAddressValues.city;
-      newAddress.countryCode = newAddressValues.countryCode;
-      target.addresses.push(newAddress);
-    }
   }
   if (dataType === additionalInformationType) {
     const target = profileData as EditableAdditionalInformation;
@@ -361,18 +314,15 @@ export function matchEditDataToProfileData(
   };
   if (dataType === basicDataType) {
     const editDataItem = dataItems[0];
-    const {
-      addresses,
-      ...currentUserData
-    } = editDataItem.value as EditableBasicData;
-    const { addresses: newAddresses, ...newUserData } = getValue(
+    const currentUserData = editDataItem.value as EditableUserData;
+    const newUserData = getValue(
       profileDataItems[0],
       dataType
-    ) as EditableBasicData;
+    ) as EditableUserData;
     const userDataChanged = _.isEqual(currentUserData, newUserData);
-    const arrayDataChanged = _.isEqual(addresses, newAddresses);
-    if (userDataChanged || arrayDataChanged) {
+    if (userDataChanged) {
       stats.hasChanged = true;
+      editDataItem.value = newUserData;
     }
     stats.items.push(editDataItem);
     return stats;
@@ -383,11 +333,14 @@ export function matchEditDataToProfileData(
     const {
       profileLanguage,
     } = editDataItem.value as EditableAdditionalInformation;
-    const { addresses: newLanguage } = getValue(
+    const { profileLanguage: newLanguage } = getValue(
       profileDataItems[0],
       dataType
-    ) as EditableBasicData;
+    ) as EditableAdditionalInformation;
     stats.hasChanged = !_.isEqual(profileLanguage, newLanguage);
+    if (stats.hasChanged) {
+      (editDataItem.value as EditableAdditionalInformation).profileLanguage = newLanguage;
+    }
     stats.items.push(editDataItem);
     return stats;
   }
@@ -457,23 +410,15 @@ export function collect(
     const { profileLanguage } = data[0] as AdditionalInformation;
     return { profileLanguage };
   }
-  const { firstName, nickname, lastName, addresses } = data[0] as BasicData;
-  return { firstName, nickname, lastName, addresses };
+  const { firstName, nickname, lastName } = data[0] as BasicData;
+  return { firstName, nickname, lastName };
 }
 
-export function addNewAddressToBasicData(item: EditData): EditData {
-  const newAddressData = createNewProfileData('addresses') as Address;
-  (item.profileData as BasicData).addresses.push(newAddressData);
-
-  item.value = getValue(item.profileData, item.dataType);
-  return item;
-}
-
-export function resetBasicData(editData: EditData[]): EditableBasicData {
+export function resetBasicData(editData: EditData[]): EditableUserData {
   const basicData = editData[0];
   const data = getValue(basicData.profileData, basicDataType);
   basicData.value = data;
-  return data as EditableBasicData;
+  return data as EditableUserData;
 }
 
 export function createNewItem(dataType: EditData['dataType']): EditData {

@@ -7,12 +7,12 @@
 }
 
 @media (min-width: 768px) {
-  .storedInformation {
+  .multiItemWrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
   }
-  .storedInformation > * {
+  .multiItemWrapper > * {
     width: 33.33%;
   }
 }

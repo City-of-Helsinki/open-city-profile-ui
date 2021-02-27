@@ -1,17 +1,21 @@
+.contentWrapper{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  position: relative;
+}
 
-.container {
+.multiItemContentWrapper{
+  padding-bottom: var(--spacing-xl);
+}
+
+.rowContentWrapper {
   display:flex;
   flex: 1;
-  padding: 20px;
+  padding: var(--spacing-m);
   background:var(--color-black-10);
-  margin: 0 0 10px 0;
+  margin: 0 0 var(--spacing-xs) 0;
 }
-
-.value{
-  font-size: 18px;
-  padding: 0 10px 0 0;
-}
-
 
 .sectionTitle {
   font-size: var(--fontsize-heading-s);
@@ -20,70 +24,30 @@
   padding-bottom: var(--spacing-layout-2-xs);
 } 
 
-
 .sectionTitle:first-of-type {
   margin-top:0;
 }
 
-.formFields {
-  padding-bottom: 50px;
-}
-
 .formField {
-  padding-bottom: 20px;
+  padding-bottom: var(--spacing-m);
 }
 
-.addressFormFields{
+.editButtons{
   display: flex;
-  flex-direction: column;
-  flex: 1 1;
-}
-
-.addressFormFieldGroup{
-  display: flex;
-  flex-direction: column;
-  flex: 1 1;
-  position: relative;
-}
-
-.addressFormActions{
-  display: flex;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.addressFormActions button{
-  padding:0;
-}  
-
-.addressFormActions button span{
-  padding:0;
-}  
-
-.editActions{
-  display: flex;
-  flex: 1 1;
+  flex:1 0;
   margin-top: var(--spacing-m);
-  padding: var(--spacing-m) 0;
   border-top: 1px solid var(--color-black-30);
-}
-
-
-.editActions{
-  display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--spacing-2-xs) 0;
-  flex:1 0;
+  border-color: var(--color-white);
 }
 
-.editActions button{
+.editButtons button{
   margin: var(--spacing-xs) 0 0;
 }
 
-.storedInformation {
-  margin-bottom: 50px;
+.multiItemForm{
+  padding-bottom: var(--spacing-xl);
 }
 
 .icon {
@@ -98,50 +62,139 @@
   padding-right:0;
 }
 
-.responsiveButton {
-  width:100%;
-}
-
-.supplementaryButton:hover,.supplementaryButton:focus,.supplementaryButton:active{
+.supplementaryButton:hover,
+.supplementaryButton:focus,
+.supplementaryButton:hover:focus,
+.supplementaryButton:active{
     background: transparent;
     border-color: transparent;
 }
 
+.responsiveButton {
+  width:100%;
+}
+
+.actionsWrapper{
+  padding-bottom: var(--spacing-xl);
+}
+
+.actionsWrapper .actionsWrapperButton{
+  border:2px solid var(--color-bus);
+  margin-bottom:var(--spacing-xs);
+}  
+
+.actions{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: var(--spacing-xs);
+  flex:1 0;
+  border-top:1px solid var(--color-white);
+}
+
+.actions button{
+  font-size: 16px;
+  padding: 0;
+  border:0;
+  width: 100%;
+}
+
+.actions button{
+  width: 100%;
+}
+
+.primaryContainer{
+  justify-content: flex-start;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  position: relative;
+  vertical-align: top;
+  color:var(--color-bus);
+  line-height: 1.25em;
+  padding: 0;
+  
+}
+
+.primaryContainer span{
+  padding: var(--spacing-s) 0;
+  padding-left: var(--spacing-3-xs);
+}
+
 @media (min-width: 768px) {
-  .storedInformation {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-  .storedInformation > * {
-    width: 33.33%;
-  }
-  .formFields {
+  
+  .multiItemWrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
   }
 
-  .formFields > div{
-      flex-basis: 33.333%;
-      max-width: 350px;
-      padding: 10px 40px 10px 0;
-      box-sizing: border-box;
+  .multiItemWrapper > * {
+    flex-basis: 33.333%;
+    max-width: 350px;
+    padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-xs) 0;
+    box-sizing: border-box;
   }
+
   /* fixes bug in HDS TextInput when it is wrapped to an element with display:flex: */
-  .formFields > div > div { 
+  .multiItemWrapper > div > div { 
     height:auto;
   }
 
   .responsiveButton {
     width: auto;
   }
+  
+  .actionsWrapper{
+    position: absolute;
+    top:-10px;
+    right:0;
+    padding:0;
+  }
 
-  .editActions{
+  .actionsWrapper .actionsWrapperButton{
+    border:0;
+    margin-bottom:0;
+  }
+
+  .primaryContainer{
+    padding: 0 0 0 var(--spacing-m);
+  }
+  
+  .actions{
+    flex: 1 1;
     flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    border:0;
+    padding-top: 0;
+  }
+  
+  .actions button{
+    width: auto;
+  }
+
+  .actions button{
+    padding: 0 0 0 var(--spacing-m);
+  }
+  
+  .editButtons{
+    flex-direction: row;
+    border:0;
+    margin:0;
+    justify-content: flex-end;
+  }
+
+  .editButtons button{
+    margin: 0 0 0 var(--spacing-xs);
+  }
+
+  .alignLeft{
+    justify-content: flex-start;
     padding: var(--spacing-m) 0 0 0;
   }
-  .editActions button{
+
+  .editButtons.alignLeft > button{
     margin: 0 var(--spacing-xs) 0 0;
   }
 }

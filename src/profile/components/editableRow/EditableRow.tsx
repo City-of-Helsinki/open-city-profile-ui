@@ -1,21 +1,16 @@
-import {
-  Button,
-  IconPenLine,
-  IconMinusCircle,
-  IconStarFill,
-  IconStar,
-  TextInput,
-} from 'hds-react';
+import { TextInput } from 'hds-react';
 import React, { useState } from 'react';
 import { Field, Formik, FormikProps, Form } from 'formik';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import to from '../../../common/awaitTo';
 import styles from './editableRow.module.css';
-import { ActionListener, EditData } from '../../helpers/mutationEditor';
+import { Action, ActionListener, EditData } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { phoneSchema, emailSchema } from '../../../common/schemas/schemas';
+import Actions from './Actions';
+import EditButtons from './EditButtons';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
 type FormikValue = { value: EditData['value'] };
@@ -29,6 +24,17 @@ function EditableRow(props: Props): React.ReactElement {
   const [isEditing, setEditing] = useState(status === 'new');
   const isNew = !data.profileData.id;
 
+  const actionHandler = async (action: Action): Promise<void> => {
+    const promise = await onAction(action, data);
+    if (action === 'cancel') {
+      setEditing(false);
+    }
+    if (action === 'edit') {
+      setEditing(true);
+    }
+    return promise as Promise<void>;
+  };
+
   const hasFieldError = (formikProps: FormikProps<FormikValue>): boolean =>
     getIsInvalid<FormikValue>(formikProps, 'value', !isNew);
 
@@ -37,7 +43,12 @@ function EditableRow(props: Props): React.ReactElement {
 
   if (isEditing) {
     return (
-      <div className={styles.container}>
+      <div
+        className={classNames([
+          commonFormStyles.contentWrapper,
+          styles.rowContentWrapper,
+        ])}
+      >
         <Formik
           initialValues={{
             value,
@@ -67,30 +78,10 @@ function EditableRow(props: Props): React.ReactElement {
                   helperText={getFieldErrorMessage(formikProps)}
                   autoFocus
                 />
-                <div
-                  className={classNames([
-                    commonFormStyles.editActions,
-                    styles.editActions,
-                  ])}
-                >
-                  <Button
-                    type="submit"
-                    disabled={editable && Boolean(formikProps.isSubmitting)}
-                    className={commonFormStyles.responsiveButton}
-                  >
-                    {t('profileForm.submit')}
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={async () => {
-                      await onAction('cancel', data);
-                      setEditing(false);
-                    }}
-                    className={commonFormStyles.responsiveButton}
-                  >
-                    {t('profileForm.cancel')}
-                  </Button>
-                </div>
+                <EditButtons
+                  handler={actionHandler}
+                  canSubmit={!!editable && !Boolean(formikProps.isSubmitting)}
+                />
               </div>
             </Form>
           )}
@@ -99,56 +90,22 @@ function EditableRow(props: Props): React.ReactElement {
     );
   }
   return (
-    <div className={styles.container}>
+    <div
+      className={classNames([
+        commonFormStyles.contentWrapper,
+        styles.rowContentWrapper,
+      ])}
+    >
       <span className={styles.value}>{value || '–'}</span>
-      <div className={styles.actions}>
-        {primary && (
-          <div className={styles.primaryContainer}>
-            <IconStarFill />
-            <span>{t('profileForm.primary')}</span>
-          </div>
-        )}
-        {!primary && (
-          <Button
-            variant="supplementary"
-            iconLeft={<IconStar />}
-            onClick={async () => {
-              await onAction('set-primary', data);
-            }}
-            className={commonFormStyles.supplementaryButton}
-          >
-            {t('profileForm.setPrimary')}
-          </Button>
-        )}
-        {editable && (
-          <Button
-            variant="supplementary"
-            iconLeft={<IconPenLine />}
-            onClick={async () => {
-              await onAction('edit', data);
-              if (data.profileData.id) {
-                setEditing(true);
-              }
-            }}
-            className={commonFormStyles.supplementaryButton}
-          >
-            {t('profileForm.edit')}
-          </Button>
-        )}
-        {editable && (
-          <Button
-            variant="supplementary"
-            iconLeft={<IconMinusCircle />}
-            disabled={primary || !removable}
-            onClick={async () => {
-              await onAction('remove', data);
-            }}
-            className={commonFormStyles.supplementaryButton}
-          >
-            {t('profileForm.remove')}
-          </Button>
-        )}
-      </div>
+      <Actions
+        handler={actionHandler}
+        actions={{
+          editable,
+          removable: removable && !primary,
+          primary,
+          setPrimary: true,
+        }}
+      />
     </div>
   );
 }

@@ -5,6 +5,7 @@
   border-radius: 2px;
   padding: var(--spacing-l) var(--horizontal-whitespace);
   margin-bottom: var(--spacing-xl);
+  position:relative;
 }
 
 .verifiedData{

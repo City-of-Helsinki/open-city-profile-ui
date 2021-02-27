@@ -8,7 +8,7 @@ type Props = {
   children?: React.ReactNode;
   description?: string;
   titleButton?: React.ReactNode;
-  title: string;
+  title?: string;
   titleVariant?: 'h2' | 'h3';
   hasVerifiedUserData?: boolean;
 };
@@ -21,6 +21,7 @@ function ProfileSection({
   title,
   hasVerifiedUserData,
 }: Props): React.ReactElement {
+  const hasTitleRowContent = !!(title || description || titleButton);
   return (
     <section
       className={classNames(
@@ -28,18 +29,20 @@ function ProfileSection({
         hasVerifiedUserData && styles.verifiedData
       )}
     >
-      <div className={styles.profileSectionTitleRow}>
-        {(title || description) && (
-          <Explanation
-            variant="flush"
-            className={styles.profileSectionTitle}
-            titleVariant={titleVariant}
-            main={title}
-            small={description}
-          />
-        )}
-        <div className={styles.buttonContainer}>{titleButton}</div>
-      </div>
+      {hasTitleRowContent && (
+        <div className={styles.profileSectionTitleRow}>
+          {(title || description) && (
+            <Explanation
+              variant="flush"
+              className={styles.profileSectionTitle}
+              titleVariant={titleVariant}
+              main={title || ''}
+              small={description}
+            />
+          )}
+          <div className={styles.buttonContainer}>{titleButton}</div>
+        </div>
+      )}
       {children}
     </section>
   );

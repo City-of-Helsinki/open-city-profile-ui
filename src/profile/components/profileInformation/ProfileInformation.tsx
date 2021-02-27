@@ -84,6 +84,7 @@ function ProfileInformation(props: Props): React.ReactElement {
         <Fragment>
           <VerifiedPersonalInformation />
           <EditableBasicData />
+          <ProfileDataEditor dataType="addresses" />
           <ProfileDataEditor dataType="phones" />
           <ProfileDataEditor dataType="emails" />
           <EditableAdditionalInformation />

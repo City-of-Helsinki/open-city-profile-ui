@@ -6,6 +6,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import to from '../../../common/awaitTo';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import EditableRow from '../editableRow/EditableRow';
+import EditableRowAddress from '../editableRow/EditableRowAddress';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import useNotificationContent from '../editingNotifications/useNotificationContent';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
@@ -44,6 +45,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
 
   const { showModal, modalProps } = useConfirmationModal();
   const isAddButtonDisabled = hasNewItem(data);
+  const hasAddressList = dataType === 'addresses';
 
   const executeActionAndNotifyUser: ActionListener = async (action, item) => {
     const func = action === 'save' ? save : remove;
@@ -100,11 +102,16 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
     return null;
   }
 
+  const RenderComponent =
+    dataType === 'addresses' ? EditableRowAddress : EditableRow;
+
   return (
-    <ProfileSection title="">
-      <h3 className={commonFormStyles.sectionTitle}>{getTitle()}</h3>
+    <ProfileSection>
+      {!hasAddressList && (
+        <h3 className={commonFormStyles.sectionTitle}>{getTitle()}</h3>
+      )}
       {data.map(item => (
-        <EditableRow
+        <RenderComponent
           key={item.profileData.id || item.status}
           data={item}
           onAction={onAction}
@@ -124,7 +131,9 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
       >
         {dataType === 'emails'
           ? t('profileForm.addAnotherEmail')
-          : t('profileForm.addAnotherPhone')}
+          : dataType === 'phones'
+          ? t('profileForm.addAnotherPhone')
+          : t('profileForm.addAnotherAddress')}
       </Button>
       <ConfirmationModal {...modalProps} />
     </ProfileSection>

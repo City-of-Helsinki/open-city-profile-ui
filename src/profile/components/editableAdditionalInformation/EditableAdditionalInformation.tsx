@@ -66,11 +66,11 @@ function EditableAdditionalInformation(): React.ReactElement | null {
   };
 
   return (
-    <ProfileSection title={''}>
+    <ProfileSection>
       <h3 className={commonFormStyles.sectionTitle}>
         {t('profileForm.language')}
       </h3>
-      <div className={commonFormStyles.storedInformation}>
+      <div className={commonFormStyles.multiItemWrapper}>
         <Formik
           initialValues={{ profileLanguage }}
           onSubmit={() => {

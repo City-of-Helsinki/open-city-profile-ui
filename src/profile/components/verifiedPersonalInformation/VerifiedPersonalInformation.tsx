@@ -35,7 +35,27 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
   const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];
 
-  const verifiedPersonalInformation = getVerifiedPersonalInformation(data);
+  const verifiedPersonalInformation = getVerifiedPersonalInformation(data) || {
+    firstName: 'firstName',
+    givenName: 'givenName',
+    lastName: 'lastName',
+    email: 'email',
+    permanentAddress: {
+      streetAddress: 'streetAddress',
+      postOffice: 'postOffice',
+      postalCode: 'postalCode',
+    },
+    temporaryAddress: {
+      streetAddress: 'streetAddress',
+      postOffice: 'postOffice',
+      postalCode: 'postalCode',
+    },
+    permanentForeignAddress: {
+      streetAddress: 'streetAddress',
+      additionalAddress: 'additionalAddress',
+      countryCode: 'FI',
+    },
+  };
 
   if (!verifiedPersonalInformation) {
     return null;
@@ -66,7 +86,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
             ? t('profileInformation.temporaryAddress')
             : t('profileInformation.permanentForeignAddress')}
         </h3>
-        <div className={commonFormStyles.storedInformation}>
+        <div className={commonFormStyles.multiItemWrapper}>
           <LabeledValue
             label={t('profileForm.address')}
             value={address.streetAddress}
@@ -106,9 +126,11 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
   };
 
   return (
-    <ProfileSection title={''} hasVerifiedUserData>
-      <h3 className={commonFormStyles.sectionTitle}>Perustiedot</h3>
-      <div className={commonFormStyles.storedInformation}>
+    <ProfileSection hasVerifiedUserData>
+      <h3 className={commonFormStyles.sectionTitle}>
+        {t('profileForm.basicData')}
+      </h3>
+      <div className={commonFormStyles.multiItemWrapper}>
         <LabeledValue
           label={t('profileForm.firstName')}
           value={firstName}

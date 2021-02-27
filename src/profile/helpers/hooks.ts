@@ -20,8 +20,6 @@ import {
   getData,
   updateProfileDataValue,
   createNewItem,
-  addNewAddressToBasicData,
-  basicDataType,
   UpdateResult,
   setNewPrimary,
 } from './mutationEditor';
@@ -193,13 +191,8 @@ export function useProfileMutationHandler({
   };
 
   const add = () => {
-    if (dataType === basicDataType) {
-      addNewAddressToBasicData(currentData[0]);
-      updateData([...currentData]);
-    } else {
-      const newItem = createNewItem(dataType);
-      updateData([...currentData, newItem]);
-    }
+    const newItem = createNewItem(dataType);
+    updateData([...currentData, newItem]);
   };
   const save = async (item: EditData) => {
     updateProfileDataValue(item);

@@ -80,7 +80,7 @@ function EditProfile(props: Props): React.ReactElement {
   };
 
   return (
-    <ProfileSection title={''}>
+    <ProfileSection>
       <EditProfileForm
         setEditing={props.setEditing}
         services={data}
