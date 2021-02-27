@@ -68,7 +68,7 @@ type MutationHandlerReturnType = {
 };
 
 let profileData: QueryReturnType['data'] = undefined;
-let profileUpdateTime = 0; // or add to loadStateTracker
+let profileUpdateTime = 0;
 
 function profileInputFromUpdateMyProfileVariables(
   variables: UpdateMyProfileVariables
@@ -87,7 +87,6 @@ export function useProfileQuery(props?: {
         props.onError(queryError);
       }
     },
-    notifyOnNetworkStatusChange: true,
     errorPolicy: 'all',
   });
   const loadStateTracker = useRef({ isLoading: loading });
@@ -117,9 +116,7 @@ export function useProfileMutation(): MutationReturnType {
   const [updateProfile, { error, loading, data }] = useMutation<
     UpdateMyProfileData,
     UpdateMyProfileVariables
-  >(UPDATE_PROFILE, {
-    refetchQueries: ['MyProfileQuery'],
-  });
+  >(UPDATE_PROFILE);
 
   const update: UpdateProfile = (formValues, profile) => {
     const currentProfile = profile || profileData;

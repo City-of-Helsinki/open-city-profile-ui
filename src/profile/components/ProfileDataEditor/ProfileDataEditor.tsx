@@ -76,7 +76,9 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
             modalTitle:
               dataType === 'emails'
                 ? t('confirmationModal.removeEmail')
-                : t('confirmationModal.removePhone'),
+                : dataType === 'phones'
+                ? t('confirmationModal.removePhone')
+                : t('confirmationModal.removeAddress'),
           })
         );
         if (rejected) {
@@ -105,11 +107,29 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
   const RenderComponent =
     dataType === 'addresses' ? EditableRowAddress : EditableRow;
 
+  const NoDataMessage = () => (
+    <React.Fragment>
+      {dataType === 'addresses' && (
+        <h3 className={commonFormStyles.sectionTitle}>
+          {t('profileInformation.address')}
+        </h3>
+      )}
+      <p>
+        {dataType === 'emails'
+          ? t('profileInformation.noEmails')
+          : dataType === 'phones'
+          ? t('profileInformation.noPhones')
+          : t('profileInformation.noAddresses')}
+      </p>
+    </React.Fragment>
+  );
+
   return (
     <ProfileSection>
       {!hasAddressList && (
         <h3 className={commonFormStyles.sectionTitle}>{getTitle()}</h3>
       )}
+      {!data || (!data.length && <NoDataMessage />)}
       {data.map(item => (
         <RenderComponent
           key={item.profileData.id || item.status}

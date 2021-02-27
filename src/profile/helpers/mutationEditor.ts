@@ -366,6 +366,9 @@ export function matchEditDataToProfileData(
       }
     }
   });
+  if (dataItems.length && !profileDataItems.length) {
+    stats.hasChanged = true;
+  }
   if (existingNewItem) {
     stats.items.push(existingNewItem);
   }

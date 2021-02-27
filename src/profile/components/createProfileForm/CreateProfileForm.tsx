@@ -87,7 +87,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
           <div
             className={classNames([
               styles.formFields,
-              commonFormStyles.formFields,
+              commonFormStyles.multiItemWrapper,
             ])}
           >
             <Field
