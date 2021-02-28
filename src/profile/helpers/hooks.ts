@@ -1,4 +1,10 @@
-import { useMutation, useQuery, FetchResult } from '@apollo/client';
+import {
+  useMutation,
+  useQuery,
+  FetchResult,
+  Reference,
+  ApolloCache,
+} from '@apollo/client';
 import { ApolloError, NetworkStatus } from 'apollo-boost';
 import { loader } from 'graphql.macro';
 import { useRef, useState } from 'react';
@@ -8,6 +14,7 @@ import {
   UpdateMyProfile as UpdateMyProfileData,
   MyProfileQuery,
   ProfileInput,
+  UpdateMyProfile_updateMyProfile_profile as UpdatedMyProfile,
 } from '../../graphql/generatedTypes';
 import {
   FormValues,
@@ -15,27 +22,21 @@ import {
   matchEditDataToProfileData,
   getTargetData,
   collect,
-  convertUpdateMyProfileDataToMyProfile,
   getData,
   updateProfileDataValue,
   createNewItem,
   setNewPrimary,
+  basicDataType,
+  additionalInformationType,
 } from './mutationEditor';
 import { updatePartialMutationVariables } from './updateMutationVariables';
 
 const UPDATE_PROFILE = loader('../../profile/graphql/UpdateMyProfile.graphql');
 const MY_PROFILE = loader('../../profile/graphql/MyProfileQuery.graphql');
 
-type UpdateResult = FetchResult<
-  UpdateMyProfileData,
-  Record<string, unknown>,
-  Record<string, unknown>
->;
-type QueryResult = FetchResult<
-  MyProfileQuery,
-  Record<string, unknown>,
-  Record<string, unknown>
->;
+type AnyObject = Record<string, unknown>;
+type UpdateResult = FetchResult<UpdateMyProfileData, AnyObject, AnyObject>;
+type QueryResult = FetchResult<MyProfileQuery, AnyObject, AnyObject>;
 
 type UpdateProfile = (
   formValues: Partial<FormValues>,
@@ -50,7 +51,7 @@ type QueryReturnType = {
   loading: boolean;
   data: MyProfileQuery | undefined;
   networkStatus: NetworkStatus;
-  refetch: (variables?: Record<string, unknown>) => Promise<QueryResult>;
+  refetch: (variables?: AnyObject) => Promise<QueryResult>;
   updateTime: number;
 };
 
@@ -62,10 +63,6 @@ type MutationReturnType = {
 };
 
 type MutationHandlerReturnType = {
-  update: () => {
-    promise: Promise<UpdateResult>;
-    profileInput: ProfileInput | null;
-  };
   data: EditData[];
   add: () => void;
   save: (item: EditData) => Promise<void>;
@@ -81,6 +78,101 @@ function profileInputFromUpdateMyProfileVariables(
   variables: UpdateMyProfileVariables
 ): ProfileInput {
   return variables.input.profile;
+}
+
+function updateProfileData(data: MyProfileQuery): void {
+  profileData = data;
+  profileUpdateTime = Date.now();
+}
+
+function getCacheUpdateFields(
+  dataType: EditData['dataType'],
+  updatedProfile: UpdatedMyProfile
+): Record<string, (data: unknown) => unknown> {
+  if (dataType === 'phones') {
+    return getPhoneCacheUpdateFields(updatedProfile);
+  }
+  if (dataType === 'emails') {
+    return getEmailCacheUpdateFields(updatedProfile);
+  }
+  if (dataType === 'addresses') {
+    return getAddressCacheUpdateFields(updatedProfile);
+  }
+  if (dataType === basicDataType) {
+    return getBasicDataCacheUpdateFields(updatedProfile);
+  }
+  if (dataType === additionalInformationType) {
+    return getAdditionalDataCacheUpdateFields(updatedProfile);
+  }
+  return {};
+}
+
+function getPhoneCacheUpdateFields(
+  updatedProfile: UpdatedMyProfile
+): Record<string, (data: unknown) => unknown> {
+  return {
+    phones: () => updatedProfile.phones,
+    primaryPhone: () => updatedProfile.primaryPhone,
+  };
+}
+
+function getEmailCacheUpdateFields(
+  updatedProfile: UpdatedMyProfile
+): Record<string, (data: unknown) => unknown> {
+  return {
+    emails: () => updatedProfile.emails,
+    primaryEmail: () => updatedProfile.primaryEmail,
+  };
+}
+
+function getAddressCacheUpdateFields(
+  updatedProfile: UpdatedMyProfile
+): Record<string, (data: unknown) => unknown> {
+  return {
+    addresses: () => updatedProfile.addresses,
+    primaryAddress: () => updatedProfile.primaryAddress,
+  };
+}
+
+function getBasicDataCacheUpdateFields(
+  updatedProfile: UpdatedMyProfile
+): Record<string, (data: unknown) => unknown> {
+  return {
+    firstName: () => updatedProfile.firstName,
+    nickname: () => updatedProfile.nickname,
+    lastName: () => updatedProfile.lastName,
+  };
+}
+
+function getAdditionalDataCacheUpdateFields(
+  updatedProfile: UpdatedMyProfile
+): Record<string, (data: unknown) => unknown> {
+  return {
+    language: () => updatedProfile.language,
+  };
+}
+
+function updateCache(
+  cache: ApolloCache<UpdateMyProfileData>,
+  result: UpdateResult,
+  dataType: EditData['dataType']
+) {
+  const updatedProfile: UpdatedMyProfile | null | undefined =
+    result.data?.updateMyProfile?.profile;
+  const identity =
+    profileData &&
+    cache.identify((profileData.myProfile as unknown) as Reference);
+  if (!updatedProfile || !identity) {
+    throw new Error('Unable to update cache');
+  }
+  cache.modify({
+    id: identity,
+    fields: getCacheUpdateFields(dataType, updatedProfile),
+  });
+  const newData = cache.readQuery({
+    query: MY_PROFILE,
+  });
+  updateProfileData(newData as MyProfileQuery);
 }
 
 export function useProfileQuery(props?: {
@@ -99,15 +191,13 @@ export function useProfileQuery(props?: {
   const loadStateTracker = useRef({ isLoading: loading });
   const loadStarted = loadStateTracker.current.isLoading;
   if (loadStarted && loading === false && data) {
-    profileUpdateTime = Date.now();
-    profileData = data;
+    updateProfileData(data);
     loadStateTracker.current.isLoading = false;
   } else if (!loadStarted && loading) {
     loadStateTracker.current.isLoading = true;
   }
   if (!profileData && data && !loading) {
-    profileData = data;
-    profileUpdateTime = Date.now();
+    updateProfileData(data);
   }
   return {
     refetch,
@@ -119,11 +209,17 @@ export function useProfileQuery(props?: {
   };
 }
 
-export function useProfileMutation(): MutationReturnType {
+export function useProfileMutation({
+  dataType,
+}: {
+  dataType: EditData['dataType'];
+}): MutationReturnType {
   const [updateProfile, { error, loading, data }] = useMutation<
     UpdateMyProfileData,
     UpdateMyProfileVariables
-  >(UPDATE_PROFILE);
+  >(UPDATE_PROFILE, {
+    update: (cache, result) => updateCache(cache, result, dataType),
+  });
 
   const update: UpdateProfile = (formValues, profile) => {
     const currentProfile = profile || profileData;
@@ -152,7 +248,9 @@ export function useProfileMutationHandler({
   dataType: EditData['dataType'];
 }): MutationHandlerReturnType {
   const { data, updateTime } = useProfileQuery();
-  const { update: mutationUpdate } = useProfileMutation();
+  const { update: mutationUpdate } = useProfileMutation({
+    dataType,
+  });
   const [currentData, updateData] = useState<EditData[]>(() =>
     getData(data, dataType)
   );
@@ -172,25 +270,9 @@ export function useProfileMutationHandler({
       updateData(matchResult.items);
     }
   }
-  const update = () => {
-    const formValues = collect(currentData, dataType);
+  const update = (current: EditData[]) => {
+    const formValues = collect(current, dataType);
     const { promise, profileInput } = mutationUpdate(formValues, data);
-    promise
-      .then((result: FetchResult<UpdateMyProfileData>) => {
-        const updatedData = convertUpdateMyProfileDataToMyProfile(result.data);
-        if (updatedData) {
-          const matchResult = matchEditDataToProfileData(
-            currentData,
-            getTargetData(updatedData, dataType),
-            dataType
-          );
-          loadStateTracker.current.updateTime = Date.now();
-          if (matchResult.hasChanged) {
-            updateData(matchResult.items);
-          }
-        }
-      })
-      .catch(e => false);
     return { promise, profileInput };
   };
 
@@ -200,7 +282,7 @@ export function useProfileMutationHandler({
   };
   const save = async (item: EditData) => {
     updateProfileDataValue(item);
-    await update().promise;
+    await update(currentData).promise;
     return Promise.resolve();
   };
   const remove = async (item: EditData) => {
@@ -217,20 +299,18 @@ export function useProfileMutationHandler({
       return Promise.resolve();
     } else {
       item.status = 'removed';
-      return update().promise;
+      return update(currentData).promise;
     }
   };
   const setPrimary = async (item: EditData) => {
     const newData = setNewPrimary(currentData, item);
     if (newData) {
-      updateData(newData);
-      await update().promise;
+      await update(newData).promise;
     }
     return Promise.resolve();
   };
 
   return {
-    update,
     data: currentData,
     add,
     loading: !data,

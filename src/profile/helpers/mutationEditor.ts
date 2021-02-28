@@ -350,6 +350,10 @@ export function matchEditDataToProfileData(
     const existingItem = findExistingItem(dataItems, profileDataItem);
     if (existingItem) {
       existingItem.value = profileDataValue;
+      existingItem.primary = (profileDataItem as
+        | Phone
+        | Email
+        | Address).primary;
       stats.items.push(existingItem);
       stats.hasChanged = true;
     } else {
@@ -373,18 +377,6 @@ export function matchEditDataToProfileData(
     stats.items.push(existingNewItem);
   }
   return stats;
-}
-
-export function convertUpdateMyProfileDataToMyProfile(
-  updateMyProfileData: UpdateMyProfileData | undefined | null
-): MyProfileQuery | null {
-  const updatedProfile = updateMyProfileData?.updateMyProfile?.profile;
-  if (!updatedProfile) {
-    return null;
-  }
-  return {
-    myProfile: (updatedProfile as unknown) as MyProfileQuery_myProfile,
-  };
 }
 
 export function collect(
@@ -458,36 +450,35 @@ export function setNewPrimary(
   dataItems: EditData[],
   newPrimary: EditData
 ): EditData[] | null {
-  const currentPrimary = dataItems[0];
-  const newPrimaryIndex = dataItems.findIndex(
+  const clonedDataItems = dataItems.map(dataItem => ({ ...dataItem }));
+  const currentPrimary = clonedDataItems[0].primary ? clonedDataItems[0] : null;
+  const newPrimaryIndex = clonedDataItems.findIndex(
     item => item.profileData.id === newPrimary.profileData.id
   );
-  if (
-    currentPrimary.primary === false ||
-    newPrimaryIndex === -1 ||
-    !newPrimary.profileData.id
-  ) {
-    throw new Error(
-      'currentPrimary or newPrimary not found or newPrimary is new'
-    );
+  if (newPrimaryIndex === -1 || !newPrimary.profileData.id) {
+    throw new Error('cannot set selected item as new primary');
   }
-  if (currentPrimary.profileData.id === newPrimary.profileData.id) {
+  if (
+    currentPrimary &&
+    currentPrimary.profileData.id === newPrimary.profileData.id
+  ) {
     return null;
   }
-  const newDataItems = [...dataItems];
-  currentPrimary.primary = false;
-  newPrimary.primary = true;
-  (currentPrimary.profileData as
-    | EditableEmail
-    | EditablePhone
-    | EditableAddress).primary = false;
-
-  (newPrimary.profileData as
+  const clonedPrimary = clonedDataItems[newPrimaryIndex];
+  if (currentPrimary) {
+    currentPrimary.primary = false;
+    (currentPrimary.profileData as
+      | EditableEmail
+      | EditablePhone
+      | EditableAddress).primary = false;
+  }
+  clonedPrimary.primary = true;
+  (clonedPrimary.profileData as
     | EditableEmail
     | EditablePhone
     | EditableAddress).primary = true;
 
-  newDataItems.splice(newPrimaryIndex, 1);
-  newDataItems.unshift(newPrimary);
-  return newDataItems;
+  clonedDataItems.splice(newPrimaryIndex, 1);
+  clonedDataItems.unshift(clonedPrimary);
+  return clonedDataItems;
 }
