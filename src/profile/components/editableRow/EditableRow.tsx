@@ -6,7 +6,12 @@ import classNames from 'classnames';
 
 import to from '../../../common/awaitTo';
 import styles from './editableRow.module.css';
-import { Action, ActionListener, EditData } from '../../helpers/mutationEditor';
+import {
+  Action,
+  ActionListener,
+  EditData,
+  UpdateResult,
+} from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { phoneSchema, emailSchema } from '../../../common/schemas/schemas';
 import Actions from './Actions';
@@ -24,7 +29,7 @@ function EditableRow(props: Props): React.ReactElement {
   const [isEditing, setEditing] = useState(status === 'new');
   const isNew = !data.profileData.id;
 
-  const actionHandler = async (action: Action): Promise<void> => {
+  const actionHandler = async (action: Action): Promise<UpdateResult> => {
     const promise = await onAction(action, data);
     if (action === 'cancel') {
       setEditing(false);
@@ -32,7 +37,7 @@ function EditableRow(props: Props): React.ReactElement {
     if (action === 'edit') {
       setEditing(true);
     }
-    return promise as Promise<void>;
+    return promise;
   };
 
   const hasFieldError = (formikProps: FormikProps<FormikValue>): boolean =>

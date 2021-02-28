@@ -3,11 +3,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import { Action } from '../../helpers/mutationEditor';
+import { Action, UpdateResult } from '../../helpers/mutationEditor';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
 type Props = {
-  handler: (action: Action) => Promise<void>;
+  handler: (action: Action) => Promise<UpdateResult>;
   canSubmit: boolean;
   alignLeft?: boolean;
 };

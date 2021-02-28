@@ -15,7 +15,7 @@ const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
 function DownloadData(): React.ReactElement {
   const { createToast } = useToast();
-  const [downloadProfileData, downloadQueryResult] = useDownloadProfile<
+  const [downloadProfileData, , loading] = useDownloadProfile<
     DownloadMyProfileQuery
   >(ALL_DATA, {
     onCompleted: returnedData => {
@@ -31,8 +31,8 @@ function DownloadData(): React.ReactElement {
     fetchPolicy: 'network-only',
   });
   const { t } = useTranslation();
-  const isDownloadingData = downloadQueryResult.loading;
-  const isOpenByDefault = downloadQueryResult.loading;
+  const isDownloadingData = loading;
+  const isOpenByDefault = loading;
   const onDownloadClick = downloadProfileData;
 
   return (

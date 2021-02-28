@@ -13,6 +13,7 @@ import {
   basicDataType,
   resetBasicData,
   Action,
+  UpdateResult,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -61,7 +62,7 @@ function EditableBasicData(): React.ReactElement | null {
     return Promise.resolve();
   };
 
-  const actionHandler = async (action: Action): Promise<void> => {
+  const actionHandler = async (action: Action): Promise<UpdateResult> => {
     const promise = await onAction(action, editData);
     if (action === 'cancel') {
       setEditing(false);
@@ -70,7 +71,7 @@ function EditableBasicData(): React.ReactElement | null {
       clearMessage();
       setEditing(true);
     }
-    return promise as Promise<void>;
+    return promise;
   };
 
   const hasFieldError = (

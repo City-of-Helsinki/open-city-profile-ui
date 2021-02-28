@@ -1,6 +1,5 @@
-import { ExecutionResult } from '@apollo/react-common';
-import { useMutation, useQuery } from '@apollo/react-hooks';
-import { ApolloError, ApolloQueryResult, NetworkStatus } from 'apollo-boost';
+import { useMutation, useQuery, FetchResult } from '@apollo/client';
+import { ApolloError, NetworkStatus } from 'apollo-boost';
 import { loader } from 'graphql.macro';
 import { useRef, useState } from 'react';
 
@@ -20,7 +19,6 @@ import {
   getData,
   updateProfileDataValue,
   createNewItem,
-  UpdateResult,
   setNewPrimary,
 } from './mutationEditor';
 import { updatePartialMutationVariables } from './updateMutationVariables';
@@ -28,11 +26,22 @@ import { updatePartialMutationVariables } from './updateMutationVariables';
 const UPDATE_PROFILE = loader('../../profile/graphql/UpdateMyProfile.graphql');
 const MY_PROFILE = loader('../../profile/graphql/MyProfileQuery.graphql');
 
+type UpdateResult = FetchResult<
+  UpdateMyProfileData,
+  Record<string, unknown>,
+  Record<string, unknown>
+>;
+type QueryResult = FetchResult<
+  MyProfileQuery,
+  Record<string, unknown>,
+  Record<string, unknown>
+>;
+
 type UpdateProfile = (
   formValues: Partial<FormValues>,
   profile?: MyProfileQuery
 ) => {
-  promise: Promise<ExecutionResult<UpdateMyProfileData>>;
+  promise: Promise<UpdateResult>;
   profileInput: ProfileInput | null;
 };
 
@@ -41,28 +50,26 @@ type QueryReturnType = {
   loading: boolean;
   data: MyProfileQuery | undefined;
   networkStatus: NetworkStatus;
-  refetch: (
-    variables?: Record<string, unknown>
-  ) => Promise<ApolloQueryResult<MyProfileQuery>>;
+  refetch: (variables?: Record<string, unknown>) => Promise<QueryResult>;
   updateTime: number;
 };
 
 type MutationReturnType = {
   error: ApolloError | undefined;
   loading: boolean;
-  data: UpdateMyProfileData | undefined;
+  data: UpdateMyProfileData | undefined | null;
   update: UpdateProfile;
 };
 
 type MutationHandlerReturnType = {
   update: () => {
-    promise: Promise<ExecutionResult<UpdateMyProfileData>>;
+    promise: Promise<UpdateResult>;
     profileInput: ProfileInput | null;
   };
   data: EditData[];
   add: () => void;
   save: (item: EditData) => Promise<void>;
-  remove: (item: EditData) => Promise<UpdateResult>;
+  remove: (item: EditData) => Promise<void | UpdateResult>;
   setPrimary: (item: EditData) => Promise<void>;
   loading: boolean;
 };
@@ -91,7 +98,7 @@ export function useProfileQuery(props?: {
   });
   const loadStateTracker = useRef({ isLoading: loading });
   const loadStarted = loadStateTracker.current.isLoading;
-  if (loadStarted && loading === false) {
+  if (loadStarted && loading === false && data) {
     profileUpdateTime = Date.now();
     profileData = data;
     loadStateTracker.current.isLoading = false;
@@ -169,7 +176,7 @@ export function useProfileMutationHandler({
     const formValues = collect(currentData, dataType);
     const { promise, profileInput } = mutationUpdate(formValues, data);
     promise
-      .then((result: ExecutionResult<UpdateMyProfileData>) => {
+      .then((result: FetchResult<UpdateMyProfileData>) => {
         const updatedData = convertUpdateMyProfileDataToMyProfile(result.data);
         if (updatedData) {
           const matchResult = matchEditDataToProfileData(

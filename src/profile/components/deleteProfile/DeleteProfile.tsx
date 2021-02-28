@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';

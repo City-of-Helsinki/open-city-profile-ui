@@ -13,6 +13,7 @@ import {
   EditData,
   EditableAddress,
   Action,
+  UpdateResult,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
@@ -55,7 +56,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
     type: keyof FormikValues
   ) => getFieldError<FormikValues>(t, formikProps, type, {}, !isNew);
 
-  const actionHandler = async (action: Action): Promise<void> => {
+  const actionHandler = async (action: Action): Promise<UpdateResult> => {
     const promise = await onAction(action, data);
     if (action === 'cancel') {
       setEditing(false);
@@ -63,7 +64,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
     if (action === 'edit') {
       setEditing(true);
     }
-    return promise as Promise<void>;
+    return promise;
   };
 
   const { editable, removable, primary } = data;

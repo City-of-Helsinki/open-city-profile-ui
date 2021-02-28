@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { ExecutionResult } from '@apollo/react-common';
+import { ApolloQueryResult } from '@apollo/client';
 
 import {
   Language,
@@ -41,7 +41,7 @@ type AdditionalInformation = {
 
 export type EditableAdditionalInformation = Mutable<AdditionalInformation>;
 
-export type UpdateResult = ExecutionResult<UpdateMyProfileData> | null | void;
+export type UpdateResult = ApolloQueryResult<UpdateMyProfileData> | null | void;
 
 export interface BasicData extends UserData {
   id: string;
@@ -376,7 +376,7 @@ export function matchEditDataToProfileData(
 }
 
 export function convertUpdateMyProfileDataToMyProfile(
-  updateMyProfileData: UpdateMyProfileData | undefined
+  updateMyProfileData: UpdateMyProfileData | undefined | null
 ): MyProfileQuery | null {
   const updatedProfile = updateMyProfileData?.updateMyProfile?.profile;
   if (!updatedProfile) {

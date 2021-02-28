@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloProvider } from '@apollo/client';
 import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
 import countries from 'i18n-iso-countries';
 import fi from 'i18n-iso-countries/langs/fi.json';

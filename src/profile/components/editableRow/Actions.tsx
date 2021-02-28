@@ -9,11 +9,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import { Action, EditData } from '../../helpers/mutationEditor';
+import { Action, EditData, UpdateResult } from '../../helpers/mutationEditor';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
 type Props = {
-  handler: (action: Action) => Promise<void>;
+  handler: (action: Action) => Promise<UpdateResult>;
   actions: Pick<EditData, 'editable' | 'primary' | 'removable'> & {
     setPrimary: boolean;
   };
