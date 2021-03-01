@@ -1,27 +1,19 @@
-import React, { Fragment } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { Fragment, useContext } from 'react';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import DownloadData from '../downloadData/DownloadData';
 import styles from './ProfileInformation.module.css';
-import { MyProfileQuery } from '../../../graphql/generatedTypes';
 import ProfileInformationAccountManagementLink from './ProfileInformationAccountManagementLink';
 import ProfileDataEditor from '../ProfileDataEditor/ProfileDataEditor';
 import EditableBasicData from '../editableBasicData/EditableBasicData';
 import EditableAdditionalInformation from '../editableAdditionalInformation/EditableAdditionalInformation';
 import VerifiedPersonalInformation from '../verifiedPersonalInformation/VerifiedPersonalInformation';
+import { ProfileContext } from '../context/ProfileContext';
 
-type Props = {
-  loading: boolean;
-  data: MyProfileQuery;
-};
-
-function ProfileInformation(props: Props): React.ReactElement {
-  const { t } = useTranslation();
-  const { loading, data } = props;
+function ProfileInformation(): React.ReactElement {
+  const { data } = useContext(ProfileContext);
   return (
     <Fragment>
-      {loading && !data && t('loading')}
       {data && (
         <Fragment>
           <VerifiedPersonalInformation />

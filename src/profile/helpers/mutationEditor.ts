@@ -319,7 +319,7 @@ export function matchEditDataToProfileData(
       profileDataItems[0],
       dataType
     ) as EditableUserData;
-    const userDataChanged = _.isEqual(currentUserData, newUserData);
+    const userDataChanged = !_.isEqual(currentUserData, newUserData);
     if (userDataChanged) {
       stats.hasChanged = true;
       editDataItem.value = newUserData;
@@ -347,15 +347,18 @@ export function matchEditDataToProfileData(
   let existingNewItem = findEditItem(dataItems, '', 'new');
   profileDataItems.forEach(profileDataItem => {
     const profileDataValue = getValue(profileDataItem, dataType);
+    const profileDataIsPrimary = (profileDataItem as Phone | Email | Address)
+      .primary;
     const existingItem = findExistingItem(dataItems, profileDataItem);
     if (existingItem) {
+      if (!stats.hasChanged) {
+        stats.hasChanged =
+          !_.isEqual(existingItem.value, profileDataValue) ||
+          existingItem.primary !== profileDataIsPrimary;
+      }
       existingItem.value = profileDataValue;
-      existingItem.primary = (profileDataItem as
-        | Phone
-        | Email
-        | Address).primary;
+      existingItem.primary = profileDataIsPrimary;
       stats.items.push(existingItem);
-      stats.hasChanged = true;
     } else {
       if (
         existingNewItem &&

@@ -96,18 +96,6 @@ function EditableBasicData(): React.ReactElement | null {
     );
   };
 
-  /*
-  const setPrimaryAddress = async (index: number) => {
-    const addressList = (editData.profileData as BasicData).addresses;
-    const item = addressList[index];
-    if (!item || !item.id || item.primary) {
-      // + show error
-      return Promise.resolve();
-    }
-    await setPrimary(createEditItem('addresses', item));
-    return Promise.resolve();
-  };*/
-
   if (isEditing) {
     return (
       <Formik

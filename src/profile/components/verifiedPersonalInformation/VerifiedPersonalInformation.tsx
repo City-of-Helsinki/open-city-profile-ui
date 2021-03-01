@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { IconCheckCircleFill } from 'hds-react';
 import classNames from 'classnames';
@@ -7,7 +7,7 @@ import styles from './VerifiedPersonalInformation.module.css';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
-import { useProfileQuery } from '../../helpers/hooks';
+import { ProfileContext } from '../context/ProfileContext';
 import getCountry from '../../helpers/getCountry';
 import {
   MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress as PermanentForeignAddress,
@@ -30,7 +30,7 @@ type AddressProps = {
 };
 
 function VerifiedPersonalInformation(): React.ReactElement | null {
-  const { data } = useProfileQuery();
+  const { data } = useContext(ProfileContext);
 
   const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];

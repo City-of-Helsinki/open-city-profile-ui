@@ -1,13 +1,13 @@
 import {
   useMutation,
-  useQuery,
   FetchResult,
   Reference,
   ApolloCache,
+  useLazyQuery,
 } from '@apollo/client';
 import { ApolloError, NetworkStatus } from 'apollo-boost';
 import { loader } from 'graphql.macro';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 
 import {
   UpdateMyProfileVariables,
@@ -30,13 +30,17 @@ import {
   additionalInformationType,
 } from './mutationEditor';
 import { updatePartialMutationVariables } from './updateMutationVariables';
+import {
+  ProfileContext,
+  ProfileContextData,
+} from '../../profile/components/context/ProfileContext';
 
 const UPDATE_PROFILE = loader('../../profile/graphql/UpdateMyProfile.graphql');
 const MY_PROFILE = loader('../../profile/graphql/MyProfileQuery.graphql');
 
 type AnyObject = Record<string, unknown>;
 type UpdateResult = FetchResult<UpdateMyProfileData, AnyObject, AnyObject>;
-type QueryResult = FetchResult<MyProfileQuery, AnyObject, AnyObject>;
+export type QueryResult = FetchResult<MyProfileQuery, AnyObject, AnyObject>;
 
 type UpdateProfile = (
   formValues: Partial<FormValues>,
@@ -51,8 +55,8 @@ type QueryReturnType = {
   loading: boolean;
   data: MyProfileQuery | undefined;
   networkStatus: NetworkStatus;
-  refetch: (variables?: AnyObject) => Promise<QueryResult>;
-  updateTime: number;
+  fetch: () => void;
+  refetch?: () => Promise<QueryResult>;
 };
 
 type MutationReturnType = {
@@ -71,18 +75,10 @@ type MutationHandlerReturnType = {
   loading: boolean;
 };
 
-let profileData: QueryReturnType['data'] = undefined;
-let profileUpdateTime = 0;
-
 function profileInputFromUpdateMyProfileVariables(
   variables: UpdateMyProfileVariables
 ): ProfileInput {
   return variables.input.profile;
-}
-
-function updateProfileData(data: MyProfileQuery): void {
-  profileData = data;
-  profileUpdateTime = Date.now();
 }
 
 function getCacheUpdateFields(
@@ -155,7 +151,9 @@ function getAdditionalDataCacheUpdateFields(
 function updateCache(
   cache: ApolloCache<UpdateMyProfileData>,
   result: UpdateResult,
-  dataType: EditData['dataType']
+  dataType: EditData['dataType'],
+  profileData: MyProfileQuery | null | undefined,
+  updateProfileData: ProfileContextData['updateProfileContext']
 ) {
   const updatedProfile: UpdatedMyProfile | null | undefined =
     result.data?.updateMyProfile?.profile;
@@ -178,9 +176,10 @@ function updateCache(
 export function useProfileQuery(props?: {
   onError: (queryError: ApolloError) => void;
 }): QueryReturnType {
-  const { refetch, data, error, loading, networkStatus } = useQuery<
-    MyProfileQuery
-  >(MY_PROFILE, {
+  const [
+    fetch,
+    { data, error, loading, networkStatus, refetch },
+  ] = useLazyQuery<MyProfileQuery>(MY_PROFILE, {
     onError: (queryError: ApolloError) => {
       if (props && props.onError) {
         props.onError(queryError);
@@ -188,24 +187,14 @@ export function useProfileQuery(props?: {
     },
     errorPolicy: 'all',
   });
-  const loadStateTracker = useRef({ isLoading: loading });
-  const loadStarted = loadStateTracker.current.isLoading;
-  if (loadStarted && loading === false && data) {
-    updateProfileData(data);
-    loadStateTracker.current.isLoading = false;
-  } else if (!loadStarted && loading) {
-    loadStateTracker.current.isLoading = true;
-  }
-  if (!profileData && data && !loading) {
-    updateProfileData(data);
-  }
+
   return {
-    refetch,
-    data: profileData, // prevents bug(?) when network status changes, but data is old
+    fetch,
+    data,
     error,
     loading,
     networkStatus,
-    updateTime: profileUpdateTime,
+    refetch,
   };
 }
 
@@ -214,11 +203,15 @@ export function useProfileMutation({
 }: {
   dataType: EditData['dataType'];
 }): MutationReturnType {
+  const { data: profileData, updateProfileContext } = useContext(
+    ProfileContext
+  );
   const [updateProfile, { error, loading, data }] = useMutation<
     UpdateMyProfileData,
     UpdateMyProfileVariables
   >(UPDATE_PROFILE, {
-    update: (cache, result) => updateCache(cache, result, dataType),
+    update: (cache, result) =>
+      updateCache(cache, result, dataType, profileData, updateProfileContext),
   });
 
   const update: UpdateProfile = (formValues, profile) => {
@@ -247,7 +240,7 @@ export function useProfileMutationHandler({
 }: {
   dataType: EditData['dataType'];
 }): MutationHandlerReturnType {
-  const { data, updateTime } = useProfileQuery();
+  const { data, updateTime } = useContext(ProfileContext);
   const { update: mutationUpdate } = useProfileMutation({
     dataType,
   });
@@ -270,9 +263,13 @@ export function useProfileMutationHandler({
       updateData(matchResult.items);
     }
   }
+
   const update = (current: EditData[]) => {
     const formValues = collect(current, dataType);
-    const { promise, profileInput } = mutationUpdate(formValues, data);
+    const { promise, profileInput } = mutationUpdate(
+      formValues,
+      data as MyProfileQuery
+    );
     return { promise, profileInput };
   };
 

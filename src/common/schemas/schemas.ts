@@ -1,7 +1,6 @@
 import * as yup from 'yup';
 import validator from 'validator';
 
-// Editproform
 const maxLengthValidation = 'validation.maxLength';
 
 export const addressSchema = yup.object().shape({
@@ -28,8 +27,7 @@ export const basicDataSchema = yup.object().shape({
   lastName: yup
     .string()
     .required('validation.lastName')
-    .max(5, maxLengthValidation),
-  addresses: yup.array().of(addressSchema),
+    .max(255, maxLengthValidation),
 });
 
 export const phoneSchema = yup.object().shape({
