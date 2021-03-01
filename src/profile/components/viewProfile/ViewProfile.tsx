@@ -23,10 +23,7 @@ function ViewProfile(): React.ReactElement {
     ProfileContext
   );
   useProfileListener((error: ApolloError | Error) => {
-    if (!(error as ApolloError).graphQLErrors) {
-      return;
-    }
-    if (parseGraphQLError(error as ApolloError).isAllowedError) {
+    if (parseGraphQLError(error).isAllowedError) {
       return;
     }
     Sentry.captureException(error);
