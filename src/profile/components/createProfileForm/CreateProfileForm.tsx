@@ -5,7 +5,7 @@ import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 import classNames from 'classnames';
 
-import { getIsInvalid, getError } from '../../helpers/formik';
+import { getIsInvalid, getError, ErrorRenderer } from '../../helpers/formik';
 import FormikDropdown, {
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
@@ -52,7 +52,8 @@ function CreateProfileForm(props: Props): React.ReactElement {
     fieldName: keyof FormikFormValues,
     options: Record<string, unknown>
   ) => {
-    const renderError = (message: string) => t(message, options);
+    const renderError: ErrorRenderer = errorProps =>
+      t(errorProps.message, options);
 
     return getError<FormikFormValues>(formikProps, fieldName, renderError);
   };

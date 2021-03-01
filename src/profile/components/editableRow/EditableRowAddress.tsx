@@ -55,7 +55,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
   const getFieldErrorMessage = (
     formikProps: FormikProps<FormikValues>,
     type: keyof FormikValues
-  ) => getFieldError<FormikValues>(t, formikProps, type, {}, !isNewItem);
+  ) => getFieldError<FormikValues>(t, formikProps, type, !isNewItem);
 
   const actionHandler = async (action: Action): Promise<UpdateResult> => {
     const promise = await onAction(action, data);

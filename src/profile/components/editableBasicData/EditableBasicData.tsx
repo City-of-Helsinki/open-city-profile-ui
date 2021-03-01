@@ -81,19 +81,12 @@ function EditableBasicData(): React.ReactElement | null {
 
   const getFieldErrorMessage = (
     formikProps: FormikProps<FormikValues>,
-    fieldName: keyof FormikValues,
-    options?: Record<string, unknown>
+    fieldName: keyof FormikValues
   ) => {
     if (!hasFieldError(formikProps, fieldName)) {
       return undefined;
     }
-    return getFieldError<FormikValues>(
-      t,
-      formikProps,
-      fieldName,
-      options,
-      true
-    );
+    return getFieldError<FormikValues>(t, formikProps, fieldName, true);
   };
 
   if (isEditing) {

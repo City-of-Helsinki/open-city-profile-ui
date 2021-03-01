@@ -29,7 +29,6 @@ function EditableRow(props: Props): React.ReactElement {
   const schema = dataType === 'phones' ? phoneSchema : emailSchema;
   const isNewItem = isNew(data);
   const [isEditing, setEditing] = useState(isNewItem);
-
   const actionHandler = async (action: Action): Promise<UpdateResult> => {
     const promise = await onAction(action, data);
     if (action === 'cancel' && !isNewItem) {
@@ -45,7 +44,7 @@ function EditableRow(props: Props): React.ReactElement {
     getIsInvalid<FormikValue>(formikProps, 'value', !isNewItem);
 
   const getFieldErrorMessage = (formikProps: FormikProps<FormikValue>) =>
-    getFieldError<FormikValue>(t, formikProps, 'value', {}, !isNewItem);
+    getFieldError<FormikValue>(t, formikProps, 'value', !isNewItem);
 
   if (isEditing) {
     return (
