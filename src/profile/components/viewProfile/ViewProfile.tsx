@@ -9,7 +9,6 @@ import styles from './ViewProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import PageHeading from '../../../common/pageHeading/PageHeading';
 import ProfileInformation from '../profileInformation/ProfileInformation';
-import getNicknameOrName from '../../helpers/getNicknameOrName';
 import ServiceConnections from '../serviceConnections/ServiceConnections';
 import Subscriptions from '../../../subscriptions/components/subsciptions/Subscriptions';
 import Explanation from '../../../common/explanation/Explanation';
@@ -20,7 +19,9 @@ import { ProfileContext, useProfileListener } from '../context/ProfileContext';
 function ViewProfile(): React.ReactElement {
   const { t } = useTranslation();
   const { createToast } = useToast();
-  const { data, fetch, isInitialized, isComplete } = useContext(ProfileContext);
+  const { fetch, isInitialized, isComplete, getName } = useContext(
+    ProfileContext
+  );
   useProfileListener((error: ApolloError | Error) => {
     if (!(error as ApolloError).graphQLErrors) {
       return;
@@ -41,7 +42,7 @@ function ViewProfile(): React.ReactElement {
       {isComplete && (
         <React.Fragment>
           <Section korosType="basic">
-            <PageHeading text={getNicknameOrName(data)} />
+            <PageHeading text={getName(true)} />
           </Section>
           <div className={styles.contentWrapper}>
             <Switch>

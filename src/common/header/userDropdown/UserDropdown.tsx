@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconSignout, Navigation } from 'hds-react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
-import { loader } from 'graphql.macro';
-import { useLazyQuery } from '@apollo/client';
 
-import { NameQuery } from '../../../graphql/generatedTypes';
 import authService from '../../../auth/authService';
-import useToast from '../../../toast/useToast';
+import { ProfileContext } from '../../../profile/components/context/ProfileContext';
 
 type UserDataWithActions = {
   userName: string;
@@ -16,33 +13,17 @@ type UserDataWithActions = {
   onClick: () => Promise<void>;
 };
 
-const NAME_QUERY = loader('../../../profile/graphql/NameQuery.graphql');
-
 function UserDropdown(): React.ReactElement {
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
-  const { createToast } = useToast();
+  const { getName, isComplete } = useContext(ProfileContext);
 
   const isAuthenticated = authService.isAuthenticated();
-  const [nameQuery, { data, loading }] = useLazyQuery<NameQuery>(NAME_QUERY, {
-    onError: () => {
-      createToast({ type: 'error' });
-    },
-    fetchPolicy: 'cache-only',
-  });
-
-  React.useEffect(() => {
-    if (isAuthenticated) {
-      nameQuery();
-    }
-  }, [isAuthenticated, nameQuery]);
 
   const getUserDataWithActions = (): UserDataWithActions => {
-    const userLoaded = isAuthenticated && !loading && data?.myProfile;
+    const userLoaded = isAuthenticated && isComplete;
     // eslint-disable-next-line no-shadow
-    const userName = userLoaded
-      ? `${data?.myProfile?.firstName} ${data?.myProfile?.lastName}`
-      : '';
+    const userName = userLoaded ? getName(true) : '';
 
     const logoutAction = (): Promise<void> => {
       trackEvent({ category: 'action', action: 'Log out' });

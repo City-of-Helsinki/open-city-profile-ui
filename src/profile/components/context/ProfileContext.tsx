@@ -29,6 +29,7 @@ export type ProfileContextData = {
   refetch: () => Promise<QueryResult>;
   isInitialized: boolean;
   isComplete: boolean;
+  getName: (preferNickOrGivenName?: boolean) => string;
 };
 
 export const ProfileContext = createContext<ProfileContextData>({
@@ -41,6 +42,7 @@ export const ProfileContext = createContext<ProfileContextData>({
   refetch: () => Promise.reject(),
   isInitialized: false,
   isComplete: false,
+  getName: () => '',
 });
 
 export const Provider = (props: ContextProps): React.ReactElement => {
@@ -124,6 +126,24 @@ export const Provider = (props: ContextProps): React.ReactElement => {
     refetch: refetchDataIfPossible,
     isInitialized: hasBeenCalled,
     isComplete,
+    getName: preferNickOrGivenName => {
+      if (!isComplete || !profileData || !profileData.myProfile) {
+        return 'NONE';
+      }
+      if (profileData.myProfile.verifiedPersonalInformation) {
+        const source = profileData.myProfile.verifiedPersonalInformation;
+        return `${
+          preferNickOrGivenName && source.givenName
+            ? source.givenName
+            : source.firstName
+        } ${source.lastName}`;
+      } else {
+        const source = profileData.myProfile;
+        return preferNickOrGivenName && source.nickname
+          ? source.nickname
+          : `${source.firstName} ${source.lastName}`;
+      }
+    },
   };
 
   return (
