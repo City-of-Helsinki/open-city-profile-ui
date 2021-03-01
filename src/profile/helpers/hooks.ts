@@ -4,8 +4,9 @@ import {
   Reference,
   ApolloCache,
   useLazyQuery,
+  ApolloError,
+  NetworkStatus,
 } from '@apollo/client';
-import { ApolloError, NetworkStatus } from 'apollo-boost';
 import { loader } from 'graphql.macro';
 import { useContext, useRef, useState } from 'react';
 

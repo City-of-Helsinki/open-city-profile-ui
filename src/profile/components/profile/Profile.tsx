@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, ApolloError } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router';
 import { loader } from 'graphql.macro';
 import { User } from 'oidc-client';
 import * as Sentry from '@sentry/browser';
-import { ApolloError } from 'apollo-boost';
 import { Notification } from 'hds-react';
 
 import PageLayout from '../../../common/pageLayout/PageLayout';

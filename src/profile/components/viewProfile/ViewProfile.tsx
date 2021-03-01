@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Switch, Route } from 'react-router-dom';
 import * as Sentry from '@sentry/browser';
 import { Section } from 'hds-react';
-import { ApolloError } from 'apollo-boost';
+import { ApolloError } from '@apollo/client';
 
 import styles from './ViewProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';

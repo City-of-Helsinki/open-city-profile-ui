@@ -1,4 +1,4 @@
-import { ApolloError } from 'apollo-boost';
+import { ApolloError } from '@apollo/client';
 
 type ParsingResult = { isAllowedError: boolean };
 
