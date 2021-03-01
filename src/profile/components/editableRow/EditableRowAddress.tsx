@@ -14,6 +14,7 @@ import {
   EditableAddress,
   Action,
   UpdateResult,
+  isNew,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
@@ -32,13 +33,13 @@ type Props = { data: EditData; onAction: ActionListener };
 
 function EditableRowAddress(props: Props): React.ReactElement {
   const { data, onAction } = props;
-  const { status, profileData } = data;
+  const { profileData } = data;
   const value = data.value as EditableAddress;
-  const { address, city, postalCode, countryCode, id } = profileData as Address;
-  const isNew = !id;
+  const { address, city, postalCode, countryCode } = profileData as Address;
+  const isNewItem = isNew(data);
   const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];
-  const [isEditing, setEditing] = useState(status === 'new');
+  const [isEditing, setEditing] = useState(isNewItem);
   const applicationLanguage = getLanguageCode(i18n.languages[0]);
   const countryList = countries.getNames(applicationLanguage);
   const countryOptions = Object.keys(countryList).map(key => ({
@@ -49,16 +50,16 @@ function EditableRowAddress(props: Props): React.ReactElement {
   const hasFieldError = (
     formikProps: FormikProps<FormikValues>,
     type: keyof FormikValues
-  ): boolean => getIsInvalid<FormikValues>(formikProps, type, !isNew);
+  ): boolean => getIsInvalid<FormikValues>(formikProps, type, !isNewItem);
 
   const getFieldErrorMessage = (
     formikProps: FormikProps<FormikValues>,
     type: keyof FormikValues
-  ) => getFieldError<FormikValues>(t, formikProps, type, {}, !isNew);
+  ) => getFieldError<FormikValues>(t, formikProps, type, {}, !isNewItem);
 
   const actionHandler = async (action: Action): Promise<UpdateResult> => {
     const promise = await onAction(action, data);
-    if (action === 'cancel') {
+    if (action === 'cancel' && !isNewItem) {
       setEditing(false);
     }
     if (action === 'edit') {
@@ -85,7 +86,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
           const [err] = await to(onAction('save', data));
           if (err) {
             actions.setSubmitting(false);
-          } else if (!isNew) {
+          } else if (!isNewItem) {
             actions.setSubmitting(false);
             setEditing(false);
           }

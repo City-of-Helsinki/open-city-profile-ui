@@ -11,6 +11,7 @@ import {
   ActionListener,
   EditData,
   UpdateResult,
+  isNew,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { phoneSchema, emailSchema } from '../../../common/schemas/schemas';
@@ -24,14 +25,14 @@ type Props = { data: EditData; onAction: ActionListener };
 function EditableRow(props: Props): React.ReactElement {
   const { data, onAction } = props;
   const { t } = useTranslation();
-  const { value, editable, removable, status, dataType, primary } = data;
+  const { value, editable, removable, dataType, primary } = data;
   const schema = dataType === 'phones' ? phoneSchema : emailSchema;
-  const [isEditing, setEditing] = useState(status === 'new');
-  const isNew = !data.profileData.id;
+  const isNewItem = isNew(data);
+  const [isEditing, setEditing] = useState(isNewItem);
 
   const actionHandler = async (action: Action): Promise<UpdateResult> => {
     const promise = await onAction(action, data);
-    if (action === 'cancel') {
+    if (action === 'cancel' && !isNewItem) {
       setEditing(false);
     }
     if (action === 'edit') {
@@ -41,10 +42,10 @@ function EditableRow(props: Props): React.ReactElement {
   };
 
   const hasFieldError = (formikProps: FormikProps<FormikValue>): boolean =>
-    getIsInvalid<FormikValue>(formikProps, 'value', !isNew);
+    getIsInvalid<FormikValue>(formikProps, 'value', !isNewItem);
 
   const getFieldErrorMessage = (formikProps: FormikProps<FormikValue>) =>
-    getFieldError<FormikValue>(t, formikProps, 'value', {}, !isNew);
+    getFieldError<FormikValue>(t, formikProps, 'value', {}, !isNewItem);
 
   if (isEditing) {
     return (
@@ -64,7 +65,7 @@ function EditableRow(props: Props): React.ReactElement {
             const [err] = await to(onAction('save', data));
             if (err) {
               actions.setSubmitting(false);
-            } else if (!isNew) {
+            } else if (!isNewItem) {
               actions.setSubmitting(false);
               setEditing(false);
             }

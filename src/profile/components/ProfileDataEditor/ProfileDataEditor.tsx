@@ -132,7 +132,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
       {!data || (!data.length && <NoDataMessage />)}
       {data.map(item => (
         <RenderComponent
-          key={item.profileData.id || item.status}
+          key={item.profileData.id || 'new'}
           data={item}
           onAction={onAction}
         />

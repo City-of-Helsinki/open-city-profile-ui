@@ -29,6 +29,8 @@ import {
   setNewPrimary,
   basicDataType,
   additionalInformationType,
+  isNew,
+  markRemoved,
 } from './mutationEditor';
 import { updatePartialMutationVariables } from './updateMutationVariables';
 import {
@@ -284,11 +286,8 @@ export function useProfileMutationHandler({
     return Promise.resolve();
   };
   const remove = async (item: EditData) => {
-    const isNew = !item.profileData.id;
-    if (isNew) {
-      const index = currentData.findIndex(
-        dataItem => dataItem.status === 'new'
-      );
+    if (isNew(item)) {
+      const index = currentData.findIndex(dataItem => isNew(dataItem));
       if (index === -1) {
         return Promise.resolve();
       }
@@ -296,7 +295,7 @@ export function useProfileMutationHandler({
       updateData([...currentData]);
       return Promise.resolve();
     } else {
-      item.status = 'removed';
+      markRemoved(item);
       return update(currentData).promise;
     }
   };

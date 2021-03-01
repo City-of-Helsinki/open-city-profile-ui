@@ -54,6 +54,7 @@ export type EditData = {
   editable?: boolean;
   removable?: boolean;
   primary?: boolean;
+  removed?: boolean;
   profileData: Phone | Email | Address | BasicData | AdditionalInformation;
   value:
     | string
@@ -61,7 +62,6 @@ export type EditData = {
     | EditableAddress
     | EditableUserData
     | EditableAdditionalInformation;
-  status: 'new' | 'removed' | 'edited' | undefined;
   dataType:
     | 'phones'
     | 'emails'
@@ -168,7 +168,7 @@ export function createEditItem(
     profileData: targetProfileData,
     value: getValue(targetProfileData, dataType),
     primary: isPrimary(targetProfileData, dataType),
-    status: undefined,
+    removed: false,
     dataType,
   };
 }
@@ -287,20 +287,8 @@ function findExistingItem(
   return findEditItem(dataItems, profileDataItem && profileDataItem.id);
 }
 
-function findEditItem(
-  dataItems: EditData[],
-  id?: string,
-  status?: EditData['status']
-): EditData | undefined {
-  if (!id && !status) {
-    return undefined;
-  }
-  return dataItems.find(dataItem => {
-    const idMatch =
-      !id || id === (dataItem.profileData && dataItem.profileData.id);
-    const statusMatch = !status || status === dataItem.status;
-    return idMatch && statusMatch;
-  });
+function findEditItem(dataItems: EditData[], id: string): EditData | undefined {
+  return dataItems.find(dataItem => id === dataItem.profileData.id);
 }
 
 export function matchEditDataToProfileData(
@@ -344,7 +332,7 @@ export function matchEditDataToProfileData(
     stats.items.push(editDataItem);
     return stats;
   }
-  let existingNewItem = findEditItem(dataItems, '', 'new');
+  let existingNewItem = findEditItem(dataItems, '');
   profileDataItems.forEach(profileDataItem => {
     const profileDataValue = getValue(profileDataItem, dataType);
     const profileDataIsPrimary = (profileDataItem as Phone | Email | Address)
@@ -365,7 +353,6 @@ export function matchEditDataToProfileData(
         _.isEqual(existingNewItem.value, profileDataValue)
       ) {
         existingNewItem.profileData = profileDataItem;
-        existingNewItem.status = undefined;
         stats.items.push(existingNewItem);
         existingNewItem = undefined;
       } else {
@@ -373,7 +360,7 @@ export function matchEditDataToProfileData(
       }
     }
   });
-  if (dataItems.length && !profileDataItems.length) {
+  if (!stats.hasChanged && dataItems.length !== profileDataItems.length) {
     stats.hasChanged = true;
   }
   if (existingNewItem) {
@@ -387,7 +374,7 @@ export function collect(
   dataType: EditData['dataType']
 ): Partial<FormValues> {
   const data = dataItems
-    .filter(dataItem => dataItem.status !== 'removed')
+    .filter(dataItem => !isRemoved(dataItem))
     .map(dataItem => dataItem.profileData);
   if (dataType === 'phones') {
     return {
@@ -422,8 +409,19 @@ export function resetBasicData(editData: EditData[]): EditableUserData {
 export function createNewItem(dataType: EditData['dataType']): EditData {
   const newProfileData = createNewProfileData(dataType);
   const newItem = createEditItem(dataType, newProfileData);
-  newItem.status = 'new';
   return newItem;
+}
+
+export function isNew(data: EditData): boolean {
+  return data.profileData.id === '';
+}
+
+export function isRemoved(data: EditData): boolean {
+  return !!data.removed;
+}
+
+export function markRemoved(data: EditData): void {
+  data.removed = true;
 }
 
 export function createNewProfileData(
@@ -446,7 +444,7 @@ export function createEditableData(
 }
 
 export function hasNewItem(data: EditData[]): boolean {
-  return !!findEditItem(data, '', 'new');
+  return !!findEditItem(data, '');
 }
 
 export function setNewPrimary(
