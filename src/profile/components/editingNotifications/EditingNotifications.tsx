@@ -13,7 +13,7 @@ function EditingNotifications({ content }: Props): React.ReactElement | null {
     return null;
   }
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} role="alert">
       <Notification
         type={content.error ? 'error' : 'success'}
         label={content.text}

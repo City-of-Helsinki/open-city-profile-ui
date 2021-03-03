@@ -33,9 +33,3 @@
   right:0;
   top:calc(var(--spacing-s)*-1);
 }
-
-@media (min-width: 600px) {
-  .profileSection {
-    --horizontal-whitespace: var(--spacing-xl);
-  }
-}

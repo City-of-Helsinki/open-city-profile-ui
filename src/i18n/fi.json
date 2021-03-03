@@ -23,6 +23,7 @@
     "remove": "Poista",
     "removeEmail": "Poistetaanko sähköpostiosoite?",
     "removePhone": "Poistetaanko puhelinnumero?",
+    "removeAddress": "Poistetaanko osoite?",
     "saveMessage": "Muuttamasi tiedot ovat heti käytössä seuraavissa Helsingin kaupungin palveluissa:",
     "saveTitle": "Haluatko tallentaa tekemäsi muutokset?"
   },
@@ -103,9 +104,9 @@
     "title": "Profiilisi on poistettu onnistuneesti!"
   },
   "profileForm": {
-    "addAnotherAddress": "Lisää toinen osoite",
-    "addAnotherEmail": "Lisää toinen sähköpostiosoite",
-    "addAnotherPhone": "Lisää toinen puhelinnumero",
+    "addAnotherAddress": "Lisää uusi osoite",
+    "addAnotherEmail": "Lisää uusi sähköpostiosoite",
+    "addAnotherPhone": "Lisää uusi puhelinnumero",
     "additionalInfo": "Lisätiedot",
     "address": "Kotiosoite",
     "basicData": "Perustiedot",
@@ -136,6 +137,10 @@
   },
   "profileInformation": {
     "address": "Osoite",
+    "ariaEditAddress": "Muokkaa osoitetta",
+    "ariaEditPhone": "Muokkaa puhelinnumeroa",
+    "ariaEditEmail": "Muokkaa sähköpostiosoitetta",
+    "ariaEditBasicData": "Muokkaa perustietoja",
     "deleteProfile": "Poista omat tietosi",
     "description": "Helsinki Profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa. Kätevää eikö?",
     "downloadData": "Lataa omat tietosi",
@@ -151,8 +156,14 @@
     "permanentAddress": "Vakinainen osoite",
     "temporaryAddress": "Väliaikainen osoite",
     "permanentForeignAddress": "Väliaikainen ulkomainen osoite",
-    "verifiedDataIconInformation": "Merkityt tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <0>siirry suomi.fi palveluun </0>",
-    "verifiedDataIconInformationLink": "https://www.suomi.fi/"
+    "primaryEmail": "Ensisijainen sähköposti",
+    "primaryPhone": "Ensisijainen puhelinnumero",
+    "verifiedDataInformationPrefix": "Merkityt ",
+    "verifiedDataInformationAriaPrefix": "Alla olevat",
+    "verifiedDataInformation": "<0></0> tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <1>siirry suomi.fi palveluun </1>",
+    "verifiedDataInformationLink": "https://www.suomi.fi/",
+    "verifiedData": "Vahvistettu tieto",
+    "ariaFieldHelperWrite": "Kirjoita"
   },
   "sanityCheck": "open-city-profile.fi",
   "serviceConnections": {
@@ -176,7 +187,8 @@
     "email": "Sähköpostiosoite ei kelpaa.",
     "maxLength": "Kentän maksimipituus on {{max}} merkkiä.",
     "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä.",
-    "required": "Tämä kenttä on pakollinen."
+    "required": "Tämä kenttä on pakollinen.",
+    "errorTitleForScreenReaders": "Lomakkeella on seuraavat virheet:"
   },
   "identityProvider": {
     "helsinkiAccount": "Helsinki-tunnus",

@@ -61,6 +61,8 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     return null;
   }
 
+  const verifiedInfoText = t('profileInformation.verifiedData');
+
   const {
     firstName,
     givenName,
@@ -90,34 +92,34 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
           <LabeledValue
             label={t('profileForm.address')}
             value={address.streetAddress}
-            showCheckIcon
+            verifiedInfoText={verifiedInfoText}
           />
           {address.additionalAddress && (
             <LabeledValue
               label={t('profileForm.additionalInfo')}
               value={address.additionalAddress}
-              showCheckIcon
+              verifiedInfoText={verifiedInfoText}
             />
           )}
           {address.postalCode && (
             <LabeledValue
               label={t('profileForm.postalCode')}
               value={address.postalCode}
-              showCheckIcon
+              verifiedInfoText={verifiedInfoText}
             />
           )}
           {address.postOffice && (
             <LabeledValue
               label={t('profileForm.postOffice')}
               value={address.postOffice}
-              showCheckIcon
+              verifiedInfoText={verifiedInfoText}
             />
           )}
           {country && (
             <LabeledValue
               label={t('profileForm.country')}
               value={country}
-              showCheckIcon
+              verifiedInfoText={verifiedInfoText}
             />
           )}
         </div>
@@ -125,26 +127,50 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     );
   };
 
+  const LongDescription = ({ forAria }: { forAria?: boolean }) => (
+    <p className={forAria ? commonFormStyles.visuallyHidden : ''}>
+      <Trans
+        i18nKey="profileInformation.verifiedDataInformation"
+        components={[
+          forAria
+            ? t('profileInformation.verifiedDataInformationAriaPrefix')
+            : t('profileInformation.verifiedDataInformationPrefix'),
+          // eslint-disable-next-line jsx-a11y/anchor-has-content
+          <a
+            href={t('profileInformation.verifiedDataInformationLink')}
+            target="_blank"
+            rel="noopener noreferrer"
+            tabIndex={forAria ? 0 : -1}
+          />,
+        ]}
+      />
+    </p>
+  );
+
   return (
     <ProfileSection hasVerifiedUserData>
-      <h3 className={commonFormStyles.sectionTitle}>
+      <h3
+        className={commonFormStyles.sectionTitle}
+        aria-label="Vahvistetut perustiedot"
+      >
         {t('profileForm.basicData')}
       </h3>
+      <LongDescription forAria />
       <div className={commonFormStyles.multiItemWrapper}>
         <LabeledValue
           label={t('profileForm.firstName')}
           value={firstName}
-          showCheckIcon
+          verifiedInfoText={verifiedInfoText}
         />
         <LabeledValue
           label={t('profileForm.givenName')}
           value={givenName}
-          showCheckIcon
+          verifiedInfoText={verifiedInfoText}
         />
         <LabeledValue
           label={t('profileForm.lastName')}
           value={lastName}
-          showCheckIcon
+          verifiedInfoText={verifiedInfoText}
         />
       </div>
       <AddressComponent
@@ -159,23 +185,15 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
         type="foreign"
         address={permanentForeignAddress as CommonAddress}
       />
-      <div className={classNames([styles.verifiedDataIconInformation])}>
+      <div
+        className={classNames([styles.verifiedDataIconInformation])}
+        id="verified-data-information"
+        aria-hidden="true"
+      >
         <span className={commonFormStyles.icon}>
           <IconCheckCircleFill />
         </span>
-        <p>
-          <Trans
-            i18nKey="profileInformation.verifiedDataIconInformation"
-            components={[
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
-              <a
-                href={t('profileInformation.verifiedDataIconInformationLink')}
-                target="_blank"
-                rel="noopener noreferrer"
-              />,
-            ]}
-          />
-        </p>
+        <LongDescription />
       </div>
     </ProfileSection>
   );

@@ -17,12 +17,18 @@ import {
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
+import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import useNotificationContent from '../editingNotifications/useNotificationContent';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
 import { basicDataSchema } from '../../../common/schemas/schemas';
-import Actions from '../editableRow/Actions';
+import Actions, { ActionAriaLabels } from '../editableRow/Actions';
 import EditButtons from '../editableRow/EditButtons';
+import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
+import createActionAriaLabels from '../../helpers/createActionAriaLabels';
+import { useAutoFocus } from '../../helpers/useAutoFocus';
+import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
+import { getFormFields } from '../../helpers/formProperties';
 
 type FormikValues = EditableUserData;
 
@@ -39,6 +45,9 @@ function EditableBasicData(): React.ReactElement | null {
   const [isEditing, setEditing] = useState(false);
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
+  const { autoFocusTargetId, activateAutoFocusing } = useAutoFocus({
+    targetId: 'basic-data-edit-button',
+  });
 
   if (!data || !data[0]) {
     return null;
@@ -46,6 +55,7 @@ function EditableBasicData(): React.ReactElement | null {
   const editData = data[0];
   const { value, editable } = editData;
   const { firstName, nickname, lastName } = value as EditableUserData;
+  const formFields = getFormFields(basicDataType);
 
   const onAction: ActionListener = async (action, item) => {
     trackEvent({ category: 'form-action', action });
@@ -65,6 +75,7 @@ function EditableBasicData(): React.ReactElement | null {
   const actionHandler = async (action: Action): Promise<UpdateResult> => {
     const promise = await onAction(action, editData);
     if (action === 'cancel') {
+      activateAutoFocusing();
       setEditing(false);
     }
     if (action === 'edit') {
@@ -89,11 +100,15 @@ function EditableBasicData(): React.ReactElement | null {
     return getFieldError<FormikValues>(t, formikProps, fieldName, true);
   };
 
+  const ariaActionLabels: ActionAriaLabels = createActionAriaLabels(
+    editData,
+    t
+  );
+
   if (isEditing) {
     return (
       <Formik
         initialValues={{ firstName, nickname, lastName }}
-        enableReinitialize
         onSubmit={async (values, actions) => {
           actions.setSubmitting(true);
           // eslint-disable-next-line no-shadow
@@ -105,6 +120,7 @@ function EditableBasicData(): React.ReactElement | null {
             setErrorMessage('', 'save');
           } else {
             setSuccessMessage('', 'save');
+            activateAutoFocusing();
             setEditing(false);
           }
         }}
@@ -116,44 +132,58 @@ function EditableBasicData(): React.ReactElement | null {
               {t('profileForm.basicData')}
             </h3>
             <Form>
-              <div className={commonFormStyles.multiItemWrapper}>
-                <Field
-                  className={commonFormStyles.formField}
-                  name="firstName"
-                  id="firstName"
-                  maxLength="255"
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps, 'firstName')}
-                  helperText={getFieldErrorMessage(formikProps, 'firstName')}
-                  labelText={t('profileForm.firstName')}
+              <FocusKeeper targetId={'firstName'}>
+                <div className={commonFormStyles.multiItemWrapper}>
+                  <Field
+                    className={commonFormStyles.formField}
+                    name="firstName"
+                    id="firstName"
+                    maxLength={formFields.firstName.max as number}
+                    as={TextInput}
+                    invalid={hasFieldError(formikProps, 'firstName')}
+                    aria-invalid={hasFieldError(formikProps, 'firstName')}
+                    helperText={getFieldErrorMessage(formikProps, 'firstName')}
+                    labelText={t(formFields.firstName.translationKey)}
+                    aria-describedby="basic-data-firstname-helper"
+                    autoFocus
+                  />
+                  <Field
+                    className={commonFormStyles.formField}
+                    name="nickname"
+                    id="nickname"
+                    maxLength={formFields.nickname.max as number}
+                    as={TextInput}
+                    invalid={hasFieldError(formikProps, 'nickname')}
+                    aria-invalid={hasFieldError(formikProps, 'nickname')}
+                    helperText={getFieldErrorMessage(formikProps, 'nickname')}
+                    labelText={t(formFields.nickname.translationKey)}
+                    aria-describedby="basic-data-nickname-helper"
+                  />
+                  <Field
+                    className={commonFormStyles.formField}
+                    name="lastName"
+                    id="lastName"
+                    maxLength={formFields.lastName.max as number}
+                    as={TextInput}
+                    invalid={hasFieldError(formikProps, 'lastName')}
+                    aria-invalid={hasFieldError(formikProps, 'lastName')}
+                    helperText={getFieldErrorMessage(formikProps, 'lastName')}
+                    labelText={t(formFields.lastName.translationKey)}
+                    aria-describedby={`${basicDataType}-lastname-helper`}
+                  />
+                </div>
+                <AccessibilityFieldHelpers dataType={basicDataType} />
+                <AccessibleFormikErrors
+                  formikProps={formikProps}
+                  dataType={basicDataType}
                 />
-                <Field
-                  className={commonFormStyles.formField}
-                  name="nickname"
-                  id="nickname"
-                  maxLength="255"
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps, 'nickname')}
-                  helperText={getFieldErrorMessage(formikProps, 'nickname')}
-                  labelText={t('profileForm.nickname')}
+                <EditingNotifications content={content} />
+                <EditButtons
+                  handler={actionHandler}
+                  canSubmit={!!editable && !Boolean(formikProps.isSubmitting)}
+                  alignLeft
                 />
-                <Field
-                  className={commonFormStyles.formField}
-                  name="lastName"
-                  id="lastName"
-                  maxLength="255"
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps, 'lastName')}
-                  helperText={getFieldErrorMessage(formikProps, 'lastName')}
-                  labelText={t('profileForm.lastName')}
-                />
-              </div>
-              <EditingNotifications content={content} />
-              <EditButtons
-                handler={actionHandler}
-                canSubmit={!!editable && !Boolean(formikProps.isSubmitting)}
-                alignLeft
-              />
+              </FocusKeeper>
             </Form>
           </ProfileSection>
         )}
@@ -167,9 +197,18 @@ function EditableBasicData(): React.ReactElement | null {
           {t('profileForm.basicData')}
         </h3>
         <div className={commonFormStyles.multiItemWrapper}>
-          <LabeledValue label={t('profileForm.firstName')} value={firstName} />
-          <LabeledValue label={t('profileForm.nickname')} value={nickname} />
-          <LabeledValue label={t('profileForm.lastName')} value={lastName} />
+          <LabeledValue
+            label={t(formFields.firstName.translationKey)}
+            value={firstName}
+          />
+          <LabeledValue
+            label={t(formFields.nickname.translationKey)}
+            value={nickname}
+          />
+          <LabeledValue
+            label={t(formFields.lastName.translationKey)}
+            value={lastName}
+          />
         </div>
 
         <div className={commonFormStyles.actionsWrapper}>
@@ -181,6 +220,8 @@ function EditableBasicData(): React.ReactElement | null {
               setPrimary: false,
             }}
             buttonClassNames={commonFormStyles.actionsWrapperButton}
+            ariaLabels={ariaActionLabels}
+            editButtonId={autoFocusTargetId}
           />
         </div>
       </div>

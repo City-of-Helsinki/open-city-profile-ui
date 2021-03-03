@@ -19,13 +19,18 @@ import {
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
 import EditButtons from './EditButtons';
-import Actions from './Actions';
+import Actions, { ActionAriaLabels } from './Actions';
 import FormikDropdown, {
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import getCountry from '../../helpers/getCountry';
+import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
+import createActionAriaLabels from '../../helpers/createActionAriaLabels';
+import { useAutoFocus } from '../../helpers/useAutoFocus';
+import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
+import { getFormFields } from '../../helpers/formProperties';
 
 type FormikValues = EditableAddress;
 
@@ -46,6 +51,12 @@ function EditableRowAddress(props: Props): React.ReactElement {
     value: key,
     label: countryList[key],
   }));
+  const dataType = 'addresses';
+  const formFields = getFormFields(dataType);
+  // new item will never autofocus to "edit"-button, but React hooks cannot be conditional
+  const { autoFocusTargetId, activateAutoFocusing } = useAutoFocus({
+    targetId: `${data.profileData.id || 'new'}-edit-button`,
+  });
 
   const hasFieldError = (
     formikProps: FormikProps<FormikValues>,
@@ -60,6 +71,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
   const actionHandler = async (action: Action): Promise<UpdateResult> => {
     const promise = await onAction(action, data);
     if (action === 'cancel' && !isNewItem) {
+      activateAutoFocusing();
       setEditing(false);
     }
     if (action === 'edit') {
@@ -68,6 +80,9 @@ function EditableRowAddress(props: Props): React.ReactElement {
     return promise;
   };
 
+  const ariaActionLabels: ActionAriaLabels = createActionAriaLabels(data, t);
+
+  const inputIdPrefix = data.profileData.id || 'new';
   const { editable, removable, primary } = data;
 
   if (isEditing) {
@@ -88,6 +103,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
             actions.setSubmitting(false);
           } else if (!isNewItem) {
             actions.setSubmitting(false);
+            activateAutoFocusing();
             setEditing(false);
           }
         }}
@@ -100,55 +116,64 @@ function EditableRowAddress(props: Props): React.ReactElement {
                 ? t('profileInformation.primaryAddress')
                 : t('profileInformation.address')}
             </h3>
-            <div className={commonFormStyles.multiItemWrapper}>
-              <Field
-                name="address"
-                id="address"
-                maxLength="255"
-                as={TextInput}
-                invalid={hasFieldError(formikProps, 'address')}
-                helperText={getFieldErrorMessage(formikProps, 'address')}
-                labelText={t('profileForm.address')}
-                autoFocus
+            <FocusKeeper targetId={`${inputIdPrefix}-address`}>
+              <div className={commonFormStyles.multiItemWrapper}>
+                <Field
+                  name="address"
+                  id={`${inputIdPrefix}-address`}
+                  maxLength={formFields.address.max as number}
+                  as={TextInput}
+                  invalid={hasFieldError(formikProps, 'address')}
+                  helperText={getFieldErrorMessage(formikProps, 'address')}
+                  labelText={t(formFields.address.translationKey)}
+                  autoFocus
+                  aria-describedby={`${dataType}-address-helper`}
+                />
+                <Field
+                  name="postalCode"
+                  id={`${inputIdPrefix}-postalCode`}
+                  maxLength={formFields.postalCode.max as number}
+                  as={TextInput}
+                  invalid={hasFieldError(formikProps, 'postalCode')}
+                  helperText={getFieldErrorMessage(formikProps, 'postalCode')}
+                  labelText={t(formFields.postalCode.translationKey)}
+                  aria-describedby={`${dataType}-postalCode-helper`}
+                />
+                <Field
+                  name="city"
+                  id={`${inputIdPrefix}-city`}
+                  maxLength={formFields.city.max as number}
+                  as={TextInput}
+                  invalid={hasFieldError(formikProps, 'city')}
+                  helperText={getFieldErrorMessage(formikProps, 'city')}
+                  labelText={t(formFields.city.translationKey)}
+                  aria-describedby={`${dataType}-city-helper`}
+                />
+                <FormikDropdown
+                  className={commonFormStyles.formField}
+                  name="countryCode"
+                  id={`${inputIdPrefix}-countryCode`}
+                  options={countryOptions}
+                  label={t(formFields.country.translationKey)}
+                  default={countryCode}
+                  onChange={option =>
+                    formikProps.setFieldValue(
+                      'countryCode',
+                      (option as HdsOptionType).value
+                    )
+                  }
+                />
+              </div>
+              <AccessibleFormikErrors
+                formikProps={formikProps}
+                dataType={dataType}
               />
-              <Field
-                name="postalCode"
-                id="postalCode"
-                maxLength="5"
-                as={TextInput}
-                invalid={hasFieldError(formikProps, 'postalCode')}
-                helperText={getFieldErrorMessage(formikProps, 'postalCode')}
-                labelText={t('profileForm.postalCode')}
+              <EditButtons
+                handler={actionHandler}
+                canSubmit={!!editable && !Boolean(formikProps.isSubmitting)}
+                alignLeft
               />
-              <Field
-                name="city"
-                id="city"
-                maxLength="255"
-                as={TextInput}
-                invalid={hasFieldError(formikProps, 'city')}
-                helperText={getFieldErrorMessage(formikProps, 'city')}
-                labelText={t('profileForm.city')}
-              />
-              <FormikDropdown
-                className={commonFormStyles.formField}
-                name="countryCode"
-                id="countryCode"
-                options={countryOptions}
-                label={t('profileForm.country')}
-                default={countryCode}
-                onChange={option =>
-                  formikProps.setFieldValue(
-                    'countryCode',
-                    (option as HdsOptionType).value
-                  )
-                }
-              />
-            </div>
-            <EditButtons
-              handler={actionHandler}
-              canSubmit={!!editable && !Boolean(formikProps.isSubmitting)}
-              alignLeft
-            />
+            </FocusKeeper>
           </Form>
         )}
       </Formik>
@@ -167,14 +192,20 @@ function EditableRowAddress(props: Props): React.ReactElement {
           : t('profileInformation.address')}
       </h3>
       <div className={commonFormStyles.multiItemWrapper}>
-        <LabeledValue label={t('profileForm.address')} value={value.address} />
         <LabeledValue
-          label={t('profileForm.postalCode')}
+          label={t(formFields.address.translationKey)}
+          value={value.address}
+        />
+        <LabeledValue
+          label={t(formFields.postalCode.translationKey)}
           value={value.postalCode}
         />
-        <LabeledValue label={t('profileForm.city')} value={value.city} />
         <LabeledValue
-          label={t('profileForm.country')}
+          label={t(formFields.city.translationKey)}
+          value={value.city}
+        />
+        <LabeledValue
+          label={t(formFields.country.translationKey)}
           value={getCountry(value.countryCode, lang)}
         />
       </div>
@@ -188,6 +219,8 @@ function EditableRowAddress(props: Props): React.ReactElement {
             setPrimary: true,
           }}
           buttonClassNames={commonFormStyles.actionsWrapperButton}
+          ariaLabels={ariaActionLabels}
+          editButtonId={autoFocusTargetId}
         />
       </div>
     </div>

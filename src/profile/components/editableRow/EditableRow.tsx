@@ -15,9 +15,13 @@ import {
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { phoneSchema, emailSchema } from '../../../common/schemas/schemas';
-import Actions from './Actions';
+import Actions, { ActionAriaLabels } from './Actions';
 import EditButtons from './EditButtons';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
+import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
+import createActionAriaLabels from '../../helpers/createActionAriaLabels';
+import { useAutoFocus } from '../../helpers/useAutoFocus';
+import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 
 type FormikValue = { value: EditData['value'] };
 
@@ -25,6 +29,10 @@ type Props = { data: EditData; onAction: ActionListener };
 function EditableRow(props: Props): React.ReactElement {
   const { data, onAction } = props;
   const { t } = useTranslation();
+  // new item will never autofocus to "edit"-button, but React hooks cannot be conditional
+  const { autoFocusTargetId, activateAutoFocusing } = useAutoFocus({
+    targetId: `${data.profileData.id || 'new'}-edit-button`,
+  });
   const { value, editable, removable, dataType, primary } = data;
   const schema = dataType === 'phones' ? phoneSchema : emailSchema;
   const isNewItem = isNew(data);
@@ -32,6 +40,7 @@ function EditableRow(props: Props): React.ReactElement {
   const actionHandler = async (action: Action): Promise<UpdateResult> => {
     const promise = await onAction(action, data);
     if (action === 'cancel' && !isNewItem) {
+      activateAutoFocusing();
       setEditing(false);
     }
     if (action === 'edit') {
@@ -39,6 +48,10 @@ function EditableRow(props: Props): React.ReactElement {
     }
     return promise;
   };
+
+  const inputId = `${data.profileData.id || 'new'}-value`;
+
+  const ariaActionLabels: ActionAriaLabels = createActionAriaLabels(data, t);
 
   const hasFieldError = (formikProps: FormikProps<FormikValue>): boolean =>
     getIsInvalid<FormikValue>(formikProps, 'value', !isNewItem);
@@ -66,6 +79,7 @@ function EditableRow(props: Props): React.ReactElement {
               actions.setSubmitting(false);
             } else if (!isNewItem) {
               actions.setSubmitting(false);
+              activateAutoFocusing();
               setEditing(false);
             }
           }}
@@ -73,21 +87,27 @@ function EditableRow(props: Props): React.ReactElement {
         >
           {(formikProps: FormikProps<FormikValue>) => (
             <Form>
-              <div className={styles.editableRow}>
-                <Field
-                  name="value"
-                  id="value"
-                  maxLength="255"
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps)}
-                  helperText={getFieldErrorMessage(formikProps)}
-                  autoFocus
-                />
-                <EditButtons
-                  handler={actionHandler}
-                  canSubmit={!!editable && !Boolean(formikProps.isSubmitting)}
-                />
-              </div>
+              <FocusKeeper targetId={inputId}>
+                <div className={styles.editableRow}>
+                  <Field
+                    name="value"
+                    id={inputId}
+                    maxLength="255"
+                    as={TextInput}
+                    invalid={hasFieldError(formikProps)}
+                    helperText={getFieldErrorMessage(formikProps)}
+                    autoFocus
+                  />
+                  <AccessibleFormikErrors
+                    formikProps={formikProps}
+                    dataType={dataType}
+                  />
+                  <EditButtons
+                    handler={actionHandler}
+                    canSubmit={!!editable && !Boolean(formikProps.isSubmitting)}
+                  />
+                </div>
+              </FocusKeeper>
             </Form>
           )}
         </Formik>
@@ -110,6 +130,8 @@ function EditableRow(props: Props): React.ReactElement {
           primary,
           setPrimary: true,
         }}
+        ariaLabels={ariaActionLabels}
+        editButtonId={autoFocusTargetId}
       />
     </div>
   );

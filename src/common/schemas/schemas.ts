@@ -1,6 +1,8 @@
 import * as yup from 'yup';
 import validator from 'validator';
 
+import { formFieldsByDataType } from '../../profile/helpers/formProperties';
+
 type MessageWithOptions = {
   message: string;
   options?: Record<string, string>;
@@ -46,41 +48,51 @@ const createMinLengthMessage = (min: number, message: string): string =>
     options: { min: String(min) },
   });
 
+const addressesProperties = formFieldsByDataType['addresses'];
+const addressMax = addressesProperties.address.max as number;
+const cityMax = addressesProperties.city.max as number;
+const postalCodeMax = addressesProperties.postalCode.max as number;
 export const addressSchema = yup.object().shape({
   address: yup
     .string()
     .required(requiredValidation)
-    .max(128, createMaxLengthMessage(128)),
+    .max(addressMax, createMaxLengthMessage(addressMax)),
   city: yup
     .string()
     .required(requiredValidation)
-    .max(64, createMaxLengthMessage(64)),
+    .max(cityMax, createMaxLengthMessage(cityMax)),
   postalCode: yup
     .string()
     .required(requiredValidation)
-    .max(5, createMaxLengthMessage(5)),
+    .max(postalCodeMax, createMaxLengthMessage(postalCodeMax)),
 });
 
+const basicDataProperties = formFieldsByDataType['basic-data'];
+const firstNameMax = basicDataProperties.firstName.max as number;
+const nicknameMax = basicDataProperties.nickname.max as number;
+const lastNameMax = basicDataProperties.lastName.max as number;
 export const basicDataSchema = yup.object().shape({
   firstName: yup
     .string()
     .required(requiredValidation)
-    .max(128, createMaxLengthMessage(128)),
-  nickname: yup.string().max(64, createMaxLengthMessage(64)),
+    .max(firstNameMax, createMaxLengthMessage(firstNameMax)),
+  nickname: yup.string().max(nicknameMax, createMaxLengthMessage(nicknameMax)),
   lastName: yup
     .string()
     .required(requiredValidation)
-    .max(255, createMaxLengthMessage(255)),
+    .max(lastNameMax, createMaxLengthMessage(lastNameMax)),
 });
 
+const phonesProperties = formFieldsByDataType['phones'];
+const phonesMin = phonesProperties.value.min as number;
+const phonesMax = phonesProperties.value.max as number;
 export const phoneSchema = yup.object().shape({
   value: yup
     .string()
     .required(requiredValidation)
-    .min(6, createMinLengthMessage(6, 'validation.phoneMin'))
-    .max(255, createMaxLengthMessage(255)),
+    .min(phonesMin, createMinLengthMessage(phonesMin, 'validation.phoneMin'))
+    .max(phonesMax, createMaxLengthMessage(phonesMax)),
 });
-
 export const emailSchema = yup.object().shape({
   value: yup.mixed().test('isValidEmail', 'validation.email', function() {
     return this.parent?.value ? validator.isEmail(this.parent?.value) : false;

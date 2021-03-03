@@ -18,6 +18,8 @@ import {
 } from '../../helpers/mutationEditor';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import { useConfirmationModal } from '../modals/confirmationModal/hooks';
+import { useAutoFocus } from '../../helpers/useAutoFocus';
+import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
 
 type Props = {
   dataType: EditData['dataType'];
@@ -42,17 +44,24 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
     setSuccessMessage,
     clearMessage,
   } = useNotificationContent();
+  const { autoFocusTargetId, activateAutoFocusing } = useAutoFocus({
+    targetId: `${dataType}-new-item-button`,
+  });
 
   const { showModal, modalProps } = useConfirmationModal();
   const isAddButtonDisabled = hasNewItem(data);
   const hasAddressList = dataType === 'addresses';
 
   const executeActionAndNotifyUser: ActionListener = async (action, item) => {
+    const wasNewItem = !item.profileData.id;
     const func = action === 'save' ? save : remove;
     const [err] = await to(func(item));
     if (err) {
       setErrorMessage('', action);
       return Promise.reject();
+    }
+    if (wasNewItem) {
+      activateAutoFocusing();
     }
     setSuccessMessage('', action);
     return Promise.resolve();
@@ -66,6 +75,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
     } else if (action === 'cancel') {
       clearMessage();
       if (!item.profileData.id) {
+        activateAutoFocusing();
         await remove(item);
       }
     } else if (action === 'remove' || action === 'save') {
@@ -138,6 +148,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
         />
       ))}
       <EditingNotifications content={content} />
+      <AccessibilityFieldHelpers dataType={dataType} />
       <Button
         iconLeft={<IconPlusCircle />}
         onClick={async () => {
@@ -148,6 +159,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
         variant="secondary"
         disabled={isAddButtonDisabled}
         className={commonFormStyles.responsiveButton}
+        id={autoFocusTargetId}
       >
         {dataType === 'emails'
           ? t('profileForm.addAnotherEmail')

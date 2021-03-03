@@ -7,13 +7,15 @@
   margin: 0 var(--spacing-layout-xs);
 }
 
-.main {
+.container h1,  
+.container h2,  
+.container h2{
   margin-bottom: 30px;
 }
-.main.h2 {
+.container h2 {
   font-size: var(--fontsize-heading-m);
 }
-.main.h3 {
+.container h3 {
   font-size: var(--fontsize-heading-s);
 }
 .small {
@@ -23,11 +25,11 @@
 }
 
 @media (min-width: 768px) {
-  .main.h2 {
+  .container h2 {
     font-size: var(--fontsize-heading-l);
   }
 
-  .main.h3 {
+  .container h3 {
     font-size: var(--fontsize-heading-m);
   }
 }

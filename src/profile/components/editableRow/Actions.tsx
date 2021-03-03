@@ -17,14 +17,30 @@ type Props = {
   actions: Pick<EditData, 'editable' | 'primary' | 'removable'> & {
     setPrimary: boolean;
   };
+  ariaLabels: ActionAriaLabels;
   buttonClassNames?: string;
+  editButtonId?: string;
+};
+
+export type ActionAriaLabels = {
+  setPrimary?: string;
+  edit?: string;
+  remove?: string;
+  primary?: string;
 };
 
 function Actions(props: Props): React.ReactElement {
-  const { actions, handler, buttonClassNames } = props;
+  const {
+    actions,
+    handler,
+    buttonClassNames,
+    ariaLabels,
+    editButtonId,
+  } = props;
   const { t } = useTranslation();
   const { editable, primary, removable, setPrimary } = actions;
   const buttonStyle = [commonFormStyles.supplementaryButton];
+  const editButtonIdAttr = editButtonId ? { id: editButtonId } : undefined;
   if (buttonClassNames) {
     buttonStyle.push(buttonClassNames);
   }
@@ -32,8 +48,10 @@ function Actions(props: Props): React.ReactElement {
     <div className={commonFormStyles.actions}>
       {setPrimary && primary && (
         <div className={commonFormStyles.primaryContainer}>
-          <IconStarFill />
-          <span>{t('profileForm.primary')}</span>
+          <IconStarFill aria-hidden="true" />
+          <span aria-label={ariaLabels.primary}>
+            {t('profileForm.primary')}
+          </span>
         </div>
       )}
       {setPrimary && !primary && (
@@ -44,6 +62,7 @@ function Actions(props: Props): React.ReactElement {
             await handler('set-primary');
           }}
           className={classNames(buttonStyle)}
+          aria-label={ariaLabels.setPrimary}
         >
           {t('profileForm.setPrimary')}
         </Button>
@@ -56,6 +75,8 @@ function Actions(props: Props): React.ReactElement {
             await handler('edit');
           }}
           className={classNames(buttonStyle)}
+          aria-label={ariaLabels.edit}
+          {...editButtonIdAttr}
         >
           {t('profileForm.edit')}
         </Button>
@@ -68,6 +89,7 @@ function Actions(props: Props): React.ReactElement {
             await handler('remove');
           }}
           className={classNames(buttonStyle)}
+          aria-label={ariaLabels.remove}
         >
           {t('profileForm.remove')}
         </Button>

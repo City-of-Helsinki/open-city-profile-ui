@@ -12,8 +12,8 @@ type Props = {
 function PageHeading(props: Props): React.ReactElement {
   return (
     <div className={classNames(styles.pageHeading, props.className)}>
-      <UserIcon className={styles.userIcon} />
-      <div className={styles.title}>{props.text}</div>
+      <UserIcon className={styles.userIcon} aria-hidden={'true'} />
+      <h1>{props.text}</h1>
     </div>
   );
 }

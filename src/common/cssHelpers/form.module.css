@@ -63,8 +63,6 @@
 }
 
 .supplementaryButton:hover,
-.supplementaryButton:focus,
-.supplementaryButton:hover:focus,
 .supplementaryButton:active{
     background: transparent;
     border-color: transparent;
@@ -112,13 +110,17 @@
   vertical-align: top;
   color:var(--color-bus);
   line-height: 1.25em;
-  padding: 0;
+  padding: 0 0 var(--spacing-s) 0;
   
 }
 
 .primaryContainer span{
-  padding: var(--spacing-s) 0;
-  padding-left: var(--spacing-3-xs);
+  padding: var(--spacing-s) 0 var(--spacing-s) var(--spacing-3-xs);
+}
+
+.visuallyHidden {
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+  composes: hiddenFromScreen from '~hds-core/lib/base.css';
 }
 
 @media (min-width: 768px) {
@@ -148,17 +150,21 @@
   .actionsWrapper{
     position: absolute;
     top:-10px;
-    right:0;
+    right: calc(-1*var(--spacing-s));
     padding:0;
   }
 
   .actionsWrapper .actionsWrapperButton{
-    border:0;
+    border-color:var(--color-white);
     margin-bottom:0;
   }
+  .actionsWrapper .actionsWrapperButton:focus,
+  .actionsWrapper .actionsWrapperButton:hover:focus{
+    border-color:var(--color-bus);
+  }  
 
   .primaryContainer{
-    padding: 0 0 0 var(--spacing-m);
+    padding: 0 var(--spacing-s);
   }
   
   .actions{
@@ -175,7 +181,7 @@
   }
 
   .actions button{
-    padding: 0 0 0 var(--spacing-m);
+    padding: 0 var(--spacing-s);
   }
   
   .editButtons{

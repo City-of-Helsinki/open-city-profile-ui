@@ -38,7 +38,7 @@ function ConfirmationModal({
       shouldCloseOnOverlayClick
     >
       <div className={styles.wrapper}>
-        <span>
+        <span aria-hidden="true">
           <IconAlertCircle />
         </span>
         <div className={styles.content}>

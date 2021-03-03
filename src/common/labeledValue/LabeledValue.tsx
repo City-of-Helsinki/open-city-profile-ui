@@ -8,24 +8,30 @@ import commonFormStyles from '../cssHelpers/form.module.css';
 type Props = {
   label: string;
   value: string | null | undefined;
-  showCheckIcon?: boolean;
+  verifiedInfoText?: string;
 };
 
 function LabeledValue({
   label,
   value,
-  showCheckIcon,
+  verifiedInfoText,
 }: Props): React.ReactElement {
   return (
     <div className={styles.wrapper}>
       <strong className={styles.label}>{label}</strong>
       <span
-        className={classNames(styles.value, showCheckIcon && styles.withIcon)}
+        className={classNames(
+          styles.value,
+          verifiedInfoText && styles.withIcon
+        )}
       >
         {value || '–'}
-        {showCheckIcon && (
+        {verifiedInfoText && (
           <span className={classNames(commonFormStyles.icon, styles.icon)}>
-            <IconCheckCircleFill />
+            <IconCheckCircleFill aria-hidden="true" />
+            <span className={commonFormStyles.visuallyHidden}>
+              {verifiedInfoText}
+            </span>
           </span>
         )}
       </span>
