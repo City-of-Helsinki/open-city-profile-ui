@@ -13,6 +13,7 @@ import {
   EditData,
   EditableAddress,
   isNew,
+  resetValue,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
@@ -69,6 +70,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
   const actionHandler: ActionHandler = async action => {
     const promise = await onAction(action, data);
     if (action === 'cancel' && !isNewItem) {
+      resetValue(data);
       activateAutoFocusing();
       setEditing(false);
     }

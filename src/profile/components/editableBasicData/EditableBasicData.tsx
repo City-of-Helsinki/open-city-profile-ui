@@ -11,6 +11,7 @@ import {
   ActionListener,
   EditableUserData,
   basicDataType,
+  resetValue,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -69,6 +70,7 @@ function EditableBasicData(): React.ReactElement | null {
   const actionHandler: ActionHandler = async action => {
     const promise = await onAction(action, editData);
     if (action === 'cancel') {
+      resetValue(editData);
       activateAutoFocusing();
       setEditing(false);
     }

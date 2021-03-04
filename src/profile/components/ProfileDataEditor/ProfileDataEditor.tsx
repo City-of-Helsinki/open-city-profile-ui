@@ -58,7 +58,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
     const [err] = await to(func(item));
     if (err) {
       setErrorMessage('', action);
-      return Promise.reject();
+      return Promise.reject(err);
     }
     if (wasNewItem) {
       activateAutoFocusing();
@@ -69,11 +69,10 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
 
   const onAction: ActionListener = async (action, item) => {
     trackEvent({ category: 'form-action', action });
+    clearMessage();
     if (action === 'add') {
-      clearMessage();
       add();
     } else if (action === 'cancel') {
-      clearMessage();
       if (!item.profileData.id) {
         activateAutoFocusing();
         await remove(item);
@@ -96,11 +95,12 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
         }
       }
       return executeActionAndNotifyUser(action, item);
-    }
-    if (action === 'set-primary') {
+    } else if (action === 'set-primary') {
       const [err] = await to(setPrimary(item));
       if (err) {
         setErrorMessage('', action);
+      } else {
+        setSuccessMessage('', action);
       }
     }
     return Promise.resolve();

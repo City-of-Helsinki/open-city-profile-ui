@@ -30,14 +30,16 @@ import {
   basicDataType,
   additionalInformationType,
   isNew,
-  markRemoved,
   UpdateResult,
+  cloneDataAndGetCurrentClone,
+  findEditItemIndex,
 } from './mutationEditor';
 import { updatePartialMutationVariables } from './updateMutationVariables';
 import {
   ProfileContext,
   ProfileContextData,
 } from '../../profile/components/context/ProfileContext';
+import to from '../../common/awaitTo';
 
 const UPDATE_PROFILE = loader('../../profile/graphql/UpdateMyProfile.graphql');
 const MY_PROFILE = loader('../../profile/graphql/MyProfileQuery.graphql');
@@ -276,14 +278,28 @@ export function useProfileMutationHandler({
     return { promise, profileInput };
   };
 
+  const executeUpdateAndHandleResult = async (newData: EditData[]) => {
+    const [err, success] = await to(update(newData).promise);
+    if (err) {
+      return Promise.reject(err);
+    }
+    return Promise.resolve(success);
+  };
+
   const add = () => {
     const newItem = createNewItem(dataType);
     updateData([...currentData, newItem]);
   };
+
   const save = async (item: EditData) => {
-    updateProfileDataValue(item);
-    return await update(currentData).promise;
+    const { clonedData, clonedItem } = cloneDataAndGetCurrentClone(
+      currentData,
+      item
+    );
+    updateProfileDataValue(clonedItem);
+    return executeUpdateAndHandleResult(clonedData);
   };
+
   const remove = async (item: EditData) => {
     if (isNew(item)) {
       const index = currentData.findIndex(dataItem => isNew(dataItem));
@@ -294,14 +310,20 @@ export function useProfileMutationHandler({
       updateData([...currentData]);
       return Promise.resolve();
     } else {
-      markRemoved(item);
-      return update(currentData).promise;
+      const { clonedData, clonedItem } = cloneDataAndGetCurrentClone(
+        currentData,
+        item
+      );
+      const index = findEditItemIndex(clonedData, clonedItem);
+      clonedData.splice(index, 1);
+      return executeUpdateAndHandleResult(clonedData);
     }
   };
+
   const setPrimary = async (item: EditData) => {
     const newData = setNewPrimary(currentData, item);
     if (newData) {
-      await update(newData).promise;
+      return executeUpdateAndHandleResult(newData);
     }
     return Promise.resolve();
   };

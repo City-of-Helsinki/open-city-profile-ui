@@ -54,7 +54,6 @@ export type EditData = {
   editable?: boolean;
   removable?: boolean;
   primary?: boolean;
-  removed?: boolean;
   profileData: Phone | Email | Address | BasicData | AdditionalInformation;
   value:
     | string
@@ -169,7 +168,6 @@ export function createEditItem(
     profileData: targetProfileData,
     value: getValue(targetProfileData, dataType),
     primary: isPrimary(targetProfileData, dataType),
-    removed: false,
     dataType,
   };
 }
@@ -292,6 +290,17 @@ function findEditItem(dataItems: EditData[], id: string): EditData | undefined {
   return dataItems.find(dataItem => id === dataItem.profileData.id);
 }
 
+export function findEditItemIndex(
+  dataItems: EditData[],
+  idOrEditData: string | EditData
+): number {
+  const itemId =
+    typeof idOrEditData === 'string'
+      ? idOrEditData
+      : idOrEditData.profileData.id;
+  return dataItems.findIndex(dataItem => itemId === dataItem.profileData.id);
+}
+
 export function matchEditDataToProfileData(
   dataItems: EditData[],
   profileDataItems: EditData['profileData'][],
@@ -336,8 +345,7 @@ export function matchEditDataToProfileData(
   let existingNewItem = findEditItem(dataItems, '');
   profileDataItems.forEach(profileDataItem => {
     const profileDataValue = getValue(profileDataItem, dataType);
-    const profileDataIsPrimary = (profileDataItem as Phone | Email | Address)
-      .primary;
+    const profileDataIsPrimary = isPrimary(profileDataItem, dataType);
     const existingItem = findExistingItem(dataItems, profileDataItem);
     if (existingItem) {
       if (!stats.hasChanged) {
@@ -347,6 +355,7 @@ export function matchEditDataToProfileData(
       }
       existingItem.value = profileDataValue;
       existingItem.primary = profileDataIsPrimary;
+      existingItem.profileData = profileDataItem;
       stats.items.push(existingItem);
     } else {
       if (
@@ -375,7 +384,7 @@ export function collect(
   dataType: EditData['dataType']
 ): Partial<FormValues> {
   const data = dataItems
-    .filter(dataItem => !isRemoved(dataItem))
+    .filter(dataItem => !!dataItem && !!dataItem.profileData)
     .map(dataItem => dataItem.profileData);
   if (dataType === 'phones') {
     return {
@@ -410,14 +419,6 @@ export function isNew(data: EditData): boolean {
   return data.profileData.id === '';
 }
 
-export function isRemoved(data: EditData): boolean {
-  return !!data.removed;
-}
-
-export function markRemoved(data: EditData): void {
-  data.removed = true;
-}
-
 export function createNewProfileData(
   dataType: EditData['dataType']
 ): EditData['profileData'] {
@@ -445,21 +446,23 @@ export function setNewPrimary(
   dataItems: EditData[],
   newPrimary: EditData
 ): EditData[] | null {
-  const clonedDataItems = dataItems.map(dataItem => ({ ...dataItem }));
-  const currentPrimary = clonedDataItems[0].primary ? clonedDataItems[0] : null;
-  const newPrimaryIndex = clonedDataItems.findIndex(
-    item => item.profileData.id === newPrimary.profileData.id
+  const { clonedData, clonedItem } = cloneDataAndGetCurrentClone(
+    dataItems,
+    newPrimary
   );
-  if (newPrimaryIndex === -1 || !newPrimary.profileData.id) {
+  const currentPrimary = clonedData[0].primary ? clonedData[0] : null;
+  const newPrimaryIndex = findEditItemIndex(clonedData, clonedItem);
+
+  if (newPrimaryIndex === -1 || !clonedItem.profileData.id) {
     throw new Error('cannot set selected item as new primary');
   }
   if (
     currentPrimary &&
-    currentPrimary.profileData.id === newPrimary.profileData.id
+    currentPrimary.profileData.id === clonedItem.profileData.id
   ) {
     return null;
   }
-  const clonedPrimary = clonedDataItems[newPrimaryIndex];
+
   if (currentPrimary) {
     currentPrimary.primary = false;
     (currentPrimary.profileData as
@@ -467,13 +470,42 @@ export function setNewPrimary(
       | EditablePhone
       | EditableAddress).primary = false;
   }
-  clonedPrimary.primary = true;
-  (clonedPrimary.profileData as
+  clonedItem.primary = true;
+  (clonedItem.profileData as
     | EditableEmail
     | EditablePhone
     | EditableAddress).primary = true;
 
-  clonedDataItems.splice(newPrimaryIndex, 1);
-  clonedDataItems.unshift(clonedPrimary);
-  return clonedDataItems;
+  clonedData.splice(newPrimaryIndex, 1);
+  clonedData.unshift(clonedItem);
+  return clonedData;
+}
+
+export function resetValue(editData: EditData): EditData['value'] {
+  const valueFromProfileData = getValue(
+    editData.profileData,
+    editData.dataType
+  );
+  editData.value = valueFromProfileData;
+  return valueFromProfileData;
+}
+
+export function cloneData(dataItems: EditData[]): EditData[] {
+  const newList = dataItems.map(dataItem => ({ ...dataItem }));
+  newList.forEach(newDataItem => {
+    newDataItem.profileData = { ...newDataItem.profileData };
+  });
+  return newList;
+}
+
+export function cloneDataAndGetCurrentClone(
+  dataItems: EditData[],
+  currentItem: EditData
+): { clonedData: EditData[]; clonedItem: EditData } {
+  const clonedData = cloneData(dataItems);
+  const clonedItem = findEditItem(clonedData, currentItem.profileData.id);
+  if (!clonedItem) {
+    throw new Error('item not found in new data list');
+  }
+  return { clonedData, clonedItem };
 }
