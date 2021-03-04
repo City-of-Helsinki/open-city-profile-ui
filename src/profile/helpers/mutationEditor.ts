@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { ApolloQueryResult } from '@apollo/client';
+import { FetchResult } from '@apollo/client';
 
 import {
   Language,
@@ -41,7 +41,7 @@ type AdditionalInformation = {
 
 export type EditableAdditionalInformation = Mutable<AdditionalInformation>;
 
-export type UpdateResult = ApolloQueryResult<UpdateMyProfileData> | null | void;
+export type UpdateResult = FetchResult<UpdateMyProfileData>;
 
 export interface BasicData extends UserData {
   id: string;
@@ -83,10 +83,11 @@ export type Action =
   | 'save'
   | 'add';
 
+export type ActionListenerReturnType = Promise<void | UpdateResult>;
 export type ActionListener = (
   action: Action,
   data: EditData
-) => Promise<UpdateResult>;
+) => ActionListenerReturnType;
 
 export function getTargetData(
   myProfileQuery: MyProfileQuery,

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Action } from '../../helpers/mutationEditor';
 
@@ -14,16 +15,22 @@ function useNotificationContent(): ContentHandlers {
     error: false,
     text: '',
   });
+  const { t } = useTranslation();
+  const tryAgainKey = 'notification.tryAgain';
   const getActionMessage = (action: Action, error: boolean): string => {
     if (action === 'remove') {
-      return error ? 'Poisto epäonnistui. Yritä uudelleen.' : 'Poisto onnistui';
+      return error
+        ? `${t('notification.removeError')} ${t(tryAgainKey)}`
+        : t('notification.removeSuccess');
     }
     if (action === 'save') {
       return error
-        ? 'Tallennus epäonnistui.Yritä uudelleen.'
-        : 'Tallennus onnistui';
+        ? `${t('notification.saveError')} ${t(tryAgainKey)}`
+        : t('notification.saveSuccess');
     }
-    return error ? 'Tapahtui virhe' : 'Toiminto onnistui';
+    return error
+      ? `${t('notification.genericError')} ${t(tryAgainKey)}`
+      : t('notification.genericSuccess');
   };
   const setSuccessMessage: ContentHandlers['setSuccessMessage'] = (
     message,

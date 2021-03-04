@@ -98,7 +98,10 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
       return executeActionAndNotifyUser(action, item);
     }
     if (action === 'set-primary') {
-      await setPrimary(item);
+      const [err] = await to(setPrimary(item));
+      if (err) {
+        setErrorMessage('', action);
+      }
     }
     return Promise.resolve();
   };

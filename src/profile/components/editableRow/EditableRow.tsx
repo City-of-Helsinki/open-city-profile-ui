@@ -6,16 +6,10 @@ import classNames from 'classnames';
 
 import to from '../../../common/awaitTo';
 import styles from './editableRow.module.css';
-import {
-  Action,
-  ActionListener,
-  EditData,
-  UpdateResult,
-  isNew,
-} from '../../helpers/mutationEditor';
+import { ActionListener, EditData, isNew } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { phoneSchema, emailSchema } from '../../../common/schemas/schemas';
-import Actions, { ActionAriaLabels } from './Actions';
+import Actions, { ActionAriaLabels, ActionHandler } from './Actions';
 import EditButtons from './EditButtons';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
@@ -37,7 +31,7 @@ function EditableRow(props: Props): React.ReactElement {
   const schema = dataType === 'phones' ? phoneSchema : emailSchema;
   const isNewItem = isNew(data);
   const [isEditing, setEditing] = useState(isNewItem);
-  const actionHandler = async (action: Action): Promise<UpdateResult> => {
+  const actionHandler: ActionHandler = async action => {
     const promise = await onAction(action, data);
     if (action === 'cancel' && !isNewItem) {
       activateAutoFocusing();

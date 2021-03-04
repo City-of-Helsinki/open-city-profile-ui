@@ -91,7 +91,14 @@
   "notification": {
     "closeButtonText": "Sulje",
     "defaultErrorText": "Jokin meni pieleen. Yritä hetken kuluttua uudelleen.",
-    "defaultErrorTitle": "Virhe"
+    "defaultErrorTitle": "Virhe",
+    "removeError": "Poisto epäonnistui.",
+    "removeSuccess": "Poisto onnistui!",
+    "saveError": "Tallennus epäonnistui.",
+    "saveSuccess": "Tallennus onnistui!",
+    "tryAgain": "Yritä uudelleen.",
+    "genericError": "Tapahtui virhe.",
+    "genericSuccess": "Toiminto onnistui!"
   },
   "oidc": {
     "authenticating": "Tunnistaudutaan..."
@@ -158,7 +165,7 @@
     "permanentForeignAddress": "Väliaikainen ulkomainen osoite",
     "primaryEmail": "Ensisijainen sähköposti",
     "primaryPhone": "Ensisijainen puhelinnumero",
-    "verifiedDataInformationPrefix": "Merkityt ",
+    "verifiedDataInformationPrefix": "Merkityt",
     "verifiedDataInformationAriaPrefix": "Alla olevat",
     "verifiedDataInformation": "<0></0> tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <1>siirry suomi.fi palveluun </1>",
     "verifiedDataInformationLink": "https://www.suomi.fi/",

@@ -12,14 +12,12 @@ import {
   ActionListener,
   EditData,
   EditableAddress,
-  Action,
-  UpdateResult,
   isNew,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
 import EditButtons from './EditButtons';
-import Actions, { ActionAriaLabels } from './Actions';
+import Actions, { ActionAriaLabels, ActionHandler } from './Actions';
 import FormikDropdown, {
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
@@ -68,7 +66,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
     type: keyof FormikValues
   ) => getFieldError<FormikValues>(t, formikProps, type, !isNewItem);
 
-  const actionHandler = async (action: Action): Promise<UpdateResult> => {
+  const actionHandler: ActionHandler = async action => {
     const promise = await onAction(action, data);
     if (action === 'cancel' && !isNewItem) {
       activateAutoFocusing();

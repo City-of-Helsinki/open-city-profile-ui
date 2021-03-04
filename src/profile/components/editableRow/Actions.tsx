@@ -9,11 +9,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import { Action, EditData, UpdateResult } from '../../helpers/mutationEditor';
+import {
+  Action,
+  ActionListenerReturnType,
+  EditData,
+} from '../../helpers/mutationEditor';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
 type Props = {
-  handler: (action: Action) => Promise<UpdateResult>;
+  handler: ActionHandler;
   actions: Pick<EditData, 'editable' | 'primary' | 'removable'> & {
     setPrimary: boolean;
   };
@@ -28,6 +32,8 @@ export type ActionAriaLabels = {
   remove?: string;
   primary?: string;
 };
+
+export type ActionHandler = (action: Action) => ActionListenerReturnType;
 
 function Actions(props: Props): React.ReactElement {
   const {

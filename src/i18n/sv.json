@@ -91,7 +91,14 @@
   "notification": {
     "closeButtonText": "Stäng",
     "defaultErrorText": "Något gick fel. Försök igen efter ett tag.",
-    "defaultErrorTitle": "Fel"
+    "defaultErrorTitle": "Fel",
+    "removeError": "SV: Poisto epäonnistui.",
+    "removeSuccess": "SV: Poisto onnistui",
+    "saveError": "SV: Tallennus epäonnistui.",
+    "saveSuccess": "SV: Tallennus onnistui!",
+    "tryAgain": "SV: Yritä uudelleen.",
+    "genericError": "SV:  Tapahtui virhe.",
+    "genericSuccess": "SV: Toiminto onnistui!"
   },
   "oidc": {
     "authenticating": "Autentiserar..."
@@ -160,7 +167,7 @@
     "primaryPhone": "SV: Ensisijainen puhelinnumero",
     "verifiedDataInformationPrefix": "SV: Merkityt",
     "verifiedDataInformationAriaPrefix": "SV: Alla olevat",
-    "verifiedDataInformation": "SV:... tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <0>siirry suomi.fi palveluun </0>",
+    "verifiedDataInformation": "SV: <0></0> tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <1>siirry suomi.fi palveluun </1>",
     "verifiedDataInformationLink": "https://www.suomi.fi/",
     "verifiedData": "SV: Vahvistettu tieto",
     "ariaFieldHelperWrite": "SV: Kirjoita"

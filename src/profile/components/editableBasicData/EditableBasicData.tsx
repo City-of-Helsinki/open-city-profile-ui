@@ -11,8 +11,6 @@ import {
   ActionListener,
   EditableUserData,
   basicDataType,
-  Action,
-  UpdateResult,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -21,7 +19,10 @@ import ProfileSection from '../../../common/profileSection/ProfileSection';
 import useNotificationContent from '../editingNotifications/useNotificationContent';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
 import { basicDataSchema } from '../../../common/schemas/schemas';
-import Actions, { ActionAriaLabels } from '../editableRow/Actions';
+import Actions, {
+  ActionAriaLabels,
+  ActionHandler,
+} from '../editableRow/Actions';
 import EditButtons from '../editableRow/EditButtons';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
@@ -32,7 +33,7 @@ import { getFormFields } from '../../helpers/formProperties';
 type FormikValues = EditableUserData;
 
 function EditableBasicData(): React.ReactElement | null {
-  const { data, add, save } = useProfileMutationHandler({
+  const { data, save } = useProfileMutationHandler({
     dataType: basicDataType,
   });
   const {
@@ -59,16 +60,13 @@ function EditableBasicData(): React.ReactElement | null {
   const onAction: ActionListener = async (action, item) => {
     trackEvent({ category: 'form-action', action });
     clearMessage();
-    if (action === 'add') {
-      add();
-    }
     if (action === 'save') {
       return save(item);
     }
     return Promise.resolve();
   };
 
-  const actionHandler = async (action: Action): Promise<UpdateResult> => {
+  const actionHandler: ActionHandler = async action => {
     const promise = await onAction(action, editData);
     if (action === 'cancel') {
       activateAutoFocusing();

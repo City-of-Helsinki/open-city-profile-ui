@@ -31,6 +31,7 @@ import {
   additionalInformationType,
   isNew,
   markRemoved,
+  UpdateResult,
 } from './mutationEditor';
 import { updatePartialMutationVariables } from './updateMutationVariables';
 import {
@@ -42,7 +43,6 @@ const UPDATE_PROFILE = loader('../../profile/graphql/UpdateMyProfile.graphql');
 const MY_PROFILE = loader('../../profile/graphql/MyProfileQuery.graphql');
 
 type AnyObject = Record<string, unknown>;
-type UpdateResult = FetchResult<UpdateMyProfileData, AnyObject, AnyObject>;
 export type QueryResult = FetchResult<MyProfileQuery, AnyObject, AnyObject>;
 
 type UpdateProfile = (
@@ -72,7 +72,7 @@ type MutationReturnType = {
 type MutationHandlerReturnType = {
   data: EditData[];
   add: () => void;
-  save: (item: EditData) => Promise<void>;
+  save: (item: EditData) => Promise<UpdateResult>;
   remove: (item: EditData) => Promise<void | UpdateResult>;
   setPrimary: (item: EditData) => Promise<void>;
   loading: boolean;
@@ -282,8 +282,7 @@ export function useProfileMutationHandler({
   };
   const save = async (item: EditData) => {
     updateProfileDataValue(item);
-    await update(currentData).promise;
-    return Promise.resolve();
+    return await update(currentData).promise;
   };
   const remove = async (item: EditData) => {
     if (isNew(item)) {
