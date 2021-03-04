@@ -11,7 +11,6 @@ import {
   ActionListener,
   EditableUserData,
   basicDataType,
-  resetBasicData,
   Action,
   UpdateResult,
 } from '../../helpers/mutationEditor';
@@ -62,9 +61,6 @@ function EditableBasicData(): React.ReactElement | null {
     clearMessage();
     if (action === 'add') {
       add();
-    }
-    if (action === 'cancel') {
-      resetBasicData(data);
     }
     if (action === 'save') {
       return save(item);

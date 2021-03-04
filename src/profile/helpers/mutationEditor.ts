@@ -399,13 +399,6 @@ export function collect(
   return { firstName, nickname, lastName };
 }
 
-export function resetBasicData(editData: EditData[]): EditableUserData {
-  const basicData = editData[0];
-  const data = getValue(basicData.profileData, basicDataType);
-  basicData.value = data;
-  return data as EditableUserData;
-}
-
 export function createNewItem(dataType: EditData['dataType']): EditData {
   const newProfileData = createNewProfileData(dataType);
   const newItem = createEditItem(dataType, newProfileData);
