@@ -27,17 +27,16 @@ export default function createActionAriaLabels(
 
     return {
       edit: `${t(editTranslation)} ${value}`,
-      primary: `${t(primaryTranslation)} ${labelForType}`,
+      primary: `${t(primaryTranslation)}`,
       setPrimary: `${t('profileForm.setPrimary')} ${labelForType} ${value}`,
-      remove: `${t('profileInformation.remove')} ${labelForType} ${value}`,
+      remove: `${t('profileForm.remove')} ${labelForType} ${value}`,
     };
   }
   if (dataType === 'addresses') {
-    // format "Muokkaa osoitetta {value}"
     const value = (editData.value as EditableAddress).address;
     return {
       edit: `${t('profileInformation.ariaEditAddress')} ${value}`,
-      primary: `${t('profileInformation.primaryAddress')} ${value}`,
+      primary: `${t('profileInformation.primaryAddress')}`,
       setPrimary: `${t('profileForm.setPrimary')} ${t(
         'profileInformation.address'
       )} ${value}`,
@@ -46,7 +45,6 @@ export default function createActionAriaLabels(
       )} ${value}`,
     };
   }
-  //basicData
   return {
     edit: t('profileInformation.ariaEditBasicData'),
   };

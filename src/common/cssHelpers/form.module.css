@@ -62,12 +62,6 @@
   padding-right:0;
 }
 
-.supplementaryButton:hover,
-.supplementaryButton:active{
-    background: transparent;
-    border-color: transparent;
-}
-
 .responsiveButton {
   width:100%;
 }
@@ -121,6 +115,16 @@
 .visuallyHidden {
   clip-path: polygon(0 0, 0 0, 0 0, 0 0);
   composes: hiddenFromScreen from '~hds-core/lib/base.css';
+}
+
+.list{
+  list-style: none;
+  padding: 0;
+  margin:0;
+}
+
+.listItem{
+  text-align: left;
 }
 
 @media (min-width: 768px) {

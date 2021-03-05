@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, IconPlusCircle } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
+import classNames from 'classnames';
 
 import to from '../../../common/awaitTo';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
@@ -45,12 +46,40 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
     clearMessage,
   } = useNotificationContent();
   const { autoFocusTargetId, activateAutoFocusing } = useAutoFocus({
-    targetId: `${dataType}-new-item-button`,
+    targetId: `${dataType}-edit-notifications`,
   });
 
   const { showModal, modalProps } = useConfirmationModal();
   const isAddButtonDisabled = hasNewItem(data);
   const hasAddressList = dataType === 'addresses';
+
+  const texts = (function() {
+    if (dataType === 'emails') {
+      return {
+        modalTitle: t('confirmationModal.removeEmail'),
+        title: t('profileInformation.emails'),
+        listAriaLabel: t('profileInformation.ariaListTitleEmails'),
+        listNumberTitle: t('profileInformation.email'),
+        addNew: t('profileForm.addAnotherEmail'),
+      };
+    }
+    if (dataType === 'phones') {
+      return {
+        modalTitle: t('confirmationModal.removePhone'),
+        title: t('profileInformation.phones'),
+        listAriaLabel: t('profileInformation.ariaListTitlePhones'),
+        listNumberTitle: t('profileInformation.phone'),
+        addNew: t('profileForm.addAnotherPhone'),
+      };
+    }
+    return {
+      modalTitle: t('confirmationModal.removeAddress'),
+      title: t('profileInformation.addresses'),
+      listAriaLabel: t('profileInformation.ariaListTitleAddresses'),
+      listNumberTitle: t('profileInformation.address'),
+      addNew: t('profileForm.addAnotherAddress'),
+    };
+  })();
 
   const executeActionAndNotifyUser: ActionListener = async (action, item) => {
     const wasNewItem = !item.profileData.id;
@@ -60,7 +89,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
       setErrorMessage('', action);
       return Promise.reject(err);
     }
-    if (wasNewItem) {
+    if (wasNewItem || action === 'remove') {
       activateAutoFocusing();
     }
     setSuccessMessage('', action);
@@ -82,16 +111,11 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
         const [rejected] = await to(
           showModal({
             actionButtonText: t('confirmationModal.remove'),
-            modalTitle:
-              dataType === 'emails'
-                ? t('confirmationModal.removeEmail')
-                : dataType === 'phones'
-                ? t('confirmationModal.removePhone')
-                : t('confirmationModal.removeAddress'),
+            modalTitle: texts.modalTitle,
           })
         );
         if (rejected) {
-          return Promise.resolve();
+          return Promise.reject({ removeCancelled: true });
         }
       }
       return executeActionAndNotifyUser(action, item);
@@ -104,13 +128,6 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
       }
     }
     return Promise.resolve();
-  };
-
-  const getTitle = (): string => {
-    if (dataType === 'emails') {
-      return t('profileForm.email');
-    }
-    return t('profileForm.phone');
   };
 
   if (loading) {
@@ -139,18 +156,28 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
 
   return (
     <ProfileSection>
-      {!hasAddressList && (
-        <h3 className={commonFormStyles.sectionTitle}>{getTitle()}</h3>
-      )}
+      <h3
+        className={classNames([
+          commonFormStyles.sectionTitle,
+          hasAddressList && commonFormStyles.visuallyHidden,
+        ])}
+      >
+        {texts.title}
+      </h3>
+
       {!data || (!data.length && <NoDataMessage />)}
-      {data.map(item => (
-        <RenderComponent
-          key={item.profileData.id || 'new'}
-          data={item}
-          onAction={onAction}
-        />
-      ))}
-      <EditingNotifications content={content} />
+      <ul aria-label={texts.listAriaLabel} className={commonFormStyles.list}>
+        {data.map((item, index) => (
+          <li
+            className={commonFormStyles.listItem}
+            aria-label={`${texts.listNumberTitle} ${index + 1}`}
+            key={item.profileData.id || 'new'}
+          >
+            <RenderComponent data={item} onAction={onAction} />
+          </li>
+        ))}
+      </ul>
+      <EditingNotifications content={content} dataType={dataType} />
       <AccessibilityFieldHelpers dataType={dataType} />
       <Button
         iconLeft={<IconPlusCircle />}
@@ -164,11 +191,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
         className={commonFormStyles.responsiveButton}
         id={autoFocusTargetId}
       >
-        {dataType === 'emails'
-          ? t('profileForm.addAnotherEmail')
-          : dataType === 'phones'
-          ? t('profileForm.addAnotherPhone')
-          : t('profileForm.addAnotherAddress')}
+        {texts.addNew}
       </Button>
       <ConfirmationModal {...modalProps} />
     </ProfileSection>

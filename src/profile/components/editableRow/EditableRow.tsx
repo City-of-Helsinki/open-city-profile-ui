@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import to from '../../../common/awaitTo';
 import styles from './editableRow.module.css';
 import {
+  Action,
   ActionListener,
   EditData,
   isNew,
@@ -21,6 +22,7 @@ import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikEr
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import { useAutoFocus } from '../../helpers/useAutoFocus';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
+import SaveIndicator from '../saveIndicator/SaveIndicator';
 
 type FormikValue = { value: EditData['value'] };
 
@@ -36,17 +38,30 @@ function EditableRow(props: Props): React.ReactElement {
   const schema = dataType === 'phones' ? phoneSchema : emailSchema;
   const isNewItem = isNew(data);
   const [isEditing, setEditing] = useState(isNewItem);
+  const [currentSaveAction, setCurrentSaveAction] = useState<
+    Action | undefined
+  >(undefined);
   const actionHandler: ActionHandler = async action => {
-    const promise = await onAction(action, data);
+    if (action === 'set-primary' || action === 'remove' || action === 'save') {
+      setCurrentSaveAction(action);
+    }
+    const [err] = await to(onAction(action, data));
+    if (err || action !== 'remove') {
+      setCurrentSaveAction(undefined);
+    }
     if (action === 'cancel' && !isNewItem) {
       resetValue(data);
       activateAutoFocusing();
       setEditing(false);
-    }
-    if (action === 'edit') {
+    } else if (action === 'edit') {
       setEditing(true);
+    } else if (action === 'save') {
+      if (!err && !isNewItem) {
+        activateAutoFocusing();
+        setEditing(false);
+      }
     }
-    return promise;
+    return Promise.resolve();
   };
 
   const inputId = `${data.profileData.id || 'new'}-value`;
@@ -74,13 +89,9 @@ function EditableRow(props: Props): React.ReactElement {
           onSubmit={async (values, actions) => {
             actions.setSubmitting(true);
             data.value = values.value;
-            const [err] = await to(onAction('save', data));
-            if (err) {
+            await actionHandler('save');
+            if (!isNewItem) {
               actions.setSubmitting(false);
-            } else if (!isNewItem) {
-              actions.setSubmitting(false);
-              activateAutoFocusing();
-              setEditing(false);
             }
           }}
           validationSchema={schema}
@@ -96,6 +107,7 @@ function EditableRow(props: Props): React.ReactElement {
                     as={TextInput}
                     invalid={hasFieldError(formikProps)}
                     helperText={getFieldErrorMessage(formikProps)}
+                    aria-labelledby={`${dataType}-value-helper`}
                     autoFocus
                   />
                   <AccessibleFormikErrors
@@ -108,6 +120,7 @@ function EditableRow(props: Props): React.ReactElement {
                   />
                 </div>
               </FocusKeeper>
+              <SaveIndicator currentAction={currentSaveAction} />
             </Form>
           )}
         </Formik>
@@ -132,7 +145,9 @@ function EditableRow(props: Props): React.ReactElement {
         }}
         ariaLabels={ariaActionLabels}
         editButtonId={autoFocusTargetId}
+        disable={!!currentSaveAction}
       />
+      <SaveIndicator currentAction={currentSaveAction} />
     </div>
   );
 }

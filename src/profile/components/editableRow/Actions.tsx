@@ -24,6 +24,7 @@ type Props = {
   ariaLabels: ActionAriaLabels;
   buttonClassNames?: string;
   editButtonId?: string;
+  disable?: boolean;
 };
 
 export type ActionAriaLabels = {
@@ -42,6 +43,7 @@ function Actions(props: Props): React.ReactElement {
     buttonClassNames,
     ariaLabels,
     editButtonId,
+    disable,
   } = props;
   const { t } = useTranslation();
   const { editable, primary, removable, setPrimary } = actions;
@@ -55,8 +57,9 @@ function Actions(props: Props): React.ReactElement {
       {setPrimary && primary && (
         <div className={commonFormStyles.primaryContainer}>
           <IconStarFill aria-hidden="true" />
-          <span aria-label={ariaLabels.primary}>
-            {t('profileForm.primary')}
+          <span aria-hidden="true">{t('profileForm.primary')}</span>
+          <span className={commonFormStyles.visuallyHidden}>
+            {ariaLabels.primary}
           </span>
         </div>
       )}
@@ -69,6 +72,7 @@ function Actions(props: Props): React.ReactElement {
           }}
           className={classNames(buttonStyle)}
           aria-label={ariaLabels.setPrimary}
+          disabled={disable}
         >
           {t('profileForm.setPrimary')}
         </Button>
@@ -82,6 +86,7 @@ function Actions(props: Props): React.ReactElement {
           }}
           className={classNames(buttonStyle)}
           aria-label={ariaLabels.edit}
+          disabled={disable}
           {...editButtonIdAttr}
         >
           {t('profileForm.edit')}
@@ -96,6 +101,7 @@ function Actions(props: Props): React.ReactElement {
           }}
           className={classNames(buttonStyle)}
           aria-label={ariaLabels.remove}
+          disabled={disable}
         >
           {t('profileForm.remove')}
         </Button>

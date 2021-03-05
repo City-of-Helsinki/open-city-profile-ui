@@ -14,6 +14,7 @@ import {
   EditableAddress,
   isNew,
   resetValue,
+  Action,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
@@ -30,6 +31,7 @@ import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import { useAutoFocus } from '../../helpers/useAutoFocus';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import { getFormFields } from '../../helpers/formProperties';
+import SaveIndicator from '../saveIndicator/SaveIndicator';
 
 type FormikValues = EditableAddress;
 
@@ -44,6 +46,9 @@ function EditableRowAddress(props: Props): React.ReactElement {
   const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];
   const [isEditing, setEditing] = useState(isNewItem);
+  const [currentSaveAction, setCurrentSaveAction] = useState<
+    Action | undefined
+  >(undefined);
   const applicationLanguage = getLanguageCode(i18n.languages[0]);
   const countryList = countries.getNames(applicationLanguage);
   const countryOptions = Object.keys(countryList).map(key => ({
@@ -68,16 +73,26 @@ function EditableRowAddress(props: Props): React.ReactElement {
   ) => getFieldError<FormikValues>(t, formikProps, type, !isNewItem);
 
   const actionHandler: ActionHandler = async action => {
-    const promise = await onAction(action, data);
+    if (action === 'set-primary' || action === 'remove' || action === 'save') {
+      setCurrentSaveAction(action);
+    }
+    const [err] = await to(onAction(action, data));
+    if (err || action !== 'remove') {
+      setCurrentSaveAction(undefined);
+    }
     if (action === 'cancel' && !isNewItem) {
       resetValue(data);
       activateAutoFocusing();
       setEditing(false);
-    }
-    if (action === 'edit') {
+    } else if (action === 'edit') {
       setEditing(true);
+    } else if (action === 'save') {
+      if (!err && !isNewItem) {
+        activateAutoFocusing();
+        setEditing(false);
+      }
     }
-    return promise;
+    return Promise.resolve();
   };
 
   const ariaActionLabels: ActionAriaLabels = createActionAriaLabels(data, t);
@@ -98,24 +113,20 @@ function EditableRowAddress(props: Props): React.ReactElement {
         onSubmit={async (values, actions) => {
           actions.setSubmitting(true);
           data.value = values;
-          const [err] = await to(onAction('save', data));
-          if (err) {
+          await actionHandler('save');
+          if (!isNewItem) {
             actions.setSubmitting(false);
-          } else if (!isNewItem) {
-            actions.setSubmitting(false);
-            activateAutoFocusing();
-            setEditing(false);
           }
         }}
         validationSchema={addressSchema}
       >
         {(formikProps: FormikProps<FormikValues>) => (
           <Form className={commonFormStyles.multiItemForm}>
-            <h3 className={commonFormStyles.sectionTitle}>
+            <h4 className={commonFormStyles.sectionTitle}>
               {primary
                 ? t('profileInformation.primaryAddress')
                 : t('profileInformation.address')}
-            </h3>
+            </h4>
             <FocusKeeper targetId={`${inputIdPrefix}-address`}>
               <div className={commonFormStyles.multiItemWrapper}>
                 <Field
@@ -127,7 +138,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
                   helperText={getFieldErrorMessage(formikProps, 'address')}
                   labelText={t(formFields.address.translationKey)}
                   autoFocus
-                  aria-describedby={`${dataType}-address-helper`}
+                  aria-labelledby={`${dataType}-address-helper`}
                 />
                 <Field
                   name="postalCode"
@@ -137,7 +148,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
                   invalid={hasFieldError(formikProps, 'postalCode')}
                   helperText={getFieldErrorMessage(formikProps, 'postalCode')}
                   labelText={t(formFields.postalCode.translationKey)}
-                  aria-describedby={`${dataType}-postalCode-helper`}
+                  aria-labelledby={`${dataType}-postalCode-helper`}
                 />
                 <Field
                   name="city"
@@ -147,7 +158,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
                   invalid={hasFieldError(formikProps, 'city')}
                   helperText={getFieldErrorMessage(formikProps, 'city')}
                   labelText={t(formFields.city.translationKey)}
-                  aria-describedby={`${dataType}-city-helper`}
+                  aria-labelledby={`${dataType}-city-helper`}
                 />
                 <FormikDropdown
                   className={commonFormStyles.formField}
@@ -174,6 +185,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
                 alignLeft
               />
             </FocusKeeper>
+            <SaveIndicator currentAction={currentSaveAction} />
           </Form>
         )}
       </Formik>
@@ -186,11 +198,11 @@ function EditableRowAddress(props: Props): React.ReactElement {
         commonFormStyles.multiItemContentWrapper,
       ])}
     >
-      <h3 className={commonFormStyles.sectionTitle}>
+      <h4 className={commonFormStyles.sectionTitle}>
         {primary
           ? t('profileInformation.primaryAddress')
           : t('profileInformation.address')}
-      </h3>
+      </h4>
       <div className={commonFormStyles.multiItemWrapper}>
         <LabeledValue
           label={t(formFields.address.translationKey)}
@@ -221,7 +233,9 @@ function EditableRowAddress(props: Props): React.ReactElement {
           buttonClassNames={commonFormStyles.actionsWrapperButton}
           ariaLabels={ariaActionLabels}
           editButtonId={autoFocusTargetId}
+          disable={!!currentSaveAction}
         />
+        <SaveIndicator currentAction={currentSaveAction} />
       </div>
     </div>
   );

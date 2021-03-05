@@ -12,6 +12,7 @@ import {
   EditableUserData,
   basicDataType,
   resetValue,
+  Action,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -30,6 +31,7 @@ import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import { useAutoFocus } from '../../helpers/useAutoFocus';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
 import { getFormFields } from '../../helpers/formProperties';
+import SaveIndicator from '../saveIndicator/SaveIndicator';
 
 type FormikValues = EditableUserData;
 
@@ -44,6 +46,9 @@ function EditableBasicData(): React.ReactElement | null {
     clearMessage,
   } = useNotificationContent();
   const [isEditing, setEditing] = useState(false);
+  const [currentSaveAction, setCurrentSaveAction] = useState<
+    Action | undefined
+  >(undefined);
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
   const { autoFocusTargetId, activateAutoFocusing } = useAutoFocus({
@@ -107,11 +112,13 @@ function EditableBasicData(): React.ReactElement | null {
         initialValues={{ firstName, nickname, lastName }}
         onSubmit={async (values, actions) => {
           actions.setSubmitting(true);
+          setCurrentSaveAction('save');
           // eslint-disable-next-line no-shadow
           const { firstName, nickname, lastName } = values;
           editData.value = { firstName, nickname, lastName };
           const [error] = await to(onAction('save', editData));
           actions.setSubmitting(false);
+          setCurrentSaveAction(undefined);
           if (error) {
             setErrorMessage('', 'save');
           } else {
@@ -140,7 +147,7 @@ function EditableBasicData(): React.ReactElement | null {
                     aria-invalid={hasFieldError(formikProps, 'firstName')}
                     helperText={getFieldErrorMessage(formikProps, 'firstName')}
                     labelText={t(formFields.firstName.translationKey)}
-                    aria-describedby="basic-data-firstname-helper"
+                    aria-labelledby="basic-data-firstName-helper"
                     autoFocus
                   />
                   <Field
@@ -153,7 +160,7 @@ function EditableBasicData(): React.ReactElement | null {
                     aria-invalid={hasFieldError(formikProps, 'nickname')}
                     helperText={getFieldErrorMessage(formikProps, 'nickname')}
                     labelText={t(formFields.nickname.translationKey)}
-                    aria-describedby="basic-data-nickname-helper"
+                    aria-labelledby="basic-data-nickname-helper"
                   />
                   <Field
                     className={commonFormStyles.formField}
@@ -165,7 +172,7 @@ function EditableBasicData(): React.ReactElement | null {
                     aria-invalid={hasFieldError(formikProps, 'lastName')}
                     helperText={getFieldErrorMessage(formikProps, 'lastName')}
                     labelText={t(formFields.lastName.translationKey)}
-                    aria-describedby={`${basicDataType}-lastname-helper`}
+                    aria-labelledby={`${basicDataType}-lastName-helper`}
                   />
                 </div>
                 <AccessibilityFieldHelpers dataType={basicDataType} />
@@ -173,13 +180,17 @@ function EditableBasicData(): React.ReactElement | null {
                   formikProps={formikProps}
                   dataType={basicDataType}
                 />
-                <EditingNotifications content={content} />
+                <EditingNotifications
+                  content={content}
+                  dataType={basicDataType}
+                />
                 <EditButtons
                   handler={actionHandler}
                   canSubmit={!!editable && !Boolean(formikProps.isSubmitting)}
                   alignLeft
                 />
               </FocusKeeper>
+              <SaveIndicator currentAction={currentSaveAction} />
             </Form>
           </ProfileSection>
         )}
@@ -221,7 +232,7 @@ function EditableBasicData(): React.ReactElement | null {
           />
         </div>
       </div>
-      <EditingNotifications content={content} />
+      <EditingNotifications content={content} dataType={basicDataType} />
     </ProfileSection>
   );
 }

@@ -96,7 +96,10 @@ function EditableAdditionalInformation(): React.ReactElement | null {
           )}
         </Formik>
       </div>
-      <EditingNotifications content={content} />
+      <EditingNotifications
+        content={content}
+        dataType={additionalInformationType}
+      />
     </ProfileSection>
   );
 }

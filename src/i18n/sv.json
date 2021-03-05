@@ -98,7 +98,9 @@
     "saveSuccess": "SV: Tallennus onnistui!",
     "tryAgain": "SV: Yritä uudelleen.",
     "genericError": "SV:  Tapahtui virhe.",
-    "genericSuccess": "SV: Toiminto onnistui!"
+    "genericSuccess": "SV: Toiminto onnistui!",
+    "saving": "SV: Tallennetaan",
+    "removing": "SV: Poistetaan"
   },
   "oidc": {
     "authenticating": "Autentiserar..."
@@ -170,7 +172,13 @@
     "verifiedDataInformation": "SV: <0></0> tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <1>siirry suomi.fi palveluun </1>",
     "verifiedDataInformationLink": "https://www.suomi.fi/",
     "verifiedData": "SV: Vahvistettu tieto",
-    "ariaFieldHelperWrite": "SV: Kirjoita"
+    "phones": "SV: Puhelinnumerot",
+    "emails": "SV: Sähköpostiosoitteet",
+    "addresses": "SV: Osoitteet",
+    "ariaFieldHelperWrite": "SV: Kirjoita",
+    "ariaListTitlePhones": "SV: Antamasi puhelinnumerot",
+    "ariaListTitleEmails": "SV: Antamasi sähköpostiosoitteet",
+    "ariaListTitleAddresses": "SV: Antamasi osoitteet"
   },
   "sanityCheck": "open-city-profile.sv",
   "serviceConnections": {
@@ -202,6 +210,7 @@
     "github": "GitHub",
     "google": "Google",
     "facebook": "Facebook",
-    "yle": "Yle"
+    "yle": "Yle",
+    "tunnistusSuomifi": "Suomi.fi"
   }
 }
