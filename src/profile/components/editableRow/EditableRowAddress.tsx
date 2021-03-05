@@ -1,25 +1,21 @@
 import { TextInput } from 'hds-react';
-import React, { useState } from 'react';
+import React from 'react';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
 
 import { MyProfileQuery_myProfile_addresses_edges_node as Address } from '../../../graphql/generatedTypes';
-import to from '../../../common/awaitTo';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import {
   ActionListener,
   EditData,
   EditableAddress,
-  isNew,
-  resetEditDataValue,
-  Action,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
 import EditButtons from './EditButtons';
-import Actions, { ActionAriaLabels, ActionHandler } from './Actions';
+import Actions, { ActionAriaLabels } from './Actions';
 import FormikDropdown, {
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
@@ -28,10 +24,10 @@ import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import getCountry from '../../helpers/getCountry';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
-import { useAutoFocus } from '../../helpers/useAutoFocus';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import { getFormFields } from '../../helpers/formProperties';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
+import { useCommonEditHandling } from './useCommonEditHandling';
 
 type FormikValues = EditableAddress;
 
@@ -42,13 +38,8 @@ function EditableRowAddress(props: Props): React.ReactElement {
   const { profileData } = data;
   const value = data.value as EditableAddress;
   const { address, city, postalCode, countryCode } = profileData as Address;
-  const isNewItem = isNew(data);
   const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];
-  const [isEditing, setEditing] = useState(isNewItem);
-  const [currentSaveAction, setCurrentSaveAction] = useState<
-    Action | undefined
-  >(undefined);
   const applicationLanguage = getLanguageCode(i18n.languages[0]);
   const countryList = countries.getNames(applicationLanguage);
   const countryOptions = Object.keys(countryList).map(key => ({
@@ -57,10 +48,14 @@ function EditableRowAddress(props: Props): React.ReactElement {
   }));
   const dataType = 'addresses';
   const formFields = getFormFields(dataType);
-  // new item will never autofocus to "edit"-button, but React hooks cannot be conditional
-  const { autoFocusTargetId, activateAutoFocusing } = useAutoFocus({
-    targetId: `${data.profileData.id || 'new'}-edit-button`,
-  });
+
+  const {
+    autoFocusTargetId,
+    isNewItem,
+    isEditing,
+    currentSaveAction,
+    actionHandler,
+  } = useCommonEditHandling({ data, onAction });
 
   const hasFieldError = (
     formikProps: FormikProps<FormikValues>,
@@ -71,30 +66,6 @@ function EditableRowAddress(props: Props): React.ReactElement {
     formikProps: FormikProps<FormikValues>,
     type: keyof FormikValues
   ) => getFieldError<FormikValues>(t, formikProps, type, !isNewItem);
-
-  const actionHandler: ActionHandler = async action => {
-    if (action === 'set-primary' || action === 'remove' || action === 'save') {
-      setCurrentSaveAction(action);
-    }
-    const [err] = await to(onAction(action, data));
-    if (!err && isNewItem) {
-      return Promise.resolve();
-    }
-    if (err || action !== 'remove') {
-      setCurrentSaveAction(undefined);
-    }
-    if (action === 'cancel' && !isNewItem) {
-      resetEditDataValue(data);
-      activateAutoFocusing();
-      setEditing(false);
-    } else if (action === 'edit') {
-      setEditing(true);
-    } else if (action === 'save') {
-      activateAutoFocusing();
-      setEditing(false);
-    }
-    return Promise.resolve();
-  };
 
   const ariaActionLabels: ActionAriaLabels = createActionAriaLabels(data, t);
 

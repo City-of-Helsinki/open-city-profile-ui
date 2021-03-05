@@ -178,7 +178,10 @@
     "ariaFieldHelperWrite": "SV: Kirjoita",
     "ariaListTitlePhones": "SV: Antamasi puhelinnumerot",
     "ariaListTitleEmails": "SV: Antamasi sähköpostiosoitteet",
-    "ariaListTitleAddresses": "SV: Antamasi osoitteet"
+    "ariaListTitleAddresses": "SV: Antamasi osoitteet",
+    "noPhones": "SV: Et ole antanut puhelinnumeroita",
+    "noEmails": "SV: Et ole antanut sähköpostiosoitteita",
+    "noAddresses": "SV: Et ole antanut osoitteita"
   },
   "sanityCheck": "open-city-profile.sv",
   "serviceConnections": {

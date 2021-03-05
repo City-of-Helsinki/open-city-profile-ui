@@ -178,7 +178,10 @@
     "ariaFieldHelperWrite": "Write",
     "ariaListTitlePhones": "EN: Antamasi puhelinnumerot",
     "ariaListTitleEmails": "EN: Antamasi sähköpostiosoitteet",
-    "ariaListTitleAddresses": "EN: Antamasi osoitteet"
+    "ariaListTitleAddresses": "EN: Antamasi osoitteet",
+    "noPhones": "You haven't given any phone numbers",
+    "noEmails": "You haven't given any emails",
+    "noAddresses": "You haven't given any addresses"
   },
   "sanityCheck": "open-city-profile.en",
   "serviceConnections": {

@@ -1,28 +1,21 @@
 import { TextInput } from 'hds-react';
-import React, { useState } from 'react';
+import React from 'react';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import to from '../../../common/awaitTo';
 import styles from './editableRow.module.css';
-import {
-  Action,
-  ActionListener,
-  EditData,
-  isNew,
-  resetEditDataValue,
-} from '../../helpers/mutationEditor';
+import { ActionListener, EditData } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { phoneSchema, emailSchema } from '../../../common/schemas/schemas';
-import Actions, { ActionAriaLabels, ActionHandler } from './Actions';
+import Actions, { ActionAriaLabels } from './Actions';
 import EditButtons from './EditButtons';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
-import { useAutoFocus } from '../../helpers/useAutoFocus';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
+import { useCommonEditHandling } from './useCommonEditHandling';
 
 type FormikValue = { value: EditData['value'] };
 
@@ -30,40 +23,16 @@ type Props = { data: EditData; onAction: ActionListener };
 function EditableRow(props: Props): React.ReactElement {
   const { data, onAction } = props;
   const { t } = useTranslation();
-  // new item will never autofocus to "edit"-button, but React hooks cannot be conditional
-  const { autoFocusTargetId, activateAutoFocusing } = useAutoFocus({
-    targetId: `${data.profileData.id || 'new'}-edit-button`,
-  });
+
   const { value, editable, removable, dataType, primary } = data;
   const schema = dataType === 'phones' ? phoneSchema : emailSchema;
-  const isNewItem = isNew(data);
-  const [isEditing, setEditing] = useState(isNewItem);
-  const [currentSaveAction, setCurrentSaveAction] = useState<
-    Action | undefined
-  >(undefined);
-  const actionHandler: ActionHandler = async action => {
-    if (action === 'set-primary' || action === 'remove' || action === 'save') {
-      setCurrentSaveAction(action);
-    }
-    const [err] = await to(onAction(action, data));
-    if (!err && isNewItem) {
-      return Promise.resolve();
-    }
-    if (err || action !== 'remove') {
-      setCurrentSaveAction(undefined);
-    }
-    if (action === 'cancel' && !isNewItem) {
-      resetEditDataValue(data);
-      activateAutoFocusing();
-      setEditing(false);
-    } else if (action === 'edit') {
-      setEditing(true);
-    } else if (action === 'save') {
-      activateAutoFocusing();
-      setEditing(false);
-    }
-    return Promise.resolve();
-  };
+  const {
+    autoFocusTargetId,
+    isNewItem,
+    isEditing,
+    currentSaveAction,
+    actionHandler,
+  } = useCommonEditHandling({ data, onAction });
 
   const inputId = `${data.profileData.id || 'new'}-value`;
 

@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 
 import { MyProfileQuery } from '../../../graphql/generatedTypes';
+import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
 import { useProfileQuery, QueryResult } from '../../helpers/hooks';
 
 type ContextProps = {
@@ -128,15 +129,17 @@ export const Provider = (props: ContextProps): React.ReactElement => {
     isComplete,
     getName: preferNickOrGivenName => {
       if (!isComplete || !profileData || !profileData.myProfile) {
-        return 'NONE';
+        return '';
       }
-      if (profileData.myProfile.verifiedPersonalInformation) {
-        const source = profileData.myProfile.verifiedPersonalInformation;
+      const verifiedPersonalInformation = getVerifiedPersonalInformation(
+        profileData
+      );
+      if (verifiedPersonalInformation) {
         return `${
-          preferNickOrGivenName && source.givenName
-            ? source.givenName
-            : source.firstName
-        } ${source.lastName}`;
+          preferNickOrGivenName && verifiedPersonalInformation.givenName
+            ? verifiedPersonalInformation.givenName
+            : verifiedPersonalInformation.firstName
+        } ${verifiedPersonalInformation.lastName}`;
       } else {
         const source = profileData.myProfile;
         return preferNickOrGivenName && source.nickname
