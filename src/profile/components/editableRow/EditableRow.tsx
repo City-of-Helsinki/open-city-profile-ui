@@ -46,6 +46,9 @@ function EditableRow(props: Props): React.ReactElement {
       setCurrentSaveAction(action);
     }
     const [err] = await to(onAction(action, data));
+    if (!err && isNewItem) {
+      return Promise.resolve();
+    }
     if (err || action !== 'remove') {
       setCurrentSaveAction(undefined);
     }
@@ -56,10 +59,8 @@ function EditableRow(props: Props): React.ReactElement {
     } else if (action === 'edit') {
       setEditing(true);
     } else if (action === 'save') {
-      if (!err && !isNewItem) {
-        activateAutoFocusing();
-        setEditing(false);
-      }
+      activateAutoFocusing();
+      setEditing(false);
     }
     return Promise.resolve();
   };
@@ -87,12 +88,8 @@ function EditableRow(props: Props): React.ReactElement {
             value,
           }}
           onSubmit={async (values, actions) => {
-            actions.setSubmitting(true);
             data.value = values.value;
             await actionHandler('save');
-            if (!isNewItem) {
-              actions.setSubmitting(false);
-            }
           }}
           validationSchema={schema}
         >
@@ -116,7 +113,7 @@ function EditableRow(props: Props): React.ReactElement {
                   />
                   <EditButtons
                     handler={actionHandler}
-                    canSubmit={!!editable && !Boolean(formikProps.isSubmitting)}
+                    disabled={!!currentSaveAction}
                   />
                 </div>
               </FocusKeeper>

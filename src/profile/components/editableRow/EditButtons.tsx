@@ -8,13 +8,13 @@ import { ActionHandler } from './Actions';
 
 type Props = {
   handler: ActionHandler;
-  canSubmit: boolean;
+  disabled: boolean;
   alignLeft?: boolean;
 };
 
 function EditButtons(props: Props): React.ReactElement {
   const { t } = useTranslation();
-  const { handler, alignLeft, canSubmit } = props;
+  const { handler, alignLeft, disabled } = props;
   return (
     <div
       className={classNames([
@@ -25,7 +25,7 @@ function EditButtons(props: Props): React.ReactElement {
     >
       <Button
         type="submit"
-        disabled={!canSubmit}
+        disabled={disabled}
         className={commonFormStyles.responsiveButton}
       >
         {t('profileForm.submit')}
@@ -36,6 +36,7 @@ function EditButtons(props: Props): React.ReactElement {
           await handler('cancel');
         }}
         className={commonFormStyles.responsiveButton}
+        disabled={disabled}
       >
         {t('profileForm.cancel')}
       </Button>

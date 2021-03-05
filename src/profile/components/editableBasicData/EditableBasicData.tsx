@@ -59,7 +59,7 @@ function EditableBasicData(): React.ReactElement | null {
     return null;
   }
   const editData = data[0];
-  const { value, editable } = editData;
+  const { value } = editData;
   const { firstName, nickname, lastName } = value as EditableUserData;
   const formFields = getFormFields(basicDataType);
 
@@ -111,13 +111,11 @@ function EditableBasicData(): React.ReactElement | null {
       <Formik
         initialValues={{ firstName, nickname, lastName }}
         onSubmit={async (values, actions) => {
-          actions.setSubmitting(true);
           setCurrentSaveAction('save');
           // eslint-disable-next-line no-shadow
           const { firstName, nickname, lastName } = values;
           editData.value = { firstName, nickname, lastName };
           const [error] = await to(onAction('save', editData));
-          actions.setSubmitting(false);
           setCurrentSaveAction(undefined);
           if (error) {
             setErrorMessage('', 'save');
@@ -186,7 +184,7 @@ function EditableBasicData(): React.ReactElement | null {
                 />
                 <EditButtons
                   handler={actionHandler}
-                  canSubmit={!!editable && !Boolean(formikProps.isSubmitting)}
+                  disabled={!!currentSaveAction}
                   alignLeft
                 />
               </FocusKeeper>
