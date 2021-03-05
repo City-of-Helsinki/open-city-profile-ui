@@ -47,6 +47,19 @@ export interface BasicData extends UserData {
   id: string;
 }
 
+export type FormValues = {
+  firstName: string;
+  nickname: string;
+  lastName: string;
+  primaryEmail: PrimaryEmail;
+  primaryAddress: PrimaryAddress;
+  primaryPhone: PrimaryPhone;
+  profileLanguage: Language;
+  addresses: Address[];
+  emails: Email[];
+  phones: Phone[];
+};
+
 export const basicDataType = 'basic-data';
 export const additionalInformationType = 'additional-information';
 
@@ -88,7 +101,7 @@ export type ActionListener = (
   data: EditData
 ) => ActionListenerReturnType;
 
-export function getTargetData(
+export function pickProfileData(
   myProfileQuery: MyProfileQuery,
   dataType: EditData['dataType']
 ): EditData['profileData'][] {
@@ -144,7 +157,7 @@ export function getTargetData(
   return [];
 }
 
-export function getData(
+export function createEditData(
   myProfileQuery: MyProfileQuery | undefined,
   dataType: EditData['dataType']
 ): EditData[] {
@@ -152,40 +165,16 @@ export function getData(
   if (!profile) {
     return [];
   }
-  const targetData = getTargetData(myProfileQuery as MyProfileQuery, dataType);
+  const targetData = pickProfileData(
+    myProfileQuery as MyProfileQuery,
+    dataType
+  );
   return targetData.map(targetProfileData =>
     createEditItem(dataType, targetProfileData)
   );
 }
 
-export function createEditItem(
-  dataType: EditData['dataType'],
-  targetProfileData: EditData['profileData']
-): EditData {
-  return {
-    editable: true,
-    removable: true,
-    profileData: targetProfileData,
-    value: getValue(targetProfileData, dataType),
-    primary: isPrimary(targetProfileData, dataType),
-    dataType,
-  };
-}
-
-export type FormValues = {
-  firstName: string;
-  nickname: string;
-  lastName: string;
-  primaryEmail: PrimaryEmail;
-  primaryAddress: PrimaryAddress;
-  primaryPhone: PrimaryPhone;
-  profileLanguage: Language;
-  addresses: Address[];
-  emails: Email[];
-  phones: Phone[];
-};
-
-function getValue(
+function createEditDataValueFromProfileData(
   profileDataItem: EditData['profileData'],
   dataType: EditData['dataType']
 ): EditData['value'] {
@@ -229,6 +218,20 @@ function getValue(
   return '';
 }
 
+export function createEditItem(
+  dataType: EditData['dataType'],
+  targetProfileData: EditData['profileData']
+): EditData {
+  return {
+    editable: true,
+    removable: true,
+    profileData: targetProfileData,
+    value: createEditDataValueFromProfileData(targetProfileData, dataType),
+    primary: isPrimary(targetProfileData, dataType),
+    dataType,
+  };
+}
+
 function isPrimary(
   profileDataItem: EditData['profileData'],
   dataType: EditData['dataType']
@@ -245,7 +248,7 @@ function isPrimary(
   return false;
 }
 
-export function updateProfileDataValue(
+export function updateProfileDataFromEditData(
   item: EditData
 ): EditData['profileData'] {
   const profileData = item.profileData;
@@ -301,7 +304,7 @@ export function findEditItemIndex(
   return dataItems.findIndex(dataItem => itemId === dataItem.profileData.id);
 }
 
-export function matchEditDataToProfileData(
+export function mergeOldEditDataToNewProfileData(
   dataItems: EditData[],
   profileDataItems: EditData['profileData'][],
   dataType: EditData['dataType']
@@ -313,7 +316,7 @@ export function matchEditDataToProfileData(
   if (dataType === basicDataType) {
     const editDataItem = dataItems[0];
     const currentUserData = editDataItem.value as EditableUserData;
-    const newUserData = getValue(
+    const newUserData = createEditDataValueFromProfileData(
       profileDataItems[0],
       dataType
     ) as EditableUserData;
@@ -331,7 +334,7 @@ export function matchEditDataToProfileData(
     const {
       profileLanguage,
     } = editDataItem.value as EditableAdditionalInformation;
-    const { profileLanguage: newLanguage } = getValue(
+    const { profileLanguage: newLanguage } = createEditDataValueFromProfileData(
       profileDataItems[0],
       dataType
     ) as EditableAdditionalInformation;
@@ -344,7 +347,10 @@ export function matchEditDataToProfileData(
   }
   let existingNewItem = findEditItem(dataItems, '');
   profileDataItems.forEach(profileDataItem => {
-    const profileDataValue = getValue(profileDataItem, dataType);
+    const profileDataValue = createEditDataValueFromProfileData(
+      profileDataItem,
+      dataType
+    );
     const profileDataIsPrimary = isPrimary(profileDataItem, dataType);
     const existingItem = findExistingItem(dataItems, profileDataItem);
     if (existingItem) {
@@ -379,7 +385,7 @@ export function matchEditDataToProfileData(
   return stats;
 }
 
-export function collect(
+export function collectProfileData(
   dataItems: EditData[],
   dataType: EditData['dataType']
 ): Partial<FormValues> {
@@ -409,7 +415,7 @@ export function collect(
   return { firstName, nickname, lastName };
 }
 
-export function createNewItem(dataType: EditData['dataType']): EditData {
+export function createNewEditItem(dataType: EditData['dataType']): EditData {
   const newProfileData = createNewProfileData(dataType);
   const newItem = createEditItem(dataType, newProfileData);
   return newItem;
@@ -425,17 +431,6 @@ export function createNewProfileData(
   return {
     ...(formConstants.EMPTY_VALUES[dataType] as EditData['profileData']),
   };
-}
-
-export function createEditableData(
-  dataType: EditData['dataType']
-): EditData['value'] {
-  return getValue(
-    {
-      ...(formConstants.EMPTY_VALUES[dataType] as EditData['profileData']),
-    },
-    dataType
-  );
 }
 
 export function hasNewItem(data: EditData[]): boolean {
@@ -481,8 +476,8 @@ export function setNewPrimary(
   return clonedData;
 }
 
-export function resetValue(editData: EditData): EditData['value'] {
-  const valueFromProfileData = getValue(
+export function resetEditDataValue(editData: EditData): EditData['value'] {
+  const valueFromProfileData = createEditDataValueFromProfileData(
     editData.profileData,
     editData.dataType
   );

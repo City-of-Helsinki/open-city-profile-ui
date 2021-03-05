@@ -11,7 +11,7 @@ import {
   ActionListener,
   EditData,
   isNew,
-  resetValue,
+  resetEditDataValue,
 } from '../../helpers/mutationEditor';
 import { getFieldError, getIsInvalid } from '../../helpers/formik';
 import { phoneSchema, emailSchema } from '../../../common/schemas/schemas';
@@ -53,7 +53,7 @@ function EditableRow(props: Props): React.ReactElement {
       setCurrentSaveAction(undefined);
     }
     if (action === 'cancel' && !isNewItem) {
-      resetValue(data);
+      resetEditDataValue(data);
       activateAutoFocusing();
       setEditing(false);
     } else if (action === 'edit') {

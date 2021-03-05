@@ -20,12 +20,12 @@ import {
 import {
   FormValues,
   EditData,
-  matchEditDataToProfileData,
-  getTargetData,
-  collect,
-  getData,
-  updateProfileDataValue,
-  createNewItem,
+  mergeOldEditDataToNewProfileData,
+  pickProfileData,
+  collectProfileData,
+  createEditData,
+  updateProfileDataFromEditData,
+  createNewEditItem,
   setNewPrimary,
   basicDataType,
   additionalInformationType,
@@ -250,7 +250,7 @@ export function useProfileMutationHandler({
     dataType,
   });
   const [currentData, updateData] = useState<EditData[]>(() =>
-    getData(data, dataType)
+    createEditData(data, dataType)
   );
   const loadStateTracker = useRef({ updateTime: data ? updateTime : 0 });
   if (
@@ -258,9 +258,9 @@ export function useProfileMutationHandler({
     data &&
     data.myProfile
   ) {
-    const matchResult = matchEditDataToProfileData(
+    const matchResult = mergeOldEditDataToNewProfileData(
       currentData,
-      getTargetData(data, dataType),
+      pickProfileData(data, dataType),
       dataType
     );
     loadStateTracker.current.updateTime = Date.now();
@@ -269,8 +269,8 @@ export function useProfileMutationHandler({
     }
   }
 
-  const update = (current: EditData[]) => {
-    const formValues = collect(current, dataType);
+  const executeMutationUpdate = (current: EditData[]) => {
+    const formValues = collectProfileData(current, dataType);
     const { promise, profileInput } = mutationUpdate(
       formValues,
       data as MyProfileQuery
@@ -278,8 +278,8 @@ export function useProfileMutationHandler({
     return { promise, profileInput };
   };
 
-  const executeUpdateAndHandleResult = async (newData: EditData[]) => {
-    const [err, success] = await to(update(newData).promise);
+  const executeMutationUpdateAndHandleResult = async (newData: EditData[]) => {
+    const [err, success] = await to(executeMutationUpdate(newData).promise);
     if (err) {
       return Promise.reject(err);
     }
@@ -287,7 +287,7 @@ export function useProfileMutationHandler({
   };
 
   const add = () => {
-    const newItem = createNewItem(dataType);
+    const newItem = createNewEditItem(dataType);
     updateData([...currentData, newItem]);
   };
 
@@ -296,8 +296,8 @@ export function useProfileMutationHandler({
       currentData,
       item
     );
-    updateProfileDataValue(clonedItem);
-    return executeUpdateAndHandleResult(clonedData);
+    updateProfileDataFromEditData(clonedItem);
+    return executeMutationUpdateAndHandleResult(clonedData);
   };
 
   const remove = async (item: EditData) => {
@@ -316,14 +316,14 @@ export function useProfileMutationHandler({
       );
       const index = findEditItemIndex(clonedData, clonedItem);
       clonedData.splice(index, 1);
-      return executeUpdateAndHandleResult(clonedData);
+      return executeMutationUpdateAndHandleResult(clonedData);
     }
   };
 
   const setPrimary = async (item: EditData) => {
     const newData = setNewPrimary(currentData, item);
     if (newData) {
-      return executeUpdateAndHandleResult(newData);
+      return executeMutationUpdateAndHandleResult(newData);
     }
     return Promise.resolve();
   };
