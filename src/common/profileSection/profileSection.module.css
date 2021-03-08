@@ -31,5 +31,5 @@
 .buttonContainer {
   position:absolute;
   right:0;
-  top:calc(var(--spacing-s)*-1);
+  top:calc(-1*var(--spacing-s));
 }
