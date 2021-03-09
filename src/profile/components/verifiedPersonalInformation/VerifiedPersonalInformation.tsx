@@ -35,27 +35,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
   const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];
 
-  const verifiedPersonalInformation = getVerifiedPersonalInformation(data) || {
-    firstName: 'firstName',
-    givenName: 'givenName',
-    lastName: 'lastName',
-    email: 'email',
-    permanentAddress: {
-      streetAddress: 'streetAddress',
-      postOffice: 'postOffice',
-      postalCode: 'postalCode',
-    },
-    temporaryAddress: {
-      streetAddress: 'streetAddress',
-      postOffice: 'postOffice',
-      postalCode: 'postalCode',
-    },
-    permanentForeignAddress: {
-      streetAddress: 'streetAddress',
-      additionalAddress: 'additionalAddress',
-      countryCode: 'FI',
-    },
-  };
+  const verifiedPersonalInformation = getVerifiedPersonalInformation(data);
 
   if (!verifiedPersonalInformation) {
     return null;
@@ -70,6 +50,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     permanentAddress,
     temporaryAddress,
     permanentForeignAddress,
+    nationalIdentificationNumber,
   } = verifiedPersonalInformation;
 
   const AddressComponent = (props: AddressProps): React.ReactElement | null => {
@@ -170,6 +151,11 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
         <LabeledValue
           label={t('profileForm.lastName')}
           value={lastName}
+          verifiedInfoText={verifiedInfoText}
+        />
+        <LabeledValue
+          label={t('profileForm.nationalIdentificationNumber')}
+          value={nationalIdentificationNumber}
           verifiedInfoText={verifiedInfoText}
         />
       </div>

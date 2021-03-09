@@ -10,7 +10,7 @@ type UserDataWithActions = {
   userName: string;
   label: string;
   ariaLabel: string;
-  onClick: () => Promise<void>;
+  onClick: (e: React.MouseEvent) => Promise<void>;
 };
 
 function UserDropdown(): React.ReactElement {
@@ -25,7 +25,8 @@ function UserDropdown(): React.ReactElement {
     // eslint-disable-next-line no-shadow
     const userName = userLoaded ? getName(true) : '';
 
-    const logoutAction = (): Promise<void> => {
+    const logoutAction = (e: React.MouseEvent): Promise<void> => {
+      e.preventDefault();
       trackEvent({ category: 'action', action: 'Log out' });
       return authService.logout();
     };
@@ -72,9 +73,10 @@ function UserDropdown(): React.ReactElement {
         variant="primary"
       />
       <Navigation.Item
-        onClick={(): Promise<void> => onClick()}
+        onClick={(e: React.MouseEvent): Promise<void> => onClick(e)}
         variant="secondary"
         label={label}
+        href="/logout"
         icon={<IconSignout aria-hidden />}
       />
     </Navigation.User>

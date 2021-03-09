@@ -1,6 +1,9 @@
 
 .wrapper {
   padding-bottom: var(--spacing-m);
+  /*Fixes notification rendering above language selection*/
+  z-index: 1;
+  position: relative;
 }
 .wrapper:focus {
  outline:none;

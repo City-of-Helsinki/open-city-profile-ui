@@ -142,7 +142,8 @@
     "submit": "Spara",
     "terms": "Jag har läst filen <0>beskrivningen</0> och stads <1>sekretesspolicy</1>",
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/dataskydd",
-    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf"
+    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf",
+    "nationalIdentificationNumber": "SV: Henkilötunnus"
   },
   "profileInformation": {
     "address": "Adress",
@@ -170,7 +171,7 @@
     "verifiedDataInformationPrefix": "SV: Merkityt",
     "verifiedDataInformationAriaPrefix": "SV: Alla olevat",
     "verifiedDataInformation": "SV: <0></0> tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <1>siirry suomi.fi palveluun </1>",
-    "verifiedDataInformationLink": "https://www.suomi.fi/",
+    "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "SV: Vahvistettu tieto",
     "phones": "SV: Puhelinnumerot",
     "emails": "SV: Sähköpostiosoitteet",

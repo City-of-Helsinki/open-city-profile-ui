@@ -142,7 +142,8 @@
     "submit": "Tallenna",
     "terms": "Olen tutustunut palvelun <0>rekisteriselosteeseen</0> ja kaupungin <1>tietosuojakäytäntöön</1> ",
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietosuoja/",
-    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf"
+    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf",
+    "nationalIdentificationNumber": "Henkilötunnus"
   },
   "profileInformation": {
     "address": "Osoite",
@@ -170,7 +171,7 @@
     "verifiedDataInformationPrefix": "Merkityt",
     "verifiedDataInformationAriaPrefix": "Alla olevat",
     "verifiedDataInformation": "<0></0> tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <1>siirry suomi.fi palveluun </1>",
-    "verifiedDataInformationLink": "https://www.suomi.fi/",
+    "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Vahvistettu tieto",
     "phones": "Puhelinnumerot",
     "emails": "Sähköpostiosoitteet",
