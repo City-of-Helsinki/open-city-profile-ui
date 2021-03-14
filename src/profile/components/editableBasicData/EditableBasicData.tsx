@@ -225,7 +225,6 @@ function EditableBasicData(): React.ReactElement | null {
           <Actions
             handler={actionHandler}
             actions={{
-              editable: true,
               removable: false,
               setPrimary: false,
             }}

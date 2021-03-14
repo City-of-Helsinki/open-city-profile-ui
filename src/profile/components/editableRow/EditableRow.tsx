@@ -24,7 +24,7 @@ function EditableRow(props: Props): React.ReactElement {
   const { data, onAction, testId } = props;
   const { t } = useTranslation();
 
-  const { value, editable, removable, dataType, primary } = data;
+  const { value, dataType, primary } = data;
   const schema = dataType === 'phones' ? phoneSchema : emailSchema;
   const {
     autoFocusTargetId,
@@ -107,8 +107,7 @@ function EditableRow(props: Props): React.ReactElement {
       <Actions
         handler={actionHandler}
         actions={{
-          editable,
-          removable: removable && !primary,
+          removable: !primary,
           primary,
           setPrimary: true,
         }}

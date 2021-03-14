@@ -64,8 +64,6 @@ export const basicDataType = 'basic-data';
 export const additionalInformationType = 'additional-information';
 
 export type EditData = {
-  editable?: boolean;
-  removable?: boolean;
   primary?: boolean;
   profileData: Phone | Email | Address | BasicData | AdditionalInformation;
   value:
@@ -223,8 +221,6 @@ export function createEditItem(
   targetProfileData: EditData['profileData']
 ): EditData {
   return {
-    editable: true,
-    removable: true,
     profileData: targetProfileData,
     value: createEditDataValueFromProfileData(targetProfileData, dataType),
     primary: isPrimary(targetProfileData, dataType),

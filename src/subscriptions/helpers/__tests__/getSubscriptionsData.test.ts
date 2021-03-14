@@ -26,7 +26,7 @@ const getProfileData = (edges: ProfileEdge[]) =>
         edges: [...edges],
         __typename: 'SubscriptionNodeConnection',
       },
-      __typename: 'ProfileNode',
+      __typename: 'ProfileWithVerifiedPersonalInformationNode',
     },
   } as QueryMySubscriptions);
 

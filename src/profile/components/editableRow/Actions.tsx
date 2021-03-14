@@ -18,8 +18,9 @@ import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
 type Props = {
   handler: ActionHandler;
-  actions: Pick<EditData, 'editable' | 'primary' | 'removable'> & {
+  actions: Pick<EditData, 'primary'> & {
     setPrimary: boolean;
+    removable: boolean;
   };
   ariaLabels: ActionAriaLabels;
   buttonClassNames?: string;
@@ -48,7 +49,7 @@ function Actions(props: Props): React.ReactElement {
     testId,
   } = props;
   const { t } = useTranslation();
-  const { editable, primary, removable, setPrimary } = actions;
+  const { primary, removable, setPrimary } = actions;
   const buttonStyle = [commonFormStyles.supplementaryButton];
   const editButtonIdAttr = editButtonId ? { id: editButtonId } : undefined;
   if (buttonClassNames) {
@@ -80,21 +81,19 @@ function Actions(props: Props): React.ReactElement {
           {t('profileForm.setPrimary')}
         </Button>
       )}
-      {editable && (
-        <Button
-          variant="supplementary"
-          iconLeft={<IconPenLine />}
-          onClick={async () => {
-            await handler('edit');
-          }}
-          className={classNames(buttonStyle)}
-          aria-label={ariaLabels.edit}
-          disabled={disable}
-          {...editButtonIdAttr}
-        >
-          {t('profileForm.edit')}
-        </Button>
-      )}
+      <Button
+        variant="supplementary"
+        iconLeft={<IconPenLine />}
+        onClick={async () => {
+          await handler('edit');
+        }}
+        className={classNames(buttonStyle)}
+        aria-label={ariaLabels.edit}
+        disabled={disable}
+        {...editButtonIdAttr}
+      >
+        {t('profileForm.edit')}
+      </Button>
       {removable && (
         <Button
           variant="supplementary"

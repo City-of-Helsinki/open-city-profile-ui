@@ -69,7 +69,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
 
   const ariaActionLabels: ActionAriaLabels = createActionAriaLabels(data, t);
 
-  const { editable, removable, primary } = data;
+  const { primary } = data;
 
   if (isEditing) {
     return (
@@ -197,8 +197,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
         <Actions
           handler={actionHandler}
           actions={{
-            editable,
-            removable: removable && !primary,
+            removable: !primary,
             primary,
             setPrimary: true,
           }}

@@ -54,7 +54,7 @@ const getMocks = (
             __typename: 'SubscriptionNodeConnection',
           },
           id: '123',
-          __typename: 'ProfileNode',
+          __typename: 'ProfileWithVerifiedPersonalInformationNode',
         },
       } as QueryMySubscriptions,
     },
