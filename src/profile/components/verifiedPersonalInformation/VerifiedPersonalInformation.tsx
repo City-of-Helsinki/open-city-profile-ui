@@ -62,7 +62,10 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     const country = getCountry(address.countryCode, lang);
     return (
       <React.Fragment key={type}>
-        <h3 className={commonFormStyles.sectionTitle}>
+        <h3
+          className={commonFormStyles.sectionTitle}
+          data-testid={`vpi-address-${type}`}
+        >
           {type === 'permanent'
             ? t('profileInformation.permanentAddress')
             : type === 'temporary'

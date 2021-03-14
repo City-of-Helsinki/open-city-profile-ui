@@ -18,11 +18,7 @@ describe('<EditableBasicData />', () => {
   ]);
 
   const renderEditableBasicData = () =>
-    renderProfileContextWrapper(
-      testData.mocks,
-      <EditableBasicData />,
-      basicDataType
-    );
+    renderProfileContextWrapper(testData.mocks, <EditableBasicData />);
 
   const saveResultValue = (testData.modifiedEditData[0] as EditData)
     .value as EditableUserData;

@@ -145,8 +145,7 @@ describe('<ProfileDataEditor />', () => {
       const renderProfileDataEditor = () =>
         renderProfileContextWrapper(
           testData.mocks,
-          <ProfileDataEditor dataType={dataType} />,
-          dataType
+          <ProfileDataEditor dataType={dataType} />
         );
 
       it('and renders data and a form, saves new data and shows notifications to user', async () => {

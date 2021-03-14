@@ -22,6 +22,7 @@ import {
   Mutable,
 } from '../../profile/helpers/mutationEditor';
 
+export type VerifiedPersonalInformation = MyProfileQuery_myProfile_verifiedPersonalInformation;
 export type Addresses = MyProfileQuery_myProfile_addresses;
 export type AddressEdge = MyProfileQuery_myProfile_addresses_edges;
 export type AddressNode = MyProfileQuery_myProfile_addresses_edges_node;
@@ -133,34 +134,37 @@ export const getMyProfile = (): MyProfileQuery => ({
   },
 });
 
-export const verifiedPersonalInformationNode: MyProfileQuery_myProfile_verifiedPersonalInformation = {
+export const getVerifiedData = (
+  overrides?: Partial<VerifiedPersonalInformation>
+): VerifiedPersonalInformation => ({
   __typename: 'VerifiedPersonalInformationNode',
-  firstName: '',
-  lastName: '',
-  givenName: '',
-  nationalIdentificationNumber: '',
-  email: '',
-  municipalityOfResidence: '',
-  municipalityOfResidenceNumber: '',
+  firstName: 'verifiedFirstName',
+  lastName: 'verifiedLastName',
+  givenName: 'verifiedGivenName',
+  nationalIdentificationNumber: 'nationalIdentificationNumber',
+  email: 'vip@email.com',
+  municipalityOfResidence: 'municipalityOfResidence',
+  municipalityOfResidenceNumber: 'municipalityOfResidenceNumber',
   permanentAddress: {
     __typename: 'VerifiedPersonalInformationAddressNode',
-    streetAddress: '',
-    postalCode: '',
-    postOffice: '',
+    streetAddress: 'permanent.streetAddress',
+    postalCode: 'permanent.postalCode',
+    postOffice: 'permanent.postOffice',
   },
   temporaryAddress: {
     __typename: 'VerifiedPersonalInformationAddressNode',
-    streetAddress: '',
-    postalCode: '',
-    postOffice: '',
+    streetAddress: 'temporaryAddress.streetAddress',
+    postalCode: 'temporaryAddress.postalCode',
+    postOffice: 'temporaryAddress.postOffice',
   },
   permanentForeignAddress: {
     __typename: 'VerifiedPersonalInformationForeignAddressNode',
-    streetAddress: '',
-    additionalAddress: '',
-    countryCode: '',
+    streetAddress: 'permanentForeignAddress.streetAddress',
+    additionalAddress: 'permanentForeignAddress.additionalAddress',
+    countryCode: 'permanentForeignAddress.countryCode',
   },
-};
+  ...overrides,
+});
 
 /* GENERIC FUNCS */
 

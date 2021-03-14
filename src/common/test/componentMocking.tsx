@@ -162,8 +162,7 @@ export const exposeProfileContext = (
 
 export const renderProfileContextWrapper = async (
   mocks: MockedResponse[],
-  children: React.ReactElement,
-  dataType: EditData['dataType']
+  children: React.ReactElement
 ): Promise<TestTools> => {
   let currentProfileData = mocks[0] && (mocks[0].result as MyProfileQuery);
   if (!currentProfileData) {

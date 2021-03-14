@@ -16,8 +16,7 @@ describe('<EditableAdditionalInformation />', () => {
   const renderEditableAdditionalInformation = () =>
     renderProfileContextWrapper(
       testData.mocks,
-      <EditableAdditionalInformation />,
-      additionalInformationType
+      <EditableAdditionalInformation />
     );
 
   it('should render language selection, auto save and show success/error message', async () => {
@@ -66,6 +65,8 @@ describe('<EditableAdditionalInformation />', () => {
       id: `${additionalInformationType}-edit-notifications`,
     })) as string;
     // check error is displayed
-    expect(errorNotificationContent.includes('notification.saveError'));
+    expect(
+      errorNotificationContent.includes('notification.saveError')
+    ).toBeTruthy();
   });
 });
