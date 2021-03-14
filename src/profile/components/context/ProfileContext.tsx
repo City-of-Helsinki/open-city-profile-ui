@@ -39,7 +39,9 @@ export const ProfileContext = createContext<ProfileContextData>({
   updateProfileContext: () => undefined,
   loading: false,
   addErrorListener: () => () => undefined,
-  fetch: () => undefined,
+  fetch: () => {
+    throw new Error('Use context provider');
+  },
   refetch: () => Promise.reject(),
   isInitialized: false,
   isComplete: false,

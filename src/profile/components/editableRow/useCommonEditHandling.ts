@@ -14,6 +14,7 @@ import { ActionHandler } from './Actions';
 type UseActionHandlingProps = {
   onAction: ActionListener;
   data: EditData;
+  testId: string;
 };
 
 type UseActionHandlingReturnType = {
@@ -27,11 +28,10 @@ type UseActionHandlingReturnType = {
 export const useCommonEditHandling = (
   props: UseActionHandlingProps
 ): UseActionHandlingReturnType => {
-  const { data, onAction } = props;
-  const { dataType } = data;
+  const { data, onAction, testId } = props;
   // new item will never autofocus to "edit"-button, but React hooks cannot be conditional
   const { autoFocusTargetId, activateAutoFocusing } = useAutoFocus({
-    targetId: `${data.profileData.id || `new-${dataType}`}-edit-button`,
+    targetId: `${testId}-edit-button`,
   });
   const isNewItem = isNew(data);
   const [isEditing, setEditing] = useState(isNewItem);

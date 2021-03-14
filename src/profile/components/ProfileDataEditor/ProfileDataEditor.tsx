@@ -46,7 +46,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
     clearMessage,
   } = useNotificationContent();
   const { autoFocusTargetId, activateAutoFocusing } = useAutoFocus({
-    targetId: `${dataType}-edit-notifications`,
+    targetId: `${dataType}-add-button`,
   });
 
   const { showModal, modalProps } = useConfirmationModal();
@@ -173,7 +173,11 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
             aria-label={`${texts.listNumberTitle} ${index + 1}`}
             key={item.profileData.id || 'new'}
           >
-            <RenderComponent data={item} onAction={onAction} />
+            <RenderComponent
+              data={item}
+              onAction={onAction}
+              testId={`${dataType}-${index}`}
+            />
           </li>
         ))}
       </ul>

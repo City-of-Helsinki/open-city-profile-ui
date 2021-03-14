@@ -19,7 +19,7 @@ import getAddressesFromNode from './getAddressesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
 import getPhonesFromNode from './getPhonesFromNode';
 
-type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
 
 type UserData = Pick<
   MyProfileQuery_myProfile,
@@ -34,7 +34,7 @@ export type EditableAddress = Mutable<AddressData>;
 export type EditableEmail = Mutable<Email>;
 export type EditablePhone = Mutable<Phone>;
 
-type AdditionalInformation = {
+export type AdditionalInformation = {
   id: string;
   profileLanguage: Language;
 };
@@ -174,7 +174,7 @@ export function createEditData(
   );
 }
 
-function createEditDataValueFromProfileData(
+export function createEditDataValueFromProfileData(
   profileDataItem: EditData['profileData'],
   dataType: EditData['dataType']
 ): EditData['value'] {
@@ -315,7 +315,10 @@ export function mergeOldEditDataToNewProfileData(
   };
   if (dataType === basicDataType) {
     const editDataItem = dataItems[0];
-    const currentUserData = editDataItem.value as EditableUserData;
+    const currentUserData = createEditDataValueFromProfileData(
+      editDataItem.profileData,
+      dataType
+    ) as EditableUserData;
     const newUserData = createEditDataValueFromProfileData(
       profileDataItems[0],
       dataType
@@ -324,6 +327,7 @@ export function mergeOldEditDataToNewProfileData(
     if (userDataChanged) {
       stats.hasChanged = true;
       editDataItem.value = newUserData;
+      editDataItem.profileData = profileDataItems[0];
     }
     stats.items.push(editDataItem);
     return stats;
@@ -486,7 +490,19 @@ export function resetEditDataValue(editData: EditData): EditData['value'] {
 }
 
 export function cloneData(dataItems: EditData[]): EditData[] {
-  const newList = dataItems.map(dataItem => ({ ...dataItem }));
+  const cloneValue =
+    dataItems[0] &&
+    (dataItems[0].dataType === 'addresses' ||
+      dataItems[0].dataType === basicDataType);
+  const newList = dataItems.map(dataItem => {
+    const clone = { ...dataItem };
+    if (cloneValue) {
+      clone.value = {
+        ...(dataItem.value as EditableAddress | EditableUserData),
+      };
+    }
+    return clone;
+  });
   newList.forEach(newDataItem => {
     newDataItem.profileData = { ...newDataItem.profileData };
   });

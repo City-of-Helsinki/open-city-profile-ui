@@ -54,6 +54,7 @@ function EditableBasicData(): React.ReactElement | null {
   const { autoFocusTargetId, activateAutoFocusing } = useAutoFocus({
     targetId: 'basic-data-edit-button',
   });
+  const testId = 'basic-data';
 
   if (!data || !data[0]) {
     return null;
@@ -133,12 +134,12 @@ function EditableBasicData(): React.ReactElement | null {
               {t('profileForm.basicData')}
             </h3>
             <Form>
-              <FocusKeeper targetId={'firstName'}>
+              <FocusKeeper targetId={`${testId}-firstName`}>
                 <div className={commonFormStyles.multiItemWrapper}>
                   <Field
                     className={commonFormStyles.formField}
                     name="firstName"
-                    id="firstName"
+                    id={`${testId}-firstName`}
                     maxLength={formFields.firstName.max as number}
                     as={TextInput}
                     invalid={hasFieldError(formikProps, 'firstName')}
@@ -151,7 +152,7 @@ function EditableBasicData(): React.ReactElement | null {
                   <Field
                     className={commonFormStyles.formField}
                     name="nickname"
-                    id="nickname"
+                    id={`${testId}-nickname`}
                     maxLength={formFields.nickname.max as number}
                     as={TextInput}
                     invalid={hasFieldError(formikProps, 'nickname')}
@@ -163,7 +164,7 @@ function EditableBasicData(): React.ReactElement | null {
                   <Field
                     className={commonFormStyles.formField}
                     name="lastName"
-                    id="lastName"
+                    id={`${testId}-lastName`}
                     maxLength={formFields.lastName.max as number}
                     as={TextInput}
                     invalid={hasFieldError(formikProps, 'lastName')}
@@ -186,6 +187,7 @@ function EditableBasicData(): React.ReactElement | null {
                   handler={actionHandler}
                   disabled={!!currentSaveAction}
                   alignLeft
+                  testId={testId}
                 />
               </FocusKeeper>
               <SaveIndicator currentAction={currentSaveAction} />
@@ -205,14 +207,17 @@ function EditableBasicData(): React.ReactElement | null {
           <LabeledValue
             label={t(formFields.firstName.translationKey)}
             value={firstName}
+            testId={`${testId}-firstName`}
           />
           <LabeledValue
             label={t(formFields.nickname.translationKey)}
             value={nickname}
+            testId={`${testId}-nickname`}
           />
           <LabeledValue
             label={t(formFields.lastName.translationKey)}
             value={lastName}
+            testId={`${testId}-lastName`}
           />
         </div>
 
@@ -227,6 +232,7 @@ function EditableBasicData(): React.ReactElement | null {
             buttonClassNames={commonFormStyles.actionsWrapperButton}
             ariaLabels={ariaActionLabels}
             editButtonId={autoFocusTargetId}
+            testId={testId}
           />
         </div>
       </div>

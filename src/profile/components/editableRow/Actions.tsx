@@ -24,6 +24,7 @@ type Props = {
   ariaLabels: ActionAriaLabels;
   buttonClassNames?: string;
   editButtonId?: string;
+  testId: string;
   disable?: boolean;
 };
 
@@ -44,6 +45,7 @@ function Actions(props: Props): React.ReactElement {
     ariaLabels,
     editButtonId,
     disable,
+    testId,
   } = props;
   const { t } = useTranslation();
   const { editable, primary, removable, setPrimary } = actions;
@@ -73,6 +75,7 @@ function Actions(props: Props): React.ReactElement {
           className={classNames(buttonStyle)}
           aria-label={ariaLabels.setPrimary}
           disabled={disable}
+          data-testid={`${testId}-set-primary-button`}
         >
           {t('profileForm.setPrimary')}
         </Button>
@@ -102,6 +105,7 @@ function Actions(props: Props): React.ReactElement {
           className={classNames(buttonStyle)}
           aria-label={ariaLabels.remove}
           disabled={disable}
+          data-testid={`${testId}-remove-button`}
         >
           {t('profileForm.remove')}
         </Button>

@@ -31,10 +31,10 @@ import { useCommonEditHandling } from './useCommonEditHandling';
 
 type FormikValues = EditableAddress;
 
-type Props = { data: EditData; onAction: ActionListener };
+type Props = { data: EditData; onAction: ActionListener; testId: string };
 
 function EditableRowAddress(props: Props): React.ReactElement {
-  const { data, onAction } = props;
+  const { data, onAction, testId } = props;
   const { profileData } = data;
   const value = data.value as EditableAddress;
   const { address, city, postalCode, countryCode } = profileData as Address;
@@ -55,7 +55,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
     isEditing,
     currentSaveAction,
     actionHandler,
-  } = useCommonEditHandling({ data, onAction });
+  } = useCommonEditHandling({ data, onAction, testId });
 
   const hasFieldError = (
     formikProps: FormikProps<FormikValues>,
@@ -69,7 +69,6 @@ function EditableRowAddress(props: Props): React.ReactElement {
 
   const ariaActionLabels: ActionAriaLabels = createActionAriaLabels(data, t);
 
-  const inputIdPrefix = data.profileData.id || 'new';
   const { editable, removable, primary } = data;
 
   if (isEditing) {
@@ -95,11 +94,11 @@ function EditableRowAddress(props: Props): React.ReactElement {
                 ? t('profileInformation.primaryAddress')
                 : t('profileInformation.address')}
             </h4>
-            <FocusKeeper targetId={`${inputIdPrefix}-address`}>
+            <FocusKeeper targetId={`${testId}-address`}>
               <div className={commonFormStyles.multiItemWrapper}>
                 <Field
                   name="address"
-                  id={`${inputIdPrefix}-address`}
+                  id={`${testId}-address`}
                   maxLength={formFields.address.max as number}
                   as={TextInput}
                   invalid={hasFieldError(formikProps, 'address')}
@@ -110,7 +109,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
                 />
                 <Field
                   name="postalCode"
-                  id={`${inputIdPrefix}-postalCode`}
+                  id={`${testId}-postalCode`}
                   maxLength={formFields.postalCode.max as number}
                   as={TextInput}
                   invalid={hasFieldError(formikProps, 'postalCode')}
@@ -120,7 +119,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
                 />
                 <Field
                   name="city"
-                  id={`${inputIdPrefix}-city`}
+                  id={`${testId}-city`}
                   maxLength={formFields.city.max as number}
                   as={TextInput}
                   invalid={hasFieldError(formikProps, 'city')}
@@ -131,7 +130,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
                 <FormikDropdown
                   className={commonFormStyles.formField}
                   name="countryCode"
-                  id={`${inputIdPrefix}-countryCode`}
+                  id={`${testId}-countryCode`}
                   options={countryOptions}
                   label={t(formFields.country.translationKey)}
                   default={countryCode}
@@ -150,6 +149,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
               <EditButtons
                 handler={actionHandler}
                 disabled={!!currentSaveAction}
+                testId={testId}
                 alignLeft
               />
             </FocusKeeper>
@@ -175,18 +175,22 @@ function EditableRowAddress(props: Props): React.ReactElement {
         <LabeledValue
           label={t(formFields.address.translationKey)}
           value={value.address}
+          testId={`${testId}-address`}
         />
         <LabeledValue
           label={t(formFields.postalCode.translationKey)}
           value={value.postalCode}
+          testId={`${testId}-postalCode`}
         />
         <LabeledValue
           label={t(formFields.city.translationKey)}
           value={value.city}
+          testId={`${testId}-city`}
         />
         <LabeledValue
           label={t(formFields.country.translationKey)}
           value={getCountry(value.countryCode, lang)}
+          testId={`${testId}-countryCode`}
         />
       </div>
       <div className={commonFormStyles.actionsWrapper}>
@@ -202,6 +206,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
           ariaLabels={ariaActionLabels}
           editButtonId={autoFocusTargetId}
           disable={!!currentSaveAction}
+          testId={testId}
         />
         <SaveIndicator currentAction={currentSaveAction} />
       </div>

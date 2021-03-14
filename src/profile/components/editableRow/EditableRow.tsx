@@ -19,9 +19,9 @@ import { useCommonEditHandling } from './useCommonEditHandling';
 
 type FormikValue = { value: EditData['value'] };
 
-type Props = { data: EditData; onAction: ActionListener };
+type Props = { data: EditData; onAction: ActionListener; testId: string };
 function EditableRow(props: Props): React.ReactElement {
-  const { data, onAction } = props;
+  const { data, onAction, testId } = props;
   const { t } = useTranslation();
 
   const { value, editable, removable, dataType, primary } = data;
@@ -32,9 +32,9 @@ function EditableRow(props: Props): React.ReactElement {
     isEditing,
     currentSaveAction,
     actionHandler,
-  } = useCommonEditHandling({ data, onAction });
+  } = useCommonEditHandling({ data, onAction, testId });
 
-  const inputId = `${data.profileData.id || 'new'}-value`;
+  const inputId = `${testId}-value`;
 
   const ariaActionLabels: ActionAriaLabels = createActionAriaLabels(data, t);
 
@@ -83,6 +83,7 @@ function EditableRow(props: Props): React.ReactElement {
                   <EditButtons
                     handler={actionHandler}
                     disabled={!!currentSaveAction}
+                    testId={testId}
                   />
                 </div>
               </FocusKeeper>
@@ -100,7 +101,9 @@ function EditableRow(props: Props): React.ReactElement {
         styles.rowContentWrapper,
       ])}
     >
-      <span className={styles.value}>{value || '–'}</span>
+      <span className={styles.value} data-testid={`${testId}-value`}>
+        {value || '–'}
+      </span>
       <Actions
         handler={actionHandler}
         actions={{
@@ -112,6 +115,7 @@ function EditableRow(props: Props): React.ReactElement {
         ariaLabels={ariaActionLabels}
         editButtonId={autoFocusTargetId}
         disable={!!currentSaveAction}
+        testId={testId}
       />
       <SaveIndicator currentAction={currentSaveAction} />
     </div>

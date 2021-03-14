@@ -9,21 +9,28 @@ type Props = {
   label: string;
   value: string | null | undefined;
   verifiedInfoText?: string;
+  testId?: string;
 };
 
 function LabeledValue({
   label,
   value,
   verifiedInfoText,
+  testId,
 }: Props): React.ReactElement {
+  const labelTestId = testId ? { 'data-testid': `${testId}-label` } : null;
+  const valueTestId = testId ? { 'data-testid': `${testId}-value` } : null;
   return (
     <div className={styles.wrapper}>
-      <strong className={styles.label}>{label}</strong>
+      <strong className={styles.label} {...labelTestId}>
+        {label}
+      </strong>
       <span
         className={classNames(
           styles.value,
           verifiedInfoText && styles.withIcon
         )}
+        {...valueTestId}
       >
         {value || '–'}
         {verifiedInfoText && (

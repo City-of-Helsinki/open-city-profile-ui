@@ -10,11 +10,12 @@ type Props = {
   handler: ActionHandler;
   disabled: boolean;
   alignLeft?: boolean;
+  testId: string;
 };
 
 function EditButtons(props: Props): React.ReactElement {
   const { t } = useTranslation();
-  const { handler, alignLeft, disabled } = props;
+  const { handler, alignLeft, disabled, testId } = props;
   return (
     <div
       className={classNames([
@@ -27,6 +28,7 @@ function EditButtons(props: Props): React.ReactElement {
         type="submit"
         disabled={disabled}
         className={commonFormStyles.responsiveButton}
+        data-testid={`${testId}-save-button`}
       >
         {t('profileForm.submit')}
       </Button>
@@ -37,6 +39,7 @@ function EditButtons(props: Props): React.ReactElement {
         }}
         className={commonFormStyles.responsiveButton}
         disabled={disabled}
+        data-testid={`${testId}-cancel-button`}
       >
         {t('profileForm.cancel')}
       </Button>

@@ -8,12 +8,14 @@ import {
   MyProfileQuery_myProfile_phones_edges_node as Phone,
   PhoneType,
 } from '../../../graphql/generatedTypes';
-import { FormValues } from '../../components/editProfileForm/EditProfileForm';
 import { updateMutationVariables } from '../updateMutationVariables';
-import { myProfile } from '../../../common/test/myProfileQueryData';
+import { getMyProfile } from '../../../common/test/myProfileMocking';
+import { FormValues } from '../mutationEditor';
 
 type ClonedObject = Record<string, unknown>;
 type ReplacerFunction = (key: string, value: unknown) => unknown;
+
+const myProfile = getMyProfile();
 
 const JSONReplacer: ReplacerFunction = (
   key: string,
@@ -50,7 +52,7 @@ const getPhoneAsComparisonObject = (source: Phone): Partial<Phone> => {
 const getEmailAsComparisonObject = (source: Email): Partial<Email> => {
   const clone = cloneAndReplace<Email>(source);
   if (source.email && source.id) {
-    clone.id = source.email;
+    clone.id = source.id;
   }
   return clone;
 };
@@ -107,6 +109,7 @@ const newAddress = {
 
 const formValues: FormValues = {
   firstName: 'Teemu',
+  nickname: 'Lempinimi',
   lastName: 'Testaaja',
   profileLanguage: Language.FINNISH,
   primaryEmail,

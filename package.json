@@ -80,6 +80,8 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/react-hooks": "^5.1.0",
     "apollo": "^2.32.1",
     "cross-env": "^7.0.3",
     "eslint-plugin-sonarjs": "^0.5.0",
