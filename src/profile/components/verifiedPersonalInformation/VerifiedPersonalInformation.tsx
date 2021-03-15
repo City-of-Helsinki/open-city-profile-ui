@@ -10,9 +10,9 @@ import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { ProfileContext } from '../context/ProfileContext';
 import getCountry from '../../helpers/getCountry';
 import {
-  MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress as PermanentForeignAddress,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress as PermanentAddress,
-} from '../../../graphql/generatedTypes';
+  PermanentForeignAddress,
+  PermanentAddress,
+} from '../../../graphql/typings';
 import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
 
 type CommonAddress = {

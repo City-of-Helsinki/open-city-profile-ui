@@ -10,7 +10,7 @@ import Explanation from '../../../common/explanation/Explanation';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import CheckedLabel from '../../../common/checkedLabel/CheckedLabel';
 import styles from './ServiceConnections.module.css';
-import { ServiceConnectionsQuery } from '../../../graphql/generatedTypes';
+import { ServiceConnectionsRoot } from '../../../graphql/typings';
 import getServices from '../../helpers/getServices';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
 import useToast from '../../../toast/useToast';
@@ -25,7 +25,7 @@ function ServiceConnections(props: Props): React.ReactElement {
   const { t, i18n } = useTranslation();
   const { createToast } = useToast();
 
-  const { data, loading, refetch } = useQuery<ServiceConnectionsQuery>(
+  const { data, loading, refetch } = useQuery<ServiceConnectionsRoot>(
     SERVICE_CONNECTIONS,
     {
       onError: (error: Error) => {

@@ -5,11 +5,11 @@ import { loader } from 'graphql.macro';
 
 import Subscriptions from '../Subscriptions';
 import {
-  QuerySubscriptions,
-  QueryMySubscriptions,
-  QueryMySubscriptions_myProfile_subscriptions_edges as ProfileEdges,
-  QuerySubscriptions_subscriptionTypeCategories_edges as SubscriptionEdges,
-} from '../../../../graphql/generatedTypes';
+  SubscriptionsRoot,
+  MySubscriptionsRoot,
+  MySubcriptionsEdge,
+  SubcriptionsTypeCategoriesEdge,
+} from '../../../../graphql/typings';
 import {
   subscriptions,
   profile,
@@ -24,8 +24,8 @@ const QUERY_MY_SUBSCRIPTIONS = loader(
 );
 
 const getMocks = (
-  subscriptionEdges: SubscriptionEdges[],
-  profileEdges: ProfileEdges[]
+  subscriptionEdges: SubcriptionsTypeCategoriesEdge[],
+  profileEdges: MySubcriptionsEdge[]
 ) => [
   {
     request: {
@@ -38,7 +38,7 @@ const getMocks = (
           edges: [...subscriptionEdges],
           __typename: 'SubscriptionTypeCategoryNodeConnection',
         },
-      } as QuerySubscriptions,
+      } as SubscriptionsRoot,
     },
   },
   {
@@ -56,7 +56,7 @@ const getMocks = (
           id: '123',
           __typename: 'ProfileWithVerifiedPersonalInformationNode',
         },
-      } as QueryMySubscriptions,
+      } as MySubscriptionsRoot,
     },
   },
 ];

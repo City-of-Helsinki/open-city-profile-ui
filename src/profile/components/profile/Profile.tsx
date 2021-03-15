@@ -12,7 +12,7 @@ import CreateProfile from '../createProfile/CreateProfile';
 import ViewProfile from '../viewProfile/ViewProfile';
 import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
-import { ProfileExistsQuery } from '../../../graphql/generatedTypes';
+import { ProfileExistsQuery as ProfileExistsRoot } from '../../../graphql/generatedTypes';
 import authService from '../../../auth/authService';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import { ProfileContext } from '../context/ProfileContext';
@@ -25,7 +25,7 @@ function Profile(): React.ReactElement {
   const location = useLocation();
 
   const [checkProfileExists, { data, loading, error }] = useLazyQuery<
-    ProfileExistsQuery
+    ProfileExistsRoot
   >(PROFILE_EXISTS, {
     fetchPolicy: 'no-cache',
     onError: (apolloError: ApolloError) => {

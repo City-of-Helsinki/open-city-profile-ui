@@ -5,24 +5,24 @@ import { renderProfileContextWrapper } from '../../../../common/test/componentMo
 import { createMockedMyProfileResponse } from '../../../../common/test/graphQLDataMocking';
 import { Mutable } from '../../../helpers/mutationEditor';
 import {
-  MyProfileQuery,
-  MyProfileQuery_myProfile as MyProfileData,
-} from '../../../../graphql/generatedTypes';
-import {
   getMyProfile,
   getVerifiedData,
-  VerifiedPersonalInformation as VerifiedPersonalInformationType,
 } from '../../../../common/test/myProfileMocking';
+import {
+  ProfileRoot,
+  ProfileData,
+  VerifiedPersonalInformation as VerifiedPersonalInformationType,
+} from '../../../../graphql/typings';
 
 describe('<VerifiedPersonalInformation />', () => {
   let currentVIP: VerifiedPersonalInformationType;
   const getProfileWithVIP = (
     overrides?: Partial<VerifiedPersonalInformationType>
-  ): MyProfileQuery => {
+  ): ProfileRoot => {
     currentVIP = getVerifiedData(overrides);
     const profile = getMyProfile();
     (profile.myProfile as Mutable<
-      MyProfileData
+      ProfileData
     >).verifiedPersonalInformation = currentVIP;
     return profile;
   };

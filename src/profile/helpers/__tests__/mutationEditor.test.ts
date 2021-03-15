@@ -1,13 +1,14 @@
 import _ from 'lodash';
 
 import {
-  MyProfileQuery_myProfile_addresses_edges_node as Address,
-  MyProfileQuery_myProfile_emails_edges_node as Email,
-  MyProfileQuery_myProfile_phones_edges_node as Phone,
-  MyProfileQuery as MyProfile,
-  MyProfileQuery_myProfile as MyProfileData,
   Language,
-} from '../../../graphql/generatedTypes';
+  ProfileRoot,
+  ProfileData,
+  AddressNode,
+  EmailNode,
+  PhoneNode,
+  InsertableEdge,
+} from '../../../graphql/typings';
 import {
   getMyProfile,
   removeAddress,
@@ -15,7 +16,6 @@ import {
   edgesObjectToNodeList,
   removePhone,
   removeEmail,
-  InsertableEdge,
   findAndUpdateEdgesNode,
   getAddFunc,
   getCreatorFunc,
@@ -45,10 +45,10 @@ import {
   EditableUserData,
 } from '../mutationEditor';
 
-type PrimaryItem = Address | Email | Phone;
+type PrimaryItem = AddressNode | EmailNode | PhoneNode;
 type TestData = {
-  profile: MyProfile;
-  myProfileData: MyProfileData;
+  profile: ProfileRoot;
+  myProfileData: ProfileData;
   nodes: PrimaryItem[];
   editItems: EditData[];
   clonedItems: EditData[];
@@ -70,7 +70,7 @@ describe('mutationEditor.ts ', () => {
   let isListDataType: boolean;
   const createTestData = (dataType: EditData['dataType']): TestData => {
     const profile = getMyProfile();
-    const myProfileData = profile.myProfile as MyProfileData;
+    const myProfileData = profile.myProfile as ProfileData;
     const nodes = getNodeList(myProfileData, dataType);
     const editItems = createEditData(profile, dataType);
     const clonedItems = cloneData(editItems);
@@ -112,10 +112,10 @@ describe('mutationEditor.ts ', () => {
       return { address: value };
     }
     if (dataType === 'phones') {
-      return { phone: value } as Phone;
+      return { phone: value } as PhoneNode;
     }
     if (dataType === 'emails') {
-      return { email: value } as Email;
+      return { email: value } as EmailNode;
     }
     if (dataType === basicDataType) {
       return { lastName: value };
@@ -150,7 +150,7 @@ describe('mutationEditor.ts ', () => {
   };
 
   const getNodeList = (
-    myProfileData: MyProfileData,
+    myProfileData: ProfileData,
     dataType: EditData['dataType']
   ): PrimaryItem[] =>
     edgesObjectToNodeList(collectAllNodes(myProfileData, dataType));
@@ -161,13 +161,13 @@ describe('mutationEditor.ts ', () => {
   ): EditData['profileData'][] => {
     const profileData = collectProfileData(editItems, dataType);
     if (dataType === 'addresses') {
-      return profileData.addresses as Address[];
+      return profileData.addresses as AddressNode[];
     }
     if (dataType === 'emails') {
-      return profileData.emails as Email[];
+      return profileData.emails as EmailNode[];
     }
     if (dataType === 'phones') {
-      return profileData.phones as Phone[];
+      return profileData.phones as PhoneNode[];
     }
     return [];
   };
@@ -243,15 +243,15 @@ describe('mutationEditor.ts ', () => {
           expect(hasNewItem(editItems)).toEqual(true);
           // check created data has correct node type
           if (dataType === 'addresses') {
-            expect((newItem.profileData as Address).__typename).toEqual(
+            expect((newItem.profileData as AddressNode).__typename).toEqual(
               'AddressNode'
             );
           } else if (dataType === 'phones') {
-            expect((newItem.profileData as Phone).__typename).toEqual(
+            expect((newItem.profileData as PhoneNode).__typename).toEqual(
               'PhoneNode'
             );
           } else if (dataType === 'emails') {
-            expect((newItem.profileData as Email).__typename).toEqual(
+            expect((newItem.profileData as EmailNode).__typename).toEqual(
               'EmailNode'
             );
           }
@@ -348,7 +348,7 @@ describe('mutationEditor.ts ', () => {
           expect(findEditItemIndex(clonedData, editItems[0])).toBe(0);
         });
         test('pickProfileData picks nothing when passed nothing', () => {
-          expect(pickProfileData({} as MyProfile, basicDataType)).toEqual([]);
+          expect(pickProfileData({} as ProfileRoot, basicDataType)).toEqual([]);
         });
         test('mergeOldEditDataToNewProfileData merges basic data', () => {
           const count = isListDataType ? 2 : 1;

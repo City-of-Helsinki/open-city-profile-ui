@@ -5,7 +5,6 @@ import { act } from 'react-dom/test-utils';
 import {
   findNodeById,
   getMyProfile,
-  InsertableNode,
 } from '../../../../common/test/myProfileMocking';
 import ProfileDataEditor from '../ProfileDataEditor';
 import {
@@ -14,17 +13,14 @@ import {
 } from '../../../../common/test/componentMocking';
 import { createMutationMocksAndTestData } from '../../../../common/test/graphQLDataMocking';
 import {
-  MyProfileQuery_myProfile as MyProfileData,
-  MyProfileQuery_myProfile,
-} from '../../../../graphql/generatedTypes';
-import {
   EditableAddress,
   EditableEmail,
   EditablePhone,
   EditData,
 } from '../../../helpers/mutationEditor';
+import { ProfileData, InsertableNode } from '../../../../graphql/typings';
 
-type InputSource = Partial<EditableAddress | MyProfileData> | string;
+type InputSource = Partial<EditableAddress | ProfileData> | string;
 
 describe('<ProfileDataEditor />', () => {
   const listDataTypes: EditData['dataType'][] = [
@@ -123,7 +119,7 @@ describe('<ProfileDataEditor />', () => {
 
   listDataTypes.forEach(dataType => {
     describe(` handles ${dataType} `, () => {
-      const myProfile = getMyProfile().myProfile as MyProfileQuery_myProfile;
+      const myProfile = getMyProfile().myProfile as ProfileData;
 
       const testData = createMutationMocksAndTestData(dataType, [
         { action: 'edit', id: '123' },

@@ -10,7 +10,7 @@ import {
 } from '@testing-library/react';
 import _ from 'lodash';
 
-import { MyProfileQuery } from '../../graphql/generatedTypes';
+import { ProfileRoot } from '../../graphql/typings';
 import {
   ProfileContext,
   ProfileContextData,
@@ -163,12 +163,12 @@ export const renderProfileContextWrapper = async (
   mocks: MockedResponse[],
   children: React.ReactElement
 ): Promise<TestTools> => {
-  let currentProfileData = mocks[0] && (mocks[0].result as MyProfileQuery);
+  let currentProfileData = mocks[0] && (mocks[0].result as ProfileRoot);
   if (!currentProfileData) {
     throw new Error('Initial MyProfile data must be set');
   }
 
-  const updateCurrentData = (newData: MyProfileQuery): void => {
+  const updateCurrentData = (newData: ProfileRoot): void => {
     currentProfileData = newData;
   };
 
@@ -212,7 +212,7 @@ export const renderProfileContextWrapper = async (
       : undefined;
   };
 
-  const updateCurrentDataFromHTML = (): MyProfileQuery => {
+  const updateCurrentDataFromHTML = (): ProfileRoot => {
     const data = getData();
     if (!data) {
       throw new Error('Invalid profile data in HTML');

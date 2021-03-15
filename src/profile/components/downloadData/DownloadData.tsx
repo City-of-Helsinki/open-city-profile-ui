@@ -7,7 +7,7 @@ import { loader } from 'graphql.macro';
 import Button from '../../../common/button/Button';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './DownloadData.module.css';
-import { DownloadMyProfileQuery } from '../../../graphql/generatedTypes';
+import { DownloadMyProfileQuery as DownloadMyProfileRoot } from '../../../graphql/generatedTypes';
 import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
 import useToast from '../../../toast/useToast';
 
@@ -16,7 +16,7 @@ const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 function DownloadData(): React.ReactElement {
   const { createToast } = useToast();
   const [downloadProfileData, , loading] = useDownloadProfile<
-    DownloadMyProfileQuery
+    DownloadMyProfileRoot
   >(ALL_DATA, {
     onCompleted: returnedData => {
       const blob = new Blob([returnedData.downloadMyProfile], {

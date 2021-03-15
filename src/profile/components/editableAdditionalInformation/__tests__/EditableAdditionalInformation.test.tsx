@@ -4,7 +4,7 @@ import EditableAdditionalInformation from '../EditableAdditionalInformation';
 import { renderProfileContextWrapper } from '../../../../common/test/componentMocking';
 import { createMutationMocksAndTestData } from '../../../../common/test/graphQLDataMocking';
 import { additionalInformationType } from '../../../helpers/mutationEditor';
-import { Language } from '../../../../graphql/generatedTypes';
+import { Language } from '../../../../graphql/typings';
 import profileConstants from '../../../constants/profileConstants';
 
 describe('<EditableAdditionalInformation />', () => {

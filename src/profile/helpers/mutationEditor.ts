@@ -1,38 +1,40 @@
 import _ from 'lodash';
 import { FetchResult } from '@apollo/client';
 
-import {
-  Language,
-  UpdateMyProfile as UpdateMyProfileData,
-  MyProfileQuery_myProfile_primaryAddress as PrimaryAddress,
-  MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
-  MyProfileQuery_myProfile_primaryPhone as PrimaryPhone,
-  MyProfileQuery_myProfile_emails_edges_node as Email,
-  MyProfileQuery_myProfile_phones_edges_node as Phone,
-  MyProfileQuery_myProfile_addresses_edges_node as Address,
-  MyProfileQuery,
-  MyProfileQuery_myProfile,
-} from '../../graphql/generatedTypes';
 import { formConstants } from '../constants/formConstants';
 import profileConstants from '../constants/profileConstants';
 import getAddressesFromNode from './getAddressesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
 import getPhonesFromNode from './getPhonesFromNode';
-
+import {
+  ProfileRoot,
+  ProfileData,
+  UpdateProfileRoot,
+  AddressNode,
+  EmailNode,
+  PhoneNode,
+  PrimaryAddress,
+  PrimaryEmail,
+  PrimaryPhone,
+  Language,
+} from '../../graphql/typings';
 export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
 
-type UserData = Pick<
-  MyProfileQuery_myProfile,
-  'firstName' | 'nickname' | 'lastName'
->;
+type UserData = Pick<ProfileData, 'firstName' | 'nickname' | 'lastName'>;
 export type AddressData = Mutable<
-  Pick<Address, 'address' | 'city' | 'postalCode' | 'countryCode' | 'primary'>
+  Pick<
+    AddressNode,
+    'address' | 'city' | 'postalCode' | 'countryCode' | 'primary'
+  >
 >;
+
+export type EmailData = Mutable<Pick<EmailNode, 'email' | 'primary'>>;
+export type PhoneData = Mutable<Pick<PhoneNode, 'phone' | 'primary'>>;
 
 export type EditableUserData = Mutable<UserData>;
 export type EditableAddress = Mutable<AddressData>;
-export type EditableEmail = Mutable<Email>;
-export type EditablePhone = Mutable<Phone>;
+export type EditableEmail = Mutable<EmailData>;
+export type EditablePhone = Mutable<PhoneData>;
 
 export type AdditionalInformation = {
   id: string;
@@ -41,7 +43,7 @@ export type AdditionalInformation = {
 
 export type EditableAdditionalInformation = Mutable<AdditionalInformation>;
 
-export type UpdateResult = FetchResult<UpdateMyProfileData>;
+export type UpdateResult = FetchResult<UpdateProfileRoot>;
 
 export interface BasicData extends UserData {
   id: string;
@@ -55,9 +57,9 @@ export type FormValues = {
   primaryAddress: PrimaryAddress;
   primaryPhone: PrimaryPhone;
   profileLanguage: Language;
-  addresses: Address[];
-  emails: Email[];
-  phones: Phone[];
+  addresses: AddressNode[];
+  emails: EmailNode[];
+  phones: PhoneNode[];
 };
 
 export const basicDataType = 'basic-data';
@@ -65,7 +67,12 @@ export const additionalInformationType = 'additional-information';
 
 export type EditData = {
   primary?: boolean;
-  profileData: Phone | Email | Address | BasicData | AdditionalInformation;
+  profileData:
+    | PhoneNode
+    | EmailNode
+    | AddressNode
+    | BasicData
+    | AdditionalInformation;
   value:
     | string
     | undefined
@@ -100,7 +107,7 @@ export type ActionListener = (
 ) => ActionListenerReturnType;
 
 export function pickProfileData(
-  myProfileQuery: MyProfileQuery,
+  myProfileQuery: ProfileRoot,
   dataType: EditData['dataType']
 ): EditData['profileData'][] {
   const profile = myProfileQuery && myProfileQuery.myProfile;
@@ -108,7 +115,7 @@ export function pickProfileData(
     return [];
   }
   if (dataType === 'phones') {
-    const list: Phone[] = getPhonesFromNode(myProfileQuery);
+    const list: PhoneNode[] = getPhonesFromNode(myProfileQuery);
     const primary = profile.primaryPhone;
     if (primary) {
       list.unshift({ ...primary });
@@ -116,7 +123,7 @@ export function pickProfileData(
     return list;
   }
   if (dataType === 'emails') {
-    const list: Email[] = getEmailsFromNode(myProfileQuery);
+    const list: EmailNode[] = getEmailsFromNode(myProfileQuery);
     const primary = profile.primaryEmail;
     if (primary) {
       list.unshift({ ...primary });
@@ -124,7 +131,7 @@ export function pickProfileData(
     return list;
   }
   if (dataType === 'addresses') {
-    const list: Address[] = getAddressesFromNode(myProfileQuery);
+    const list: AddressNode[] = getAddressesFromNode(myProfileQuery);
     const primary = profile.primaryAddress;
     if (primary) {
       list.unshift({ ...primary });
@@ -156,17 +163,14 @@ export function pickProfileData(
 }
 
 export function createEditData(
-  myProfileQuery: MyProfileQuery | undefined,
+  myProfileQuery: ProfileRoot | undefined,
   dataType: EditData['dataType']
 ): EditData[] {
   const profile = myProfileQuery && myProfileQuery.myProfile;
   if (!profile) {
     return [];
   }
-  const targetData = pickProfileData(
-    myProfileQuery as MyProfileQuery,
-    dataType
-  );
+  const targetData = pickProfileData(myProfileQuery as ProfileRoot, dataType);
   return targetData.map(targetProfileData =>
     createEditItem(dataType, targetProfileData)
   );
@@ -177,10 +181,10 @@ export function createEditDataValueFromProfileData(
   dataType: EditData['dataType']
 ): EditData['value'] {
   if (dataType === 'phones') {
-    return (profileDataItem as Phone).phone || '';
+    return (profileDataItem as PhoneNode).phone || '';
   }
   if (dataType === 'emails') {
-    return (profileDataItem as Email).email || '';
+    return (profileDataItem as EmailNode).email || '';
   }
   if (dataType === 'addresses') {
     const {
@@ -189,7 +193,7 @@ export function createEditDataValueFromProfileData(
       city,
       countryCode,
       primary,
-    } = profileDataItem as Address;
+    } = profileDataItem as AddressNode;
     return {
       postalCode,
       address,
@@ -233,13 +237,13 @@ function isPrimary(
   dataType: EditData['dataType']
 ): boolean {
   if (dataType === 'phones') {
-    return (profileDataItem as Phone).primary === true;
+    return (profileDataItem as PhoneNode).primary === true;
   }
   if (dataType === 'emails') {
-    return (profileDataItem as Email).primary === true;
+    return (profileDataItem as EmailNode).primary === true;
   }
   if (dataType === 'addresses') {
-    return (profileDataItem as Address).primary === true;
+    return (profileDataItem as AddressNode).primary === true;
   }
   return false;
 }
@@ -394,17 +398,17 @@ export function collectProfileData(
     .map(dataItem => dataItem.profileData);
   if (dataType === 'phones') {
     return {
-      phones: data as Phone[],
+      phones: data as PhoneNode[],
     };
   }
   if (dataType === 'emails') {
     return {
-      emails: data as Email[],
+      emails: data as EmailNode[],
     };
   }
   if (dataType === 'addresses') {
     return {
-      addresses: data as Address[],
+      addresses: data as AddressNode[],
     };
   }
   if (dataType === additionalInformationType) {

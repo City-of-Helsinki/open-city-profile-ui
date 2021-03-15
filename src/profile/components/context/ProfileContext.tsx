@@ -8,7 +8,7 @@ import React, {
   useState,
 } from 'react';
 
-import { MyProfileQuery } from '../../../graphql/generatedTypes';
+import { ProfileRoot } from '../../../graphql/typings';
 import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
 import { useProfileQuery, QueryResult } from '../../helpers/hooks';
 
@@ -20,9 +20,9 @@ type ErrorListener = (e: ApolloError | Error) => void;
 type ErrorDisposer = () => void;
 
 export type ProfileContextData = {
-  data?: MyProfileQuery;
+  data?: ProfileRoot;
   updateTime: number;
-  updateProfileContext: (data: MyProfileQuery) => void;
+  updateProfileContext: (data: ProfileRoot) => void;
   error?: ApolloError | Error;
   loading: boolean;
   addErrorListener: (listener: ErrorListener) => ErrorDisposer;

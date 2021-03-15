@@ -1,56 +1,34 @@
 import {
+  Language,
+  ProfileRoot,
+  ProfileData,
+  VerifiedPersonalInformation,
+  Addresses,
+  AddressEdge,
+  AddressNode,
+  Emails,
+  EmailEdge,
+  EmailNode,
+  Phones,
+  PhoneEdge,
+  PhoneNode,
   AddressType,
   EmailType,
-  Language,
-  MyProfileQuery,
-  MyProfileQuery_myProfile_verifiedPersonalInformation,
   PhoneType,
-  MyProfileQuery_myProfile as MyProfileData,
-  MyProfileQuery_myProfile_addresses,
-  MyProfileQuery_myProfile_addresses_edges,
-  MyProfileQuery_myProfile_addresses_edges_node,
-  MyProfileQuery_myProfile_emails,
-  MyProfileQuery_myProfile_emails_edges,
-  MyProfileQuery_myProfile_emails_edges_node,
-  MyProfileQuery_myProfile_phones,
-  MyProfileQuery_myProfile_phones_edges,
-  MyProfileQuery_myProfile_phones_edges_node,
-} from '../../graphql/generatedTypes';
+  InsertableEdge,
+  InsertableNode,
+  EdgeList,
+  MutableAddresses,
+  MutableEmails,
+  MutablePhones,
+} from '../../graphql/typings';
 import {
   createNewProfileData,
   EditData,
   Mutable,
 } from '../../profile/helpers/mutationEditor';
 
-export type VerifiedPersonalInformation = MyProfileQuery_myProfile_verifiedPersonalInformation;
-export type Addresses = MyProfileQuery_myProfile_addresses;
-export type AddressEdge = MyProfileQuery_myProfile_addresses_edges;
-export type AddressNode = MyProfileQuery_myProfile_addresses_edges_node;
-
-export type Emails = MyProfileQuery_myProfile_emails;
-export type EmailEdge = MyProfileQuery_myProfile_emails_edges;
-export type EmailNode = MyProfileQuery_myProfile_emails_edges_node;
-
-export type Phones = MyProfileQuery_myProfile_phones;
-export type PhoneEdge = MyProfileQuery_myProfile_phones_edges;
-export type PhoneNode = MyProfileQuery_myProfile_phones_edges_node;
-
-export type InsertableEdge = AddressEdge | EmailEdge | PhoneEdge;
-export type InsertableNode = AddressNode | EmailNode | PhoneNode;
-export type EdgeList = (InsertableEdge | null)[];
-
-export type MutableAddresses = Mutable<Addresses> & {
-  edges: (Mutable<AddressEdge> | null)[];
-};
-
-export type MutableEmails = Mutable<Emails> & {
-  edges: (Mutable<EmailEdge> | null)[];
-};
-export type MutablePhones = Mutable<Phones> & {
-  edges: (Mutable<PhoneEdge> | null)[];
-};
-
-export const getMyProfile = (): MyProfileQuery => ({
+export const getMyProfile = (): ProfileRoot => ({
   myProfile: {
     id: 'asd',
     firstName: 'Teemu',
@@ -168,16 +146,16 @@ export const getVerifiedData = (
 
 /* GENERIC FUNCS */
 
-const getAddresses = (profile?: MyProfileData): Addresses => {
-  const source = profile || (getMyProfile().myProfile as MyProfileData);
+const getAddresses = (profile?: ProfileData): Addresses => {
+  const source = profile || (getMyProfile().myProfile as ProfileData);
   return source.addresses as Addresses;
 };
-const getEmails = (profile?: MyProfileData): Emails => {
-  const source = profile || (getMyProfile().myProfile as MyProfileData);
+const getEmails = (profile?: ProfileData): Emails => {
+  const source = profile || (getMyProfile().myProfile as ProfileData);
   return source.emails as Emails;
 };
-const getPhones = (profile?: MyProfileData): Phones => {
-  const source = profile || (getMyProfile().myProfile as MyProfileData);
+const getPhones = (profile?: ProfileData): Phones => {
+  const source = profile || (getMyProfile().myProfile as ProfileData);
   return source.phones as Phones;
 };
 
@@ -250,7 +228,7 @@ export const removeNodeFromEdges = (
 };
 
 export const getPrimaryNode = (
-  profile: MyProfileData,
+  profile: ProfileData,
   dataType: EditData['dataType']
 ): InsertableNode | null => {
   if (dataType === 'addresses') {
@@ -266,7 +244,7 @@ export const getPrimaryNode = (
 };
 
 export const setPrimaryNode = (
-  profile: Mutable<MyProfileData>,
+  profile: Mutable<ProfileData>,
   dataType: EditData['dataType'],
   newPrimary: InsertableNode | null
 ): void => {
@@ -282,7 +260,7 @@ export const setPrimaryNode = (
 };
 
 export const removePrimaryIfIdMatch = (
-  profile: MyProfileData,
+  profile: ProfileData,
   id: string,
   dataType: EditData['dataType']
 ): boolean => {
@@ -296,7 +274,7 @@ export const removePrimaryIfIdMatch = (
 };
 
 export const getEdges = (
-  profileData: MyProfileData,
+  profileData: ProfileData,
   dataType: EditData['dataType']
 ): EdgeList | null => {
   if (dataType === 'addresses') {
@@ -346,7 +324,7 @@ export const getNewList = (
 };
 
 export const primaryToNode = (
-  profileData: MyProfileData,
+  profileData: ProfileData,
   dataType: EditData['dataType']
 ): InsertableEdge | null => {
   const primary = getPrimaryNode(profileData, dataType);
@@ -366,7 +344,7 @@ export const primaryToNode = (
 };
 
 export const collectAllNodes = (
-  profileData: MyProfileData,
+  profileData: ProfileData,
   dataType: EditData['dataType']
 ): MutableAddresses | MutableEmails | MutablePhones => {
   const nodeList = getEdges(profileData, dataType);
@@ -375,7 +353,7 @@ export const collectAllNodes = (
 };
 
 export const findNodeById = (
-  profileData: MyProfileData,
+  profileData: ProfileData,
   dataType: EditData['dataType'],
   id: string
 ): InsertableNode | null => {
@@ -399,7 +377,7 @@ export function edgesObjectToNodeList(
 }
 
 export function setAsPrimary(
-  myProfileData: MyProfileData,
+  myProfileData: ProfileData,
   editData: EditData | null,
   dataType: EditData['dataType']
 ): void {
@@ -426,7 +404,7 @@ export function setAsPrimary(
 export function getAddFunc(
   dataType: EditData['dataType']
 ): (
-  profile: MyProfileData,
+  profile: ProfileData,
   newValues: Partial<InsertableNode>[],
   index?: number
 ) => InsertableEdge[] {
@@ -478,7 +456,7 @@ export const findAndUpdateAddressEdgesNode = (
 };
 
 export const addAddresses = (
-  profile: MyProfileData,
+  profile: ProfileData,
   newValues: Partial<AddressNode>[],
   index?: number
 ): AddressEdge[] =>
@@ -488,14 +466,14 @@ export const addAddresses = (
     index
   ) as AddressEdge[];
 
-export const removeAddress = (profile: MyProfileData, id: string): boolean =>
+export const removeAddress = (profile: ProfileData, id: string): boolean =>
   removeNodeFromEdges(
     getAddresses(profile).edges as Mutable<AddressEdge>[],
     id
   ) || removePrimaryIfIdMatch(profile, id, 'addresses');
 
 export const setPrimaryAddress = (
-  profile: MyProfileData,
+  profile: ProfileData,
   newPrimary: Mutable<AddressNode> | null
 ): void => {
   if (newPrimary) {
@@ -552,7 +530,7 @@ export const findAndUpdateEmailEdgesNode = (
 };
 
 export const addEmails = (
-  profile: MyProfileData,
+  profile: ProfileData,
   newValues: Partial<EmailNode>[],
   index?: number
 ): EmailEdge[] =>
@@ -562,12 +540,12 @@ export const addEmails = (
     index
   ) as EmailEdge[];
 
-export const removeEmail = (profile: MyProfileData, id: string): boolean =>
+export const removeEmail = (profile: ProfileData, id: string): boolean =>
   removeNodeFromEdges(getEmails(profile).edges as Mutable<EmailEdge>[], id) ||
   removePrimaryIfIdMatch(profile, id, 'emails');
 
 export const setPrimaryEmail = (
-  profile: MyProfileData,
+  profile: ProfileData,
   newPrimary: Mutable<EmailNode> | null
 ): void => {
   if (newPrimary) {
@@ -621,7 +599,7 @@ export const findAndUpdatePhoneEdgesNode = (
 };
 
 export const addPhones = (
-  profile: MyProfileData,
+  profile: ProfileData,
   newValues: Partial<PhoneNode>[],
   index?: number
 ): PhoneEdge[] =>
@@ -631,12 +609,12 @@ export const addPhones = (
     index
   ) as PhoneEdge[];
 
-export const removePhone = (profile: MyProfileData, id: string): boolean =>
+export const removePhone = (profile: ProfileData, id: string): boolean =>
   removeNodeFromEdges(getPhones(profile).edges as Mutable<PhoneEdge>[], id) ||
   removePrimaryIfIdMatch(profile, id, 'phones');
 
 export const setPrimaryPhone = (
-  profile: MyProfileData,
+  profile: ProfileData,
   newPrimary: Mutable<PhoneNode> | null
 ): void => {
   if (newPrimary) {

@@ -1,9 +1,9 @@
 import {
-  QueryMySubscriptions_myProfile_subscriptions_edges as ProfileEdge,
-  QuerySubscriptions_subscriptionTypeCategories_edges as SubscriptionEdge,
-} from '../../graphql/generatedTypes';
+  MySubcriptionsEdge,
+  SubcriptionsTypeCategoriesEdge,
+} from '../../graphql/typings';
 
-const subscriptions: SubscriptionEdge[] = [
+const subscriptions: SubcriptionsTypeCategoriesEdge[] = [
   {
     node: {
       id: '123',
@@ -29,7 +29,7 @@ const subscriptions: SubscriptionEdge[] = [
   },
 ];
 
-const profile: ProfileEdge[] = [
+const profile: MySubcriptionsEdge[] = [
   {
     node: {
       id: 'qwerty',

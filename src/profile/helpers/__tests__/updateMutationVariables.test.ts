@@ -1,13 +1,13 @@
+import { UpdateMyProfileVariables } from '../../../graphql/generatedTypes';
 import {
   AddressType,
   EmailType,
   Language,
-  UpdateMyProfileVariables,
-  MyProfileQuery_myProfile_addresses_edges_node as Address,
-  MyProfileQuery_myProfile_emails_edges_node as Email,
-  MyProfileQuery_myProfile_phones_edges_node as Phone,
   PhoneType,
-} from '../../../graphql/generatedTypes';
+  AddressNode,
+  EmailNode,
+  PhoneNode,
+} from '../../../graphql/typings';
 import { updateMutationVariables } from '../updateMutationVariables';
 import { getMyProfile } from '../../../common/test/myProfileMocking';
 import { FormValues } from '../mutationEditor';
@@ -33,69 +33,75 @@ const cloneObject = <T>(source: T, replacer?: ReplacerFunction): T =>
 const cloneAndReplace = <T>(source: T): ClonedObject =>
   cloneObject<T>(source, JSONReplacer) as ClonedObject;
 
-const getAddressAsComparisonObject = (source: Address): Partial<Address> => {
-  const clone = cloneAndReplace<Address>(source);
+const getAddressAsComparisonObject = (
+  source: AddressNode
+): Partial<AddressNode> => {
+  const clone = cloneAndReplace<AddressNode>(source);
   if (source.id) {
     clone.id = source.id;
   }
   return clone;
 };
 
-const getPhoneAsComparisonObject = (source: Phone): Partial<Phone> => {
-  const clone = cloneAndReplace<Phone>(source);
+const getPhoneAsComparisonObject = (source: PhoneNode): Partial<PhoneNode> => {
+  const clone = cloneAndReplace<PhoneNode>(source);
   if (source.id) {
     clone.id = source.id;
   }
   return clone;
 };
 
-const getEmailAsComparisonObject = (source: Email): Partial<Email> => {
-  const clone = cloneAndReplace<Email>(source);
+const getEmailAsComparisonObject = (source: EmailNode): Partial<EmailNode> => {
+  const clone = cloneAndReplace<EmailNode>(source);
   if (source.email && source.id) {
     clone.id = source.id;
   }
   return clone;
 };
 
-const primaryEmail = cloneObject(myProfile.myProfile?.primaryEmail as Email);
+const primaryEmail = cloneObject(
+  myProfile.myProfile?.primaryEmail as EmailNode
+);
 const updatedSecondaryEmail = {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   ...cloneObject(myProfile.myProfile.emails.edges[0].node),
   ...{ email: 'kolmas@testi.fi' },
-} as Email;
+} as EmailNode;
 const newEmail = {
   email: 'toinen@testi.fi',
   primary: false,
   emailType: EmailType.OTHER,
   id: '',
   __typename: 'EmailNode',
-} as Email;
+} as EmailNode;
 
-const primaryPhone = cloneObject(myProfile.myProfile?.primaryPhone as Phone);
+const primaryPhone = cloneObject(
+  myProfile.myProfile?.primaryPhone as PhoneNode
+);
 const updatedSecondaryPhone = {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   ...cloneObject(myProfile.myProfile?.phones.edges[0].node),
   ...{ phone: '0505472568' },
-} as Phone;
+} as PhoneNode;
 const newPhone = {
   id: '',
   phone: '0507654321',
   phoneType: PhoneType.OTHER,
   primary: false,
   __typename: 'PhoneNode',
-} as Phone;
+} as PhoneNode;
 
 const primaryAddress = cloneObject(
-  myProfile.myProfile?.primaryAddress as Address
+  myProfile.myProfile?.primaryAddress as AddressNode
 );
 const updatedSecondaryAddress = {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  ...cloneObject(myProfile.myProfile?.addresses.edges[0].node as Address),
+  ...cloneObject(myProfile.myProfile?.addresses.edges[0].node as AddressNode),
   ...{ address: 'Testaajaraitti' },
-} as Address;
+} as AddressNode;
 const newAddress = {
   id: '',
   address: 'Testikatu 66',
@@ -105,7 +111,7 @@ const newAddress = {
   primary: false,
   addressType: AddressType.OTHER,
   __typename: 'AddressNode',
-} as Address;
+} as AddressNode;
 
 const formValues: FormValues = {
   firstName: 'Teemu',

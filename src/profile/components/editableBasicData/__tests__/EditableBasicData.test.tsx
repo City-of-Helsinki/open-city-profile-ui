@@ -9,7 +9,7 @@ import {
   EditableUserData,
   EditData,
 } from '../../../helpers/mutationEditor';
-import { MyProfileQuery_myProfile as MyProfileData } from '../../../../graphql/generatedTypes';
+import { ProfileData } from '../../../../graphql/typings';
 
 describe('<EditableBasicData />', () => {
   const testData = createMutationMocksAndTestData(basicDataType, [
@@ -36,7 +36,7 @@ describe('<EditableBasicData />', () => {
 
     // verify rendered data
     const verifyValues = async (
-      source: Partial<EditableUserData | MyProfileData>
+      source: Partial<EditableUserData | ProfileData>
     ) => {
       const { firstName, nickname, lastName } = source;
       await expect(
@@ -52,7 +52,7 @@ describe('<EditableBasicData />', () => {
 
     // set new data to input fields
     const setValues = async (
-      source: Partial<EditableUserData | MyProfileData>
+      source: Partial<EditableUserData | ProfileData>
     ) => {
       const { firstName, nickname, lastName } = source;
       await setInputValue({
@@ -70,7 +70,7 @@ describe('<EditableBasicData />', () => {
     };
 
     // component shows myProfile data on first load
-    await verifyValues(getMyProfile().myProfile as MyProfileData);
+    await verifyValues(getMyProfile().myProfile as ProfileData);
     // goto edit mode
     await triggerAction({ id: 'basic-data-edit-button' });
     // set new values from testData

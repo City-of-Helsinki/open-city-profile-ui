@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { IconCross, IconAlertCircle } from 'hds-react';
 
 import styles from './ConfirmationModal.module.css';
-import { ServiceConnectionsQuery } from '../../../../graphql/generatedTypes';
+import { ServiceConnectionsRoot } from '../../../../graphql/typings';
 import getServices from '../../../helpers/getServices';
 import Button from '../../../../common/button/Button';
 
@@ -15,7 +15,7 @@ export type Props = {
   modalTitle?: string;
   modalText?: string;
   actionButtonText: string;
-  services?: ServiceConnectionsQuery;
+  services?: ServiceConnectionsRoot;
 };
 
 function ConfirmationModal({

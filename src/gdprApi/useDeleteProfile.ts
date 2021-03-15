@@ -10,8 +10,8 @@ import { loader } from 'graphql.macro';
 import {
   GdprDeleteMyProfileMutation,
   GdprDeleteMyProfileMutationVariables,
-  GdprServiceConnectionsQuery,
 } from '../graphql/generatedTypes';
+import { GdprServiceConnectionsRoot } from '../graphql/typings';
 import { getDeleteScopes } from './utils';
 import useAuthorizationCode from './useAuthorizationCode';
 
@@ -26,7 +26,7 @@ function useDeleteProfile(
     GdprDeleteMyProfileMutationVariables
   >
 ): [() => void, MutationResult<GdprDeleteMyProfileMutation>] {
-  const { data } = useQuery<GdprServiceConnectionsQuery>(SERVICE_CONNECTIONS);
+  const { data } = useQuery<GdprServiceConnectionsRoot>(SERVICE_CONNECTIONS);
   const [deleteProfile, queryResult] = useMutation<
     GdprDeleteMyProfileMutation,
     GdprDeleteMyProfileMutationVariables

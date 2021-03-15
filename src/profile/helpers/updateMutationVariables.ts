@@ -1,21 +1,23 @@
 import { isEqual } from 'lodash';
 
 import {
-  AddressType,
   CreateAddressInput,
   CreateEmailInput,
   CreatePhoneInput,
-  EmailType,
-  MyProfileQuery,
-  MyProfileQuery_myProfile_addresses_edges_node as Address,
-  MyProfileQuery_myProfile_emails_edges_node as Email,
-  MyProfileQuery_myProfile_phones_edges_node as Phone,
-  PhoneType,
   UpdateAddressInput,
   UpdateEmailInput,
   UpdateMyProfileVariables,
   UpdatePhoneInput,
 } from '../../graphql/generatedTypes';
+import {
+  AddressType,
+  EmailType,
+  PhoneType,
+  ProfileRoot,
+  AddressNode,
+  EmailNode,
+  PhoneNode,
+} from '../../graphql/typings';
 import getPhonesFromNode from './getPhonesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
 import getAddressesFromNode from './getAddressesFromNode';
@@ -44,15 +46,15 @@ type PhoneInputs = {
 
 type CreateFullProfileUpdateData = (
   formValues: FormValues,
-  profile?: MyProfileQuery
+  profile?: ProfileRoot
 ) => UpdateMyProfileVariables;
 
 type CreatePartialProfileUpdateData = (
   formValues: Partial<FormValues>,
-  profile?: MyProfileQuery
+  profile?: ProfileRoot
 ) => UpdateMyProfileVariables;
 
-const getPrimaryValue = (primary: Primary, profile?: MyProfileQuery) => {
+const getPrimaryValue = (primary: Primary, profile?: ProfileRoot) => {
   const primaryValue = profile?.myProfile && profile.myProfile[primary];
   return primaryValue || { id: '' };
 };
@@ -73,7 +75,7 @@ const getEmptyObject = (primary: Primary) => {
   }
 };
 
-const getNodesFromProfile = (primary: Primary, profile?: MyProfileQuery) => {
+const getNodesFromProfile = (primary: Primary, profile?: ProfileRoot) => {
   switch (primary) {
     case 'primaryPhone':
       return getPhonesFromNode(profile);
@@ -86,7 +88,7 @@ const getNodesFromProfile = (primary: Primary, profile?: MyProfileQuery) => {
   }
 };
 
-const getObjectFields = (value: Address | Email | Phone) => {
+const getObjectFields = (value: AddressNode | EmailNode | PhoneNode) => {
   switch (value.__typename) {
     case 'EmailNode': {
       return {
@@ -120,10 +122,10 @@ const getObjectFields = (value: Address | Email | Phone) => {
   }
 };
 
-function formMutationArrays<T extends Address | Email | Phone>(
+function formMutationArrays<T extends AddressNode | EmailNode | PhoneNode>(
   formValueArray: T[],
   primary: Primary,
-  profile?: MyProfileQuery
+  profile?: ProfileRoot
 ): Record<string, unknown> {
   const profileValues = [
     getPrimaryValue(primary, profile),
@@ -211,13 +213,21 @@ const updateMutationVariables: CreateFullProfileUpdateData = (
       firstName: formValues.firstName,
       lastName: formValues.lastName,
       language: formValues.profileLanguage,
-      ...formMutationArrays<Address>(
+      ...formMutationArrays<AddressNode>(
         formValues.addresses,
         'primaryAddress',
         profile
       ),
-      ...formMutationArrays<Phone>(formValues.phones, 'primaryPhone', profile),
-      ...formMutationArrays<Email>(formValues.emails, 'primaryEmail', profile),
+      ...formMutationArrays<PhoneNode>(
+        formValues.phones,
+        'primaryPhone',
+        profile
+      ),
+      ...formMutationArrays<EmailNode>(
+        formValues.emails,
+        'primaryEmail',
+        profile
+      ),
     },
   },
 });
@@ -227,13 +237,13 @@ const updatePartialMutationVariables: CreatePartialProfileUpdateData = (
   profile
 ) => {
   const phoneData = formValues.phones
-    ? formMutationArrays<Phone>(formValues.phones, 'primaryPhone', profile)
+    ? formMutationArrays<PhoneNode>(formValues.phones, 'primaryPhone', profile)
     : null;
   const emailData = formValues.emails
-    ? formMutationArrays<Email>(formValues.emails, 'primaryEmail', profile)
+    ? formMutationArrays<EmailNode>(formValues.emails, 'primaryEmail', profile)
     : null;
   const addressData = formValues.addresses
-    ? formMutationArrays<Address>(
+    ? formMutationArrays<AddressNode>(
         formValues.addresses,
         'primaryAddress',
         profile

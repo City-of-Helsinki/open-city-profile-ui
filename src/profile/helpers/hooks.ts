@@ -10,13 +10,13 @@ import {
 import { loader } from 'graphql.macro';
 import { useContext, useRef, useState } from 'react';
 
+import { UpdateMyProfileVariables } from '../../graphql/generatedTypes';
 import {
-  UpdateMyProfileVariables,
-  UpdateMyProfile as UpdateMyProfileData,
-  MyProfileQuery,
+  ProfileRoot,
+  UpdateProfileRoot,
+  UpdateProfileData,
   ProfileInput,
-  UpdateMyProfile_updateMyProfile_profile as UpdatedMyProfile,
-} from '../../graphql/generatedTypes';
+} from '../../graphql/typings';
 import {
   FormValues,
   EditData,
@@ -45,11 +45,11 @@ const UPDATE_PROFILE = loader('../../profile/graphql/UpdateMyProfile.graphql');
 const MY_PROFILE = loader('../../profile/graphql/MyProfileQuery.graphql');
 
 type AnyObject = Record<string, unknown>;
-export type QueryResult = FetchResult<MyProfileQuery, AnyObject, AnyObject>;
+export type QueryResult = FetchResult<ProfileRoot, AnyObject, AnyObject>;
 
 type UpdateProfile = (
   formValues: Partial<FormValues>,
-  profile?: MyProfileQuery
+  profile?: ProfileRoot
 ) => {
   promise: Promise<UpdateResult>;
   profileInput: ProfileInput | null;
@@ -58,7 +58,7 @@ type UpdateProfile = (
 type QueryReturnType = {
   error: ApolloError | undefined;
   loading: boolean;
-  data: MyProfileQuery | undefined;
+  data: ProfileRoot | undefined;
   networkStatus: NetworkStatus;
   fetch: () => void;
   refetch?: () => Promise<QueryResult>;
@@ -67,7 +67,7 @@ type QueryReturnType = {
 type MutationReturnType = {
   error: ApolloError | undefined;
   loading: boolean;
-  data: UpdateMyProfileData | undefined | null;
+  data: UpdateProfileRoot | undefined | null;
   update: UpdateProfile;
 };
 
@@ -88,7 +88,7 @@ function profileInputFromUpdateMyProfileVariables(
 
 function getCacheUpdateFields(
   dataType: EditData['dataType'],
-  updatedProfile: UpdatedMyProfile
+  updatedProfile: UpdateProfileData
 ): Record<string, (data: unknown) => unknown> {
   if (dataType === 'phones') {
     return getPhoneCacheUpdateFields(updatedProfile);
@@ -109,7 +109,7 @@ function getCacheUpdateFields(
 }
 
 function getPhoneCacheUpdateFields(
-  updatedProfile: UpdatedMyProfile
+  updatedProfile: UpdateProfileData
 ): Record<string, (data: unknown) => unknown> {
   return {
     phones: () => updatedProfile.phones,
@@ -118,7 +118,7 @@ function getPhoneCacheUpdateFields(
 }
 
 function getEmailCacheUpdateFields(
-  updatedProfile: UpdatedMyProfile
+  updatedProfile: UpdateProfileData
 ): Record<string, (data: unknown) => unknown> {
   return {
     emails: () => updatedProfile.emails,
@@ -127,7 +127,7 @@ function getEmailCacheUpdateFields(
 }
 
 function getAddressCacheUpdateFields(
-  updatedProfile: UpdatedMyProfile
+  updatedProfile: UpdateProfileData
 ): Record<string, (data: unknown) => unknown> {
   return {
     addresses: () => updatedProfile.addresses,
@@ -136,7 +136,7 @@ function getAddressCacheUpdateFields(
 }
 
 function getBasicDataCacheUpdateFields(
-  updatedProfile: UpdatedMyProfile
+  updatedProfile: UpdateProfileData
 ): Record<string, (data: unknown) => unknown> {
   return {
     firstName: () => updatedProfile.firstName,
@@ -146,7 +146,7 @@ function getBasicDataCacheUpdateFields(
 }
 
 function getAdditionalDataCacheUpdateFields(
-  updatedProfile: UpdatedMyProfile
+  updatedProfile: UpdateProfileData
 ): Record<string, (data: unknown) => unknown> {
   return {
     language: () => updatedProfile.language,
@@ -154,13 +154,13 @@ function getAdditionalDataCacheUpdateFields(
 }
 
 function updateCache(
-  cache: ApolloCache<UpdateMyProfileData>,
+  cache: ApolloCache<UpdateProfileRoot>,
   result: UpdateResult,
   dataType: EditData['dataType'],
-  profileData: MyProfileQuery | null | undefined,
+  profileData: ProfileRoot | null | undefined,
   updateProfileData: ProfileContextData['updateProfileContext']
 ) {
-  const updatedProfile: UpdatedMyProfile | null | undefined =
+  const updatedProfile: UpdateProfileData | null | undefined =
     result.data?.updateMyProfile?.profile;
   const identity =
     profileData &&
@@ -175,7 +175,7 @@ function updateCache(
   const newData = cache.readQuery({
     query: MY_PROFILE,
   });
-  updateProfileData(newData as MyProfileQuery);
+  updateProfileData(newData as ProfileRoot);
 }
 
 export function useProfileQuery(props?: {
@@ -184,7 +184,7 @@ export function useProfileQuery(props?: {
   const [
     fetch,
     { data, error, loading, networkStatus, refetch },
-  ] = useLazyQuery<MyProfileQuery>(MY_PROFILE, {
+  ] = useLazyQuery<ProfileRoot>(MY_PROFILE, {
     onError: (queryError: ApolloError) => {
       if (props && props.onError) {
         props.onError(queryError);
@@ -212,7 +212,7 @@ export function useProfileMutation({
     ProfileContext
   );
   const [updateProfile, { error, loading, data }] = useMutation<
-    UpdateMyProfileData,
+    UpdateProfileRoot,
     UpdateMyProfileVariables
   >(UPDATE_PROFILE, {
     update: (cache, result) =>
@@ -273,7 +273,7 @@ export function useProfileMutationHandler({
     const formValues = collectProfileData(current, dataType);
     const { promise, profileInput } = mutationUpdate(
       formValues,
-      data as MyProfileQuery
+      data as ProfileRoot
     );
     return { promise, profileInput };
   };

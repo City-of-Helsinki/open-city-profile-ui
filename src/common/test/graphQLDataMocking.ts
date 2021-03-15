@@ -4,13 +4,19 @@ import { loader } from 'graphql.macro';
 import _ from 'lodash';
 
 import {
-  UpdateMyProfile,
-  MyProfileQuery,
   ProfileInput,
-  UpdateMyProfile_updateMyProfile_profile as UpdateProfileData,
-  MyProfileQuery_myProfile as MyProfileData,
   Language,
-} from '../../graphql/generatedTypes';
+  ProfileRoot,
+  ProfileData,
+  UpdateProfileRoot,
+  UpdateProfileData,
+  AddressNode,
+  MutableAddresses,
+  InsertableNode,
+  EdgeList,
+  MutableEmails,
+  MutablePhones,
+} from '../../graphql/typings';
 import {
   Action,
   additionalInformationType,
@@ -28,24 +34,18 @@ import {
 } from '../../profile/helpers/mutationEditor';
 import { updatePartialMutationVariables } from '../../profile/helpers/updateMutationVariables';
 import {
-  AddressNode,
   collectAllNodes,
   findAndUpdateAddressEdgesNode,
   getMyProfile,
-  MutableAddresses,
   removeAddress,
-  InsertableNode,
   getCreatorFunc,
   findNodeById,
   getAddFunc,
   setAsPrimary,
   createId,
   getEdges,
-  EdgeList,
-  MutableEmails,
   findAndUpdateEmailEdgesNode,
   findAndUpdatePhoneEdgesNode,
-  MutablePhones,
   removePhone,
   removeEmail,
   cloneObject,
@@ -67,7 +67,7 @@ type TestData = {
 };
 
 export const createMockedMyProfileResponse = (
-  resultData: MyProfileQuery
+  resultData: ProfileRoot
 ): MockedResponse => ({
   request: {
     query: QUERY_MY_PROFILE,
@@ -79,7 +79,7 @@ export const createMockedMyProfileResponse = (
 });
 
 export const createMockedUpdateProfileResponse = (
-  resultData: UpdateMyProfile,
+  resultData: UpdateProfileRoot,
   queryVariables: ProfileInput,
   errorType?: 'networkError' | 'graphQLError'
 ): MockedResponse => {
@@ -110,13 +110,13 @@ export const createMockedUpdateProfileResponse = (
 };
 
 export const updateProfileQueryData = (
-  profileData: MyProfileQuery,
+  profileData: ProfileRoot,
   newProfileData: Partial<UpdateProfileData>,
   returnUpdateGraph: boolean
-): MyProfileQuery | UpdateMyProfile => {
-  const currentProfile = profileData.myProfile as MyProfileData;
+): ProfileRoot | UpdateProfileRoot => {
+  const currentProfile = profileData.myProfile as ProfileData;
   if (returnUpdateGraph) {
-    const updateMyProfile: UpdateMyProfile = {
+    const updateMyProfile: UpdateProfileRoot = {
       updateMyProfile: {
         profile: {
           ...currentProfile,
@@ -128,7 +128,7 @@ export const updateProfileQueryData = (
     };
     return updateMyProfile;
   }
-  const myProfileQuery: MyProfileQuery = {
+  const myProfileQuery: ProfileRoot = {
     myProfile: {
       ...currentProfile,
       ...newProfileData,
@@ -139,13 +139,13 @@ export const updateProfileQueryData = (
 };
 
 export const createUpdateResponse = (
-  profileData: MyProfileQuery,
+  profileData: ProfileRoot,
   newProfileData: Partial<UpdateProfileData>,
   queryVariables: ProfileInput,
   errorType?: 'networkError' | 'graphQLError'
 ): MockedResponse => {
-  const currentProfile = profileData.myProfile as MyProfileData;
-  const data: UpdateMyProfile = {
+  const currentProfile = profileData.myProfile as ProfileData;
+  const data: UpdateProfileRoot = {
     // change
     updateMyProfile: {
       profile: {
@@ -165,7 +165,7 @@ export const createUpdateResponse = (
 };
 
 function createAddressUpdate(
-  profileData: MyProfileData,
+  profileData: ProfileData,
   editData?: EditData
 ): Partial<UpdateProfileData> {
   const list = collectAllNodes(profileData, 'addresses') as MutableAddresses;
@@ -188,7 +188,7 @@ function createAddressUpdate(
 }
 
 function createEmailsUpdate(
-  profileData: MyProfileData,
+  profileData: ProfileData,
   editData?: EditData
 ): Partial<UpdateProfileData> {
   const list = collectAllNodes(profileData, 'emails') as MutableEmails;
@@ -209,7 +209,7 @@ function createEmailsUpdate(
 }
 
 function createPhonesUpdate(
-  profileData: MyProfileData,
+  profileData: ProfileData,
   editData?: EditData
 ): Partial<UpdateProfileData> {
   const list = collectAllNodes(profileData, 'phones') as MutablePhones;
@@ -232,7 +232,7 @@ function createPhonesUpdate(
 export function getUpdateCreatorFunc(
   dataType: EditData['dataType']
 ): (
-  profileData: MyProfileData,
+  profileData: ProfileData,
   editData?: EditData
 ) => Partial<UpdateProfileData> {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -246,7 +246,7 @@ export function getUpdateCreatorFunc(
 
 export function getRemoverFunc(
   dataType: EditData['dataType']
-): (profileData: MyProfileData, id: string) => boolean {
+): (profileData: ProfileData, id: string) => boolean {
   return dataType === 'addresses'
     ? removeAddress
     : dataType === 'phones'
@@ -280,8 +280,8 @@ export function createMutationMocksAndTestData(
 
   changes.forEach(({ action, id }) => {
     const nextProfile = cloneObject(currentProfile);
-    const nextMyProfileData = nextProfile.myProfile as MyProfileData;
-    const target = findNodeById(nextMyProfileData, dataType, id);
+    const nextProfileData = nextProfile.myProfile as ProfileData;
+    const target = findNodeById(nextProfileData, dataType, id);
     if (id && !target) {
       throw new Error(`Edit target not found`);
     }
@@ -294,7 +294,7 @@ export function createMutationMocksAndTestData(
         nextProfile,
         updatedData,
         false
-      ) as MyProfileQuery;
+      ) as ProfileRoot;
 
       const nextVersionNodes = pickProfileData(
         updatedNextProfile,
@@ -316,7 +316,7 @@ export function createMutationMocksAndTestData(
         profileChanges.input.profile.addPhones;
       if (hasNewArray && hasNewArray.length) {
         const edges = getEdges(
-          (updatedData as unknown) as MyProfileData,
+          (updatedData as unknown) as ProfileData,
           dataType
         ) as EdgeList;
         const lastEdge = edges[edges.length - 1];
@@ -333,7 +333,7 @@ export function createMutationMocksAndTestData(
         errorType
       );
       if (!errorType) {
-        (currentProfile as Mutable<MyProfileQuery>).myProfile = _.get(
+        (currentProfile as Mutable<ProfileRoot>).myProfile = _.get(
           updateResponse.result,
           'data.updateMyProfile.profile'
         );
@@ -371,24 +371,24 @@ export function createMutationMocksAndTestData(
         target as InsertableNode
       );
       const updateCreator = getUpdateCreatorFunc(dataType);
-      const update = updateCreator(nextMyProfileData, editDataM);
+      const update = updateCreator(nextProfileData, editDataM);
       createResponse(update);
       modifiedEditData.push(editDataM);
     } else if (action === 'set-primary') {
       const editDataP = createEditItem(dataType, target as InsertableNode);
-      setAsPrimary(nextMyProfileData, editDataP, dataType);
+      setAsPrimary(nextProfileData, editDataP, dataType);
       if (dataType === 'addresses') {
         (editDataP.value as EditableAddress).primary = true;
       }
       const updateCreator = getUpdateCreatorFunc(dataType);
-      const update = updateCreator(nextMyProfileData, editDataP);
+      const update = updateCreator(nextProfileData, editDataP);
       createResponse(update);
       modifiedEditData.push(editDataP);
     } else if (action === 'remove') {
       const removeFunc = getRemoverFunc(dataType);
-      removeFunc(nextMyProfileData, id);
+      removeFunc(nextProfileData, id);
       const updateCreator = getUpdateCreatorFunc(dataType);
-      const update = updateCreator(nextMyProfileData);
+      const update = updateCreator(nextProfileData);
       createResponse(update);
       modifiedEditData.push(null);
     } else if (action === 'error') {
@@ -417,7 +417,7 @@ export function createMutationMocksAndTestData(
         target as InsertableNode
       );
       const updateCreator = getUpdateCreatorFunc(dataType);
-      const update = updateCreator(nextMyProfileData);
+      const update = updateCreator(nextProfileData);
       createResponse(update, 'graphQLError');
       modifiedEditData.push(editDataErr);
     } else if (action === 'add') {
@@ -426,9 +426,9 @@ export function createMutationMocksAndTestData(
       node.primary = false;
       const editDataA = createEditItem(dataType, node);
       const addFunc = getAddFunc(dataType);
-      addFunc(nextMyProfileData, [editDataA.profileData]);
+      addFunc(nextProfileData, [editDataA.profileData]);
       const updateCreator = getUpdateCreatorFunc(dataType);
-      const update = updateCreator(nextMyProfileData);
+      const update = updateCreator(nextProfileData);
       createResponse(update);
       modifiedEditData.push(editDataA);
     }

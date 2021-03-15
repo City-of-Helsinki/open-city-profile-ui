@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
 
-import { MyProfileQuery_myProfile_addresses_edges_node as Address } from '../../../graphql/generatedTypes';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import {
   ActionListener,
@@ -28,6 +27,7 @@ import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import { getFormFields } from '../../helpers/formProperties';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
 import { useCommonEditHandling } from './useCommonEditHandling';
+import { AddressNode } from '../../../graphql/typings';
 
 type FormikValues = EditableAddress;
 
@@ -37,7 +37,7 @@ function EditableRowAddress(props: Props): React.ReactElement {
   const { data, onAction, testId } = props;
   const { profileData } = data;
   const value = data.value as EditableAddress;
-  const { address, city, postalCode, countryCode } = profileData as Address;
+  const { address, city, postalCode, countryCode } = profileData as AddressNode;
   const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];
   const applicationLanguage = getLanguageCode(i18n.languages[0]);

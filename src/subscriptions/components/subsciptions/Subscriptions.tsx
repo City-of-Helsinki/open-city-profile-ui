@@ -11,14 +11,16 @@ import Loading from '../../../common/loading/Loading';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import styles from './Subscriptions.module.css';
 import {
-  QuerySubscriptions,
-  QueryMySubscriptions,
-  UpdateMyProfile,
   UpdateMyProfileVariables,
   SubscriptionInputType,
 } from '../../../graphql/generatedTypes';
 import getSubscriptionsData from '../../helpers/getSubscriptionsData';
 import useToast from '../../../toast/useToast';
+import {
+  UpdateProfileRoot,
+  SubscriptionsRoot,
+  MySubscriptionsRoot,
+} from '../../../graphql/typings';
 
 const QUERY_SUBSCRIPTIONS = loader('../../graphql/QuerySubscriptions.graphql');
 const QUERY_MY_SUBSCRIPTIONS = loader(
@@ -49,7 +51,7 @@ function Subscriptions(): React.ReactElement {
   const { t, i18n } = useTranslation();
   const { createToast } = useToast();
 
-  const { data, loading, refetch } = useQuery<QuerySubscriptions>(
+  const { data, loading, refetch } = useQuery<SubscriptionsRoot>(
     QUERY_SUBSCRIPTIONS,
     {
       onError: (error: Error) => {
@@ -60,7 +62,7 @@ function Subscriptions(): React.ReactElement {
   );
 
   const { data: profileData, loading: profileLoading } = useQuery<
-    QueryMySubscriptions
+    MySubscriptionsRoot
   >(QUERY_MY_SUBSCRIPTIONS, {
     onError: (error: Error) => {
       Sentry.captureException(error);
@@ -69,7 +71,7 @@ function Subscriptions(): React.ReactElement {
   });
 
   const [updateSubscriptions] = useMutation<
-    UpdateMyProfile,
+    UpdateProfileRoot,
     UpdateMyProfileVariables
   >(UPDATE_PROFILE, {
     refetchQueries: ['QueryMySubscriptions'],

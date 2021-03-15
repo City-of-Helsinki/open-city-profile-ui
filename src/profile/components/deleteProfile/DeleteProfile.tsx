@@ -10,7 +10,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import Button from '../../../common/button/Button';
-import { ServiceConnectionsQuery } from '../../../graphql/generatedTypes';
+import { ServiceConnectionsRoot } from '../../../graphql/typings';
 import useToast from '../../../toast/useToast';
 import styles from './deleteProfile.module.css';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
@@ -47,7 +47,7 @@ function DeleteProfile(): React.ReactElement {
 
   const { t, i18n } = useTranslation();
 
-  const { data, refetch } = useQuery<ServiceConnectionsQuery>(
+  const { data, refetch } = useQuery<ServiceConnectionsRoot>(
     SERVICE_CONNECTIONS,
     {
       onError: (error: Error) => {

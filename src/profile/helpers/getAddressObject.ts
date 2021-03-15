@@ -1,18 +1,15 @@
 import _ from 'lodash';
 
-import {
-  MyProfileQuery,
-  MyProfileQuery_myProfile_addresses_edges_node,
-} from '../../graphql/generatedTypes';
 import getCountry from './getCountry';
+import { ProfileRoot, AddressNode } from '../../graphql/typings';
 
 type AddressObject = Pick<
-  MyProfileQuery_myProfile_addresses_edges_node,
+  AddressNode,
   'address' | 'postalCode' | 'city' | 'countryCode'
 > & { country: string };
 
 export default function getAddress(
-  data: MyProfileQuery,
+  data: ProfileRoot,
   lang: string
 ): AddressObject {
   const addressObject: AddressObject = {

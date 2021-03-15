@@ -1,15 +1,15 @@
 import {
+  AddressNode,
+  EmailNode,
+  PhoneNode,
   AddressType,
   EmailType,
-  MyProfileQuery_myProfile_phones_edges_node as Phone,
-  MyProfileQuery_myProfile_addresses_edges_node as Address,
-  MyProfileQuery_myProfile_emails_edges_node as Email,
   PhoneType,
-} from '../../graphql/generatedTypes';
+} from '../../graphql/typings';
 
 type FormConstants = {
   EMPTY_VALUES: {
-    [index: string]: Address | Email | Phone;
+    [index: string]: AddressNode | EmailNode | PhoneNode;
   };
 };
 
