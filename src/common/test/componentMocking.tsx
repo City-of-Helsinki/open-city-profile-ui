@@ -16,7 +16,6 @@ import {
   ProfileContextData,
   Provider as ProfileProvider,
 } from '../../profile/components/context/ProfileContext';
-import { EditData } from '../../profile/helpers/mutationEditor';
 import ToastProvider from '../../toast/ToastProvider';
 
 type ElementSelector = {

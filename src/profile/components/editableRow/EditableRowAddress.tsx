@@ -127,20 +127,21 @@ function EditableRowAddress(props: Props): React.ReactElement {
                   labelText={t(formFields.city.translationKey)}
                   aria-labelledby={`${dataType}-city-helper`}
                 />
-                <FormikDropdown
-                  className={commonFormStyles.formField}
-                  name="countryCode"
-                  id={`${testId}-countryCode`}
-                  options={countryOptions}
-                  label={t(formFields.country.translationKey)}
-                  default={countryCode}
-                  onChange={option =>
-                    formikProps.setFieldValue(
-                      'countryCode',
-                      (option as HdsOptionType).value
-                    )
-                  }
-                />
+                <div className={commonFormStyles.formField}>
+                  <FormikDropdown
+                    name="countryCode"
+                    id={`${testId}-countryCode`}
+                    options={countryOptions}
+                    label={t(formFields.country.translationKey)}
+                    default={countryCode}
+                    onChange={option =>
+                      formikProps.setFieldValue(
+                        'countryCode',
+                        (option as HdsOptionType).value
+                      )
+                    }
+                  />
+                </div>
               </div>
               <AccessibleFormikErrors
                 formikProps={formikProps}

@@ -1,9 +1,10 @@
 
 .rowContentWrapper {
-  background:var(--color-black-10);
+  background:var(--color-black-ultra-light);
   margin: 0 0 var(--spacing-m) 0;
   padding: var(--spacing-m);
 }
+
 .rowContentWrapper form {
   width:100%;
 }
