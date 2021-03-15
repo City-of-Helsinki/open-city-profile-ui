@@ -65,7 +65,7 @@ function EditableBasicData(): React.ReactElement | null {
   const formFields = getFormFields(basicDataType);
 
   const onAction: ActionListener = async (action, item) => {
-    trackEvent({ category: 'form-action', action });
+    trackEvent({ category: `${basicDataType}-form-event`, action });
     clearMessage();
     if (action === 'save') {
       return save(item);

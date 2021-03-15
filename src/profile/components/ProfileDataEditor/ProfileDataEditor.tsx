@@ -97,7 +97,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
   };
 
   const onAction: ActionListener = async (action, item) => {
-    trackEvent({ category: 'form-action', action });
+    trackEvent({ category: `${dataType}-form-event`, action });
     clearMessage();
     if (action === 'add') {
       add();
@@ -186,7 +186,7 @@ function ProfileDataEditor({ dataType }: Props): React.ReactElement | null {
       <Button
         iconLeft={<IconPlusCircle />}
         onClick={async () => {
-          trackEvent({ category: 'form-action', action: 'add' });
+          trackEvent({ category: `${dataType}-form-event`, action: 'add' });
           clearMessage();
           add();
         }}

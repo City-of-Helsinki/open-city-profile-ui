@@ -55,7 +55,7 @@ function EditableAdditionalInformation(): React.ReactElement | null {
     clearMessage();
     trackEvent({
       category: 'form-action',
-      action: `language-set-to-${languageValue}`,
+      action: `new-profile-language-${languageValue}`,
     });
     const [error] = await to(save(editData));
     if (error) {
