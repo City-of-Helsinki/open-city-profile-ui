@@ -8,7 +8,7 @@ type AddressObject = Pick<
   'address' | 'postalCode' | 'city' | 'countryCode'
 > & { country: string };
 
-export default function getAddress(
+export default function getAddressObject(
   data: ProfileRoot,
   lang: string
 ): AddressObject {

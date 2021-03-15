@@ -395,8 +395,8 @@ describe('mutationEditor.ts ', () => {
       let initialNodeCount = -1;
       beforeEach(() => {
         testData = createTestData(dataType);
-        initialItemsCount = testData.editItems.length; // == 2
-        initialNodeCount = testData.nodes.length; // == 2
+        initialItemsCount = testData.editItems.length;
+        initialNodeCount = testData.nodes.length;
       });
 
       const addNewEditDataItem = (targetData: EditData[]): EditData => {
@@ -454,7 +454,7 @@ describe('mutationEditor.ts ', () => {
 
         const updatedNodeList = getNodeList(myProfileData, dataType);
 
-        expect(currentEditData).toHaveLength(initialItemsCount + 3); // no removals
+        expect(currentEditData).toHaveLength(initialItemsCount + 3);
         expect(removedResult.items).toHaveLength(initialItemsCount + 3 - 1);
         expect(updatedNodeList).toHaveLength(initialNodeCount + 3 - 1);
 

@@ -28,8 +28,4 @@
 .profileSectionTitle p {
   margin-bottom: 0;
 }
-.buttonContainer {
-  position:absolute;
-  right:0;
-  top:calc(-1*var(--spacing-s));
-}
+

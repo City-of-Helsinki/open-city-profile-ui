@@ -160,16 +160,19 @@ const getPhones = (profile?: ProfileData): Phones => {
 };
 
 let idCounter = 1;
-// eslint-disable-next-line no-plusplus
-export const createId = (): string => `fake_id_${idCounter++}`;
+export const createId = (): string => {
+  const id = idCounter + 1;
+  idCounter = id;
+  return `fake_id_${id}`;
+};
 
 export const cloneObject = <T>(source: T): T =>
   JSON.parse(JSON.stringify(source));
 
-export const createEdgeArray = <T>(__typename: string): T => {
+export const createEdgeArray = <T>(typename: string): T => {
   const clone: unknown = {
     edges: [],
-    __typename,
+    __typename: typename,
   };
   return clone as T;
 };
@@ -433,12 +436,11 @@ export const createAddresses = (): Addresses =>
   createEdgeArray<Addresses>(getAddresses().__typename);
 
 export const createAddressEdge = (): Mutable<AddressEdge> => {
-  const __typename = (getAddresses().edges[0] as AddressEdge).__typename;
-  const cloneNode: AddressEdge = {
-    __typename,
+  const typename = (getAddresses().edges[0] as AddressEdge).__typename;
+  return {
+    __typename: typename,
     node: createNewProfileData('addresses') as AddressNode,
   };
-  return cloneNode;
 };
 
 export const createNewAddressEdgeWithNodeData = (
@@ -491,14 +493,13 @@ export const setPrimaryAddress = (
 
 export const createAddressData = (): Partial<AddressNode> => {
   const id = createId();
-  const data: Partial<AddressNode> = {
+  return {
     id,
     address: `address-${id}`,
     postalCode: `${10000 + idCounter}`,
     city: `city-${id}`,
     countryCode: 'FI',
   };
-  return data;
 };
 
 /* EMAIL FUNCS */
@@ -507,12 +508,11 @@ export const createEmails = (): Emails =>
   createEdgeArray<Emails>(getEmails().__typename);
 
 export const createEmailsEdge = (): Mutable<EmailEdge> => {
-  const __typename = (getEmails().edges[0] as EmailEdge).__typename;
-  const cloneNode: EmailEdge = {
-    __typename,
+  const typename = (getEmails().edges[0] as EmailEdge).__typename;
+  return {
+    __typename: typename,
     node: createNewProfileData('emails') as EmailNode,
   };
-  return cloneNode;
 };
 
 export const createNewEmailEdgeWithNodeData = (
@@ -563,11 +563,10 @@ export const setPrimaryEmail = (
 
 export const createEmailData = (): Partial<EmailNode> => {
   const id = createId();
-  const data: Partial<EmailNode> = {
+  return {
     id,
     email: `${id}@email.com`,
   };
-  return data;
 };
 
 /* PHONE FUNCS */
@@ -576,12 +575,11 @@ export const createPhones = (): Phones =>
   createEdgeArray<Phones>(getPhones().__typename);
 
 export const createPhonesEdge = (): Mutable<PhoneEdge> => {
-  const __typename = (getPhones().edges[0] as PhoneEdge).__typename;
-  const cloneNode: PhoneEdge = {
-    __typename,
+  const typename = (getPhones().edges[0] as PhoneEdge).__typename;
+  return {
+    __typename: typename,
     node: createNewProfileData('phones') as PhoneNode,
   };
-  return cloneNode;
 };
 
 export const createNewPhoneEdgeWithNodeData = (
@@ -632,9 +630,8 @@ export const setPrimaryPhone = (
 
 export const createPhoneData = (): Partial<PhoneNode> => {
   const id = createId();
-  const data: Partial<PhoneNode> = {
+  return {
     id,
     phone: `phone-${id}`,
   };
-  return data;
 };

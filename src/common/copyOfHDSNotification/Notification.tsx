@@ -87,8 +87,7 @@ const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
       autoClose = false;
     }
 
-    // internal state used for transitions
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // internal state
     const [open, setOpen] = useState(true);
 
     const handleClose = useCallback(() => {
@@ -112,6 +111,10 @@ const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
 
     // Set role="alert" for non-inline notifications
     const role = position !== 'inline' ? 'alert' : undefined;
+
+    if (!open) {
+      return null;
+    }
 
     return (
       <ConditionalVisuallyHidden visuallyHidden={invisible}>

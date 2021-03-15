@@ -146,7 +146,6 @@ export const exposeProfileContext = (
   };
 
   const tracker = (newContextData: ProfileContextData) => {
-    // console.log('####tracker', newContextData.updateTime);
     trackDataChanges(newContextData);
     trackUpdateChanges(newContextData);
     return newContextData;

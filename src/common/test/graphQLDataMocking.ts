@@ -116,7 +116,7 @@ export const updateProfileQueryData = (
 ): ProfileRoot | UpdateProfileRoot => {
   const currentProfile = profileData.myProfile as ProfileData;
   if (returnUpdateGraph) {
-    const updateMyProfile: UpdateProfileRoot = {
+    return {
       updateMyProfile: {
         profile: {
           ...currentProfile,
@@ -125,17 +125,15 @@ export const updateProfileQueryData = (
         },
         __typename: 'UpdateMyProfileMutationPayload',
       },
-    };
-    return updateMyProfile;
+    } as UpdateProfileRoot;
   }
-  const myProfileQuery: ProfileRoot = {
+  return {
     myProfile: {
       ...currentProfile,
       ...newProfileData,
       __typename: 'ProfileWithVerifiedPersonalInformationNode',
     },
-  };
-  return myProfileQuery;
+  } as ProfileRoot;
 };
 
 export const createUpdateResponse = (
@@ -156,12 +154,7 @@ export const createUpdateResponse = (
       __typename: 'UpdateMyProfileMutationPayload',
     },
   };
-  const response = createMockedUpdateProfileResponse(
-    data,
-    queryVariables,
-    errorType
-  );
-  return response;
+  return createMockedUpdateProfileResponse(data, queryVariables, errorType);
 };
 
 function createAddressUpdate(
@@ -355,7 +348,6 @@ export function createMutationMocksAndTestData(
 
         createResponse(basicEditData.value as EditableUserData);
         modifiedEditData.push(basicEditData);
-        return;
       } else if (dataType === additionalInformationType) {
         const basicEditData = createEditData(nextProfile, dataType)[0];
 
@@ -364,16 +356,16 @@ export function createMutationMocksAndTestData(
 
         createResponse(basicEditData.value as EditableAdditionalInformation);
         modifiedEditData.push(basicEditData);
-        return;
+      } else {
+        const editDataM = createEditDataWithNode(
+          dataType,
+          target as InsertableNode
+        );
+        const updateCreator = getUpdateCreatorFunc(dataType);
+        const update = updateCreator(nextProfileData, editDataM);
+        createResponse(update);
+        modifiedEditData.push(editDataM);
       }
-      const editDataM = createEditDataWithNode(
-        dataType,
-        target as InsertableNode
-      );
-      const updateCreator = getUpdateCreatorFunc(dataType);
-      const update = updateCreator(nextProfileData, editDataM);
-      createResponse(update);
-      modifiedEditData.push(editDataM);
     } else if (action === 'set-primary') {
       const editDataP = createEditItem(dataType, target as InsertableNode);
       setAsPrimary(nextProfileData, editDataP, dataType);
@@ -399,7 +391,6 @@ export function createMutationMocksAndTestData(
           'graphQLError'
         );
         modifiedEditData.push(basicEditDataErr);
-        return;
       } else if (dataType === additionalInformationType) {
         const basicEditDataErr = createEditData(nextProfile, dataType)[0];
         const value = basicEditDataErr.value as EditableAdditionalInformation;
@@ -409,17 +400,16 @@ export function createMutationMocksAndTestData(
           'graphQLError'
         );
         modifiedEditData.push(basicEditDataErr);
-        return;
+      } else {
+        const editDataErr = createEditDataWithNode(
+          dataType,
+          target as InsertableNode
+        );
+        const updateCreator = getUpdateCreatorFunc(dataType);
+        const update = updateCreator(nextProfileData);
+        createResponse(update, 'graphQLError');
+        modifiedEditData.push(editDataErr);
       }
-
-      const editDataErr = createEditDataWithNode(
-        dataType,
-        target as InsertableNode
-      );
-      const updateCreator = getUpdateCreatorFunc(dataType);
-      const update = updateCreator(nextProfileData);
-      createResponse(update, 'graphQLError');
-      modifiedEditData.push(editDataErr);
     } else if (action === 'add') {
       const node = getCreatorFunc(dataType)() as Mutable<InsertableNode>;
       node.id = '';

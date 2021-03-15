@@ -251,17 +251,16 @@ function isPrimary(
 export function updateProfileDataFromEditData(
   item: EditData
 ): EditData['profileData'] {
-  const profileData = item.profileData;
-  const dataType = item.dataType;
+  const { profileData, dataType, value } = item;
   if (dataType === 'phones') {
-    (profileData as EditablePhone).phone = item.value as string;
+    (profileData as EditablePhone).phone = value as string;
   }
   if (dataType === 'emails') {
-    (profileData as EditableEmail).email = item.value as string;
+    (profileData as EditableEmail).email = value as string;
   }
   if (dataType === 'addresses') {
     const target = profileData as EditableAddress;
-    const source = item.value as EditableAddress;
+    const source = value as EditableAddress;
     target.address = source.address;
     target.postalCode = source.postalCode;
     target.countryCode = source.countryCode;
@@ -269,14 +268,14 @@ export function updateProfileDataFromEditData(
   }
   if (dataType === basicDataType) {
     const target = profileData as EditableUserData;
-    const source = item.value as EditableUserData;
+    const source = value as EditableUserData;
     target.firstName = source.firstName;
     target.nickname = source.nickname;
     target.lastName = source.lastName;
   }
   if (dataType === additionalInformationType) {
     const target = profileData as EditableAdditionalInformation;
-    const source = item.value as EditableAdditionalInformation;
+    const source = value as EditableAdditionalInformation;
     target.profileLanguage = source.profileLanguage;
   }
   return profileData;
@@ -421,8 +420,7 @@ export function collectProfileData(
 
 export function createNewEditItem(dataType: EditData['dataType']): EditData {
   const newProfileData = createNewProfileData(dataType);
-  const newItem = createEditItem(dataType, newProfileData);
-  return newItem;
+  return createEditItem(dataType, newProfileData);
 }
 
 export function isNew(data: EditData): boolean {

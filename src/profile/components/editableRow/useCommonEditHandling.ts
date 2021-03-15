@@ -56,11 +56,9 @@ export const useCommonEditHandling = (
       setEditing(false);
     } else if (action === 'edit') {
       setEditing(true);
-    } else if (action === 'save') {
-      if (!err) {
-        activateAutoFocusing();
-        setEditing(false);
-      }
+    } else if (action === 'save' && !err) {
+      activateAutoFocusing();
+      setEditing(false);
     }
     return Promise.resolve();
   };

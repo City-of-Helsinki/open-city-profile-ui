@@ -7,7 +7,6 @@ import styles from './profileSection.module.css';
 type Props = {
   children?: React.ReactNode;
   description?: string;
-  titleButton?: React.ReactNode;
   title?: string;
   titleVariant?: 'h2' | 'h3';
   hasVerifiedUserData?: boolean;
@@ -15,13 +14,12 @@ type Props = {
 
 function ProfileSection({
   children,
-  titleButton,
   titleVariant,
   description,
   title,
   hasVerifiedUserData,
 }: Props): React.ReactElement {
-  const hasTitleRowContent = !!(title || description || titleButton);
+  const hasTitleRowContent = !!(title || description);
   return (
     <section
       className={classNames(
@@ -40,7 +38,6 @@ function ProfileSection({
               small={description}
             />
           )}
-          <div className={styles.buttonContainer}>{titleButton}</div>
         </div>
       )}
       {children}

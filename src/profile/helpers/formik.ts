@@ -15,7 +15,7 @@ export type ErrorRenderer = ({
 export function getIsInvalid<FormValues>(
   formikProps: FormikProps<FormValues>,
   fieldName: string,
-  isOldData?: boolean
+  isOldData = false
 ): boolean {
   const isNotNew = isOldData === true || formikProps.submitCount > 0;
   const isError = Boolean(lodash.get(formikProps.errors, fieldName));
@@ -29,7 +29,7 @@ export function getError<FormValues>(
   formikProps: FormikProps<FormValues>,
   fieldName: string,
   render: ErrorRenderer = defaultErrorRender,
-  isOldData?: boolean
+  isOldData = false
 ): ReactNode | undefined {
   const errorMessage = lodash.get(formikProps.errors, fieldName);
   if (
@@ -46,7 +46,7 @@ export function getFieldError<FormValues>(
   t: TFunction,
   formikProps: FormikProps<FormValues>,
   fieldName: string,
-  isOldData?: boolean
+  isOldData = false
 ): ReactNode | undefined {
   const renderError: ErrorRenderer = ({ message, options }) =>
     t(message, options);
