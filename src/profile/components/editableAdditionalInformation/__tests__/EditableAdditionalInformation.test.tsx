@@ -26,19 +26,21 @@ describe('<EditableAdditionalInformation />', () => {
       createWaitForDataChange,
     } = await renderEditableAdditionalInformation();
 
+    const languageSelectionIdPrefix = `${additionalInformationType}-profileLanguage`;
+
     const findLanguageIndex = (langugage: Language): number =>
       profileConstants.LANGUAGES.findIndex(
         constLang => constLang === langugage
       );
     const selectLanguage = async (langugage: Language) => {
       const index = findLanguageIndex(langugage);
-      await triggerAction({ id: 'hds-toggle-button' });
-      await triggerAction({ id: `hds-item-${index}` });
+      await triggerAction({ id: `${languageSelectionIdPrefix}-toggle-button` });
+      await triggerAction({ id: `${languageSelectionIdPrefix}-item-${index}` });
     };
 
     const getSelectedLanguageIndex = async () => {
       const buttonText = (await getTextOrInputValue({
-        id: `hds-toggle-button`,
+        id: `${languageSelectionIdPrefix}-toggle-button`,
       })) as string;
       return profileConstants.LANGUAGES.findIndex(constLang =>
         buttonText.includes(constLang)

@@ -81,6 +81,7 @@ function EditableAdditionalInformation(): React.ReactElement | null {
             <Form>
               <FormikDropdown
                 className={commonFormStyles.formField}
+                id={`${additionalInformationType}-profileLanguage`}
                 name={'profileLanguage'}
                 options={profileLanguageOptions}
                 default={formikProps.values.profileLanguage || ''}

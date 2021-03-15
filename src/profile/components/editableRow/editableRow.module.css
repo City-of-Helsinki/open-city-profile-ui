@@ -20,7 +20,7 @@
 }
 
 .value{
-  font-size: 18px;
+font-size: 18px;
   padding: 0 0 var(--spacing-m) 0;
   word-break: break-all;
 }
