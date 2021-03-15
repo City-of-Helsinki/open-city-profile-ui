@@ -5,8 +5,8 @@ import { useHistory, useLocation } from 'react-router';
 import { loader } from 'graphql.macro';
 import { User } from 'oidc-client';
 import * as Sentry from '@sentry/browser';
-import { Notification } from 'hds-react';
 
+import Notification from '../../../common/copyOfHDSNotification/Notification';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import CreateProfile from '../createProfile/CreateProfile';
 import ViewProfile from '../viewProfile/ViewProfile';

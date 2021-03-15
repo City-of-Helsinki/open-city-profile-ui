@@ -6,6 +6,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.11",
     "@datapunt/matomo-tracker-react": "^0.1.2",
+    "@react-aria/visually-hidden": "^3.2.1",
     "@sentry/browser": "^5.15.4",
     "@types/classnames": "^2.2.9",
     "@types/enzyme": "^3.10.5",

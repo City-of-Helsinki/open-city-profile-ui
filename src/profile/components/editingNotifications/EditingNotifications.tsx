@@ -1,6 +1,6 @@
 import React from 'react';
-import { Notification } from 'hds-react';
 
+import Notification from '../../../common/copyOfHDSNotification/Notification';
 import { NotificationContent } from './useNotificationContent';
 import styles from './EditingNotifications.module.css';
 import { EditData } from '../../helpers/mutationEditor';
