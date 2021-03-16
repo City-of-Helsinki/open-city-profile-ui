@@ -3,8 +3,7 @@
   color: var(--color-bus);
   display: flex;
   min-height: 120px;
-  padding: 20px 10px 10px;
-  font-size: var(--fontsize-h-2);
+  font-size: var(--fontsize-heading-l);
   font-weight: bold;
   width: 100%;
   flex-direction: column;
@@ -25,7 +24,7 @@
 
 @media (min-width: 450px) {
   .pageHeading {
-    font-size: var(--fontsize-h-1);
+    font-size: var(--fontsize-heading-xl);
     flex-direction: row;
     text-align: left;
   }

@@ -29,18 +29,21 @@ button.button {
     background-color: var(--color-white);
     width: 100%;
 }
+button.button.button:hover {
+  background-color: var(--color-black-5);
+}
 
 button.button:hover {
     background-color: var(--color-background-button-secondary-hover);
 }
 
 .content h1 {
-    font-size: var(--fontsize-h-2);
+    font-size: var(--fontsize-heading-l);
 }
 
 .content h2 {
     line-height: var(--lineheight-l);
-    font-size: var(--fontsize-h-5);
+    font-size: var(--fontsize-heading-xs);
 }
 
 @media(min-width: 450px) {
@@ -49,7 +52,7 @@ button.button:hover {
     }
 
     .content h1 {
-        font-size: var(--fontsize-h-1);
+        font-size: var(--fontsize-heading-xl);
     }
 
 }

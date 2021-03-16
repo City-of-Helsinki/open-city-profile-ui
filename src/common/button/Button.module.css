@@ -12,11 +12,11 @@
 }
 
 .button:hover {
-  background: var(--color-bus-dark-50);
+  background: var(--color-bus-dark);
 }
 
 .button:disabled {
-  background: var(--color-bus-light-20);
+  background: var(--color-bus-light);
   cursor: not-allowed;
 }
 
