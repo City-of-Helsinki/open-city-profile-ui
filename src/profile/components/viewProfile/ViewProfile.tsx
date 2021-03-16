@@ -26,6 +26,7 @@ function ViewProfile(): React.ReactElement {
   const { createToast } = useToast();
 
   const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE, {
+    errorPolicy: 'ignore',
     onError: (error: Error) => {
       Sentry.captureException(error);
       createToast({ type: 'error' });

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -34,6 +35,7 @@ export interface GdprDeleteMyProfileMutationVariables {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -101,6 +103,7 @@ export interface GdprServiceConnectionsQuery {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -130,8 +133,6 @@ export interface CreateMyProfile {
    * * Address
    * * Phone
    * 
-   * If youth data is given, a youth profile will also be created and linked to the profile.
-   * 
    * Requires authentication.
    * 
    * Possible error codes:
@@ -147,6 +148,7 @@ export interface CreateMyProfileVariables {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -172,6 +174,7 @@ export interface DownloadMyProfileQueryVariables {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -298,6 +301,98 @@ export interface MyProfileQuery_myProfile_phones {
   readonly edges: ReadonlyArray<(MyProfileQuery_myProfile_phones_edges | null)>;
 }
 
+export interface MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress {
+  readonly __typename: "VerifiedPersonalInformationAddressNode";
+  /**
+   * Street address with possible house number etc.
+   */
+  readonly streetAddress: string;
+  /**
+   * Postal code.
+   */
+  readonly postalCode: string;
+  /**
+   * Post office.
+   */
+  readonly postOffice: string;
+}
+
+export interface MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress {
+  readonly __typename: "VerifiedPersonalInformationAddressNode";
+  /**
+   * Street address with possible house number etc.
+   */
+  readonly streetAddress: string;
+  /**
+   * Postal code.
+   */
+  readonly postalCode: string;
+  /**
+   * Post office.
+   */
+  readonly postOffice: string;
+}
+
+export interface MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress {
+  readonly __typename: "VerifiedPersonalInformationForeignAddressNode";
+  /**
+   * Street address or whatever is the _first part_ of the address.
+   */
+  readonly streetAddress: string;
+  /**
+   * Additional address information, perhaps town, county, state, country etc.
+   */
+  readonly additionalAddress: string;
+  /**
+   * An ISO 3166-1 country code.
+   */
+  readonly countryCode: string;
+}
+
+export interface MyProfileQuery_myProfile_verifiedPersonalInformation {
+  readonly __typename: "VerifiedPersonalInformationNode";
+  /**
+   * First name(s).
+   */
+  readonly firstName: string;
+  /**
+   * Last name.
+   */
+  readonly lastName: string;
+  /**
+   * The name the person is called with.
+   */
+  readonly givenName: string;
+  /**
+   * Finnish national identification number.
+   */
+  readonly nationalIdentificationNumber: string;
+  /**
+   * Email.
+   */
+  readonly email: string;
+  /**
+   * Official municipality of residence in Finland as a free form text.
+   */
+  readonly municipalityOfResidence: string;
+  /**
+   * Official municipality of residence in Finland as an official number.
+   */
+  readonly municipalityOfResidenceNumber: string;
+  /**
+   * The permanent residency address in Finland.
+   */
+  readonly permanentAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress | null;
+  /**
+   * The temporary residency address in Finland.
+   */
+  readonly temporaryAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress | null;
+  /**
+   * The temporary foreign (i.e. not in Finland) residency address.
+   */
+  readonly permanentForeignAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress | null;
+}
+
 export interface MyProfileQuery_myProfile {
   readonly __typename: "ProfileNode";
   /**
@@ -332,6 +427,12 @@ export interface MyProfileQuery_myProfile {
    * List of phone numbers of the profile.
    */
   readonly phones: MyProfileQuery_myProfile_phones | null;
+  /**
+   * Personal information that has been verified to be true. Can result into
+   * `PERMISSION_DENIED_ERROR` if the requester has no required privileges to
+   * access this information.
+   */
+  readonly verifiedPersonalInformation: MyProfileQuery_myProfile_verifiedPersonalInformation | null;
 }
 
 export interface MyProfileQuery {
@@ -349,6 +450,7 @@ export interface MyProfileQuery {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -377,6 +479,7 @@ export interface NameQuery {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -406,6 +509,7 @@ export interface ProfileExistsQuery {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -491,6 +595,7 @@ export interface ServiceConnectionsQuery {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -563,10 +668,6 @@ export interface UpdateMyProfile {
    * * Address
    * * Phone
    * 
-   * If youth data is given, a youth profile will also be created and linked to the
-   * profile **or** the existing youth profile will be updated if the profile is
-   * already linked to a youth profile.
-   * 
    * Requires authentication.
    * 
    * Possible error codes:
@@ -582,6 +683,7 @@ export interface UpdateMyProfileVariables {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -643,6 +745,7 @@ export interface QueryMySubscriptions {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -708,6 +811,7 @@ export interface QuerySubscriptions {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 //==============================================================
@@ -760,16 +864,6 @@ export enum ServiceType {
   YOUTH_MEMBERSHIP = "YOUTH_MEMBERSHIP",
 }
 
-export enum YouthLanguage {
-  ARABIC = "ARABIC",
-  ENGLISH = "ENGLISH",
-  ESTONIAN = "ESTONIAN",
-  FINNISH = "FINNISH",
-  RUSSIAN = "RUSSIAN",
-  SOMALI = "SOMALI",
-  SWEDISH = "SWEDISH",
-}
-
 export interface CreateAddressInput {
   readonly countryCode?: string | null;
   readonly primary?: boolean | null;
@@ -809,17 +903,16 @@ export interface ProfileInput {
   readonly language?: Language | null;
   readonly contactMethod?: ContactMethod | null;
   readonly addEmails?: ReadonlyArray<(CreateEmailInput | null)> | null;
+  readonly addPhones?: ReadonlyArray<(CreatePhoneInput | null)> | null;
+  readonly addAddresses?: ReadonlyArray<(CreateAddressInput | null)> | null;
+  readonly subscriptions?: ReadonlyArray<(SubscriptionInputType | null)> | null;
+  readonly sensitivedata?: SensitiveDataFields | null;
   readonly updateEmails?: ReadonlyArray<(UpdateEmailInput | null)> | null;
   readonly removeEmails?: ReadonlyArray<(string | null)> | null;
-  readonly addPhones?: ReadonlyArray<(CreatePhoneInput | null)> | null;
   readonly updatePhones?: ReadonlyArray<(UpdatePhoneInput | null)> | null;
   readonly removePhones?: ReadonlyArray<(string | null)> | null;
-  readonly addAddresses?: ReadonlyArray<(CreateAddressInput | null)> | null;
   readonly updateAddresses?: ReadonlyArray<(UpdateAddressInput | null)> | null;
   readonly removeAddresses?: ReadonlyArray<(string | null)> | null;
-  readonly subscriptions?: ReadonlyArray<(SubscriptionInputType | null)> | null;
-  readonly youthProfile?: YouthProfileFields | null;
-  readonly sensitivedata?: SensitiveDataFields | null;
 }
 
 export interface SensitiveDataFields {
@@ -858,18 +951,6 @@ export interface UpdatePhoneInput {
   readonly id: string;
   readonly phone?: string | null;
   readonly phoneType?: PhoneType | null;
-}
-
-export interface YouthProfileFields {
-  readonly schoolName?: string | null;
-  readonly schoolClass?: string | null;
-  readonly languageAtHome?: YouthLanguage | null;
-  readonly approverFirstName?: string | null;
-  readonly approverLastName?: string | null;
-  readonly approverPhone?: string | null;
-  readonly approverEmail?: string | null;
-  readonly birthDate?: any | null;
-  readonly photoUsageApproved?: boolean | null;
 }
 
 //==============================================================

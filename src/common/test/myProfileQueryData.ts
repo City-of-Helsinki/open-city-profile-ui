@@ -85,6 +85,7 @@ export const myProfile: MyProfileQuery = {
       ],
       __typename: 'PhoneNodeConnection',
     },
+    verifiedPersonalInformation: null,
     __typename: 'ProfileNode',
   },
 };
