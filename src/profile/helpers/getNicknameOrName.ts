@@ -1,6 +1,6 @@
-import { MyProfileQuery } from '../../graphql/generatedTypes';
+import { ProfileRoot } from '../../graphql/typings';
 
-export default function getNicknameOrName(data?: MyProfileQuery): string {
+export default function getNicknameOrName(data?: ProfileRoot): string {
   if (data && data.myProfile) {
     const myProfile = data.myProfile;
     if (myProfile.nickname) {

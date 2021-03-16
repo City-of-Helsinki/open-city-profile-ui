@@ -13,12 +13,10 @@ import PageHeading from '../../../common/pageHeading/PageHeading';
 import styles from './CreateProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import {
-  CreateMyProfile as CreateMyProfileData,
+  CreateMyProfile as CreateMyProfileRoot,
   CreateMyProfileVariables,
-  EmailType,
-  Language,
-  PhoneType,
 } from '../../../graphql/generatedTypes';
+import { EmailType, Language, PhoneType } from '../../../graphql/typings';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import useToast from '../../../toast/useToast';
 
@@ -36,7 +34,7 @@ function CreateProfile({
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
   const [createProfile, { loading }] = useMutation<
-    CreateMyProfileData,
+    CreateMyProfileRoot,
     CreateMyProfileVariables
   >(CREATE_PROFILE);
   const { createToast } = useToast();
