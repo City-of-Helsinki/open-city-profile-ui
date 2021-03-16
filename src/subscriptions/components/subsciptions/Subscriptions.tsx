@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 import * as Sentry from '@sentry/browser';
 import { Checkbox } from 'hds-react';
 

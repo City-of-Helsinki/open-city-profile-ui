@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { IconSignout, Navigation } from 'hds-react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { loader } from 'graphql.macro';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/client';
 
 import { NameQuery } from '../../../graphql/generatedTypes';
 import authService from '../../../auth/authService';

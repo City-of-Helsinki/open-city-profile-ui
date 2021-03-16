@@ -3,8 +3,8 @@ import {
   useQuery,
   useMutation,
   MutationHookOptions,
-} from '@apollo/react-hooks';
-import { MutationResult } from '@apollo/react-common';
+  MutationResult,
+} from '@apollo/client';
 import { loader } from 'graphql.macro';
 
 import {

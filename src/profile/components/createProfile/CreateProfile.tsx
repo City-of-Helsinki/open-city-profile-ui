@@ -1,7 +1,7 @@
 import React from 'react';
 import { User } from 'oidc-client';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import * as Sentry from '@sentry/browser';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
