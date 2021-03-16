@@ -3,8 +3,8 @@ import {
   useQuery,
   useLazyQuery,
   LazyQueryHookOptions,
-} from '@apollo/react-hooks';
-import { QueryResult } from '@apollo/react-common';
+  LazyQueryResult,
+} from '@apollo/client';
 import { DocumentNode } from 'graphql';
 import { loader } from 'graphql.macro';
 
@@ -21,7 +21,7 @@ type TVariables = Record<string, unknown>;
 function useDownloadProfile<TQuery>(
   query: DocumentNode,
   options?: LazyQueryHookOptions<TQuery, TVariables>
-): [() => void, QueryResult<TQuery, TVariables>] {
+): [() => void, LazyQueryResult<TQuery, TVariables>, boolean] {
   const { data } = useQuery<GdprServiceConnectionsQuery>(SERVICE_CONNECTIONS);
   const [downloadProfile, queryResult] = useLazyQuery<TQuery>(query, {
     ...options,
@@ -58,12 +58,11 @@ function useDownloadProfile<TQuery>(
     startFetchingAuthorizationCode(queryScopes);
   }, [data, startFetchingAuthorizationCode]);
 
-  const injectedQueryResult = {
-    ...queryResult,
-    loading: isAuthorizing || queryResult.loading,
-  };
-
-  return [handleDownloadActionInitialization, injectedQueryResult];
+  return [
+    handleDownloadActionInitialization,
+    queryResult,
+    isAuthorizing || queryResult.loading,
+  ];
 }
 
 export default useDownloadProfile;
