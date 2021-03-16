@@ -32,6 +32,7 @@ import checkBerthError from '../../helpers/checkBerthError';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
 import ProfileInformationAccountManagementLink from './ProfileInformationAccountManagementLink';
 import useToast from '../../../toast/useToast';
+import VerifiedPersonalInformation from '../verifiedPersonalInformation/VerifiedPersonalInformation';
 
 const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
@@ -108,6 +109,7 @@ function ProfileInformation(props: Props): React.ReactElement {
     emails.length > 0 || addresses.length > 0 || phones.length > 0;
   return (
     <Fragment>
+      {data && <VerifiedPersonalInformation data={data} />}
       <ProfileSection
         title={t('profileInformation.personalData')}
         description={t('profileInformation.visibility')}
