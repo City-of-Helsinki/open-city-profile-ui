@@ -9,7 +9,7 @@
 
 .additionalInfo {
     margin-top: var(--spacing-layout-m);
-    font-size: var(--fontsize-h-3);
+    font-size: var(--fontsize-heading-m);
 }
 
 .linebreak {
@@ -38,7 +38,7 @@
 
 .additionalActionsWrapper {
     color: var(--color-bus);
-    font-size: var(--fontsize-body-small);
+    font-size: var(--fontsize-body-s);
 }
 
 .additionalActionButton {
