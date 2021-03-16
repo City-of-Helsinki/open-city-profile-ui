@@ -1,55 +1,5 @@
-:root {
-  --header-height: 64px;
+/* fixes koros rendering above nav */
+.zIndexFix {
+  z-index: 10;
 }
 
-.header {
-  background: var(--color-white);
-  height: var(--header-height);
-  position: sticky;
-  z-index: 1;
-}
-
-
-.inner {
-  align-items: center;
-  display: flex;
-  height: 100%;
-}
-
-.logo {
-  width: 120px;
-  height: 42px;
-  margin-left: 10px;
-}
-
-.appName {
-  font-size: 18px;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.appName:visited {
-  color: var(--color-black);
-}
-
-.end {
-  margin-left: auto;
-  padding-right: 20px;
-}
-
-
-@media (min-width: 768px) {
-  .mobileNav {
-    display: none;
-  }
-}
-
-.desktopNav {
-  display: none;
-}
-@media (min-width: 768px) {
-  .desktopNav {
-    display: flex;
-    align-items: center;
-  }
-}
