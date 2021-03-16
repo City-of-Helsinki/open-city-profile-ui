@@ -32,6 +32,10 @@ const config = {
     window._env_.REACT_APP_IPD_MANAGEMENT_URL_YLE,
     'https://tunnus.yle.fi/#omat-tiedot'
   ),
+  identityProviderManagementUrlTunnistusSuomifi: defaultTo(
+    window._env_.REACT_APP_IPD_MANAGEMENT_URL_TUNNISTUS_SUOMI_FI,
+    'https://suomi.fi'
+  ),
 };
 
 export default config;
