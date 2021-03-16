@@ -8,6 +8,7 @@ import authService from '../../auth/authService';
 import { MAIN_CONTENT_ID } from '../constants';
 import LanguageSwitcher from '../../i18n/components/languageSwitcher/LanguageSwitcher';
 import UserDropdown from './userDropdown/UserDropdown';
+import styles from './Header.module.css';
 
 function Header(): React.ReactElement {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ function Header(): React.ReactElement {
       skipToContentLabel={t('skipToContent')}
       menuToggleAriaLabel={t('nav.menuButtonLabel')}
       title="Profile"
+      className={styles.zIndexFix}
     >
       {isAuthenticated && (
         <Navigation.Row>
