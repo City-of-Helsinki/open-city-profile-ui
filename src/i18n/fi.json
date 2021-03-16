@@ -20,6 +20,10 @@
     "cancel": "Peruuta",
     "close": "Sulje",
     "save": "Tallenna",
+    "remove": "Poista",
+    "removeEmail": "Poistetaanko sähköpostiosoite?",
+    "removePhone": "Poistetaanko puhelinnumero?",
+    "removeAddress": "Poistetaanko osoite?",
     "saveMessage": "Muuttamasi tiedot ovat heti käytössä seuraavissa Helsingin kaupungin palveluissa:",
     "saveTitle": "Haluatko tallentaa tekemäsi muutokset?"
   },
@@ -87,7 +91,16 @@
   "notification": {
     "closeButtonText": "Sulje",
     "defaultErrorText": "Jokin meni pieleen. Yritä hetken kuluttua uudelleen.",
-    "defaultErrorTitle": "Virhe"
+    "defaultErrorTitle": "Virhe",
+    "removeError": "Poisto epäonnistui.",
+    "removeSuccess": "Poisto onnistui!",
+    "saveError": "Tallennus epäonnistui.",
+    "saveSuccess": "Tallennus onnistui!",
+    "tryAgain": "Yritä uudelleen.",
+    "genericError": "Tapahtui virhe.",
+    "genericSuccess": "Toiminto onnistui!",
+    "saving": "Tallennetaan",
+    "removing": "Poistetaan"
   },
   "oidc": {
     "authenticating": "Tunnistaudutaan..."
@@ -100,11 +113,12 @@
     "title": "Profiilisi on poistettu onnistuneesti!"
   },
   "profileForm": {
-    "addAnotherAddress": "Lisää toinen osoite",
-    "addAnotherEmail": "Lisää toinen sähköpostiosoite",
-    "addAnotherPhone": "Lisää toinen puhelinnumero",
+    "addAnotherAddress": "Lisää uusi osoite",
+    "addAnotherEmail": "Lisää uusi sähköpostiosoite",
+    "addAnotherPhone": "Lisää uusi puhelinnumero",
     "additionalInfo": "Lisätiedot",
     "address": "Kotiosoite",
+    "basicData": "Perustiedot",
     "cancel": "Peruuta",
     "city": "Kaupunki",
     "country": "Maa",
@@ -112,21 +126,33 @@
     "edit": "Muokkaa",
     "email": "Sähköpostiosoite",
     "firstName": "Etunimi",
+    "givenName": "Kutsumanimi",
     "language": "Profiilin kieli",
     "lastName": "Sukunimi",
     "makeAddressPrimary": "Muuta ensisijaiseksi osoitteeksi",
     "makeEmailPrimary": "Muuta ensisijaiseksi sähköpostiosoitteeksi",
     "makePhonePrimary": "Muuta ensisijaiseksi puhelinnumeroksi",
+    "nickname": "Lempinimi",
     "phone": "Puhelinnumero",
     "postalCode": "Postinumero",
+    "postOffice": "Postitoimipaikka",
+    "primary": "Ensisijainen",
+    "remove": "Poista",
+    "setPrimary": "Aseta ensisijaiseksi",
     "submit": "Tallenna",
     "terms": "Olen tutustunut palvelun <0>rekisteriselosteeseen</0> ja kaupungin <1>tietosuojakäytäntöön</1> ",
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietosuoja/",
-    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf"
+    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf",
+    "nationalIdentificationNumber": "Henkilötunnus"
   },
   "profileInformation": {
     "address": "Osoite",
+    "ariaEditAddress": "Muokkaa osoitetta",
+    "ariaEditPhone": "Muokkaa puhelinnumeroa",
+    "ariaEditEmail": "Muokkaa sähköpostiosoitetta",
+    "ariaEditBasicData": "Muokkaa perustietoja",
     "deleteProfile": "Poista omat tietosi",
+    "description": "Helsinki Profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa. Kätevää eikö?",
     "downloadData": "Lataa omat tietosi",
     "email": "Sähköpostiosoite",
     "name": "Nimi",
@@ -135,7 +161,28 @@
     "title": "Omat tiedot",
     "visibility": "Helsinki-profiiliin on tallennettu sinusta alla olevat tiedot.",
     "doGoToAccountManagement": "Siirry tunnuksen hallintaan",
-    "authenticationMethod": "Tunnistautumistapa"
+    "authenticationMethod": "Tunnistautumistapa",
+    "primaryAddress": "Tämä on ensisijainen osoitteesi",
+    "permanentAddress": "Vakinainen osoite",
+    "temporaryAddress": "Väliaikainen osoite",
+    "permanentForeignAddress": "Väliaikainen ulkomainen osoite",
+    "primaryEmail": "Tämä on ensisijainen sähköpostiosoitteesi",
+    "primaryPhone": "Tämä on ensisijainen puhelinnumerosi",
+    "verifiedDataInformationPrefix": "Merkityt",
+    "verifiedDataInformationAriaPrefix": "Alla olevat",
+    "verifiedDataInformation": "<0></0> tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <1>siirry suomi.fi palveluun </1>",
+    "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
+    "verifiedData": "Vahvistettu tieto",
+    "phones": "Puhelinnumerot",
+    "emails": "Sähköpostiosoitteet",
+    "addresses": "Osoitteet",
+    "ariaFieldHelperWrite": "Kirjoita",
+    "ariaListTitlePhones": "Antamasi puhelinnumerot",
+    "ariaListTitleEmails": "Antamasi sähköpostiosoitteet",
+    "ariaListTitleAddresses": "Antamasi osoitteet",
+    "noPhones": "Et ole antanut puhelinnumeroita",
+    "noEmails": "Et ole antanut sähköpostiosoitteita",
+    "noAddresses": "Et ole antanut osoitteita"
   },
   "sanityCheck": "open-city-profile.fi",
   "serviceConnections": {
@@ -159,13 +206,15 @@
     "email": "Sähköpostiosoite ei kelpaa.",
     "maxLength": "Kentän maksimipituus on {{max}} merkkiä.",
     "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä.",
-    "required": "Tämä kenttä on pakollinen."
+    "required": "Tämä kenttä on pakollinen.",
+    "errorTitleForScreenReaders": "Lomakkeella on seuraavat virheet:"
   },
   "identityProvider": {
     "helsinkiAccount": "Helsinki-tunnus",
     "github": "GitHub",
     "google": "Google",
     "facebook": "Facebook",
-    "yle": "Yle"
+    "yle": "Yle",
+    "tunnistusSuomifi": "Suomi.fi"
   }
 }
