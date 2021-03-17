@@ -10,6 +10,9 @@
 .formField {
   padding-bottom: 20px;
 }
+.formField > div{
+  height:auto;
+}
 @media (min-width: 768px) {
   .formField {
     flex-basis: 50%;
