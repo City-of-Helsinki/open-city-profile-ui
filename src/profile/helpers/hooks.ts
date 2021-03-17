@@ -331,7 +331,7 @@ export function useProfileMutationHandler({
   return {
     data: currentData,
     add,
-    loading: !data,
+    loading: !currentData,
     save,
     remove,
     setPrimary,

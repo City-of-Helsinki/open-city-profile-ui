@@ -22,8 +22,8 @@ export default function createActionAriaLabels(
 
     const primaryTranslation =
       dataType === 'phones'
-        ? t('profileInformation.primaryPhone')
-        : t('profileInformation.primaryEmail');
+        ? t('profileInformation.primaryPhoneAriaDescription')
+        : t('profileInformation.primaryEmailAriaDescription');
 
     return {
       edit: `${t(editTranslation)} ${value}`,
@@ -36,7 +36,7 @@ export default function createActionAriaLabels(
     const value = (editData.value as EditableAddress).address;
     return {
       edit: `${t('profileInformation.ariaEditAddress')} ${value}`,
-      primary: `${t('profileInformation.primaryAddress')}`,
+      primary: `${t('profileInformation.primaryAddressAriaDescription')}`,
       setPrimary: `${t('profileForm.setPrimary')} ${t(
         'profileInformation.address'
       )} ${value}`,

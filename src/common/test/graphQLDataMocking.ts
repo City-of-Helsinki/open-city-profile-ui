@@ -16,6 +16,7 @@ import {
   EdgeList,
   MutableEmails,
   MutablePhones,
+  Mutable,
 } from '../../graphql/typings';
 import {
   Action,
@@ -29,7 +30,6 @@ import {
   EditableUserData,
   EditData,
   FormValues,
-  Mutable,
   pickProfileData,
 } from '../../profile/helpers/mutationEditor';
 import { updatePartialMutationVariables } from '../../profile/helpers/updateMutationVariables';

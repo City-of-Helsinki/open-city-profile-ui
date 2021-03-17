@@ -17,8 +17,8 @@ import {
   PrimaryEmail,
   PrimaryPhone,
   Language,
+  Mutable,
 } from '../../graphql/typings';
-export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
 
 type UserData = Pick<ProfileData, 'firstName' | 'nickname' | 'lastName'>;
 export type AddressData = Mutable<
@@ -496,7 +496,7 @@ export function cloneData(dataItems: EditData[]): EditData[] {
     const clone = { ...dataItem };
     if (cloneValue) {
       clone.value = {
-        ...(dataItem.value as EditableAddress | EditableUserData),
+        ...(dataItem.value as EditableUserData | EditableAddress),
       };
     }
     return clone;

@@ -21,11 +21,11 @@ import {
   MutableAddresses,
   MutableEmails,
   MutablePhones,
+  Mutable,
 } from '../../graphql/typings';
 import {
   createNewProfileData,
   EditData,
-  Mutable,
 } from '../../profile/helpers/mutationEditor';
 
 export const getMyProfile = (): ProfileRoot => ({
