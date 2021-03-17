@@ -2,34 +2,40 @@ import React from 'react';
 
 import VerifiedPersonalInformation from '../VerifiedPersonalInformation';
 import { renderProfileContextWrapper } from '../../../../common/test/componentMocking';
-import { getVerifiedData } from '../../../../common/test/myProfileMocking';
+import { createMockedMyProfileResponse } from '../../../../common/test/graphQLDataMocking';
 import {
-  MyProfileQuery,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress as PermanentForeignAddress,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress as PermanentAddress,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress as TemporaryAddress,
-  MyProfileQuery_myProfile_verifiedPersonalInformation as VerifiedPersonalInformationType,
-} from '../../../../graphql/generatedTypes';
-import { myProfile } from '../../../../common/test/myProfileQueryData';
+  getMyProfile,
+  getVerifiedData,
+} from '../../../../common/test/myProfileMocking';
+import {
+  ProfileRoot,
+  ProfileData,
+  VerifiedPersonalInformation as VerifiedPersonalInformationType,
+  Mutable,
+  PermanentAddress,
+  PermanentForeignAddress,
+  TemporaryAddress,
+} from '../../../../graphql/typings';
 
 describe('<VerifiedPersonalInformation />', () => {
   let currentVIP: VerifiedPersonalInformationType;
   const getProfileWithVIP = (
     overrides?: Partial<VerifiedPersonalInformationType>
-  ): MyProfileQuery => {
+  ): ProfileRoot => {
     currentVIP = getVerifiedData(overrides);
-    const profileBase = myProfile.myProfile;
-    return {
-      myProfile: {
-        ...profileBase,
-        verifiedPersonalInformation: currentVIP,
-      },
-    } as MyProfileQuery;
+    const profile = getMyProfile();
+    (profile.myProfile as Mutable<
+      ProfileData
+    >).verifiedPersonalInformation = currentVIP;
+    return profile;
   };
   it('should render all given data', async () => {
-    const data = getProfileWithVIP();
+    const initialMyProfileResponse = createMockedMyProfileResponse(
+      getProfileWithVIP()
+    );
     const { getElement } = await renderProfileContextWrapper(
-      <VerifiedPersonalInformation data={data} />
+      [initialMyProfileResponse],
+      <VerifiedPersonalInformation />
     );
     const permanentAddress = currentVIP.permanentAddress as PermanentAddress;
     const permanentForeignAddress = currentVIP.permanentForeignAddress as PermanentForeignAddress;
@@ -61,13 +67,16 @@ describe('<VerifiedPersonalInformation />', () => {
     ).toBeTruthy();
   });
   it('should not render address blocks if not present in data', async () => {
-    const data = getProfileWithVIP({
-      permanentAddress: null,
-      temporaryAddress: null,
-      permanentForeignAddress: null,
-    });
+    const initialMyProfileResponse = createMockedMyProfileResponse(
+      getProfileWithVIP({
+        permanentAddress: null,
+        temporaryAddress: null,
+        permanentForeignAddress: null,
+      })
+    );
     const { getElement } = await renderProfileContextWrapper(
-      <VerifiedPersonalInformation data={data} />
+      [initialMyProfileResponse],
+      <VerifiedPersonalInformation />
     );
     expect(() => getElement({ testId: 'vpi-address-permanent' })).toThrow();
     expect(() => getElement({ testId: 'vpi-address-temporary' })).toThrow();

@@ -9,6 +9,7 @@
     "@react-aria/visually-hidden": "^3.2.1",
     "@sentry/browser": "^5.15.4",
     "@testing-library/react": "^11.2.5",
+    "@testing-library/react-hooks": "^5.1.0",
     "@types/classnames": "^2.2.9",
     "@types/enzyme": "^3.10.5",
     "@types/enzyme-adapter-react-16": "^1.0.6",

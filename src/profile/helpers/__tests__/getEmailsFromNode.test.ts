@@ -1,9 +1,9 @@
 import getEmailsFromNode from '../getEmailsFromNode';
-import { MyProfileQuery } from '../../../graphql/generatedTypes';
-import { myProfile } from '../../../common/test/myProfileQueryData';
+import { ProfileRoot } from '../../../graphql/typings';
+import { getMyProfile } from '../../../common/test/myProfileMocking';
 
 test('returns correct array of emails', () => {
-  const emails = getEmailsFromNode(myProfile);
+  const emails = getEmailsFromNode(getMyProfile());
   expect(emails).toEqual([
     {
       email: 'test@email.com',
@@ -18,7 +18,7 @@ test('returns correct array of emails', () => {
 test('emails is empty', () => {
   const emptyEmailProfile = {
     myProfile: {
-      ...myProfile.myProfile,
+      ...getMyProfile().myProfile,
       emails: {
         edges: [],
         __typename: 'EmailNodeConnection',
@@ -26,6 +26,6 @@ test('emails is empty', () => {
     },
   };
 
-  const emails = getEmailsFromNode(emptyEmailProfile as MyProfileQuery);
+  const emails = getEmailsFromNode(emptyEmailProfile as ProfileRoot);
   expect(emails).toEqual([]);
 });

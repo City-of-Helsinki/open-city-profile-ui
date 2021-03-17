@@ -9,11 +9,13 @@ import {
   PhoneNode,
 } from '../../../graphql/typings';
 import { updateMutationVariables } from '../updateMutationVariables';
-import { myProfile } from '../../../common/test/myProfileQueryData';
+import { getMyProfile } from '../../../common/test/myProfileMocking';
 import { FormValues } from '../mutationEditor';
 
 type ClonedObject = Record<string, unknown>;
 type ReplacerFunction = (key: string, value: unknown) => unknown;
+
+const myProfile = getMyProfile();
 
 const JSONReplacer: ReplacerFunction = (
   key: string,
