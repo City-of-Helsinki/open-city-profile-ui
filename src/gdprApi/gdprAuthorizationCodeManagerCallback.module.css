@@ -16,5 +16,5 @@
 
 .fakeContent {
   flex-grow: 1;
-  background: var(--color-black-5);
+  background: var(--color-black-ultra-light);
 }

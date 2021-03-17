@@ -72,4 +72,5 @@
 
   --hds-primary-font: var(--font-helsinki-grotesk);
   font-family: var(--font-helsinki-grotesk);
+  --color-black-ultra-light: #fafafb;
 }

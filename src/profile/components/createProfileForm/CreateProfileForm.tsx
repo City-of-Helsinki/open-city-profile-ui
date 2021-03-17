@@ -3,6 +3,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { TextInput, Checkbox } from 'hds-react';
 import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
+import classNames from 'classnames';
 
 import { getIsInvalid, getError, ErrorRenderer } from '../../helpers/formik';
 import FormikDropdown, {
@@ -10,6 +11,7 @@ import FormikDropdown, {
 } from '../../../common/formikDropdown/FormikDropdown';
 import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
+import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import profileConstants from '../../constants/profileConstants';
 import { getFormFields } from '../../helpers/formProperties';
 import {
@@ -90,9 +92,17 @@ function CreateProfileForm(props: Props): React.ReactElement {
     >
       {formikProps => (
         <Form>
-          <div className={styles.formFields}>
+          <div
+            className={classNames([
+              styles.formFields,
+              commonFormStyles.multiItemWrapper,
+            ])}
+          >
             <Field
-              className={styles.formField}
+              className={classNames([
+                styles.formField,
+                commonFormStyles.formField,
+              ])}
               name="firstName"
               id="firstName"
               maxLength={formFields.firstName.max as number}

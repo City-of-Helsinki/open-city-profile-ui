@@ -1,27 +1,12 @@
 @media (min-width: 768px) {
   .formFields {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     max-width: 750px;
   }
-}
-
-.formField {
-  padding-bottom: 20px;
-}
-.formField > div{
-  height:auto;
-}
-@media (min-width: 768px) {
-  .formField {
+  .formFields > div.formField {
     flex-basis: 50%;
-    max-width: 350px;
-    padding: 10px 10px 10px 0;
   }
   .formField:nth-of-type(even) {
     padding-right: 0;
-    padding-left: 10px;
   }
 }
 
