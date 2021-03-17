@@ -21,9 +21,6 @@ import {
   PhoneNode,
   EmailNode,
   PrimaryEmail,
-  PrimaryAddress,
-  PrimaryPhone,
-  Language,
   ServiceConnectionsRoot,
 } from '../../../graphql/typings';
 import profileConstants from '../../constants/profileConstants';
@@ -34,19 +31,8 @@ import FormikDropdown, {
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
 import { basicDataSchema } from '../../../common/schemas/schemas';
+import { FormValues } from '../../helpers/mutationEditor';
 
-export type FormValues = {
-  firstName: string;
-  nickname?: string;
-  lastName: string;
-  primaryEmail: PrimaryEmail;
-  primaryAddress: PrimaryAddress;
-  primaryPhone: PrimaryPhone;
-  profileLanguage: Language;
-  addresses: AddressNode[];
-  emails: EmailNode[];
-  phones: PhoneNode[];
-};
 type Props = {
   setEditing: () => void;
   isSubmitting: boolean;

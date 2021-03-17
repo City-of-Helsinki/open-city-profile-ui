@@ -1,6 +1,5 @@
 import { isEqual } from 'lodash';
 
-import { FormValues } from '../components/editProfileForm/EditProfileForm';
 import {
   CreateAddressInput,
   CreateEmailInput,
@@ -23,6 +22,7 @@ import getPhonesFromNode from './getPhonesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
 import getAddressesFromNode from './getAddressesFromNode';
 import { formConstants } from '../constants/formConstants';
+import { FormValues } from './mutationEditor';
 
 type Primary = 'primaryEmail' | 'primaryAddress' | 'primaryPhone';
 

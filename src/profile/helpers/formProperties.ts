@@ -1,19 +1,16 @@
+import { EditData } from './mutationEditor';
+
 export type FormField = {
   required: boolean;
   min?: number;
   max?: number;
   translationKey: string;
 };
-
-type DataType =
-  | 'basic-data'
-  | 'additional-information'
-  | 'addresses'
-  | 'phones'
-  | 'emails';
-
 export type DataTypeFormFields = Record<string, FormField>;
-type FormFieldsByDataType = Record<DataType, Record<string, FormField>>;
+type FormFieldsByDataType = Record<
+  EditData['dataType'],
+  Record<string, FormField>
+>;
 export const formFieldsByDataType: FormFieldsByDataType = {
   addresses: {
     address: {
@@ -65,7 +62,7 @@ export const formFieldsByDataType: FormFieldsByDataType = {
     value: {
       required: true,
       min: 1,
-      max: 255,
+      max: 1,
       translationKey: 'profileForm.email',
     },
   },
@@ -77,5 +74,6 @@ export const formFieldsByDataType: FormFieldsByDataType = {
   },
 };
 
-export const getFormFields = (dataType: DataType): DataTypeFormFields =>
-  formFieldsByDataType[dataType];
+export const getFormFields = (
+  dataType: EditData['dataType']
+): DataTypeFormFields => formFieldsByDataType[dataType];

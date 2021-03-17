@@ -11,12 +11,12 @@ import FormikDropdown, {
 import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
-import { Language } from '../../../graphql/typings';
 import { getFormFields } from '../../helpers/formProperties';
 import {
   basicDataSchema,
   createProfilePhoneSchema,
 } from '../../../common/schemas/schemas';
+import { FormValues } from '../../helpers/mutationEditor';
 
 const termsSchema = yup
   .object()
@@ -25,21 +25,21 @@ const schema = basicDataSchema
   .concat(termsSchema)
   .concat(createProfilePhoneSchema);
 
-export type FormValues = {
-  firstName: string;
-  lastName: string;
+export type CreateProfileFormValues = Pick<
+  FormValues,
+  'firstName' | 'lastName' | 'profileLanguage'
+> & {
   email: string;
   phone: string;
-  profileLanguage: Language;
 };
 
-type FormikFormValues = FormValues & {
+type FormikFormValues = CreateProfileFormValues & {
   terms: boolean;
 };
 
 type Props = {
-  profile: FormValues;
-  onValues: (values: FormValues) => void;
+  profile: CreateProfileFormValues;
+  onValues: (values: CreateProfileFormValues) => void;
   isSubmitting: boolean;
 };
 

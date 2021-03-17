@@ -7,7 +7,7 @@ import * as Sentry from '@sentry/browser';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import CreateProfileForm, {
-  FormValues,
+  CreateProfileFormValues,
 } from '../createProfileForm/CreateProfileForm';
 import PageHeading from '../../../common/pageHeading/PageHeading';
 import styles from './CreateProfile.module.css';
@@ -39,7 +39,7 @@ function CreateProfile({
   >(CREATE_PROFILE);
   const { createToast } = useToast();
 
-  const handleOnValues = (formValues: FormValues) => {
+  const handleOnValues = (formValues: CreateProfileFormValues) => {
     const variables: CreateMyProfileVariables = {
       input: {
         profile: {

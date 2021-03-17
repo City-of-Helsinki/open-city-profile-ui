@@ -19,6 +19,7 @@ export function getIsInvalid<FormValues>(
 ): boolean {
   const isNotNew = isOldData === true || formikProps.submitCount > 0;
   const isError = Boolean(lodash.get(formikProps.errors, fieldName));
+
   return isNotNew && isError;
 }
 
