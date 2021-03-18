@@ -23,12 +23,12 @@
 }
 
 .innerWrapper h1 {
-    font-size: var(--fontsize-h-3);
+    font-size: var(--fontsize-heading-m);
 }
 
 .innerWrapper h2 {
     margin-top: var(--spacing-layout-xs);
-    font-size: var(--fontsize-h-4);
+    font-size: var(--fontsize-heading-s);
 }
 
 @media (min-width: 768px) {
@@ -37,11 +37,11 @@
     }
 
     .innerWrapper h1 {
-        font-size: var(--fontsize-h-2);
+        font-size: var(--fontsize-heading-l);
     }
 
     .innerWrapper h2 {
-        font-size: var(--fontsize-h-3);
+        font-size: var(--fontsize-heading-m);
     }
 }
 

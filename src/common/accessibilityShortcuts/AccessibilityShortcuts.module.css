@@ -2,9 +2,9 @@
   display: flex;
   justify-content: center;
 
-  font-size: var(--fontsize-body-medium);
+  font-size: var(--fontsize-body-m);
 
-  background: var(--color-bus-light-20);
+  background: var(--color-bus-light);
 }
 
 /* Inspired by Bootstrap */

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
-import { Switch, Route, NavLink } from 'react-router-dom';
-import classNames from 'classnames';
+import { Switch, Route } from 'react-router-dom';
 import * as Sentry from '@sentry/browser';
+import { Section } from 'hds-react';
 
 import styles from './ViewProfile.module.css';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
@@ -40,41 +40,9 @@ function ViewProfile(): React.ReactElement {
     <div className={styles.viewProfile}>
       {data && (
         <React.Fragment>
-          <PageHeading text={getNicknameOrName(data)} />
-          <nav
-            aria-label={t('landmarks.navigation.main')}
-            className={classNames(
-              styles.profileNav,
-              responsive.maxWidthCentered
-            )}
-          >
-            <NavLink
-              exact
-              to="/"
-              className={styles.profileNavLink}
-              activeClassName={styles.activeProfileNavLink}
-            >
-              {t('nav.information')}
-            </NavLink>
-            <NavLink
-              exact
-              to="/connected-services"
-              className={styles.profileNavLink}
-              activeClassName={styles.activeProfileNavLink}
-            >
-              {t('nav.services')}
-            </NavLink>
-            {window._env_.REACT_APP_ENVIRONMENT !== 'production' && (
-              <NavLink
-                exact
-                to="/subscriptions"
-                className={styles.profileNavLink}
-                activeClassName={styles.activeProfileNavLink}
-              >
-                {t('nav.subscriptions')}
-              </NavLink>
-            )}
-          </nav>
+          <Section korosType="basic">
+            <PageHeading text={getNicknameOrName(data)} />
+          </Section>
           <div className={styles.contentWrapper}>
             <Switch>
               <Route path="/connected-services">

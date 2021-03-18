@@ -26,7 +26,7 @@ function ToastProvider({ children }: Props): React.ReactElement {
     const id = uuid();
     const toastWithDefaults: ToastType = {
       id: uuid(),
-      type: 'notification',
+      type: 'info',
       hidden: false,
       ...toast,
     };

@@ -13,7 +13,7 @@
 .subscriptionsContainer h2 {
     margin-top: 0;
     margin-bottom: 20px;
-    font-size: var(--fontsize-h-3);
+    font-size: var(--fontsize-heading-m);
 }
 
 .subscription {

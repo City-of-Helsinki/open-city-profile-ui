@@ -29,7 +29,7 @@
 
 .showInformation {
     margin-right: var(--spacing-s);
-    font-size: var(--fontsize-body-small);
+    font-size: var(--fontsize-body-s);
     font-weight: bold;
     color: var(--ep-accent-color);
 }
@@ -59,7 +59,7 @@
     width: 100%;
     overflow: hidden;
 
-    font-size: var(--fontsize-body-medium);
+    font-size: var(--fontsize-body-m);
 
     /* Negates some of the padding has in order to place the content */
     /* closer to the title. Makes sure that content overlaps the */

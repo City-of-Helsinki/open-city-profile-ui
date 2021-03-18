@@ -1,13 +1,14 @@
 import React, { PropsWithChildren } from 'react';
-import { DismissableNotification } from 'hds-react';
+import { NotificationType } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 
+import Notification from '../copyOfHDSNotification/Notification';
 import styles from './NotificationComponent.module.css';
 
 type Props = PropsWithChildren<{
   show: boolean;
   labelText?: string;
-  type?: 'error' | 'success' | 'warning' | 'notification';
+  type?: NotificationType;
   onClose?: () => void;
 }>;
 
@@ -18,16 +19,17 @@ function NotificationComponent(props: Props): React.ReactElement | null {
   }
   return (
     <div className={styles.notification}>
-      <DismissableNotification
+      <Notification
+        dismissible
         type={props.type || 'error'}
-        labelText={props.labelText || t('notification.defaultErrorTitle')}
-        closeButtonLabelText={t('notification.closeButtonText')}
+        label={props.labelText || t('notification.defaultErrorTitle')}
+        closeButtonLabelText={t('notification.closeButtonText') || ''}
         onClose={props.onClose}
       >
         <div className={styles.messageWrapper}>
           {props.children || t('notification.defaultErrorText')}
         </div>
-      </DismissableNotification>
+      </Notification>
     </div>
   );
 }

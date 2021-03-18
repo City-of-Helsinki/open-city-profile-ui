@@ -3,29 +3,24 @@
   color: var(--color-bus);
   display: flex;
   min-height: 120px;
-  padding: 20px 10px 10px;
-  font-size: var(--fontsize-h-2);
-  font-weight: bold;
   width: 100%;
   flex-direction: column;
   text-align: center;
 }
 
-.titleWrapper {
-  flex: 1;
-  min-width: 0;
-  margin-left: 20px;
+.pageHeading h1 {
+  font-size: var(--fontsize-heading-m);
+  font-weight: bold;
 }
 
 .userIcon {
-  width: 50px;
-  height: 50px;
+  width: 54px;
+  height: 54px;
   margin-bottom: var(--spacing-layout-2-xs);
 }
 
-@media (min-width: 450px) {
+@media (min-width: 768px) {
   .pageHeading {
-    font-size: var(--fontsize-h-1);
     flex-direction: row;
     text-align: left;
   }
@@ -34,6 +29,10 @@
     width: 77px;
     height: 77px;
     margin-bottom: 0;
+  }
+  .pageHeading h1{
+    font-size: var(--fontsize-heading-xl);
+    margin-left: var(--spacing-layout-xs);
   }
 }
 
