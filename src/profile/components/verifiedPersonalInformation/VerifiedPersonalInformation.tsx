@@ -141,7 +141,7 @@ function VerifiedPersonalInformation(
     <ProfileSection hasVerifiedUserData>
       <h3
         className={commonFormStyles.sectionTitle}
-        aria-label="Vahvistetut perustiedot"
+        aria-label={t('personalInformation.verifiedBasicData')}
       >
         {t('profileForm.basicData')}
       </h3>
