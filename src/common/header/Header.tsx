@@ -50,13 +50,6 @@ function Header(): React.ReactElement {
             onClick={(e: MouseEvent) => onClick('/connected-services', e)}
             active={currentPath === '/connected-services'}
           />
-          <Navigation.Item
-            label={t('nav.subscriptions')}
-            href="/subscriptions"
-            variant="secondary"
-            onClick={(e: MouseEvent) => onClick('/subscriptions', e)}
-            active={currentPath === '/subscriptions'}
-          />
         </Navigation.Row>
       )}
       <Navigation.Actions>

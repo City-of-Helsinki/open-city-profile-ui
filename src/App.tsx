@@ -77,7 +77,7 @@ function App(): React.ReactElement {
             <Route path="/login">
               <Login />
             </Route>
-            <Route path={['/', '/connected-services', '/subscriptions']} exact>
+            <Route path={['/', '/connected-services']} exact>
               <Profile />
             </Route>
             <Route path="/accessibility">

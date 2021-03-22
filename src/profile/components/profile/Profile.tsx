@@ -68,8 +68,6 @@ function Profile(): React.ReactElement {
     switch (pathname) {
       case 'connected-services':
         return 'serviceConnections.title';
-      case 'subscriptions':
-        return 'subscriptions.title';
       default:
         return 'appName';
     }

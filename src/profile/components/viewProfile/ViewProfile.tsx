@@ -13,7 +13,6 @@ import ProfileInformation from '../profileInformation/ProfileInformation';
 import EditProfile from '../editProfile/EditProfile';
 import getNicknameOrName from '../../helpers/getNicknameOrName';
 import ServiceConnections from '../serviceConnections/ServiceConnections';
-import Subscriptions from '../../../subscriptions/components/subsciptions/Subscriptions';
 import { MyProfileQuery } from '../../../graphql/generatedTypes';
 import Explanation from '../../../common/explanation/Explanation';
 import useToast from '../../../toast/useToast';
@@ -49,11 +48,6 @@ function ViewProfile(): React.ReactElement {
               <Route path="/connected-services">
                 <ServiceConnections />
               </Route>
-              {window._env_.REACT_APP_ENVIRONMENT !== 'production' && (
-                <Route path="/subscriptions">
-                  <Subscriptions />
-                </Route>
-              )}
               <Route path="/">
                 <div className={styles.profileContent}>
                   <div className={responsive.maxWidthCentered}>
