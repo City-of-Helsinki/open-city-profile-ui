@@ -4,9 +4,13 @@ import enzymeToJson from 'enzyme-to-json';
 
 import ProfileInformationAuthenticationSourceBackLink from '../ProfileInformationAccountManagementLink';
 
+let mockCurrentAmr;
+const helsinkiAccountAMR = 'helusername-test';
+
 jest.mock('../../../../config', () => ({
   identityProviderManagementUrlHelsinki: 'https://test-url',
-  helsinkiAccountAMR: 'helusername-test',
+  identityProviderManagementUrlTunnistusSuomifi: 'https://test-url-suomif-fi',
+  helsinkiAccountAMR,
 }));
 
 jest.mock('../../../../auth/useProfile', () => () => ({
@@ -23,7 +27,12 @@ jest.mock('../../../../auth/useProfile', () => () => ({
   },
 }));
 
-describe('<ProfileInformationAuthenticationSourceBackLink />', () => {
+jest.mock('../profileInformationAccountManagementLinkUtils', () => ({
+  ...jest.requireActual('../profileInformationAccountManagementLinkUtils'),
+  getAmr: () => mockCurrentAmr,
+}));
+
+describe('<ProfileInformationAuthenticationSourceBackLink /> ', () => {
   const defaultProps = {};
   const getWrapper = props =>
     mount(
@@ -32,18 +41,26 @@ describe('<ProfileInformationAuthenticationSourceBackLink />', () => {
         {...props}
       />
     );
+  describe('renders correctly when AMR is helsinkiAccountAMR', () => {
+    beforeAll(() => {
+      window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = helsinkiAccountAMR;
+    });
 
-  beforeAll(() => {
-    window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = 'helusername-test';
+    afterAll(() => {
+      window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = 'helusername';
+    });
+
+    it('should render helsinki account link as expected based on config', () => {
+      mockCurrentAmr = 'helsinkiAccount';
+      const wrapper = getWrapper();
+      expect(enzymeToJson(wrapper)).toMatchSnapshot();
+    });
   });
-
-  afterAll(() => {
-    window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = 'helusername';
-  });
-
-  it('should render helsinki account link as expected based on config', () => {
-    const wrapper = getWrapper();
-
-    expect(enzymeToJson(wrapper)).toMatchSnapshot();
+  describe('renders correctly when AMR is tunnistusSuomifiAMR', () => {
+    it('should render suomi.fi link as expected based on config', () => {
+      mockCurrentAmr = 'tunnistusSuomifi';
+      const wrapper = getWrapper();
+      expect(enzymeToJson(wrapper)).toMatchSnapshot();
+    });
   });
 });

@@ -20,6 +20,10 @@
     "cancel": "Cancel",
     "close": "Close",
     "save": "Save",
+    "remove": "Remove",
+    "removeEmail": "EN: Poistetaanko sähköpostiosoite?",
+    "removePhone": "EN: Poistetaanko puhelinnumero?",
+    "removeAddress": "EN: Poistetaanko osoite?",
     "saveMessage": "The information you have changed is immediately available to the following City of Helsinki services:",
     "saveTitle": "Do you want to save your changes?"
   },
@@ -79,7 +83,7 @@
   "nav": {
     "information": "Information",
     "menuButtonLabel": "Profile menu",
-    "services": "EN: Käyttämäsi palvelut",
+    "services": "Your services",
     "signin": "Log in",
     "signout": "Sign out",
     "subscriptions": "Subscriptions"
@@ -87,7 +91,16 @@
   "notification": {
     "closeButtonText": "Close",
     "defaultErrorText": "Something went wrong. Try again after a while.",
-    "defaultErrorTitle": "Error"
+    "defaultErrorTitle": "Error",
+    "removeError": "EN: Poisto epäonnistui.",
+    "removeSuccess": "EN: Poisto onnistui",
+    "saveError": "EN: Tallennus epäonnistui.",
+    "saveSuccess": "EN: Tallennus onnistui!",
+    "tryAgain": "Try again",
+    "genericError": "Something went wrong.",
+    "genericSuccess": "EN: Toiminto onnistui!",
+    "saving": "Saving",
+    "removing": "Removing"
   },
   "oidc": {
     "authenticating": "Authenticating..."
@@ -100,11 +113,12 @@
     "title": "Your profile has been successfully removed!"
   },
   "profileForm": {
-    "addAnotherAddress": "Add another address",
-    "addAnotherEmail": "Add another email address",
-    "addAnotherPhone": "Add another phone number",
+    "addAnotherAddress": "Add new address",
+    "addAnotherEmail": "Add new email address",
+    "addAnotherPhone": "Add new phone number",
     "additionalInfo": "Additional Information",
     "address": "Home address",
+    "basicData": "EN: Perustiedot",
     "cancel": "Cancel",
     "city": "City",
     "country": "Country",
@@ -112,21 +126,33 @@
     "edit": "Edit",
     "email": "Email",
     "firstName": "First name",
+    "givenName": "Given name",
     "language": "Profile language",
     "lastName": "Last name",
     "makeAddressPrimary": "Change to your primary address",
     "makeEmailPrimary": "Change to your primary email address",
     "makePhonePrimary": "Change to your primary phone",
+    "nickname": "Nickname",
     "phone": "Phone",
     "postalCode": "Postal code",
+    "postOffice": "Post office",
+    "primary": "Primary",
+    "remove": "Remove",
+    "setPrimary": "Set as primary",
     "submit": "Save",
     "terms": "I have read <0>file description</0> and  city's <1>data protection principles</1>",
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/en/administration/information/data-protection",
-    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf"
+    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf",
+    "nationalIdentificationNumber": "EN: Henkilötunnus"
   },
   "profileInformation": {
     "address": "Address",
+    "ariaEditAddress": "Edit address",
+    "ariaEditPhone": "Edit phone number",
+    "ariaEditEmail": "Edit email",
+    "ariaEditBasicData": "EN: Muokkaa perustietoja",
     "deleteProfile": "Delete your profile",
+    "description": "EN: Helsinki Profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa. Kätevää eikö?",
     "downloadData": "Download your data",
     "email": "Email",
     "name": "Name",
@@ -135,16 +161,41 @@
     "title": "My information",
     "visibility": "The following information about you is stored in Helsinki profile.",
     "doGoToAccountManagement": "Go to account management",
-    "authenticationMethod": "Authentication method"
+    "authenticationMethod": "Authentication method",
+    "primaryAddress": "Primary address",
+    "permanentAddress": "EN: Vakinainen osoite",
+    "temporaryAddress": "EN: Väliaikainen osoite",
+    "permanentForeignAddress": "EN: Väliaikainen ulkomainen osoite",
+    "primaryEmail": "Primary email",
+    "primaryPhone": "Primary phone",
+    "primaryAddressAriaDescription": "This is your primary address",
+    "primaryEmailAriaDescription": "This is your primary email",
+    "primaryPhoneAriaDescription": "This is your primary phone number",
+    "verifiedDataInformationPrefix": "EN: Merkityt",
+    "verifiedDataInformationAriaPrefix": "EN: Alla olevat",
+    "verifiedDataInformation": "EN: <0></0> tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <1>siirry suomi.fi palveluun </1>",
+    "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
+    "verifiedData": "EN: Vahvistettu tieto",
+    "verifiedBasicData": "EN: Vahvistetut perustiedot",
+    "phones": "Phone numbers",
+    "emails": "Emails",
+    "addresses": "Addresses",
+    "ariaFieldHelperWrite": "Write",
+    "ariaListTitlePhones": "EN: Antamasi puhelinnumerot",
+    "ariaListTitleEmails": "EN: Antamasi sähköpostiosoitteet",
+    "ariaListTitleAddresses": "EN: Antamasi osoitteet",
+    "noPhones": "You haven't given any phone numbers",
+    "noEmails": "You haven't given any emails",
+    "noAddresses": "You haven't given any addresses"
   },
   "sanityCheck": "open-city-profile.en",
   "serviceConnections": {
     "clock": "at",
     "created": "Created:",
     "empty": "You currently don't have any services connected to your profile.",
-    "explanation": "EN: Olet antanut seuraaville palveluille oikeuden käyttää Helsinki Profiili -tietojasi.",
+    "explanation": "You have given the following services permission to use your Helsinki Profile data.",
     "servicePersonalData": "Information which the service will know about you:",
-    "title": "EN: Palvelut, joilla on lupa käyttää tietojasi"
+    "title": "Services with permission to use your data"
   },
   "skipToContent": "Skip to content",
   "subscriptions": {
@@ -159,13 +210,15 @@
     "email": "The value must be an email-address.",
     "maxLength": "This field can be max {{max}} characters.",
     "phoneMin": "The number must be at least {{min}} characters long.",
-    "required": "This field is required."
+    "required": "This field is required.",
+    "errorTitleForScreenReaders": "EN: Lomakkeella on seuraavat virheet:"
   },
   "identityProvider": {
     "helsinkiAccount": "Helsinki account",
     "github": "GitHub",
     "google": "Google",
     "facebook": "Facebook",
-    "yle": "Yle"
+    "yle": "Yle",
+    "tunnistusSuomifi": "Suomi.fi"
   }
 }

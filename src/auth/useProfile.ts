@@ -3,11 +3,14 @@ import React from 'react';
 import config from '../config';
 import authService from './authService';
 
+export const tunnistusSuomifiAMR = 'heltunnistussuomifi';
+
 export type AMR =
   | 'github'
   | 'google'
   | 'facebook'
   | 'yle'
+  | typeof tunnistusSuomifiAMR
   | typeof config.helsinkiAccountAMR;
 
 export type AMRStatic =
@@ -15,7 +18,8 @@ export type AMRStatic =
   | 'google'
   | 'facebook'
   | 'yle'
-  | 'helsinkiAccount';
+  | 'helsinkiAccount'
+  | 'tunnistusSuomifi';
 
 export interface Profile {
   amr: AMR;

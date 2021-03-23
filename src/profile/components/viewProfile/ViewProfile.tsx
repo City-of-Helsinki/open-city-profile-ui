@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route } from 'react-router-dom';
@@ -26,6 +26,7 @@ function ViewProfile(): React.ReactElement {
   const { createToast } = useToast();
 
   const { data, loading } = useQuery<MyProfileQuery>(MY_PROFILE, {
+    errorPolicy: 'ignore',
     onError: (error: Error) => {
       Sentry.captureException(error);
       createToast({ type: 'error' });

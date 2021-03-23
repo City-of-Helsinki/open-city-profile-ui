@@ -88,6 +88,7 @@ The following envs are used:
 | `REACT_APP_IPD_MANAGEMENT_URL_GOOGLE` | Account management url for Google. </br> **default:** `https://myaccount.google.com` |
 | `REACT_APP_IPD_MANAGEMENT_URL_FACEBOOK` | Account management url for Facebook.  </br> **default:** `http://facebook.com/settings` |
 | `REACT_APP_IPD_MANAGEMENT_URL_YLE` | Account management url for Yle. </br> **default:** `https://tunnus.yle.fi/#omat-tiedot` |
+| `REACT_APP_IPD_MANAGEMENT_URL_TUNNISTUS_SUOMI_FI` | Account management url for Suomi.fi tunnistus. </br> **default:** `https://suomi.fi` |
 | `REACT_APP_OIDC_AUTHORITY` | This is the URL to tunnistamo. |
 | `REACT_APP_OIDC_CLIENT_ID` | ID of the client that has to be configured in tunnistamo. |
 | `REACT_APP_OIDC_SCOPE` | Which scopes the app requires. |

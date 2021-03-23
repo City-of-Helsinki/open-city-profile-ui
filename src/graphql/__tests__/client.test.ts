@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 
 import authService from '../../auth/authService';
 import client from '../client';

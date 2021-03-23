@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery, ApolloError } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router';
 import { loader } from 'graphql.macro';
 import { User } from 'oidc-client';
 import * as Sentry from '@sentry/browser';
 
+import Notification from '../../../common/copyOfHDSNotification/Notification';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import CreateProfile from '../createProfile/CreateProfile';
 import ViewProfile from '../viewProfile/ViewProfile';
 import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
-import { ProfileExistsQuery } from '../../../graphql/generatedTypes';
-import useToast from '../../../toast/useToast';
+import { ProfileExistsQuery as ProfileExistsRoot } from '../../../graphql/generatedTypes';
 import authService from '../../../auth/authService';
+import responsive from '../../../common/cssHelpers/responsive.module.css';
+import parseGraphQLError from '../../helpers/parseGraphQLError';
 
 const PROFILE_EXISTS = loader('../../graphql/ProfileExistsQuery.graphql');
 
@@ -21,15 +23,14 @@ function Profile(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const location = useLocation();
-  const { createToast } = useToast();
 
-  const [checkProfileExists, { data, loading }] = useLazyQuery<
-    ProfileExistsQuery
+  const [checkProfileExists, { data, loading, error }] = useLazyQuery<
+    ProfileExistsRoot
   >(PROFILE_EXISTS, {
     fetchPolicy: 'no-cache',
-    onError: (error: Error) => {
-      Sentry.captureException(error);
-      createToast({ type: 'error' });
+    errorPolicy: 'ignore',
+    onError: (apolloError: ApolloError) => {
+      Sentry.captureException(apolloError);
     },
   });
   const [isCheckingAuthState, setIsCheckingAuthState] = useState(true);
@@ -53,6 +54,9 @@ function Profile(): React.ReactElement {
 
   const isLoadingAnything = Boolean(isCheckingAuthState || loading);
   const isProfileFound = data && data.myProfile;
+  const hasGraphQLError = error
+    ? !parseGraphQLError(error).isAllowedError
+    : false;
 
   const getPageTitle = () => {
     const pathname = location.pathname.substr(1);
@@ -70,6 +74,23 @@ function Profile(): React.ReactElement {
         return 'appName';
     }
   };
+
+  if (!isProfileFound && tunnistamoUser && hasGraphQLError) {
+    return (
+      <PageLayout title={getPageTitle()}>
+        <div className={styles.errorWrapper}>
+          <div className={responsive.maxWidthCentered}>
+            <Notification
+              type={'error'}
+              label={t('notification.defaultErrorTitle')}
+            >
+              {t('notification.defaultErrorText')}
+            </Notification>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout title={getPageTitle()}>

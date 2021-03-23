@@ -20,6 +20,10 @@
     "cancel": "Annullera",
     "close": "Stäng",
     "save": "Spara",
+    "remove": "SV: Poista",
+    "removeEmail": "SV: Poistetaanko sähköpostiosoite?",
+    "removePhone": "SV: Poistetaanko puhelinnumero?",
+    "removeAddress": "SV: Poistetaanko osoite?",
     "saveMessage": "Informationen som du har ändrat är omedelbart tillgänglig för följande Helsingfors stads tjänster:",
     "saveTitle": "Vill du spara dina ändringar?"
   },
@@ -79,7 +83,7 @@
   "nav": {
     "information": "Mina uppgifter",
     "menuButtonLabel": "Profilmeny",
-    "services": "SV: Käyttämäsi palvelut",
+    "services": "Dina tjänster",
     "signin": "Logga in",
     "signout": "Logga ut",
     "subscriptions": "Prenumerationer"
@@ -87,7 +91,16 @@
   "notification": {
     "closeButtonText": "Stäng",
     "defaultErrorText": "Något gick fel. Försök igen efter ett tag.",
-    "defaultErrorTitle": "Fel"
+    "defaultErrorTitle": "Fel",
+    "removeError": "SV: Poisto epäonnistui.",
+    "removeSuccess": "SV: Poisto onnistui",
+    "saveError": "SV: Tallennus epäonnistui.",
+    "saveSuccess": "SV: Tallennus onnistui!",
+    "tryAgain": "SV: Yritä uudelleen.",
+    "genericError": "SV:  Tapahtui virhe.",
+    "genericSuccess": "SV: Toiminto onnistui!",
+    "saving": "SV: Tallennetaan",
+    "removing": "SV: Poistetaan"
   },
   "oidc": {
     "authenticating": "Autentiserar..."
@@ -100,11 +113,12 @@
     "title": "Din profil har tagits bort!"
   },
   "profileForm": {
-    "addAnotherAddress": "Lägg till en annan adress",
-    "addAnotherEmail": "Lägg till en annan e-postadress",
-    "addAnotherPhone": "Lägg till ett nytt telefonnummer",
+    "addAnotherAddress": "SV: Lisää uusi osoite",
+    "addAnotherEmail": "SV: Lisää uusi sähköpostiosoite",
+    "addAnotherPhone": "SV: Lisää uusi puhelinnumero",
     "additionalInfo": "Ytterligare information",
     "address": "Hemadress",
+    "basicData": "SV: Perustiedot",
     "cancel": "Annullera",
     "city": "Stad",
     "country": "Land",
@@ -112,21 +126,33 @@
     "edit": "Redigera",
     "email": "Epost-adress",
     "firstName": "Förnamn",
+    "givenName": "SV: Kutsumanimi",
     "language": "Profilspråk",
     "lastName": "Efternamn",
     "makeAddressPrimary": "Ändra till din primära adress",
     "makeEmailPrimary": "Byt till din primära e-postadress",
     "makePhonePrimary": "Byt till din primära telefon",
+    "nickname": "SV: Lempinimi",
     "phone": "Telefonnummer",
     "postalCode": "Postnummer",
+    "postOffice": "SV: Postitoimipaikka",
+    "primary": "SV: Ensisijainen",
+    "remove": "SV: Poista",
+    "setPrimary": "SV: Aseta ensisijaiseksi",
     "submit": "Spara",
     "terms": "Jag har läst filen <0>beskrivningen</0> och stads <1>sekretesspolicy</1>",
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/dataskydd",
-    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf"
+    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf",
+    "nationalIdentificationNumber": "SV: Henkilötunnus"
   },
   "profileInformation": {
     "address": "Adress",
+    "ariaEditAddress": "SV: Muokkaa osoitetta",
+    "ariaEditPhone": "SV: Muokkaa puhelinnumeroa",
+    "ariaEditEmail": "SV: Muokkaa sähköpostiosoitetta",
+    "ariaEditBasicData": "SV: Muokkaa perustietoja",
     "deleteProfile": "Radera profil",
+    "description": "SV: Helsinki Profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa. Kätevää eikö?",
     "downloadData": "Ladda ner min information",
     "email": "Epost",
     "name": "Namn",
@@ -135,16 +161,41 @@
     "title": "Min information",
     "visibility": "Följande information om dig lagras i Helsingfors profilen.",
     "doGoToAccountManagement": "Gå till kontohantering",
-    "authenticationMethod": "Autentiseringsmetod"
+    "authenticationMethod": "Autentiseringsmetod",
+    "primaryAddress": "SV: Ensisijainen osoite",
+    "permanentAddress": "SV: Vakinainen osoite",
+    "temporaryAddress": "SV: Väliaikainen osoite",
+    "permanentForeignAddress": "SV: Väliaikainen ulkomainen osoite",
+    "primaryEmail": "SV: Ensisijainen sähköpostiosoite",
+    "primaryPhone": "SV: Ensisijainen puhelinnumero",
+    "primaryAddressAriaDescription": "SV :Tämä on ensisijainen osoitteesi",
+    "primaryEmailAriaDescription": "SV: Tämä on ensisijainen sähköpostiosoitteesi",
+    "primaryPhoneAriaDescription": "SV: Tämä on ensisijainen puhelinnumerosi",
+    "verifiedDataInformationPrefix": "SV: Merkityt",
+    "verifiedDataInformationAriaPrefix": "SV: Alla olevat",
+    "verifiedDataInformation": "SV: <0></0> tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <1>siirry suomi.fi palveluun </1>",
+    "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
+    "verifiedData": "SV: Vahvistettu tieto",
+    "verifiedBasicData": "SV: Vahvistetut perustiedot",
+    "phones": "SV: Puhelinnumerot",
+    "emails": "SV: Sähköpostiosoitteet",
+    "addresses": "SV: Osoitteet",
+    "ariaFieldHelperWrite": "SV: Kirjoita",
+    "ariaListTitlePhones": "SV: Antamasi puhelinnumerot",
+    "ariaListTitleEmails": "SV: Antamasi sähköpostiosoitteet",
+    "ariaListTitleAddresses": "SV: Antamasi osoitteet",
+    "noPhones": "SV: Et ole antanut puhelinnumeroita",
+    "noEmails": "SV: Et ole antanut sähköpostiosoitteita",
+    "noAddresses": "SV: Et ole antanut osoitteita"
   },
   "sanityCheck": "open-city-profile.sv",
   "serviceConnections": {
     "clock": "kl.",
     "created": "Skapad:",
     "empty": "Du har för närvarande inga tjänster anslutna till din profil.",
-    "explanation": "SV: Olet antanut seuraaville palveluille oikeuden käyttää Helsinki Profiili -tietojasi.",
+    "explanation": "Du har gett följande tjänster tillstånd att använda uppgifterna i din Helsingfors-profil.",
     "servicePersonalData": "Information som tjänsten vet om dig:",
-    "title": "SV: Palvelut, joilla on lupa käyttää tietojasi"
+    "title": "Tjänster som har tillstånd att använda dina uppgifter"
   },
   "skipToContent": "Hoppa till innehåll",
   "subscriptions": {
@@ -159,13 +210,15 @@
     "email": "Inte ett giltigt epost-adress",
     "maxLength": "Fältet får vara högst {{max}} tecken långt.",
     "phoneMin": "Telefonnumret måste vara mint {{min}} tecken långt.",
-    "required": "Detta fält krävs."
+    "required": "Detta fält krävs.",
+    "errorTitleForScreenReaders": "SV: Lomakkeella on seuraavat virheet:"
   },
   "identityProvider": {
     "helsinkiAccount": "Helsinfors-kontot",
     "github": "GitHub",
     "google": "Google",
     "facebook": "Facebook",
-    "yle": "Yle"
+    "yle": "Yle",
+    "tunnistusSuomifi": "Suomi.fi"
   }
 }
