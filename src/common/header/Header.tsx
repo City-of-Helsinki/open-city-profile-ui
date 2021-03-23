@@ -1,14 +1,14 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Navigation } from 'hds-react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
-import authService from '../../auth/authService';
 import { MAIN_CONTENT_ID } from '../constants';
 import LanguageSwitcher from '../../i18n/components/languageSwitcher/LanguageSwitcher';
 import UserDropdown from './userDropdown/UserDropdown';
 import styles from './Header.module.css';
+import { ProfileContext } from '../../profile/components/context/ProfileContext';
 
 function Header(): React.ReactElement {
   const { t } = useTranslation();
@@ -18,7 +18,7 @@ function Header(): React.ReactElement {
 
   const { trackEvent } = useMatomo();
 
-  const isAuthenticated = authService.isAuthenticated();
+  const { isComplete } = useContext(ProfileContext);
 
   const onClick = (path: string, e: MouseEvent) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ function Header(): React.ReactElement {
       title="Profile"
       className={styles.zIndexFix}
     >
-      {isAuthenticated && (
+      {isComplete && (
         <Navigation.Row>
           <Navigation.Item
             label={t('nav.information')}
