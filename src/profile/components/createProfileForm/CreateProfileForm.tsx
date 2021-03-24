@@ -12,6 +12,7 @@ import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
 import { Language } from '../../../graphql/typings';
+import { getFormFields } from '../../helpers/formProperties';
 import {
   basicDataSchema,
   createProfilePhoneSchema,
@@ -44,7 +45,8 @@ type Props = {
 
 function CreateProfileForm(props: Props): React.ReactElement {
   const { t } = useTranslation();
-
+  const formFields = getFormFields('basic-data');
+  const phoneFields = getFormFields('phones');
   const getFieldError = (
     formikProps: FormikProps<FormikFormValues>,
     fieldName: keyof FormikFormValues,
@@ -87,11 +89,11 @@ function CreateProfileForm(props: Props): React.ReactElement {
               className={styles.formField}
               name="firstName"
               id="firstName"
-              maxLength="255"
+              maxLength={formFields.firstName.max as number}
               as={TextInput}
               invalid={getIsInvalid(formikProps, 'firstName')}
               helperText={getFieldError(formikProps, 'firstName', {
-                max: 255,
+                max: formFields.firstName.max as number,
               })}
               labelText={t('profileForm.firstName')}
             />
@@ -99,7 +101,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
               className={styles.formField}
               name="lastName"
               id="lastName"
-              maxLength="255"
+              maxLength={formFields.lastName.max as number}
               as={TextInput}
               invalid={getIsInvalid(formikProps, 'lastName')}
               helperText={getFieldError(formikProps, 'lastName', { max: 255 })}
@@ -126,12 +128,12 @@ function CreateProfileForm(props: Props): React.ReactElement {
               id="phone"
               as={TextInput}
               type="tel"
-              minLength="6"
-              maxLength="255"
+              minLength={phoneFields.value.min as number}
+              maxLength={phoneFields.value.max as number}
               invalid={getIsInvalid(formikProps, 'phone')}
               helperText={getFieldError(formikProps, 'phone', {
-                min: 6,
-                max: 255,
+                min: phoneFields.value.min as number,
+                max: phoneFields.value.max as number,
               })}
               labelText={t('profileForm.phone')}
             />
