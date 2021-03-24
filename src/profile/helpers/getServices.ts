@@ -1,10 +1,10 @@
 import {
-  ServiceConnectionsQuery,
-  ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service as Service,
+  ServiceConnectionsRoot,
+  Service,
   ServiceType,
-} from '../../graphql/generatedTypes';
+} from '../../graphql/typings';
 
-export default function getServices(data?: ServiceConnectionsQuery): Service[] {
+export default function getServices(data?: ServiceConnectionsRoot): Service[] {
   if (data?.myProfile?.serviceConnections) {
     return data.myProfile.serviceConnections.edges
       .map(edge => {

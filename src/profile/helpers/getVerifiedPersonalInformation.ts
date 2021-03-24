@@ -1,10 +1,10 @@
 import {
-  MyProfileQuery,
-  MyProfileQuery_myProfile_verifiedPersonalInformation as VerifiedPersonalInformation,
-} from '../../graphql/generatedTypes';
+  ProfileRoot,
+  VerifiedPersonalInformation,
+} from '../../graphql/typings';
 
 function getVerifiedPersonalInformation(
-  myProfileQuery: MyProfileQuery | undefined
+  myProfileQuery: ProfileRoot | undefined
 ): VerifiedPersonalInformation | null | undefined {
   return (
     myProfileQuery &&

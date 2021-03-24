@@ -8,7 +8,7 @@ import {
 import { DocumentNode } from 'graphql';
 import { loader } from 'graphql.macro';
 
-import { GdprServiceConnectionsQuery } from '../graphql/generatedTypes';
+import { GdprServiceConnectionsRoot } from '../graphql/typings';
 import { getQueryScopes } from './utils';
 import useAuthorizationCode from './useAuthorizationCode';
 
@@ -22,7 +22,7 @@ function useDownloadProfile<TQuery>(
   query: DocumentNode,
   options?: LazyQueryHookOptions<TQuery, TVariables>
 ): [() => void, LazyQueryResult<TQuery, TVariables>, boolean] {
-  const { data } = useQuery<GdprServiceConnectionsQuery>(SERVICE_CONNECTIONS);
+  const { data } = useQuery<GdprServiceConnectionsRoot>(SERVICE_CONNECTIONS);
   const [downloadProfile, queryResult] = useLazyQuery<TQuery>(query, {
     ...options,
     onCompleted: (...args) => {
