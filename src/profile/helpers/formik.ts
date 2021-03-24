@@ -1,32 +1,53 @@
 import { ReactNode } from 'react';
 import { FormikProps } from 'formik';
 import lodash from 'lodash';
+import { TFunction } from 'i18next';
+
+import { getErrorMessageWithOptions } from '../../common/schemas/schemas';
+export type ErrorRenderer = ({
+  message,
+  options,
+}: {
+  message: string;
+  options?: Record<string, unknown>;
+}) => ReactNode;
 
 export function getIsInvalid<FormValues>(
   formikProps: FormikProps<FormValues>,
-  fieldName: string
+  fieldName: string,
+  isOldData = false
 ): boolean {
-  const isSubmitted = formikProps.submitCount > 0;
+  const isNotNew = isOldData === true || formikProps.submitCount > 0;
   const isError = Boolean(lodash.get(formikProps.errors, fieldName));
-
-  return isSubmitted && isError;
+  return isNotNew && isError;
 }
 
-const defaultErrorRender = (error: string) => error;
+const defaultErrorRender: ErrorRenderer = props => props.message;
 
 export function getError<FormValues>(
   formikProps: FormikProps<FormValues>,
   fieldName: string,
-  render: (error: string) => ReactNode = defaultErrorRender
+  render: ErrorRenderer = defaultErrorRender,
+  isOldData = false
 ): ReactNode | undefined {
   const errorMessage = lodash.get(formikProps.errors, fieldName);
-
   if (
-    getIsInvalid(formikProps, fieldName) &&
+    getIsInvalid(formikProps, fieldName, isOldData) &&
     typeof errorMessage === 'string'
   ) {
-    return render(errorMessage);
+    return render(getErrorMessageWithOptions(errorMessage));
   }
 
   return undefined;
+}
+
+export function getFieldError<FormValues>(
+  t: TFunction,
+  formikProps: FormikProps<FormValues>,
+  fieldName: string,
+  isOldData = false
+): ReactNode | undefined {
+  const renderError: ErrorRenderer = ({ message, options }) =>
+    t(message, options);
+  return getError<FormValues>(formikProps, fieldName, renderError, isOldData);
 }

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { TextInput, Checkbox } from 'hds-react';
 import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 
-import { getIsInvalid, getError } from '../../helpers/formik';
+import { getIsInvalid, getFieldError } from '../../helpers/formik';
 import FormikDropdown, {
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
@@ -47,14 +47,27 @@ function CreateProfileForm(props: Props): React.ReactElement {
   const { t } = useTranslation();
   const formFields = getFormFields('basic-data');
   const phoneFields = getFormFields('phones');
-  const getFieldError = (
-    formikProps: FormikProps<FormikFormValues>,
-    fieldName: keyof FormikFormValues,
-    options: Record<string, unknown>
-  ) => {
-    const renderError = (message: string) => t(message, options);
+  const [submitAttempted, setSubmitAttempted] = useState<boolean>(false);
 
-    return getError<FormikFormValues>(formikProps, fieldName, renderError);
+  const hasFieldError = (
+    formikProps: FormikProps<FormikFormValues>,
+    fieldName: keyof FormikFormValues
+  ): boolean =>
+    getIsInvalid<FormikFormValues>(formikProps, fieldName, submitAttempted);
+
+  const getFieldErrorMessage = (
+    formikProps: FormikProps<FormikFormValues>,
+    fieldName: keyof FormikFormValues
+  ) => {
+    if (!hasFieldError(formikProps, fieldName)) {
+      return undefined;
+    }
+    return getFieldError<FormikFormValues>(
+      t,
+      formikProps,
+      fieldName,
+      submitAttempted
+    );
   };
 
   const profileLanguageOptions = profileConstants.LANGUAGES.map(language => ({
@@ -91,10 +104,8 @@ function CreateProfileForm(props: Props): React.ReactElement {
               id="firstName"
               maxLength={formFields.firstName.max as number}
               as={TextInput}
-              invalid={getIsInvalid(formikProps, 'firstName')}
-              helperText={getFieldError(formikProps, 'firstName', {
-                max: formFields.firstName.max as number,
-              })}
+              invalid={hasFieldError(formikProps, 'firstName')}
+              helperText={getFieldErrorMessage(formikProps, 'firstName')}
               labelText={t('profileForm.firstName')}
             />
             <Field
@@ -103,8 +114,8 @@ function CreateProfileForm(props: Props): React.ReactElement {
               id="lastName"
               maxLength={formFields.lastName.max as number}
               as={TextInput}
-              invalid={getIsInvalid(formikProps, 'lastName')}
-              helperText={getFieldError(formikProps, 'lastName', { max: 255 })}
+              invalid={hasFieldError(formikProps, 'lastName')}
+              helperText={getFieldErrorMessage(formikProps, 'lastName')}
               labelText={t('profileForm.lastName')}
             />
 
@@ -130,11 +141,8 @@ function CreateProfileForm(props: Props): React.ReactElement {
               type="tel"
               minLength={phoneFields.value.min as number}
               maxLength={phoneFields.value.max as number}
-              invalid={getIsInvalid(formikProps, 'phone')}
-              helperText={getFieldError(formikProps, 'phone', {
-                min: phoneFields.value.min as number,
-                max: phoneFields.value.max as number,
-              })}
+              invalid={hasFieldError(formikProps, 'phone')}
+              helperText={getFieldErrorMessage(formikProps, 'phone')}
               labelText={t('profileForm.phone')}
             />
 
@@ -179,6 +187,11 @@ function CreateProfileForm(props: Props): React.ReactElement {
                   formikProps.errors.terms ||
                   props.isSubmitting
               )}
+              onClick={() => {
+                if (!submitAttempted) {
+                  setSubmitAttempted(true);
+                }
+              }}
             >
               {t('profileForm.submit')}
             </Button>

@@ -14,7 +14,7 @@ import classNames from 'classnames';
 
 import { formConstants } from '../../constants/formConstants';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
-import { getError, getIsInvalid } from '../../helpers/formik';
+import { ErrorRenderer, getError, getIsInvalid } from '../../helpers/formik';
 import styles from './EditProfileForm.module.css';
 import {
   AddressNode,
@@ -75,7 +75,8 @@ function EditProfileForm(props: Props): React.ReactElement {
     fieldName: string,
     options: Record<string, unknown>
   ) => {
-    const renderError = (message: string) => t(message, options);
+    const renderError: ErrorRenderer = errorProps =>
+      t(errorProps.message, options);
 
     return getError<FormValues>(formikProps, fieldName, renderError);
   };
