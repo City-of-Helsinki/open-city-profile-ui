@@ -1,24 +1,24 @@
 import getSubscriptionsData from '../getSubscriptionsData';
 import {
-  QueryMySubscriptions,
-  QuerySubscriptions,
-  QueryMySubscriptions_myProfile_subscriptions_edges as ProfileEdge,
-  QuerySubscriptions_subscriptionTypeCategories_edges as SubscriptionEdge,
-} from '../../../graphql/generatedTypes';
+  MySubscriptionsRoot,
+  MySubcriptionsEdge,
+  SubcriptionsTypeCategoriesEdge,
+  SubscriptionsRoot,
+} from '../../../graphql/typings';
 import {
   subscriptions,
   profile,
 } from '../../../common/test/subscriptionTestData';
 
-const getSubscriptions = (edges: SubscriptionEdge[]) =>
+const getSubscriptions = (edges: SubcriptionsTypeCategoriesEdge[]) =>
   ({
     subscriptionTypeCategories: {
       edges: [...edges],
       __typename: 'SubscriptionTypeCategoryNodeConnection',
     },
-  } as QuerySubscriptions);
+  } as SubscriptionsRoot);
 
-const getProfileData = (edges: ProfileEdge[]) =>
+const getProfileData = (edges: MySubcriptionsEdge[]) =>
   ({
     myProfile: {
       id: '123',
@@ -28,7 +28,7 @@ const getProfileData = (edges: ProfileEdge[]) =>
       },
       __typename: 'ProfileNode',
     },
-  } as QueryMySubscriptions);
+  } as MySubscriptionsRoot);
 
 it('returns empty array', () => {
   const testData = getSubscriptionsData(
