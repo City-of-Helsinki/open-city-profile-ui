@@ -9,10 +9,8 @@ import {
   Formik,
   FormikProps,
 } from 'formik';
-import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
-import validator from 'validator';
 
 import { formConstants } from '../../constants/formConstants';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
@@ -35,40 +33,7 @@ import FormikDropdown, {
   OptionType,
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
-
-const maxLengthValidation = 'validation.maxLength';
-
-const addressSchema = yup.object().shape({
-  address: yup.string().max(128, maxLengthValidation),
-  city: yup.string().max(64, maxLengthValidation),
-  postalCode: yup.string().max(5, maxLengthValidation),
-});
-
-const phoneSchema = yup.object().shape({
-  phone: yup
-    .string()
-    .min(6, 'validation.phoneMin')
-    .max(255, maxLengthValidation),
-});
-
-const schema = yup.object().shape({
-  firstName: yup.string().max(255, maxLengthValidation),
-  lastName: yup.string().max(255, maxLengthValidation),
-  language: yup.string(),
-  primaryPhone: phoneSchema,
-  primaryAddress: addressSchema,
-  addresses: yup.array().of(addressSchema),
-  emails: yup.array().of(
-    yup.object().shape({
-      email: yup.mixed().test('isValidEmail', 'validation.email', function() {
-        return this.parent?.email
-          ? validator.isEmail(this.parent?.email)
-          : false;
-      }),
-    })
-  ),
-  phones: yup.array().of(phoneSchema),
-});
+import { basicDataSchema } from '../../../common/schemas/schemas';
 
 export type FormValues = {
   firstName: string;
@@ -185,7 +150,7 @@ function EditProfileForm(props: Props): React.ReactElement {
           phones: [...values.phones, values.primaryPhone],
         });
       }}
-      validationSchema={schema}
+      validationSchema={basicDataSchema}
     >
       {(formikProps: FormikProps<FormValues>) => (
         <Fragment>
