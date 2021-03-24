@@ -12,17 +12,17 @@ import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
 import { Language } from '../../../graphql/typings';
+import {
+  basicDataSchema,
+  createProfilePhoneSchema,
+} from '../../../common/schemas/schemas';
 
-const maxLengthValidation = 'validation.maxLength';
-const schema = yup.object().shape({
-  firstName: yup.string().max(255, maxLengthValidation),
-  lastName: yup.string().max(255, maxLengthValidation),
-  phone: yup
-    .string()
-    .min(6, 'validation.phoneMin')
-    .max(255, maxLengthValidation),
-  terms: yup.boolean().oneOf([true], 'validation.required'),
-});
+const termsSchema = yup
+  .object()
+  .shape({ terms: yup.boolean().oneOf([true], 'validation.required') });
+const schema = basicDataSchema
+  .concat(termsSchema)
+  .concat(createProfilePhoneSchema);
 
 export type FormValues = {
   firstName: string;
