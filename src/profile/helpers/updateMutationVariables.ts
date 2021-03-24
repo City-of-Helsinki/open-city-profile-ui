@@ -1,9 +1,6 @@
 import { isEqual } from 'lodash';
 
-import {
-  FormValues,
-  Primary,
-} from '../components/editProfileForm/EditProfileForm';
+import { FormValues } from '../components/editProfileForm/EditProfileForm';
 import {
   CreateAddressInput,
   CreateEmailInput,
@@ -26,6 +23,8 @@ import getPhonesFromNode from './getPhonesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
 import getAddressesFromNode from './getAddressesFromNode';
 import { formConstants } from '../constants/formConstants';
+
+type Primary = 'primaryEmail' | 'primaryAddress' | 'primaryPhone';
 
 type EmailInputs = {
   addEmails: CreateEmailInput[] | null[];
@@ -83,8 +82,8 @@ const getObjectFields = (value: AddressNode | EmailNode | PhoneNode) => {
   switch (value.__typename) {
     case 'EmailNode': {
       return {
+        id: value.id,
         email: value.email,
-        id: value.email,
         emailType: value.emailType || EmailType.OTHER,
         primary: value.primary,
       };
