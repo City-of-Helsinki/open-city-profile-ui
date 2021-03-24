@@ -1,7 +1,4 @@
-import {
-  QueryMySubscriptions,
-  QuerySubscriptions,
-} from '../../graphql/generatedTypes';
+import { MySubscriptionsRoot, SubscriptionsRoot } from '../../graphql/typings';
 
 type SubscriptionsData = {
   id: string | undefined;
@@ -10,8 +7,8 @@ type SubscriptionsData = {
   options: (Record<string, unknown> & { enabled: boolean })[] | undefined;
 };
 export default function getSubscriptionsData(
-  data?: QuerySubscriptions,
-  profileData?: QueryMySubscriptions
+  data?: SubscriptionsRoot,
+  profileData?: MySubscriptionsRoot
 ): SubscriptionsData[] {
   if (
     !data?.subscriptionTypeCategories ||

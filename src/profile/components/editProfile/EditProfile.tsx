@@ -8,15 +8,17 @@ import EditProfileForm, {
   FormValues,
 } from '../editProfileForm/EditProfileForm';
 import {
-  Language,
-  MyProfileQuery,
-  MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
-  MyProfileQuery_myProfile_primaryAddress as PrimaryAddress,
-  MyProfileQuery_myProfile_primaryPhone as PrimaryPhone,
-  ServiceConnectionsQuery,
   UpdateMyProfile as UpdateMyProfileData,
   UpdateMyProfileVariables,
 } from '../../../graphql/generatedTypes';
+import {
+  ProfileRoot,
+  PrimaryEmail,
+  PrimaryAddress,
+  PrimaryPhone,
+  Language,
+  ServiceConnectionsRoot,
+} from '../../../graphql/typings';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import getEmailsFromNode from '../../helpers/getEmailsFromNode';
 import getAddressesFromNode from '../../helpers/getAddressesFromNode';
@@ -31,12 +33,12 @@ const SERVICE_CONNECTIONS = loader(
 
 type Props = {
   setEditing: () => void;
-  profileData: MyProfileQuery;
+  profileData: ProfileRoot;
 };
 
 function EditProfile(props: Props): React.ReactElement {
   const { createToast } = useToast();
-  const { data, refetch } = useQuery<ServiceConnectionsQuery>(
+  const { data, refetch } = useQuery<ServiceConnectionsRoot>(
     SERVICE_CONNECTIONS,
     {
       onError: (error: Error) => {

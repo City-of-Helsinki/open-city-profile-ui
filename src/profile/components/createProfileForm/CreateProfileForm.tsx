@@ -11,7 +11,7 @@ import FormikDropdown, {
 import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
-import { Language } from '../../../graphql/generatedTypes';
+import { Language } from '../../../graphql/typings';
 
 const maxLengthValidation = 'validation.maxLength';
 const schema = yup.object().shape({

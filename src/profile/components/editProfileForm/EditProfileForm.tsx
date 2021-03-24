@@ -19,15 +19,15 @@ import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import { getError, getIsInvalid } from '../../helpers/formik';
 import styles from './EditProfileForm.module.css';
 import {
+  AddressNode,
+  PhoneNode,
+  EmailNode,
+  PrimaryEmail,
+  PrimaryAddress,
+  PrimaryPhone,
   Language,
-  MyProfileQuery_myProfile_addresses_edges_node as Address,
-  MyProfileQuery_myProfile_emails_edges_node as Email,
-  MyProfileQuery_myProfile_phones_edges_node as Phone,
-  MyProfileQuery_myProfile_primaryAddress as PrimaryAddress,
-  MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
-  MyProfileQuery_myProfile_primaryPhone as PrimaryPhone,
-  ServiceConnectionsQuery,
-} from '../../../graphql/generatedTypes';
+  ServiceConnectionsRoot,
+} from '../../../graphql/typings';
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import AdditionalInformationActions from './AdditionalInformationActions';
@@ -77,9 +77,9 @@ export type FormValues = {
   primaryAddress: PrimaryAddress;
   primaryPhone: PrimaryPhone;
   profileLanguage: Language;
-  addresses: Address[];
-  emails: Email[];
-  phones: Phone[];
+  addresses: AddressNode[];
+  emails: EmailNode[];
+  phones: PhoneNode[];
 };
 
 type Props = {
@@ -87,7 +87,7 @@ type Props = {
   isSubmitting: boolean;
   profile: FormValues;
   onValues: (values: FormValues) => void;
-  services?: ServiceConnectionsQuery;
+  services?: ServiceConnectionsRoot;
 };
 
 export type Primary = 'primaryEmail' | 'primaryAddress' | 'primaryPhone';
@@ -136,9 +136,11 @@ function EditProfileForm(props: Props): React.ReactElement {
     formProps: FormikProps<FormValues>,
     fieldName: keyof FormValues
   ) => {
-    const previous: (Email | Address | Phone)[] = formProps.getFieldProps(
-      fieldName
-    ).value;
+    const previous: (
+      | EmailNode
+      | AddressNode
+      | PhoneNode
+    )[] = formProps.getFieldProps(fieldName).value;
 
     previous.push(formConstants.EMPTY_VALUES[fieldName]);
 
@@ -327,7 +329,7 @@ function EditProfileForm(props: Props): React.ReactElement {
                 <React.Fragment>
                   <div className={styles.formFields}>
                     {formikProps?.values?.emails.map(
-                      (email: Email | PrimaryEmail, index: number) => (
+                      (email: EmailNode | PrimaryEmail, index: number) => (
                         <div key={index} className={styles.formField}>
                           <Field
                             as={TextInput}
@@ -374,7 +376,7 @@ function EditProfileForm(props: Props): React.ReactElement {
                 <React.Fragment>
                   <div className={styles.formFields}>
                     {formikProps.values.phones.map(
-                      (phone: Phone, index: number) => (
+                      (phone: PhoneNode, index: number) => (
                         <div className={styles.formField} key={index}>
                           <Field
                             className={styles.formField}
@@ -425,7 +427,7 @@ function EditProfileForm(props: Props): React.ReactElement {
               render={(arrayHelpers: FieldArrayRenderProps) => (
                 <React.Fragment>
                   {formikProps?.values?.addresses.map(
-                    (address: Address, index: number) => (
+                    (address: AddressNode, index: number) => (
                       <div key={index} className={styles.multipleAddresses}>
                         <div
                           className={classNames(

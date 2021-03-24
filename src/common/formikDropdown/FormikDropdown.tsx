@@ -2,7 +2,7 @@ import React from 'react';
 import { Dropdown, DropdownProps } from 'hds-react';
 import { Field, FieldProps } from 'formik';
 
-import { Language } from '../../graphql/generatedTypes';
+import { Language } from '../../graphql/typings';
 
 type Props = {
   name: string;
