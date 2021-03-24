@@ -1,28 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { TextInput, Checkbox } from 'hds-react';
 import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 
-import { getIsInvalid, getError } from '../../helpers/formik';
+import { getIsInvalid, getFieldError } from '../../helpers/formik';
 import FormikDropdown, {
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
 import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
-import { Language } from '../../../graphql/generatedTypes';
+import { Language } from '../../../graphql/typings';
+import { getFormFields } from '../../helpers/formProperties';
+import {
+  basicDataSchema,
+  createProfilePhoneSchema,
+} from '../../../common/schemas/schemas';
 
-const maxLengthValidation = 'validation.maxLength';
-const schema = yup.object().shape({
-  firstName: yup.string().max(255, maxLengthValidation),
-  lastName: yup.string().max(255, maxLengthValidation),
-  phone: yup
-    .string()
-    .min(6, 'validation.phoneMin')
-    .max(255, maxLengthValidation),
-  terms: yup.boolean().oneOf([true], 'validation.required'),
-});
+const termsSchema = yup
+  .object()
+  .shape({ terms: yup.boolean().oneOf([true], 'validation.required') });
+const schema = basicDataSchema
+  .concat(termsSchema)
+  .concat(createProfilePhoneSchema);
 
 export type FormValues = {
   firstName: string;
@@ -44,15 +45,29 @@ type Props = {
 
 function CreateProfileForm(props: Props): React.ReactElement {
   const { t } = useTranslation();
+  const formFields = getFormFields('basic-data');
+  const phoneFields = getFormFields('phones');
+  const [submitAttempted, setSubmitAttempted] = useState<boolean>(false);
 
-  const getFieldError = (
+  const hasFieldError = (
     formikProps: FormikProps<FormikFormValues>,
-    fieldName: keyof FormikFormValues,
-    options: Record<string, unknown>
-  ) => {
-    const renderError = (message: string) => t(message, options);
+    fieldName: keyof FormikFormValues
+  ): boolean =>
+    getIsInvalid<FormikFormValues>(formikProps, fieldName, submitAttempted);
 
-    return getError<FormikFormValues>(formikProps, fieldName, renderError);
+  const getFieldErrorMessage = (
+    formikProps: FormikProps<FormikFormValues>,
+    fieldName: keyof FormikFormValues
+  ) => {
+    if (!hasFieldError(formikProps, fieldName)) {
+      return undefined;
+    }
+    return getFieldError<FormikFormValues>(
+      t,
+      formikProps,
+      fieldName,
+      submitAttempted
+    );
   };
 
   const profileLanguageOptions = profileConstants.LANGUAGES.map(language => ({
@@ -87,22 +102,20 @@ function CreateProfileForm(props: Props): React.ReactElement {
               className={styles.formField}
               name="firstName"
               id="firstName"
-              maxLength="255"
+              maxLength={formFields.firstName.max as number}
               as={TextInput}
-              invalid={getIsInvalid(formikProps, 'firstName')}
-              helperText={getFieldError(formikProps, 'firstName', {
-                max: 255,
-              })}
+              invalid={hasFieldError(formikProps, 'firstName')}
+              helperText={getFieldErrorMessage(formikProps, 'firstName')}
               labelText={t('profileForm.firstName')}
             />
             <Field
               className={styles.formField}
               name="lastName"
               id="lastName"
-              maxLength="255"
+              maxLength={formFields.lastName.max as number}
               as={TextInput}
-              invalid={getIsInvalid(formikProps, 'lastName')}
-              helperText={getFieldError(formikProps, 'lastName', { max: 255 })}
+              invalid={hasFieldError(formikProps, 'lastName')}
+              helperText={getFieldErrorMessage(formikProps, 'lastName')}
               labelText={t('profileForm.lastName')}
             />
 
@@ -126,13 +139,10 @@ function CreateProfileForm(props: Props): React.ReactElement {
               id="phone"
               as={TextInput}
               type="tel"
-              minLength="6"
-              maxLength="255"
-              invalid={getIsInvalid(formikProps, 'phone')}
-              helperText={getFieldError(formikProps, 'phone', {
-                min: 6,
-                max: 255,
-              })}
+              minLength={phoneFields.value.min as number}
+              maxLength={phoneFields.value.max as number}
+              invalid={hasFieldError(formikProps, 'phone')}
+              helperText={getFieldErrorMessage(formikProps, 'phone')}
               labelText={t('profileForm.phone')}
             />
 
@@ -177,6 +187,11 @@ function CreateProfileForm(props: Props): React.ReactElement {
                   formikProps.errors.terms ||
                   props.isSubmitting
               )}
+              onClick={() => {
+                if (!submitAttempted) {
+                  setSubmitAttempted(true);
+                }
+              }}
             >
               {t('profileForm.submit')}
             </Button>

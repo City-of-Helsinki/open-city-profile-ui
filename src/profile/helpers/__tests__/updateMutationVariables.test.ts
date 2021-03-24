@@ -50,7 +50,7 @@ const getPhoneAsComparisonObject = (source: Phone): Partial<Phone> => {
 const getEmailAsComparisonObject = (source: Email): Partial<Email> => {
   const clone = cloneAndReplace<Email>(source);
   if (source.email && source.id) {
-    clone.id = source.email;
+    clone.id = source.id;
   }
   return clone;
 };

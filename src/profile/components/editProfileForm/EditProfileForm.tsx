@@ -9,25 +9,23 @@ import {
   Formik,
   FormikProps,
 } from 'formik';
-import * as yup from 'yup';
 import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
-import validator from 'validator';
 
 import { formConstants } from '../../constants/formConstants';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
-import { getError, getIsInvalid } from '../../helpers/formik';
+import { ErrorRenderer, getError, getIsInvalid } from '../../helpers/formik';
 import styles from './EditProfileForm.module.css';
 import {
+  AddressNode,
+  PhoneNode,
+  EmailNode,
+  PrimaryEmail,
+  PrimaryAddress,
+  PrimaryPhone,
   Language,
-  MyProfileQuery_myProfile_addresses_edges_node as Address,
-  MyProfileQuery_myProfile_emails_edges_node as Email,
-  MyProfileQuery_myProfile_phones_edges_node as Phone,
-  MyProfileQuery_myProfile_primaryAddress as PrimaryAddress,
-  MyProfileQuery_myProfile_primaryEmail as PrimaryEmail,
-  MyProfileQuery_myProfile_primaryPhone as PrimaryPhone,
-  ServiceConnectionsQuery,
-} from '../../../graphql/generatedTypes';
+  ServiceConnectionsRoot,
+} from '../../../graphql/typings';
 import profileConstants from '../../constants/profileConstants';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import AdditionalInformationActions from './AdditionalInformationActions';
@@ -35,40 +33,7 @@ import FormikDropdown, {
   OptionType,
   HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
-
-const maxLengthValidation = 'validation.maxLength';
-
-const addressSchema = yup.object().shape({
-  address: yup.string().max(128, maxLengthValidation),
-  city: yup.string().max(64, maxLengthValidation),
-  postalCode: yup.string().max(5, maxLengthValidation),
-});
-
-const phoneSchema = yup.object().shape({
-  phone: yup
-    .string()
-    .min(6, 'validation.phoneMin')
-    .max(255, maxLengthValidation),
-});
-
-const schema = yup.object().shape({
-  firstName: yup.string().max(255, maxLengthValidation),
-  lastName: yup.string().max(255, maxLengthValidation),
-  language: yup.string(),
-  primaryPhone: phoneSchema,
-  primaryAddress: addressSchema,
-  addresses: yup.array().of(addressSchema),
-  emails: yup.array().of(
-    yup.object().shape({
-      email: yup.mixed().test('isValidEmail', 'validation.email', function() {
-        return this.parent?.email
-          ? validator.isEmail(this.parent?.email)
-          : false;
-      }),
-    })
-  ),
-  phones: yup.array().of(phoneSchema),
-});
+import { basicDataSchema } from '../../../common/schemas/schemas';
 
 export type FormValues = {
   firstName: string;
@@ -77,17 +42,16 @@ export type FormValues = {
   primaryAddress: PrimaryAddress;
   primaryPhone: PrimaryPhone;
   profileLanguage: Language;
-  addresses: Address[];
-  emails: Email[];
-  phones: Phone[];
+  addresses: AddressNode[];
+  emails: EmailNode[];
+  phones: PhoneNode[];
 };
-
 type Props = {
   setEditing: () => void;
   isSubmitting: boolean;
   profile: FormValues;
   onValues: (values: FormValues) => void;
-  services?: ServiceConnectionsQuery;
+  services?: ServiceConnectionsRoot;
 };
 
 export type Primary = 'primaryEmail' | 'primaryAddress' | 'primaryPhone';
@@ -111,7 +75,8 @@ function EditProfileForm(props: Props): React.ReactElement {
     fieldName: string,
     options: Record<string, unknown>
   ) => {
-    const renderError = (message: string) => t(message, options);
+    const renderError: ErrorRenderer = errorProps =>
+      t(errorProps.message, options);
 
     return getError<FormValues>(formikProps, fieldName, renderError);
   };
@@ -136,9 +101,11 @@ function EditProfileForm(props: Props): React.ReactElement {
     formProps: FormikProps<FormValues>,
     fieldName: keyof FormValues
   ) => {
-    const previous: (Email | Address | Phone)[] = formProps.getFieldProps(
-      fieldName
-    ).value;
+    const previous: (
+      | EmailNode
+      | AddressNode
+      | PhoneNode
+    )[] = formProps.getFieldProps(fieldName).value;
 
     previous.push(formConstants.EMPTY_VALUES[fieldName]);
 
@@ -183,7 +150,7 @@ function EditProfileForm(props: Props): React.ReactElement {
           phones: [...values.phones, values.primaryPhone],
         });
       }}
-      validationSchema={schema}
+      validationSchema={basicDataSchema}
     >
       {(formikProps: FormikProps<FormValues>) => (
         <Fragment>
@@ -327,7 +294,7 @@ function EditProfileForm(props: Props): React.ReactElement {
                 <React.Fragment>
                   <div className={styles.formFields}>
                     {formikProps?.values?.emails.map(
-                      (email: Email | PrimaryEmail, index: number) => (
+                      (email: EmailNode | PrimaryEmail, index: number) => (
                         <div key={index} className={styles.formField}>
                           <Field
                             as={TextInput}
@@ -374,7 +341,7 @@ function EditProfileForm(props: Props): React.ReactElement {
                 <React.Fragment>
                   <div className={styles.formFields}>
                     {formikProps.values.phones.map(
-                      (phone: Phone, index: number) => (
+                      (phone: PhoneNode, index: number) => (
                         <div className={styles.formField} key={index}>
                           <Field
                             className={styles.formField}
@@ -425,7 +392,7 @@ function EditProfileForm(props: Props): React.ReactElement {
               render={(arrayHelpers: FieldArrayRenderProps) => (
                 <React.Fragment>
                   {formikProps?.values?.addresses.map(
-                    (address: Address, index: number) => (
+                    (address: AddressNode, index: number) => (
                       <div key={index} className={styles.multipleAddresses}>
                         <div
                           className={classNames(
