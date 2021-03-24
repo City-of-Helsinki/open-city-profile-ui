@@ -46,7 +46,6 @@ export type FormValues = {
   emails: EmailNode[];
   phones: PhoneNode[];
 };
-
 type Props = {
   setEditing: () => void;
   isSubmitting: boolean;
