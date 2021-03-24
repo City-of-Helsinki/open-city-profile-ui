@@ -2,7 +2,10 @@ import React from 'react';
 
 import VerifiedPersonalInformation from '../VerifiedPersonalInformation';
 import { renderProfileContextWrapper } from '../../../../common/test/componentMocking';
-import { getVerifiedData } from '../../../../common/test/myProfileMocking';
+import {
+  getVerifiedData,
+  getMyProfile,
+} from '../../../../common/test/myProfileMocking';
 import {
   MyProfileQuery,
   MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress as PermanentForeignAddress,
@@ -10,13 +13,17 @@ import {
   MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress as TemporaryAddress,
   MyProfileQuery_myProfile_verifiedPersonalInformation as VerifiedPersonalInformationType,
 } from '../../../../graphql/generatedTypes';
-import { myProfile } from '../../../../common/test/myProfileQueryData';
+import { createMockedMyProfileResponse } from '../../../../common/test/graphQLDataMocking';
 
 describe('<VerifiedPersonalInformation />', () => {
   let currentVIP: VerifiedPersonalInformationType;
+  const initialMyProfileResponse = createMockedMyProfileResponse(
+    getMyProfile()
+  );
   const getProfileWithVIP = (
     overrides?: Partial<VerifiedPersonalInformationType>
   ): MyProfileQuery => {
+    const myProfile = getMyProfile();
     currentVIP = getVerifiedData(overrides);
     const profileBase = myProfile.myProfile;
     return {
@@ -29,6 +36,7 @@ describe('<VerifiedPersonalInformation />', () => {
   it('should render all given data', async () => {
     const data = getProfileWithVIP();
     const { getElement } = await renderProfileContextWrapper(
+      [initialMyProfileResponse],
       <VerifiedPersonalInformation data={data} />
     );
     const permanentAddress = currentVIP.permanentAddress as PermanentAddress;
@@ -67,6 +75,7 @@ describe('<VerifiedPersonalInformation />', () => {
       permanentForeignAddress: null,
     });
     const { getElement } = await renderProfileContextWrapper(
+      [initialMyProfileResponse],
       <VerifiedPersonalInformation data={data} />
     );
     expect(() => getElement({ testId: 'vpi-address-permanent' })).toThrow();

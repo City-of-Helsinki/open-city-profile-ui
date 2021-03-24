@@ -37,6 +37,7 @@ import { basicDataSchema } from '../../../common/schemas/schemas';
 
 export type FormValues = {
   firstName: string;
+  nickname: string;
   lastName: string;
   primaryEmail: PrimaryEmail;
   primaryAddress: PrimaryAddress;

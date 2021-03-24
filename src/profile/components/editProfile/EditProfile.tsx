@@ -92,6 +92,7 @@ function EditProfile(props: Props): React.ReactElement {
         services={data}
         profile={{
           firstName: profileData?.myProfile?.firstName || '',
+          nickname: profileData?.myProfile?.nickname || '',
           lastName: profileData?.myProfile?.lastName || '',
           profileLanguage: profileData?.myProfile?.language || Language.FINNISH,
           primaryEmail:
