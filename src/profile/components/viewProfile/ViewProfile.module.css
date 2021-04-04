@@ -25,7 +25,7 @@
 }
 
 .profileContent {
-  background: var(--color-black-5);
+  background: var(--color-black-ultra-light);
   flex: 1;
   padding-bottom: 50px;
 }
@@ -45,6 +45,5 @@
 .contentWrapper {
   flex: 1;
   padding-top: var(--spacing-l);
-
-  background-color: var(--color-black-5);
+  background-color: var(--color-black-ultra-light);
 }
