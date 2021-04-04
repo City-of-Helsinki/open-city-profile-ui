@@ -10,7 +10,7 @@ import {
 } from '../../../graphql/generatedTypes';
 import { FormValues } from '../../components/editProfileForm/EditProfileForm';
 import { updateMutationVariables } from '../updateMutationVariables';
-import { myProfile } from '../../../common/test/myProfileQueryData';
+import { getMyProfile } from '../../../common/test/myProfileMocking';
 
 type ClonedObject = Record<string, unknown>;
 type ReplacerFunction = (key: string, value: unknown) => unknown;
@@ -55,6 +55,7 @@ const getEmailAsComparisonObject = (source: Email): Partial<Email> => {
   return clone;
 };
 
+const myProfile = getMyProfile();
 const primaryEmail = cloneObject(myProfile.myProfile?.primaryEmail as Email);
 const updatedSecondaryEmail = {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
