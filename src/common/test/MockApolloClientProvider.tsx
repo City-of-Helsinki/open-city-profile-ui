@@ -35,27 +35,40 @@ export function MockApolloClientProvider({
   return <ApolloProvider client={graphqlClient}>{children}</ApolloProvider>;
 }
 
+const getResponseData = (
+  response: MockedResponse
+): Record<string, unknown> | undefined => {
+  const { errorType, profileData, updatedProfileData } = response;
+  if (errorType) {
+    return undefined;
+  }
+  return profileData
+    ? { myProfile: profileData }
+    : { updateMyProfile: { profile: updatedProfileData } };
+};
+
+const createResponse = (
+  response: MockedResponse,
+  data: unknown
+): Record<string, unknown> => {
+  const { errorType } = response;
+  if (!errorType) {
+    return { data };
+  }
+  return errorType === 'networkError'
+    ? { error: new Error(`NetworkError at ${Date.now()}`) }
+    : {
+        errors: [new GraphQLError(`GraphQLError at ${Date.now()}`)],
+      };
+};
+
 const createMockedProfileResponse = (
   response: MockedResponse
 ): Record<string, unknown> => {
   if (!response) {
     throw new Error('No response provided');
   }
-  const { errorType, profileData, updatedProfileData } = response;
-  const data = !errorType
-    ? profileData
-      ? { myProfile: profileData }
-      : { updateMyProfile: { profile: updatedProfileData } }
-    : undefined;
-  return !errorType
-    ? {
-        data,
-      }
-    : errorType === 'networkError'
-    ? { error: new Error('Network error') }
-    : {
-        errors: [new GraphQLError('Error!')],
-      };
+  return createResponse(response, getResponseData(response));
 };
 
 export function resetApolloMocks(): void {
