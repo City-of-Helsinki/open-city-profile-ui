@@ -2,7 +2,10 @@ import React from 'react';
 
 import VerifiedPersonalInformation from '../VerifiedPersonalInformation';
 import { renderProfileContextWrapper } from '../../../../common/test/componentMocking';
-import { getVerifiedData } from '../../../../common/test/myProfileMocking';
+import {
+  getVerifiedData,
+  getMyProfile,
+} from '../../../../common/test/myProfileMocking';
 import {
   MyProfileQuery,
   MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress as PermanentForeignAddress,
@@ -10,7 +13,6 @@ import {
   MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress as TemporaryAddress,
   MyProfileQuery_myProfile_verifiedPersonalInformation as VerifiedPersonalInformationType,
 } from '../../../../graphql/generatedTypes';
-import { myProfile } from '../../../../common/test/myProfileQueryData';
 
 describe('<VerifiedPersonalInformation />', () => {
   let currentVIP: VerifiedPersonalInformationType;
@@ -18,7 +20,7 @@ describe('<VerifiedPersonalInformation />', () => {
     overrides?: Partial<VerifiedPersonalInformationType>
   ): MyProfileQuery => {
     currentVIP = getVerifiedData(overrides);
-    const profileBase = myProfile.myProfile;
+    const profileBase = getMyProfile().myProfile;
     return {
       myProfile: {
         ...profileBase,
