@@ -12,6 +12,7 @@ import {
   MockApolloClientProvider,
   ResponseProvider,
 } from './MockApolloClientProvider';
+import { AnyObject } from '../../graphql/typings';
 
 type ElementSelector = {
   testId?: string;
@@ -53,6 +54,7 @@ export const exposeProfileContext = (
 > & {
   waitForDataChange: () => Promise<ProfileContextData>;
   waitForUpdate: () => Promise<ProfileContextData>;
+  waitForErrorChange: () => Promise<ProfileContextData>;
 } => {
   const wrapper = ({ children }: { children: React.ReactNodeArray }) => (
     <MockApolloClientProvider responseProvider={responseProvider}>
@@ -64,14 +66,19 @@ export const exposeProfileContext = (
   ): Record<string, unknown> => ({
     loading: contextData.loading,
     isComplete: contextData.isComplete,
-    error: contextData.error,
   });
+  const lastError = {
+    message: '',
+  };
   let lastUpdate: Record<string, unknown> = {};
   let lastData: string | undefined;
   let updateChangeResolver:
     | ((newContextData: ProfileContextData) => void)
     | undefined;
   let dataChangeResolver:
+    | ((newContextData: ProfileContextData) => void)
+    | undefined;
+  let errorChangeResolver:
     | ((newContextData: ProfileContextData) => void)
     | undefined;
 
@@ -83,6 +90,10 @@ export const exposeProfileContext = (
   const waitForDataChange = () =>
     new Promise<ProfileContextData>(resolve => {
       dataChangeResolver = resolve;
+    });
+  const waitForErrorChange = () =>
+    new Promise<ProfileContextData>(resolve => {
+      errorChangeResolver = resolve;
     });
 
   const trackUpdateChanges = (newContext: ProfileContextData): void => {
@@ -102,9 +113,29 @@ export const exposeProfileContext = (
     }
   };
 
+  const trackErrorChanges = (newContext: ProfileContextData): void => {
+    const getErrorMessage = (error?: AnyObject<string>): string => {
+      if (!error) {
+        return '';
+      }
+      if (error.networkError) {
+        return error.networkError;
+      }
+      return error.message;
+    };
+    const errorMessage = getErrorMessage(
+      (newContext.error as unknown) as AnyObject<string>
+    );
+    if (errorMessage !== lastError.message) {
+      lastError.message = errorMessage;
+      errorChangeResolver && errorChangeResolver(newContext);
+    }
+  };
+
   const tracker = (newContextData: ProfileContextData) => {
     trackDataChanges(newContextData);
     trackUpdateChanges(newContextData);
+    trackErrorChanges(newContextData);
     return newContextData;
   };
   const callback = () =>
@@ -112,5 +143,5 @@ export const exposeProfileContext = (
     tracker(useContext(ProfileContext));
 
   const result = renderHook(callback, { wrapper });
-  return { ...result, waitForDataChange, waitForUpdate };
+  return { ...result, waitForDataChange, waitForUpdate, waitForErrorChange };
 };
