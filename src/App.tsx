@@ -12,6 +12,7 @@ import graphqlClient from './graphql/client';
 import Login from './auth/components/login/Login';
 import OidcCallback from './auth/components/oidcCallback/OidcCallback';
 import Profile from './profile/components/profile/Profile';
+import { Provider as ProfileProvider } from './profile/context/ProfileContext';
 import ProfileDeleted from './profile/components/profileDeleted/ProfileDeleted';
 import AccessibilityStatement from './accessibilityStatement/AccessibilityStatement';
 import { MAIN_CONTENT_ID } from './common/constants';
@@ -48,29 +49,34 @@ function App(): React.ReactElement {
     <ApolloProvider client={graphqlClient}>
       <ToastProvider>
         <MatomoProvider value={instance}>
-          <AppMeta />
-          {/* This should be the first focusable element */}
-          <AccessibilityShortcuts mainContentId={MAIN_CONTENT_ID} />
-          <Switch>
-            <Route path="/callback" component={OidcCallback} />
-            <Route path="/gdpr-callback">
-              <GdprAuthorizationCodeManagerCallback />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path={['/', '/connected-services']} exact>
-              <Profile />
-            </Route>
-            <Route path="/accessibility">
-              <AccessibilityStatement />
-            </Route>
-            <Route path="/profile-deleted" exact>
-              <ProfileDeleted />
-            </Route>
-            <Route path="/loginsso" exact />
-            <Route path="*">404 - not found</Route>
-          </Switch>
+          <ProfileProvider>
+            <AppMeta />
+            {/* This should be the first focusable element */}
+            <AccessibilityShortcuts mainContentId={MAIN_CONTENT_ID} />
+            <Switch>
+              <Route path="/callback" component={OidcCallback} />
+              <Route path="/gdpr-callback">
+                <GdprAuthorizationCodeManagerCallback />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route
+                path={['/', '/connected-services', '/subscriptions']}
+                exact
+              >
+                <Profile />
+              </Route>
+              <Route path="/accessibility">
+                <AccessibilityStatement />
+              </Route>
+              <Route path="/profile-deleted" exact>
+                <ProfileDeleted />
+              </Route>
+              <Route path="/loginsso" exact />
+              <Route path="*">404 - not found</Route>
+            </Switch>
+          </ProfileProvider>
         </MatomoProvider>
       </ToastProvider>
     </ApolloProvider>
