@@ -1,7 +1,10 @@
 import React from 'react';
 
 import VerifiedPersonalInformation from '../VerifiedPersonalInformation';
-import { renderProfileContextWrapper } from '../../../../common/test/componentMocking';
+import {
+  emptyResponseProvider,
+  renderProfileContextWrapper,
+} from '../../../../common/test/componentMocking';
 import {
   getVerifiedData,
   getMyProfile,
@@ -31,6 +34,7 @@ describe('<VerifiedPersonalInformation />', () => {
   it('should render all given data', async () => {
     const data = getProfileWithVIP();
     const { getElement } = await renderProfileContextWrapper(
+      emptyResponseProvider,
       <VerifiedPersonalInformation data={data} />
     );
     const permanentAddress = currentVIP.permanentAddress as PermanentAddress;
@@ -69,6 +73,7 @@ describe('<VerifiedPersonalInformation />', () => {
       permanentForeignAddress: null,
     });
     const { getElement } = await renderProfileContextWrapper(
+      emptyResponseProvider,
       <VerifiedPersonalInformation data={data} />
     );
     expect(() => getElement({ testId: 'vpi-address-permanent' })).toThrow();
