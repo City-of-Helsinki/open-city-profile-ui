@@ -21,7 +21,10 @@ function ViewProfile(): React.ReactElement {
       {isComplete && (
         <React.Fragment>
           <Section korosType="basic">
-            <PageHeading text={getName(true)} />
+            <PageHeading
+              text={getName(true)}
+              dataTestId="view-profile-heading"
+            />
           </Section>
           <div className={styles.contentWrapper}>
             <Switch>
