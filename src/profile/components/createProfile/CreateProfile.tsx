@@ -83,6 +83,7 @@ function CreateProfile({
       <PageHeading
         text={t('createProfile.pageTitle')}
         className={responsive.maxWidthCentered}
+        dataTestId="create-profile-heading"
       />
       <div className={responsive.maxWidthCentered}>
         <ProfileSection

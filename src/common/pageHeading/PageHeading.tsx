@@ -7,11 +7,15 @@ import styles from './PageHeading.module.css';
 type Props = {
   text: string;
   className?: string;
+  dataTestId?: string;
 };
 
 function PageHeading(props: Props): React.ReactElement {
   return (
-    <div className={classNames(styles.pageHeading, props.className)}>
+    <div
+      className={classNames(styles.pageHeading, props.className)}
+      data-testid={props.dataTestId}
+    >
       <UserIcon className={styles.userIcon} aria-hidden={'true'} />
       <h1>{props.text}</h1>
     </div>

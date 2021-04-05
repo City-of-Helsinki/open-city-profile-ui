@@ -94,7 +94,7 @@ function Profile(): React.ReactElement {
 
   if (!isProfileFound && tunnistamoUser && hasGraphQLError) {
     return (
-      <PageLayout title={getPageTitle()}>
+      <PageLayout title={getPageTitle()} data-testid="profile-error-layout">
         <div className={styles.errorWrapper}>
           <div className={responsive.maxWidthCentered}>
             <Notification
