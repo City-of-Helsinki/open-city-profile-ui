@@ -16,9 +16,6 @@ configure({ adapter: new Adapter() });
 
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
-  useHistory: () => ({
-    push: jest.fn(),
-  }),
   useLocation: () => ({
     pathname: '/',
   }),
