@@ -19,4 +19,7 @@ jest.mock('react-router', () => ({
   useHistory: () => ({
     push: jest.fn(),
   }),
+  useLocation: () => ({
+    pathname: '/',
+  }),
 }));
