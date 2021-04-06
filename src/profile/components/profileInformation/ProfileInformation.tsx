@@ -6,6 +6,7 @@ import styles from './ProfileInformation.module.css';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
 import ProfileInformationAccountManagementLink from './ProfileInformationAccountManagementLink';
 import { ProfileContext } from '../../context/ProfileContext';
+import BasicData from '../basicData/BasicData';
 
 function ProfileInformation(): React.ReactElement {
   const [berthError, setBerthError] = useState(false);
@@ -14,7 +15,7 @@ function ProfileInformation(): React.ReactElement {
     <Fragment>
       {data && (
         <Fragment>
-          <div>COMPONENT PLACEHOLDER</div>
+          <BasicData />
         </Fragment>
       )}
       <div className={styles.boxGrid}>
