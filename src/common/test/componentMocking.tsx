@@ -25,6 +25,7 @@ import ToastProvider from '../../toast/__mocks__/ToastProvider';
 type ElementSelector = {
   testId?: string;
   text?: string;
+  valueSelector?: string;
 };
 
 export type TestTools = RenderResult & {
@@ -32,6 +33,9 @@ export type TestTools = RenderResult & {
   waitForIsComplete: () => Promise<void>;
   waitForDataChange: () => Promise<void>;
   waitForElement: (selector: ElementSelector) => Promise<void>;
+  getTextOrInputValue: (
+    selector: ElementSelector
+  ) => Promise<string | undefined>;
   fetch: () => Promise<void>;
 };
 
@@ -109,12 +113,30 @@ export const renderProfileContextWrapper = async (
     });
   };
 
+  const getTextOrInputValue: TestTools['getTextOrInputValue'] = async selector => {
+    let value: string | undefined;
+    await waitFor(
+      () => {
+        const element = getElement(selector);
+        if (element && !value) {
+          if (selector.valueSelector) {
+            value = (element as HTMLInputElement).value;
+          }
+          value = element.textContent || undefined;
+        }
+      },
+      { timeout: 150 }
+    );
+    return Promise.resolve(value);
+  };
+
   return Promise.resolve({
     ...renderResult,
     getElement,
     waitForIsComplete,
     waitForDataChange,
     waitForElement,
+    getTextOrInputValue,
     fetch,
   });
 };
@@ -249,4 +271,16 @@ const getErrorMessage = (error?: Error | GraphQLError): string => {
     return retypedError.networkError;
   }
   return retypedError.message;
+};
+
+export const RenderChildrenWhenDataIsComplete = ({
+  children,
+}: {
+  children: React.ReactElement | React.ReactNodeArray;
+}): React.ReactElement | null => {
+  const { isComplete } = useContext(ProfileContext);
+  if (!isComplete) {
+    return null;
+  }
+  return <div data-testid="component-wrapper">{children}</div>;
 };
