@@ -1,6 +1,5 @@
 import { isEqual } from 'lodash';
 
-import { FormValues } from '../components/editProfileForm/EditProfileForm';
 import {
   CreateAddressInput,
   CreateEmailInput,
@@ -23,6 +22,7 @@ import getPhonesFromNode from './getPhonesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
 import getAddressesFromNode from './getAddressesFromNode';
 import { formConstants } from '../constants/formConstants';
+import { FormValues } from './editData';
 
 type Primary = 'primaryEmail' | 'primaryAddress' | 'primaryPhone';
 
@@ -201,8 +201,9 @@ const updateMutationVariables = (
   input: {
     profile: {
       firstName: formValues.firstName,
+      nickname: formValues.nickname,
       lastName: formValues.lastName,
-      language: formValues.profileLanguage,
+      language: formValues.language,
       ...formMutationArrays<AddressNode>(
         formValues.addresses,
         'primaryAddress',

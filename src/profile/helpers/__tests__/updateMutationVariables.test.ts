@@ -8,9 +8,9 @@ import {
   MyProfileQuery_myProfile_phones_edges_node as Phone,
   PhoneType,
 } from '../../../graphql/generatedTypes';
-import { FormValues } from '../../components/editProfileForm/EditProfileForm';
 import { updateMutationVariables } from '../updateMutationVariables';
 import { getMyProfile } from '../../../common/test/myProfileMocking';
+import { FormValues } from '../editData';
 
 type ClonedObject = Record<string, unknown>;
 type ReplacerFunction = (key: string, value: unknown) => unknown;
@@ -108,8 +108,9 @@ const newAddress = {
 
 const formValues: FormValues = {
   firstName: 'Teemu',
+  nickname: 'Teme',
   lastName: 'Testaaja',
-  profileLanguage: Language.FINNISH,
+  language: Language.FINNISH,
   primaryEmail,
   emails: [primaryEmail, newEmail, updatedSecondaryEmail],
   phones: [primaryPhone, newPhone, updatedSecondaryPhone],
