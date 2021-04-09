@@ -56,8 +56,11 @@ function useProfile(): ProfileState {
           if (ignore) {
             return;
           }
-
-          setProfile(user ? ((user.profile as unknown) as Profile) : null);
+          setProfile(
+            user && user.expired === false
+              ? ((user.profile as unknown) as Profile)
+              : null
+          );
         })
         .catch(() => {
           if (ignore) {
