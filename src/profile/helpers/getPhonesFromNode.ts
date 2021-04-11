@@ -1,9 +1,12 @@
 import { ProfileRoot, PhoneNode } from '../../graphql/typings';
 
-const getPhonesFromNode = (data?: ProfileRoot): PhoneNode[] => {
+const getPhonesFromNode = (
+  data?: ProfileRoot,
+  keepPrimary = false
+): PhoneNode[] => {
   const edges = data?.myProfile?.phones?.edges || [];
   return edges
-    .filter(edge => !edge?.node?.primary)
+    .filter(edge => keepPrimary || !edge?.node?.primary)
     .map(
       edge =>
         ({
