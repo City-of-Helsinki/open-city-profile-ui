@@ -60,7 +60,7 @@ const primaryEmail = cloneObject(myProfile.myProfile?.primaryEmail as Email);
 const updatedSecondaryEmail = {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  ...cloneObject(myProfile.myProfile.emails.edges[0].node),
+  ...cloneObject(myProfile.myProfile.emails.edges[1].node),
   ...{ email: 'kolmas@testi.fi' },
 } as Email;
 const newEmail = {
@@ -75,7 +75,7 @@ const primaryPhone = cloneObject(myProfile.myProfile?.primaryPhone as Phone);
 const updatedSecondaryPhone = {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  ...cloneObject(myProfile.myProfile?.phones.edges[0].node),
+  ...cloneObject(myProfile.myProfile?.phones.edges[1].node),
   ...{ phone: '0505472568' },
 } as Phone;
 const newPhone = {
@@ -92,7 +92,7 @@ const primaryAddress = cloneObject(
 const updatedSecondaryAddress = {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  ...cloneObject(myProfile.myProfile?.addresses.edges[0].node as Address),
+  ...cloneObject(myProfile.myProfile?.addresses.edges[1].node as Address),
   ...{ address: 'Testaajaraitti' },
 } as Address;
 const newAddress = {
@@ -190,7 +190,6 @@ test('remove arrays are formed correctly with existing data', () => {
     { ...formValues, addresses: [], emails: [], phones: [] },
     myProfile
   );
-
   expect(variables.input.profile.removeAddresses).toEqual([
     primaryAddress.id,
     updatedSecondaryAddress.id,

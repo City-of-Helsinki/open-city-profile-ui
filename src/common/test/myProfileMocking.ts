@@ -42,6 +42,19 @@ export const getMyProfile = (): ProfileRoot => ({
       edges: [
         {
           node: {
+            id: '123',
+            primary: true,
+            address: 'Testikatu 55',
+            city: 'Helsinki',
+            countryCode: 'FI',
+            postalCode: '00100',
+            addressType: AddressType.OTHER,
+            __typename: 'AddressNode',
+          },
+          __typename: 'AddressNodeEdge',
+        },
+        {
+          node: {
             id: '234',
             address: 'Muokkauskatu 55',
             city: 'Helsinki',
@@ -60,6 +73,16 @@ export const getMyProfile = (): ProfileRoot => ({
       edges: [
         {
           node: {
+            id: '123',
+            email: 'ensimmainen@testi.fi',
+            primary: true,
+            emailType: EmailType.OTHER,
+            __typename: 'EmailNode',
+          },
+          __typename: 'EmailNodeEdge',
+        },
+        {
+          node: {
             id: '234',
             email: 'test@email.com',
             primary: false,
@@ -73,6 +96,16 @@ export const getMyProfile = (): ProfileRoot => ({
     },
     phones: {
       edges: [
+        {
+          node: {
+            id: '123',
+            phone: '0501234567',
+            phoneType: PhoneType.OTHER,
+            primary: true,
+            __typename: 'PhoneNode',
+          },
+          __typename: 'PhoneNodeEdge',
+        },
         {
           node: {
             id: '234',
