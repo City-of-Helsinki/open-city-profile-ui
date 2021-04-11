@@ -1,9 +1,12 @@
 import { ProfileRoot, AddressNode } from '../../graphql/typings';
 
-const getAddressesFromNode = (data?: ProfileRoot): AddressNode[] => {
+const getAddressesFromNode = (
+  data?: ProfileRoot,
+  keepPrimary = false
+): AddressNode[] => {
   const edges = data?.myProfile?.addresses?.edges || [];
   return edges
-    .filter(edge => !edge?.node?.primary)
+    .filter(edge => keepPrimary || !edge?.node?.primary)
     .map(
       edge =>
         ({
