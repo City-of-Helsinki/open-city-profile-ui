@@ -14,3 +14,7 @@ export const updateWrapper = async (wrapper: ReactWrapper): Promise<void> => {
     wrapper.update();
   });
 };
+
+export const waitForTimeout = async (time = 0): Promise<void> => {
+  await new Promise(resolve => setTimeout(resolve, time));
+};

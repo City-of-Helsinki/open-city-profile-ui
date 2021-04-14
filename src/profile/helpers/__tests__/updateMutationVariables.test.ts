@@ -8,9 +8,9 @@ import {
   MyProfileQuery_myProfile_phones_edges_node as Phone,
   PhoneType,
 } from '../../../graphql/generatedTypes';
-import { FormValues } from '../../components/editProfileForm/EditProfileForm';
 import { updateMutationVariables } from '../updateMutationVariables';
-import { myProfile } from '../../../common/test/myProfileQueryData';
+import { getMyProfile } from '../../../common/test/myProfileMocking';
+import { FormValues } from '../editData';
 
 type ClonedObject = Record<string, unknown>;
 type ReplacerFunction = (key: string, value: unknown) => unknown;
@@ -55,11 +55,12 @@ const getEmailAsComparisonObject = (source: Email): Partial<Email> => {
   return clone;
 };
 
+const myProfile = getMyProfile();
 const primaryEmail = cloneObject(myProfile.myProfile?.primaryEmail as Email);
 const updatedSecondaryEmail = {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  ...cloneObject(myProfile.myProfile.emails.edges[0].node),
+  ...cloneObject(myProfile.myProfile.emails.edges[1].node),
   ...{ email: 'kolmas@testi.fi' },
 } as Email;
 const newEmail = {
@@ -74,7 +75,7 @@ const primaryPhone = cloneObject(myProfile.myProfile?.primaryPhone as Phone);
 const updatedSecondaryPhone = {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  ...cloneObject(myProfile.myProfile?.phones.edges[0].node),
+  ...cloneObject(myProfile.myProfile?.phones.edges[1].node),
   ...{ phone: '0505472568' },
 } as Phone;
 const newPhone = {
@@ -91,7 +92,7 @@ const primaryAddress = cloneObject(
 const updatedSecondaryAddress = {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  ...cloneObject(myProfile.myProfile?.addresses.edges[0].node as Address),
+  ...cloneObject(myProfile.myProfile?.addresses.edges[1].node as Address),
   ...{ address: 'Testaajaraitti' },
 } as Address;
 const newAddress = {
@@ -107,8 +108,9 @@ const newAddress = {
 
 const formValues: FormValues = {
   firstName: 'Teemu',
+  nickname: 'Teme',
   lastName: 'Testaaja',
-  profileLanguage: Language.FINNISH,
+  language: Language.FINNISH,
   primaryEmail,
   emails: [primaryEmail, newEmail, updatedSecondaryEmail],
   phones: [primaryPhone, newPhone, updatedSecondaryPhone],
@@ -189,7 +191,6 @@ test('remove arrays are formed correctly with existing data', () => {
     { ...formValues, addresses: [], emails: [], phones: [] },
     myProfile
   );
-
   expect(variables.input.profile.removeAddresses).toEqual([
     primaryAddress.id,
     updatedSecondaryAddress.id,

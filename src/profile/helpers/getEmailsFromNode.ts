@@ -1,9 +1,12 @@
 import { ProfileRoot, EmailNode } from '../../graphql/typings';
 
-const getEmailsFromNode = (data?: ProfileRoot): EmailNode[] => {
+const getEmailsFromNode = (
+  data?: ProfileRoot,
+  keepPrimary = false
+): EmailNode[] => {
   const edges = data?.myProfile?.emails?.edges || [];
   return edges
-    .filter(edge => !edge?.node?.primary)
+    .filter(edge => keepPrimary || !edge?.node?.primary)
     .map(
       edge =>
         ({

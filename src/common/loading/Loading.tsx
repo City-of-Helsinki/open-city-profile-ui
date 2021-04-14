@@ -12,7 +12,10 @@ function Loading(props: Props): React.ReactElement {
   return (
     <>
       {props.isLoading ? (
-        <span className={classNames(styles.loading, props.loadingClassName)}>
+        <span
+          className={classNames(styles.loading, props.loadingClassName)}
+          data-testid="load-indicator"
+        >
           {props.loadingText}
         </span>
       ) : (
