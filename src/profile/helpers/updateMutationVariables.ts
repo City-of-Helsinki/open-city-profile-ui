@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import _, { isEqual } from 'lodash';
 
 import {
   CreateAddressInput,
@@ -43,6 +43,11 @@ type PhoneInputs = {
   updatePhones: UpdatePhoneInput[];
   removePhones?: (string | null)[] | null;
 };
+
+type CreatePartialProfileUpdateData = (
+  formValues: Partial<FormValues>,
+  profile?: ProfileRoot
+) => UpdateMyProfileVariables;
 
 const getPrimaryValue = (primary: Primary, profile?: ProfileRoot) => {
   const primaryValue = profile?.myProfile && profile.myProfile[primary];
@@ -194,33 +199,48 @@ function formMutationArrays<T extends AddressNode | EmailNode | PhoneNode>(
   }
 }
 
-const updateMutationVariables = (
-  formValues: FormValues,
-  profile?: ProfileRoot
-): UpdateMyProfileVariables => ({
-  input: {
-    profile: {
-      firstName: formValues.firstName,
-      nickname: formValues.nickname,
-      lastName: formValues.lastName,
-      language: formValues.language,
-      ...formMutationArrays<AddressNode>(
+const updateMutationVariables: CreatePartialProfileUpdateData = (
+  formValues,
+  profile
+) => {
+  const phoneData = formValues.phones
+    ? formMutationArrays<PhoneNode>(formValues.phones, 'primaryPhone', profile)
+    : null;
+  const emailData = formValues.emails
+    ? formMutationArrays<EmailNode>(formValues.emails, 'primaryEmail', profile)
+    : null;
+  const addressData = formValues.addresses
+    ? formMutationArrays<AddressNode>(
         formValues.addresses,
         'primaryAddress',
         profile
-      ),
-      ...formMutationArrays<PhoneNode>(
-        formValues.phones,
-        'primaryPhone',
-        profile
-      ),
-      ...formMutationArrays<EmailNode>(
-        formValues.emails,
-        'primaryEmail',
-        profile
-      ),
+      )
+    : null;
+
+  const updateNameProps = _.pick(formValues, [
+    'firstName',
+    'nickname',
+    'lastName',
+  ]);
+  const updateNameCount = Object.keys(updateNameProps).length;
+
+  const userData = updateNameCount > 0 ? updateNameProps : null;
+  const additionalInformation = formValues.language
+    ? {
+        language: formValues.language,
+      }
+    : null;
+  return {
+    input: {
+      profile: {
+        ...userData,
+        ...additionalInformation,
+        ...phoneData,
+        ...emailData,
+        ...addressData,
+      },
     },
-  },
-});
+  };
+};
 
 export { formMutationArrays, updateMutationVariables };
