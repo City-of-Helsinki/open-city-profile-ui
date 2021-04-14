@@ -1,4 +1,4 @@
-import _, { isEqual } from 'lodash';
+import _ from 'lodash';
 
 import {
   CreateAddressInput,
@@ -129,7 +129,7 @@ function formMutationArrays<T extends AddressNode | EmailNode | PhoneNode>(
 
   // Filter empty values (e.g user added new phone and pressed save without typing anything)
   const formValues: T[] = formValueArray.filter(
-    value => !isEqual(value, getEmptyObject(primary))
+    value => !_.isEqual(value, getEmptyObject(primary))
   );
 
   // Form array that contains values that needs to be updated.
@@ -140,7 +140,7 @@ function formMutationArrays<T extends AddressNode | EmailNode | PhoneNode>(
         profileValueItem => profileValueItem?.id === value.id
       );
 
-      return value.id && !isEqual(value, profileValue);
+      return value.id && !_.isEqual(value, profileValue);
     })
     .map(value => getObjectFields(value));
 
