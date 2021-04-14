@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import {
   AddressType,
   EmailType,
@@ -106,112 +108,251 @@ const newAddress = {
   __typename: 'AddressNode',
 } as Address;
 
-const formValues: FormValues = {
-  firstName: 'Teemu',
-  nickname: 'Teme',
-  lastName: 'Testaaja',
-  language: Language.FINNISH,
-  primaryEmail,
-  emails: [primaryEmail, newEmail, updatedSecondaryEmail],
-  phones: [primaryPhone, newPhone, updatedSecondaryPhone],
-  primaryPhone,
-  addresses: [primaryAddress, newAddress, updatedSecondaryAddress],
-  primaryAddress,
+type FormParts = (keyof FormValues)[];
+
+const multiNodeFormParts: FormParts = [
+  'primaryAddress',
+  'primaryEmail',
+  'primaryPhone',
+  'phones',
+  'emails',
+  'addresses',
+];
+
+const nameFormParts: FormParts = ['firstName', 'nickname', 'lastName'];
+
+const getFormValues = (parts: FormParts): Partial<FormValues> => {
+  const myProfileNamesAndLanguage = _.pick(myProfile.myProfile, [
+    ...nameFormParts,
+    'language',
+  ]);
+  const formValues = {
+    ...myProfileNamesAndLanguage,
+    primaryEmail,
+    emails: [primaryEmail, newEmail, updatedSecondaryEmail],
+    phones: [primaryPhone, newPhone, updatedSecondaryPhone],
+    primaryPhone,
+    addresses: [primaryAddress, newAddress, updatedSecondaryAddress],
+    primaryAddress,
+  };
+  return _.pick(formValues, parts) as Partial<FormValues>;
 };
 
-test('add arrays are formed correctly with new data', () => {
-  const variables: UpdateMyProfileVariables = updateMutationVariables(
-    formValues,
-    myProfile
-  );
+describe('Update variables for basic data (names) are formed correctly', () => {
+  let formValues: Partial<FormValues>;
 
-  expect(variables.input.profile.addAddresses).toEqual([
-    getAddressAsComparisonObject(newAddress),
-  ]);
+  beforeEach(() => {
+    formValues = getFormValues(nameFormParts);
+  });
 
-  expect(variables.input.profile.addEmails).toEqual([
-    getEmailAsComparisonObject(newEmail),
-  ]);
+  test('Variables in update data match formValues even if not changed', () => {
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      formValues,
+      myProfile
+    );
+    expect(variables.input.profile).toEqual(formValues);
+  });
 
-  expect(variables.input.profile.addPhones).toEqual([
-    getPhoneAsComparisonObject(newPhone),
-  ]);
+  test('Variables in update data match changes', () => {
+    const newData = {
+      firstName: 'test-firstName',
+      nickname: 'test-nickname',
+      lastName: 'test-lastName',
+    };
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      newData,
+      myProfile
+    );
+    expect(variables.input.profile).toEqual(newData);
+
+    const partialData1 = {
+      firstName: 'test-firstName',
+    };
+    expect(
+      updateMutationVariables(partialData1, myProfile).input.profile
+    ).toEqual(partialData1);
+
+    const partialData2 = {
+      nickname: 'test-nickname',
+      lastName: 'test-lastName',
+    };
+    expect(
+      updateMutationVariables(partialData2, myProfile).input.profile
+    ).toEqual(partialData2);
+  });
 });
 
-test('add arrays are empty when using existing data', () => {
-  const variables: UpdateMyProfileVariables = updateMutationVariables(
-    {
-      ...formValues,
-      addresses: [primaryAddress, updatedSecondaryAddress],
-      emails: [primaryEmail, updatedSecondaryEmail],
-      phones: [primaryPhone, updatedSecondaryPhone],
-    },
-    myProfile
-  );
+describe('Update variable for language is formed correctly', () => {
+  let formValues: Partial<FormValues>;
 
-  expect(variables.input.profile.addPhones).toEqual([]);
-  expect(variables.input.profile.addEmails).toEqual([]);
-  expect(variables.input.profile.addAddresses).toEqual([]);
+  beforeEach(() => {
+    formValues = getFormValues(['language']);
+  });
+
+  test('Variable in update data match formValues even if not changed', () => {
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      formValues,
+      myProfile
+    );
+    expect(variables.input.profile).toEqual(formValues);
+  });
+
+  test('Variables in update data match changes', () => {
+    const newData = {
+      language: Language.SWEDISH,
+    };
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      newData,
+      myProfile
+    );
+    expect(variables.input.profile).toEqual(newData);
+  });
 });
 
-test('update arrays are formed correctly with updated data objects', () => {
-  const variables: UpdateMyProfileVariables = updateMutationVariables(
-    formValues,
-    myProfile
-  );
-  expect(variables.input.profile.updateAddresses).toEqual([
-    getAddressAsComparisonObject(updatedSecondaryAddress),
-  ]);
-  expect(variables.input.profile.updateEmails).toEqual([
-    getEmailAsComparisonObject(updatedSecondaryEmail),
-  ]);
-  expect(variables.input.profile.updatePhones).toEqual([
-    getPhoneAsComparisonObject(updatedSecondaryPhone),
-  ]);
+describe('MultiItemArrays are formed correctly', () => {
+  let formValues: Partial<FormValues>;
+
+  beforeEach(() => {
+    formValues = getFormValues(multiNodeFormParts);
+  });
+
+  test('Names and language do not exist in update variables when not in formValues', () => {
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      formValues,
+      myProfile
+    );
+    expect(variables.input.profile.firstName).toBeUndefined();
+    expect(variables.input.profile.nickname).toBeUndefined();
+    expect(variables.input.profile.lastName).toBeUndefined();
+    expect(variables.input.profile.language).toBeUndefined();
+  });
+
+  test('add arrays are formed correctly with new data', () => {
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      formValues,
+      myProfile
+    );
+
+    expect(variables.input.profile.addAddresses).toEqual([
+      getAddressAsComparisonObject(newAddress),
+    ]);
+
+    expect(variables.input.profile.addEmails).toEqual([
+      getEmailAsComparisonObject(newEmail),
+    ]);
+
+    expect(variables.input.profile.addPhones).toEqual([
+      getPhoneAsComparisonObject(newPhone),
+    ]);
+  });
+
+  test('add arrays are empty when using existing data', () => {
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      {
+        ...formValues,
+        addresses: [primaryAddress, updatedSecondaryAddress],
+        emails: [primaryEmail, updatedSecondaryEmail],
+        phones: [primaryPhone, updatedSecondaryPhone],
+      },
+      myProfile
+    );
+
+    expect(variables.input.profile.addPhones).toEqual([]);
+    expect(variables.input.profile.addEmails).toEqual([]);
+    expect(variables.input.profile.addAddresses).toEqual([]);
+  });
+
+  test('update arrays are formed correctly with updated data objects', () => {
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      formValues,
+      myProfile
+    );
+    expect(variables.input.profile.updateAddresses).toEqual([
+      getAddressAsComparisonObject(updatedSecondaryAddress),
+    ]);
+    expect(variables.input.profile.updateEmails).toEqual([
+      getEmailAsComparisonObject(updatedSecondaryEmail),
+    ]);
+    expect(variables.input.profile.updatePhones).toEqual([
+      getPhoneAsComparisonObject(updatedSecondaryPhone),
+    ]);
+  });
+
+  test('update arrays are empty when using unchanged or new data', () => {
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      {
+        ...formValues,
+        addresses: [primaryAddress, newAddress],
+        emails: [primaryEmail, newEmail],
+        phones: [primaryPhone, newPhone],
+      },
+      myProfile
+    );
+
+    expect(variables.input.profile.updateAddresses).toEqual([]);
+    expect(variables.input.profile.updateEmails).toEqual([]);
+    expect(variables.input.profile.updatePhones).toEqual([]);
+  });
+
+  test('remove arrays are formed correctly with existing data', () => {
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      { ...formValues, addresses: [], emails: [], phones: [] },
+      myProfile
+    );
+    expect(variables.input.profile.removeAddresses).toEqual([
+      primaryAddress.id,
+      updatedSecondaryAddress.id,
+    ]);
+    expect(variables.input.profile.removeEmails).toEqual([
+      primaryEmail.id,
+      updatedSecondaryEmail.id,
+    ]);
+    expect(variables.input.profile.removePhones).toEqual([
+      primaryPhone.id,
+      updatedSecondaryPhone.id,
+    ]);
+  });
+
+  test('remove arrays do not exists when data is not changed', () => {
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      formValues,
+      myProfile
+    );
+
+    expect(variables.input.profile.removeAddresses).toBeFalsy();
+    expect(variables.input.profile.removeEmails).toBeFalsy();
+    expect(variables.input.profile.removePhones).toBeFalsy();
+  });
 });
 
-test('update arrays are empty when using unchanged or new data', () => {
-  const variables: UpdateMyProfileVariables = updateMutationVariables(
-    {
-      ...formValues,
-      addresses: [primaryAddress, newAddress],
-      emails: [primaryEmail, newEmail],
-      phones: [primaryPhone, newPhone],
-    },
-    myProfile
-  );
+describe('Full profile can be updated ', () => {
+  let formValues: Partial<FormValues>;
 
-  expect(variables.input.profile.updateAddresses).toEqual([]);
-  expect(variables.input.profile.updateEmails).toEqual([]);
-  expect(variables.input.profile.updatePhones).toEqual([]);
-});
+  beforeEach(() => {
+    formValues = getFormValues([
+      ...multiNodeFormParts,
+      ...nameFormParts,
+      'language',
+    ]);
+  });
 
-test('remove arrays are formed correctly with existing data', () => {
-  const variables: UpdateMyProfileVariables = updateMutationVariables(
-    { ...formValues, addresses: [], emails: [], phones: [] },
-    myProfile
-  );
-  expect(variables.input.profile.removeAddresses).toEqual([
-    primaryAddress.id,
-    updatedSecondaryAddress.id,
-  ]);
-  expect(variables.input.profile.removeEmails).toEqual([
-    primaryEmail.id,
-    updatedSecondaryEmail.id,
-  ]);
-  expect(variables.input.profile.removePhones).toEqual([
-    primaryPhone.id,
-    updatedSecondaryPhone.id,
-  ]);
-});
+  test('Variables include all formValues or corresponding update property', () => {
+    const variables: UpdateMyProfileVariables = updateMutationVariables(
+      formValues,
+      myProfile
+    );
+    expect(variables.input.profile.firstName).toBeDefined();
+    expect(variables.input.profile.nickname).toBeDefined();
+    expect(variables.input.profile.lastName).toBeDefined();
+    expect(variables.input.profile.language).toBeDefined();
+    expect(variables.input.profile.updateAddresses).toBeDefined();
+    expect(variables.input.profile.updateEmails).toBeDefined();
+    expect(variables.input.profile.updatePhones).toBeDefined();
+  });
 
-test('remove arrays do not exists when data is not changed', () => {
-  const variables: UpdateMyProfileVariables = updateMutationVariables(
-    formValues,
-    myProfile
-  );
-
-  expect(variables.input.profile.removeAddresses).toBeFalsy();
-  expect(variables.input.profile.removeEmails).toBeFalsy();
-  expect(variables.input.profile.removePhones).toBeFalsy();
+  test('but empty update is also handled', () => {
+    expect(updateMutationVariables({}, myProfile)).toEqual({
+      input: { profile: {} },
+    });
+  });
 });
