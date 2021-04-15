@@ -1,7 +1,7 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { GlobalWithFetchMock } from 'jest-fetch-mock/types';
 import { GraphQLError } from 'graphql';
+import fetchMock from 'jest-fetch-mock';
 
 import graphqlClient from '../../graphql/client';
 import { ProfileData, UpdateProfileData } from '../../graphql/typings';
@@ -24,8 +24,7 @@ export function MockApolloClientProvider({
   children: React.ReactElement | React.ReactNodeArray;
   responseProvider: ResponseProvider;
 }): React.ReactElement {
-  const customGlobal = global as GlobalWithFetchMock;
-  customGlobal.fetchMock.mockResponse(async (req: Request) => {
+  fetchMock.mockIf(/.*\/graphql\/.*$/, async (req: Request) => {
     const payload = await req.json();
     const response = createMockedProfileResponse(
       responseProvider(
@@ -79,7 +78,6 @@ const createMockedProfileResponse = (
 };
 
 export function resetApolloMocks(): void {
-  const customGlobal = global as GlobalWithFetchMock;
-  customGlobal.fetchMock.resetMocks();
+  fetchMock.resetMocks();
   graphqlClient.resetStore();
 }
