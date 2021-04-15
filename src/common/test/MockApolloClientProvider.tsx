@@ -5,6 +5,7 @@ import { GraphQLError } from 'graphql';
 
 import graphqlClient from '../../graphql/client';
 import { ProfileData, UpdateProfileData } from '../../graphql/typings';
+import { UpdateMyProfileVariables } from '../../graphql/generatedTypes';
 
 export type MockedResponse = {
   profileData?: ProfileData;
@@ -12,8 +13,9 @@ export type MockedResponse = {
   errorType?: 'networkError' | 'graphQLError';
 };
 
-type RequestVariables = Record<string, unknown>;
-export type ResponseProvider = (variables?: RequestVariables) => MockedResponse;
+export type ResponseProvider = (
+  variables?: UpdateMyProfileVariables
+) => MockedResponse;
 
 export function MockApolloClientProvider({
   responseProvider,
@@ -23,8 +25,13 @@ export function MockApolloClientProvider({
   responseProvider: ResponseProvider;
 }): React.ReactElement {
   const customGlobal = global as GlobalWithFetchMock;
-  customGlobal.fetchMock.mockResponse((variables?: RequestVariables) => {
-    const response = createMockedProfileResponse(responseProvider(variables));
+  customGlobal.fetchMock.mockResponse(async (req: Request) => {
+    const payload = await req.json();
+    const response = createMockedProfileResponse(
+      responseProvider(
+        payload ? (payload.variables as UpdateMyProfileVariables) : undefined
+      )
+    );
     if (response.error) {
       return Promise.reject({
         body: JSON.stringify({ message: (response.error as Error).message }),
