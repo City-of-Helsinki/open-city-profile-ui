@@ -26,6 +26,7 @@
     "@types/validator": "^13.0.0",
     "@types/yup": "^0.26.24",
     "ahooks": "^2.10.0",
+    "await-to-js": "^3.0.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.9.0",
     "enzyme": "^3.11.0",
