@@ -1,11 +1,13 @@
-import { cleanup, waitFor } from '@testing-library/react';
-import { act, cleanup as cleanupHooks } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react';
+import { act } from '@testing-library/react-hooks';
 
 import { getMyProfile } from '../../../common/test/myProfileMocking';
-import { exposeProfileContext } from '../../../common/test/componentMocking';
+import {
+  cleanComponentMocks,
+  exposeProfileContext,
+} from '../../../common/test/componentMocking';
 import {
   MockedResponse,
-  resetApolloMocks,
   ResponseProvider,
 } from '../../../common/test/MockApolloClientProvider';
 import { ProfileData } from '../../../graphql/typings';
@@ -18,9 +20,7 @@ describe('ProfileContext', () => {
   }
 
   afterEach(() => {
-    cleanup();
-    cleanupHooks();
-    resetApolloMocks();
+    cleanComponentMocks();
   });
 
   it('should have no data before fetch is called and all trackers are "false" ', async () => {
