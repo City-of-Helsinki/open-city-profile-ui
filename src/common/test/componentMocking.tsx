@@ -4,8 +4,13 @@ import {
   render,
   RenderResult,
   waitFor,
+  cleanup,
 } from '@testing-library/react';
-import { renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import {
+  renderHook,
+  RenderHookResult,
+  cleanup as cleanupHooks,
+} from '@testing-library/react-hooks';
 import _ from 'lodash';
 import { GraphQLError } from 'graphql';
 import { BrowserRouter } from 'react-router-dom';
@@ -17,15 +22,25 @@ import {
 } from '../../profile/context/ProfileContext';
 import {
   MockApolloClientProvider,
+  resetApolloMocks,
   ResponseProvider,
 } from './MockApolloClientProvider';
 import { AnyObject } from '../../graphql/typings';
 import ToastProvider from '../../toast/__mocks__/ToastProvider';
+import {
+  MutationReturnType,
+  useProfileMutations,
+} from '../../profile/hooks/useProfileMutations';
+import { EditDataType } from '../../profile/helpers/editData';
 
 type ElementSelector = {
   testId?: string;
   text?: string;
   valueSelector?: string;
+};
+
+export type RenderHookResultsChildren = {
+  children: React.ReactNodeArray;
 };
 
 export type TestTools = RenderResult & {
@@ -37,6 +52,12 @@ export type TestTools = RenderResult & {
     selector: ElementSelector
   ) => Promise<string | undefined>;
   fetch: () => Promise<void>;
+};
+
+export const cleanComponentMocks = (): void => {
+  cleanup();
+  cleanupHooks();
+  resetApolloMocks();
 };
 
 export const emptyResponseProvider: ResponseProvider = () => ({});
@@ -143,17 +164,12 @@ export const renderProfileContextWrapper = async (
 
 export const exposeProfileContext = (
   responseProvider: ResponseProvider
-): RenderHookResult<
-  {
-    children: React.ReactNodeArray;
-  },
-  ProfileContextData
-> & {
+): RenderHookResult<RenderHookResultsChildren, ProfileContextData> & {
   waitForDataChange: () => Promise<ProfileContextData>;
   waitForUpdate: () => Promise<ProfileContextData>;
   waitForErrorChange: () => Promise<ProfileContextData>;
 } => {
-  const wrapper = ({ children }: { children: React.ReactNodeArray }) => (
+  const wrapper = ({ children }: RenderHookResultsChildren) => (
     <MockApolloClientProvider responseProvider={responseProvider}>
       <ProfileProvider>{children}</ProfileProvider>
     </MockApolloClientProvider>
@@ -230,6 +246,74 @@ export const exposeProfileContext = (
 
   const result = renderHook(callback, { wrapper });
   return { ...result, waitForDataChange, waitForUpdate, waitForErrorChange };
+};
+
+export const createResultPropertyTracker = <T,>({
+  renderHookResult,
+  valuePicker,
+}: {
+  renderHookResult: RenderHookResult<RenderHookResultsChildren, T>;
+  valuePicker: (props: T) => string | undefined | AnyObject;
+}): [() => Promise<void>] => {
+  const currentPicker = (): T => renderHookResult.result.current;
+  const waitForChange = () => {
+    const initialValue = valuePicker(currentPicker());
+    return new Promise<void>(async resolve => {
+      await waitFor(() => {
+        const newValue = valuePicker(renderHookResult.result.current);
+        if (newValue !== initialValue) {
+          resolve();
+        } else {
+          throw new Error('waiting...');
+        }
+      });
+    });
+  };
+
+  return [waitForChange];
+};
+
+export const exposeProfileMutationsHook = (
+  responseProvider: ResponseProvider,
+  dataType: EditDataType
+): RenderHookResult<RenderHookResultsChildren, MutationReturnType> => {
+  const wrapper = ({ children }: RenderHookResultsChildren) => (
+    <MockApolloClientProvider responseProvider={responseProvider}>
+      <ProfileProvider>
+        <ProfileContextFetcher>{children}</ProfileContextFetcher>
+      </ProfileProvider>
+    </MockApolloClientProvider>
+  );
+
+  const callback = () =>
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useProfileMutations({
+      dataType,
+    });
+
+  return renderHook(callback, { wrapper });
+};
+
+export const ProfileContextFetcher = ({
+  children,
+}: {
+  children: React.ReactElement | React.ReactNodeArray;
+}): React.ReactElement => {
+  const [fetchStarted, setFetchStarted] = useState(false);
+  const { data, fetch } = useContext(ProfileContext);
+  if (!fetchStarted) {
+    fetch();
+    setFetchStarted(true);
+  }
+
+  if (!data) {
+    return <div data-testid="no-data-fetched"></div>;
+  }
+  return (
+    <div data-testid="test-elements">
+      <div data-testid="component">{children}</div>
+    </div>
+  );
 };
 
 export const ProfileContextAsHTML = (): React.ReactElement => {

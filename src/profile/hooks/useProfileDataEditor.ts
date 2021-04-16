@@ -1,11 +1,11 @@
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import { ProfileContext } from '../context/ProfileContext';
 import {
   EditData,
   EditDataType,
   createEditorForDataType,
 } from '../helpers/editData';
+import { useProfileMutations } from './useProfileMutations';
 
 export type ProfileDataEditorReturnType = {
   editDataList: EditData[];
@@ -16,7 +16,9 @@ export function useProfileDataEditor({
 }: {
   dataType: EditDataType;
 }): ProfileDataEditorReturnType {
-  const { data: profileData } = useContext(ProfileContext);
+  const { profileData } = useProfileMutations({
+    dataType,
+  });
   if (!profileData) {
     throw new Error(
       'No profile data for useProfileDataEditor. Hook used before data has been fetched.'

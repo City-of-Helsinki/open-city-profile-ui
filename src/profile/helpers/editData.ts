@@ -30,8 +30,8 @@ export type AddressValue = Pick<
 export type EmailValue = Pick<EmailNode, 'email'>;
 export type PhoneValue = Pick<PhoneNode, 'phone'>;
 
-type BasicDataSource = BasicDataValue & { id: ProfileData['id'] };
-type AdditionalInformationSource = Pick<ProfileData, 'id' | 'language'>;
+export type BasicDataSource = BasicDataValue & { id: ProfileData['id'] };
+export type AdditionalInformationSource = Pick<ProfileData, 'id' | 'language'>;
 export type EditDataProfileSource =
   | BasicDataSource
   | AdditionalInformationSource
@@ -127,7 +127,7 @@ function create(
   };
 }
 
-function pickSources(
+export function pickSources(
   profileData: ProfileData,
   dataType: EditDataType
 ): EditDataProfileSource[] {
