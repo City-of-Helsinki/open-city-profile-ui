@@ -87,6 +87,12 @@ export type EditData = {
   readonly saving: SaveType;
 };
 
+type Backups = {
+  add: (item: EditData) => void;
+  clean: (allItems: EditData[]) => void;
+  get: (id: string) => EditData | undefined;
+};
+
 export type EditFunctions = {
   create: (newProfileData: EditDataProfileSource) => EditData;
   getEditData: () => EditData[];
@@ -96,6 +102,7 @@ export type EditFunctions = {
   ) => Partial<FormValues>;
   updateData: (newProfileRoot: ProfileRoot) => boolean;
   updateAfterSavingError: (id: string) => boolean;
+  resetItem: (targetItem: EditData) => boolean;
 };
 
 function isMultiItemDataType(dataType: EditDataType): boolean {
@@ -110,6 +117,10 @@ function isSaving(allItems: EditData[]): boolean {
 
 function getNewItem(allItems: EditData[]): EditData | undefined {
   return allItems.find(item => item.id === '');
+}
+
+function hasNewItem(allItems: EditData[]): boolean {
+  return !!getNewItem(allItems);
 }
 
 function getValueProps(dataType: EditDataType): string[] {
@@ -202,7 +213,7 @@ function updateItemAndCloneList(
 ): EditData[] {
   const index = findItemIndex(allItems, item.id);
   if (index < 0) {
-    throw new Error('Item not found in updateEditData() ');
+    throw new Error('Item not found in updateItemAndCloneList() ');
   }
   const updatedItem = cloneAndMutateItem(item, {
     value: newValue,
@@ -315,6 +326,34 @@ export function updateItems(
   return dataHasUpdated ? newList : null;
 }
 
+function createBackups(): Backups {
+  const backups: Map<string, EditData> = new Map();
+  const add: Backups['add'] = (item: EditData) => {
+    const clone = cloneAndMutateItem(item);
+    backups.set(clone.id, clone);
+  };
+  const get: Backups['get'] = id => backups.get(id);
+  const clean: Backups['clean'] = allItems => {
+    if (!allItems.length) {
+      backups.clear();
+      return;
+    }
+    allItems.forEach(item => {
+      if (!item.saving) {
+        backups.delete(item.id);
+      }
+    });
+    if (!hasNewItem(allItems)) {
+      backups.delete('');
+    }
+  };
+  return {
+    add,
+    get,
+    clean,
+  };
+}
+
 export function createEditorForDataType(
   profileRoot: ProfileRoot,
   dataType: EditDataType
@@ -331,11 +370,13 @@ export function createEditorForDataType(
       );
     }
   };
+  const backups = createBackups();
   return {
     create: newProfileData => createNewItem(newProfileData, dataType),
     getEditData: () => allItems,
     updateItemAndCreateSaveData: (targetItem, newValue) => {
       preventDoubleEdits(targetItem);
+      backups.add(targetItem);
       allItems = updateItemAndCloneList(
         allItems,
         targetItem,
@@ -351,6 +392,7 @@ export function createEditorForDataType(
       );
       if (!newSources.length) {
         if (allItems.length) {
+          backups.clean(allItems);
           allItems = [];
           return true;
         }
@@ -362,6 +404,7 @@ export function createEditorForDataType(
 
       const newList = updateItems(allItems, newSources, dataType);
       if (newList) {
+        backups.clean(newList);
         allItems = newList;
       }
       return !!newList;
@@ -375,6 +418,17 @@ export function createEditorForDataType(
         return false;
       }
       allItems = updateItemAndCloneList(allItems, targetItem, targetItem.value);
+      return true;
+    },
+    resetItem: targetItem => {
+      const backup = backups.get(targetItem.id);
+      if (!backup) {
+        return false;
+      }
+      if (_.isEqual(backup.value, targetItem.value)) {
+        return false;
+      }
+      allItems = updateItemAndCloneList(allItems, targetItem, backup.value);
       return true;
     },
   };

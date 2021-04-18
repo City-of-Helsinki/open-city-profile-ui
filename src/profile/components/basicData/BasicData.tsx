@@ -29,9 +29,6 @@ import SaveIndicator from '../saveIndicator/SaveIndicator';
 type FormikValues = BasicDataValue;
 
 function BasicData(): React.ReactElement | null {
-  const { editDataList, save } = useProfileDataEditor({
-    dataType: basicDataType,
-  });
   const [isEditing, setEditing] = useState(false);
   const { t } = useTranslation();
   const {
@@ -41,6 +38,10 @@ function BasicData(): React.ReactElement | null {
     clearMessage,
   } = useNotificationContent();
   const testId = basicDataType;
+
+  const { editDataList, save, reset } = useProfileDataEditor({
+    dataType: basicDataType,
+  });
 
   if (!editDataList || !editDataList[0]) {
     return null;
@@ -76,6 +77,7 @@ function BasicData(): React.ReactElement | null {
   const actionHandler: ActionHandler = async action => {
     const promise = await onAction(action, editData);
     if (action === 'cancel') {
+      reset(editData);
       setEditing(false);
     }
     if (action === 'edit') {
