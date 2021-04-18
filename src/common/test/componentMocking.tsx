@@ -33,7 +33,7 @@ import {
 } from '../../profile/hooks/useProfileMutations';
 import { EditDataType } from '../../profile/helpers/editData';
 
-type ElementSelector = {
+export type ElementSelector = {
   testId?: string;
   text?: string;
   valueSelector?: string;

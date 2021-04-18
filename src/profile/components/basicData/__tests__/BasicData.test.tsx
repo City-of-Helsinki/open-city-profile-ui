@@ -11,6 +11,7 @@ import {
   RenderChildrenWhenDataIsComplete,
   cleanComponentMocks,
   WaitForElementAndValueProps,
+  ElementSelector,
 } from '../../../../common/test/componentMocking';
 import { ProfileData } from '../../../../graphql/typings';
 import BasicData from '../BasicData';
@@ -35,7 +36,10 @@ describe('<BasicData /> ', () => {
     );
   };
   const t = i18n.getFixedT('fi');
-  const editButtonSelector = { id: 'basic-data-edit-button' };
+  const editButtonSelector: ElementSelector = { id: 'basic-data-edit-button' };
+  const cancelButtonSelector: ElementSelector = {
+    testId: 'basic-data-cancel-button',
+  };
 
   beforeEach(() => {
     responses.length = 0;
@@ -146,7 +150,7 @@ describe('<BasicData /> ', () => {
       await verifyValues(getTextOrInputValue, basicData);
     });
   });
-  it('sends new data and on error shows error notification and stays in edit mode', async () => {
+  it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {
     // new values
     const basicData = {
       firstName: 'test-firstName',
@@ -179,6 +183,9 @@ describe('<BasicData /> ', () => {
       });
       // input fields are still rendered
       await verifyValues(getTextOrInputValue, basicData, true);
+      await triggerAction(cancelButtonSelector);
+      // values are reset to previous values
+      await verifyValues(getTextOrInputValue, initialProfile);
     });
   });
 });
