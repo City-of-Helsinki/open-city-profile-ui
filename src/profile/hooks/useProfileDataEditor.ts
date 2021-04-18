@@ -5,6 +5,7 @@ import {
   EditData,
   EditDataType,
   createEditorForDataType,
+  SaveType,
   EditDataValue,
   FormValues,
 } from '../helpers/editData';
@@ -14,6 +15,28 @@ export type ProfileDataEditorReturnType = {
   editDataList: EditData[];
   save: (item: EditData, newValue: EditDataValue) => Promise<UpdateResult>;
 };
+
+export type Action = SaveType | 'edit' | 'cancel' | 'save' | 'add';
+
+export type ActionListenerReturnType = Promise<void | UpdateResult>;
+export type ActionListener = (
+  action: Action,
+  data: EditData,
+  value?: Partial<EditDataValue>
+) => ActionListenerReturnType;
+
+export function saveTypeToAction(saveType?: SaveType): Action | undefined {
+  if (!saveType) {
+    return undefined;
+  }
+  if (saveType === 'value') {
+    return 'save';
+  }
+  if (saveType === 'remove' || saveType === 'set-primary') {
+    return saveType;
+  }
+  return undefined;
+}
 
 export function useProfileDataEditor({
   dataType,

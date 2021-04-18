@@ -37,21 +37,46 @@ type ElementSelector = {
   testId?: string;
   text?: string;
   valueSelector?: string;
+  id?: string;
+  querySelector?: string;
+  label?: string;
 };
 
 export type RenderHookResultsChildren = {
   children: React.ReactNodeArray;
 };
 
+export type WaitForElementAndValueProps = {
+  selector: ElementSelector;
+  value?: string;
+};
+
 export type TestTools = RenderResult & {
   getElement: (selector: ElementSelector) => HTMLElement | null;
   waitForIsComplete: () => Promise<void>;
-  waitForDataChange: () => Promise<void>;
+  waitForDataChange: (previousChangeTime?: number) => Promise<void>;
   waitForElement: (selector: ElementSelector) => Promise<void>;
   getTextOrInputValue: (
     selector: ElementSelector
   ) => Promise<string | undefined>;
   fetch: () => Promise<void>;
+  triggerAction: (selector: ElementSelector) => Promise<void>;
+  submit: (props?: {
+    waitForOnSaveNotification?: WaitForElementAndValueProps;
+    waitForAfterSaveNotification?: WaitForElementAndValueProps;
+    skipDataCheck?: boolean;
+  }) => Promise<void>;
+  isDisabled: (element: HTMLElement | Element | null) => boolean;
+  setInputValue: ({
+    target,
+    selector,
+    newValue,
+  }: {
+    target?: HTMLElement;
+    selector: ElementSelector;
+    newValue: string;
+  }) => Promise<void>;
+  waitForElementAndValue: (props: WaitForElementAndValueProps) => Promise<void>;
 };
 
 export const cleanComponentMocks = (): void => {
@@ -102,8 +127,8 @@ export const renderProfileContextWrapper = async (
     });
   };
 
-  const waitForDataChange: TestTools['waitForDataChange'] = async () => {
-    const latest = getLastTime('dataUpdateTime');
+  const waitForDataChange: TestTools['waitForDataChange'] = async previousChangeTime => {
+    const latest = previousChangeTime || getLastTime('dataUpdateTime');
     await waitFor(() => {
       const time = getLastTime('dataUpdateTime');
       if (time <= latest) {
@@ -118,14 +143,33 @@ export const renderProfileContextWrapper = async (
     return waitForDataChange();
   };
 
-  const getElement: TestTools['getElement'] = ({ testId, text }) => {
+  const getElement: TestTools['getElement'] = ({
+    label,
+    id,
+    testId,
+    valueSelector,
+    text,
+    querySelector,
+  }) => {
+    if (label) {
+      return renderResult.getByLabelText(label);
+    }
     if (testId) {
       return renderResult.getByTestId(testId);
     }
     if (text) {
       return renderResult.getByText(text);
     }
-    throw new Error('getElement selector not set');
+    if (valueSelector) {
+      return renderResult.getByDisplayValue(valueSelector);
+    }
+    const selector = querySelector || `#${id}`;
+    const element = renderResult.container.querySelector(selector);
+    if (!element) {
+      // all selectors above throw error if element not found. This should too.
+      throw new Error(`Element not found with selector ${selector}`);
+    }
+    return element as HTMLElement;
   };
 
   const waitForElement: TestTools['waitForElement'] = async selector => {
@@ -140,15 +184,72 @@ export const renderProfileContextWrapper = async (
       () => {
         const element = getElement(selector);
         if (element && !value) {
-          if (selector.valueSelector) {
+          if (selector.valueSelector || element.nodeName === 'INPUT') {
             value = (element as HTMLInputElement).value;
+          } else {
+            value = element.textContent || undefined;
           }
-          value = element.textContent || undefined;
         }
       },
       { timeout: 150 }
     );
     return Promise.resolve(value);
+  };
+
+  const triggerAction: TestTools['triggerAction'] = async selector => {
+    const button = getElement(selector);
+    fireEvent.click(button as Element);
+    return Promise.resolve();
+  };
+
+  const isDisabled: TestTools['isDisabled'] = element =>
+    !!element && element.getAttribute('disabled') !== null;
+
+  const submit: TestTools['submit'] = async ({
+    waitForOnSaveNotification,
+    waitForAfterSaveNotification,
+    skipDataCheck,
+  } = {}) => {
+    const previousDataChangeTime = getLastTime('dataUpdateTime');
+    const submitButton = renderResult.container.querySelectorAll(
+      'button[type="submit"]'
+    );
+    fireEvent.click(submitButton[0]);
+    if (waitForOnSaveNotification) {
+      await waitForElementAndValue(waitForOnSaveNotification);
+    }
+    await waitFor(() => {
+      if (!isDisabled(submitButton[0])) {
+        throw new Error('NOT DISABLED');
+      }
+    });
+    if (waitForAfterSaveNotification) {
+      await waitForElementAndValue(waitForAfterSaveNotification);
+    }
+    if (!skipDataCheck) {
+      await waitForDataChange(previousDataChangeTime);
+    }
+  };
+
+  const setInputValue: TestTools['setInputValue'] = async props => {
+    const { newValue, target, selector } = props;
+    const input = target || getElement(selector);
+    fireEvent.change(input as HTMLElement, { target: { value: newValue } });
+
+    return waitFor(
+      () => {
+        getElement({ valueSelector: newValue });
+      },
+      { timeout: 60 }
+    );
+  };
+
+  const waitForElementAndValue: TestTools['waitForElementAndValue'] = async props => {
+    const { selector, value } = props;
+    const elementValue = await getTextOrInputValue(selector);
+    if (value && (!elementValue || !elementValue.includes(value))) {
+      throw new Error('element value does not match given value');
+    }
   };
 
   return Promise.resolve({
@@ -159,6 +260,11 @@ export const renderProfileContextWrapper = async (
     waitForElement,
     getTextOrInputValue,
     fetch,
+    triggerAction,
+    submit,
+    isDisabled,
+    setInputValue,
+    waitForElementAndValue,
   });
 };
 
@@ -260,7 +366,7 @@ export const createResultPropertyTracker = <T,>({
     const initialValue = valuePicker(currentPicker());
     return new Promise<void>(async resolve => {
       await waitFor(() => {
-        const newValue = valuePicker(renderHookResult.result.current);
+        const newValue = valuePicker(currentPicker());
         if (newValue !== initialValue) {
           resolve();
         } else {
