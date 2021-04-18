@@ -14,6 +14,7 @@ import { UpdateResult, useProfileMutations } from './useProfileMutations';
 export type ProfileDataEditorReturnType = {
   editDataList: EditData[];
   save: (item: EditData, newValue: EditDataValue) => Promise<UpdateResult>;
+  reset: (item: EditData) => void;
 };
 
 export type Action = SaveType | 'edit' | 'cancel' | 'save' | 'add';
@@ -56,6 +57,7 @@ export function useProfileDataEditor({
     updateItemAndCreateSaveData,
     updateData,
     updateAfterSavingError,
+    resetItem,
   } = useMemo(
     () => createEditorForDataType(profileData, dataType),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -94,9 +96,14 @@ export function useProfileDataEditor({
     triggerUpdate();
     return executeMutationUpdateAndHandleResult(formValues, item.id);
   };
+  const reset: ProfileDataEditorReturnType['reset'] = item => {
+    const success = resetItem(item);
+    success && triggerUpdate();
+  };
 
   return {
     editDataList: getEditData(),
     save,
+    reset,
   };
 }
