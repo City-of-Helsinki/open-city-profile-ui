@@ -40,7 +40,7 @@ function Profile(): React.ReactElement {
     authService
       .getUser()
       .then(user => {
-        if (!user) {
+        if (!user || user.expired) {
           return history.push('/login');
         }
 
