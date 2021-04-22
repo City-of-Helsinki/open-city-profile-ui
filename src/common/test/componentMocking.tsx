@@ -87,7 +87,7 @@ export const cleanComponentMocks = (): void => {
 
 export const emptyResponseProvider: ResponseProvider = () => ({});
 
-export const renderProfileContextWrapper = async (
+export const renderComponentWithMocksAndContexts = async (
   responseProvider: ResponseProvider,
   children: React.ReactElement
 ): Promise<TestTools> => {

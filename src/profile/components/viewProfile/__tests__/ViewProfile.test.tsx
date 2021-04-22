@@ -2,7 +2,7 @@ import React from 'react';
 import { act } from '@testing-library/react';
 
 import { getMyProfile } from '../../../../common/test/myProfileMocking';
-import { renderProfileContextWrapper } from '../../../../common/test/componentMocking';
+import { renderComponentWithMocksAndContexts } from '../../../../common/test/componentMocking';
 import { ProfileData } from '../../../../graphql/typings';
 import ViewProfile from '../ViewProfile';
 import {
@@ -18,7 +18,10 @@ describe('<ViewProfile /> ', () => {
   const renderTestSuite = (responses: MockedResponse[]) => {
     const responseProvider: ResponseProvider = () =>
       responses.shift() as MockedResponse;
-    return renderProfileContextWrapper(responseProvider, <ViewProfile />);
+    return renderComponentWithMocksAndContexts(
+      responseProvider,
+      <ViewProfile />
+    );
   };
 
   it('renders user"s name or nickname in header  ', async () => {
