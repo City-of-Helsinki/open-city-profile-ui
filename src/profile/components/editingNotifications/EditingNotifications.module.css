@@ -1,4 +1,3 @@
-
 .wrapper {
   padding-bottom: var(--spacing-m);
   /*Fixes notification rendering above language selection*/
@@ -6,5 +5,5 @@
   position: relative;
 }
 .wrapper:focus {
- outline:none;
+  outline: none;
 }

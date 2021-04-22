@@ -1,32 +1,32 @@
-.contentWrapper{
+.contentWrapper {
   display: flex;
   flex: 1;
   flex-direction: column;
   position: relative;
 }
 
-.multiItemContentWrapper{
+.multiItemContentWrapper {
   padding-bottom: var(--spacing-xl);
 }
 
 .sectionTitle {
   font-size: var(--fontsize-heading-s);
   border-bottom: 1px solid var(--color-black-30);
-  width:100%;
+  width: 100%;
   padding-bottom: var(--spacing-layout-2-xs);
-} 
+}
 
 .sectionTitle:first-of-type {
-  margin-top:0;
+  margin-top: 0;
 }
 
 .formField {
   padding-bottom: var(--spacing-m);
 }
 
-.editButtons{
+.editButtons {
   display: flex;
-  flex:1 0;
+  flex: 1 0;
   margin-top: var(--spacing-m);
   border-top: 1px solid var(--color-black-30);
   flex-direction: column;
@@ -34,67 +34,66 @@
   border-color: var(--color-white);
 }
 
-.editButtons button{
+.editButtons button {
   margin: var(--spacing-xs) 0 0;
 }
 
-.multiItemForm{
+.multiItemForm {
   padding-bottom: var(--spacing-xl);
 }
 
 .icon {
-  color:var(--color-success);
+  color: var(--color-success);
   height: 24px;
 }
 
-.supplementaryButton.supplementaryButton > div{
-  margin-left:0;
+.supplementaryButton.supplementaryButton > div {
+  margin-left: 0;
 }
-.supplementaryButton.supplementaryButton > span{
-  padding-right:0;
+.supplementaryButton.supplementaryButton > span {
+  padding-right: 0;
 }
 
 .responsiveButton {
-  width:100%;
+  width: 100%;
 }
 
-.actionsWrapper{
+.actionsWrapper {
   padding-bottom: var(--spacing-xl);
 }
 
-.actionsWrapper .actionsWrapperButton{
-  border:2px solid var(--color-bus);
-  margin-bottom:var(--spacing-xs);
-}  
+.actionsWrapper .actionsWrapperButton {
+  border: 2px solid var(--color-bus);
+  margin-bottom: var(--spacing-xs);
+}
 
-.actions{
+.actions {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: var(--spacing-xs);
-  flex:1 0;
-  border-top:1px solid var(--color-white);
+  flex: 1 0;
+  border-top: 1px solid var(--color-white);
 }
 
-.actions button{
+.actions button {
   font-size: 16px;
   padding: 0;
   width: 100%;
 }
 
-.primaryContainer{
+.primaryContainer {
   align-items: center;
   display: inline-flex;
   justify-content: center;
   position: relative;
   vertical-align: top;
-  color:var(--color-bus);
+  color: var(--color-bus);
   line-height: 1.25em;
   padding: 0 0 var(--spacing-s) 0;
-  
 }
 
-.primaryContainer span{
+.primaryContainer span {
   padding: var(--spacing-s) 0 var(--spacing-s) var(--spacing-3-xs);
 }
 
@@ -103,18 +102,17 @@
   composes: hiddenFromScreen from '~hds-core/lib/base.css';
 }
 
-.list{
+.list {
   list-style: none;
   padding: 0;
-  margin:0;
+  margin: 0;
 }
 
-.listItem{
+.listItem {
   text-align: left;
 }
 
 @media (min-width: 768px) {
-  
   .multiItemWrapper {
     display: flex;
     flex-direction: row;
@@ -129,67 +127,65 @@
   }
 
   /* fixes bug in HDS TextInput when it is wrapped to an element with display:flex: */
-  .multiItemWrapper > div > div { 
-    height:auto;
+  .multiItemWrapper > div > div {
+    height: auto;
   }
 
   .responsiveButton {
     width: auto;
   }
-  
-  .actionsWrapper{
+
+  .actionsWrapper {
     position: absolute;
     top: -17px;
     right: 0;
-    padding:0;
+    padding: 0;
   }
 
-  .actionsWrapper .actionsWrapperButton{
-    border-color:var(--color-white);
-    margin-bottom:0;
+  .actionsWrapper .actionsWrapperButton {
+    border-color: var(--color-white);
+    margin-bottom: 0;
   }
   .actionsWrapper .actionsWrapperButton:focus,
-  .actionsWrapper .actionsWrapperButton:hover:focus{
-    border-color:var(--color-bus);
-  }  
+  .actionsWrapper .actionsWrapperButton:hover:focus {
+    border-color: var(--color-bus);
+  }
 
-  .primaryContainer{
+  .primaryContainer {
     padding: 0 var(--spacing-s);
   }
-  
-  .actions{
+
+  .actions {
     flex: 1 1;
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    border:0;
+    border: 0;
     padding-top: 0;
   }
-  
-  .actions button{
+
+  .actions button {
     width: auto;
     padding: 0 var(--spacing-s);
   }
 
-  .editButtons{
+  .editButtons {
     flex-direction: row;
-    border:0;
-    margin:0;
+    border: 0;
+    margin: 0;
     justify-content: flex-end;
   }
 
-  .editButtons button{
+  .editButtons button {
     margin: 0 0 0 var(--spacing-xs);
   }
 
-  .alignLeft{
+  .alignLeft {
     justify-content: flex-start;
     padding: var(--spacing-m) 0 0 0;
   }
 
-  .editButtons.alignLeft > button{
+  .editButtons.alignLeft > button {
     margin: 0 var(--spacing-xs) 0 0;
   }
 }
-
-
