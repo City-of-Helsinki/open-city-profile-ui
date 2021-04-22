@@ -2,7 +2,7 @@ import React from 'react';
 import { act } from '@testing-library/react';
 
 import {
-  cloneAndManipulateProfile,
+  cloneProfileAndProvideManipulationFunctions,
   getMyProfile,
 } from '../../../../common/test/myProfileMocking';
 import {
@@ -111,7 +111,9 @@ describe('<BasicData /> ', () => {
   });
   it('sends new data and returns to view mode when saved', async () => {
     // create graphQL response for the update
-    const updatedProfileData = cloneAndManipulateProfile(initialProfile)
+    const updatedProfileData = cloneProfileAndProvideManipulationFunctions(
+      initialProfile
+    )
       .setBasicData(basicData)
       .getProfile();
 
