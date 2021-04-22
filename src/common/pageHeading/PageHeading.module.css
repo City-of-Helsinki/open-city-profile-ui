@@ -30,7 +30,7 @@
     height: 77px;
     margin-bottom: 0;
   }
-  .pageHeading h1{
+  .pageHeading h1 {
     font-size: var(--fontsize-heading-xl);
     margin-left: var(--spacing-layout-xs);
   }
