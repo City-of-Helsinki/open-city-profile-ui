@@ -1,12 +1,11 @@
 .notification {
-    width: 300px;
+  width: 300px;
 }
 
 .notification p {
-    margin: 0;
+  margin: 0;
 }
 
 .messageWrapper {
-    margin-top: var(--spacing-m);
+  margin-top: var(--spacing-m);
 }
-
