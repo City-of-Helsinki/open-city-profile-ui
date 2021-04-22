@@ -3,7 +3,7 @@ import React from 'react';
 import VerifiedPersonalInformation from '../VerifiedPersonalInformation';
 import {
   emptyResponseProvider,
-  renderProfileContextWrapper,
+  renderComponentWithMocksAndContexts,
 } from '../../../../common/test/componentMocking';
 import {
   getVerifiedData,
@@ -33,7 +33,7 @@ describe('<VerifiedPersonalInformation />', () => {
   };
   it('should render all given data', async () => {
     const data = getProfileWithVIP();
-    const { getElement } = await renderProfileContextWrapper(
+    const { getElement } = await renderComponentWithMocksAndContexts(
       emptyResponseProvider,
       <VerifiedPersonalInformation data={data} />
     );
@@ -72,7 +72,7 @@ describe('<VerifiedPersonalInformation />', () => {
       temporaryAddress: null,
       permanentForeignAddress: null,
     });
-    const { getElement } = await renderProfileContextWrapper(
+    const { getElement } = await renderComponentWithMocksAndContexts(
       emptyResponseProvider,
       <VerifiedPersonalInformation data={data} />
     );
