@@ -6,7 +6,7 @@ import {
   getMyProfile,
 } from '../../../../common/test/myProfileMocking';
 import {
-  renderProfileContextWrapper,
+  renderComponentWithMocksAndContexts,
   TestTools,
   RenderChildrenWhenDataIsComplete,
   cleanComponentMocks,
@@ -28,7 +28,7 @@ describe('<BasicData /> ', () => {
   const renderTestSuite = () => {
     const responseProvider: ResponseProvider = () =>
       responses.shift() as MockedResponse;
-    return renderProfileContextWrapper(
+    return renderComponentWithMocksAndContexts(
       responseProvider,
       <RenderChildrenWhenDataIsComplete>
         <BasicData />
