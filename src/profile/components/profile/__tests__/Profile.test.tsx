@@ -4,7 +4,7 @@ import { act, cleanup } from '@testing-library/react';
 import { Route, Switch } from 'react-router';
 
 import { getMyProfile } from '../../../../common/test/myProfileMocking';
-import { renderProfileContextWrapper } from '../../../../common/test/componentMocking';
+import { renderComponentWithMocksAndContexts } from '../../../../common/test/componentMocking';
 import { ProfileData } from '../../../../graphql/typings';
 import Profile from '../Profile';
 import {
@@ -27,7 +27,7 @@ describe('<Profile />', () => {
   const renderTestSuite = (responses: MockedResponse[]) => {
     const responseProvider: ResponseProvider = () =>
       responses.shift() as MockedResponse;
-    return renderProfileContextWrapper(
+    return renderComponentWithMocksAndContexts(
       responseProvider,
       <React.Fragment>
         <Profile />
