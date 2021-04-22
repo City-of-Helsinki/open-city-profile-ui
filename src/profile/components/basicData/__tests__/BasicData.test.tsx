@@ -102,10 +102,10 @@ describe('<BasicData /> ', () => {
 
   it("renders user's names - also in edit mode", async () => {
     await act(async () => {
-      const { getTextOrInputValue, triggerAction } = await initTests();
+      const { getTextOrInputValue, clickElement } = await initTests();
       await verifyValues(getTextOrInputValue, initialProfile);
       // goto edit mode
-      await triggerAction(editButtonSelector);
+      await clickElement(editButtonSelector);
       await verifyValues(getTextOrInputValue, initialProfile, true);
     });
   });
@@ -119,12 +119,12 @@ describe('<BasicData /> ', () => {
 
     await act(async () => {
       const {
-        triggerAction,
+        clickElement,
         setInputValue,
         submit,
         getTextOrInputValue,
       } = await initTests();
-      await triggerAction(editButtonSelector);
+      await clickElement(editButtonSelector);
       await setValues(setInputValue, basicData);
       // add the graphQL response
       responses.push({
@@ -151,12 +151,12 @@ describe('<BasicData /> ', () => {
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {
     await act(async () => {
       const {
-        triggerAction,
+        clickElement,
         setInputValue,
         submit,
         getTextOrInputValue,
       } = await initTests();
-      await triggerAction(editButtonSelector);
+      await clickElement(editButtonSelector);
       await setValues(setInputValue, basicData);
       // add the graphQL response
       responses.push({
@@ -174,7 +174,7 @@ describe('<BasicData /> ', () => {
       });
       // input fields are still rendered
       await verifyValues(getTextOrInputValue, basicData, true);
-      await triggerAction({
+      await clickElement({
         testId: 'basic-data-cancel-button',
       });
       // values are reset to previous values
