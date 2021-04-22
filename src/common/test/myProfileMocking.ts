@@ -276,7 +276,7 @@ function setPrimaryNode(
   Object.assign(profile, { [propName]: newPrimary });
 }
 
-export function cloneAndManipulateProfile(
+export function cloneProfileAndProvideManipulationFunctions(
   profileData: ProfileData
 ): ManipulationFunctions {
   const currentProfile = _.cloneDeep(profileData) as Mutable<ProfileData>;

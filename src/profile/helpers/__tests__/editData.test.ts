@@ -20,7 +20,7 @@ import {
   updateItems,
 } from '../editData';
 import {
-  cloneAndManipulateProfile,
+  cloneProfileAndProvideManipulationFunctions,
   getMyProfile,
 } from '../../../common/test/myProfileMocking';
 import {
@@ -226,7 +226,7 @@ describe('editData.ts ', () => {
         const didChangeIsFalseWhenDataIsSame = updateData(myProfile);
         expect(didChangeIsFalseWhenDataIsSame).toBeFalsy();
 
-        const profileManipulator = cloneAndManipulateProfile(
+        const profileManipulator = cloneProfileAndProvideManipulationFunctions(
           myProfile.myProfile as ProfileData
         );
         if (dataType === basicDataType) {
