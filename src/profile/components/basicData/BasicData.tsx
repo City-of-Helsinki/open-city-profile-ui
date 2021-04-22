@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { TextInput } from 'hds-react';
@@ -37,7 +37,6 @@ function BasicData(): React.ReactElement | null {
     setSuccessMessage,
     clearMessage,
   } = useNotificationContent();
-  const testId = basicDataType;
 
   const { editDataList, save, reset } = useProfileDataEditor({
     dataType: basicDataType,
@@ -59,7 +58,7 @@ function BasicData(): React.ReactElement | null {
   const getFieldErrorMessage = (
     formikProps: FormikProps<FormikValues>,
     fieldName: keyof FormikValues
-  ) => {
+  ): ReactNode | undefined => {
     if (!hasFieldError(formikProps, fieldName)) {
       return undefined;
     }
@@ -112,7 +111,7 @@ function BasicData(): React.ReactElement | null {
                 <Field
                   className={commonFormStyles.formField}
                   name="firstName"
-                  id={`${testId}-firstName`}
+                  id={`${basicDataType}-firstName`}
                   maxLength={formFields.firstName.max as number}
                   as={TextInput}
                   invalid={hasFieldError(formikProps, 'firstName')}
@@ -125,7 +124,7 @@ function BasicData(): React.ReactElement | null {
                 <Field
                   className={commonFormStyles.formField}
                   name="nickname"
-                  id={`${testId}-nickname`}
+                  id={`${basicDataType}-nickname`}
                   maxLength={formFields.nickname.max as number}
                   as={TextInput}
                   invalid={hasFieldError(formikProps, 'nickname')}
@@ -137,7 +136,7 @@ function BasicData(): React.ReactElement | null {
                 <Field
                   className={commonFormStyles.formField}
                   name="lastName"
-                  id={`${testId}-lastName`}
+                  id={`${basicDataType}-lastName`}
                   maxLength={formFields.lastName.max as number}
                   as={TextInput}
                   invalid={hasFieldError(formikProps, 'lastName')}
@@ -155,11 +154,11 @@ function BasicData(): React.ReactElement | null {
                 handler={actionHandler}
                 disabled={!!saving}
                 alignLeft
-                testId={testId}
+                testId={basicDataType}
               />
               <SaveIndicator
                 action={saveTypeToAction(saving)}
-                testId={testId}
+                testId={basicDataType}
               />
             </Form>
           </ProfileSection>
@@ -178,17 +177,17 @@ function BasicData(): React.ReactElement | null {
           <LabeledValue
             label={t(formFields.firstName.translationKey)}
             value={firstName}
-            testId={`${testId}-firstName`}
+            testId={`${basicDataType}-firstName`}
           />
           <LabeledValue
             label={t(formFields.nickname.translationKey)}
             value={nickname}
-            testId={`${testId}-nickname`}
+            testId={`${basicDataType}-nickname`}
           />
           <LabeledValue
             label={t(formFields.lastName.translationKey)}
             value={lastName}
-            testId={`${testId}-lastName`}
+            testId={`${basicDataType}-lastName`}
           />
         </div>
         <div className={commonFormStyles.actionsWrapper}>
@@ -200,7 +199,7 @@ function BasicData(): React.ReactElement | null {
             }}
             buttonClassNames={commonFormStyles.actionsWrapperButton}
             editButtonId={`${basicDataType}-edit-button`}
-            testId={testId}
+            testId={basicDataType}
           />
         </div>
       </div>
