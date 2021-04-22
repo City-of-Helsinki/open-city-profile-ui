@@ -14,7 +14,7 @@ import {
 } from '../../../common/test/MockApolloClientProvider';
 import {
   getMyProfile,
-  cloneAndManipulateProfile,
+  cloneProfileAndProvideManipulationFunctions,
   ManipulationFunctions,
 } from '../../../common/test/myProfileMocking';
 import { UpdateMyProfileVariables } from '../../../graphql/generatedTypes';
@@ -76,7 +76,7 @@ describe('useProfileMutations.ts ', () => {
     const renderHookResult = render();
     const { result, waitForDataChange } = renderHookResult;
     await waitForDataChange();
-    profileManipulator = cloneAndManipulateProfile(
+    profileManipulator = cloneProfileAndProvideManipulationFunctions(
       result.current.profileData?.myProfile as ProfileData
     );
     return Promise.resolve(renderHookResult);
