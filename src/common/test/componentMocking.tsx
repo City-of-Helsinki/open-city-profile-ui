@@ -60,7 +60,7 @@ export type TestTools = RenderResult & {
     selector: ElementSelector
   ) => Promise<string | undefined>;
   fetch: () => Promise<void>;
-  triggerAction: (selector: ElementSelector) => Promise<void>;
+  clickElement: (selector: ElementSelector) => Promise<void>;
   submit: (props?: {
     waitForOnSaveNotification?: WaitForElementAndValueProps;
     waitForAfterSaveNotification?: WaitForElementAndValueProps;
@@ -196,7 +196,7 @@ export const renderProfileContextWrapper = async (
     return Promise.resolve(value);
   };
 
-  const triggerAction: TestTools['triggerAction'] = async selector => {
+  const clickElement: TestTools['clickElement'] = async selector => {
     const button = getElement(selector);
     fireEvent.click(button as Element);
     return Promise.resolve();
@@ -260,7 +260,7 @@ export const renderProfileContextWrapper = async (
     waitForElement,
     getTextOrInputValue,
     fetch,
-    triggerAction,
+    clickElement,
     submit,
     isDisabled,
     setInputValue,
