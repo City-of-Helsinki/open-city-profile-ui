@@ -145,7 +145,7 @@ describe('Update variables for basic data (names) are formed correctly', () => {
     formValues = getFormValues(nameFormParts);
   });
 
-  test('Variables in update data match formValues even if not changed', () => {
+  it('Variables in update data match formValues even if not changed', () => {
     const variables: UpdateMyProfileVariables = updateMutationVariables(
       formValues,
       myProfile
@@ -153,7 +153,7 @@ describe('Update variables for basic data (names) are formed correctly', () => {
     expect(variables.input.profile).toEqual(formValues);
   });
 
-  test('Variables in update data match changes', () => {
+  it('Variables in update data match changes', () => {
     const newData = {
       firstName: 'test-firstName',
       nickname: 'test-nickname',
@@ -189,7 +189,7 @@ describe('Update variable for language is formed correctly', () => {
     formValues = getFormValues(['language']);
   });
 
-  test('Variable in update data match formValues even if not changed', () => {
+  it('Variable in update data match formValues even if not changed', () => {
     const variables: UpdateMyProfileVariables = updateMutationVariables(
       formValues,
       myProfile
@@ -197,7 +197,7 @@ describe('Update variable for language is formed correctly', () => {
     expect(variables.input.profile).toEqual(formValues);
   });
 
-  test('Variables in update data match changes', () => {
+  it('Variables in update data match changes', () => {
     const newData = {
       language: Language.SWEDISH,
     };
@@ -216,7 +216,7 @@ describe('MultiItemArrays are formed correctly', () => {
     formValues = getFormValues(multiNodeFormParts);
   });
 
-  test('Names and language do not exist in update variables when not in formValues', () => {
+  it('Names and language do not exist in update variables when not in formValues', () => {
     const variables: UpdateMyProfileVariables = updateMutationVariables(
       formValues,
       myProfile
@@ -227,7 +227,7 @@ describe('MultiItemArrays are formed correctly', () => {
     expect(variables.input.profile.language).toBeUndefined();
   });
 
-  test('add arrays are formed correctly with new data', () => {
+  it('add arrays are formed correctly with new data', () => {
     const variables: UpdateMyProfileVariables = updateMutationVariables(
       formValues,
       myProfile
@@ -246,7 +246,7 @@ describe('MultiItemArrays are formed correctly', () => {
     ]);
   });
 
-  test('add arrays are empty when using existing data', () => {
+  it('add arrays are empty when using existing data', () => {
     const variables: UpdateMyProfileVariables = updateMutationVariables(
       {
         ...formValues,
@@ -262,7 +262,7 @@ describe('MultiItemArrays are formed correctly', () => {
     expect(variables.input.profile.addAddresses).toEqual([]);
   });
 
-  test('update arrays are formed correctly with updated data objects', () => {
+  it('update arrays are formed correctly with updated data objects', () => {
     const variables: UpdateMyProfileVariables = updateMutationVariables(
       formValues,
       myProfile
@@ -278,7 +278,7 @@ describe('MultiItemArrays are formed correctly', () => {
     ]);
   });
 
-  test('update arrays are empty when using unchanged or new data', () => {
+  it('update arrays are empty when using unchanged or new data', () => {
     const variables: UpdateMyProfileVariables = updateMutationVariables(
       {
         ...formValues,
@@ -294,7 +294,7 @@ describe('MultiItemArrays are formed correctly', () => {
     expect(variables.input.profile.updatePhones).toEqual([]);
   });
 
-  test('remove arrays are formed correctly with existing data', () => {
+  it('remove arrays are formed correctly with existing data', () => {
     const variables: UpdateMyProfileVariables = updateMutationVariables(
       { ...formValues, addresses: [], emails: [], phones: [] },
       myProfile
@@ -313,7 +313,7 @@ describe('MultiItemArrays are formed correctly', () => {
     ]);
   });
 
-  test('remove arrays do not exists when data is not changed', () => {
+  it('remove arrays do not exists when data is not changed', () => {
     const variables: UpdateMyProfileVariables = updateMutationVariables(
       formValues,
       myProfile
@@ -336,7 +336,7 @@ describe('Full profile can be updated ', () => {
     ]);
   });
 
-  test('Variables include all formValues or corresponding update property', () => {
+  it('Variables include all formValues or corresponding update property', () => {
     const variables: UpdateMyProfileVariables = updateMutationVariables(
       formValues,
       myProfile
@@ -350,7 +350,7 @@ describe('Full profile can be updated ', () => {
     expect(variables.input.profile.updatePhones).toBeDefined();
   });
 
-  test('but empty update is also handled', () => {
+  it('Empty formValues are also handled and return empty mutation variables', () => {
     expect(updateMutationVariables({}, myProfile)).toEqual({
       input: { profile: {} },
     });
