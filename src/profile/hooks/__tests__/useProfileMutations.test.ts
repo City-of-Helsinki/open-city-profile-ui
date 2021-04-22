@@ -83,7 +83,7 @@ describe('useProfileMutations.ts ', () => {
   };
 
   describe('Sends the update query and updates Profile Context via cache', () => {
-    test('Basic data and language are found and updated', async () => {
+    it('Basic data and language are found and updated', async () => {
       let profileData;
 
       await act(async () => {
@@ -129,7 +129,7 @@ describe('useProfileMutations.ts ', () => {
         expect(inputVariables).toMatchObject(additionalInformation);
       });
     });
-    test('Addresses are found and updated', async () => {
+    it('Addresses are found and updated', async () => {
       let profileRoot;
       await act(async () => {
         const renderHookResult = await initTests();
@@ -190,7 +190,7 @@ describe('useProfileMutations.ts ', () => {
         );
       });
     });
-    test('Emails are found and updated', async () => {
+    it('Emails are found and updated', async () => {
       let profileRoot;
       await act(async () => {
         const renderHookResult = await initTests();
@@ -242,7 +242,7 @@ describe('useProfileMutations.ts ', () => {
         );
       });
     });
-    test('Phones are found and updated', async () => {
+    it('Phones are found and updated', async () => {
       let profileRoot;
       await act(async () => {
         const renderHookResult = await initTests();
@@ -300,7 +300,7 @@ describe('useProfileMutations.ts ', () => {
     });
   });
   describe('Handles errors ', () => {
-    test('and profile data is not modified after an error occured', async () => {
+    it('and profile data is not modified after an error occured', async () => {
       await act(async () => {
         const renderHookResult = await initTests();
         const { result } = renderHookResult;
