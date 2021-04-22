@@ -18,7 +18,6 @@ import {
   PrimaryEmail,
   PrimaryAddress,
 } from '../../graphql/typings';
-import { formConstants } from '../../profile/constants/formConstants';
 import {
   AdditionalInformationSource,
   additionalInformationType,
@@ -26,6 +25,7 @@ import {
   BasicDataSource,
   basicDataType,
   BasicDataValue,
+  createNewProfileNode,
   EditDataProfileSource,
   EditDataType,
   FormValues,
@@ -207,12 +207,6 @@ export const getVerifiedData = (
   },
   ...overrides,
 });
-
-function createNewProfileNode(dataType: EditDataType): MultiItemProfileNode {
-  return {
-    ...formConstants.EMPTY_VALUES[dataType],
-  };
-}
 
 function findNode(
   nodes: MultiItemProfileNode[],
