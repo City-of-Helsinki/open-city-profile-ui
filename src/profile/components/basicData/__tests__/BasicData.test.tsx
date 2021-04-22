@@ -37,12 +37,15 @@ describe('<BasicData /> ', () => {
   };
   const t = i18n.getFixedT('fi');
   const editButtonSelector: ElementSelector = { id: 'basic-data-edit-button' };
-  const cancelButtonSelector: ElementSelector = {
-    testId: 'basic-data-cancel-button',
-  };
+  let basicData: BasicDataValue;
 
   beforeEach(() => {
     responses.length = 0;
+    basicData = {
+      firstName: 'test-firstName',
+      nickname: 'test-nickname',
+      lastName: 'test-lastName',
+    };
   });
   afterEach(() => {
     cleanComponentMocks();
@@ -107,13 +110,6 @@ describe('<BasicData /> ', () => {
     });
   });
   it('sends new data and returns to view mode when saved', async () => {
-    // new values
-    const basicData = {
-      firstName: 'test-firstName',
-      nickname: 'test-nickname',
-      lastName: 'test-lastName',
-    };
-
     // create graphQL response for the update
     const updatedProfileData = cloneAndManipulateProfile(initialProfile)
       .setBasicData(basicData)
@@ -151,13 +147,6 @@ describe('<BasicData /> ', () => {
     });
   });
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {
-    // new values
-    const basicData = {
-      firstName: 'test-firstName',
-      nickname: 'test-nickname',
-      lastName: 'test-lastName',
-    };
-
     await act(async () => {
       const {
         triggerAction,
@@ -183,7 +172,9 @@ describe('<BasicData /> ', () => {
       });
       // input fields are still rendered
       await verifyValues(getTextOrInputValue, basicData, true);
-      await triggerAction(cancelButtonSelector);
+      await triggerAction({
+        testId: 'basic-data-cancel-button',
+      });
       // values are reset to previous values
       await verifyValues(getTextOrInputValue, initialProfile);
     });
