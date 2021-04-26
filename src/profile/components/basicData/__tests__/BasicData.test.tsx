@@ -12,6 +12,8 @@ import {
   cleanComponentMocks,
   WaitForElementAndValueProps,
   ElementSelector,
+  submitButtonSelector,
+  waitForElementAttributeValue,
 } from '../../../../common/test/componentMocking';
 import { ProfileData } from '../../../../graphql/typings';
 import BasicData from '../BasicData';
@@ -21,6 +23,7 @@ import {
 } from '../../../../common/test/MockApolloClientProvider';
 import { basicDataType, BasicDataValue } from '../../../helpers/editData';
 import i18n from '../../../../common/test/testi18nInit';
+import { getFormFields } from '../../../helpers/formProperties';
 
 describe('<BasicData /> ', () => {
   const responses: MockedResponse[] = [];
@@ -179,6 +182,76 @@ describe('<BasicData /> ', () => {
       });
       // values are reset to previous values
       await verifyValues(getTextOrInputValue, initialProfile);
+    });
+  });
+  it('invalid values are indicated and setting a valid value removes error', async () => {
+    await act(async () => {
+      const { clickElement, setInputValue, getElement } = await initTests();
+      const formFields = getFormFields(basicDataType);
+      await clickElement(editButtonSelector);
+      const testRuns = [
+        {
+          validData: basicData,
+          invalidData: { ...basicData, firstName: '' },
+          elementSelector: { id: 'basic-data-firstName' },
+          errorSelector: {
+            id: 'basic-data-firstName-helper',
+          },
+        },
+        {
+          validData: basicData,
+          invalidData: { ...basicData, lastName: '' },
+          elementSelector: { id: 'basic-data-lastName' },
+          errorSelector: {
+            id: 'basic-data-lastName-helper',
+          },
+        },
+        {
+          validData: basicData,
+          invalidData: {
+            ...basicData,
+            nickname: String('a').repeat(
+              (formFields.nickname.max as number) + 1
+            ),
+          },
+          elementSelector: { id: 'basic-data-nickname' },
+          errorSelector: {
+            id: 'basic-data-nickname-helper',
+          },
+        },
+      ];
+
+      // cannot use forEach with async/await
+      for (const runProps of testRuns) {
+        const {
+          validData,
+          invalidData,
+          elementSelector,
+          errorSelector,
+        } = runProps;
+        const elementGetter = () => getElement(elementSelector);
+        const errorElementGetter = () => getElement(errorSelector);
+
+        // set invalid values
+        await setValues(setInputValue, invalidData);
+        // submit also validates the form
+        await clickElement(submitButtonSelector);
+        await waitForElementAttributeValue(
+          elementGetter,
+          'aria-invalid',
+          'true'
+        );
+        // getElement throws if element is not found
+        expect(() => errorElementGetter).not.toThrow();
+        // set valid value
+        await setValues(setInputValue, validData);
+        await waitForElementAttributeValue(
+          elementGetter,
+          'aria-invalid',
+          'false'
+        );
+        expect(errorElementGetter).toThrow();
+      }
     });
   });
 });

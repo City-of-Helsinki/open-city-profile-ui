@@ -48,7 +48,7 @@ export type RenderHookResultsChildren = {
 
 export type WaitForElementAndValueProps = {
   selector: ElementSelector;
-  value?: string;
+  value: string;
 };
 
 export type TestTools = RenderResult & {
@@ -60,11 +60,12 @@ export type TestTools = RenderResult & {
     selector: ElementSelector
   ) => Promise<string | undefined>;
   fetch: () => Promise<void>;
-  clickElement: (selector: ElementSelector) => Promise<void>;
+  clickElement: (selector: ElementSelector) => Promise<HTMLElement | null>;
   submit: (props?: {
     waitForOnSaveNotification?: WaitForElementAndValueProps;
     waitForAfterSaveNotification?: WaitForElementAndValueProps;
     skipDataCheck?: boolean;
+    optionalSubmitButtonSelector?: ElementSelector;
   }) => Promise<void>;
   isDisabled: (element: HTMLElement | Element | null) => boolean;
   setInputValue: ({
@@ -86,6 +87,23 @@ export const cleanComponentMocks = (): void => {
 };
 
 export const emptyResponseProvider: ResponseProvider = () => ({});
+export const submitButtonSelector: ElementSelector = {
+  querySelector: 'button[type="submit"]',
+};
+
+export const waitForElementAttributeValue = async (
+  elementGetter: () => HTMLElement | Element | null,
+  attribute: string,
+  value: string
+): Promise<void> => {
+  await waitFor(async () => {
+    const element = elementGetter();
+    const attributeValue = element && element.getAttribute(attribute);
+    if (attributeValue !== value) {
+      throw new Error('Attribute value mismatch');
+    }
+  });
+};
 
 export const renderComponentWithMocksAndContexts = async (
   responseProvider: ResponseProvider,
@@ -199,7 +217,7 @@ export const renderComponentWithMocksAndContexts = async (
   const clickElement: TestTools['clickElement'] = async selector => {
     const button = getElement(selector);
     fireEvent.click(button as Element);
-    return Promise.resolve();
+    return Promise.resolve(button);
   };
 
   const isDisabled: TestTools['isDisabled'] = element =>
@@ -209,17 +227,17 @@ export const renderComponentWithMocksAndContexts = async (
     waitForOnSaveNotification,
     waitForAfterSaveNotification,
     skipDataCheck,
+    optionalSubmitButtonSelector,
   } = {}) => {
     const previousDataChangeTime = getLastTime('dataUpdateTime');
-    const submitButton = renderResult.container.querySelectorAll(
-      'button[type="submit"]'
+    const submitButton = await clickElement(
+      optionalSubmitButtonSelector || submitButtonSelector
     );
-    fireEvent.click(submitButton[0]);
     if (waitForOnSaveNotification) {
       await waitForElementAndValue(waitForOnSaveNotification);
     }
     await waitFor(() => {
-      if (!isDisabled(submitButton[0])) {
+      if (!isDisabled(submitButton)) {
         throw new Error('NOT DISABLED');
       }
     });
@@ -231,25 +249,30 @@ export const renderComponentWithMocksAndContexts = async (
     }
   };
 
+  const waitForElementAndValue: TestTools['waitForElementAndValue'] = async props => {
+    const { selector, value } = props;
+    return waitFor(async () => {
+      const elementValue = await getTextOrInputValue(selector);
+      if (value === '' && elementValue === '') {
+        return;
+      }
+      if (!elementValue || !elementValue.includes(value)) {
+        throw new Error('element value does not match given value');
+      }
+    });
+  };
+
   const setInputValue: TestTools['setInputValue'] = async props => {
     const { newValue, target, selector } = props;
     const input = target || getElement(selector);
     fireEvent.change(input as HTMLElement, { target: { value: newValue } });
 
     return waitFor(
-      () => {
-        getElement({ valueSelector: newValue });
+      async () => {
+        await waitForElementAndValue({ selector, value: newValue });
       },
       { timeout: 60 }
     );
-  };
-
-  const waitForElementAndValue: TestTools['waitForElementAndValue'] = async props => {
-    const { selector, value } = props;
-    const elementValue = await getTextOrInputValue(selector);
-    if (value && (!elementValue || !elementValue.includes(value))) {
-      throw new Error('element value does not match given value');
-    }
   };
 
   return Promise.resolve({
