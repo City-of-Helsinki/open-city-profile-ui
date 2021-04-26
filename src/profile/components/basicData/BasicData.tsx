@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { TextInput } from 'hds-react';
@@ -19,7 +19,7 @@ import {
   useProfileDataEditor,
 } from '../../hooks/useProfileDataEditor';
 import { basicDataSchema } from '../../../common/schemas/schemas';
-import { getFieldError, getIsInvalid } from '../../helpers/formik';
+import { createFormFieldHelpers } from '../../helpers/formik';
 import useNotificationContent from '../editingNotifications/useNotificationContent';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
 import EditButtons, { ActionHandler } from '../editButtons/EditButtons';
@@ -50,20 +50,9 @@ function BasicData(): React.ReactElement | null {
   const { firstName, nickname, lastName } = value as BasicDataValue;
   const formFields = getFormFields(basicDataType);
 
-  const hasFieldError = (
-    formikProps: FormikProps<FormikValues>,
-    fieldName: keyof FormikValues
-  ): boolean => getIsInvalid<FormikValues>(formikProps, fieldName, true);
-
-  const getFieldErrorMessage = (
-    formikProps: FormikProps<FormikValues>,
-    fieldName: keyof FormikValues
-  ): ReactNode | undefined => {
-    if (!hasFieldError(formikProps, fieldName)) {
-      return undefined;
-    }
-    return getFieldError<FormikValues>(t, formikProps, fieldName, true);
-  };
+  const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
+    FormikValues
+  >(t, true);
 
   const onAction: ActionListener = async (action, item, newValue) => {
     clearMessage();
