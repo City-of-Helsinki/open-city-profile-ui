@@ -457,6 +457,64 @@ describe('editData.ts ', () => {
         }).toThrow();
       });
     });
+    describe(`updateItems `, () => {
+      let editorFunctions: EditFunctions;
+      let editDataList: EditData[];
+      let sources: EditDataProfileSource[];
+      beforeEach(() => {
+        editorFunctions = createEditorForDataType(myProfile, dataType);
+        editDataList = editorFunctions.getEditData();
+        sources = pickSources(myProfile.myProfile as ProfileData, dataType);
+      });
+      it(`returns null when edit data has no items with saving set to 'value'`, () => {
+        const nullList = updateItems(editDataList, sources, dataType);
+        expect(nullList).toBeNull();
+      });
+      it(`returns null until item.value and source match and item.saving='value'`, () => {
+        const item = editDataList[0] as Mutable<EditData>;
+        const newValue = createUniqueEditDataValue(item, dataType);
+        const source = sources[0] as Mutable<MultiItemProfileNode>;
+        item.saving = 'value';
+        item.value = newValue;
+        const nullList = updateItems(editDataList, sources, dataType);
+        expect(nullList).toBeNull();
+        const updatedSource = { ...source, ...newValue };
+        sources[0] = updatedSource;
+        const newList = updateItems(
+          editDataList,
+          sources,
+          dataType
+        ) as EditData[];
+        expect(newList).toHaveLength(editDataList.length);
+        const updatedItem = newList[0];
+        // old item has not changed
+        expect(item.saving).toEqual('value');
+        // change saving so item will match updatedItem
+        item.saving = undefined;
+        expect(updatedItem).toEqual(item);
+        expect(updatedItem.saving).toEqual(undefined);
+      });
+      it(`returns null until item.primary and source.primary match and item.saving='set-primary'`, () => {
+        const item = editDataList[0] as Mutable<EditData>;
+        const source = sources[0] as Mutable<PhoneNode>;
+        item.saving = saveTypeSetPrimary;
+        item.primary = true;
+        source.primary = false;
+        const nullList = updateItems(editDataList, sources, dataType);
+        expect(nullList).toBeNull();
+        source.primary = true;
+        const newList = updateItems(
+          editDataList,
+          sources,
+          dataType
+        ) as EditData[];
+        expect(newList).toHaveLength(editDataList.length);
+        const updatedItem = newList[0];
+        // change saving so item will match updatedItem
+        expect(updatedItem).toEqual({ ...item, saving: undefined });
+        expect(updatedItem.saving).toEqual(undefined);
+      });
+    });
   });
   describe(`updateData generally`, () => {
     it(`returns new list when new profile data has no items.'`, () => {
@@ -470,64 +528,7 @@ describe('editData.ts ', () => {
       expect(getEditData()).toHaveLength(0);
     });
   });
-  describe(`updateItems `, () => {
-    const dataType = 'phones';
-    let editorFunctions: EditFunctions;
-    let editDataList: EditData[];
-    let sources: EditDataProfileSource[];
-    beforeEach(() => {
-      editorFunctions = createEditorForDataType(myProfile, dataType);
-      editDataList = editorFunctions.getEditData();
-      sources = pickSources(myProfile.myProfile as ProfileData, dataType);
-    });
-    it(`returns null when edit data has no items with saving set to 'value'`, () => {
-      const nullList = updateItems(editDataList, sources, dataType);
-      expect(nullList).toBeNull();
-    });
-    it(`returns null until item.value and source match and item.saving='value'`, () => {
-      const item = editDataList[0] as Mutable<EditData>;
-      const value = item.value as Mutable<PhoneValue>;
-      const source = sources[0] as Mutable<PhoneNode>;
-      item.saving = 'value';
-      value.phone = createNewValue('phones');
-      const nullList = updateItems(editDataList, sources, dataType);
-      expect(nullList).toBeNull();
-      source.phone = value.phone;
-      const newList = updateItems(
-        editDataList,
-        sources,
-        dataType
-      ) as EditData[];
-      expect(newList).toHaveLength(editDataList.length);
-      const updatedItem = newList[0];
-      // old item has not changed
-      expect(item.saving).toEqual('value');
-      // change saving so item will match updatedItem
-      item.saving = undefined;
-      expect(updatedItem).toEqual(item);
-      expect(updatedItem.saving).toEqual(undefined);
-    });
-    it(`returns null until item.primary and source.primary match and item.saving='set-primary'`, () => {
-      const item = editDataList[0] as Mutable<EditData>;
-      const source = sources[0] as Mutable<PhoneNode>;
-      item.saving = saveTypeSetPrimary;
-      item.primary = true;
-      source.primary = false;
-      const nullList = updateItems(editDataList, sources, dataType);
-      expect(nullList).toBeNull();
-      source.primary = true;
-      const newList = updateItems(
-        editDataList,
-        sources,
-        dataType
-      ) as EditData[];
-      expect(newList).toHaveLength(editDataList.length);
-      const updatedItem = newList[0];
-      // change saving so item will match updatedItem
-      expect(updatedItem).toEqual({ ...item, saving: undefined });
-      expect(updatedItem.saving).toEqual(undefined);
-    });
-  });
+
   describe(`updateAfterSavingError `, () => {
     it(`resets item.saving to undefined and updates editData list with a clone`, () => {
       const { getEditData, updateAfterSavingError } = createEditorForDataType(
