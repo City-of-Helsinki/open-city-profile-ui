@@ -1,10 +1,11 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { GlobalWithFetchMock } from 'jest-fetch-mock/types';
 import { GraphQLError } from 'graphql';
+import fetchMock from 'jest-fetch-mock';
 
 import graphqlClient from '../../graphql/client';
 import { ProfileData, UpdateProfileData } from '../../graphql/typings';
+import { UpdateMyProfileVariables } from '../../graphql/generatedTypes';
 
 export type MockedResponse = {
   profileData?: ProfileData;
@@ -12,8 +13,9 @@ export type MockedResponse = {
   errorType?: 'networkError' | 'graphQLError';
 };
 
-type RequestVariables = Record<string, unknown>;
-export type ResponseProvider = (variables?: RequestVariables) => MockedResponse;
+export type ResponseProvider = (
+  variables?: UpdateMyProfileVariables
+) => MockedResponse;
 
 export function MockApolloClientProvider({
   responseProvider,
@@ -22,9 +24,13 @@ export function MockApolloClientProvider({
   children: React.ReactElement | React.ReactNodeArray;
   responseProvider: ResponseProvider;
 }): React.ReactElement {
-  const customGlobal = global as GlobalWithFetchMock;
-  customGlobal.fetchMock.mockResponse((variables?: RequestVariables) => {
-    const response = createMockedProfileResponse(responseProvider(variables));
+  fetchMock.mockIf(/.*\/graphql\/.*$/, async (req: Request) => {
+    const payload = await req.json();
+    const response = createMockedProfileResponse(
+      responseProvider(
+        payload ? (payload.variables as UpdateMyProfileVariables) : undefined
+      )
+    );
     if (response.error) {
       return Promise.reject({
         body: JSON.stringify({ message: (response.error as Error).message }),
@@ -72,7 +78,6 @@ const createMockedProfileResponse = (
 };
 
 export function resetApolloMocks(): void {
-  const customGlobal = global as GlobalWithFetchMock;
-  customGlobal.fetchMock.resetMocks();
+  fetchMock.resetMocks();
   graphqlClient.resetStore();
 }

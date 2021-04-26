@@ -5,11 +5,15 @@
 
 .notification.noBorder {
   border: 0;
-  padding-top: calc(var(--notification-padding) + var(--notification-border-width));
+  padding-top: calc(
+    var(--notification-padding) + var(--notification-border-width)
+  );
 }
 
 .notification.noBorder .close {
-  top: calc(var(--notification-close-button-offset) + var(--notification-border-width));
+  top: calc(
+    var(--notification-close-button-offset) + var(--notification-border-width)
+  );
 }
 
 .autoClose {

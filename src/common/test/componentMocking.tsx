@@ -4,8 +4,13 @@ import {
   render,
   RenderResult,
   waitFor,
+  cleanup,
 } from '@testing-library/react';
-import { renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import {
+  renderHook,
+  RenderHookResult,
+  cleanup as cleanupHooks,
+} from '@testing-library/react-hooks';
 import _ from 'lodash';
 import { GraphQLError } from 'graphql';
 import { BrowserRouter } from 'react-router-dom';
@@ -17,31 +22,72 @@ import {
 } from '../../profile/context/ProfileContext';
 import {
   MockApolloClientProvider,
+  resetApolloMocks,
   ResponseProvider,
 } from './MockApolloClientProvider';
 import { AnyObject } from '../../graphql/typings';
 import ToastProvider from '../../toast/__mocks__/ToastProvider';
+import {
+  MutationReturnType,
+  useProfileMutations,
+} from '../../profile/hooks/useProfileMutations';
+import { EditDataType } from '../../profile/helpers/editData';
 
-type ElementSelector = {
+export type ElementSelector = {
   testId?: string;
   text?: string;
   valueSelector?: string;
+  id?: string;
+  querySelector?: string;
+  label?: string;
+};
+
+export type RenderHookResultsChildren = {
+  children: React.ReactNodeArray;
+};
+
+export type WaitForElementAndValueProps = {
+  selector: ElementSelector;
+  value?: string;
 };
 
 export type TestTools = RenderResult & {
   getElement: (selector: ElementSelector) => HTMLElement | null;
   waitForIsComplete: () => Promise<void>;
-  waitForDataChange: () => Promise<void>;
+  waitForDataChange: (previousChangeTime?: number) => Promise<void>;
   waitForElement: (selector: ElementSelector) => Promise<void>;
   getTextOrInputValue: (
     selector: ElementSelector
   ) => Promise<string | undefined>;
   fetch: () => Promise<void>;
+  clickElement: (selector: ElementSelector) => Promise<void>;
+  submit: (props?: {
+    waitForOnSaveNotification?: WaitForElementAndValueProps;
+    waitForAfterSaveNotification?: WaitForElementAndValueProps;
+    skipDataCheck?: boolean;
+  }) => Promise<void>;
+  isDisabled: (element: HTMLElement | Element | null) => boolean;
+  setInputValue: ({
+    target,
+    selector,
+    newValue,
+  }: {
+    target?: HTMLElement;
+    selector: ElementSelector;
+    newValue: string;
+  }) => Promise<void>;
+  waitForElementAndValue: (props: WaitForElementAndValueProps) => Promise<void>;
+};
+
+export const cleanComponentMocks = (): void => {
+  cleanup();
+  cleanupHooks();
+  resetApolloMocks();
 };
 
 export const emptyResponseProvider: ResponseProvider = () => ({});
 
-export const renderProfileContextWrapper = async (
+export const renderComponentWithMocksAndContexts = async (
   responseProvider: ResponseProvider,
   children: React.ReactElement
 ): Promise<TestTools> => {
@@ -81,8 +127,8 @@ export const renderProfileContextWrapper = async (
     });
   };
 
-  const waitForDataChange: TestTools['waitForDataChange'] = async () => {
-    const latest = getLastTime('dataUpdateTime');
+  const waitForDataChange: TestTools['waitForDataChange'] = async previousChangeTime => {
+    const latest = previousChangeTime || getLastTime('dataUpdateTime');
     await waitFor(() => {
       const time = getLastTime('dataUpdateTime');
       if (time <= latest) {
@@ -97,14 +143,33 @@ export const renderProfileContextWrapper = async (
     return waitForDataChange();
   };
 
-  const getElement: TestTools['getElement'] = ({ testId, text }) => {
+  const getElement: TestTools['getElement'] = ({
+    label,
+    id,
+    testId,
+    valueSelector,
+    text,
+    querySelector,
+  }) => {
+    if (label) {
+      return renderResult.getByLabelText(label);
+    }
     if (testId) {
       return renderResult.getByTestId(testId);
     }
     if (text) {
       return renderResult.getByText(text);
     }
-    throw new Error('getElement selector not set');
+    if (valueSelector) {
+      return renderResult.getByDisplayValue(valueSelector);
+    }
+    const selector = querySelector || `#${id}`;
+    const element = renderResult.container.querySelector(selector);
+    if (!element) {
+      // all selectors above throw error if element not found. This should too.
+      throw new Error(`Element not found with selector ${selector}`);
+    }
+    return element as HTMLElement;
   };
 
   const waitForElement: TestTools['waitForElement'] = async selector => {
@@ -119,15 +184,72 @@ export const renderProfileContextWrapper = async (
       () => {
         const element = getElement(selector);
         if (element && !value) {
-          if (selector.valueSelector) {
+          if (selector.valueSelector || element.nodeName === 'INPUT') {
             value = (element as HTMLInputElement).value;
+          } else {
+            value = element.textContent || undefined;
           }
-          value = element.textContent || undefined;
         }
       },
       { timeout: 150 }
     );
     return Promise.resolve(value);
+  };
+
+  const clickElement: TestTools['clickElement'] = async selector => {
+    const button = getElement(selector);
+    fireEvent.click(button as Element);
+    return Promise.resolve();
+  };
+
+  const isDisabled: TestTools['isDisabled'] = element =>
+    !!element && element.getAttribute('disabled') !== null;
+
+  const submit: TestTools['submit'] = async ({
+    waitForOnSaveNotification,
+    waitForAfterSaveNotification,
+    skipDataCheck,
+  } = {}) => {
+    const previousDataChangeTime = getLastTime('dataUpdateTime');
+    const submitButton = renderResult.container.querySelectorAll(
+      'button[type="submit"]'
+    );
+    fireEvent.click(submitButton[0]);
+    if (waitForOnSaveNotification) {
+      await waitForElementAndValue(waitForOnSaveNotification);
+    }
+    await waitFor(() => {
+      if (!isDisabled(submitButton[0])) {
+        throw new Error('NOT DISABLED');
+      }
+    });
+    if (waitForAfterSaveNotification) {
+      await waitForElementAndValue(waitForAfterSaveNotification);
+    }
+    if (!skipDataCheck) {
+      await waitForDataChange(previousDataChangeTime);
+    }
+  };
+
+  const setInputValue: TestTools['setInputValue'] = async props => {
+    const { newValue, target, selector } = props;
+    const input = target || getElement(selector);
+    fireEvent.change(input as HTMLElement, { target: { value: newValue } });
+
+    return waitFor(
+      () => {
+        getElement({ valueSelector: newValue });
+      },
+      { timeout: 60 }
+    );
+  };
+
+  const waitForElementAndValue: TestTools['waitForElementAndValue'] = async props => {
+    const { selector, value } = props;
+    const elementValue = await getTextOrInputValue(selector);
+    if (value && (!elementValue || !elementValue.includes(value))) {
+      throw new Error('element value does not match given value');
+    }
   };
 
   return Promise.resolve({
@@ -138,22 +260,22 @@ export const renderProfileContextWrapper = async (
     waitForElement,
     getTextOrInputValue,
     fetch,
+    clickElement,
+    submit,
+    isDisabled,
+    setInputValue,
+    waitForElementAndValue,
   });
 };
 
 export const exposeProfileContext = (
   responseProvider: ResponseProvider
-): RenderHookResult<
-  {
-    children: React.ReactNodeArray;
-  },
-  ProfileContextData
-> & {
+): RenderHookResult<RenderHookResultsChildren, ProfileContextData> & {
   waitForDataChange: () => Promise<ProfileContextData>;
   waitForUpdate: () => Promise<ProfileContextData>;
   waitForErrorChange: () => Promise<ProfileContextData>;
 } => {
-  const wrapper = ({ children }: { children: React.ReactNodeArray }) => (
+  const wrapper = ({ children }: RenderHookResultsChildren) => (
     <MockApolloClientProvider responseProvider={responseProvider}>
       <ProfileProvider>{children}</ProfileProvider>
     </MockApolloClientProvider>
@@ -230,6 +352,74 @@ export const exposeProfileContext = (
 
   const result = renderHook(callback, { wrapper });
   return { ...result, waitForDataChange, waitForUpdate, waitForErrorChange };
+};
+
+export const createResultPropertyTracker = <T,>({
+  renderHookResult,
+  valuePicker,
+}: {
+  renderHookResult: RenderHookResult<RenderHookResultsChildren, T>;
+  valuePicker: (props: T) => string | undefined | AnyObject;
+}): [() => Promise<void>] => {
+  const currentPicker = (): T => renderHookResult.result.current;
+  const waitForChange = () => {
+    const initialValue = valuePicker(currentPicker());
+    return new Promise<void>(async resolve => {
+      await waitFor(() => {
+        const newValue = valuePicker(currentPicker());
+        if (newValue !== initialValue) {
+          resolve();
+        } else {
+          throw new Error('waiting...');
+        }
+      });
+    });
+  };
+
+  return [waitForChange];
+};
+
+export const exposeProfileMutationsHook = (
+  responseProvider: ResponseProvider,
+  dataType: EditDataType
+): RenderHookResult<RenderHookResultsChildren, MutationReturnType> => {
+  const wrapper = ({ children }: RenderHookResultsChildren) => (
+    <MockApolloClientProvider responseProvider={responseProvider}>
+      <ProfileProvider>
+        <ProfileContextFetcher>{children}</ProfileContextFetcher>
+      </ProfileProvider>
+    </MockApolloClientProvider>
+  );
+
+  const callback = () =>
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useProfileMutations({
+      dataType,
+    });
+
+  return renderHook(callback, { wrapper });
+};
+
+export const ProfileContextFetcher = ({
+  children,
+}: {
+  children: React.ReactElement | React.ReactNodeArray;
+}): React.ReactElement => {
+  const [fetchStarted, setFetchStarted] = useState(false);
+  const { data, fetch } = useContext(ProfileContext);
+  if (!fetchStarted) {
+    fetch();
+    setFetchStarted(true);
+  }
+
+  if (!data) {
+    return <div data-testid="no-data-fetched"></div>;
+  }
+  return (
+    <div data-testid="test-elements">
+      <div data-testid="component">{children}</div>
+    </div>
+  );
 };
 
 export const ProfileContextAsHTML = (): React.ReactElement => {
