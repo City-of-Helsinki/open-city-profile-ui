@@ -103,9 +103,12 @@ export type EditFunctions = {
   updateData: (newProfileRoot: ProfileRoot) => boolean;
   updateAfterSavingError: (id: string) => boolean;
   resetItem: (targetItem: EditData) => boolean;
+  addItem: () => EditData;
+  hasNewItem: () => boolean;
+  removeItem: (targetItem: EditData) => Partial<FormValues> | null;
 };
 
-function isMultiItemDataType(dataType: EditDataType): boolean {
+export function isMultiItemDataType(dataType: EditDataType): boolean {
   return !(
     dataType === basicDataType || dataType === additionalInformationType
   );
@@ -115,11 +118,15 @@ function isSaving(allItems: EditData[]): boolean {
   return !!allItems.find(item => !!item.saving);
 }
 
-function getNewItem(allItems: EditData[]): EditData | undefined {
-  return allItems.find(item => item.id === '');
+export function isNewItem(data: EditData): boolean {
+  return data.id === '';
 }
 
-function hasNewItem(allItems: EditData[]): boolean {
+export function getNewItem(allItems: EditData[]): EditData | undefined {
+  return allItems.find(item => isNewItem(item));
+}
+
+export function hasNewItem(allItems: EditData[]): boolean {
   return !!getNewItem(allItems);
 }
 
@@ -252,6 +259,7 @@ function createFormValues(
         createNewProfileNode(dataType, {
           ...item.value,
           primary: item.primary,
+          id: item.id,
         })
       );
     return {
@@ -364,7 +372,12 @@ export function createEditorForDataType(
     createNewItem(source, dataType)
   );
   const preventDoubleEdits = (item: EditData): void => {
-    if (item.saving) {
+    // passed item might not be the current version
+    const itemInCurrentAllItems = findItem(allItems, item.id);
+    if (!itemInCurrentAllItems) {
+      throw new Error('Edited item does not exist in current data');
+    }
+    if (itemInCurrentAllItems.saving) {
       throw new Error(
         'Data is being saved. Cannot edit before save is complete'
       );
@@ -430,6 +443,37 @@ export function createEditorForDataType(
       }
       allItems = updateItemAndCloneList(allItems, targetItem, backup.value);
       return true;
+    },
+    addItem: () => {
+      if (hasNewItem(allItems)) {
+        throw new Error('EditData already has a new item');
+      }
+      const newNode = createNewProfileNode(dataType);
+      const editData = createNewItem(newNode, dataType);
+      allItems = _.cloneDeep(allItems);
+      allItems.push(editData);
+      return editData;
+    },
+    hasNewItem: () => hasNewItem(allItems),
+    removeItem: targetItem => {
+      preventDoubleEdits(targetItem);
+      const index = findItemIndex(allItems, targetItem.id);
+      if (index < 0) {
+        throw new Error('EditData remove failed: item not found ');
+      }
+      if (isNewItem(targetItem)) {
+        const clone = _.cloneDeep(allItems);
+        clone.splice(index, 1);
+        allItems = clone;
+        return null;
+      }
+      allItems = updateItemAndCloneList(
+        allItems,
+        targetItem,
+        targetItem.value,
+        'remove'
+      );
+      return createFormValues(allItems, dataType);
     },
   };
 }
