@@ -30,7 +30,7 @@ describe('useProfileMutations.ts ', () => {
   let profileManipulator: ManipulationFunctions;
   afterEach(() => {
     cleanComponentMocks();
-    updateVariables.length = 0;
+    responses.length = 0;
     updateVariables.length = 0;
   });
   const responseProvider: ResponseProvider = variables => {
