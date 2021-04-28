@@ -17,7 +17,6 @@ import AccessibilityStatement from './accessibilityStatement/AccessibilityStatem
 import { MAIN_CONTENT_ID } from './common/constants';
 import AccessibilityShortcuts from './common/accessibilityShortcuts/AccessibilityShortcuts';
 import AppMeta from './AppMeta';
-import authConstants from './auth/constants/authConstants';
 import GdprAuthorizationCodeManagerCallback from './gdprApi/GdprAuthorizationCodeManagerCallback';
 import ToastProvider from './toast/ToastProvider';
 import authService from './auth/authService';
@@ -44,23 +43,6 @@ function App(): React.ReactElement {
   if (location.pathname === '/loginsso') {
     authService.login();
   }
-
-  window.addEventListener('storage', event => {
-    if (
-      event.key === authConstants.OIDC_KEY &&
-      event.oldValue &&
-      !event.newValue
-    ) {
-      authService.logout();
-    }
-    if (
-      event.key === authConstants.OIDC_KEY &&
-      !event.oldValue &&
-      event.newValue
-    ) {
-      authService.login();
-    }
-  });
 
   return (
     <ApolloProvider client={graphqlClient}>
