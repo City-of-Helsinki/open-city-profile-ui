@@ -29,7 +29,7 @@ class GdprAuthorizationCodeManager {
   }
 
   get(key: string): Record<string, unknown> | string | null {
-    const value = localStorage.getItem(`${PREFIX}.${key}`);
+    const value = sessionStorage.getItem(`${PREFIX}.${key}`);
 
     if (value === null) {
       return null;
@@ -39,11 +39,11 @@ class GdprAuthorizationCodeManager {
   }
 
   set(key: string, value: Record<string, unknown> | string): void {
-    localStorage.setItem(`${PREFIX}.${key}`, JSON.stringify(value));
+    sessionStorage.setItem(`${PREFIX}.${key}`, JSON.stringify(value));
   }
 
   clear(key: string): void {
-    localStorage.removeItem(`${PREFIX}.${key}`);
+    sessionStorage.removeItem(`${PREFIX}.${key}`);
   }
 
   consumeCode(): string {
