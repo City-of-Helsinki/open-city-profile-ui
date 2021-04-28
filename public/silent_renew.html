@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Silent renewal</title>
-</head>
-<body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.10.1/oidc-client.min.js" integrity="sha512-J+l1VucK7pEidJ+w1fYQfo0Yq4LGkTXwKQ3w9Y9/c4O2NoQe+DgiIwvh2ocNVv4ost5H6W4uhy1K2sw5tWO+ew==" crossorigin="anonymous"></script>
-<script>
-  var mgr = new Oidc.UserManager();
-  mgr.signinSilentCallback().catch(error => {
-    console.error('silent_renew.html error', error);
-  });
-</script></body>
+  <head>
+    <title>Silent renewal</title>
+  </head>
+  <body>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.11.5/oidc-client.min.js"
+      integrity="sha512-pGtU1n/6GJ8fu6bjYVGIOT9Dphaw5IWPwVlqkpvVgqBxFkvdNbytUh0H8AP15NYF777P4D3XEeA/uDWFCpSQ1g=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      var mgr = new Oidc.UserManager();
+      mgr.signinSilentCallback().catch(error => {
+        console.error('silent_renew.html error', error);
+      });
+    </script>
+  </body>
 </html>
