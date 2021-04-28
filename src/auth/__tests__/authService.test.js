@@ -5,7 +5,7 @@ describe('authService', () => {
   const oidcUserKey = `oidc.user:${window._env_.REACT_APP_OIDC_AUTHORITY}:${window._env_.REACT_APP_OIDC_CLIENT_ID}`;
 
   afterEach(() => {
-    localStorage.clear();
+    sessionStorage.clear();
     jest.restoreAllMocks();
   });
 
@@ -23,7 +23,7 @@ describe('authService', () => {
   });
 
   describe('getToken', () => {
-    it('should get API_TOKENS from localStorage', () => {
+    it('should get API_TOKENS from sessionStorage', () => {
       const getSpy = jest.spyOn(Storage.prototype, 'getItem');
       authService.getToken();
 
@@ -64,7 +64,7 @@ describe('authService', () => {
       });
 
       jest.spyOn(authService, 'getToken').mockReturnValue(apiToken);
-      localStorage.setItem(oidcUserKey, validUser);
+      sessionStorage.setItem(oidcUserKey, validUser);
 
       expect(authService.isAuthenticated()).toBe(true);
     });
@@ -124,7 +124,7 @@ describe('authService', () => {
       expect(authService.fetchApiToken).toHaveBeenNthCalledWith(1, mockUser);
     });
 
-    it('should set the user in localStorage before the function returns', async () => {
+    it('should set the user in sessionStorage before the function returns', async () => {
       const setSpy = jest.spyOn(Storage.prototype, 'setItem');
       expect.assertions(1);
       jest
@@ -170,15 +170,15 @@ describe('authService', () => {
       expect(signoutRedirect).toHaveBeenCalledTimes(1);
     });
 
-    it('should remove the tokens from localStorage', async () => {
+    it('should remove the tokens from sessionStorage', async () => {
       expect.assertions(1);
       jest.spyOn(userManager, 'signoutRedirect').mockResolvedValue(undefined);
       const apiTokens = 'a8d56df4-7ae8-4fbf-bf73-f366cd6fc479';
 
-      localStorage.setItem(API_TOKEN, apiTokens);
+      sessionStorage.setItem(API_TOKEN, apiTokens);
       await authService.logout();
 
-      expect(localStorage.getItem(API_TOKEN)).toBeNull();
+      expect(sessionStorage.getItem(API_TOKEN)).toBeNull();
     });
 
     it('should call clearStaleState', async () => {
@@ -227,7 +227,7 @@ describe('authService', () => {
       `);
     });
 
-    it('should call localStorage.setItem with the right arguments', async () => {
+    it('should call sessionStorage.setItem with the right arguments', async () => {
       const setSpy = jest.spyOn(Storage.prototype, 'setItem');
       expect.assertions(2);
       await authService.fetchApiToken(mockUser);
