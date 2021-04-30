@@ -9,7 +9,7 @@ export type AMR =
   | 'github'
   | 'google'
   | 'facebook'
-  | 'yle'
+  | 'yletunnus'
   | typeof tunnistusSuomifiAMR
   | typeof config.helsinkiAccountAMR;
 
@@ -17,7 +17,7 @@ export type AMRStatic =
   | 'github'
   | 'google'
   | 'facebook'
-  | 'yle'
+  | 'yletunnus'
   | 'helsinkiAccount'
   | 'tunnistusSuomifi';
 
