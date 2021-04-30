@@ -18,7 +18,7 @@ export class AuthService {
   constructor() {
     const settings: UserManagerSettings = {
       automaticSilentRenew: true,
-      userStore: new WebStorageStateStore({ store: window.localStorage }),
+      userStore: new WebStorageStateStore({ store: window.sessionStorage }),
       authority: window._env_.REACT_APP_OIDC_AUTHORITY,
       client_id: window._env_.REACT_APP_OIDC_CLIENT_ID,
       redirect_uri: `${origin}/callback`,
@@ -57,7 +57,7 @@ export class AuthService {
 
     this.userManager.events.addUserSignedOut(() => {
       this.userManager.clearStaleState();
-      localStorage.removeItem(API_TOKEN);
+      sessionStorage.removeItem(API_TOKEN);
     });
 
     this.userManager.events.addUserLoaded(async user => {
@@ -70,12 +70,12 @@ export class AuthService {
   }
 
   public getToken(): string | null {
-    return localStorage.getItem(API_TOKEN);
+    return sessionStorage.getItem(API_TOKEN);
   }
 
   public isAuthenticated(): boolean {
     const userKey = `oidc.user:${window._env_.REACT_APP_OIDC_AUTHORITY}:${window._env_.REACT_APP_OIDC_CLIENT_ID}`;
-    const oidcStorage = localStorage.getItem(userKey);
+    const oidcStorage = sessionStorage.getItem(userKey);
     const apiTokens = this.getToken();
 
     return (
@@ -107,7 +107,7 @@ export class AuthService {
   }
 
   public async logout(): Promise<void> {
-    localStorage.removeItem(API_TOKEN);
+    sessionStorage.removeItem(API_TOKEN);
     this.userManager.clearStaleState();
     await this.userManager.signoutRedirect();
   }
@@ -122,7 +122,7 @@ export class AuthService {
     const result = await response.json();
     const apiToken = pickProfileApiToken(result);
 
-    localStorage.setItem(API_TOKEN, apiToken);
+    sessionStorage.setItem(API_TOKEN, apiToken);
   }
 }
 
