@@ -4,7 +4,7 @@ import { act, cleanup } from '@testing-library/react';
 import { Route, Switch } from 'react-router';
 
 import { getMyProfile } from '../../../../common/test/myProfileMocking';
-import { renderComponentWithMocksAndContexts } from '../../../../common/test/componentMocking';
+import { renderComponentWithMocksAndContexts } from '../../../../common/test/testingLibraryTools';
 import { ProfileData } from '../../../../graphql/typings';
 import Profile from '../Profile';
 import {

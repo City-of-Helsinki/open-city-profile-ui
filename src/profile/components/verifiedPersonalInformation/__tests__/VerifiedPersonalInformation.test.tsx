@@ -4,7 +4,7 @@ import VerifiedPersonalInformation from '../VerifiedPersonalInformation';
 import {
   emptyResponseProvider,
   renderComponentWithMocksAndContexts,
-} from '../../../../common/test/componentMocking';
+} from '../../../../common/test/testingLibraryTools';
 import {
   getVerifiedData,
   getMyProfile,
