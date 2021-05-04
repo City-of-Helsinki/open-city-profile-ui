@@ -229,7 +229,9 @@ export const renderComponentWithMocksAndContexts = async (
         return;
       }
       if (!elementValue || !elementValue.includes(value)) {
-        throw new Error('element value does not match given value');
+        throw new Error(
+          `element value (${elementValue}) does not include given value ${value}`
+        );
       }
     });
   };

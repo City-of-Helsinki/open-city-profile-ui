@@ -22,6 +22,7 @@ function renderComponentTestDOM(
           <ProfileContextAsHTML />
         </ProfileProvider>
       </MockApolloClientProvider>
+      <div id="modal-container" />
     </BrowserRouter>
   );
 }
