@@ -20,6 +20,8 @@ import {
   EditDataValue,
   isNewItem,
 } from '../../helpers/editData';
+import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
+import { useConfirmationModal } from '../../hooks/useConfirmationModal';
 
 type Props = {
   dataType: EditDataType;
@@ -51,6 +53,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
     clearMessage,
   } = useNotificationContent();
 
+  const { showModal, modalProps } = useConfirmationModal();
   const hasAddressList = dataType === 'addresses';
   const isAddButtonDisabled = hasNew();
   const RowComponent = hasAddressList ? MultiItemAddressRow : MultiItemRow;
@@ -90,7 +93,8 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
     item,
     newValue
   ) => {
-    const [err] = await to(save(item, newValue as EditDataValue));
+    const func = action === 'save' ? save : remove;
+    const [err] = await to(func(item, newValue as EditDataValue));
     if (err) {
       setErrorMessage(action);
       return Promise.reject(err);
@@ -107,7 +111,18 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
       } else {
         reset(item);
       }
-    } else if (action === 'save') {
+    } else if (action === 'remove' || action === 'save') {
+      if (action === 'remove') {
+        const [rejected] = await to(
+          showModal({
+            actionButtonText: t('confirmationModal.remove'),
+            modalTitle: texts.modalTitle,
+          })
+        );
+        if (rejected) {
+          return Promise.reject({ removeCancelled: true });
+        }
+      }
       return executeActionAndNotifyUser(action, item, newValue);
     }
     return Promise.resolve();
@@ -166,6 +181,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
       >
         {texts.addNew}
       </Button>
+      <ConfirmationModal {...modalProps} />
     </ProfileSection>
   );
 }

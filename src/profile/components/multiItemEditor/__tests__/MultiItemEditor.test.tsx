@@ -1,5 +1,6 @@
 import React from 'react';
 import { act, waitFor } from '@testing-library/react';
+import Modal from 'react-modal';
 
 import {
   cloneProfileAndProvideManipulationFunctions,
@@ -295,6 +296,69 @@ describe('<MultiItemEditor /> ', () => {
           await clickElement(cancelButtonSelector);
           // values are reset to previous values
           await verifyValues(getTextOrInputValue, sourceNode, testIndex);
+        });
+      });
+      it(`Clicking remove-button shows confirm dialog and removes target item (if it is not primary)`, async () => {
+        // first item is primary and cannot be removed
+        const removeItemIndex = 1;
+        const removeNode = sourceNodeList[removeItemIndex];
+        // create graphQL response for the removal
+        const updatedProfileData = cloneProfileAndProvideManipulationFunctions(
+          initialProfile
+        )
+          .remove(dataType, {
+            id: removeNode.id,
+          })
+          .getProfile();
+
+        await act(async () => {
+          const {
+            clickElement,
+            getElement,
+            waitForElement,
+            waitForElementAndValue,
+          } = await initTests(dataType);
+          // add error response
+          responses.push({
+            errorType: 'networkError',
+          });
+          // add the graphQL response
+          responses.push({
+            updatedProfileData,
+          });
+          Modal.setAppElement('#modal-container');
+          const primaryItemRemoveButtonSelector: ElementSelector = {
+            testId: `${dataType}-0-remove-button`,
+          };
+          const removeButtonSelector: ElementSelector = {
+            testId: `${dataType}-${removeItemIndex}-remove-button`,
+          };
+          const confirmButtonSelector = {
+            testId: 'confirmation-modal-confirm-button',
+          };
+          // primary item should not have remove button
+          expect(() => getElement(primaryItemRemoveButtonSelector)).toThrow();
+          // click remove button, confirm removal and handle error
+          await clickElement(removeButtonSelector);
+          await waitForElement(confirmButtonSelector);
+          await clickElement(confirmButtonSelector);
+
+          await waitForElementAndValue({
+            selector: { id: `${dataType}-edit-notifications` },
+            value: t('notification.removeError'),
+          });
+
+          // start removal again
+          await clickElement(removeButtonSelector);
+          await waitForElement(confirmButtonSelector);
+          await clickElement(confirmButtonSelector);
+
+          await waitForElementAndValue({
+            selector: { id: `${dataType}-edit-notifications` },
+            value: t('notification.removeSuccess'),
+          });
+          // item is removed and also remove button
+          expect(() => getElement(removeButtonSelector)).toThrow();
         });
       });
     });
