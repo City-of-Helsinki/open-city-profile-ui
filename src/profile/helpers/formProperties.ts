@@ -23,7 +23,7 @@ export const formFieldsByDataType: FormFieldsByDataType = {
     },
     postalCode: {
       required: true,
-      max: 5,
+      max: 32,
       translationKey: 'profileForm.postalCode',
     },
     city: {
