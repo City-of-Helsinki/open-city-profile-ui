@@ -114,9 +114,12 @@ export function useProfileDataEditor({
   };
 
   const remove = async (item: EditData) => {
-    removeItem(item);
+    const newFormValues = removeItem(item);
     triggerUpdate();
-    return Promise.resolve();
+    if (!newFormValues) {
+      return Promise.resolve();
+    }
+    return executeMutationUpdateAndHandleResult(newFormValues, item.id);
   };
 
   return {
