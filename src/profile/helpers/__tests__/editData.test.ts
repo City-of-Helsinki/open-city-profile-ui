@@ -190,7 +190,7 @@ describe('editData.ts ', () => {
           const value = item.value as PhoneValue;
           expect(value.phone).toEqual(node.phone);
           expect(item.saving).toEqual(undefined);
-          expect(item.primary).toEqual(!!node.primary);
+          expect(item.primary).toEqual(node.primary);
           expect(item.id).toEqual(node.id);
         });
       }
