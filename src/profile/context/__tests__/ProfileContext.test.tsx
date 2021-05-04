@@ -2,15 +2,13 @@ import { waitFor } from '@testing-library/react';
 import { act } from '@testing-library/react-hooks';
 
 import { getMyProfile } from '../../../common/test/myProfileMocking';
-import {
-  cleanComponentMocks,
-  exposeProfileContext,
-} from '../../../common/test/componentMocking';
+import { cleanComponentMocks } from '../../../common/test/testingLibraryTools';
 import {
   MockedResponse,
   ResponseProvider,
 } from '../../../common/test/MockApolloClientProvider';
 import { ProfileData } from '../../../graphql/typings';
+import { exposeProfileContext } from '../../../common/test/exposeHooksForTesting';
 
 describe('ProfileContext', () => {
   function createTestEnv(responses: MockedResponse[]) {

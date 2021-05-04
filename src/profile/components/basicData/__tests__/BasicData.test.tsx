@@ -8,13 +8,12 @@ import {
 import {
   renderComponentWithMocksAndContexts,
   TestTools,
-  RenderChildrenWhenDataIsComplete,
   cleanComponentMocks,
   WaitForElementAndValueProps,
   ElementSelector,
   submitButtonSelector,
   waitForElementAttributeValue,
-} from '../../../../common/test/componentMocking';
+} from '../../../../common/test/testingLibraryTools';
 import { ProfileData } from '../../../../graphql/typings';
 import BasicData from '../BasicData';
 import {
@@ -24,6 +23,7 @@ import {
 import { basicDataType, BasicDataValue } from '../../../helpers/editData';
 import i18n from '../../../../common/test/testi18nInit';
 import { getFormFields } from '../../../helpers/formProperties';
+import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
 
 describe('<BasicData /> ', () => {
   const responses: MockedResponse[] = [];
