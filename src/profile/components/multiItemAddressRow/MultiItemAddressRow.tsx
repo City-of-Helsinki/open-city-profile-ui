@@ -181,7 +181,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
         <EditButtons
           handler={actionHandler}
           actions={{
-            removable: false,
+            removable: !primary,
             primary,
             setPrimary: false,
           }}
