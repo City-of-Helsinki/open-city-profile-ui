@@ -2,7 +2,7 @@ import React from 'react';
 import { act } from '@testing-library/react';
 
 import { getMyProfile } from '../../../../common/test/myProfileMocking';
-import { renderComponentWithMocksAndContexts } from '../../../../common/test/componentMocking';
+import { renderComponentWithMocksAndContexts } from '../../../../common/test/testingLibraryTools';
 import { ProfileData } from '../../../../graphql/typings';
 import ViewProfile from '../ViewProfile';
 import {

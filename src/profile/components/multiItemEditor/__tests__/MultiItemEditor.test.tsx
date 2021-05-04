@@ -8,12 +8,11 @@ import {
 import {
   renderComponentWithMocksAndContexts,
   TestTools,
-  RenderChildrenWhenDataIsComplete,
   cleanComponentMocks,
   WaitForElementAndValueProps,
   ElementSelector,
   waitForElementAttributeValue,
-} from '../../../../common/test/componentMocking';
+} from '../../../../common/test/testingLibraryTools';
 import { ProfileData } from '../../../../graphql/typings';
 import MultiItemEditor from '../MultiItemEditor';
 import {
@@ -26,6 +25,7 @@ import {
   pickSources,
 } from '../../../helpers/editData';
 import i18n from '../../../../common/test/testi18nInit';
+import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
 
 describe('<MultiItemEditor /> ', () => {
   const responses: MockedResponse[] = [];
