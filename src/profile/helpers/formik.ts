@@ -51,3 +51,24 @@ export function getFieldError<FormValues>(
     t(message, options);
   return getError<FormValues>(formikProps, fieldName, renderError, isOldData);
 }
+
+export function createFormFieldHelpers<FormikValues>(
+  t: TFunction,
+  isNew: boolean
+): {
+  hasFieldError: (
+    formikProps: FormikProps<FormikValues>,
+    type: keyof FormikValues
+  ) => boolean;
+  getFieldErrorMessage: (
+    formikProps: FormikProps<FormikValues>,
+    type: keyof FormikValues
+  ) => ReactNode | undefined;
+} {
+  return {
+    hasFieldError: (formikProps, type) =>
+      getIsInvalid<FormikValues>(formikProps, type as string, !isNew),
+    getFieldErrorMessage: (formikProps, type) =>
+      getFieldError<FormikValues>(t, formikProps, type as string, !isNew),
+  };
+}

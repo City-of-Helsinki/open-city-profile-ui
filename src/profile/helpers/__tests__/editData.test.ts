@@ -12,6 +12,10 @@ import {
   EditFunctions,
   EmailValue,
   FormValues,
+  getNewItem,
+  hasNewItem,
+  isMultiItemDataType,
+  isNewItem,
   MultiItemProfileNode,
   PhoneValue,
   pickSources,
@@ -98,6 +102,32 @@ describe('editData.ts ', () => {
     return newValue;
   };
 
+  const pickItemIds = (itemList: (EditData | MultiItemProfileNode)[]) =>
+    itemList.map(item => item.id);
+
+  const createTestDataWithNewItem = (dataType: EditDataType) => {
+    const editor = createEditorForDataType(myProfile, dataType);
+    const oldList = editor.getEditData();
+    const newItem = editor.addItem();
+    const newList = editor.getEditData();
+    //list of ids is stored for checking wrong items are not removed.
+    const oldIdList = pickItemIds(oldList);
+    return {
+      editor,
+      oldList,
+      newList,
+      newItem,
+      oldIdList,
+    };
+  };
+  const pickMultiItemFormValues = (
+    formValues: FormValues | Partial<FormValues>,
+    dataType: EditDataType
+  ): MultiItemProfileNode[] =>
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    formValues[dataType] as MultiItemProfileNode[];
+
   allDataTypes.forEach(dataType => {
     it(`Picks correct data from myProfile when dataType is ${dataType}`, () => {
       const { getEditData } = createEditorForDataType(myProfile, dataType);
@@ -160,7 +190,7 @@ describe('editData.ts ', () => {
           const value = item.value as PhoneValue;
           expect(value.phone).toEqual(node.phone);
           expect(item.saving).toEqual(undefined);
-          expect(item.primary).toEqual(!!node.primary);
+          expect(item.primary).toEqual(node.primary);
           expect(item.id).toEqual(node.id);
         });
       }
@@ -172,16 +202,16 @@ describe('editData.ts ', () => {
         updateItemAndCreateSaveData,
       } = createEditorForDataType(myProfile, dataType);
       const editDataList = getEditData();
+      const isMultiItem = isMultiItemDataType(dataType);
       editDataList.forEach((target, index) => {
         const oldValue = { ...target.value };
         const newValue = createUniqueEditDataValue(target, dataType);
         const newFormValues = updateItemAndCreateSaveData(target, newValue);
         const newEditDataList = getEditData();
         const newTarget = newEditDataList[index];
-        const newFormValue =
-          dataType !== basicDataType && dataType !== additionalInformationType
-            ? (newFormValues[dataType] as MultiItemProfileNode[])[index]
-            : newFormValues;
+        const newFormValue = isMultiItem
+          ? pickMultiItemFormValues(newFormValues, dataType)[index]
+          : newFormValues;
 
         // new value does not match old
         expect(newValue).not.toMatchObject(oldValue);
@@ -194,6 +224,10 @@ describe('editData.ts ', () => {
         // new id and primary match with old
         expect(newTarget.id).toEqual(target.id);
         expect(newTarget.primary).toEqual(target.primary);
+        // nodes should have id
+        if (isMultiItem) {
+          expect((newFormValue as MultiItemProfileNode).id).toEqual(target.id);
+        }
 
         // verify cloning is done: editing old data does not affect new data
         (target as Mutable<EditData>).id = 'test';
@@ -254,6 +288,234 @@ describe('editData.ts ', () => {
       });
     });
   });
+  multiItemDataTypes.forEach(dataType => {
+    describe(`addItem `, () => {
+      it(`creates new ${dataType} item with correct properties`, () => {
+        const { newItem } = createTestDataWithNewItem(dataType);
+        expect(newItem.id).toEqual('');
+        expect(newItem.primary).toBeFalsy();
+        expect(newItem.saving).toBeUndefined();
+        if (dataType === 'emails') {
+          expect((newItem.value as EmailValue).email).toBeDefined();
+        } else if (dataType === 'phones') {
+          expect((newItem.value as PhoneValue).phone).toBeDefined();
+        } else if (dataType === 'addresses') {
+          expect((newItem.value as AddressValue).address).toBeDefined();
+        }
+      });
+      it(`updateItemAndCreateSaveData updates the new ${dataType} item and it returns formValues`, () => {
+        const { editor, newItem } = createTestDataWithNewItem(dataType);
+        const newValue = createUniqueEditDataValue(newItem, dataType);
+        const saveData = editor.updateItemAndCreateSaveData(newItem, newValue);
+        const updatedList = editor.getEditData();
+        const updatedNewItem = updatedList[updatedList.length - 1];
+        const itemsInFormValues = pickMultiItemFormValues(saveData, dataType);
+        const newNodeInFormValues =
+          itemsInFormValues[itemsInFormValues.length - 1];
+        expect(newNodeInFormValues.id).toEqual(newItem.id);
+        expect(updatedNewItem.value).toMatchObject(newValue);
+        expect(pickValue(newNodeInFormValues, dataType)).toMatchObject(
+          newValue
+        );
+      });
+      it(`creates new ${dataType} item and helper functions detect it correctly`, () => {
+        const {
+          newList,
+          newItem,
+          oldList,
+          oldIdList,
+        } = createTestDataWithNewItem(dataType);
+        expect(newList.length).toEqual(oldList.length + 1);
+        expect(pickItemIds(newList)).toEqual([...oldIdList, '']);
+
+        expect(isNewItem(newItem)).toEqual(true);
+        expect(isNewItem(newList[0])).toEqual(false);
+
+        expect(hasNewItem(newList)).toEqual(true);
+        expect(hasNewItem(oldList)).toEqual(false);
+
+        expect(getNewItem(oldList)).toBeUndefined();
+        expect(getNewItem(newList)).toMatchObject(newItem);
+        // new item is last one in the array
+        expect(newList[newList.length - 1]).toMatchObject(newItem);
+      });
+      it(`adding a second new item throws`, () => {
+        const { editor } = createTestDataWithNewItem(dataType);
+        expect(() => editor.addItem()).toThrow();
+      });
+      it(`updateData updates profile data with new item when dataType is ${dataType}. 
+      New item does not exist after update`, () => {
+        const { editor, newItem, oldIdList } = createTestDataWithNewItem(
+          dataType
+        );
+        const newValue = createUniqueEditDataValue(newItem, dataType);
+        editor.updateItemAndCreateSaveData(newItem, newValue);
+        const profileManipulator = cloneProfileAndProvideManipulationFunctions(
+          myProfile.myProfile as ProfileData
+        );
+        const newItemId = '999';
+        profileManipulator.add(dataType, { ...newValue, id: newItemId });
+        editor.updateData({
+          myProfile: profileManipulator.getProfile(),
+        });
+        const updatedItems = editor.getEditData();
+        expect(hasNewItem(updatedItems)).toBeFalsy();
+        expect(updatedItems[updatedItems.length - 1].value).toMatchObject(
+          newValue
+        );
+        expect(updatedItems[updatedItems.length - 1].id).toEqual(newItemId);
+        expect(pickItemIds(updatedItems)).toEqual([...oldIdList, newItemId]);
+      });
+    });
+    describe(`removeItem `, () => {
+      it(`removing old ${dataType} item does not remove it until data is updated. 
+      Old item removal returns formValues without the removed item. `, () => {
+        const { editor, newList } = createTestDataWithNewItem(dataType);
+        // index of item to remove
+        const testIndex = 0;
+        // item to remove
+        const removeItem = newList[testIndex];
+        // removeItem() returns new formValues
+        const saveData = editor.removeItem(removeItem) as FormValues;
+        // old item is not removed, just marked by setting item.saving = 'remove'
+        const editDataWithRemovedItem = editor.getEditData();
+        const updatedItem = editDataWithRemovedItem[testIndex];
+        expect(saveData).toBeDefined();
+        expect(updatedItem.saving).toEqual('remove');
+        // original item is not mutated
+        expect(removeItem.saving).toBeUndefined();
+        const itemsInFormValues = pickMultiItemFormValues(saveData, dataType);
+        // item at target index has chaged
+        expect(itemsInFormValues[testIndex].id).toEqual(
+          editDataWithRemovedItem[testIndex + 1].id
+        );
+        // edit data have not changed yet
+        expect(editDataWithRemovedItem.length).toEqual(newList.length);
+        expect(pickItemIds(editDataWithRemovedItem)).toEqual(
+          pickItemIds(newList)
+        );
+        // formValues do not have removed item
+        expect(editDataWithRemovedItem.length).toEqual(
+          itemsInFormValues.length + 1
+        );
+        const newIdListWithoutRemovedItem = pickItemIds(newList);
+        newIdListWithoutRemovedItem.shift();
+        // removed id not found in ids
+        expect(pickItemIds(itemsInFormValues)).toEqual(
+          newIdListWithoutRemovedItem
+        );
+
+        // update data and verify item @testIndex has different item
+        const nextFirstItem = editDataWithRemovedItem[testIndex + 1];
+
+        const profileManipulator = cloneProfileAndProvideManipulationFunctions(
+          myProfile.myProfile as ProfileData
+        );
+        profileManipulator.remove(dataType, removeItem);
+
+        editor.updateData({
+          myProfile: profileManipulator.getProfile(),
+        });
+        const updatedItems = editor.getEditData();
+        expect(updatedItems.length).toEqual(newList.length - 1);
+        expect(updatedItems[testIndex]).toMatchObject(nextFirstItem);
+        const updatedIdList = pickItemIds(updatedItems);
+        expect(updatedIdList).toEqual(newIdListWithoutRemovedItem);
+        expect(updatedIdList.indexOf(removeItem.id)).toEqual(-1);
+        // new item is still found as last item
+        expect(isNewItem(updatedItems[updatedItems.length - 1])).toBeTruthy();
+      });
+
+      it(`removes new ${dataType} item. 
+      New item removal does not return new formValues but 'null'. 
+      Item list is immediately updated.`, () => {
+        const {
+          newItem,
+          editor,
+          newList,
+          oldIdList,
+        } = createTestDataWithNewItem(dataType);
+        const formValues = editor.removeItem(newItem);
+        const listWithoutNew = editor.getEditData();
+        expect(hasNewItem(listWithoutNew)).toBeFalsy();
+        expect(formValues).toBeNull();
+        expect(editor.getEditData().length).toEqual(newList.length - 1);
+        expect(pickItemIds(listWithoutNew)).toEqual(oldIdList);
+      });
+      it(`removing missing items throw`, () => {
+        const { editor } = createTestDataWithNewItem(dataType);
+        expect(() =>
+          editor.removeItem({ id: 'this_wont_exist' } as EditData)
+        ).toThrow();
+      });
+      it(`removing an item twice throws`, () => {
+        const { editor } = createTestDataWithNewItem(dataType);
+        const item = editor.getEditData()[0];
+        editor.removeItem(item);
+        expect(() => {
+          editor.removeItem(item);
+        }).toThrow();
+      });
+    });
+    describe(`updateItems `, () => {
+      let editorFunctions: EditFunctions;
+      let editDataList: EditData[];
+      let sources: EditDataProfileSource[];
+      beforeEach(() => {
+        editorFunctions = createEditorForDataType(myProfile, dataType);
+        editDataList = editorFunctions.getEditData();
+        sources = pickSources(myProfile.myProfile as ProfileData, dataType);
+      });
+      it(`returns null when edit data has no items with saving set to 'value'`, () => {
+        const nullList = updateItems(editDataList, sources, dataType);
+        expect(nullList).toBeNull();
+      });
+      it(`returns null until item.value and source match and item.saving='value'`, () => {
+        const item = editDataList[0] as Mutable<EditData>;
+        const newValue = createUniqueEditDataValue(item, dataType);
+        const source = sources[0] as Mutable<MultiItemProfileNode>;
+        item.saving = 'value';
+        item.value = newValue;
+        const nullList = updateItems(editDataList, sources, dataType);
+        expect(nullList).toBeNull();
+        const updatedSource = { ...source, ...newValue };
+        sources[0] = updatedSource;
+        const newList = updateItems(
+          editDataList,
+          sources,
+          dataType
+        ) as EditData[];
+        expect(newList).toHaveLength(editDataList.length);
+        const updatedItem = newList[0];
+        // old item has not changed
+        expect(item.saving).toEqual('value');
+        // change saving so item will match updatedItem
+        item.saving = undefined;
+        expect(updatedItem).toEqual(item);
+        expect(updatedItem.saving).toEqual(undefined);
+      });
+      it(`returns null until item.primary and source.primary match and item.saving='set-primary'`, () => {
+        const item = editDataList[0] as Mutable<EditData>;
+        const source = sources[0] as Mutable<PhoneNode>;
+        item.saving = saveTypeSetPrimary;
+        item.primary = true;
+        source.primary = false;
+        const nullList = updateItems(editDataList, sources, dataType);
+        expect(nullList).toBeNull();
+        source.primary = true;
+        const newList = updateItems(
+          editDataList,
+          sources,
+          dataType
+        ) as EditData[];
+        expect(newList).toHaveLength(editDataList.length);
+        const updatedItem = newList[0];
+        // change saving so item will match updatedItem
+        expect(updatedItem).toEqual({ ...item, saving: undefined });
+        expect(updatedItem.saving).toEqual(undefined);
+      });
+    });
+  });
   describe(`updateData generally`, () => {
     it(`returns new list when new profile data has no items.'`, () => {
       const emaillessProfileData: ProfileRoot = getMyProfile();
@@ -266,64 +528,7 @@ describe('editData.ts ', () => {
       expect(getEditData()).toHaveLength(0);
     });
   });
-  describe(`updateItems `, () => {
-    const dataType = 'phones';
-    let editorFunctions: EditFunctions;
-    let editDataList: EditData[];
-    let sources: EditDataProfileSource[];
-    beforeEach(() => {
-      editorFunctions = createEditorForDataType(myProfile, dataType);
-      editDataList = editorFunctions.getEditData();
-      sources = pickSources(myProfile.myProfile as ProfileData, dataType);
-    });
-    it(`returns null when edit data has no items with saving set to 'value'`, () => {
-      const nullList = updateItems(editDataList, sources, dataType);
-      expect(nullList).toBeNull();
-    });
-    it(`returns null until item.value and source match and item.saving='value'`, () => {
-      const item = editDataList[0] as Mutable<EditData>;
-      const value = item.value as Mutable<PhoneValue>;
-      const source = sources[0] as Mutable<PhoneNode>;
-      item.saving = 'value';
-      value.phone = createNewValue('phones');
-      const nullList = updateItems(editDataList, sources, dataType);
-      expect(nullList).toBeNull();
-      source.phone = value.phone;
-      const newList = updateItems(
-        editDataList,
-        sources,
-        dataType
-      ) as EditData[];
-      expect(newList).toHaveLength(editDataList.length);
-      const updatedItem = newList[0];
-      // old item has not changed
-      expect(item.saving).toEqual('value');
-      // change saving so item will match updatedItem
-      item.saving = undefined;
-      expect(updatedItem).toEqual(item);
-      expect(updatedItem.saving).toEqual(undefined);
-    });
-    it(`returns null until item.primary and source.primary match and item.saving='set-primary'`, () => {
-      const item = editDataList[0] as Mutable<EditData>;
-      const source = sources[0] as Mutable<PhoneNode>;
-      item.saving = saveTypeSetPrimary;
-      item.primary = true;
-      source.primary = false;
-      const nullList = updateItems(editDataList, sources, dataType);
-      expect(nullList).toBeNull();
-      source.primary = true;
-      const newList = updateItems(
-        editDataList,
-        sources,
-        dataType
-      ) as EditData[];
-      expect(newList).toHaveLength(editDataList.length);
-      const updatedItem = newList[0];
-      // change saving so item will match updatedItem
-      expect(updatedItem).toEqual({ ...item, saving: undefined });
-      expect(updatedItem.saving).toEqual(undefined);
-    });
-  });
+
   describe(`updateAfterSavingError `, () => {
     it(`resets item.saving to undefined and updates editData list with a clone`, () => {
       const { getEditData, updateAfterSavingError } = createEditorForDataType(

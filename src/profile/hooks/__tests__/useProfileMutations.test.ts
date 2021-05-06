@@ -3,11 +3,10 @@ import { RenderHookResult, act } from '@testing-library/react-hooks';
 import _ from 'lodash';
 
 import {
-  exposeProfileMutationsHook,
   createResultPropertyTracker,
   RenderHookResultsChildren,
   cleanComponentMocks,
-} from '../../../common/test/componentMocking';
+} from '../../../common/test/testingLibraryTools';
 import {
   ResponseProvider,
   MockedResponse,
@@ -23,6 +22,7 @@ import getAddressesFromNode from '../../helpers/getAddressesFromNode';
 import getEmailsFromNode from '../../helpers/getEmailsFromNode';
 import getPhonesFromNode from '../../helpers/getPhonesFromNode';
 import { MutationReturnType } from '../useProfileMutations';
+import { exposeProfileMutationsHook } from '../../../common/test/exposeHooksForTesting';
 
 describe('useProfileMutations.ts ', () => {
   const updateVariables: (UpdateMyProfileVariables | undefined)[] = [];
@@ -30,7 +30,7 @@ describe('useProfileMutations.ts ', () => {
   let profileManipulator: ManipulationFunctions;
   afterEach(() => {
     cleanComponentMocks();
-    updateVariables.length = 0;
+    responses.length = 0;
     updateVariables.length = 0;
   });
   const responseProvider: ResponseProvider = variables => {

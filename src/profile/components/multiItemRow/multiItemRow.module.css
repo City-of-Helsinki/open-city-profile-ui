@@ -1,0 +1,43 @@
+.rowContentWrapper {
+  background: var(--color-black-ultra-light);
+  margin: 0 0 var(--spacing-m) 0;
+  padding: var(--spacing-m);
+}
+
+.rowContentWrapper form {
+  width: 100%;
+}
+
+.editableRow {
+  display: flex;
+  flex-direction: column;
+}
+
+/* fixes bug in HDS TextInput when it is wrapped to an element with display:flex: */
+.editableRow > div > div {
+  height: auto;
+}
+
+.value {
+  font-size: 18px;
+  padding: 0 0 var(--spacing-m) 0;
+  word-break: break-all;
+}
+
+@media (min-width: 768px) {
+  .rowContentWrapper {
+    flex-direction: row;
+    align-items: center;
+    padding: var(--spacing-m);
+  }
+  .value {
+    padding: 0 var(--spacing-2-xs) 0 0;
+  }
+
+  .editableRow {
+    flex-direction: row;
+  }
+  .editableRow > div:first-child {
+    width: 50%;
+  }
+}
