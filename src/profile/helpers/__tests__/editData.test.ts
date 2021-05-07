@@ -22,6 +22,8 @@ import {
   pickValue,
   saveTypeSetPrimary,
   updateItems,
+  setPrimary,
+  movePrimaryAsFirst,
 } from '../editData';
 import {
   cloneProfileAndProvideManipulationFunctions,
@@ -515,6 +517,103 @@ describe('editData.ts ', () => {
         expect(updatedItem.saving).toEqual(undefined);
       });
     });
+    describe(`setPrimary `, () => {
+      let editorFunctions: EditFunctions;
+      let editDataList: EditData[];
+      beforeEach(() => {
+        editorFunctions = createEditorForDataType(myProfile, dataType);
+        editDataList = editorFunctions.getEditData();
+      });
+      it(`returns null when item is already the primary item. Null indicates there is no need to save`, () => {
+        const nullList = setPrimary(editDataList, editDataList[0]);
+        expect(nullList).toBeNull();
+      });
+      it(`returns new, cloned data when primary changes. Previous and new primary have correct props.`, () => {
+        const [oldPrimary, newPrimary] = editDataList;
+        const newEditDataList = setPrimary(
+          editDataList,
+          newPrimary
+        ) as EditData[];
+
+        const [clonedOldPrimary, clonedNewPrimary] = newEditDataList;
+        expect(oldPrimary.id).toEqual(clonedOldPrimary.id);
+        expect(newPrimary.id).toEqual(clonedNewPrimary.id);
+
+        // data has been cloned, so old values are unchanged
+        expect(oldPrimary.saving).toBeUndefined();
+        expect(newPrimary.saving).toBeUndefined();
+        expect(oldPrimary.primary).toBeTruthy();
+        expect(newPrimary.primary).toBeFalsy();
+
+        // 'saving' and 'primary' are set in new data
+        expect(clonedOldPrimary.saving).toEqual(saveTypeSetPrimary);
+        expect(clonedNewPrimary.saving).toEqual(saveTypeSetPrimary);
+        expect(clonedOldPrimary.primary).toBeFalsy();
+        expect(clonedNewPrimary.primary).toBeTruthy();
+      });
+      it(`returns new, cloned data when primary was not set yet.`, () => {
+        const [currentPrimary, newPrimary] = editDataList;
+        // there is no function to clear current primary item
+        // so clearing it by force
+        (currentPrimary as Mutable<EditData>).primary = false;
+        const newEditDataList = setPrimary(
+          editDataList,
+          newPrimary
+        ) as EditData[];
+        const [clonedOldPrimary, clonedNewPrimary] = newEditDataList;
+        expect(currentPrimary.id).toEqual(clonedOldPrimary.id);
+        expect(newPrimary.id).toEqual(clonedNewPrimary.id);
+
+        // 'saving' and 'primary' are set in new data
+        expect(clonedOldPrimary.saving).toBeUndefined();
+        expect(clonedNewPrimary.saving).toEqual(saveTypeSetPrimary);
+      });
+      it(`throws an error when item is not found or setting a saving item as primary`, () => {
+        expect(() =>
+          setPrimary(editDataList, { id: 'notfound' } as EditData)
+        ).toThrow();
+        const [oldPrimary, newPrimary] = editDataList;
+        editorFunctions.setPrimary(newPrimary);
+        expect(() => editorFunctions.setPrimary(newPrimary)).toThrow();
+        expect(() => editorFunctions.setPrimary(oldPrimary)).toThrow();
+      });
+    });
+    describe(`movePrimaryAsFirst `, () => {
+      const primaryItem = { primary: true, id: '1' } as EditData;
+      const nonPrimaryItem1 = { primary: false, id: '2' } as EditData;
+      const nonPrimaryItem2 = { primary: false, id: '3' } as EditData;
+
+      const moveAndVerify = (
+        nonArrangedList: EditData[],
+        assumedResult: EditData[]
+      ): EditData[] => {
+        const currentPrimary = nonArrangedList.filter(item => item.primary)[0];
+        const newOrder = movePrimaryAsFirst(nonArrangedList);
+        expect(newOrder).toEqual(assumedResult);
+        if (currentPrimary) {
+          const newPrimary = newOrder[0];
+          expect(newPrimary.id).toEqual(currentPrimary.id);
+          expect(newPrimary.primary).toBeTruthy();
+        }
+        return newOrder;
+      };
+
+      it(`returns re-arranged array where primary item is at index 0 and other items are in old order`, () => {
+        moveAndVerify(
+          [nonPrimaryItem1, nonPrimaryItem2, primaryItem],
+          [primaryItem, nonPrimaryItem1, nonPrimaryItem2]
+        );
+        moveAndVerify(
+          [primaryItem, nonPrimaryItem1, nonPrimaryItem2],
+          [primaryItem, nonPrimaryItem1, nonPrimaryItem2]
+        );
+        moveAndVerify(
+          [nonPrimaryItem1, nonPrimaryItem2, nonPrimaryItem1, nonPrimaryItem2],
+          [nonPrimaryItem1, nonPrimaryItem2, nonPrimaryItem1, nonPrimaryItem2]
+        );
+        moveAndVerify([], []);
+      });
+    });
   });
   describe(`updateData generally`, () => {
     it(`returns new list when new profile data has no items.'`, () => {
@@ -531,23 +630,67 @@ describe('editData.ts ', () => {
 
   describe(`updateAfterSavingError `, () => {
     it(`resets item.saving to undefined and updates editData list with a clone`, () => {
-      const { getEditData, updateAfterSavingError } = createEditorForDataType(
-        myProfile,
-        'phones'
-      );
+      const newValue: EditDataValue = { phone: '555-5555' };
+      const {
+        getEditData,
+        updateAfterSavingError,
+        updateItemAndCreateSaveData,
+      } = createEditorForDataType(myProfile, 'phones');
       const editDataList = getEditData();
       const item = editDataList[0] as Mutable<EditData>;
       const changedIsFalsy = updateAfterSavingError(item.id);
       expect(changedIsFalsy).toBeFalsy();
 
-      item.saving = saveTypeSetPrimary;
+      updateItemAndCreateSaveData(item, newValue);
       const changedIsTruthy = updateAfterSavingError(item.id);
       expect(changedIsTruthy).toBeTruthy();
       const updatedEditDataList = getEditData();
       const updatedItem = updatedEditDataList[0];
-      expect(updatedItem).toEqual({ ...item, saving: undefined });
+      expect(updatedItem).toEqual({
+        ...item,
+        value: newValue,
+        saving: undefined,
+      });
       expect(updatedItem.saving).toEqual(undefined);
-      expect(item.saving).toEqual(saveTypeSetPrimary);
+    });
+    it(`handles both items when rolling back primary change`, () => {
+      const {
+        getEditData,
+        updateAfterSavingError,
+        // imported setPrimary -function not used to keep data in scope with updateAfterSavingError and getEditData
+        setPrimary: setPrimaryScopedToEditData,
+      } = createEditorForDataType(myProfile, 'phones');
+      const editDataList = getEditData();
+      const [initialPrimary, nextPrimary] = editDataList;
+      // items are not being saved yet, so function returns false indication nothing to update
+      const currentPrimaryIsNotRolledBack = updateAfterSavingError(
+        initialPrimary.id
+      );
+      const nextPrimaryIsNotRolledBack = updateAfterSavingError(nextPrimary.id);
+      expect(currentPrimaryIsNotRolledBack).toBeFalsy();
+      expect(nextPrimaryIsNotRolledBack).toBeFalsy();
+
+      setPrimaryScopedToEditData(nextPrimary) as EditData[];
+      const editDataAfterPrimaryChange = getEditData();
+      const [newPrimary, oldPrimary] = editDataAfterPrimaryChange;
+      expect(oldPrimary.id).toEqual(initialPrimary.id);
+      expect(newPrimary.id).toEqual(nextPrimary.id);
+      // rollback
+      const changedIsTruthy = updateAfterSavingError(newPrimary.id);
+      expect(changedIsTruthy).toBeTruthy();
+
+      const rolledBackEditDataList = getEditData();
+      const [rolledBackPrimary, rolledBackNextPrimary] = rolledBackEditDataList;
+      expect(rolledBackPrimary).toEqual({
+        ...oldPrimary,
+        primary: true,
+        saving: undefined,
+      });
+      expect(rolledBackNextPrimary).toEqual({
+        ...newPrimary,
+        primary: false,
+        saving: undefined,
+      });
     });
   });
 });
