@@ -19,6 +19,7 @@ import {
   EditDataType,
   EditDataValue,
   isNewItem,
+  isSettingPrimary,
 } from '../../helpers/editData';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import { useConfirmationModal } from '../../hooks/useConfirmationModal';
@@ -32,6 +33,7 @@ export type RowItemProps = {
   onAction: ActionListener;
   testId: string;
   dataType: EditDataType;
+  disableEditButtons: boolean;
 };
 
 function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
@@ -42,6 +44,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
     add,
     hasNew,
     remove,
+    setNewPrimary,
   } = useProfileDataEditor({
     dataType,
   });
@@ -56,6 +59,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   const { showModal, modalProps } = useConfirmationModal();
   const hasAddressList = dataType === 'addresses';
   const isAddButtonDisabled = hasNew();
+  const setPrimaryInProgress = isSettingPrimary(editDataList);
   const RowComponent = hasAddressList ? MultiItemAddressRow : MultiItemRow;
   const texts = (function() {
     if (dataType === 'emails') {
@@ -124,6 +128,13 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
         }
       }
       return executeActionAndNotifyUser(action, item, newValue);
+    } else if (action === 'set-primary') {
+      const [err] = await to(setNewPrimary(item));
+      if (err) {
+        setErrorMessage(action);
+      } else {
+        setSuccessMessage(action);
+      }
     }
     return Promise.resolve();
   };
@@ -163,6 +174,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
               onAction={onAction}
               testId={`${dataType}-${index}`}
               dataType={dataType}
+              disableEditButtons={setPrimaryInProgress}
             />
           </li>
         ))}

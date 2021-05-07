@@ -25,7 +25,7 @@ import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
 type FormikValues = AddressValue;
 
 function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
-  const { data, testId, dataType } = props;
+  const { data, testId, dataType, disableEditButtons } = props;
   const value = data.value as AddressValue;
   const { address, city, postalCode, countryCode } = value;
   const { t, i18n } = useTranslation();
@@ -57,7 +57,8 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
     FormikValues
   >(t, isNew);
 
-  const { primary } = data;
+  const { primary, saving } = data;
+  const disableButtons = !!currentAction || !!saving;
 
   if (isEditing) {
     return (
@@ -133,7 +134,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
             </div>
             <FormButtons
               handler={actionHandler}
-              disabled={!!currentAction}
+              disabled={disableButtons}
               testId={testId}
               alignLeft
             />
@@ -183,11 +184,11 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
           actions={{
             removable: !primary,
             primary,
-            setPrimary: false,
+            setPrimary: true,
           }}
           buttonClassNames={commonFormStyles.actionsWrapperButton}
           editButtonId={`${testId}-edit-button`}
-          disabled={!!currentAction}
+          disabled={disableButtons || disableEditButtons}
           testId={testId}
         />
         <SaveIndicator action={currentAction} testId={testId} />
