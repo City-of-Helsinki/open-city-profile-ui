@@ -52,7 +52,10 @@ function EditButtons(props: Props): React.ReactElement {
   return (
     <div className={commonFormStyles.actions}>
       {setPrimary && primary && (
-        <div className={commonFormStyles.primaryContainer}>
+        <div
+          className={commonFormStyles.primaryContainer}
+          data-testid={`${testId}-primary-indicator`}
+        >
           <IconStarFill aria-hidden="true" />
           <span aria-hidden="true">{t('profileForm.primary')}</span>
         </div>

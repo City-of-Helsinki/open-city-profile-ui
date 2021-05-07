@@ -20,9 +20,10 @@ type EmailAndPhoneFormikValue = { value: string };
 
 function MultiItemRow(props: RowItemProps): React.ReactElement {
   const {
-    data: { value, primary },
+    data: { value, primary, saving },
     testId,
     dataType,
+    disableEditButtons,
   } = props;
   const { t } = useTranslation();
   const {
@@ -39,6 +40,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
 
   const inputId = `${testId}-value`;
   const formFields = getFormFields(dataType);
+  const disableButtons = !!currentAction || !!saving;
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     EmailAndPhoneFormikValue
   >(t, isNew);
@@ -85,7 +87,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
                 />
                 <FormButtons
                   handler={actionHandler}
-                  disabled={!!currentAction}
+                  disabled={disableButtons}
                   testId={testId}
                 />
               </div>
@@ -111,10 +113,10 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
         actions={{
           removable: !primary,
           primary,
-          setPrimary: false,
+          setPrimary: true,
         }}
         editButtonId={`${testId}-edit-button`}
-        disabled={!!currentAction}
+        disabled={disableButtons || disableEditButtons}
         testId={testId}
       />
       <SaveIndicator action={currentAction} testId={testId} />
