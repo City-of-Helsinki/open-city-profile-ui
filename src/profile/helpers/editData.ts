@@ -91,6 +91,8 @@ type Backups = {
   add: (item: EditData) => void;
   clean: (allItems: EditData[]) => void;
   get: (id: string) => EditData | undefined;
+  backupList: (allItems: EditData[]) => void;
+  restoreListBackup: () => EditData[] | undefined;
 };
 
 export type EditFunctions = {
@@ -106,6 +108,7 @@ export type EditFunctions = {
   addItem: () => EditData;
   hasNewItem: () => boolean;
   removeItem: (targetItem: EditData) => Partial<FormValues> | null;
+  setPrimary: (targetItem: EditData) => Partial<FormValues> | null;
 };
 
 export function isMultiItemDataType(dataType: EditDataType): boolean {
@@ -116,6 +119,10 @@ export function isMultiItemDataType(dataType: EditDataType): boolean {
 
 function isSaving(allItems: EditData[]): boolean {
   return !!allItems.find(item => !!item.saving);
+}
+
+export function isSettingPrimary(allItems: EditData[]): boolean {
+  return !!allItems.find(item => item.saving === saveTypeSetPrimary);
 }
 
 export function isNewItem(data: EditData): boolean {
@@ -334,8 +341,52 @@ export function updateItems(
   return dataHasUpdated ? newList : null;
 }
 
+export function movePrimaryAsFirst(mutatableArray: EditData[]): EditData[] {
+  const primaryItemIndex = mutatableArray.findIndex(item => item.primary);
+  if (primaryItemIndex < 1) {
+    return mutatableArray;
+  }
+  const primaryItem = mutatableArray.splice(primaryItemIndex, 1)[0];
+  mutatableArray.unshift(primaryItem);
+  return mutatableArray;
+}
+
+export function setPrimary(
+  allItems: EditData[],
+  newPrimary: EditData
+): EditData[] | null {
+  const newPrimaryIndex = findItemIndex(allItems, newPrimary.id);
+  if (newPrimaryIndex === -1 || !newPrimary.id) {
+    throw new Error('cannot set selected item as new primary');
+  }
+
+  const currentPrimaryIndex = allItems.findIndex(item => item.primary);
+  const currentPrimary =
+    currentPrimaryIndex > -1 ? allItems[currentPrimaryIndex] : undefined;
+
+  if (currentPrimary && currentPrimary.id === newPrimary.id) {
+    return null;
+  }
+
+  const clonedData = _.cloneDeep(allItems);
+
+  if (currentPrimary) {
+    clonedData[currentPrimaryIndex] = cloneAndMutateItem(currentPrimary, {
+      saving: saveTypeSetPrimary,
+      primary: false,
+    });
+  }
+  clonedData[newPrimaryIndex] = cloneAndMutateItem(newPrimary, {
+    saving: saveTypeSetPrimary,
+    primary: true,
+  });
+
+  return clonedData;
+}
+
 function createBackups(): Backups {
   const backups: Map<string, EditData> = new Map();
+  let listBackup: EditData[] | undefined;
   const add: Backups['add'] = (item: EditData) => {
     const clone = cloneAndMutateItem(item);
     backups.set(clone.id, clone);
@@ -355,10 +406,20 @@ function createBackups(): Backups {
       backups.delete('');
     }
   };
+  const backupList: Backups['backupList'] = allItems => {
+    listBackup = _.cloneDeep(allItems);
+  };
+  const restoreListBackup: Backups['restoreListBackup'] = () => {
+    const list = listBackup;
+    listBackup = undefined;
+    return list;
+  };
   return {
     add,
     get,
     clean,
+    backupList,
+    restoreListBackup,
   };
 }
 
@@ -386,7 +447,12 @@ export function createEditorForDataType(
   const backups = createBackups();
   return {
     create: newProfileData => createNewItem(newProfileData, dataType),
-    getEditData: () => allItems,
+    getEditData: () => {
+      if (isMultiItemDataType(dataType)) {
+        return movePrimaryAsFirst(_.cloneDeep(allItems));
+      }
+      return allItems;
+    },
     updateItemAndCreateSaveData: (targetItem, newValue) => {
       preventDoubleEdits(targetItem);
       backups.add(targetItem);
@@ -430,7 +496,37 @@ export function createEditorForDataType(
       if (!targetItem.saving) {
         return false;
       }
-      allItems = updateItemAndCloneList(allItems, targetItem, targetItem.value);
+
+      if (targetItem.saving === saveTypeSetPrimary) {
+        const backedupList = backups.restoreListBackup();
+        if (!backedupList) {
+          throw new Error('Cannot rollback. Items are not backed up');
+        }
+        const rollbackPrimary = allItems.find(
+          item =>
+            item.id !== targetItem.id && item.saving === saveTypeSetPrimary
+        );
+        const targetInBackups = findItem(
+          backedupList,
+          targetItem.id
+        ) as EditData;
+        const rollbackPrimaryInBackUps =
+          rollbackPrimary &&
+          (findItem(backedupList, targetItem.id) as EditData);
+        if (
+          !targetInBackups ||
+          (rollbackPrimary && !rollbackPrimaryInBackUps)
+        ) {
+          throw new Error('Cannot rollback. Items not found in backups');
+        }
+        allItems = backedupList;
+      } else {
+        allItems = updateItemAndCloneList(
+          allItems,
+          targetItem,
+          targetItem.value
+        );
+      }
       return true;
     },
     resetItem: targetItem => {
@@ -474,6 +570,21 @@ export function createEditorForDataType(
         'remove'
       );
       return createFormValues(allItems, dataType);
+    },
+    setPrimary: (targetItem: EditData) => {
+      // note: setting a new primary while another action is not complete
+      // must be prevented in ui.
+      preventDoubleEdits(targetItem);
+      if (allItems[0].primary) {
+        preventDoubleEdits(allItems[0]);
+      }
+      backups.backupList(allItems);
+      const changedData = setPrimary(allItems, targetItem);
+      if (changedData) {
+        allItems = changedData;
+        return createFormValues(allItems, dataType);
+      }
+      return null;
     },
   };
 }
