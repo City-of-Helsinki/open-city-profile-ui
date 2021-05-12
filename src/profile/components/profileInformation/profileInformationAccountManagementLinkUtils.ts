@@ -23,7 +23,7 @@ export function getAmr(profile: Profile | null): AMRStatic | null {
     amr === 'github' ||
     amr === 'google' ||
     amr === 'facebook' ||
-    amr === 'yle'
+    amr === 'yletunnus'
   ) {
     return amr;
   }
@@ -42,7 +42,7 @@ export function getAmrUrl(authenticationMethodReference: AMRStatic): string {
       return config.identityProviderManagementUrlGoogle;
     case 'facebook':
       return config.identityProviderManagementUrlFacebook;
-    case 'yle':
+    case 'yletunnus':
       return config.identityProviderManagementUrlYle;
     case 'tunnistusSuomifi':
       return config.identityProviderManagementUrlTunnistusSuomifi;
