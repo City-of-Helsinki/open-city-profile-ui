@@ -362,6 +362,76 @@ describe('<MultiItemEditor /> ', () => {
         });
       });
     });
+    it(`Clicking set as primary -button moves the item as #0 and old one is not primary anymore`, async () => {
+      const newPrimaryIndex = 1;
+      const newPrimaryNode = sourceNodeList[newPrimaryIndex];
+      const oldPrimaryNode = sourceNodeList[0];
+      // create graphQL response for the update
+      const updatedProfileData = cloneProfileAndProvideManipulationFunctions(
+        initialProfile
+      )
+        .edit(dataType, {
+          primary: true,
+          id: newPrimaryNode.id,
+        })
+        .edit(dataType, {
+          primary: false,
+          id: oldPrimaryNode.id,
+        })
+        .setPrimary(dataType, newPrimaryNode)
+        .getProfile();
+
+      await act(async () => {
+        const {
+          clickElement,
+          getElement,
+          waitForElementAndValue,
+        } = await initTests(dataType);
+        // add error response
+        responses.push({
+          errorType: 'graphQLError',
+        });
+        // add the graphQL response
+        responses.push({
+          updatedProfileData,
+        });
+        const primaryItemPrimaryIndicator: ElementSelector = {
+          testId: `${dataType}-0-primary-indicator`,
+        };
+        const setPrimaryButtonSelector: ElementSelector = {
+          testId: `${dataType}-${newPrimaryIndex}-set-primary-button`,
+        };
+        const nonExistingSetPrimaryButtonSelector: ElementSelector = {
+          testId: `${dataType}-0-set-primary-button`,
+        };
+
+        // primary item should have primary indicator
+        expect(() => getElement(primaryItemPrimaryIndicator)).not.toThrow();
+        // primary item should not have set as primary button
+        expect(() => getElement(nonExistingSetPrimaryButtonSelector)).toThrow();
+        // click set as primary -button and handle error
+        await clickElement(setPrimaryButtonSelector);
+        // save indicator is rendered. Note: new primary item is moved as child #0
+        await waitForElementAndValue({
+          selector: {
+            testId: `${dataType}-0-save-indicator`,
+          },
+          value: t('notification.saving'),
+        });
+        // check error message
+        await waitForElementAndValue({
+          selector: { id: `${dataType}-edit-notifications` },
+          value: t('notification.genericError'),
+        });
+
+        // start removal again, now with success
+        await clickElement(setPrimaryButtonSelector);
+        await waitForElementAndValue({
+          selector: { id: `${dataType}-edit-notifications` },
+          value: t('notification.genericSuccess'),
+        });
+      });
+    });
 
     fields.forEach(field => {
       describe(`Component indicates invalid values for ${dataType} and setting a valid value removes error `, () => {

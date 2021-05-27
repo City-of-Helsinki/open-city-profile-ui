@@ -18,6 +18,7 @@ export type ProfileDataEditorReturnType = {
   add: () => void;
   hasNew: () => boolean;
   remove: (item: EditData) => Promise<UpdateResult | void>;
+  setNewPrimary: (item: EditData) => Promise<UpdateResult | void>;
 };
 
 export type Action = SaveType | 'edit' | 'cancel' | 'save' | 'add';
@@ -64,6 +65,7 @@ export function useProfileDataEditor({
     addItem,
     hasNewItem: hasNew,
     removeItem,
+    setPrimary,
   } = useMemo(
     () => createEditorForDataType(profileData, dataType),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -122,6 +124,14 @@ export function useProfileDataEditor({
     return executeMutationUpdateAndHandleResult(newFormValues, item.id);
   };
 
+  const setNewPrimary = async (item: EditData) => {
+    const newFormValues = setPrimary(item);
+    if (!newFormValues) {
+      return Promise.resolve();
+    }
+    return executeMutationUpdateAndHandleResult(newFormValues, item.id);
+  };
+
   return {
     editDataList: getEditData(),
     save,
@@ -129,5 +139,6 @@ export function useProfileDataEditor({
     add,
     hasNew,
     remove,
+    setNewPrimary,
   };
 }
