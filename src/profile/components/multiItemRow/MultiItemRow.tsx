@@ -15,6 +15,7 @@ import SaveIndicator from '../saveIndicator/SaveIndicator';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
 import { getFormFields } from '../../helpers/formProperties';
+import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 
 type EmailAndPhoneFormikValue = { value: string };
 
@@ -54,6 +55,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
       [propName]: formValue,
     };
   };
+  const ariaLabels = createActionAriaLabels(dataType, inputValue, t);
   if (isEditing) {
     return (
       <div
@@ -119,6 +121,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
         editButtonId={editButtonId}
         disabled={disableButtons || disableEditButtons}
         testId={testId}
+        ariaLabels={ariaLabels}
       />
       <SaveIndicator action={currentAction} testId={testId} />
     </div>

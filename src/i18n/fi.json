@@ -147,9 +147,9 @@
   },
   "profileInformation": {
     "address": "Osoite",
-    "ariaEditAddress": "Muokkaa osoitetta",
-    "ariaEditPhone": "Muokkaa puhelinnumeroa",
-    "ariaEditEmail": "Muokkaa sähköpostiosoitetta",
+    "ariaEditAddress": "Muokkaa osoitetta {{value}}",
+    "ariaEditPhone": "Muokkaa puhelinnumeroa {{value}}",
+    "ariaEditEmail": "Muokkaa sähköpostiosoitetta {{value}}",
     "ariaEditBasicData": "Muokkaa perustietoja",
     "deleteProfile": "Poista omat tietosi",
     "description": "Helsinki Profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa. Kätevää eikö?",
@@ -165,7 +165,7 @@
     "primaryAddress": "Ensisijainen osoite",
     "permanentAddress": "Vakinainen osoite",
     "temporaryAddress": "Väliaikainen osoite",
-    "permanentForeignAddress": "Väliaikainen ulkomainen osoite",
+    "permanentForeignAddress": "Vakinainen ulkomainen osoite",
     "primaryEmail": "Ensisijainen sähköpostiosoite",
     "primaryPhone": "Ensisijainen puhelinnumero",
     "primaryAddressAriaDescription": "Tämä on ensisijainen osoitteesi",
@@ -184,6 +184,12 @@
     "ariaListTitlePhones": "Antamasi puhelinnumerot",
     "ariaListTitleEmails": "Antamasi sähköpostiosoitteet",
     "ariaListTitleAddresses": "Antamasi osoitteet",
+    "ariaSetPrimaryAddressWithValue": "Aseta {{value}} ensisijaiseksi osoitteeksi",
+    "ariaSetPrimaryEmailWithValue": "Aseta {{value}} ensisijaiseksi sähköpostiosoitteeksi",
+    "ariaSetPrimaryPhoneWithValue": "Aseta {{value}} ensisijaiseksi puhelinnumeroksi",
+    "ariaRemoveAddressWithValue": "Poista osoite {{value}} ",
+    "ariaRemoveEmailWithValue": "Poista sähköpostiosoite {{value}}",
+    "ariaRemovePhoneWithValue": "Poista puhelinnumero {{value}}",
     "noPhones": "Et ole antanut puhelinnumeroita",
     "noEmails": "Et ole antanut sähköpostiosoitteita",
     "noAddresses": "Et ole antanut osoitteita"
@@ -218,7 +224,7 @@
     "github": "GitHub",
     "google": "Google",
     "facebook": "Facebook",
-    "yle": "Yle",
+    "yletunnus": "Yle",
     "tunnistusSuomifi": "Suomi.fi"
   }
 }

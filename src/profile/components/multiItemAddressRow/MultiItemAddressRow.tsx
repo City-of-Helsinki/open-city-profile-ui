@@ -21,6 +21,7 @@ import { getFormFields } from '../../helpers/formProperties';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
+import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 
 type FormikValues = AddressValue;
 
@@ -60,6 +61,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
 
   const { primary, saving } = data;
   const disableButtons = !!currentAction || !!saving;
+  const ariaLabels = createActionAriaLabels(dataType, value.address, t);
 
   if (isEditing) {
     return (
@@ -191,6 +193,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
           editButtonId={editButtonId}
           disabled={disableButtons || disableEditButtons}
           testId={testId}
+          ariaLabels={ariaLabels}
         />
         <SaveIndicator action={currentAction} testId={testId} />
       </div>
