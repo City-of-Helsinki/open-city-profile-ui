@@ -25,6 +25,7 @@ import EditingNotifications from '../editingNotifications/EditingNotifications';
 import EditButtons, { ActionHandler } from '../editButtons/EditButtons';
 import FormButtons from '../formButtons/FormButtons';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
+import { useFocusSetter } from '../../hooks/useFocusSetter';
 
 type FormikValues = BasicDataValue;
 
@@ -40,6 +41,10 @@ function BasicData(): React.ReactElement | null {
 
   const { editDataList, save, reset } = useProfileDataEditor({
     dataType: basicDataType,
+  });
+
+  const [editButtonId, setFocusToEditButton] = useFocusSetter({
+    targetId: `${basicDataType}-edit-button`,
   });
 
   if (!editDataList || !editDataList[0]) {
@@ -65,6 +70,7 @@ function BasicData(): React.ReactElement | null {
   const actionHandler: ActionHandler = async action => {
     const promise = await onAction(action, editData);
     if (action === 'cancel') {
+      setFocusToEditButton();
       reset(editData);
       setEditing(false);
     }
@@ -84,6 +90,7 @@ function BasicData(): React.ReactElement | null {
           if (error) {
             setErrorMessage('save');
           } else {
+            setFocusToEditButton();
             setSuccessMessage('save');
             setEditing(false);
           }
@@ -187,7 +194,7 @@ function BasicData(): React.ReactElement | null {
               setPrimary: false,
             }}
             buttonClassNames={commonFormStyles.actionsWrapperButton}
-            editButtonId={`${basicDataType}-edit-button`}
+            editButtonId={editButtonId}
             testId={basicDataType}
           />
         </div>
