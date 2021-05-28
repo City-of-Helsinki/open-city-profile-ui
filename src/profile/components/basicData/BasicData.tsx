@@ -27,6 +27,7 @@ import FormButtons from '../formButtons/FormButtons';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
+import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 
 type FormikValues = BasicDataValue;
 
@@ -106,59 +107,61 @@ function BasicData(): React.ReactElement | null {
               {t('profileForm.basicData')}
             </h3>
             <Form>
-              <div className={commonFormStyles.multiItemWrapper}>
-                <Field
-                  className={commonFormStyles.formField}
-                  name="firstName"
-                  id={`${basicDataType}-firstName`}
-                  maxLength={formFields.firstName.max as number}
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps, 'firstName')}
-                  aria-invalid={hasFieldError(formikProps, 'firstName')}
-                  helperText={getFieldErrorMessage(formikProps, 'firstName')}
-                  labelText={t(formFields.firstName.translationKey)}
-                  aria-labelledby="basic-data-firstName-helper"
-                  autoFocus
+              <FocusKeeper targetId={`${basicDataType}-firstName`}>
+                <div className={commonFormStyles.multiItemWrapper}>
+                  <Field
+                    className={commonFormStyles.formField}
+                    name="firstName"
+                    id={`${basicDataType}-firstName`}
+                    maxLength={formFields.firstName.max as number}
+                    as={TextInput}
+                    invalid={hasFieldError(formikProps, 'firstName')}
+                    aria-invalid={hasFieldError(formikProps, 'firstName')}
+                    helperText={getFieldErrorMessage(formikProps, 'firstName')}
+                    labelText={t(formFields.firstName.translationKey)}
+                    aria-labelledby="basic-data-firstName-helper"
+                    autoFocus
+                  />
+                  <Field
+                    className={commonFormStyles.formField}
+                    name="nickname"
+                    id={`${basicDataType}-nickname`}
+                    maxLength={formFields.nickname.max as number}
+                    as={TextInput}
+                    invalid={hasFieldError(formikProps, 'nickname')}
+                    aria-invalid={hasFieldError(formikProps, 'nickname')}
+                    helperText={getFieldErrorMessage(formikProps, 'nickname')}
+                    labelText={t(formFields.nickname.translationKey)}
+                    aria-labelledby="basic-data-nickname-helper"
+                  />
+                  <Field
+                    className={commonFormStyles.formField}
+                    name="lastName"
+                    id={`${basicDataType}-lastName`}
+                    maxLength={formFields.lastName.max as number}
+                    as={TextInput}
+                    invalid={hasFieldError(formikProps, 'lastName')}
+                    aria-invalid={hasFieldError(formikProps, 'lastName')}
+                    helperText={getFieldErrorMessage(formikProps, 'lastName')}
+                    labelText={t(formFields.lastName.translationKey)}
+                    aria-labelledby={`${basicDataType}-lastName-helper`}
+                  />
+                </div>
+                <EditingNotifications
+                  content={content}
+                  dataType={basicDataType}
                 />
-                <Field
-                  className={commonFormStyles.formField}
-                  name="nickname"
-                  id={`${basicDataType}-nickname`}
-                  maxLength={formFields.nickname.max as number}
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps, 'nickname')}
-                  aria-invalid={hasFieldError(formikProps, 'nickname')}
-                  helperText={getFieldErrorMessage(formikProps, 'nickname')}
-                  labelText={t(formFields.nickname.translationKey)}
-                  aria-labelledby="basic-data-nickname-helper"
+                <FormButtons
+                  handler={actionHandler}
+                  disabled={!!saving}
+                  alignLeft
+                  testId={basicDataType}
                 />
-                <Field
-                  className={commonFormStyles.formField}
-                  name="lastName"
-                  id={`${basicDataType}-lastName`}
-                  maxLength={formFields.lastName.max as number}
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps, 'lastName')}
-                  aria-invalid={hasFieldError(formikProps, 'lastName')}
-                  helperText={getFieldErrorMessage(formikProps, 'lastName')}
-                  labelText={t(formFields.lastName.translationKey)}
-                  aria-labelledby={`${basicDataType}-lastName-helper`}
+                <SaveIndicator
+                  action={saveTypeToAction(saving)}
+                  testId={basicDataType}
                 />
-              </div>
-              <EditingNotifications
-                content={content}
-                dataType={basicDataType}
-              />
-              <FormButtons
-                handler={actionHandler}
-                disabled={!!saving}
-                alignLeft
-                testId={basicDataType}
-              />
-              <SaveIndicator
-                action={saveTypeToAction(saving)}
-                testId={basicDataType}
-              />
+              </FocusKeeper>
             </Form>
           </ProfileSection>
         )}
