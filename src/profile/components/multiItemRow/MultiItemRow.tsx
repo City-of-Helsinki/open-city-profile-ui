@@ -31,6 +31,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
     currentAction,
     actionHandler,
     isNew,
+    editButtonId,
   } = useCommonEditHandling(props);
   const schema = dataType === 'phones' ? phoneSchema : emailSchema;
   const inputValue: string =
@@ -115,7 +116,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
           primary,
           setPrimary: true,
         }}
-        editButtonId={`${testId}-edit-button`}
+        editButtonId={editButtonId}
         disabled={disableButtons || disableEditButtons}
         testId={testId}
       />

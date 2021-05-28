@@ -13,6 +13,7 @@ import {
   WaitForElementAndValueProps,
   ElementSelector,
   waitForElementAttributeValue,
+  waitForElementFocus,
 } from '../../../../common/test/testingLibraryTools';
 import { ProfileData } from '../../../../graphql/typings';
 import MultiItemEditor from '../MultiItemEditor';
@@ -241,6 +242,7 @@ describe('<MultiItemEditor /> ', () => {
             submit,
             getTextOrInputValue,
             isDisabled,
+            getElement,
           } = await initTests(dataType);
           const addButton = await clickElement(addButtonSelector);
           await waitFor(() => {
@@ -260,6 +262,8 @@ describe('<MultiItemEditor /> ', () => {
             expect(isDisabled(addButton)).toBeFalsy();
           });
           await verifyValues(getTextOrInputValue, formValues, newItemIndex);
+          // focus is set to add button
+          await waitForElementFocus(() => getElement(addButtonSelector));
         });
       });
 
@@ -272,6 +276,7 @@ describe('<MultiItemEditor /> ', () => {
             submit,
             getTextOrInputValue,
             waitForElement,
+            getElement,
           } = await initTests(dataType);
           await clickElement(editButtonSelector);
           await waitForElement(cancelButtonSelector);
@@ -296,6 +301,8 @@ describe('<MultiItemEditor /> ', () => {
           await clickElement(cancelButtonSelector);
           // values are reset to previous values
           await verifyValues(getTextOrInputValue, sourceNode, testIndex);
+          // focus is set to edit button
+          await waitForElementFocus(() => getElement(editButtonSelector));
         });
       });
       it(`Clicking remove-button shows confirm dialog and removes target item (if it is not primary)`, async () => {
