@@ -52,6 +52,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
     isEditing,
     actionHandler,
     currentAction,
+    editButtonId,
   } = useCommonEditHandling(props);
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     FormikValues
@@ -187,7 +188,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
             setPrimary: true,
           }}
           buttonClassNames={commonFormStyles.actionsWrapperButton}
-          editButtonId={`${testId}-edit-button`}
+          editButtonId={editButtonId}
           disabled={disableButtons || disableEditButtons}
           testId={testId}
         />
