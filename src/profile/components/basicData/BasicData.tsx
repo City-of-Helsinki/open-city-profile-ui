@@ -26,6 +26,7 @@ import EditButtons, { ActionHandler } from '../editButtons/EditButtons';
 import FormButtons from '../formButtons/FormButtons';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
+import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 
 type FormikValues = BasicDataValue;
 
@@ -58,6 +59,8 @@ function BasicData(): React.ReactElement | null {
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     FormikValues
   >(t, true);
+
+  const ariaLabels = createActionAriaLabels(basicDataType, '', t);
 
   const onAction: ActionListener = async (action, item, newValue) => {
     clearMessage();
@@ -196,6 +199,7 @@ function BasicData(): React.ReactElement | null {
             buttonClassNames={commonFormStyles.actionsWrapperButton}
             editButtonId={editButtonId}
             testId={basicDataType}
+            ariaLabels={ariaLabels}
           />
         </div>
       </div>
