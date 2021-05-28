@@ -16,6 +16,7 @@ import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
 import { getFormFields } from '../../helpers/formProperties';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
+import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 
 type EmailAndPhoneFormikValue = { value: string };
 
@@ -76,25 +77,27 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
         >
           {(formikProps: FormikProps<EmailAndPhoneFormikValue>) => (
             <Form>
-              <div className={styles.editableRow}>
-                <Field
-                  name="value"
-                  id={inputId}
-                  maxLength={formFields.value.max as number}
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps, 'value')}
-                  aria-invalid={hasFieldError(formikProps, 'value')}
-                  helperText={getFieldErrorMessage(formikProps, 'value')}
-                  aria-labelledby={`${dataType}-value-helper`}
-                  autoFocus
-                />
-                <FormButtons
-                  handler={actionHandler}
-                  disabled={disableButtons}
-                  testId={testId}
-                />
-              </div>
-              <SaveIndicator action={currentAction} testId={testId} />
+              <FocusKeeper targetId={inputId}>
+                <div className={styles.editableRow}>
+                  <Field
+                    name="value"
+                    id={inputId}
+                    maxLength={formFields.value.max as number}
+                    as={TextInput}
+                    invalid={hasFieldError(formikProps, 'value')}
+                    aria-invalid={hasFieldError(formikProps, 'value')}
+                    helperText={getFieldErrorMessage(formikProps, 'value')}
+                    aria-labelledby={`${dataType}-value-helper`}
+                    autoFocus
+                  />
+                  <FormButtons
+                    handler={actionHandler}
+                    disabled={disableButtons}
+                    testId={testId}
+                  />
+                </div>
+                <SaveIndicator action={currentAction} testId={testId} />
+              </FocusKeeper>
             </Form>
           )}
         </Formik>
