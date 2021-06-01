@@ -445,6 +445,13 @@ export function createEditorForDataType(
     }
   };
   const backups = createBackups();
+  const getItemFromList = ({ id }: { id: string }): EditData => {
+    const targetItem = findItem(allItems, id);
+    if (!targetItem) {
+      throw new Error('Item not found in current list');
+    }
+    return targetItem;
+  };
   return {
     create: newProfileData => createNewItem(newProfileData, dataType),
     getEditData: () => {
@@ -453,7 +460,8 @@ export function createEditorForDataType(
       }
       return allItems;
     },
-    updateItemAndCreateSaveData: (targetItem, newValue) => {
+    updateItemAndCreateSaveData: (targetRef, newValue) => {
+      const targetItem = getItemFromList(targetRef);
       preventDoubleEdits(targetItem);
       backups.add(targetItem);
       allItems = updateItemAndCloneList(
@@ -489,10 +497,7 @@ export function createEditorForDataType(
       return !!newList;
     },
     updateAfterSavingError: id => {
-      const targetItem = findItem(allItems, id);
-      if (!targetItem) {
-        throw new Error('Target not found for updateAfterSavingError() ');
-      }
+      const targetItem = getItemFromList({ id });
       if (!targetItem.saving) {
         return false;
       }
@@ -529,7 +534,8 @@ export function createEditorForDataType(
       }
       return true;
     },
-    resetItem: targetItem => {
+    resetItem: targetRef => {
+      const targetItem = getItemFromList(targetRef);
       const backup = backups.get(targetItem.id);
       if (!backup) {
         return false;
@@ -551,7 +557,8 @@ export function createEditorForDataType(
       return editData;
     },
     hasNewItem: () => hasNewItem(allItems),
-    removeItem: targetItem => {
+    removeItem: targetRef => {
+      const targetItem = getItemFromList(targetRef);
       preventDoubleEdits(targetItem);
       const index = findItemIndex(allItems, targetItem.id);
       if (index < 0) {
@@ -571,9 +578,10 @@ export function createEditorForDataType(
       );
       return createFormValues(allItems, dataType);
     },
-    setPrimary: (targetItem: EditData) => {
+    setPrimary: targetRef => {
       // note: setting a new primary while another action is not complete
       // must be prevented in ui.
+      const targetItem = getItemFromList(targetRef);
       preventDoubleEdits(targetItem);
       if (allItems[0].primary) {
         preventDoubleEdits(allItems[0]);
