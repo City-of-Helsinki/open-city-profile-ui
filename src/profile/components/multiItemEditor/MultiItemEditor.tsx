@@ -23,6 +23,7 @@ import {
 } from '../../helpers/editData';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import { useConfirmationModal } from '../../hooks/useConfirmationModal';
+import { useFocusSetter } from '../../hooks/useFocusSetter';
 
 type Props = {
   dataType: EditDataType;
@@ -57,6 +58,9 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   } = useNotificationContent();
 
   const { showModal, modalProps } = useConfirmationModal();
+  const [addButtonId, setFocusToAddButton] = useFocusSetter({
+    targetId: `${dataType}-add-button`,
+  });
   const hasAddressList = dataType === 'addresses';
   const isAddButtonDisabled = hasNew();
   const setPrimaryInProgress = isSettingPrimary(editDataList);
@@ -103,6 +107,9 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
       setErrorMessage(action);
       return Promise.reject(err);
     }
+    if (isNewItem(item)) {
+      setFocusToAddButton();
+    }
     setSuccessMessage(action);
     return Promise.resolve();
   };
@@ -111,6 +118,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
     clearMessage();
     if (action === 'cancel') {
       if (isNewItem(item)) {
+        setFocusToAddButton();
         await remove(item);
       } else {
         reset(item);
@@ -189,7 +197,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
         variant="secondary"
         disabled={isAddButtonDisabled}
         className={commonFormStyles.responsiveButton}
-        id={`${dataType}-add-button`}
+        id={addButtonId}
       >
         {texts.addNew}
       </Button>

@@ -13,6 +13,7 @@ import {
   ElementSelector,
   submitButtonSelector,
   waitForElementAttributeValue,
+  waitForElementFocus,
 } from '../../../../common/test/testingLibraryTools';
 import { ProfileData } from '../../../../graphql/typings';
 import BasicData from '../BasicData';
@@ -126,6 +127,7 @@ describe('<BasicData /> ', () => {
         setInputValue,
         submit,
         getTextOrInputValue,
+        getElement,
       } = await initTests();
       await clickElement(editButtonSelector);
       await setValues(setInputValue, basicData);
@@ -149,6 +151,8 @@ describe('<BasicData /> ', () => {
         waitForAfterSaveNotification,
       });
       await verifyValues(getTextOrInputValue, basicData);
+      // focus is set to edit button
+      await waitForElementFocus(() => getElement(editButtonSelector));
     });
   });
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {

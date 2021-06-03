@@ -87,6 +87,16 @@ export const waitForElementAttributeValue = async (
   });
 };
 
+export const waitForElementFocus = async (
+  elementGetter: () => HTMLElement | Element | null
+): Promise<void> =>
+  waitFor(() => {
+    const target = elementGetter();
+    if (target) {
+      expect(target.ownerDocument.activeElement).toEqual(target);
+    }
+  });
+
 export const renderComponentWithMocksAndContexts = async (
   responseProvider: ResponseProvider,
   children: React.ReactElement

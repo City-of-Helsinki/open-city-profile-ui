@@ -8,6 +8,7 @@ import ProfileInformationAccountManagementLink from './ProfileInformationAccount
 import { ProfileContext } from '../../context/ProfileContext';
 import BasicData from '../basicData/BasicData';
 import MultiItemEditor from '../multiItemEditor/MultiItemEditor';
+import AdditionalInformation from '../additionalInformation/AdditionalInformation';
 
 function ProfileInformation(): React.ReactElement {
   const [berthError, setBerthError] = useState(false);
@@ -20,6 +21,7 @@ function ProfileInformation(): React.ReactElement {
           <MultiItemEditor dataType="addresses" />
           <MultiItemEditor dataType="emails" />
           <MultiItemEditor dataType="phones" />
+          <AdditionalInformation />
         </Fragment>
       )}
       <div className={styles.boxGrid}>

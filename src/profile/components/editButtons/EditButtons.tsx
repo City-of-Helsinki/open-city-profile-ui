@@ -26,6 +26,14 @@ type Props = {
   editButtonId?: string;
   testId: string;
   disabled?: boolean;
+  ariaLabels: ActionAriaLabels;
+};
+
+export type ActionAriaLabels = {
+  setPrimary?: string;
+  edit?: string;
+  remove?: string;
+  primary?: string;
 };
 
 export type ActionHandler = (
@@ -41,6 +49,7 @@ function EditButtons(props: Props): React.ReactElement {
     editButtonId,
     disabled,
     testId,
+    ariaLabels,
   } = props;
   const { t } = useTranslation();
   const { primary, removable, setPrimary } = actions;
@@ -58,6 +67,9 @@ function EditButtons(props: Props): React.ReactElement {
         >
           <IconStarFill aria-hidden="true" />
           <span aria-hidden="true">{t('profileForm.primary')}</span>
+          <span className={commonFormStyles.visuallyHidden}>
+            {ariaLabels.primary}
+          </span>
         </div>
       )}
       {setPrimary && !primary && (
@@ -70,6 +82,7 @@ function EditButtons(props: Props): React.ReactElement {
           className={classNames(buttonStyle)}
           disabled={disabled}
           data-testid={`${testId}-set-primary-button`}
+          aria-label={ariaLabels.setPrimary}
         >
           {t('profileForm.setPrimary')}
         </Button>
@@ -82,6 +95,7 @@ function EditButtons(props: Props): React.ReactElement {
         }}
         className={classNames(buttonStyle)}
         disabled={disabled}
+        aria-label={ariaLabels.edit}
         {...editButtonIdAttr}
       >
         {t('profileForm.edit')}
@@ -96,6 +110,7 @@ function EditButtons(props: Props): React.ReactElement {
           className={classNames(buttonStyle)}
           disabled={disabled}
           data-testid={`${testId}-remove-button`}
+          aria-label={ariaLabels.remove}
         >
           {t('profileForm.remove')}
         </Button>

@@ -147,9 +147,9 @@
   },
   "profileInformation": {
     "address": "Adress",
-    "ariaEditAddress": "SV: Muokkaa osoitetta",
-    "ariaEditPhone": "SV: Muokkaa puhelinnumeroa",
-    "ariaEditEmail": "SV: Muokkaa sähköpostiosoitetta",
+    "ariaEditAddress": "SV: Muokkaa osoitetta {{value}}",
+    "ariaEditPhone": "SV: Muokkaa puhelinnumeroa {{value}}",
+    "ariaEditEmail": "SV: Muokkaa sähköpostiosoitetta {{value}}",
     "ariaEditBasicData": "SV: Muokkaa perustietoja",
     "deleteProfile": "Radera profil",
     "description": "SV: Helsinki Profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa. Kätevää eikö?",
@@ -165,7 +165,7 @@
     "primaryAddress": "SV: Ensisijainen osoite",
     "permanentAddress": "SV: Vakinainen osoite",
     "temporaryAddress": "SV: Väliaikainen osoite",
-    "permanentForeignAddress": "SV: Väliaikainen ulkomainen osoite",
+    "permanentForeignAddress": "SV: Vakinainen ulkomainen osoite",
     "primaryEmail": "SV: Ensisijainen sähköpostiosoite",
     "primaryPhone": "SV: Ensisijainen puhelinnumero",
     "primaryAddressAriaDescription": "SV :Tämä on ensisijainen osoitteesi",
@@ -184,6 +184,12 @@
     "ariaListTitlePhones": "SV: Antamasi puhelinnumerot",
     "ariaListTitleEmails": "SV: Antamasi sähköpostiosoitteet",
     "ariaListTitleAddresses": "SV: Antamasi osoitteet",
+    "ariaSetPrimaryAddressWithValue": "SV: Aseta {{value}} ensisijaiseksi osoitteeksi",
+    "ariaSetPrimaryEmailWithValue": "SV: Aseta {{value}} ensisijaiseksi sähköpostiosoitteeksi",
+    "ariaSetPrimaryPhoneWithValue": "SV: Aseta {{value}} ensisijaiseksi puhelinnumeroksi",
+    "ariaRemoveAddressWithValue": "SV: Poista osoite {{value}} ",
+    "ariaRemoveEmailWithValue": "SV: Poista sähköposti {{value}}",
+    "ariaRemovePhoneWithValue": "SV: Poista puhelinnumero {{value}}",
     "noPhones": "SV: Et ole antanut puhelinnumeroita",
     "noEmails": "SV: Et ole antanut sähköpostiosoitteita",
     "noAddresses": "SV: Et ole antanut osoitteita"
@@ -218,7 +224,7 @@
     "github": "GitHub",
     "google": "Google",
     "facebook": "Facebook",
-    "yle": "Yle",
+    "yletunnus": "Yle",
     "tunnistusSuomifi": "Suomi.fi"
   }
 }

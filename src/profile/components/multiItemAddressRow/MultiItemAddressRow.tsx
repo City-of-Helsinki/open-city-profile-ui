@@ -21,6 +21,8 @@ import { getFormFields } from '../../helpers/formProperties';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
+import createActionAriaLabels from '../../helpers/createActionAriaLabels';
+import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 
 type FormikValues = AddressValue;
 
@@ -52,6 +54,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
     isEditing,
     actionHandler,
     currentAction,
+    editButtonId,
   } = useCommonEditHandling(props);
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     FormikValues
@@ -59,6 +62,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
 
   const { primary, saving } = data;
   const disableButtons = !!currentAction || !!saving;
+  const ariaLabels = createActionAriaLabels(dataType, value.address, t);
 
   if (isEditing) {
     return (
@@ -81,64 +85,66 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                 ? t('profileInformation.primaryAddress')
                 : t('profileInformation.address')}
             </h4>
-            <div className={commonFormStyles.multiItemWrapper}>
-              <Field
-                name="address"
-                id={`${testId}-address`}
-                maxLength={formFields.address.max as number}
-                as={TextInput}
-                invalid={hasFieldError(formikProps, 'address')}
-                aria-invalid={hasFieldError(formikProps, 'address')}
-                helperText={getFieldErrorMessage(formikProps, 'address')}
-                labelText={t(formFields.address.translationKey)}
-                autoFocus
-                aria-labelledby={`${dataType}-address-helper`}
-              />
-              <Field
-                name="postalCode"
-                id={`${testId}-postalCode`}
-                maxLength={formFields.postalCode.max as number}
-                as={TextInput}
-                invalid={hasFieldError(formikProps, 'postalCode')}
-                aria-invalid={hasFieldError(formikProps, 'postalCode')}
-                helperText={getFieldErrorMessage(formikProps, 'postalCode')}
-                labelText={t(formFields.postalCode.translationKey)}
-                aria-labelledby={`${dataType}-postalCode-helper`}
-              />
-              <Field
-                name="city"
-                id={`${testId}-city`}
-                maxLength={formFields.city.max as number}
-                as={TextInput}
-                invalid={hasFieldError(formikProps, 'city')}
-                aria-invalid={hasFieldError(formikProps, 'city')}
-                helperText={getFieldErrorMessage(formikProps, 'city')}
-                labelText={t(formFields.city.translationKey)}
-                aria-labelledby={`${dataType}-city-helper`}
-              />
-              <div className={commonFormStyles.formField}>
-                <FormikDropdown
-                  name="countryCode"
-                  id={`${testId}-countryCode`}
-                  options={countryOptions}
-                  label={t(formFields.country.translationKey)}
-                  default={countryCode}
-                  onChange={option =>
-                    formikProps.setFieldValue(
-                      'countryCode',
-                      (option as HdsOptionType).value
-                    )
-                  }
+            <FocusKeeper targetId={`${testId}-address`}>
+              <div className={commonFormStyles.multiItemWrapper}>
+                <Field
+                  name="address"
+                  id={`${testId}-address`}
+                  maxLength={formFields.address.max as number}
+                  as={TextInput}
+                  invalid={hasFieldError(formikProps, 'address')}
+                  aria-invalid={hasFieldError(formikProps, 'address')}
+                  helperText={getFieldErrorMessage(formikProps, 'address')}
+                  labelText={t(formFields.address.translationKey)}
+                  autoFocus
+                  aria-labelledby={`${dataType}-address-helper`}
                 />
+                <Field
+                  name="postalCode"
+                  id={`${testId}-postalCode`}
+                  maxLength={formFields.postalCode.max as number}
+                  as={TextInput}
+                  invalid={hasFieldError(formikProps, 'postalCode')}
+                  aria-invalid={hasFieldError(formikProps, 'postalCode')}
+                  helperText={getFieldErrorMessage(formikProps, 'postalCode')}
+                  labelText={t(formFields.postalCode.translationKey)}
+                  aria-labelledby={`${dataType}-postalCode-helper`}
+                />
+                <Field
+                  name="city"
+                  id={`${testId}-city`}
+                  maxLength={formFields.city.max as number}
+                  as={TextInput}
+                  invalid={hasFieldError(formikProps, 'city')}
+                  aria-invalid={hasFieldError(formikProps, 'city')}
+                  helperText={getFieldErrorMessage(formikProps, 'city')}
+                  labelText={t(formFields.city.translationKey)}
+                  aria-labelledby={`${dataType}-city-helper`}
+                />
+                <div className={commonFormStyles.formField}>
+                  <FormikDropdown
+                    name="countryCode"
+                    id={`${testId}-countryCode`}
+                    options={countryOptions}
+                    label={t(formFields.country.translationKey)}
+                    default={countryCode}
+                    onChange={option =>
+                      formikProps.setFieldValue(
+                        'countryCode',
+                        (option as HdsOptionType).value
+                      )
+                    }
+                  />
+                </div>
               </div>
-            </div>
-            <FormButtons
-              handler={actionHandler}
-              disabled={disableButtons}
-              testId={testId}
-              alignLeft
-            />
-            <SaveIndicator action={currentAction} testId={testId} />
+              <FormButtons
+                handler={actionHandler}
+                disabled={disableButtons}
+                testId={testId}
+                alignLeft
+              />
+              <SaveIndicator action={currentAction} testId={testId} />
+            </FocusKeeper>
           </Form>
         )}
       </Formik>
@@ -187,9 +193,10 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
             setPrimary: true,
           }}
           buttonClassNames={commonFormStyles.actionsWrapperButton}
-          editButtonId={`${testId}-edit-button`}
+          editButtonId={editButtonId}
           disabled={disableButtons || disableEditButtons}
           testId={testId}
+          ariaLabels={ariaLabels}
         />
         <SaveIndicator action={currentAction} testId={testId} />
       </div>

@@ -5,21 +5,26 @@ import { EditDataValue, isNewItem } from '../helpers/editData';
 import { Action } from './useProfileDataEditor';
 import { ActionHandler } from '../components/editButtons/EditButtons';
 import { RowItemProps } from '../components/multiItemEditor/MultiItemEditor';
+import { useFocusSetter } from './useFocusSetter';
 
 type UseActionHandlingReturnType = {
   currentAction: Action;
   isEditing: boolean;
   isNew: boolean;
   actionHandler: ActionHandler;
+  editButtonId: string;
 };
 
 export const useCommonEditHandling = (
   props: RowItemProps
 ): UseActionHandlingReturnType => {
-  const { data, onAction } = props;
+  const { data, onAction, testId } = props;
   const isNew = isNewItem(data);
   const [isEditing, setEditing] = useState(isNew);
   const [currentAction, setCurrentAction] = useState<Action>(undefined);
+  const [editButtonId, setFocusToEditButton] = useFocusSetter({
+    targetId: `${testId}-edit-button`,
+  });
   const actionHandler: ActionHandler = async (action, newValue) => {
     if (action === 'set-primary' || action === 'remove' || action === 'save') {
       setCurrentAction(action);
@@ -34,12 +39,11 @@ export const useCommonEditHandling = (
     if (err || action !== 'remove') {
       setCurrentAction(undefined);
     }
-    if (action === 'cancel') {
+    if ((action === 'cancel' || action === 'save') && !err) {
+      setFocusToEditButton();
       setEditing(false);
     } else if (action === 'edit') {
       setEditing(true);
-    } else if (action === 'save' && !err) {
-      setEditing(false);
     }
     return Promise.resolve();
   };
@@ -49,5 +53,6 @@ export const useCommonEditHandling = (
     isEditing,
     currentAction,
     isNew,
+    editButtonId,
   };
 };

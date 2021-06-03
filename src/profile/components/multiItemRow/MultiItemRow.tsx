@@ -15,6 +15,8 @@ import SaveIndicator from '../saveIndicator/SaveIndicator';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
 import { getFormFields } from '../../helpers/formProperties';
+import createActionAriaLabels from '../../helpers/createActionAriaLabels';
+import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 
 type EmailAndPhoneFormikValue = { value: string };
 
@@ -31,6 +33,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
     currentAction,
     actionHandler,
     isNew,
+    editButtonId,
   } = useCommonEditHandling(props);
   const schema = dataType === 'phones' ? phoneSchema : emailSchema;
   const inputValue: string =
@@ -53,6 +56,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
       [propName]: formValue,
     };
   };
+  const ariaLabels = createActionAriaLabels(dataType, inputValue, t);
   if (isEditing) {
     return (
       <div
@@ -73,25 +77,27 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
         >
           {(formikProps: FormikProps<EmailAndPhoneFormikValue>) => (
             <Form>
-              <div className={styles.editableRow}>
-                <Field
-                  name="value"
-                  id={inputId}
-                  maxLength={formFields.value.max as number}
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps, 'value')}
-                  aria-invalid={hasFieldError(formikProps, 'value')}
-                  helperText={getFieldErrorMessage(formikProps, 'value')}
-                  aria-labelledby={`${dataType}-value-helper`}
-                  autoFocus
-                />
-                <FormButtons
-                  handler={actionHandler}
-                  disabled={disableButtons}
-                  testId={testId}
-                />
-              </div>
-              <SaveIndicator action={currentAction} testId={testId} />
+              <FocusKeeper targetId={inputId}>
+                <div className={styles.editableRow}>
+                  <Field
+                    name="value"
+                    id={inputId}
+                    maxLength={formFields.value.max as number}
+                    as={TextInput}
+                    invalid={hasFieldError(formikProps, 'value')}
+                    aria-invalid={hasFieldError(formikProps, 'value')}
+                    helperText={getFieldErrorMessage(formikProps, 'value')}
+                    aria-labelledby={`${dataType}-value-helper`}
+                    autoFocus
+                  />
+                  <FormButtons
+                    handler={actionHandler}
+                    disabled={disableButtons}
+                    testId={testId}
+                  />
+                </div>
+                <SaveIndicator action={currentAction} testId={testId} />
+              </FocusKeeper>
             </Form>
           )}
         </Formik>
@@ -115,9 +121,10 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
           primary,
           setPrimary: true,
         }}
-        editButtonId={`${testId}-edit-button`}
+        editButtonId={editButtonId}
         disabled={disableButtons || disableEditButtons}
         testId={testId}
+        ariaLabels={ariaLabels}
       />
       <SaveIndicator action={currentAction} testId={testId} />
     </div>
