@@ -22,7 +22,7 @@ function UserDropdown(): React.ReactElement {
 
   const getUserDataWithActions = (): UserDataWithActions => {
     // eslint-disable-next-line no-shadow
-    const userName = getName(true);
+    const name = getName(true);
 
     const logoutAction = (e: React.MouseEvent): Promise<void> => {
       e.preventDefault();
@@ -38,11 +38,11 @@ function UserDropdown(): React.ReactElement {
     const logoutLabel = t('nav.signout');
     const ariaLabel = !isAuthenticated
       ? loginLabel
-      : `${t('landmarks.navigation.user')}: ${userName}`;
+      : `${t('landmarks.navigation.user')}: ${name}`;
 
     if (!isAuthenticated) {
       return {
-        userName,
+        userName: name,
         onClick: loginAction,
         label: loginLabel,
         ariaLabel,
@@ -50,7 +50,7 @@ function UserDropdown(): React.ReactElement {
     }
 
     return {
-      userName,
+      userName: name,
       onClick: logoutAction,
       label: logoutLabel,
       ariaLabel,
