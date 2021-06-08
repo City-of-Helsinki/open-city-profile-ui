@@ -100,3 +100,5 @@ export {
   ServiceType,
   Language,
 } from './generatedTypes';
+
+export type AnyObject<T = unknown> = Record<string, T>;

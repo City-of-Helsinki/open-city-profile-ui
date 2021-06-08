@@ -363,9 +363,6 @@ export interface MyProfileQuery_myProfile_verifiedPersonalInformation {
    * The name the person is called with.
    */
   readonly givenName: string;
-  /**
-   * Finnish national identification number.
-   */
   readonly nationalIdentificationNumber: string;
   /**
    * Email.
@@ -608,9 +605,42 @@ export interface UpdateMyProfile_updateMyProfile_profile_primaryAddress {
    * The ID of the object.
    */
   readonly id: string;
+  readonly primary: boolean;
   readonly address: string;
   readonly postalCode: string;
   readonly city: string;
+  readonly countryCode: string;
+  readonly addressType: AddressType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_addresses_edges_node {
+  readonly __typename: "AddressNode";
+  readonly primary: boolean;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly address: string;
+  readonly postalCode: string;
+  readonly city: string;
+  readonly countryCode: string;
+  readonly addressType: AddressType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_addresses_edges {
+  readonly __typename: "AddressNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: UpdateMyProfile_updateMyProfile_profile_addresses_edges_node | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_addresses {
+  readonly __typename: "AddressNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(UpdateMyProfile_updateMyProfile_profile_addresses_edges | null)>;
 }
 
 export interface UpdateMyProfile_updateMyProfile_profile_primaryEmail {
@@ -620,6 +650,35 @@ export interface UpdateMyProfile_updateMyProfile_profile_primaryEmail {
    */
   readonly id: string;
   readonly email: string;
+  readonly primary: boolean;
+  readonly emailType: EmailType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_emails_edges_node {
+  readonly __typename: "EmailNode";
+  readonly primary: boolean;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly email: string;
+  readonly emailType: EmailType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_emails_edges {
+  readonly __typename: "EmailNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: UpdateMyProfile_updateMyProfile_profile_emails_edges_node | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_emails {
+  readonly __typename: "EmailNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(UpdateMyProfile_updateMyProfile_profile_emails_edges | null)>;
 }
 
 export interface UpdateMyProfile_updateMyProfile_profile_primaryPhone {
@@ -629,6 +688,35 @@ export interface UpdateMyProfile_updateMyProfile_profile_primaryPhone {
    */
   readonly id: string;
   readonly phone: string | null;
+  readonly primary: boolean;
+  readonly phoneType: PhoneType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_phones_edges_node {
+  readonly __typename: "PhoneNode";
+  readonly primary: boolean;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly phone: string | null;
+  readonly phoneType: PhoneType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_phones_edges {
+  readonly __typename: "PhoneNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: UpdateMyProfile_updateMyProfile_profile_phones_edges_node | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_phones {
+  readonly __typename: "PhoneNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(UpdateMyProfile_updateMyProfile_profile_phones_edges | null)>;
 }
 
 export interface UpdateMyProfile_updateMyProfile_profile {
@@ -639,18 +727,32 @@ export interface UpdateMyProfile_updateMyProfile_profile {
   readonly id: string;
   readonly firstName: string;
   readonly lastName: string;
+  readonly nickname: string;
+  readonly language: Language | null;
   /**
    * Convenience field for the address which is marked as primary.
    */
   readonly primaryAddress: UpdateMyProfile_updateMyProfile_profile_primaryAddress | null;
   /**
+   * List of addresses of the profile.
+   */
+  readonly addresses: UpdateMyProfile_updateMyProfile_profile_addresses | null;
+  /**
    * Convenience field for the email which is marked as primary.
    */
   readonly primaryEmail: UpdateMyProfile_updateMyProfile_profile_primaryEmail | null;
   /**
+   * List of email addresses of the profile.
+   */
+  readonly emails: UpdateMyProfile_updateMyProfile_profile_emails | null;
+  /**
    * Convenience field for the phone which is marked as primary.
    */
   readonly primaryPhone: UpdateMyProfile_updateMyProfile_profile_primaryPhone | null;
+  /**
+   * List of phone numbers of the profile.
+   */
+  readonly phones: UpdateMyProfile_updateMyProfile_profile_phones | null;
 }
 
 export interface UpdateMyProfile_updateMyProfile {

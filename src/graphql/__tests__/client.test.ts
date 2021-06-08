@@ -28,7 +28,7 @@ describe('graphql client', () => {
       });
     } catch (e) {}
 
-    const fetchOptions = global.fetch.mock.calls[0][1];
+    const fetchOptions = global.fetch.mock.calls[0][1] as RequestInit;
     expect(fetchOptions.headers).toHaveProperty(
       'Authorization',
       'Bearer foo.bar.baz'

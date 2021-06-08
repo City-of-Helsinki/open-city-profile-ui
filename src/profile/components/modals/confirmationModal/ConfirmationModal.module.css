@@ -1,87 +1,89 @@
 .container {
-    min-width: 540px;
-    padding: 30px;
-    width: 18%;
-    position: relative;
-    background-color: var(--color-white);
-    border-radius: 2px;
-    border: none;
-    z-index: 100;
+  min-width: 540px;
+  padding: 30px;
+  width: 18%;
+  position: relative;
+  background-color: var(--color-white);
+  border-radius: 2px;
+  border: none;
+  border-top: 10px solid var(--color-bus);
+  z-index: 100;
 }
 
 .container:focus {
-    outline: none;
+  outline: none;
 }
 
 .overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    display: flex;
-    background-color: rgba(0, 0, 0, 0.75);
-    align-items: center;
-    justify-content: center;
-    z-index: 99;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.75);
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
 }
 
-.titleRow {
-    display: flex;
-    align-items: flex-start;
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
 }
-.titleRow > *:first-child {
-    flex-grow: 1;
+.wrapper > div {
+  flex-grow: 1;
 }
 
 .closeButton {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    width: var(--spacing-layout);
-    height: var(--spacing-layout);
+  background: none;
+  border: 0;
+  color: var(--color-bus);
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .icon {
-    width: 20px;
-    height: 20px;
+  width: 24px;
+  height: 24px;
 }
 
 .content {
-    width: 100%;
-    display: flex;
-    margin: var(--spacing-s) 0 var(--spacing-m) 0;
-    flex-direction: column;
+  width: 100%;
+  display: flex;
+  margin-bottom: var(--spacing-m);
+  flex-direction: column;
+  padding: 0 var(--spacing-s) 0;
 }
 
 .content h3 {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .content ul {
-    margin: 0;
+  margin: 0;
 }
 
 .actions {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
-
 
 @media (max-width: 540px) {
-    .container {
-        min-width: 300px;
-    }
+  .container {
+    min-width: 300px;
+  }
 
-    .actions {
-        flex-direction: column-reverse;
-        justify-content: center;
-    }
+  .actions {
+    flex-direction: column-reverse;
+    justify-content: center;
+  }
 
-    .button:last-of-type {
-        margin: 0 0 var(--spacing-2-xs) 0;
-    }
+  .button:last-of-type {
+    margin: 0 0 var(--spacing-2-xs) 0;
+  }
 }
-

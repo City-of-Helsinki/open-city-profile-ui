@@ -1,50 +1,31 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconSignout, Navigation } from 'hds-react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
-import { loader } from 'graphql.macro';
-import { useLazyQuery } from '@apollo/client';
 
-import { NameQuery } from '../../../graphql/generatedTypes';
 import authService from '../../../auth/authService';
-import useToast from '../../../toast/useToast';
+import { ProfileContext } from '../../../profile/context/ProfileContext';
 
 type UserDataWithActions = {
   userName: string;
   label: string;
   ariaLabel: string;
-  onClick: () => Promise<void>;
+  onClick: (e: React.MouseEvent) => Promise<void>;
 };
-
-const NAME_QUERY = loader('../../../profile/graphql/NameQuery.graphql');
 
 function UserDropdown(): React.ReactElement {
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
-  const { createToast } = useToast();
+  const { getName } = useContext(ProfileContext);
 
   const isAuthenticated = authService.isAuthenticated();
-  const [nameQuery, { data, loading }] = useLazyQuery<NameQuery>(NAME_QUERY, {
-    onError: () => {
-      createToast({ type: 'error' });
-    },
-    fetchPolicy: 'cache-only',
-  });
-
-  React.useEffect(() => {
-    if (isAuthenticated) {
-      nameQuery();
-    }
-  }, [isAuthenticated, nameQuery]);
 
   const getUserDataWithActions = (): UserDataWithActions => {
-    const userLoaded = isAuthenticated && !loading && data?.myProfile;
     // eslint-disable-next-line no-shadow
-    const userName = userLoaded
-      ? `${data?.myProfile?.firstName} ${data?.myProfile?.lastName}`
-      : '';
+    const name = getName(true);
 
-    const logoutAction = (): Promise<void> => {
+    const logoutAction = (e: React.MouseEvent): Promise<void> => {
+      e.preventDefault();
       trackEvent({ category: 'action', action: 'Log out' });
       return authService.logout();
     };
@@ -57,11 +38,11 @@ function UserDropdown(): React.ReactElement {
     const logoutLabel = t('nav.signout');
     const ariaLabel = !isAuthenticated
       ? loginLabel
-      : `${t('landmarks.navigation.user')}: ${userName}`;
+      : `${t('landmarks.navigation.user')}: ${name}`;
 
     if (!isAuthenticated) {
       return {
-        userName,
+        userName: name,
         onClick: loginAction,
         label: loginLabel,
         ariaLabel,
@@ -69,7 +50,7 @@ function UserDropdown(): React.ReactElement {
     }
 
     return {
-      userName,
+      userName: name,
       onClick: logoutAction,
       label: logoutLabel,
       ariaLabel,
@@ -91,9 +72,10 @@ function UserDropdown(): React.ReactElement {
         variant="primary"
       />
       <Navigation.Item
-        onClick={(): Promise<void> => onClick()}
+        onClick={(e: React.MouseEvent): Promise<void> => onClick(e)}
         variant="secondary"
         label={label}
+        href="/logout"
         icon={<IconSignout aria-hidden />}
       />
     </Navigation.User>
