@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { IconCheckCircleFill } from 'hds-react';
 import classNames from 'classnames';
@@ -7,13 +7,13 @@ import styles from './VerifiedPersonalInformation.module.css';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
+import { ProfileContext } from '../../context/ProfileContext';
 import getCountry from '../../helpers/getCountry';
-import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
 import {
-  MyProfileQuery,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress as PermanentAddress,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress as PermanentForeignAddress,
-} from '../../../graphql/generatedTypes';
+  PermanentForeignAddress,
+  PermanentAddress,
+} from '../../../graphql/typings';
+import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
 
 type CommonAddress = {
   streetAddress: PermanentAddress['streetAddress'];
@@ -24,19 +24,13 @@ type CommonAddress = {
   __typename: string;
 };
 
-type VPIProps = {
-  data: MyProfileQuery;
-};
-
 type AddressProps = {
   type: 'permanent' | 'temporary' | 'foreign';
   address: CommonAddress;
 };
 
-function VerifiedPersonalInformation(
-  vpiProps: VPIProps
-): React.ReactElement | null {
-  const { data } = vpiProps;
+function VerifiedPersonalInformation(): React.ReactElement | null {
+  const { data } = useContext(ProfileContext);
 
   const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];
@@ -141,7 +135,7 @@ function VerifiedPersonalInformation(
     <ProfileSection hasVerifiedUserData>
       <h3
         className={commonFormStyles.sectionTitle}
-        aria-label={t('personalInformation.verifiedBasicData')}
+        aria-label={t('profileInformation.verifiedBasicData')}
       >
         {t('profileForm.basicData')}
       </h3>

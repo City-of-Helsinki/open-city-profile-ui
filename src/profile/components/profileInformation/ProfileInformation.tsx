@@ -9,15 +9,21 @@ import { ProfileContext } from '../../context/ProfileContext';
 import BasicData from '../basicData/BasicData';
 import MultiItemEditor from '../multiItemEditor/MultiItemEditor';
 import AdditionalInformation from '../additionalInformation/AdditionalInformation';
+import VerifiedPersonalInformation from '../verifiedPersonalInformation/VerifiedPersonalInformation';
+import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
 
 function ProfileInformation(): React.ReactElement {
   const [berthError, setBerthError] = useState(false);
   const { data } = useContext(ProfileContext);
+  const hasVerifiedData = !!getVerifiedPersonalInformation(data);
+  const UserDataComponent = hasVerifiedData
+    ? VerifiedPersonalInformation
+    : BasicData;
   return (
     <Fragment>
       {data && (
         <Fragment>
-          <BasicData />
+          <UserDataComponent />
           <MultiItemEditor dataType="addresses" />
           <MultiItemEditor dataType="emails" />
           <MultiItemEditor dataType="phones" />
