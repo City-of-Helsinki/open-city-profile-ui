@@ -2,7 +2,7 @@ import React from 'react';
 
 import VerifiedPersonalInformation from '../VerifiedPersonalInformation';
 import {
-  emptyResponseProvider,
+  cleanComponentMocks,
   renderComponentWithMocksAndContexts,
 } from '../../../../common/test/testingLibraryTools';
 import {
@@ -10,33 +10,56 @@ import {
   getMyProfile,
 } from '../../../../common/test/myProfileMocking';
 import {
-  MyProfileQuery,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress as PermanentForeignAddress,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress as PermanentAddress,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress as TemporaryAddress,
-  MyProfileQuery_myProfile_verifiedPersonalInformation as VerifiedPersonalInformationType,
-} from '../../../../graphql/generatedTypes';
+  MockedResponse,
+  ResponseProvider,
+} from '../../../../common/test/MockApolloClientProvider';
+import {
+  VerifiedPersonalInformation as VerifiedPersonalInformationType,
+  PermanentAddress,
+  PermanentForeignAddress,
+  TemporaryAddress,
+  ProfileData,
+} from '../../../../graphql/typings';
+import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
 
 describe('<VerifiedPersonalInformation />', () => {
-  let currentVIP: VerifiedPersonalInformationType;
+  const responses: MockedResponse[] = [];
   const getProfileWithVIP = (
-    overrides?: Partial<VerifiedPersonalInformationType>
-  ): MyProfileQuery => {
-    currentVIP = getVerifiedData(overrides);
-    const profileBase = getMyProfile().myProfile;
-    return {
-      myProfile: {
-        ...profileBase,
-        verifiedPersonalInformation: currentVIP,
-      },
-    } as MyProfileQuery;
+    verifiedPersonalInformation: VerifiedPersonalInformationType
+  ): MockedResponse => {
+    const profileData = {
+      ...getMyProfile().myProfile,
+      verifiedPersonalInformation,
+    } as ProfileData;
+    return { profileData };
   };
-  it('should render all given data', async () => {
-    const data = getProfileWithVIP();
-    const { getElement } = await renderComponentWithMocksAndContexts(
-      emptyResponseProvider,
-      <VerifiedPersonalInformation data={data} />
+  const responseProvider: ResponseProvider = () =>
+    responses.shift() as MockedResponse;
+
+  const initTests = async (
+    verifiedPersonalInformation: VerifiedPersonalInformationType
+  ) => {
+    responses.push(getProfileWithVIP(verifiedPersonalInformation));
+    const testTools = await renderComponentWithMocksAndContexts(
+      responseProvider,
+      <RenderChildrenWhenDataIsComplete>
+        <VerifiedPersonalInformation />
+      </RenderChildrenWhenDataIsComplete>
     );
+    await testTools.fetch();
+    return testTools;
+  };
+
+  beforeEach(() => {
+    responses.length = 0;
+  });
+  afterEach(() => {
+    cleanComponentMocks();
+  });
+
+  it('should render all given data', async () => {
+    const currentVIP = getVerifiedData();
+    const { getElement } = await initTests(currentVIP);
     const permanentAddress = currentVIP.permanentAddress as PermanentAddress;
     const permanentForeignAddress = currentVIP.permanentForeignAddress as PermanentForeignAddress;
     const temporaryAddress = currentVIP.temporaryAddress as TemporaryAddress;
@@ -67,15 +90,12 @@ describe('<VerifiedPersonalInformation />', () => {
     ).toBeTruthy();
   });
   it('should not render address blocks if not present in data', async () => {
-    const data = getProfileWithVIP({
+    const currentVIP = getVerifiedData({
       permanentAddress: null,
       temporaryAddress: null,
       permanentForeignAddress: null,
     });
-    const { getElement } = await renderComponentWithMocksAndContexts(
-      emptyResponseProvider,
-      <VerifiedPersonalInformation data={data} />
-    );
+    const { getElement } = await initTests(currentVIP);
     expect(() => getElement({ testId: 'vpi-address-permanent' })).toThrow();
     expect(() => getElement({ testId: 'vpi-address-temporary' })).toThrow();
     expect(() => getElement({ testId: 'vpi-address-foreign' })).toThrow();
