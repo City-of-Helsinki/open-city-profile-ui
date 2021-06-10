@@ -51,6 +51,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     temporaryAddress,
     permanentForeignAddress,
     nationalIdentificationNumber,
+    municipalityOfResidence,
   } = verifiedPersonalInformation;
 
   const AddressComponent = (props: AddressProps): React.ReactElement | null => {
@@ -159,6 +160,11 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
         <LabeledValue
           label={t('profileForm.nationalIdentificationNumber')}
           value={nationalIdentificationNumber}
+          verifiedInfoText={verifiedInfoText}
+        />
+        <LabeledValue
+          label={t('profileForm.municipalityOfResidence')}
+          value={municipalityOfResidence}
           verifiedInfoText={verifiedInfoText}
         />
       </div>
