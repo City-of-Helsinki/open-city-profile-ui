@@ -127,7 +127,7 @@
     "email": "Epost-adress",
     "firstName": "Förnamn",
     "givenName": "SV: Kutsumanimi",
-    "language": "Profilspråk",
+    "language": "SV: Asiointikieli",
     "lastName": "Efternamn",
     "makeAddressPrimary": "Ändra till din primära adress",
     "makeEmailPrimary": "Byt till din primära e-postadress",
@@ -143,7 +143,8 @@
     "terms": "Jag har läst filen <0>beskrivningen</0> och stads <1>sekretesspolicy</1>",
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/dataskydd",
     "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf",
-    "nationalIdentificationNumber": "SV: Henkilötunnus"
+    "nationalIdentificationNumber": "SV: Henkilötunnus",
+    "municipalityOfResidence": "SV: Kotikunta"
   },
   "profileInformation": {
     "address": "Adress",
