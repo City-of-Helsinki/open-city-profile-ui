@@ -32,15 +32,15 @@ function DownloadData(): React.ReactElement {
   });
   const { t } = useTranslation();
   const isDownloadingData = loading;
-  const isOpenByDefault = loading;
+  const initiallyOpen = loading;
   const onDownloadClick = downloadProfileData;
 
   return (
     <React.Fragment>
       <ExpandingPanel
         title={t('downloadData.panelTitle')}
-        defaultExpanded={isOpenByDefault}
-        scrollIntoViewOnMount={isOpenByDefault}
+        initiallyOpen={initiallyOpen}
+        scrollIntoViewOnMount={initiallyOpen}
       >
         <p>{t('downloadData.panelText')}</p>
         <Button

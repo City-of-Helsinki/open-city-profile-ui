@@ -70,6 +70,7 @@ function ServiceConnections(props: Props): React.ReactElement {
               key={index}
               title={service.title || ''}
               showInformationText
+              initiallyOpen={false}
             >
               <p>{service.description}</p>
               <p className={styles.serviceInformation}>

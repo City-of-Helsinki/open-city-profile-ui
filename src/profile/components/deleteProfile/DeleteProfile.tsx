@@ -83,14 +83,14 @@ function DeleteProfile(): React.ReactElement {
   };
   const userHasServices =
     data?.myProfile?.serviceConnections?.edges?.length !== 0;
-  const isOpenByDefault = deleteProfileResult.loading;
+  const initiallyOpen = deleteProfileResult.loading;
 
   return (
     <React.Fragment>
       <ExpandingPanel
         title={t('deleteProfile.title')}
-        defaultExpanded={isOpenByDefault}
-        scrollIntoViewOnMount={isOpenByDefault}
+        initiallyOpen={initiallyOpen}
+        scrollIntoViewOnMount={initiallyOpen}
       >
         <p>{t('deleteProfile.explanation')}</p>
 
