@@ -50,8 +50,8 @@
     "panelTitle": "Vill du ladda ner din information?"
   },
   "expandingPanel": {
-    "hideInformation": "GÖM INFORMATION",
-    "showInformation": "VISA INFORMATION"
+    "hideInformation": "Göm information",
+    "showInformation": "Visa information"
   },
   "footer": {
     "accessibility": "Tillgänglighetsdokument",
