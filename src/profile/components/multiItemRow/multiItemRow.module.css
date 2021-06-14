@@ -19,7 +19,7 @@
 }
 
 .value {
-  font-size: 18px;
+  font-size: var(--fontsize-body-l);
   padding: 0 0 var(--spacing-m) 0;
   word-break: break-all;
 }
