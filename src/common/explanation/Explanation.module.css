@@ -19,7 +19,7 @@
 .small {
   margin-top: 0;
   color: var(--color-black-70);
-  font-size: 20px;
+  font-size: var(--fontsize-heading-s);
 }
 
 @media (min-width: 450px) {

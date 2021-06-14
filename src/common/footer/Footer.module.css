@@ -18,7 +18,7 @@
 .textContainer {
   border-top: 1px solid var(--color-black-50);
   color: var(--color-white);
-  font-size: 14px;
+  font-size: var(--fontsize-body-s);
   margin: 0 3px;
   padding: 20px 10px;
   display: flex;
