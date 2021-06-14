@@ -50,8 +50,8 @@
     "panelTitle": "Do you want to download your information?"
   },
   "expandingPanel": {
-    "hideInformation": "HIDE INFORMATION",
-    "showInformation": "SHOW INFORMATION"
+    "hideInformation": "Hide information",
+    "showInformation": "Show information"
   },
   "footer": {
     "accessibility": "Accessibility document",

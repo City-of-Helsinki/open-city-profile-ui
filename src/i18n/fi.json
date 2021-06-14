@@ -50,8 +50,8 @@
     "panelTitle": "Haluatko ladata omat tietosi?"
   },
   "expandingPanel": {
-    "hideInformation": "PIILOTA TIEDOT",
-    "showInformation": "NÄYTÄ TIEDOT"
+    "hideInformation": "Piilota tiedot",
+    "showInformation": "Näytä tiedot"
   },
   "footer": {
     "accessibility": "Saavutettavuusseloste",
