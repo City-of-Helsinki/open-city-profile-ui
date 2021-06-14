@@ -86,7 +86,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
                     as={TextInput}
                     invalid={hasFieldError(formikProps, 'value')}
                     aria-invalid={hasFieldError(formikProps, 'value')}
-                    helperText={getFieldErrorMessage(formikProps, 'value')}
+                    errorText={getFieldErrorMessage(formikProps, 'value')}
                     aria-labelledby={`${dataType}-value-helper`}
                     autoFocus
                   />

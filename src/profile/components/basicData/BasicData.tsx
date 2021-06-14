@@ -117,8 +117,8 @@ function BasicData(): React.ReactElement | null {
                     as={TextInput}
                     invalid={hasFieldError(formikProps, 'firstName')}
                     aria-invalid={hasFieldError(formikProps, 'firstName')}
-                    helperText={getFieldErrorMessage(formikProps, 'firstName')}
-                    labelText={t(formFields.firstName.translationKey)}
+                    errorText={getFieldErrorMessage(formikProps, 'firstName')}
+                    label={t(formFields.firstName.translationKey)}
                     aria-labelledby="basic-data-firstName-helper"
                     autoFocus
                   />
@@ -130,8 +130,8 @@ function BasicData(): React.ReactElement | null {
                     as={TextInput}
                     invalid={hasFieldError(formikProps, 'nickname')}
                     aria-invalid={hasFieldError(formikProps, 'nickname')}
-                    helperText={getFieldErrorMessage(formikProps, 'nickname')}
-                    labelText={t(formFields.nickname.translationKey)}
+                    errorText={getFieldErrorMessage(formikProps, 'nickname')}
+                    label={t(formFields.nickname.translationKey)}
                     aria-labelledby="basic-data-nickname-helper"
                   />
                   <Field
@@ -142,8 +142,8 @@ function BasicData(): React.ReactElement | null {
                     as={TextInput}
                     invalid={hasFieldError(formikProps, 'lastName')}
                     aria-invalid={hasFieldError(formikProps, 'lastName')}
-                    helperText={getFieldErrorMessage(formikProps, 'lastName')}
-                    labelText={t(formFields.lastName.translationKey)}
+                    errorText={getFieldErrorMessage(formikProps, 'lastName')}
+                    label={t(formFields.lastName.translationKey)}
                     aria-labelledby={`${basicDataType}-lastName-helper`}
                   />
                 </div>

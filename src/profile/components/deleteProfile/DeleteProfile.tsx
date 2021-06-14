@@ -100,7 +100,7 @@ function DeleteProfile(): React.ReactElement {
           id="deleteInstructions"
           name="deleteInstructions"
           checked={deleteInstructions}
-          labelText={t('deleteProfile.accept')}
+          label={t('deleteProfile.accept')}
         />
 
         <Button
