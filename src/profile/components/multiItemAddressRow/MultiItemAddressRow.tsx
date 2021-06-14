@@ -11,9 +11,7 @@ import { createFormFieldHelpers } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
 import FormButtons from '../formButtons/FormButtons';
 import EditButtons from '../editButtons/EditButtons';
-import FormikDropdown, {
-  HdsOptionType,
-} from '../../../common/formikDropdown/FormikDropdown';
+import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import getCountry from '../../helpers/getCountry';
@@ -128,8 +126,17 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                     options={countryOptions}
                     label={t(formFields.country.translationKey)}
                     default={countryCode}
-                    onChange={(option: HdsOptionType) =>
-                      formikProps.setFieldValue('countryCode', option.value)
+                    invalid={hasFieldError(formikProps, 'countryCode')}
+                    error={getFieldErrorMessage(formikProps, 'countryCode')}
+                    toggleButtonAriaLabel={t(
+                      'profileInformation.ariaShowOptions'
+                    )}
+                    allowSearch
+                    onChange={option =>
+                      formikProps.setFieldValue(
+                        'countryCode',
+                        option ? option.value : ''
+                      )
                     }
                   />
                 </div>

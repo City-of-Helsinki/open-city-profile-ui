@@ -65,6 +65,7 @@ export const addressSchema = yup.object().shape({
     .string()
     .required(requiredValidation)
     .max(postalCodeMax, createMaxLengthMessage(postalCodeMax)),
+  countryCode: yup.string().required(requiredValidation),
 });
 
 const basicDataProperties = formFieldsByDataType['basic-data'];
