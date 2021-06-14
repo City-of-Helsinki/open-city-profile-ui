@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { TextInput, Checkbox } from 'hds-react';
+import { TextInput, Checkbox, Button } from 'hds-react';
 import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 
 import { getIsInvalid, getFieldError } from '../../helpers/formik';
 import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
-import Button from '../../../common/button/Button';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
 import { Language } from '../../../graphql/typings';
@@ -176,6 +175,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
           </div>
           <div>
             <Button
+              variant="primary"
               type="submit"
               disabled={Boolean(
                 formikProps.isSubmitting ||

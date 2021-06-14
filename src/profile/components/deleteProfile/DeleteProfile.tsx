@@ -3,13 +3,12 @@ import { useQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
-import { Checkbox } from 'hds-react';
+import { Button, Checkbox } from 'hds-react';
 import { useHistory } from 'react-router';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
-import Button from '../../../common/button/Button';
 import { ServiceConnectionsRoot } from '../../../graphql/typings';
 import useToast from '../../../toast/useToast';
 import styles from './deleteProfile.module.css';

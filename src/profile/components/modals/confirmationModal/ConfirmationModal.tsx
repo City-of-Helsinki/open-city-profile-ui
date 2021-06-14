@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import { useTranslation } from 'react-i18next';
-import { IconCross, IconAlertCircle } from 'hds-react';
+import { IconCross, IconAlertCircle, Button } from 'hds-react';
 
 import styles from './ConfirmationModal.module.css';
 import { ServiceConnectionsRoot } from '../../../../graphql/typings';
 import getServices from '../../../helpers/getServices';
-import Button from '../../../../common/button/Button';
 
 export type Props = {
   isOpen: boolean;
@@ -71,8 +70,7 @@ function ConfirmationModal({
           {actionButtonText}
         </Button>
         <Button
-          className={styles.button}
-          variant="outlined"
+          variant="secondary"
           onClick={onClose}
           data-testid="confirmation-modal-cancel-button"
         >

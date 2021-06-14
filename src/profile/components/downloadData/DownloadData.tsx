@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import FileSaver from 'file-saver';
 import * as Sentry from '@sentry/browser';
 import { loader } from 'graphql.macro';
+import { Button } from 'hds-react';
 
-import Button from '../../../common/button/Button';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './DownloadData.module.css';
 import { DownloadMyProfileQuery as DownloadMyProfileRoot } from '../../../graphql/generatedTypes';
