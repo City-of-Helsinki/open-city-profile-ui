@@ -94,8 +94,8 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                   as={TextInput}
                   invalid={hasFieldError(formikProps, 'address')}
                   aria-invalid={hasFieldError(formikProps, 'address')}
-                  helperText={getFieldErrorMessage(formikProps, 'address')}
-                  labelText={t(formFields.address.translationKey)}
+                  errorText={getFieldErrorMessage(formikProps, 'address')}
+                  label={t(formFields.address.translationKey)}
                   autoFocus
                   aria-labelledby={`${dataType}-address-helper`}
                 />
@@ -106,8 +106,8 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                   as={TextInput}
                   invalid={hasFieldError(formikProps, 'postalCode')}
                   aria-invalid={hasFieldError(formikProps, 'postalCode')}
-                  helperText={getFieldErrorMessage(formikProps, 'postalCode')}
-                  labelText={t(formFields.postalCode.translationKey)}
+                  errorText={getFieldErrorMessage(formikProps, 'postalCode')}
+                  label={t(formFields.postalCode.translationKey)}
                   aria-labelledby={`${dataType}-postalCode-helper`}
                 />
                 <Field
@@ -117,8 +117,8 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                   as={TextInput}
                   invalid={hasFieldError(formikProps, 'city')}
                   aria-invalid={hasFieldError(formikProps, 'city')}
-                  helperText={getFieldErrorMessage(formikProps, 'city')}
-                  labelText={t(formFields.city.translationKey)}
+                  errorText={getFieldErrorMessage(formikProps, 'city')}
+                  label={t(formFields.city.translationKey)}
                   aria-labelledby={`${dataType}-city-helper`}
                 />
                 <div className={commonFormStyles.formField}>
@@ -128,11 +128,8 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                     options={countryOptions}
                     label={t(formFields.country.translationKey)}
                     default={countryCode}
-                    onChange={option =>
-                      formikProps.setFieldValue(
-                        'countryCode',
-                        (option as HdsOptionType).value
-                      )
+                    onChange={(option: HdsOptionType) =>
+                      formikProps.setFieldValue('countryCode', option.value)
                     }
                   />
                 </div>

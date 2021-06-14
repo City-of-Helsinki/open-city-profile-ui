@@ -105,8 +105,8 @@ function CreateProfileForm(props: Props): React.ReactElement {
               maxLength={formFields.firstName.max as number}
               as={TextInput}
               invalid={hasFieldError(formikProps, 'firstName')}
-              helperText={getFieldErrorMessage(formikProps, 'firstName')}
-              labelText={t('profileForm.firstName')}
+              errorText={getFieldErrorMessage(formikProps, 'firstName')}
+              label={t('profileForm.firstName')}
             />
             <Field
               className={styles.formField}
@@ -115,8 +115,8 @@ function CreateProfileForm(props: Props): React.ReactElement {
               maxLength={formFields.lastName.max as number}
               as={TextInput}
               invalid={hasFieldError(formikProps, 'lastName')}
-              helperText={getFieldErrorMessage(formikProps, 'lastName')}
-              labelText={t('profileForm.lastName')}
+              errorText={getFieldErrorMessage(formikProps, 'lastName')}
+              label={t('profileForm.lastName')}
             />
 
             <FormikDropdown
@@ -125,11 +125,8 @@ function CreateProfileForm(props: Props): React.ReactElement {
               options={profileLanguageOptions}
               default={formikProps.values.profileLanguage}
               label={t('profileForm.language')}
-              onChange={option =>
-                formikProps.setFieldValue(
-                  'profileLanguage',
-                  (option as HdsOptionType).value
-                )
+              onChange={(option: HdsOptionType) =>
+                formikProps.setFieldValue('profileLanguage', option.value)
               }
             />
 
@@ -142,8 +139,8 @@ function CreateProfileForm(props: Props): React.ReactElement {
               minLength={phoneFields.value.min as number}
               maxLength={phoneFields.value.max as number}
               invalid={hasFieldError(formikProps, 'phone')}
-              helperText={getFieldErrorMessage(formikProps, 'phone')}
-              labelText={t('profileForm.phone')}
+              errorText={getFieldErrorMessage(formikProps, 'phone')}
+              label={t('profileForm.phone')}
             />
 
             <div className={styles.formField}>
@@ -158,7 +155,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
               name="terms"
               id="terms"
               checked={formikProps.values.terms}
-              labelText={
+              label={
                 <Trans
                   i18nKey="profileForm.terms"
                   components={[
