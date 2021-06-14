@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import { IconCross } from 'hds-react';
+import { Button, IconCross } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 
-import Button from '../../../../common/button/Button';
 import styles from './BerthErrorModal.module.css';
 
 type Props = {
@@ -39,7 +38,7 @@ function BerthErrorModal(props: Props): React.ReactElement | null {
       </div>
 
       <div className={styles.actions}>
-        <Button className={styles.button} variant="outlined" onClick={onClose}>
+        <Button className={styles.button} variant="secondary" onClick={onClose}>
           {t('berthErrors.close')}
         </Button>
       </div>
