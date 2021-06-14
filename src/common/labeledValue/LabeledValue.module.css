@@ -7,12 +7,13 @@
 }
 
 .label {
-  font-size: 18px;
+  font-size: var(--fontsize-body-m);
   margin-bottom: 10px;
+  font-weight: 500;
 }
 
 .value {
-  font-size: 18px;
+  font-size: var(--fontsize-body-l);
   white-space: pre-line;
 }
 .withIcon {
