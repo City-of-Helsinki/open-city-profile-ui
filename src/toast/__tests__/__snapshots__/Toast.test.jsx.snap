@@ -135,7 +135,7 @@ exports[`Toast should render correct toast 1`] = `
                       className="label"
                       role="heading"
                     >
-                      <L
+                      <Component
                         aria-hidden={true}
                         className="icon"
                       >
@@ -160,7 +160,7 @@ exports[`Toast should render correct toast 1`] = `
                             />
                           </g>
                         </svg>
-                      </L>
+                      </Component>
                       <ConditionalVisuallyHidden
                         visuallyHidden={false}
                       >
@@ -184,7 +184,7 @@ exports[`Toast should render correct toast 1`] = `
                     title="notification.closeButtonText"
                     type="button"
                   >
-                    <z
+                    <D
                       aria-hidden={true}
                     >
                       <svg
@@ -209,7 +209,7 @@ exports[`Toast should render correct toast 1`] = `
                           />
                         </g>
                       </svg>
-                    </z>
+                    </D>
                   </button>
                 </section>
               </ConditionalVisuallyHidden>
