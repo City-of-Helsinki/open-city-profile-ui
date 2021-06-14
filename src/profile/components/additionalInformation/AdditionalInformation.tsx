@@ -2,13 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikProps } from 'formik';
 import to from 'await-to-js';
+import classNames from 'classnames';
 
 import profileConstants from '../../constants/profileConstants';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import FormikDropdown, {
   OptionType,
-  HdsOptionType,
 } from '../../../common/formikDropdown/FormikDropdown';
 import { useProfileDataEditor } from '../../hooks/useProfileDataEditor';
 import {
@@ -76,17 +76,19 @@ function AdditionalInformation(): React.ReactElement | null {
           {(formikProps: FormikProps<FormValues>) => (
             <Form>
               <FormikDropdown
-                className={commonFormStyles.formField}
+                className={classNames(
+                  commonFormStyles.formField,
+                  commonFormStyles.hiddenLabels
+                )}
                 id={`${additionalInformationType}-language`}
                 name={'language'}
+                label={t('profileForm.language')}
                 options={languageOptions}
                 default={''}
-                selectedOption={selectedOption}
-                label={''}
+                value={selectedOption}
                 disabled={!!saving}
                 onChange={option => {
-                  const languageValue = (option as HdsOptionType)
-                    .value as FormValues['language'];
+                  const languageValue = option.value as FormValues['language'];
                   formikProps.setFieldValue('language', languageValue);
                   updateLanguage(languageValue);
                 }}

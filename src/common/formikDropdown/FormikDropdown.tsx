@@ -1,41 +1,64 @@
 import React from 'react';
-import { Dropdown, DropdownProps } from 'hds-react';
-import { Field, FieldProps } from 'formik';
+import { Select, SingleSelectProps, Combobox } from 'hds-react';
+import { Field } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import { Language } from '../../graphql/typings';
 
 type Props = {
   name: string;
   default: string | Language;
-} & DropdownProps;
+  toggleButtonAriaLabel?: string;
+  allowSearch?: boolean;
+} & SingleSelectProps<OptionType>;
 
 export type OptionType = {
   value: string;
   label: string;
 };
 
-export type HdsOptionType = {
-  [key: string]: unknown;
-};
-
 function FormikDropdown(props: Props): React.ReactElement {
-  // HDS Dropdown expects default value to be an object. Find correct option object from array.
-  const getSelectDefault = (options: OptionType[], value?: string) =>
-    options.find((option: OptionType) => option.value === value);
+  const { t } = useTranslation();
 
+  const {
+    name,
+    default: defaultVal,
+    allowSearch,
+    toggleButtonAriaLabel,
+    ...singleSelectProps
+  } = props;
+  const defaultValue = singleSelectProps.options.find(
+    (option: OptionType) => option.value === defaultVal
+  );
+  const commonProps: SingleSelectProps<OptionType> = {
+    ...singleSelectProps,
+    defaultValue,
+    multiselect: false,
+    getA11yStatusMessage: selectionProps =>
+      selectionProps.selectedItem
+        ? t('profileInformation.ariaSelectedOption', {
+            value: selectionProps.selectedItem.label,
+          })
+        : t('profileInformation.ariaNoSelectedItemForLabel', {
+            label: singleSelectProps.label,
+          }),
+  };
+
+  if (allowSearch && !toggleButtonAriaLabel) {
+    throw new Error('Combobox requires toggleButtonAriaLabel');
+  }
   return (
     <Field name={props.name}>
-      {(fieldProps: FieldProps<string>) => (
-        <Dropdown
-          {...fieldProps.field}
-          {...props}
-          defaultValue={getSelectDefault(
-            props.options as OptionType[],
-            props.default
-          )}
-          multiselect={false}
-        />
-      )}
+      {() =>
+        allowSearch ? (
+          <Combobox
+            {...commonProps}
+            toggleButtonAriaLabel={toggleButtonAriaLabel as string}
+          />
+        ) : (
+          <Select {...commonProps} />
+        )
+      }
     </Field>
   );
 }
