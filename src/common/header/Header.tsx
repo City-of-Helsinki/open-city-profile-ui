@@ -28,7 +28,7 @@ function Header(): React.ReactElement {
 
   return (
     <Navigation
-      skipTo={MAIN_CONTENT_ID}
+      skipTo={`#${MAIN_CONTENT_ID}`}
       skipToContentLabel={t('skipToContent')}
       menuToggleAriaLabel={t('nav.menuButtonLabel')}
       title="Profile"
