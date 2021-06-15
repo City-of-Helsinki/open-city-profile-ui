@@ -13,11 +13,6 @@
   flex-direction: column;
 }
 
-/* fixes bug in HDS TextInput when it is wrapped to an element with display:flex: */
-.editableRow > div > div {
-  height: auto;
-}
-
 .value {
   font-size: var(--fontsize-body-l);
   padding: 0 0 var(--spacing-m) 0;

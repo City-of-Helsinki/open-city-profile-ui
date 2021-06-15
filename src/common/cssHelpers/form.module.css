@@ -129,11 +129,6 @@
     box-sizing: border-box;
   }
 
-  /* fixes bug in HDS TextInput when it is wrapped to an element with display:flex: */
-  .multiItemWrapper > div > div {
-    height: auto;
-  }
-
   .responsiveButton {
     width: auto;
   }
