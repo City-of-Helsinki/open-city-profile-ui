@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
 import * as Sentry from '@sentry/browser';
 
 import './index.css';
 import BrowserApp from './BrowserApp';
 import * as serviceWorker from './serviceWorker';
-
-Modal.setAppElement('#root');
 
 declare global {
   interface Window {
