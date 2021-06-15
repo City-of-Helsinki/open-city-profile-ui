@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactModal from 'react-modal';
-import { Button, IconCross } from 'hds-react';
+import { Button, Dialog, IconAlertCircle } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 
-import styles from './BerthErrorModal.module.css';
+import { getModalProps } from '../getModalProps';
 
 type Props = {
   isOpen: boolean;
@@ -17,32 +16,49 @@ function BerthErrorModal(props: Props): React.ReactElement | null {
   if (!isOpen) {
     return null;
   }
+  const id = 'berth-error-modal';
+  const content = t('berthErrors.explanation');
+  const closeButtonText = t('berthErrors.close');
+  const {
+    titleId,
+    descriptionId,
+    dialogTargetElement,
+    closeButtonLabelText,
+    close,
+  } = getModalProps({
+    id,
+    onClose,
+    closeButtonText,
+  });
+  const dialogCloseProps = closeButtonLabelText
+    ? {
+        close,
+        closeButtonLabelText,
+      }
+    : undefined;
   return (
-    <ReactModal
-      ariaHideApp={false}
+    <Dialog
+      id={id}
+      aria-labelledby={titleId}
+      aria-describedby={descriptionId}
       isOpen={isOpen}
-      onRequestClose={onClose}
-      className={styles.container}
-      overlayClassName={styles.overlay}
-      shouldCloseOnOverlayClick
+      targetElement={dialogTargetElement}
+      {...dialogCloseProps}
     >
-      <div className={styles.close}>
-        <button type="button" onClick={onClose}>
-          <IconCross className={styles.icon} />
-        </button>
-      </div>
-
-      <div className={styles.content}>
-        <h3>{t('berthErrors.title')}</h3>
-        <p>{t('berthErrors.explanation')}</p>
-      </div>
-
-      <div className={styles.actions}>
-        <Button className={styles.button} variant="secondary" onClick={onClose}>
+      <Dialog.Header
+        id={titleId}
+        title={t('berthErrors.title')}
+        iconLeft={<IconAlertCircle aria-hidden="true" />}
+      />
+      <Dialog.Content>
+        <p id={descriptionId}>{content}</p>
+      </Dialog.Content>
+      <Dialog.ActionButtons>
+        <Button variant="secondary" onClick={onClose}>
           {t('berthErrors.close')}
         </Button>
-      </div>
-    </ReactModal>
+      </Dialog.ActionButtons>
+    </Dialog>
   );
 }
 

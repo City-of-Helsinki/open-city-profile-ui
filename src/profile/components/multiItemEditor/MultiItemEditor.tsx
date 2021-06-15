@@ -128,7 +128,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
         const [rejected] = await to(
           showModal({
             actionButtonText: t('confirmationModal.remove'),
-            modalTitle: texts.modalTitle,
+            title: texts.modalTitle,
           })
         );
         if (rejected) {

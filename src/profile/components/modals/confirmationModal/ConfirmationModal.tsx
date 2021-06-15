@@ -1,69 +1,75 @@
 import React from 'react';
-import ReactModal from 'react-modal';
 import { useTranslation } from 'react-i18next';
-import { IconCross, IconAlertCircle, Button } from 'hds-react';
+import { IconAlertCircle, Button, Dialog } from 'hds-react';
 
-import styles from './ConfirmationModal.module.css';
-import { ServiceConnectionsRoot } from '../../../../graphql/typings';
-import getServices from '../../../helpers/getServices';
+import { getModalProps } from '../getModalProps';
 
 export type Props = {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  modalTitle?: string;
-  modalText?: string;
+  title?: string;
+  content?: React.FC<unknown> | string;
   actionButtonText: string;
-  services?: ServiceConnectionsRoot;
 };
 
 function ConfirmationModal({
   isOpen,
   onClose,
   onConfirm,
-  modalTitle,
-  modalText,
+  title,
+  content,
   actionButtonText,
-  services,
 }: Props): React.ReactElement {
-  const servicesArray = getServices(services);
   const { t } = useTranslation();
+  const id = 'confirmation-modal';
+  const closeButtonText = t('confirmationModal.cancel');
+  const {
+    titleId,
+    descriptionId,
+    dialogTargetElement,
+    close,
+    closeButtonLabelText,
+  } = getModalProps({
+    id,
+    onClose,
+    closeButtonText,
+  });
+  const ContentComponent: React.FC<unknown> =
+    typeof content === 'string' || typeof content === 'undefined'
+      ? () => <>{content || null}</>
+      : content;
+  const dialogCloseProps = closeButtonLabelText
+    ? {
+        close,
+        closeButtonLabelText,
+      }
+    : undefined;
   return (
-    <ReactModal
+    <Dialog
+      id={id}
+      aria-labelledby={titleId}
+      aria-describedby={descriptionId}
       isOpen={isOpen}
-      onRequestClose={onClose}
-      className={styles.container}
-      overlayClassName={styles.overlay}
-      shouldCloseOnOverlayClick
+      targetElement={dialogTargetElement}
+      {...dialogCloseProps}
     >
-      <div className={styles.wrapper}>
-        <span aria-hidden="true">
-          <IconAlertCircle />
-        </span>
-        <div className={styles.content}>
-          <div className={styles.titleRow}>
-            <h3>{modalTitle}</h3>
-            <p>{modalText}</p>
+      {title && (
+        <Dialog.Header
+          id={titleId}
+          title={title}
+          iconLeft={<IconAlertCircle aria-hidden="true" />}
+        />
+      )}
+      {content && (
+        <Dialog.Content>
+          <div id={descriptionId}>
+            <ContentComponent />
           </div>
-          <ul>
-            {servicesArray.map((service, index) => (
-              <li key={index}>{service.title}</li>
-            ))}
-          </ul>
-        </div>
-        <button
-          className={styles.closeButton}
-          type="button"
-          onClick={onClose}
-          aria-label={t('confirmationModal.close')}
-        >
-          <IconCross className={styles.icon} />
-        </button>
-      </div>
-
-      <div className={styles.actions}>
+        </Dialog.Content>
+      )}
+      <Dialog.ActionButtons>
         <Button
-          className={styles.button}
           onClick={onConfirm}
           data-testid="confirmation-modal-confirm-button"
         >
@@ -74,10 +80,10 @@ function ConfirmationModal({
           onClick={onClose}
           data-testid="confirmation-modal-cancel-button"
         >
-          {t('confirmationModal.cancel')}
+          {closeButtonText}
         </Button>
-      </div>
-    </ReactModal>
+      </Dialog.ActionButtons>
+    </Dialog>
   );
 }
 
