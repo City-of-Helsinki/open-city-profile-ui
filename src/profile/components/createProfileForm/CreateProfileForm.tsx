@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { TextInput, Checkbox, Button } from 'hds-react';
+import { TextInput, Checkbox, Button, PhoneInput } from 'hds-react';
 import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 
@@ -131,8 +131,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
               className={styles.formField}
               name="phone"
               id="phone"
-              as={TextInput}
-              type="tel"
+              as={PhoneInput}
               minLength={phoneFields.value.min as number}
               maxLength={phoneFields.value.max as number}
               invalid={hasFieldError(formikProps, 'phone')}
