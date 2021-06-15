@@ -1,6 +1,5 @@
 import React from 'react';
 import { act, waitFor } from '@testing-library/react';
-import Modal from 'react-modal';
 
 import {
   cloneProfileAndProvideManipulationFunctions,
@@ -333,7 +332,6 @@ describe('<MultiItemEditor /> ', () => {
           responses.push({
             updatedProfileData,
           });
-          Modal.setAppElement('#modal-container');
           const primaryItemRemoveButtonSelector: ElementSelector = {
             testId: `${dataType}-0-remove-button`,
           };
