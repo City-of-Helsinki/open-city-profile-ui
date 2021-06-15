@@ -1,4 +1,4 @@
-import { TextInput } from 'hds-react';
+import { PhoneInput, TextInput } from 'hds-react';
 import React from 'react';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -83,7 +83,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
                     name="value"
                     id={inputId}
                     maxLength={formFields.value.max as number}
-                    as={TextInput}
+                    as={dataType === 'phones' ? PhoneInput : TextInput}
                     invalid={hasFieldError(formikProps, 'value')}
                     aria-invalid={hasFieldError(formikProps, 'value')}
                     errorText={getFieldErrorMessage(formikProps, 'value')}
