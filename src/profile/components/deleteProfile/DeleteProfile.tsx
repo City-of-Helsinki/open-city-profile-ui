@@ -15,6 +15,7 @@ import styles from './deleteProfile.module.css';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import checkBerthError from '../../helpers/checkBerthError';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
+import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -84,6 +85,9 @@ function DeleteProfile(): React.ReactElement {
   const userHasServices =
     data?.myProfile?.serviceConnections?.edges?.length !== 0;
   const initiallyOpen = deleteProfileResult.loading;
+  const description = userHasServices
+    ? t('deleteProfileModal.explanation')
+    : t('deleteProfileModal.noServiceExplanation');
 
   return (
     <React.Fragment>
@@ -116,13 +120,10 @@ function DeleteProfile(): React.ReactElement {
         isOpen={deleteConfirmationModal}
         onClose={handleConfirmationModal}
         onConfirm={handleProfileDelete}
-        services={data}
-        modalTitle={t('deleteProfileModal.title')}
-        modalText={
-          userHasServices
-            ? t('deleteProfileModal.explanation')
-            : t('deleteProfileModal.noServiceExplanation')
-        }
+        content={() => (
+          <ModalServicesContent description={description} data={data} />
+        )}
+        title={t('deleteProfileModal.title')}
         actionButtonText={t('deleteProfileModal.delete')}
       />
       <BerthErrorModal
