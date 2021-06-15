@@ -15,8 +15,6 @@ import Profile from './profile/components/profile/Profile';
 import { Provider as ProfileProvider } from './profile/context/ProfileContext';
 import ProfileDeleted from './profile/components/profileDeleted/ProfileDeleted';
 import AccessibilityStatement from './accessibilityStatement/AccessibilityStatement';
-import { MAIN_CONTENT_ID } from './common/constants';
-import AccessibilityShortcuts from './common/accessibilityShortcuts/AccessibilityShortcuts';
 import AppMeta from './AppMeta';
 import GdprAuthorizationCodeManagerCallback from './gdprApi/GdprAuthorizationCodeManagerCallback';
 import ToastProvider from './toast/ToastProvider';
@@ -51,8 +49,6 @@ function App(): React.ReactElement {
         <MatomoProvider value={instance}>
           <ProfileProvider>
             <AppMeta />
-            {/* This should be the first focusable element */}
-            <AccessibilityShortcuts mainContentId={MAIN_CONTENT_ID} />
             <Switch>
               <Route path="/callback" component={OidcCallback} />
               <Route path="/gdpr-callback">
