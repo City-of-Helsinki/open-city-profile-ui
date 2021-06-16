@@ -17,7 +17,7 @@ function HelsinkiLogo({
   const { t, i18n } = useTranslation();
 
   const lang = getLanguageCode(i18n.languages[0]);
-  const logoStyle = lang === 'sv' ? styles.logoSv : styles.logoFi;
+  const logoStyle = lang === 'sv' ? styles['logo-sv'] : styles['logo-fi'];
 
   if (isLinkToFrontPage) {
     return (

@@ -3,26 +3,17 @@
   overflow: hidden;
 }
 
-.notification.noBorder {
+.notification.no-border {
   border: 0;
   padding-top: calc(
     var(--notification-padding) + var(--notification-border-width)
   );
 }
 
-.notification.noBorder .close {
+.notification.no-border .close {
   top: calc(
     var(--notification-close-button-offset) + var(--notification-border-width)
   );
-}
-
-.autoClose {
-  background-color: var(--notification-border-color);
-  height: var(--notification-border-width);
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
 }
 
 .content {

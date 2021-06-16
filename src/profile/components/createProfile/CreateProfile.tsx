@@ -79,7 +79,7 @@ function CreateProfile({
       });
   };
   return (
-    <div className={styles.createProfile}>
+    <div className={styles['create-profile']}>
       <PageHeading
         text={t('createProfile.pageTitle')}
         className={responsive.maxWidthCentered}

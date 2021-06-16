@@ -4,17 +4,17 @@
   height: 100vh;
 }
 
-.fakeNavigation {
+.fake-navigation {
   height: var(--header-height);
   background: var(--color-white);
 }
 
-.fakePageHeading {
+.fake-page-heading {
   height: 170px;
   background: var(--color-coat-of-arms-light);
 }
 
-.fakeContent {
+.fake-content {
   flex-grow: 1;
   background: var(--color-black-5);
 }

@@ -1,11 +1,11 @@
-.logoFi {
+.logo-fi {
   background-size: contain;
   background-color: var(--color-black);
   -webkit-mask: url('../svg/HelsinkiLogoFi.svg') no-repeat;
   mask: url('../svg/HelsinkiLogoFi.svg') no-repeat;
 }
 
-.logoSv {
+.logo-sv {
   background-size: contain;
   background-color: var(--color-black);
   -webkit-mask: url('../svg/HelsinkiLogoSv.svg') no-repeat;
@@ -13,7 +13,7 @@
 }
 
 @media (min-width: 400px) {
-  .logoSv {
+  .logo-sv {
     margin-right: 20px;
   }
 }

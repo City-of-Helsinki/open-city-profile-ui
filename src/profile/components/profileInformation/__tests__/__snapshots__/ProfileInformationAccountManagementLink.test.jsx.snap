@@ -6,7 +6,7 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
     className="container"
   >
     <div
-      className="labelSection"
+      className="label-section"
     >
       <LabeledValue
         label="profileInformation.authenticationMethod"
@@ -72,7 +72,7 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
     className="container"
   >
     <div
-      className="labelSection"
+      className="label-section"
     >
       <LabeledValue
         label="profileInformation.authenticationMethod"

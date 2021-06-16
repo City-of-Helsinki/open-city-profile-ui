@@ -30,7 +30,7 @@ function ProfileInformation(): React.ReactElement {
           <AdditionalInformation />
         </Fragment>
       )}
-      <div className={styles.boxGrid}>
+      <div className={styles['box-grid']}>
         <ProfileInformationAccountManagementLink />
         <DownloadData />
         <DeleteProfile />

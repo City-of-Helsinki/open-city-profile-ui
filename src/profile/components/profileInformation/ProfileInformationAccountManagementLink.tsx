@@ -24,14 +24,14 @@ function ProfileInformationAccountManagementLink(): React.ReactElement | null {
   const authenticationMethodReferenceName = t(`identityProvider.${amr}`);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.labelSection}>
+    <div className={styles['container']}>
+      <div className={styles['label-section']}>
         <LabeledValue
           label={t('profileInformation.authenticationMethod')}
           value={authenticationMethodReferenceName}
         />
       </div>
-      <div className={styles.link}>
+      <div className={styles['link']}>
         <a
           href={authenticationMethodReferenceUrl}
           target="_blank"

@@ -1,14 +1,14 @@
-.rowContentWrapper {
+.row-content-wrapper {
   background: var(--color-black-ultra-light);
   margin: 0 0 var(--spacing-m) 0;
   padding: var(--spacing-m);
 }
 
-.rowContentWrapper form {
+.row-content-wrapper form {
   width: 100%;
 }
 
-.editableRow {
+.editable-row {
   display: flex;
   flex-direction: column;
 }
@@ -20,7 +20,7 @@
 }
 
 @media (min-width: 768px) {
-  .rowContentWrapper {
+  .row-content-wrapper {
     flex-direction: row;
     align-items: center;
     padding: var(--spacing-m);
@@ -29,10 +29,10 @@
     padding: 0 var(--spacing-2-xs) 0 0;
   }
 
-  .editableRow {
+  .editable-row {
     flex-direction: row;
   }
-  .editableRow > div:first-child {
+  .editable-row > div:first-child {
     width: 50%;
   }
 }

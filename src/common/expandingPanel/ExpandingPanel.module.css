@@ -22,17 +22,17 @@
   color: var(--color-bus);
 }
 
-.rightSideInformation {
+.right-side-information {
   display: flex;
   align-items: center;
 }
 
-.rightSideInformation button {
+.right-side-information button {
   padding-right: 0;
   margin-right: calc(-1 * (var(--spacing-s)));
 }
 
-.showInformation {
+.show-information {
   margin-right: var(--spacing-s);
   font-size: var(--fontsize-body-s);
   font-weight: bold;

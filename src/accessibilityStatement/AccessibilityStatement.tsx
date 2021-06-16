@@ -29,10 +29,10 @@ function AccessibilityStatement(): React.ReactElement {
   };
 
   return (
-    <div className={styles.pageWrapper}>
+    <div className={styles['page-wrapper']}>
       <Header />
-      <div className={styles.container}>
-        <div className={styles.innerWrapper}>{selectStatement()}</div>
+      <div className={styles['container']}>
+        <div className={styles['inner-wrapper']}>{selectStatement()}</div>
       </div>
       <Footer />
     </div>

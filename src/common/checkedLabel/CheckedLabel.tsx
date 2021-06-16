@@ -10,8 +10,8 @@ type Props = {
 
 function CheckedLabel(props: Props): React.ReactElement {
   return (
-    <span className={`${styles.checkedLabel} ${props.className}`}>
-      <IconCheck className={styles.icon} aria-hidden />
+    <span className={`${styles['checked-label']} ${props.className}`}>
+      <IconCheck className={styles['icon']} aria-hidden />
       {props.value}
     </span>
   );

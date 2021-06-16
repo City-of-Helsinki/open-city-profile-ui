@@ -9,10 +9,10 @@ function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
   }, []);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.fakeNavigation} />
-      <div className={styles.fakePageHeading} />
-      <div className={styles.fakeContent} />
+    <div className={styles['wrapper']}>
+      <div className={styles['fake-navigation']} />
+      <div className={styles['fake-page-heading']} />
+      <div className={styles['fake-content']} />
     </div>
   );
 }

@@ -8,7 +8,7 @@ exports[`Toast should render correct toast 1`] = `
         id="toast-root"
       >
         <div
-          class="toastContainer"
+          class="toast-container"
         >
           <div
             class="notification"
@@ -52,7 +52,7 @@ exports[`Toast should render correct toast 1`] = `
                   class="body"
                 >
                   <div
-                    class="messageWrapper"
+                    class="message-wrapper"
                   >
                     notification.defaultErrorText
                   </div>
@@ -93,7 +93,7 @@ exports[`Toast should render correct toast 1`] = `
     }
   >
     <div
-      className="toastContainer"
+      className="toast-container"
     >
       <Toast
         hidden={false}
@@ -171,7 +171,7 @@ exports[`Toast should render correct toast 1`] = `
                       className="body"
                     >
                       <div
-                        className="messageWrapper"
+                        className="message-wrapper"
                       >
                         notification.defaultErrorText
                       </div>

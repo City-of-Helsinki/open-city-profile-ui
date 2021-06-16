@@ -62,7 +62,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
       <div
         className={classNames([
           commonFormStyles.contentWrapper,
-          styles.rowContentWrapper,
+          styles['row-content-wrapper'],
         ])}
       >
         <Formik
@@ -78,7 +78,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
           {(formikProps: FormikProps<EmailAndPhoneFormikValue>) => (
             <Form>
               <FocusKeeper targetId={inputId}>
-                <div className={styles.editableRow}>
+                <div className={styles['editable-row']}>
                   <Field
                     name="value"
                     id={inputId}
@@ -108,10 +108,10 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
     <div
       className={classNames([
         commonFormStyles.contentWrapper,
-        styles.rowContentWrapper,
+        styles['row-content-wrapper'],
       ])}
     >
-      <span className={styles.value} data-testid={`${testId}-value`}>
+      <span className={styles['value']} data-testid={`${testId}-value`}>
         {inputValue || '–'}
       </span>
       <EditButtons

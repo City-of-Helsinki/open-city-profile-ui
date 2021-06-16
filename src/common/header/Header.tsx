@@ -32,7 +32,7 @@ function Header(): React.ReactElement {
       skipToContentLabel={t('skipToContent')}
       menuToggleAriaLabel={t('nav.menuButtonLabel')}
       title="Profile"
-      className={styles.zIndexFix}
+      className={styles['z-index-fix']}
     >
       {isComplete && (
         <Navigation.Row>

@@ -45,10 +45,10 @@ function ExpandingPanel({
     ? t('expandingPanel.hideInformation')
     : t('expandingPanel.showInformation');
   return (
-    <div className={styles.container} ref={handleContainerRef}>
-      <div className={styles.title}>
+    <div className={styles['container']} ref={handleContainerRef}>
+      <div className={styles['title']}>
         <h2>{title}</h2>
-        <div className={styles.rightSideInformation}>
+        <div className={styles['right-side-information']}>
           <Button
             title={`${buttonText}: ${title}`}
             variant={'supplementary'}
@@ -56,14 +56,14 @@ function ExpandingPanel({
             {...buttonProps}
           >
             {showInformationText && (
-              <span className={styles.showInformation} aria-hidden>
+              <span className={styles['show-information']} aria-hidden>
                 {buttonText}
               </span>
             )}
           </Button>
         </div>
       </div>
-      <Card aria-label={title} className={styles.card} {...contentProps}>
+      <Card aria-label={title} className={styles['card']} {...contentProps}>
         {children}
       </Card>
     </div>

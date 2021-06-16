@@ -16,7 +16,7 @@
   font-size: var(--fontsize-body-l);
   white-space: pre-line;
 }
-.withIcon {
+.with-icon {
   position: relative;
   display: flex;
   line-height: 24px;

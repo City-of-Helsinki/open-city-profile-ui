@@ -13,10 +13,10 @@ type Props = {
 function PageHeading(props: Props): React.ReactElement {
   return (
     <div
-      className={classNames(styles.pageHeading, props.className)}
+      className={classNames(styles['page-heading'], props.className)}
       data-testid={props.dataTestId}
     >
-      <UserIcon className={styles.userIcon} aria-hidden={'true'} />
+      <UserIcon className={styles['user-icon']} aria-hidden={'true'} />
       <h1>{props.text}</h1>
     </div>
   );
