@@ -24,6 +24,10 @@
   margin-bottom: 0;
 }
 
+.verifiedData {
+  background: none;
+}
+
 @media (min-width: 600px) {
   .profileSection {
     --horizontal-whitespace: var(--spacing-xl);
