@@ -25,7 +25,7 @@ function ProfileDeleted(): React.ReactElement {
   return (
     <PageLayout>
       <div className={styles.wrapper}>
-        <div className={responsive.maxWidthCentered}>
+        <div className={responsive['max-width-centered']}>
           <div className={styles.content}>
             <h2>{t('profileDeleted.title')}</h2>
             <p>{t('profileDeleted.message', { time: timeUntilLogout })}</p>

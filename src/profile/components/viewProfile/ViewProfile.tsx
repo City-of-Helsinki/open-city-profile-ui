@@ -32,7 +32,7 @@ function ViewProfile(): React.ReactElement {
               </Route>
               <Route path="/">
                 <div className={styles['profile-content']}>
-                  <div className={responsive.maxWidthCentered}>
+                  <div className={responsive['max-width-centered']}>
                     <Explanation
                       main={t('profileInformation.title')}
                       titleVariant="h2"

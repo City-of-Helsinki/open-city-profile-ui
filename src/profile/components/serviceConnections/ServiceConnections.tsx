@@ -55,7 +55,7 @@ function ServiceConnections(props: Props): React.ReactElement {
   const hasNoServices = !loading && services.length === 0;
   return (
     <div className={styles['service-connections']}>
-      <div className={responsive.maxWidthCentered}>
+      <div className={responsive['max-width-centered']}>
         <Explanation
           main={t('serviceConnections.title')}
           small={t('serviceConnections.explanation')}
