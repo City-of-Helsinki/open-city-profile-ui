@@ -58,12 +58,13 @@ function ServiceConnections(props: Props): React.ReactElement {
       <div className={responsive['max-width-centered']}>
         <Explanation
           main={t('serviceConnections.title')}
-          small={t('serviceConnections.explanation')}
+          small={
+            hasNoServices
+              ? t('serviceConnections.empty')
+              : t('serviceConnections.explanation')
+          }
           titleVariant="h2"
         />
-        {hasNoServices && (
-          <p className={styles['empty']}>{t('serviceConnections.empty')}</p>
-        )}
         <div className={styles['panel-container']}>
           {services.map((service, index) => (
             <ExpandingPanel
