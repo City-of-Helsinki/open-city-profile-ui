@@ -63,10 +63,10 @@ function AdditionalInformation(): React.ReactElement | null {
 
   return (
     <ProfileSection>
-      <h3 className={commonFormStyles.sectionTitle}>
+      <h3 className={commonFormStyles['section-title']}>
         {t('profileForm.language')}
       </h3>
-      <div className={commonFormStyles.multiItemWrapper}>
+      <div className={commonFormStyles['multi-item-wrapper']}>
         <Formik
           initialValues={{ language }}
           onSubmit={() => {
@@ -77,8 +77,8 @@ function AdditionalInformation(): React.ReactElement | null {
             <Form>
               <FormikDropdown
                 className={classNames(
-                  commonFormStyles.formField,
-                  commonFormStyles.hiddenLabels
+                  commonFormStyles['form-field'],
+                  commonFormStyles['hidden-labels']
                 )}
                 id={`${additionalInformationType}-language`}
                 name={'language'}

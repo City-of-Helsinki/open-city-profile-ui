@@ -77,14 +77,14 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
         validationSchema={addressSchema}
       >
         {(formikProps: FormikProps<FormikValues>) => (
-          <Form className={commonFormStyles.multiItemForm}>
-            <h4 className={commonFormStyles.sectionTitle}>
+          <Form className={commonFormStyles['multi-item-form']}>
+            <h4 className={commonFormStyles['section-title']}>
               {primary
                 ? t('profileInformation.primaryAddress')
                 : t('profileInformation.address')}
             </h4>
             <FocusKeeper targetId={`${testId}-address`}>
-              <div className={commonFormStyles.multiItemWrapper}>
+              <div className={commonFormStyles['multi-item-wrapper']}>
                 <Field
                   name="address"
                   id={`${testId}-address`}
@@ -119,7 +119,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                   label={t(formFields.city.translationKey)}
                   aria-labelledby={`${dataType}-city-helper`}
                 />
-                <div className={commonFormStyles.formField}>
+                <div className={commonFormStyles['form-field']}>
                   <FormikDropdown
                     name="countryCode"
                     id={`${testId}-countryCode`}
@@ -157,16 +157,16 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
   return (
     <div
       className={classNames([
-        commonFormStyles.contentWrapper,
-        commonFormStyles.multiItemContentWrapper,
+        commonFormStyles['content-wrapper'],
+        commonFormStyles['multi-item-content-wrapper'],
       ])}
     >
-      <h4 className={commonFormStyles.sectionTitle}>
+      <h4 className={commonFormStyles['section-title']}>
         {primary
           ? t('profileInformation.primaryAddress')
           : t('profileInformation.address')}
       </h4>
-      <div className={commonFormStyles.multiItemWrapper}>
+      <div className={commonFormStyles['multi-item-wrapper']}>
         <LabeledValue
           label={t(formFields.address.translationKey)}
           value={value.address}
@@ -188,7 +188,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
           testId={`${testId}-countryCode`}
         />
       </div>
-      <div className={commonFormStyles.actionsWrapper}>
+      <div className={commonFormStyles['actions-wrapper']}>
         <EditButtons
           handler={actionHandler}
           actions={{
@@ -196,7 +196,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
             primary,
             setPrimary: true,
           }}
-          buttonClassNames={commonFormStyles.actionsWrapperButton}
+          buttonClassNames={commonFormStyles['actions-wrapper-button']}
           editButtonId={editButtonId}
           disabled={disableButtons || disableEditButtons}
           testId={testId}

@@ -64,7 +64,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     return (
       <React.Fragment key={type}>
         <h3
-          className={commonFormStyles.sectionTitle}
+          className={commonFormStyles['section-title']}
           data-testid={`vpi-address-${type}`}
         >
           {type === 'permanent'
@@ -73,7 +73,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
             ? t('profileInformation.temporaryAddress')
             : t('profileInformation.permanentForeignAddress')}
         </h3>
-        <div className={commonFormStyles.multiItemWrapper}>
+        <div className={commonFormStyles['multi-item-wrapper']}>
           <LabeledValue
             label={t('profileForm.address')}
             value={address.streetAddress}
@@ -113,7 +113,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
   };
 
   const LongDescription = ({ forAria }: { forAria?: boolean }) => (
-    <p className={forAria ? commonFormStyles.visuallyHidden : ''}>
+    <p className={forAria ? commonFormStyles['visually-hidden'] : ''}>
       <Trans
         i18nKey="profileInformation.verifiedDataInformation"
         components={[
@@ -135,13 +135,13 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
   return (
     <ProfileSection hasVerifiedUserData>
       <h3
-        className={commonFormStyles.sectionTitle}
+        className={commonFormStyles['section-title']}
         aria-label={t('profileInformation.verifiedBasicData')}
       >
         {t('profileForm.basicData')}
       </h3>
       <LongDescription forAria />
-      <div className={commonFormStyles.multiItemWrapper}>
+      <div className={commonFormStyles['multi-item-wrapper']}>
         <LabeledValue
           label={t('profileForm.firstName')}
           value={firstName}
@@ -185,7 +185,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
         id="verified-data-information"
         aria-hidden="true"
       >
-        <span className={commonFormStyles.icon}>
+        <span className={commonFormStyles['icon']}>
           <IconCheckCircleFill />
         </span>
         <LongDescription />

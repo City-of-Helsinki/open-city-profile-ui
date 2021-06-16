@@ -20,7 +20,7 @@ const SaveIndicator = (props: Props): React.ReactElement | null => {
   return (
     <div
       role="alert"
-      className={commonFormStyles.visuallyHidden}
+      className={commonFormStyles['visually-hidden']}
       data-testid={`${testId}-save-indicator`}
     >
       {t(translationKey)}

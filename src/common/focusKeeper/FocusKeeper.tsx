@@ -19,7 +19,7 @@ const FocusKeeper = (props: Props): React.ReactElement => {
 
   const HiddenTrapper = (): React.ReactElement => (
     <div
-      className={commonFormStyles.visuallyHidden}
+      className={commonFormStyles['visually-hidden']}
       tabIndex={0}
       onFocus={moveFocusToTarget}
     ></div>

@@ -61,7 +61,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
     return (
       <div
         className={classNames([
-          commonFormStyles.contentWrapper,
+          commonFormStyles['content-wrapper'],
           styles['row-content-wrapper'],
         ])}
       >
@@ -107,7 +107,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
   return (
     <div
       className={classNames([
-        commonFormStyles.contentWrapper,
+        commonFormStyles['content-wrapper'],
         styles['row-content-wrapper'],
       ])}
     >
