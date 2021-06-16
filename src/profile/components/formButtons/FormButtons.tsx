@@ -19,14 +19,14 @@ function FormButtons(props: Props): React.ReactElement {
   return (
     <div
       className={classNames([
-        commonFormStyles.editButtons,
-        alignLeft && commonFormStyles.alignLeft,
+        commonFormStyles['edit-buttons'],
+        alignLeft && commonFormStyles['align-left'],
       ])}
     >
       <Button
         type="submit"
         disabled={disabled}
-        className={commonFormStyles.responsiveButton}
+        className={commonFormStyles['responsive-button']}
         data-testid={`${testId}-save-button`}
       >
         {t('profileForm.submit')}
@@ -36,7 +36,7 @@ function FormButtons(props: Props): React.ReactElement {
         onClick={async () => {
           await handler('cancel');
         }}
-        className={commonFormStyles.responsiveButton}
+        className={commonFormStyles['responsive-button']}
         disabled={disabled}
         data-testid={`${testId}-cancel-button`}
       >

@@ -34,9 +34,11 @@ function LabeledValue({
       >
         {value || '–'}
         {verifiedInfoText && (
-          <span className={classNames(commonFormStyles.icon, styles['icon'])}>
+          <span
+            className={classNames(commonFormStyles['icon'], styles['icon'])}
+          >
             <IconCheckCircleFill aria-hidden="true" />
-            <span className={commonFormStyles.visuallyHidden}>
+            <span className={commonFormStyles['visually-hidden']}>
               {verifiedInfoText}
             </span>
           </span>
