@@ -24,14 +24,14 @@ function ProfileSection({
   return (
     <section
       className={classNames(
-        styles.profileSection,
-        hasVerifiedUserData && styles.verifiedData
+        styles['profile-section'],
+        hasVerifiedUserData && styles['verified-data']
       )}
     >
-      <div className={styles.profileSectionTitleRow}>
+      <div className={styles['profile-section-title-row']}>
         <Explanation
           variant="flush"
-          className={styles.profileSectionTitle}
+          className={styles['profile-section-title']}
           titleVariant={titleVariant}
           main={title || ''}
           small={description}

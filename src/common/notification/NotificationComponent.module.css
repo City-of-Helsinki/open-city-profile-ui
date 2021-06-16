@@ -6,6 +6,6 @@
   margin: 0;
 }
 
-.messageWrapper {
+.message-wrapper {
   margin-top: var(--spacing-m);
 }

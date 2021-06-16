@@ -72,7 +72,7 @@ function ToastProvider({ children }: Props): React.ReactElement {
       }}
     >
       {ReactDOM.createPortal(
-        <div className={styles.toastContainer}>
+        <div className={styles['toast-container']}>
           {toasts.map(toast => (
             <Toast
               key={toast.id}

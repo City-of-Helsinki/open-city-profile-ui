@@ -71,7 +71,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
     value: language,
     label: t(`LANGUAGE_OPTIONS.${language}`),
   }));
-
+  const formFieldStyle = styles['form-field'];
   return (
     <Formik
       initialValues={{
@@ -94,9 +94,9 @@ function CreateProfileForm(props: Props): React.ReactElement {
     >
       {formikProps => (
         <Form>
-          <div className={styles.formFields}>
+          <div className={styles['form-fields']}>
             <Field
-              className={styles.formField}
+              className={formFieldStyle}
               name="firstName"
               id="firstName"
               maxLength={formFields.firstName.max as number}
@@ -106,7 +106,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
               label={t('profileForm.firstName')}
             />
             <Field
-              className={styles.formField}
+              className={formFieldStyle}
               name="lastName"
               id="lastName"
               maxLength={formFields.lastName.max as number}
@@ -117,7 +117,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
             />
 
             <FormikDropdown
-              className={styles.formField}
+              className={formFieldStyle}
               name={'profileLanguage'}
               options={profileLanguageOptions}
               default={formikProps.values.profileLanguage}
@@ -128,7 +128,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
             />
 
             <Field
-              className={styles.formField}
+              className={formFieldStyle}
               name="phone"
               id="phone"
               as={PhoneInput}
@@ -139,13 +139,15 @@ function CreateProfileForm(props: Props): React.ReactElement {
               label={t('profileForm.phone')}
             />
 
-            <div className={styles.formField}>
-              <label className={styles.label}>{t('profileForm.email')}</label>
-              <span className={styles.email}>{props.profile.email}</span>
+            <div className={formFieldStyle}>
+              <label className={styles['label']}>
+                {t('profileForm.email')}
+              </label>
+              <span className={styles['email']}>{props.profile.email}</span>
             </div>
           </div>
 
-          <div className={styles.terms}>
+          <div className={styles['terms']}>
             <Field
               as={Checkbox}
               name="terms"

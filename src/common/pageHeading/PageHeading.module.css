@@ -1,4 +1,4 @@
-.pageHeading {
+.page-heading {
   align-items: center;
   color: var(--color-bus);
   display: flex;
@@ -8,36 +8,36 @@
   text-align: center;
 }
 
-.pageHeading h1 {
+.page-heading h1 {
   font-size: var(--fontsize-heading-m);
   font-weight: bold;
 }
 
-.userIcon {
+.user-icon {
   width: 54px;
   height: 54px;
   margin-bottom: var(--spacing-layout-2-xs);
 }
 
 @media (min-width: 768px) {
-  .pageHeading {
+  .page-heading {
     flex-direction: row;
     text-align: left;
   }
 
-  .userIcon {
+  .user-icon {
     width: 77px;
     height: 77px;
     margin-bottom: 0;
   }
-  .pageHeading h1 {
+  .page-heading h1 {
     font-size: var(--fontsize-heading-xl);
     margin-left: var(--spacing-layout-xs);
   }
 }
 
 @media (min-width: 1200px) {
-  .pageHeading {
+  .page-heading {
     width: 1140px;
     margin-left: auto;
     margin-right: auto;

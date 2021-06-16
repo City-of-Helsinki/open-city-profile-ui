@@ -13,19 +13,19 @@ type Props = {
 function Footer(props: Props): React.ReactElement {
   const { t } = useTranslation();
   return (
-    <footer className={styles.footer}>
-      <div className={styles.content}>
-        {!props.hideFooterLogo && <HelsinkiLogo className={styles.logo} />}
-        <div className={styles.textContainer}>
+    <footer className={styles['footer']}>
+      <div className={styles['content']}>
+        {!props.hideFooterLogo && <HelsinkiLogo className={styles['logo']} />}
+        <div className={styles['text-container']}>
           <div>
             <Copyright />
-            <FooterLinks className={styles.links} />
+            <FooterLinks className={styles['links']} />
           </div>
           <a
             href={t('footer.feedbackLink')}
             target="_blank"
             rel="noreferrer noopener"
-            className={styles.feedback}
+            className={styles['feedback']}
           >
             {t('footer.feedback')}
           </a>

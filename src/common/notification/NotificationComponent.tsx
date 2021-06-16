@@ -18,7 +18,7 @@ function NotificationComponent(props: Props): React.ReactElement | null {
     return null;
   }
   return (
-    <div className={styles.notification}>
+    <div className={styles['notification']}>
       <Notification
         dismissible
         type={props.type || 'error'}
@@ -26,7 +26,7 @@ function NotificationComponent(props: Props): React.ReactElement | null {
         closeButtonLabelText={t('notification.closeButtonText') || ''}
         onClose={props.onClose}
       >
-        <div className={styles.messageWrapper}>
+        <div className={styles['message-wrapper']}>
           {props.children || t('notification.defaultErrorText')}
         </div>
       </Notification>

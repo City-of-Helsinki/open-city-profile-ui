@@ -181,7 +181,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
         address={permanentForeignAddress as CommonAddress}
       />
       <div
-        className={classNames([styles.verifiedDataIconInformation])}
+        className={classNames([styles['verified-data-icon-information']])}
         id="verified-data-information"
         aria-hidden="true"
       >
