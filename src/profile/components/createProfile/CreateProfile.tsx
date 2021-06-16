@@ -82,10 +82,10 @@ function CreateProfile({
     <div className={styles['create-profile']}>
       <PageHeading
         text={t('createProfile.pageTitle')}
-        className={responsive.maxWidthCentered}
+        className={responsive['max-width-centered']}
         dataTestId="create-profile-heading"
       />
-      <div className={responsive.maxWidthCentered}>
+      <div className={responsive['max-width-centered']}>
         <ProfileSection
           title={t('createProfile.heading')}
           titleVariant="h2"
