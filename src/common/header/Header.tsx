@@ -31,7 +31,7 @@ function Header(): React.ReactElement {
       skipTo={`#${MAIN_CONTENT_ID}`}
       skipToContentLabel={t('skipToContent')}
       menuToggleAriaLabel={t('nav.menuButtonLabel')}
-      title="Profile"
+      title={t('appName')}
       className={styles['z-index-fix']}
     >
       {isComplete && (
