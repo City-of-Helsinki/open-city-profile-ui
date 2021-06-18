@@ -5,6 +5,7 @@ import HelsinkiLogo from '../helsinkiLogo/HelsinkiLogo';
 import Copyright from '../copyright/Copyright';
 import styles from './Footer.module.css';
 import FooterLinks from '../footerLinks/FooterLinks';
+import NewWindowLink from '../newWindowLink/NewWindowLink';
 
 type Props = {
   hideFooterLogo?: boolean;
@@ -21,14 +22,11 @@ function Footer(props: Props): React.ReactElement {
             <Copyright />
             <FooterLinks className={styles['links']} />
           </div>
-          <a
-            href={t('footer.feedbackLink')}
-            target="_blank"
-            rel="noreferrer noopener"
+          <NewWindowLink
+            link={t('footer.feedbackLink')}
+            title={t('footer.feedback')}
             className={styles['feedback']}
-          >
-            {t('footer.feedback')}
-          </a>
+          />
         </div>
       </div>
     </footer>

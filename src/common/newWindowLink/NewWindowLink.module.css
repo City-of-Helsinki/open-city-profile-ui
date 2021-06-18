@@ -1,0 +1,8 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon {
+  padding-left: 0.25em;
+}
