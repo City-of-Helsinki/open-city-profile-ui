@@ -12,9 +12,9 @@ function LanguageSwitcher(): React.ReactElement {
     trackEvent({ category: 'action', action: `Language selected ${code}` });
   };
   const languages = [
-    { code: 'fi', label: 'Suomi' },
-    { code: 'sv', label: 'Svenska' },
-    { code: 'en', label: 'English' },
+    { code: 'fi', label: 'Suomeksi' },
+    { code: 'sv', label: 'På svenska' },
+    { code: 'en', label: 'In English' },
   ];
   return (
     <Navigation.LanguageSelector
@@ -28,10 +28,12 @@ function LanguageSwitcher(): React.ReactElement {
           label={lang.label}
           active={i18n.language === lang.code}
           key={lang.code}
+          lang={lang.code}
         />
       ))}
     </Navigation.LanguageSelector>
   );
 }
-
+// without the componentName, this component won't show beside the menu icon in mobile.
+LanguageSwitcher.componentName = 'NavigationLanguageSelector';
 export default LanguageSwitcher;
