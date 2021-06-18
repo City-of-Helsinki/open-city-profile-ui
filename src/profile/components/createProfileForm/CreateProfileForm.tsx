@@ -14,6 +14,7 @@ import {
   basicDataSchema,
   createProfilePhoneSchema,
 } from '../../../common/schemas/schemas';
+import NewWindowLinkWithChildrenAsTitle from '../../../common/newWindowLink/NewWindowLinkWithChildrenAsTitle';
 
 const termsSchema = yup
   .object()
@@ -148,30 +149,25 @@ function CreateProfileForm(props: Props): React.ReactElement {
           </div>
 
           <div className={styles['terms']}>
+            <p>
+              <Trans
+                i18nKey="profileForm.terms"
+                components={[
+                  <NewWindowLinkWithChildrenAsTitle
+                    link={t('profileForm.termsFileDescriptionLink')}
+                  />,
+                  <NewWindowLinkWithChildrenAsTitle
+                    link={t('profileForm.termsDataProtectionLink')}
+                  />,
+                ]}
+              />
+            </p>
             <Field
               as={Checkbox}
               name="terms"
               id="terms"
               checked={formikProps.values.terms}
-              label={
-                <Trans
-                  i18nKey="profileForm.terms"
-                  components={[
-                    // eslint-disable-next-line jsx-a11y/anchor-has-content
-                    <a
-                      href={t('profileForm.termsFileDescriptionLink')}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    />,
-                    // eslint-disable-next-line jsx-a11y/anchor-has-content
-                    <a
-                      href={t('profileForm.termsDataProtectionLink')}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    />,
-                  ]}
-                />
-              }
+              label={t('profileForm.termsLabel')}
             />
           </div>
           <div>
