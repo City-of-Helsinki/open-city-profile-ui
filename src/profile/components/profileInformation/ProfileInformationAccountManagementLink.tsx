@@ -9,6 +9,7 @@ import {
   getAmrUrl,
 } from './profileInformationAccountManagementLinkUtils';
 import styles from './profileInformationAccountManagementLink.module.css';
+import NewWindowLink from '../../../common/newWindowLink/NewWindowLink';
 
 function ProfileInformationAccountManagementLink(): React.ReactElement | null {
   const { t } = useTranslation();
@@ -32,13 +33,13 @@ function ProfileInformationAccountManagementLink(): React.ReactElement | null {
         />
       </div>
       <div className={styles['link']}>
-        <a
-          href={authenticationMethodReferenceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+        <NewWindowLink
+          link={authenticationMethodReferenceUrl}
+          title={t('profileInformation.doGoToAccountManagement')}
+          hideIcon
         >
-          {t('profileInformation.doGoToAccountManagement')} <IconAngleRight />
-        </a>
+          <IconAngleRight />
+        </NewWindowLink>
       </div>
     </div>
   );

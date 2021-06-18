@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import NewWindowLink from '../newWindowLink/NewWindowLink';
+
 type Props = {
   className?: string;
 };
@@ -12,13 +14,10 @@ function FooterLinks(props: Props): React.ReactElement {
   return (
     <span className={props.className}>
       {' '}
-      <a
-        href={t('profileForm.termsFileDescriptionLink')}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {t('footer.privacy')}
-      </a>{' '}
+      <NewWindowLink
+        link={t('profileForm.termsFileDescriptionLink')}
+        title={t('footer.privacy')}
+      />{' '}
       | <Link to="/accessibility">{t('footer.accessibility')}</Link>
     </span>
   );

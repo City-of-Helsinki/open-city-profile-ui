@@ -231,5 +231,6 @@
     "facebook": "Facebook",
     "yletunnus": "Yle",
     "tunnistusSuomifi": "Suomi.fi"
-  }
+  },
+  "opensInNewWindow": "{{title}}. Opens in a new window."
 }
