@@ -64,7 +64,7 @@
   "helsinkiLogo": "Helsingfors logotyp",
   "landmarks": {
     "navigation": {
-      "language": "",
+      "language": "Språk: Svenska. Ändra språk. Vaihda kieli. Change language.",
       "main": "",
       "user": ""
     }
@@ -86,7 +86,8 @@
     "services": "Dina tjänster",
     "signin": "Logga in",
     "signout": "Logga ut",
-    "subscriptions": "Prenumerationer"
+    "subscriptions": "Prenumerationer",
+    "titleAriaLabel": "Helsingfors: Helsingfors stad"
   },
   "notification": {
     "closeButtonText": "Stäng",

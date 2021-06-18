@@ -64,7 +64,7 @@
   "helsinkiLogo": "Helsinki logo",
   "landmarks": {
     "navigation": {
-      "language": "Language",
+      "language": "Language: English. Change language. Vaihda kieli. Ändra språk.",
       "main": "Main",
       "user": "User"
     }
@@ -86,7 +86,8 @@
     "services": "Your services",
     "signin": "Log in",
     "signout": "Sign out",
-    "subscriptions": "Subscriptions"
+    "subscriptions": "Subscriptions",
+    "titleAriaLabel": "Helsinki: City of Helsinki"
   },
   "notification": {
     "closeButtonText": "Close",
