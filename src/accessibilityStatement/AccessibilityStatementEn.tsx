@@ -44,7 +44,7 @@ function AccessibilityStatementEn(): ReactElement {
           link="https://www.hel.fi/feedback"
           title="www.hel.fi/feedback"
         />
-        . The aim is to reply to the enquiry within a reasonable time frame.{' '}
+        . The aim is to reply to the enquiry within a reasonable time frame.
       </p>
 
       <h2>Feedback and contact information</h2>

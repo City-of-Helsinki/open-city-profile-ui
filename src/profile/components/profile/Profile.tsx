@@ -81,12 +81,12 @@ function Profile(): React.ReactElement {
     const pathname = location.pathname.substr(1);
 
     if (!isDoingProfileChecks && pathname.length === 0) {
-      return isProfileFound ? 'nav.information' : 'profileForm.pageTitle';
+      return isProfileFound ? 'nav.information' : 'createProfile.pageTitle';
     }
 
     switch (pathname) {
       case 'connected-services':
-        return 'serviceConnections.title';
+        return 'nav.services';
       default:
         return 'appName';
     }
