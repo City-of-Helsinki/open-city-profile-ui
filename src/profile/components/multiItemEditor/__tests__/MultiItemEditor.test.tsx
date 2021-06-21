@@ -471,6 +471,8 @@ describe('<MultiItemEditor /> ', () => {
             } = testRun;
             const elementGetter = () => getElement(elementSelector);
             const errorElementGetter = () => getElement(errorSelector);
+            const errorListElementGetter = () =>
+              getElement({ testId: `${dataType}-error-list` });
 
             // set invalid values
             await setValues(setInputValue, invalidData, testIndex);
@@ -483,6 +485,7 @@ describe('<MultiItemEditor /> ', () => {
             );
             // getElement throws if element is not found
             expect(() => errorElementGetter).not.toThrow();
+            expect(() => errorListElementGetter).not.toThrow();
             // set valid value
             await setValues(setInputValue, validData, testIndex);
             await waitForElementAttributeValue(
@@ -491,6 +494,7 @@ describe('<MultiItemEditor /> ', () => {
               'false'
             );
             expect(errorElementGetter).toThrow();
+            expect(errorListElementGetter).toThrow();
           });
         });
       });

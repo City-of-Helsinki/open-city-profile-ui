@@ -235,6 +235,8 @@ describe('<BasicData /> ', () => {
         } = runProps;
         const elementGetter = () => getElement(elementSelector);
         const errorElementGetter = () => getElement(errorSelector);
+        const errorListElementGetter = () =>
+          getElement({ testId: `${basicDataType}-error-list` });
 
         // set invalid values
         await setValues(setInputValue, invalidData);
@@ -247,6 +249,7 @@ describe('<BasicData /> ', () => {
         );
         // getElement throws if element is not found
         expect(() => errorElementGetter).not.toThrow();
+        expect(() => errorListElementGetter).not.toThrow();
         // set valid value
         await setValues(setInputValue, validData);
         await waitForElementAttributeValue(
@@ -255,6 +258,7 @@ describe('<BasicData /> ', () => {
           'false'
         );
         expect(errorElementGetter).toThrow();
+        expect(errorListElementGetter).toThrow();
       }
     });
   });
