@@ -21,8 +21,8 @@ function Header(): React.ReactElement {
 
   const { isComplete } = useContext(ProfileContext);
 
-  const onClick = (path: string, e: MouseEvent) => {
-    e.preventDefault();
+  const onClick = (path: string, e?: MouseEvent) => {
+    e && e.preventDefault();
     history.push(path);
     trackEvent({ category: 'nav', action: `${path} click` });
   };
@@ -39,6 +39,7 @@ function Header(): React.ReactElement {
       titleAriaLabel={t('nav.titleAriaLabel')}
       className={styles['z-index-fix']}
       logoLanguage={logoLanguage}
+      onTitleClick={() => onClick('/')}
     >
       {isComplete && (
         <Navigation.Row>
