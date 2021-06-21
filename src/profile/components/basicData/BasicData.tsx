@@ -29,6 +29,7 @@ import { useFocusSetter } from '../../hooks/useFocusSetter';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
+import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
 
 type FormikValues = BasicDataValue;
 
@@ -148,6 +149,7 @@ function BasicData(): React.ReactElement | null {
                     aria-labelledby={`${basicDataType}-lastName-helper`}
                   />
                 </div>
+                <AccessibilityFieldHelpers dataType={basicDataType} />
                 <AccessibleFormikErrors
                   formikProps={formikProps}
                   dataType={basicDataType}

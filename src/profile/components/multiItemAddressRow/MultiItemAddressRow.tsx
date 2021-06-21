@@ -129,6 +129,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                     default={countryCode}
                     invalid={hasFieldError(formikProps, 'countryCode')}
                     error={getFieldErrorMessage(formikProps, 'countryCode')}
+                    aria-describedby={`${dataType}-countryCode-helper`}
                     toggleButtonAriaLabel={t(
                       'profileInformation.ariaShowOptions'
                     )}
