@@ -7,7 +7,6 @@ import Explanation from '../explanation/Explanation';
 type Props = {
   children?: React.ReactNode;
   description?: string;
-  titleButton?: React.ReactNode;
   title?: string;
   titleVariant?: 'h2' | 'h3';
   hasVerifiedUserData?: boolean;
@@ -16,7 +15,6 @@ type Props = {
 function ProfileSection({
   children,
   description,
-  titleButton,
   titleVariant,
   title,
   hasVerifiedUserData,
@@ -36,7 +34,6 @@ function ProfileSection({
           main={title || ''}
           small={description}
         />
-        {titleButton}
       </div>
       {children}
     </section>
