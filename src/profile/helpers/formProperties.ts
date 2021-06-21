@@ -31,8 +31,8 @@ export const formFieldsByDataType: FormFieldsByDataType = {
       max: 64,
       translationKey: 'profileForm.city',
     },
-    country: {
-      required: false,
+    countryCode: {
+      required: true,
       translationKey: 'profileForm.country',
     },
   },

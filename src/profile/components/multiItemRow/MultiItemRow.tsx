@@ -17,6 +17,7 @@ import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
 import { getFormFields } from '../../helpers/formProperties';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
+import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 
 type EmailAndPhoneFormikValue = { value: string };
 
@@ -89,6 +90,10 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
                     errorText={getFieldErrorMessage(formikProps, 'value')}
                     aria-labelledby={`${dataType}-value-helper`}
                     autoFocus
+                  />
+                  <AccessibleFormikErrors
+                    formikProps={formikProps}
+                    dataType={dataType}
                   />
                   <FormButtons
                     handler={actionHandler}
