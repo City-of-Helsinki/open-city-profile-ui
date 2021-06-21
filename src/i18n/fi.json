@@ -234,5 +234,6 @@
     "yletunnus": "Yle",
     "tunnistusSuomifi": "Suomi.fi"
   },
-  "opensInNewWindow": "{{title}}. Avautuu uudessa ikkunassa."
+  "opensInNewWindow": "{{title}}. Avautuu uudessa ikkunassa.",
+  "accessibilityStatement": "Saavutettavuusseloste"
 }

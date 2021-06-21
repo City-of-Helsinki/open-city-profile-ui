@@ -11,6 +11,8 @@ require('../public/test-env-config');
 
 configure({ adapter: new Adapter() });
 
+((global as unknown) as Window).scrollTo = jest.fn();
+
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
   useLocation: () => ({
