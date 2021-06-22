@@ -16,6 +16,7 @@ import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import checkBerthError from '../../helpers/checkBerthError';
 import BerthErrorModal from '../modals/berthError/BerthErrorModal';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
+import { useFocusSetter } from '../../hooks/useFocusSetter';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -47,6 +48,10 @@ function DeleteProfile(): React.ReactElement {
 
   const { t, i18n } = useTranslation();
 
+  const [removeButtonId, setFocusToRemoveButton] = useFocusSetter({
+    targetId: `delete-profile-button`,
+  });
+
   const { data, refetch } = useQuery<ServiceConnectionsRoot>(
     SERVICE_CONNECTIONS,
     {
@@ -71,6 +76,7 @@ function DeleteProfile(): React.ReactElement {
 
   const handleConfirmationModal = () => {
     setDeleteConfirmationModal(prevState => !prevState);
+    setFocusToRemoveButton();
   };
 
   const handleProfileDelete = async () => {
@@ -111,6 +117,7 @@ function DeleteProfile(): React.ReactElement {
           onClick={handleConfirmationModal}
           disabled={!deleteInstructions}
           className={styles.button}
+          id={removeButtonId}
         >
           {t('deleteProfile.delete')}
         </Button>
