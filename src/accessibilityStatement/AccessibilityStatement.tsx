@@ -33,9 +33,9 @@ function AccessibilityStatement(): React.ReactElement {
     <div className={styles['page-wrapper']}>
       <Header />
       <PageMeta title={t('accessibilityStatement')} />
-      <div className={styles['container']}>
+      <main className={styles['container']}>
         <div className={styles['inner-wrapper']}>{selectStatement()}</div>
-      </div>
+      </main>
       <Footer />
     </div>
   );
