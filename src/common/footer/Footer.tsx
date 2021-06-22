@@ -16,7 +16,9 @@ function Footer(props: Props): React.ReactElement {
   return (
     <footer className={styles['footer']}>
       <div className={styles['content']}>
-        {!props.hideFooterLogo && <HelsinkiLogo className={styles['logo']} />}
+        {!props.hideFooterLogo && (
+          <HelsinkiLogo className={styles['logo']} isLinkToFrontPage />
+        )}
         <div className={styles['text-container']}>
           <div>
             <Copyright />
