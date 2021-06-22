@@ -19,6 +19,7 @@ function ProfileSection({
   title,
   hasVerifiedUserData,
 }: Props): React.ReactElement {
+  const hasTitleRowContent = !!(title || description);
   return (
     <section
       className={classNames(
@@ -26,15 +27,17 @@ function ProfileSection({
         hasVerifiedUserData && styles['verified-data']
       )}
     >
-      <div className={styles['profile-section-title-row']}>
-        <Explanation
-          variant="flush"
-          className={styles['profile-section-title']}
-          titleVariant={titleVariant}
-          main={title || ''}
-          small={description}
-        />
-      </div>
+      {hasTitleRowContent && (
+        <div className={styles['profile-section-title-row']}>
+          <Explanation
+            variant="flush"
+            className={styles['profile-section-title']}
+            titleVariant={titleVariant}
+            main={title || ''}
+            small={description}
+          />
+        </div>
+      )}
       {children}
     </section>
   );
