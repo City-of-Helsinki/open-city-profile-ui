@@ -199,7 +199,7 @@ describe('<BasicData /> ', () => {
           invalidData: { ...basicData, firstName: '' },
           elementSelector: { id: 'basic-data-firstName' },
           errorSelector: {
-            id: 'basic-data-firstName-helper',
+            id: 'basic-data-firstName-error',
           },
         },
         {
@@ -207,7 +207,7 @@ describe('<BasicData /> ', () => {
           invalidData: { ...basicData, lastName: '' },
           elementSelector: { id: 'basic-data-lastName' },
           errorSelector: {
-            id: 'basic-data-lastName-helper',
+            id: 'basic-data-lastName-error',
           },
         },
         {
@@ -220,7 +220,7 @@ describe('<BasicData /> ', () => {
           },
           elementSelector: { id: 'basic-data-nickname' },
           errorSelector: {
-            id: 'basic-data-nickname-helper',
+            id: 'basic-data-nickname-error',
           },
         },
       ];
@@ -248,8 +248,8 @@ describe('<BasicData /> ', () => {
           'true'
         );
         // getElement throws if element is not found
-        expect(() => errorElementGetter).not.toThrow();
-        expect(() => errorListElementGetter).not.toThrow();
+        expect(errorElementGetter).not.toThrow();
+        expect(errorListElementGetter).not.toThrow();
         // set valid value
         await setValues(setInputValue, validData);
         await waitForElementAttributeValue(

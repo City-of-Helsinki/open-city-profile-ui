@@ -459,7 +459,7 @@ describe('<MultiItemEditor /> ', () => {
               invalidData: { ...formValues, [field]: '' },
               elementSelector: { id: `${selector}` },
               errorSelector: {
-                id: `${selector}-helper`,
+                id: `${selector}-error`,
               },
             };
 
@@ -484,8 +484,8 @@ describe('<MultiItemEditor /> ', () => {
               'true'
             );
             // getElement throws if element is not found
-            expect(() => errorElementGetter).not.toThrow();
-            expect(() => errorListElementGetter).not.toThrow();
+            expect(errorElementGetter).not.toThrow();
+            expect(errorListElementGetter).not.toThrow();
             // set valid value
             await setValues(setInputValue, validData, testIndex);
             await waitForElementAttributeValue(
