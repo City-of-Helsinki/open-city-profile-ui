@@ -1,9 +1,8 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext } from 'react';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import DownloadData from '../downloadData/DownloadData';
 import styles from './ProfileInformation.module.css';
-import BerthErrorModal from '../modals/berthError/BerthErrorModal';
 import ProfileInformationAccountManagementLink from './ProfileInformationAccountManagementLink';
 import { ProfileContext } from '../../context/ProfileContext';
 import BasicData from '../basicData/BasicData';
@@ -13,7 +12,6 @@ import VerifiedPersonalInformation from '../verifiedPersonalInformation/Verified
 import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
 
 function ProfileInformation(): React.ReactElement {
-  const [berthError, setBerthError] = useState(false);
   const { data } = useContext(ProfileContext);
   const hasVerifiedData = !!getVerifiedPersonalInformation(data);
   const UserDataComponent = hasVerifiedData
@@ -35,10 +33,6 @@ function ProfileInformation(): React.ReactElement {
         <DownloadData />
         <DeleteProfile />
       </div>
-      <BerthErrorModal
-        isOpen={berthError}
-        onClose={() => setBerthError(prevState => !prevState)}
-      />
     </Fragment>
   );
 }
