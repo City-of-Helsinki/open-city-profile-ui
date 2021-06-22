@@ -333,10 +333,10 @@ describe('<MultiItemEditor /> ', () => {
             updatedProfileData,
           });
           const primaryItemRemoveButtonSelector: ElementSelector = {
-            testId: `${dataType}-0-remove-button`,
+            id: `${dataType}-0-remove-button`,
           };
           const removeButtonSelector: ElementSelector = {
-            testId: `${dataType}-${removeItemIndex}-remove-button`,
+            id: `${dataType}-${removeItemIndex}-remove-button`,
           };
           const confirmButtonSelector = {
             testId: 'confirmation-modal-confirm-button',
