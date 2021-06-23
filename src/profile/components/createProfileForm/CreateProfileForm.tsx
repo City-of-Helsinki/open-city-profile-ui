@@ -3,6 +3,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { TextInput, Checkbox, Button, PhoneInput } from 'hds-react';
 import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
+import classNames from 'classnames';
 
 import { getIsInvalid, getFieldError } from '../../helpers/formik';
 import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
@@ -15,6 +16,7 @@ import {
   createProfilePhoneSchema,
 } from '../../../common/schemas/schemas';
 import NewWindowLinkWithChildrenAsTitle from '../../../common/newWindowLink/NewWindowLinkWithChildrenAsTitle';
+import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
 const termsSchema = yup
   .object()
@@ -72,7 +74,14 @@ function CreateProfileForm(props: Props): React.ReactElement {
     value: language,
     label: t(`LANGUAGE_OPTIONS.${language}`),
   }));
-  const formFieldStyle = styles['form-field'];
+  const formFieldStyle = classNames([
+    styles['form-field'],
+    commonFormStyles['form-field'],
+  ]);
+  const containerStyle = classNames([
+    styles['form-fields'],
+    commonFormStyles['multi-item-wrapper'],
+  ]);
   return (
     <Formik
       initialValues={{
@@ -95,7 +104,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
     >
       {formikProps => (
         <Form>
-          <div className={styles['form-fields']}>
+          <div className={containerStyle}>
             <Field
               className={formFieldStyle}
               name="firstName"
@@ -141,10 +150,12 @@ function CreateProfileForm(props: Props): React.ReactElement {
             />
 
             <div className={formFieldStyle}>
-              <label className={styles['label']}>
-                {t('profileForm.email')}
-              </label>
-              <span className={styles['email']}>{props.profile.email}</span>
+              <TextInput
+                id={'create-profile-email'}
+                readOnly
+                label={t('profileForm.email')}
+                defaultValue={props.profile.email}
+              />
             </div>
           </div>
 
