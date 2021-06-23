@@ -21,22 +21,24 @@ function LabeledValue({
   const labelTestId = testId ? { 'data-testid': `${testId}-label` } : null;
   const valueTestId = testId ? { 'data-testid': `${testId}-value` } : null;
   return (
-    <div className={styles.wrapper}>
-      <strong className={styles.label} {...labelTestId}>
+    <div className={styles['wrapper']}>
+      <strong className={styles['label']} {...labelTestId}>
         {label}
       </strong>
       <span
         className={classNames(
-          styles.value,
-          verifiedInfoText && styles.withIcon
+          styles['value'],
+          verifiedInfoText && styles['with-icon']
         )}
         {...valueTestId}
       >
         {value || '–'}
         {verifiedInfoText && (
-          <span className={classNames(commonFormStyles.icon, styles.icon)}>
+          <span
+            className={classNames(commonFormStyles['icon'], styles['icon'])}
+          >
             <IconCheckCircleFill aria-hidden="true" />
-            <span className={commonFormStyles.visuallyHidden}>
+            <span className={commonFormStyles['visually-hidden']}>
               {verifiedInfoText}
             </span>
           </span>

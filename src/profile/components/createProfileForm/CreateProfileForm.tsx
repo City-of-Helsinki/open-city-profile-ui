@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { TextInput, Checkbox } from 'hds-react';
+import { TextInput, Checkbox, Button, PhoneInput } from 'hds-react';
 import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 
 import { getIsInvalid, getFieldError } from '../../helpers/formik';
-import FormikDropdown, {
-  HdsOptionType,
-} from '../../../common/formikDropdown/FormikDropdown';
-import Button from '../../../common/button/Button';
+import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
 import { Language } from '../../../graphql/typings';
@@ -74,7 +71,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
     value: language,
     label: t(`LANGUAGE_OPTIONS.${language}`),
   }));
-
+  const formFieldStyle = styles['form-field'];
   return (
     <Formik
       initialValues={{
@@ -97,68 +94,66 @@ function CreateProfileForm(props: Props): React.ReactElement {
     >
       {formikProps => (
         <Form>
-          <div className={styles.formFields}>
+          <div className={styles['form-fields']}>
             <Field
-              className={styles.formField}
+              className={formFieldStyle}
               name="firstName"
               id="firstName"
               maxLength={formFields.firstName.max as number}
               as={TextInput}
               invalid={hasFieldError(formikProps, 'firstName')}
-              helperText={getFieldErrorMessage(formikProps, 'firstName')}
-              labelText={t('profileForm.firstName')}
+              errorText={getFieldErrorMessage(formikProps, 'firstName')}
+              label={t('profileForm.firstName')}
             />
             <Field
-              className={styles.formField}
+              className={formFieldStyle}
               name="lastName"
               id="lastName"
               maxLength={formFields.lastName.max as number}
               as={TextInput}
               invalid={hasFieldError(formikProps, 'lastName')}
-              helperText={getFieldErrorMessage(formikProps, 'lastName')}
-              labelText={t('profileForm.lastName')}
+              errorText={getFieldErrorMessage(formikProps, 'lastName')}
+              label={t('profileForm.lastName')}
             />
 
             <FormikDropdown
-              className={styles.formField}
+              className={formFieldStyle}
               name={'profileLanguage'}
               options={profileLanguageOptions}
               default={formikProps.values.profileLanguage}
               label={t('profileForm.language')}
               onChange={option =>
-                formikProps.setFieldValue(
-                  'profileLanguage',
-                  (option as HdsOptionType).value
-                )
+                formikProps.setFieldValue('profileLanguage', option.value)
               }
             />
 
             <Field
-              className={styles.formField}
+              className={formFieldStyle}
               name="phone"
               id="phone"
-              as={TextInput}
-              type="tel"
+              as={PhoneInput}
               minLength={phoneFields.value.min as number}
               maxLength={phoneFields.value.max as number}
               invalid={hasFieldError(formikProps, 'phone')}
-              helperText={getFieldErrorMessage(formikProps, 'phone')}
-              labelText={t('profileForm.phone')}
+              errorText={getFieldErrorMessage(formikProps, 'phone')}
+              label={t('profileForm.phone')}
             />
 
-            <div className={styles.formField}>
-              <label className={styles.label}>{t('profileForm.email')}</label>
-              <span className={styles.email}>{props.profile.email}</span>
+            <div className={formFieldStyle}>
+              <label className={styles['label']}>
+                {t('profileForm.email')}
+              </label>
+              <span className={styles['email']}>{props.profile.email}</span>
             </div>
           </div>
 
-          <div className={styles.terms}>
+          <div className={styles['terms']}>
             <Field
               as={Checkbox}
               name="terms"
               id="terms"
               checked={formikProps.values.terms}
-              labelText={
+              label={
                 <Trans
                   i18nKey="profileForm.terms"
                   components={[
@@ -181,6 +176,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
           </div>
           <div>
             <Button
+              variant="primary"
               type="submit"
               disabled={Boolean(
                 formikProps.isSubmitting ||

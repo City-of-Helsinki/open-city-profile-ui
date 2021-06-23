@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import FileSaver from 'file-saver';
 import * as Sentry from '@sentry/browser';
 import { loader } from 'graphql.macro';
+import { Button } from 'hds-react';
 
-import Button from '../../../common/button/Button';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './DownloadData.module.css';
 import { DownloadMyProfileQuery as DownloadMyProfileRoot } from '../../../graphql/generatedTypes';
@@ -32,15 +32,15 @@ function DownloadData(): React.ReactElement {
   });
   const { t } = useTranslation();
   const isDownloadingData = loading;
-  const isOpenByDefault = loading;
+  const initiallyOpen = loading;
   const onDownloadClick = downloadProfileData;
 
   return (
     <React.Fragment>
       <ExpandingPanel
         title={t('downloadData.panelTitle')}
-        defaultExpanded={isOpenByDefault}
-        scrollIntoViewOnMount={isOpenByDefault}
+        initiallyOpen={initiallyOpen}
+        scrollIntoViewOnMount={initiallyOpen}
       >
         <p>{t('downloadData.panelText')}</p>
         <Button

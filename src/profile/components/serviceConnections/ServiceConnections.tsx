@@ -54,38 +54,40 @@ function ServiceConnections(props: Props): React.ReactElement {
   const services = getServices(data);
   const hasNoServices = !loading && services.length === 0;
   return (
-    <div className={styles.serviceConnections}>
-      <div className={responsive.maxWidthCentered}>
+    <div className={styles['service-connections']}>
+      <div className={responsive['max-width-centered']}>
         <Explanation
           main={t('serviceConnections.title')}
-          small={t('serviceConnections.explanation')}
+          small={
+            hasNoServices
+              ? t('serviceConnections.empty')
+              : t('serviceConnections.explanation')
+          }
           titleVariant="h2"
         />
-        {hasNoServices && (
-          <p className={styles.empty}>{t('serviceConnections.empty')}</p>
-        )}
-        <div className={styles.panelContainer}>
+        <div className={styles['panel-container']}>
           {services.map((service, index) => (
             <ExpandingPanel
               key={index}
               title={service.title || ''}
               showInformationText
+              initiallyOpen={false}
             >
               <p>{service.description}</p>
-              <p className={styles.serviceInformation}>
+              <p className={styles['service-information']}>
                 {t('serviceConnections.servicePersonalData')}
               </p>
               {getAllowedDataFieldsFromService(service).map(node => (
                 <CheckedLabel
                   key={node.fieldName}
                   value={node.label || node.fieldName}
-                  className={styles.allowedDataField}
+                  className={styles['allowed-data-field']}
                 />
               ))}
-              <p className={styles.createdAt}>
+              <p className={styles['created-at']}>
                 {t('serviceConnections.created')}
               </p>
-              <p className={styles.dateAndTime}>
+              <p className={styles['date-and-time']}>
                 {getDateTime(service.createdAt)}
               </p>
             </ExpandingPanel>

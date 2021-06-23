@@ -13,13 +13,13 @@ const getWrapper = (props?: Props) => shallow(<HelsinkiLogo {...props} />);
 describe('renders correct logo based on language', () => {
   it('finnish logo', () => {
     const wrapper = getWrapper();
-    expect(wrapper.find('.logoFi').length).toEqual(1);
+    expect(wrapper.find('.logo-fi').length).toEqual(1);
   });
 
   it('swedish logo', () => {
     i18n.changeLanguage('sv');
     const wrapper = getWrapper();
-    expect(wrapper.find('.logoSv').length).toEqual(1);
+    expect(wrapper.find('.logo-sv').length).toEqual(1);
   });
 });
 

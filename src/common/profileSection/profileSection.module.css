@@ -1,4 +1,4 @@
-.profileSection {
+.profile-section {
   --horizontal-whitespace: var(--spacing-m);
   --title-fontsize: var(--fontsize-heading-m);
   background: var(--color-white);
@@ -7,25 +7,29 @@
   margin-bottom: var(--spacing-xl);
 }
 
-.profileSectionTitleRow {
+.profile-section-title-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: var(--spacing-l);
 }
 
-.profileSectionTitle h1 {
+.profile-section-title h1 {
   font-size: var(--title-fontsize);
   margin-top: 0;
   margin-bottom: var(--spacing-s);
 }
 
-.profileSectionTitle p {
+.profile-section-title p {
   margin-bottom: 0;
 }
 
+.verified-data {
+  background: none;
+}
+
 @media (min-width: 600px) {
-  .profileSection {
+  .profile-section {
     --horizontal-whitespace: var(--spacing-xl);
   }
 }

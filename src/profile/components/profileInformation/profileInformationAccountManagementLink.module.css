@@ -9,11 +9,11 @@
   background: var(--color-white);
 }
 
-.labelSection {
+.label-section {
   flex-grow: 1;
   margin-bottom: var(--spacing-m);
 }
-.labelSection > div {
+.label-section > div {
   margin-bottom: 0;
 }
 
@@ -36,7 +36,7 @@
     flex-direction: row;
   }
 
-  .labelSection {
+  .label-section {
     margin-bottom: 0;
   }
 

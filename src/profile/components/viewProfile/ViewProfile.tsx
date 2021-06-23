@@ -16,7 +16,7 @@ function ViewProfile(): React.ReactElement {
   const { isComplete, getName } = useContext(ProfileContext);
 
   return (
-    <div className={styles.viewProfile}>
+    <div className={styles['view-profile']}>
       {isComplete && (
         <React.Fragment>
           <Section korosType="basic">
@@ -25,14 +25,14 @@ function ViewProfile(): React.ReactElement {
               dataTestId="view-profile-heading"
             />
           </Section>
-          <div className={styles.contentWrapper}>
+          <div className={styles['content-wrapper']}>
             <Switch>
               <Route path="/connected-services">
                 <ServiceConnections />
               </Route>
               <Route path="/">
-                <div className={styles.profileContent}>
-                  <div className={responsive.maxWidthCentered}>
+                <div className={styles['profile-content']}>
+                  <div className={responsive['max-width-centered']}>
                     <Explanation
                       main={t('profileInformation.title')}
                       titleVariant="h2"

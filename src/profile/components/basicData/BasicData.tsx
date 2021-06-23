@@ -84,7 +84,7 @@ function BasicData(): React.ReactElement | null {
     }
     return promise;
   };
-
+  const formFieldStyle = commonFormStyles['form-field'];
   if (isEditing) {
     return (
       <Formik
@@ -103,47 +103,47 @@ function BasicData(): React.ReactElement | null {
       >
         {(formikProps: FormikProps<FormikValues>) => (
           <ProfileSection>
-            <h3 className={commonFormStyles.sectionTitle}>
+            <h3 className={commonFormStyles['section-title']}>
               {t('profileForm.basicData')}
             </h3>
             <Form>
               <FocusKeeper targetId={`${basicDataType}-firstName`}>
-                <div className={commonFormStyles.multiItemWrapper}>
+                <div className={commonFormStyles['multi-item-wrapper']}>
                   <Field
-                    className={commonFormStyles.formField}
+                    className={formFieldStyle}
                     name="firstName"
                     id={`${basicDataType}-firstName`}
                     maxLength={formFields.firstName.max as number}
                     as={TextInput}
                     invalid={hasFieldError(formikProps, 'firstName')}
                     aria-invalid={hasFieldError(formikProps, 'firstName')}
-                    helperText={getFieldErrorMessage(formikProps, 'firstName')}
-                    labelText={t(formFields.firstName.translationKey)}
+                    errorText={getFieldErrorMessage(formikProps, 'firstName')}
+                    label={t(formFields.firstName.translationKey)}
                     aria-labelledby="basic-data-firstName-helper"
                     autoFocus
                   />
                   <Field
-                    className={commonFormStyles.formField}
+                    className={formFieldStyle}
                     name="nickname"
                     id={`${basicDataType}-nickname`}
                     maxLength={formFields.nickname.max as number}
                     as={TextInput}
                     invalid={hasFieldError(formikProps, 'nickname')}
                     aria-invalid={hasFieldError(formikProps, 'nickname')}
-                    helperText={getFieldErrorMessage(formikProps, 'nickname')}
-                    labelText={t(formFields.nickname.translationKey)}
+                    errorText={getFieldErrorMessage(formikProps, 'nickname')}
+                    label={t(formFields.nickname.translationKey)}
                     aria-labelledby="basic-data-nickname-helper"
                   />
                   <Field
-                    className={commonFormStyles.formField}
+                    className={formFieldStyle}
                     name="lastName"
                     id={`${basicDataType}-lastName`}
                     maxLength={formFields.lastName.max as number}
                     as={TextInput}
                     invalid={hasFieldError(formikProps, 'lastName')}
                     aria-invalid={hasFieldError(formikProps, 'lastName')}
-                    helperText={getFieldErrorMessage(formikProps, 'lastName')}
-                    labelText={t(formFields.lastName.translationKey)}
+                    errorText={getFieldErrorMessage(formikProps, 'lastName')}
+                    label={t(formFields.lastName.translationKey)}
                     aria-labelledby={`${basicDataType}-lastName-helper`}
                   />
                 </div>
@@ -171,11 +171,11 @@ function BasicData(): React.ReactElement | null {
 
   return (
     <ProfileSection>
-      <div className={commonFormStyles.contentWrapper}>
-        <h3 className={commonFormStyles.sectionTitle}>
+      <div className={commonFormStyles['content-wrapper']}>
+        <h3 className={commonFormStyles['section-title']}>
           {t('profileForm.basicData')}
         </h3>
-        <div className={commonFormStyles.multiItemWrapper}>
+        <div className={commonFormStyles['multi-item-wrapper']}>
           <LabeledValue
             label={t(formFields.firstName.translationKey)}
             value={firstName}
@@ -192,14 +192,14 @@ function BasicData(): React.ReactElement | null {
             testId={`${basicDataType}-lastName`}
           />
         </div>
-        <div className={commonFormStyles.actionsWrapper}>
+        <div className={commonFormStyles['actions-wrapper']}>
           <EditButtons
             handler={actionHandler}
             actions={{
               removable: false,
               setPrimary: false,
             }}
-            buttonClassNames={commonFormStyles.actionsWrapperButton}
+            buttonClassNames={commonFormStyles['actions-wrapper-button']}
             editButtonId={editButtonId}
             testId={basicDataType}
             ariaLabels={ariaLabels}

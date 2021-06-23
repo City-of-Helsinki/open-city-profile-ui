@@ -4,7 +4,7 @@ import { Props as ModalComponentProps } from '../components/modals/confirmationM
 
 type AsyncModalProps = Pick<
   ModalComponentProps,
-  'modalTitle' | 'modalText' | 'actionButtonText'
+  'title' | 'content' | 'actionButtonText'
 >;
 
 type AsyncModalPromiseControls = {

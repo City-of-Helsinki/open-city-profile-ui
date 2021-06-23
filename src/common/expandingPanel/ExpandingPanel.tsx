@@ -1,38 +1,31 @@
-import React, { useState, PropsWithChildren, useRef } from 'react';
-import { IconAngleRight } from 'hds-react';
+import React, { PropsWithChildren, useRef } from 'react';
+import {
+  Button,
+  Card,
+  IconAngleDown,
+  IconAngleUp,
+  useAccordion,
+} from 'hds-react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 
 import styles from './ExpandingPanel.module.css';
 
 type Props = PropsWithChildren<{
   title?: string;
   showInformationText?: boolean;
-  defaultExpanded?: boolean;
+  initiallyOpen: boolean;
   scrollIntoViewOnMount?: boolean;
 }>;
 
 function ExpandingPanel({
   children,
-  defaultExpanded,
+  initiallyOpen,
   showInformationText,
   scrollIntoViewOnMount,
   title,
 }: Props): React.ReactElement {
   const container = useRef<HTMLDivElement | null>(null);
-  const [expanded, setExpanded] = useState(defaultExpanded);
-  const toggleExpanding = () => setExpanded(prevState => !prevState);
   const { t } = useTranslation();
-  const onKeyDown = (event: React.KeyboardEvent) => {
-    if (
-      event.key === ' ' ||
-      event.key === 'Enter' ||
-      event.key === 'Spacebar'
-    ) {
-      event.preventDefault();
-      toggleExpanding();
-    }
-  };
 
   const handleContainerRef = (ref: HTMLDivElement) => {
     // If ref is not saved yet we are about in the first render.
@@ -44,43 +37,35 @@ function ExpandingPanel({
     container.current = ref;
   };
 
-  const handleContentClick = (event: React.SyntheticEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-  };
-
+  const { isOpen, buttonProps, contentProps } = useAccordion({
+    initiallyOpen,
+  });
+  const Icon = isOpen ? IconAngleUp : IconAngleDown;
+  const buttonText = isOpen
+    ? t('expandingPanel.hideInformation')
+    : t('expandingPanel.showInformation');
   return (
-    <div
-      className={styles.container}
-      ref={handleContainerRef}
-      onClick={toggleExpanding}
-      onKeyDown={onKeyDown}
-      tabIndex={0}
-      role="button"
-      aria-expanded={expanded ? 'true' : 'false'}
-    >
-      <div className={styles.title}>
+    <div className={styles['container']} ref={handleContainerRef}>
+      <div className={styles['title']}>
         <h2>{title}</h2>
-        <div className={styles.rightSideInformation}>
-          {showInformationText && (
-            <p className={styles.showInformation}>
-              {expanded
-                ? t('expandingPanel.hideInformation')
-                : t('expandingPanel.showInformation')}
-            </p>
-          )}
-          <IconAngleRight
-            className={classNames(
-              styles.icon,
-              expanded ? styles.iconUp : styles.iconDown
+        <div className={styles['right-side-information']}>
+          <Button
+            title={`${buttonText}: ${title}`}
+            variant={'supplementary'}
+            iconRight={<Icon aria-hidden />}
+            {...buttonProps}
+          >
+            {showInformationText && (
+              <span className={styles['show-information']} aria-hidden>
+                {buttonText}
+              </span>
             )}
-          />
+          </Button>
         </div>
       </div>
-      {expanded && (
-        <div className={styles.content} onClick={handleContentClick}>
-          {children}
-        </div>
-      )}
+      <Card aria-label={title} className={styles['card']} {...contentProps}>
+        {children}
+      </Card>
     </div>
   );
 }

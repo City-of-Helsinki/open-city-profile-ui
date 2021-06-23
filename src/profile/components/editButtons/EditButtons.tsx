@@ -53,21 +53,21 @@ function EditButtons(props: Props): React.ReactElement {
   } = props;
   const { t } = useTranslation();
   const { primary, removable, setPrimary } = actions;
-  const buttonStyle = [commonFormStyles.supplementaryButton];
+  const buttonStyle = [commonFormStyles['supplementary-button']];
   const editButtonIdAttr = editButtonId ? { id: editButtonId } : undefined;
   if (buttonClassNames) {
     buttonStyle.push(buttonClassNames);
   }
   return (
-    <div className={commonFormStyles.actions}>
+    <div className={commonFormStyles['actions']}>
       {setPrimary && primary && (
         <div
-          className={commonFormStyles.primaryContainer}
+          className={commonFormStyles['primary-container']}
           data-testid={`${testId}-primary-indicator`}
         >
           <IconStarFill aria-hidden="true" />
           <span aria-hidden="true">{t('profileForm.primary')}</span>
-          <span className={commonFormStyles.visuallyHidden}>
+          <span className={commonFormStyles['visually-hidden']}>
             {ariaLabels.primary}
           </span>
         </div>

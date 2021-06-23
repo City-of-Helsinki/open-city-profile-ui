@@ -121,28 +121,28 @@ const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
         <section
           className={classNames(
             styles[position],
-            styles.notification,
+            styles['notification'],
             styles[size],
             styles[type],
-            autoClose && styles.noBorder,
+            autoClose && styles['no-border'],
             className
           )}
           aria-label="Notification"
           aria-atomic="true"
           data-testid={dataTestId}
         >
-          <div className={styles.content} role={role} ref={ref}>
-            <div className={styles.label} role="heading" aria-level={2}>
-              <Icon className={styles.icon} aria-hidden />
+          <div className={styles['content']} role={role} ref={ref}>
+            <div className={styles['label']} role="heading" aria-level={2}>
+              <Icon className={styles['icon']} aria-hidden />
               <ConditionalVisuallyHidden visuallyHidden={size === 'small'}>
                 {label}
               </ConditionalVisuallyHidden>
             </div>
-            {children && <div className={styles.body}>{children}</div>}
+            {children && <div className={styles['body']}>{children}</div>}
           </div>
           {dismissible && (
             <button
-              className={classNames(styles.close, styles[type])}
+              className={classNames(styles['close'], styles[type])}
               type="button"
               title={closeButtonLabelText}
               aria-label={closeButtonLabelText}

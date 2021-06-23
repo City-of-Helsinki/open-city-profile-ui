@@ -2372,13 +2372,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-modal@^3.10.1":
-  version "3.10.6"
-  resolved "https://registry.yarnpkg.com/@types/react-modal/-/react-modal-3.10.6.tgz#76717220f32bc72769190692147814a540053c7e"
-  integrity sha512-XpshhwVYir1TRZ2HS5EfmNotJjB8UEC2IkT3omNtiQzROOXSzVLz5xsjwEpACP8U+PctkpfZepX+WT5oDf0a9g==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-router-dom@^5.1.0":
   version "5.1.6"
   resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-5.1.6.tgz#07b14e7ab1893a837c8565634960dc398564b1fb"
@@ -5162,15 +5155,15 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
+date-fns@2.16.1, date-fns@^2.9.0:
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.16.1.tgz#05775792c3f3331da812af253e1a935851d3834b"
+  integrity sha512-sAJVKx/FqrLYHAQeN7VpJrPhagZc9R4ImZIWYRFZaaohR3KzmuK88touwsSwSVT8Qcbd4zoDsnGfX4GFB4imyQ==
+
 date-fns@^1.27.2:
   version "1.30.1"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
   integrity sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
-
-date-fns@^2.9.0:
-  version "2.16.1"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.16.1.tgz#05775792c3f3331da812af253e1a935851d3834b"
-  integrity sha512-sAJVKx/FqrLYHAQeN7VpJrPhagZc9R4ImZIWYRFZaaohR3KzmuK88touwsSwSVT8Qcbd4zoDsnGfX4GFB4imyQ==
 
 dayjs@^1.9.1:
   version "1.10.4"
@@ -6212,11 +6205,6 @@ execa@^4.0.0:
     signal-exit "^3.0.2"
     strip-final-newline "^2.0.0"
 
-exenv@^1.2.0:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
-  integrity sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
-
 exit@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/exit/-/exit-0.1.2.tgz#0632638f8d877cc82107d30a0fff1a17cba1cd0c"
@@ -7122,28 +7110,30 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hds-core@0.21.0:
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-0.21.0.tgz#5c88c783ce4a4f04c9dec81eac89c3047e7b6753"
-  integrity sha512-il5MxtaRY2Exa8rS4mRhjimIWxXzPra6vRcZ1r7KmUo3aJm69B1ZYF0OXHuWeVSJewOzgyfEZahCT+Mzxq0MVw==
+hds-core@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-1.1.0.tgz#de4b696c39e70b1c8256a0f104463ec509259576"
+  integrity sha512-eXT/X3Ts7pdGjH6nYoBuyGjZZDz534TUMJZD3uvvE4U0ousUwJ8J8QQBAggLUyhmiR8piSl7ODuzU3ZFJQYOMg==
 
-hds-design-tokens@0.21.0:
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-0.21.0.tgz#4930ad28a797200f9409ac5169311f13ad7aa607"
-  integrity sha512-ko6db9pjbNyxQsuQCOQUKW+N+QBC3Jc8j+XL5NoY3WqR/bovI4lp1TI88FZcsx6rmG/4aPhU7kWhxwEPaGz4+A==
+hds-design-tokens@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-1.1.0.tgz#a5bec355e0f6224fb4dc2de46e7bc62bfc192973"
+  integrity sha512-N6/UY6NZxc5rA7uULE7TcwIdpWomoIyq+ByBYh4KbB2SpLrMkxTFNcoat2Iqct1uiSw1hZinQd8/JtBuwLrjDg==
 
-hds-react@0.21.0:
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-0.21.0.tgz#13a4124253a314e218f1caf8f556d906223ff3ec"
-  integrity sha512-u6GdIWqqV4va+4Wy4xrzhNKTMzf5Z81icAWHwoaB/nXBCVtw2V4nEHXTC7eCeFEplk1LH/dyvfPPN6b6auyorQ==
+hds-react@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-1.1.0.tgz#0caa01f41c30b1137eea84fbfcff1bf23d908c8a"
+  integrity sha512-K9pz/Ffsl9AmGn0vplTbuCJ1BNC3GWIy7bGNFD/vsRdI5mLbvLkUheDsD5m+xpsafgCQtG1XraHVvVADlrLNUg==
   dependencies:
     "@babel/runtime" "7.11.2"
     "@juggle/resize-observer" "3.2.0"
     "@popperjs/core" "2.5.3"
     "@react-aria/visually-hidden" "3.2.0"
+    date-fns "2.16.1"
     downshift "6.0.6"
-    hds-core "0.21.0"
+    hds-core "1.1.0"
     lodash.isequal "4.5.0"
+    lodash.isfunction "3.0.9"
     lodash.uniqueid "4.0.1"
     react-merge-refs "1.1.0"
     react-popper "2.2.3"
@@ -8924,6 +8914,11 @@ lodash.isequal@4.5.0, lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
   integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+
+lodash.isfunction@3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/lodash.isfunction/-/lodash.isfunction-3.0.9.tgz#06de25df4db327ac931981d1bdb067e5af68d051"
+  integrity sha512-AirXNj15uRIMMPihnkInB4i3NHeb4iBtNg9WRWuK2o31S+ePwwNmDPaTL3o7dTJ+VXNZim7rFs4rxN4YU1oUJw==
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -11008,7 +11003,7 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -11292,25 +11287,10 @@ react-layout-effect@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-layout-effect/-/react-layout-effect-1.0.5.tgz#0dc4e24452aee5de66c93c166f0ec512dfb1be80"
   integrity sha512-zdRXHuch+OBHU6bvjTelOGUCM+UDr/iCY+c0wXLEAc+G4/FlcJruD/hUOzlKH5XgO90Y/BUJPNhI/g9kl+VAsA==
 
-react-lifecycles-compat@^3.0.0:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
-  integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
-
 react-merge-refs@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-merge-refs/-/react-merge-refs-1.1.0.tgz#73d88b892c6c68cbb7a66e0800faa374f4c38b06"
   integrity sha512-alTKsjEL0dKH/ru1Iyn7vliS2QRcBp9zZPGoWxUOvRGWPUYgjo+V01is7p04It6KhgrzhJGnIj9GgX8W4bZoCQ==
-
-react-modal@^3.11.1:
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.12.1.tgz#38c33f70d81c33d02ff1ed115530443a3dc2afd3"
-  integrity sha512-WGuXn7Fq31PbFJwtWmOk+jFtGC7E9tJVbFX0lts8ZoS5EPi9+WWylUJWLKKVm3H4GlQ7ZxY7R6tLlbSIBQ5oZA==
-  dependencies:
-    exenv "^1.2.0"
-    prop-types "^15.5.10"
-    react-lifecycles-compat "^3.0.0"
-    warning "^4.0.3"
 
 react-popper@2.2.3:
   version "2.2.3"
@@ -13644,7 +13624,7 @@ walker@^1.0.7, walker@~1.0.5:
   dependencies:
     makeerror "1.0.x"
 
-warning@^4.0.2, warning@^4.0.3:
+warning@^4.0.2:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
   integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==

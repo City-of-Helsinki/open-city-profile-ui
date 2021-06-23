@@ -1,4 +1,4 @@
-import { TextInput } from 'hds-react';
+import { PhoneInput, TextInput } from 'hds-react';
 import React from 'react';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -61,8 +61,8 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
     return (
       <div
         className={classNames([
-          commonFormStyles.contentWrapper,
-          styles.rowContentWrapper,
+          commonFormStyles['content-wrapper'],
+          styles['row-content-wrapper'],
         ])}
       >
         <Formik
@@ -78,15 +78,15 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
           {(formikProps: FormikProps<EmailAndPhoneFormikValue>) => (
             <Form>
               <FocusKeeper targetId={inputId}>
-                <div className={styles.editableRow}>
+                <div className={styles['editable-row']}>
                   <Field
                     name="value"
                     id={inputId}
                     maxLength={formFields.value.max as number}
-                    as={TextInput}
+                    as={dataType === 'phones' ? PhoneInput : TextInput}
                     invalid={hasFieldError(formikProps, 'value')}
                     aria-invalid={hasFieldError(formikProps, 'value')}
-                    helperText={getFieldErrorMessage(formikProps, 'value')}
+                    errorText={getFieldErrorMessage(formikProps, 'value')}
                     aria-labelledby={`${dataType}-value-helper`}
                     autoFocus
                   />
@@ -107,11 +107,11 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
   return (
     <div
       className={classNames([
-        commonFormStyles.contentWrapper,
-        styles.rowContentWrapper,
+        commonFormStyles['content-wrapper'],
+        styles['row-content-wrapper'],
       ])}
     >
-      <span className={styles.value} data-testid={`${testId}-value`}>
+      <span className={styles['value']} data-testid={`${testId}-value`}>
         {inputValue || '–'}
       </span>
       <EditButtons

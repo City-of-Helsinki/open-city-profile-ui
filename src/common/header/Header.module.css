@@ -1,4 +1,4 @@
 /* fixes koros rendering above nav */
-.zIndexFix {
+.z-index-fix {
   z-index: 10;
 }

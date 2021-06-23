@@ -128,7 +128,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
         const [rejected] = await to(
           showModal({
             actionButtonText: t('confirmationModal.remove'),
-            modalTitle: texts.modalTitle,
+            title: texts.modalTitle,
           })
         );
         if (rejected) {
@@ -150,7 +150,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   const NoItemsMessage = () => (
     <React.Fragment>
       {dataType === 'addresses' && (
-        <h3 className={commonFormStyles.sectionTitle}>
+        <h3 className={commonFormStyles['section-title']}>
           {texts.listNumberTitle}
         </h3>
       )}
@@ -162,18 +162,18 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
     <ProfileSection>
       <h3
         className={classNames([
-          commonFormStyles.sectionTitle,
-          hasAddressList && commonFormStyles.visuallyHidden,
+          commonFormStyles['section-title'],
+          hasAddressList && commonFormStyles['visually-hidden'],
         ])}
       >
         {texts.title}
       </h3>
 
       {!editDataList || (!editDataList.length && <NoItemsMessage />)}
-      <ul aria-label={texts.listAriaLabel} className={commonFormStyles.list}>
+      <ul aria-label={texts.listAriaLabel} className={commonFormStyles['list']}>
         {editDataList.map((item, index) => (
           <li
-            className={commonFormStyles.listItem}
+            className={commonFormStyles['list-item']}
             aria-label={`${texts.listNumberTitle} ${index + 1}`}
             key={item.id || 'new'}
           >
@@ -196,7 +196,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
         }}
         variant="secondary"
         disabled={isAddButtonDisabled}
-        className={commonFormStyles.responsiveButton}
+        className={commonFormStyles['responsive-button']}
         id={addButtonId}
       >
         {texts.addNew}

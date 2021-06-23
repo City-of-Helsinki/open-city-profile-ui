@@ -8,7 +8,7 @@ exports[`Toast should render correct toast 1`] = `
         id="toast-root"
       >
         <div
-          class="toastContainer"
+          class="toast-container"
         >
           <div
             class="notification"
@@ -52,7 +52,7 @@ exports[`Toast should render correct toast 1`] = `
                   class="body"
                 >
                   <div
-                    class="messageWrapper"
+                    class="message-wrapper"
                   >
                     notification.defaultErrorText
                   </div>
@@ -93,7 +93,7 @@ exports[`Toast should render correct toast 1`] = `
     }
   >
     <div
-      className="toastContainer"
+      className="toast-container"
     >
       <Toast
         hidden={false}
@@ -135,7 +135,7 @@ exports[`Toast should render correct toast 1`] = `
                       className="label"
                       role="heading"
                     >
-                      <L
+                      <Component
                         aria-hidden={true}
                         className="icon"
                       >
@@ -160,7 +160,7 @@ exports[`Toast should render correct toast 1`] = `
                             />
                           </g>
                         </svg>
-                      </L>
+                      </Component>
                       <ConditionalVisuallyHidden
                         visuallyHidden={false}
                       >
@@ -171,7 +171,7 @@ exports[`Toast should render correct toast 1`] = `
                       className="body"
                     >
                       <div
-                        className="messageWrapper"
+                        className="message-wrapper"
                       >
                         notification.defaultErrorText
                       </div>
@@ -184,7 +184,7 @@ exports[`Toast should render correct toast 1`] = `
                     title="notification.closeButtonText"
                     type="button"
                   >
-                    <z
+                    <D
                       aria-hidden={true}
                     >
                       <svg
@@ -209,7 +209,7 @@ exports[`Toast should render correct toast 1`] = `
                           />
                         </g>
                       </svg>
-                    </z>
+                    </D>
                   </button>
                 </section>
               </ConditionalVisuallyHidden>

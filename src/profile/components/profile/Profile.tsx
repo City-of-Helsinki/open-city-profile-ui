@@ -95,8 +95,8 @@ function Profile(): React.ReactElement {
   if (!isProfileFound && tunnistamoUser && hasGraphQLError) {
     return (
       <PageLayout title={getPageTitle()} data-testid="profile-error-layout">
-        <div className={styles.errorWrapper}>
-          <div className={responsive.maxWidthCentered}>
+        <div className={styles['error-wrapper']}>
+          <div className={responsive['max-width-centered']}>
             <Notification
               type={'error'}
               label={t('notification.defaultErrorTitle')}
@@ -112,7 +112,7 @@ function Profile(): React.ReactElement {
   return (
     <PageLayout title={getPageTitle()}>
       <Loading
-        loadingClassName={styles.loading}
+        loadingClassName={styles['loading']}
         isLoading={isDoingProfileChecks || isLoadingProfile}
         loadingText={t('profile.loading')}
       >

@@ -18,58 +18,34 @@
 
 .title h2 {
   margin: var(--ep-vertical-whitespace) 0;
-  font-size: 22px;
+  font-size: var(--fontsize-heading-s);
   color: var(--color-bus);
 }
 
-.rightSideInformation {
+.right-side-information {
   display: flex;
   align-items: center;
 }
 
-.showInformation {
+.right-side-information button {
+  padding-right: 0;
+  margin-right: calc(-1 * (var(--spacing-s)));
+}
+
+.show-information {
   margin-right: var(--spacing-s);
   font-size: var(--fontsize-body-s);
   font-weight: bold;
   color: var(--ep-accent-color);
+  text-transform: uppercase;
 }
 
-.icon {
-  height: var(--spacing-s);
-  width: var(--spacing-s);
-  fill: var(--ep-accent-color);
-}
-
-.iconDown {
-  transform: rotateZ(90deg);
-}
-
-.iconUp {
-  transform: rotateZ(-90deg);
-}
-
-.title:hover {
-  cursor: pointer;
-}
-
-.content {
-  padding: 0 var(--ep-horizontal-whitespace) var(--ep-vertical-whitespace);
-  width: 100%;
-  overflow: hidden;
-
-  font-size: var(--fontsize-body-m);
-
+.card {
+  padding-left: var(--ep-horizontal-whitespace);
+  padding-right: var(--ep-horizontal-whitespace);
   /* Negates some of the padding has in order to place the content */
-  /* closer to the title. Makes sure that content overlaps the */
-  /* title in order to avoid focus outline obstructing content. */
-  margin-top: calc(-1 * var(--ep-vertical-whitespace));
-  background: var(--ep-background);
-}
-
-@media (max-width: 400px) {
-  .content {
-    overflow-x: hidden;
-  }
+  /* closer to the title. */
+  margin-top: -50px;
 }
 
 @media (min-width: 600px) {
@@ -77,7 +53,7 @@
     --ep-horizontal-whitespace: var(--spacing-xl);
   }
 
-  .content {
+  .card {
     width: 80%;
   }
 }

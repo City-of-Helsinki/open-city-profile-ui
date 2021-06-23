@@ -50,8 +50,8 @@
     "panelTitle": "Haluatko ladata omat tietosi?"
   },
   "expandingPanel": {
-    "hideInformation": "PIILOTA TIEDOT",
-    "showInformation": "NÄYTÄ TIEDOT"
+    "hideInformation": "Piilota tiedot",
+    "showInformation": "Näytä tiedot"
   },
   "footer": {
     "accessibility": "Saavutettavuusseloste",
@@ -152,6 +152,9 @@
     "ariaEditPhone": "Muokkaa puhelinnumeroa {{value}}",
     "ariaEditEmail": "Muokkaa sähköpostiosoitetta {{value}}",
     "ariaEditBasicData": "Muokkaa perustietoja",
+    "ariaShowOptions": "Näytä vaihtoehdot",
+    "ariaSelectedOption": "{{value}} on valittu",
+    "ariaNoSelectedItemForLabel": "{{label}} ei ole valittuna",
     "deleteProfile": "Poista omat tietosi",
     "description": "Helsinki Profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa. Kätevää eikö?",
     "downloadData": "Lataa omat tietosi",
