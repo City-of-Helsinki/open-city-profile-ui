@@ -85,6 +85,7 @@
   "devDependencies": {
     "apollo": "^2.32.1",
     "cross-env": "^7.0.3",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-sonarjs": "^0.5.0",
     "helsinki-utils": "City-of-Helsinki/helsinki-utils-js#0.1.0",
     "prettier": "^1.18.2",
