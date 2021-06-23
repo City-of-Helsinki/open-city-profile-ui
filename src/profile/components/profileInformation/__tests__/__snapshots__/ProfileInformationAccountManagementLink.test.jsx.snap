@@ -42,11 +42,13 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
           href="https://test-url"
           rel="noopener noreferrer"
           target="_blank"
-          title="profileInformation.doGoToAccountManagement"
         >
           profileInformation.doGoToAccountManagement
-          <I>
+          <I
+            aria-hidden={true}
+          >
             <svg
+              aria-hidden={true}
               className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
               role="img"
               style={Object {}}
@@ -116,11 +118,13 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
           href="https://test-url-suomif-fi"
           rel="noopener noreferrer"
           target="_blank"
-          title="profileInformation.doGoToAccountManagement"
         >
           profileInformation.doGoToAccountManagement
-          <I>
+          <I
+            aria-hidden={true}
+          >
             <svg
+              aria-hidden={true}
               className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
               role="img"
               style={Object {}}

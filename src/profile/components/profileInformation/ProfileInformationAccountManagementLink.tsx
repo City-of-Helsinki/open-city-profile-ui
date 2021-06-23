@@ -38,7 +38,7 @@ function ProfileInformationAccountManagementLink(): React.ReactElement | null {
           title={t('profileInformation.doGoToAccountManagement')}
           hideIcon
         >
-          <IconAngleRight />
+          <IconAngleRight aria-hidden />
         </NewWindowLink>
       </div>
     </div>
