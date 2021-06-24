@@ -38,6 +38,7 @@ export function useProfileQuery(props?: {
   const dependencySafeOnError = usePersistFn(
     props && props.onError ? props.onError : _.noop
   );
+
   useEffect(() => {
     if (error) {
       dependencySafeOnError(error);

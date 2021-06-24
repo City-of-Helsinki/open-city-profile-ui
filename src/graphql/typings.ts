@@ -25,11 +25,6 @@ import {
   MyProfileQuery_myProfile_primaryAddress,
   MyProfileQuery_myProfile_primaryEmail,
   MyProfileQuery_myProfile_primaryPhone,
-  QueryMySubscriptions_myProfile_subscriptions_edges,
-  QuerySubscriptions_subscriptionTypeCategories_edges,
-  QueryMySubscriptions_myProfile_subscriptions_edges_node,
-  QueryMySubscriptions,
-  QuerySubscriptions,
 } from './generatedTypes';
 
 export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
@@ -85,13 +80,6 @@ export type Service = ServiceConnectionsQuery_myProfile_serviceConnections_edges
 // eslint-disable-next-line max-len
 export type ServiceAllowedFieldsNode = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node;
 export type GdprServiceConnectionsRoot = GdprServiceConnectionsQuery;
-
-export type SubscriptionsRoot = QuerySubscriptions;
-export type SubcriptionsTypeCategoriesEdge = QuerySubscriptions_subscriptionTypeCategories_edges;
-
-export type MySubscriptionsRoot = QueryMySubscriptions;
-export type MySubcriptionsEdge = QueryMySubscriptions_myProfile_subscriptions_edges;
-export type MySubcriptionsNode = QueryMySubscriptions_myProfile_subscriptions_edges_node;
 
 export {
   PhoneType,
