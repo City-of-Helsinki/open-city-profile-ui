@@ -363,10 +363,6 @@ export interface MyProfileQuery_myProfile_verifiedPersonalInformation {
   readonly givenName: string;
   readonly nationalIdentificationNumber: string;
   /**
-   * Email.
-   */
-  readonly email: string;
-  /**
    * Official municipality of residence in Finland as a free form text.
    */
   readonly municipalityOfResidence: string;

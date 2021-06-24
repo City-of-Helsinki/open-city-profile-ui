@@ -59,29 +59,28 @@ query MyProfileQuery {
         }
       }
     }
-    verifiedPersonalInformation{
-        firstName
-        lastName
-        givenName
-        nationalIdentificationNumber
-        email
-        municipalityOfResidence
-        municipalityOfResidenceNumber
-        permanentAddress{
-          streetAddress
-          postalCode
-          postOffice
-        }
-        temporaryAddress{
-          streetAddress
-          postalCode
-          postOffice
-        }
-        permanentForeignAddress{
-          streetAddress
-          additionalAddress
-          countryCode
-        }
+    verifiedPersonalInformation {
+      firstName
+      lastName
+      givenName
+      nationalIdentificationNumber
+      municipalityOfResidence
+      municipalityOfResidenceNumber
+      permanentAddress {
+        streetAddress
+        postalCode
+        postOffice
+      }
+      temporaryAddress {
+        streetAddress
+        postalCode
+        postOffice
+      }
+      permanentForeignAddress {
+        streetAddress
+        additionalAddress
+        countryCode
+      }
     }
   }
 }
