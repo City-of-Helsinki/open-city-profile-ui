@@ -23,7 +23,7 @@ export class AuthService {
       client_id: window._env_.REACT_APP_OIDC_CLIENT_ID,
       redirect_uri: `${origin}/callback`,
       silent_redirect_uri: `${origin}/silent_renew.html`,
-      response_type: 'id_token token',
+      response_type: window._env_.REACT_APP_OIDC_RESPONSE_TYPE,
       scope: window._env_.REACT_APP_OIDC_SCOPE,
       post_logout_redirect_uri: `${origin}/`,
       // This calculates to 1 minute, good for debugging:
