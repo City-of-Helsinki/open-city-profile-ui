@@ -28,8 +28,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-Scripts generates first environment variables to `public/env-config.js` with `scripts/update-runtime-env.ts`, which contains the 
-actual used variables when running the app. App is not using CRA's default `process.env` way to refer of variables but 
+Scripts generates first environment variables to `public/env-config.js` with `scripts/update-runtime-env.ts`, which contains the
+actual used variables when running the app. App is not using CRA's default `process.env` way to refer of variables but
 `window._env_` object.
 
 ### `yarn test`
@@ -37,8 +37,8 @@ actual used variables when running the app. App is not using CRA's default `proc
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Scripts generates first environment variables to `public/env-config.js` with `scripts/update-runtime-env.ts`, which contains the 
-actual used variables when running the app. App is not using CRA's default `process.env` way to refer of variables but 
+Scripts generates first environment variables to `public/env-config.js` with `scripts/update-runtime-env.ts`, which contains the
+actual used variables when running the app. App is not using CRA's default `process.env` way to refer of variables but
 `window._env_` object.
 
 ### `yarn build`
@@ -80,22 +80,22 @@ Since this app uses react-scripts (Create React App) the env-files work a bit di
 
 The following envs are used:
 
-| Name  | Description |
-| --- | ------------- |
-| `REACT_APP_HELSINKI_ACCOUNT_AMR` | Authentication method reference for Helsinki account. </br> **default:** `helusername` |
-| `REACT_APP_IPD_MANAGEMENT_URL_HELSINKI_ACCOUNT` | Account management url for Helsinki account. </br> **default:** `https://salasana.hel.ninja/auth/realms/helsinki-salasana/account` |
-| `REACT_APP_IPD_MANAGEMENT_URL_GITHUB` | Account management url for GitHub. </br> **default:** `https://github.com/settings/profile` |
-| `REACT_APP_IPD_MANAGEMENT_URL_GOOGLE` | Account management url for Google. </br> **default:** `https://myaccount.google.com` |
-| `REACT_APP_IPD_MANAGEMENT_URL_FACEBOOK` | Account management url for Facebook.  </br> **default:** `http://facebook.com/settings` |
-| `REACT_APP_IPD_MANAGEMENT_URL_YLE` | Account management url for Yle. </br> **default:** `https://tunnus.yle.fi/#omat-tiedot` |
-| `REACT_APP_IPD_MANAGEMENT_URL_TUNNISTUS_SUOMI_FI` | Account management url for Suomi.fi tunnistus. </br> **default:** `https://suomi.fi` |
-| `REACT_APP_OIDC_AUTHORITY` | This is the URL to tunnistamo. |
-| `REACT_APP_OIDC_CLIENT_ID` | ID of the client that has to be configured in tunnistamo. |
-| `REACT_APP_OIDC_SCOPE` | Which scopes the app requires. |
-| `REACT_APP_PROFILE_AUDIENCE` | Name of the api-token that client uses profile-api with. |
-| `REACT_APP_PROFILE_GRAPHQL` | URL to the profile graphql. |
-| `REACT_APP_SENTRY_DSN` | Sentry public dns-key. |
-
+| Name                                              | Description                                                                                                                        |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `REACT_APP_HELSINKI_ACCOUNT_AMR`                  | Authentication method reference for Helsinki account. </br> **default:** `helusername`                                             |
+| `REACT_APP_IPD_MANAGEMENT_URL_HELSINKI_ACCOUNT`   | Account management url for Helsinki account. </br> **default:** `https://salasana.hel.ninja/auth/realms/helsinki-salasana/account` |
+| `REACT_APP_IPD_MANAGEMENT_URL_GITHUB`             | Account management url for GitHub. </br> **default:** `https://github.com/settings/profile`                                        |
+| `REACT_APP_IPD_MANAGEMENT_URL_GOOGLE`             | Account management url for Google. </br> **default:** `https://myaccount.google.com`                                               |
+| `REACT_APP_IPD_MANAGEMENT_URL_FACEBOOK`           | Account management url for Facebook. </br> **default:** `http://facebook.com/settings`                                             |
+| `REACT_APP_IPD_MANAGEMENT_URL_YLE`                | Account management url for Yle. </br> **default:** `https://tunnus.yle.fi/#omat-tiedot`                                            |
+| `REACT_APP_IPD_MANAGEMENT_URL_TUNNISTUS_SUOMI_FI` | Account management url for Suomi.fi tunnistus. </br> **default:** `https://suomi.fi`                                               |
+| `REACT_APP_OIDC_AUTHORITY`                        | This is the URL to tunnistamo.                                                                                                     |
+| `REACT_APP_OIDC_CLIENT_ID`                        | ID of the client that has to be configured in tunnistamo.                                                                          |
+| `REACT_APP_OIDC_SCOPE`                            | Which scopes the app requires.                                                                                                     |
+| `REACT_APP_PROFILE_AUDIENCE`                      | Name of the api-token that client uses profile-api with.                                                                           |
+| `REACT_APP_PROFILE_GRAPHQL`                       | URL to the profile graphql.                                                                                                        |
+| `REACT_APP_SENTRY_DSN`                            | Sentry public dns-key.                                                                                                             |
+| `REACT_APP_OIDC_RESPONSE_TYPE`                    | Which response type to require.                                                                                                    |
 
 ## Setting up local development environment with Docker
 
@@ -133,7 +133,8 @@ After container is up and running, few things need to be set up at http://localh
 The ID of this client must be the same as set in the REACT_APP_OIDC_CLIENT_ID environment variable.
 
 Requires the following things:
-- Response types - id_token token
+
+- Response types - 'code' OR 'id_token token'
 - Redirect URIs (app-url is where the UI is running, e.g. http://localhost:3000 for development) - {app-url}/callback, {app-url}/silent_renew
 - Client ID - the name as noted above
 - Login methods - which providers can be used to authenticate, should have at least GitHub enabled for development.
@@ -143,18 +144,21 @@ Requires the following things:
 The scopes this app uses are set with the REACT_APP_OIDC_SCOPE environment variable.
 
 ### Install local open-city-profile
+
 Clone https://github.com/City-of-Helsinki/open-city-profile/.
 
 1. Create a `docker-compose.env.yaml` file in the project folder:
-   * Use `docker-compose.env.yaml.example` as a base, it does not need any changes
+
+   - Use `docker-compose.env.yaml.example` as a base, it does not need any changes
      for getting the project running.
-   * Change `DEBUG` and the rest of the Django settings if needed.
-     * `TOKEN_AUTH_*`, settings for [tunnistamo](https://github.com/City-of-Helsinki/tunnistamo) authentication service
-   * Set entrypoint/startup variables according to taste.
-     * `CREATE_SUPERUSER`, creates a superuser with credentials `admin`:`admin` (admin@example.com)
-     * `APPLY_MIGRATIONS`, applies migrations on startup
-     * `BOOTSTRAP_DIVISIONS`, bootstrap data import for divisions
-     
+   - Change `DEBUG` and the rest of the Django settings if needed.
+     - `TOKEN_AUTH_*`, settings for [tunnistamo](https://github.com/City-of-Helsinki/tunnistamo) authentication service
+   - Set entrypoint/startup variables according to taste.
+
+     - `CREATE_SUPERUSER`, creates a superuser with credentials `admin`:`admin` (admin@example.com)
+     - `APPLY_MIGRATIONS`, applies migrations on startup
+     - `BOOTSTRAP_DIVISIONS`, bootstrap data import for divisions
+
 2. Run `docker-compose up`
 
 ### open-city-profile-ui
