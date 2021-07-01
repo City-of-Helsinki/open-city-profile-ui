@@ -8,10 +8,6 @@ const config = {
     'helusername'
   ),
   oidcAuthority: window._env_.REACT_APP_OIDC_AUTHORITY,
-  oidcScope: window._env_.REACT_APP_OIDC_SCOPE,
-  profileAudience: window._env_.REACT_APP_PROFILE_AUDIENCE,
-  profileGraphQl: window._env_.REACT_APP_PROFILE_GRAPHQL,
-  sentryDsn: window._env_.REACT_APP_SENTRY_DSN,
   identityProviderManagementUrlHelsinki: defaultTo(
     window._env_.REACT_APP_IPD_MANAGEMENT_URL_HELSINKI_ACCOUNT,
     'https://salasana.hel.ninja/auth/realms/helsinki-salasana/account'
