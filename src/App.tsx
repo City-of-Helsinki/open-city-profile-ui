@@ -14,10 +14,12 @@ import OidcCallback from './auth/components/oidcCallback/OidcCallback';
 import Profile from './profile/components/profile/Profile';
 import { Provider as ProfileProvider } from './profile/context/ProfileContext';
 import ProfileDeleted from './profile/components/profileDeleted/ProfileDeleted';
+import ErrorPage from './profile/components/errorPage/ErrorPage';
 import AccessibilityStatement from './accessibilityStatement/AccessibilityStatement';
 import GdprAuthorizationCodeManagerCallback from './gdprApi/GdprAuthorizationCodeManagerCallback';
 import ToastProvider from './toast/ToastProvider';
 import authService from './auth/authService';
+import config from './config';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -63,6 +65,9 @@ function App(): React.ReactElement {
               </Route>
               <Route path="/profile-deleted" exact>
                 <ProfileDeleted />
+              </Route>
+              <Route path={config.errorPagePath} exact>
+                <ErrorPage />
               </Route>
               <Route path="/loginsso" exact />
               <Route path="*">404 - not found</Route>

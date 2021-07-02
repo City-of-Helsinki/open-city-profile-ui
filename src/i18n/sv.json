@@ -86,7 +86,8 @@
     "services": "Dina tjänster",
     "signin": "Logga in",
     "signout": "Logga ut",
-    "titleAriaLabel": "SV: Siirry Profiilin etusivulle"
+    "titleAriaLabel": "SV: Siirry Profiilin etusivulle",
+    "goToHomePage": "SV: Etusivulle"
   },
   "notification": {
     "closeButtonText": "Stäng",

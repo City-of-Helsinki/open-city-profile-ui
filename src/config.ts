@@ -32,6 +32,7 @@ const config = {
     window._env_.REACT_APP_IPD_MANAGEMENT_URL_TUNNISTUS_SUOMI_FI,
     'https://suomi.fi'
   ),
+  errorPagePath: '/error',
 };
 
 export default config;
