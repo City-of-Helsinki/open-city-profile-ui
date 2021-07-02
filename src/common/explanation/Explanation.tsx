@@ -27,6 +27,11 @@ function Explanation({
   variant = 'margin',
   titleVariant = 'h3',
 }: Props): React.ReactElement {
+  const HeadingTagName = `${
+    titleVariant ? titleVariant : 'h1'
+    // eslint-disable-next-line no-undef
+  }` as keyof JSX.IntrinsicElements;
+
   return (
     <div
       className={classNames(
@@ -38,14 +43,14 @@ function Explanation({
         className
       )}
     >
-      <h1
+      <HeadingTagName
         className={classNames(styles.main, {
           [styles.h2]: titleVariant === 'h2',
           [styles.h3]: titleVariant === 'h3',
         })}
       >
         {main}
-      </h1>
+      </HeadingTagName>
       {small && <p className={styles.small}>{small}</p>}
     </div>
   );

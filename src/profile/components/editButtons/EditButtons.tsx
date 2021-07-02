@@ -24,6 +24,7 @@ type Props = {
   };
   buttonClassNames?: string;
   editButtonId?: string;
+  removeButtonId?: string;
   testId: string;
   disabled?: boolean;
   ariaLabels: ActionAriaLabels;
@@ -47,6 +48,7 @@ function EditButtons(props: Props): React.ReactElement {
     handler,
     buttonClassNames,
     editButtonId,
+    removeButtonId,
     disabled,
     testId,
     ariaLabels,
@@ -109,7 +111,7 @@ function EditButtons(props: Props): React.ReactElement {
           }}
           className={classNames(buttonStyle)}
           disabled={disabled}
-          data-testid={`${testId}-remove-button`}
+          id={removeButtonId}
           aria-label={ariaLabels.remove}
         >
           {t('profileForm.remove')}

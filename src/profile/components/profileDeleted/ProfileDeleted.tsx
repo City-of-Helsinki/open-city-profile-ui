@@ -22,12 +22,13 @@ function ProfileDeleted(): React.ReactElement {
     }
   }, [timeUntilLogout]);
 
+  const title = t('profileDeleted.title');
   return (
-    <PageLayout>
+    <PageLayout title={title}>
       <div className={styles.wrapper}>
         <div className={responsive['max-width-centered']}>
           <div className={styles.content}>
-            <h2>{t('profileDeleted.title')}</h2>
+            <h2>{title}</h2>
             <p>{t('profileDeleted.message', { time: timeUntilLogout })}</p>
           </div>
         </div>

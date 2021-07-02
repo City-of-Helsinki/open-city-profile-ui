@@ -64,7 +64,7 @@
   "helsinkiLogo": "Helsingfors logotyp",
   "landmarks": {
     "navigation": {
-      "language": "",
+      "language": "Språk: Svenska. Ändra språk. Vaihda kieli. Change language.",
       "main": "",
       "user": ""
     }
@@ -86,7 +86,8 @@
     "services": "Dina tjänster",
     "signin": "Logga in",
     "signout": "Logga ut",
-    "subscriptions": "Prenumerationer"
+    "subscriptions": "Prenumerationer",
+    "titleAriaLabel": "SV: Siirry Profiilin etusivulle"
   },
   "notification": {
     "closeButtonText": "Stäng",
@@ -140,7 +141,8 @@
     "remove": "SV: Poista",
     "setPrimary": "SV: Aseta ensisijaiseksi",
     "submit": "Spara",
-    "terms": "Jag har läst filen <0>beskrivningen</0> och stads <1>sekretesspolicy</1>",
+    "termsLabel": "SV: Olen tutustunut palvelun rekisteriselosteeseen ja kaupungin tietosuojakäytäntöön",
+    "terms": "SV: Lue palvelun <0>rekisteriseloste</0> ja kaupungin <1>tietosuojakäytännöt</1> ",
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/dataskydd",
     "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf",
     "nationalIdentificationNumber": "SV: Henkilötunnus",
@@ -184,7 +186,8 @@
     "phones": "SV: Puhelinnumerot",
     "emails": "SV: Sähköpostiosoitteet",
     "addresses": "SV: Osoitteet",
-    "ariaFieldHelperWrite": "SV: Kirjoita",
+    "ariaComboBoxHelperText": "SV: Valitse {{field}}. Etsi kirjoittamalla ja valitse lopuksi yksi vaihtoehto. {{requiredInfo}}",
+    "ariaInputFieldHelperText": "SV: Kirjoita  {{field}} .  {{requiredInfo}}",
     "ariaListTitlePhones": "SV: Antamasi puhelinnumerot",
     "ariaListTitleEmails": "SV: Antamasi sähköpostiosoitteet",
     "ariaListTitleAddresses": "SV: Antamasi osoitteet",
@@ -230,5 +233,7 @@
     "facebook": "Facebook",
     "yletunnus": "Yle",
     "tunnistusSuomifi": "Suomi.fi"
-  }
+  },
+  "opensInNewWindow": "SV: {{title}}. Avautuu uudessa ikkunassa.",
+  "accessibilityStatement": "Tillgänglighetsutlåtande"
 }

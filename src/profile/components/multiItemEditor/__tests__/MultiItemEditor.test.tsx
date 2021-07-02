@@ -333,10 +333,10 @@ describe('<MultiItemEditor /> ', () => {
             updatedProfileData,
           });
           const primaryItemRemoveButtonSelector: ElementSelector = {
-            testId: `${dataType}-0-remove-button`,
+            id: `${dataType}-0-remove-button`,
           };
           const removeButtonSelector: ElementSelector = {
-            testId: `${dataType}-${removeItemIndex}-remove-button`,
+            id: `${dataType}-${removeItemIndex}-remove-button`,
           };
           const confirmButtonSelector = {
             testId: 'confirmation-modal-confirm-button',
@@ -459,7 +459,7 @@ describe('<MultiItemEditor /> ', () => {
               invalidData: { ...formValues, [field]: '' },
               elementSelector: { id: `${selector}` },
               errorSelector: {
-                id: `${selector}-helper`,
+                id: `${selector}-error`,
               },
             };
 
@@ -471,6 +471,8 @@ describe('<MultiItemEditor /> ', () => {
             } = testRun;
             const elementGetter = () => getElement(elementSelector);
             const errorElementGetter = () => getElement(errorSelector);
+            const errorListElementGetter = () =>
+              getElement({ testId: `${dataType}-error-list` });
 
             // set invalid values
             await setValues(setInputValue, invalidData, testIndex);
@@ -482,7 +484,8 @@ describe('<MultiItemEditor /> ', () => {
               'true'
             );
             // getElement throws if element is not found
-            expect(() => errorElementGetter).not.toThrow();
+            expect(errorElementGetter).not.toThrow();
+            expect(errorListElementGetter).not.toThrow();
             // set valid value
             await setValues(setInputValue, validData, testIndex);
             await waitForElementAttributeValue(
@@ -491,6 +494,7 @@ describe('<MultiItemEditor /> ', () => {
               'false'
             );
             expect(errorElementGetter).toThrow();
+            expect(errorListElementGetter).toThrow();
           });
         });
       });

@@ -30,11 +30,11 @@ button.button {
   width: 100%;
 }
 button.button.button:hover {
-  background-color: var(--color-black-5);
+  background-color: var(--background-color-hover);
 }
 
-button.button:hover {
-  background-color: var(--color-background-button-secondary-hover);
+button.button.button:focus {
+  background-color: var(--background-color-hover);
 }
 
 .content h1 {

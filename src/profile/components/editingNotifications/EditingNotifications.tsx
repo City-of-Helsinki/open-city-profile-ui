@@ -22,7 +22,6 @@ function EditingNotifications({
       className={styles.wrapper}
       role="alert"
       id={`${dataType}-edit-notifications`}
-      tabIndex={0}
     >
       <Notification
         type={content.error ? 'error' : 'success'}

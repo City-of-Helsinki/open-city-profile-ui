@@ -64,7 +64,7 @@
   "helsinkiLogo": "Helsinki logo",
   "landmarks": {
     "navigation": {
-      "language": "Language",
+      "language": "Language: English. Change language. Vaihda kieli. Ändra språk.",
       "main": "Main",
       "user": "User"
     }
@@ -86,7 +86,8 @@
     "services": "Your services",
     "signin": "Log in",
     "signout": "Sign out",
-    "subscriptions": "Subscriptions"
+    "subscriptions": "Subscriptions",
+    "titleAriaLabel": "Go to homepage of the Profile"
   },
   "notification": {
     "closeButtonText": "Close",
@@ -140,7 +141,8 @@
     "remove": "Remove",
     "setPrimary": "Set as primary",
     "submit": "Save",
-    "terms": "I have read <0>file description</0> and  city's <1>data protection principles</1>",
+    "termsLabel": "EN: Olen tutustunut palvelun rekisteriselosteeseen ja kaupungin tietosuojakäytäntöön",
+    "terms": "Read <0>file description</0> and  city's <1>data protection principles</1>",
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/en/administration/information/data-protection",
     "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf",
     "nationalIdentificationNumber": "EN: Henkilötunnus",
@@ -184,7 +186,8 @@
     "phones": "Phone numbers",
     "emails": "Emails",
     "addresses": "Addresses",
-    "ariaFieldHelperWrite": "Write",
+    "ariaComboBoxHelperText": "Select {{field}}. Search by typing and select one option. {{requiredInfo}}",
+    "ariaInputFieldHelperText": "Write {{field}}.  {{requiredInfo}}",
     "ariaListTitlePhones": "EN: Antamasi puhelinnumerot",
     "ariaListTitleEmails": "EN: Antamasi sähköpostiosoitteet",
     "ariaListTitleAddresses": "EN: Antamasi osoitteet",
@@ -230,5 +233,7 @@
     "facebook": "Facebook",
     "yletunnus": "Yle",
     "tunnistusSuomifi": "Suomi.fi"
-  }
+  },
+  "opensInNewWindow": "{{title}}. Opens in a new window.",
+  "accessibilityStatement": "Accessibility Statement"
 }

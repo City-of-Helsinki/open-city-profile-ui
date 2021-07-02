@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 
+import NewWindowLink from '../common/newWindowLink/NewWindowLink';
+
 function AccessibilityStatementSv(): React.ReactElement {
   return (
     <Fragment>
@@ -44,9 +46,10 @@ function AccessibilityStatementSv(): React.ReactElement {
         form, kan användaren begära dessa uppgifter per e-post{' '}
         <a href="mailto:helsinki.palaute@hel.fi">helsinki.palaute@hel.fi</a>{' '}
         eller med responsformulär på{' '}
-        <a href="https://www.hel.fi/helsinki/sv/stad-och-forvaltning/delta/feedback">
-          www.hel.fi/feedback
-        </a>
+        <NewWindowLink
+          link="https://www.hel.fi/helsinki/sv/stad-och-forvaltning/delta/feedback"
+          title="www.hel.fi/feedback"
+        />
         . Strävan är att svara på förfrågan inom rimlig tid.
       </p>
 

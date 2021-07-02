@@ -1,17 +1,22 @@
 {
   "extends": [
-    "react-app", 
-    "plugin:@typescript-eslint/recommended", 
+    "react-app",
+    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:jsx-a11y/recommended"
   ],
-  "plugins": ["sonarjs"],
+  "plugins": ["sonarjs", "jsx-a11y"],
   "rules": {
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
-    "@typescript-eslint/brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "@typescript-eslint/brace-style": [
+      "error",
+      "1tbs",
+      { "allowSingleLine": true }
+    ],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/func-call-spacing": ["error"],
     "@typescript-eslint/member-ordering": ["warn"],
@@ -34,16 +39,17 @@
     "no-plusplus": "error",
     "no-undef": "error",
     "object-curly-spacing": ["warn", "always"],
-    "curly":"error",
-    "consistent-return":"error",
-    "no-shadow":["error", { "hoist": "all"}],
+    "curly": "error",
+    "consistent-return": "error",
+    "no-shadow": ["error", { "hoist": "all" }],
     "sonarjs/no-duplicate-string": "error",
     "arrow-parens": ["error", "as-needed"],
     "arrow-body-style": ["error", "as-needed"],
     "object-shorthand": ["error", "properties"],
-    "@typescript-eslint/no-unnecessary-type-assertion": "error"
+    "@typescript-eslint/no-unnecessary-type-assertion": "error",
+    "jsx-a11y/no-autofocus": "off"
   },
   "parserOptions": {
-    "project":"./tsconfig.json"
+    "project": "./tsconfig.json"
   }
 }

@@ -1,24 +1,12 @@
 @media (min-width: 768px) {
-  .form-fields {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  .formFields {
     max-width: 750px;
   }
-}
-
-.form-field {
-  padding-bottom: 20px;
-}
-@media (min-width: 768px) {
-  .form-field {
+  .formFields > div.formField {
     flex-basis: 50%;
-    max-width: 350px;
-    padding: 10px 10px 10px 0;
   }
-  .form-field:nth-of-type(even) {
+  .formField:nth-of-type(even) {
     padding-right: 0;
-    padding-left: 10px;
   }
 }
 
@@ -26,6 +14,11 @@
   composes: text-bold text-sm from '~hds-core/lib/base.css';
   display: block;
 }
+
+.likeInput {
+  composes: hds-text-input__input from 'hds-core/lib/components/text-input/text-input.css';
+}
+
 @media (min-width: 768px) {
   .email {
     display: inline-block;

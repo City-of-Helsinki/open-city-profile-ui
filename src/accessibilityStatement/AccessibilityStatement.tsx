@@ -7,9 +7,10 @@ import Footer from '../common/footer/Footer';
 import AccessibilityStatementFi from './AccessibilityStatementFi';
 import AccessibilityStatementSv from './AccessibilityStatementSv';
 import AccessibilityStatementEn from './AccessibilityStatementEn';
+import PageMeta from '../common/pageMeta/PageMeta';
 
 function AccessibilityStatement(): React.ReactElement {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const selectStatement = () => {
     const lang =
       i18n.languages[0].length > 2
@@ -31,9 +32,10 @@ function AccessibilityStatement(): React.ReactElement {
   return (
     <div className={styles['page-wrapper']}>
       <Header />
-      <div className={styles['container']}>
+      <PageMeta title={t('accessibilityStatement')} />
+      <main className={styles['container']}>
         <div className={styles['inner-wrapper']}>{selectStatement()}</div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

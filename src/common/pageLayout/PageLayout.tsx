@@ -7,6 +7,7 @@ import { MAIN_CONTENT_ID } from '../constants';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import styles from './PageLayout.module.css';
+import PageMeta from '../pageMeta/PageMeta';
 
 type Props = React.PropsWithChildren<{
   className?: string;
@@ -32,6 +33,7 @@ function PageLayout(props: Props): React.ReactElement {
   return (
     <div className={styles.wrapper}>
       <Header />
+      <PageMeta title={pageTitle} />
       <main
         id={MAIN_CONTENT_ID}
         className={classNames(styles.content, props.className)}

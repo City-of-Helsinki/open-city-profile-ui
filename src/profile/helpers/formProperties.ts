@@ -3,6 +3,7 @@ export type FormField = {
   min?: number;
   max?: number;
   translationKey: string;
+  comboBox?: boolean;
 };
 
 type DataType =
@@ -31,8 +32,9 @@ export const formFieldsByDataType: FormFieldsByDataType = {
       max: 64,
       translationKey: 'profileForm.city',
     },
-    country: {
-      required: false,
+    countryCode: {
+      required: true,
+      comboBox: true,
       translationKey: 'profileForm.country',
     },
   },

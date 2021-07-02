@@ -14,6 +14,7 @@ import {
   PermanentAddress,
 } from '../../../graphql/typings';
 import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
+import NewWindowLinkWithChildrenAsTitle from '../../../common/newWindowLink/NewWindowLinkWithChildrenAsTitle';
 
 type CommonAddress = {
   streetAddress: PermanentAddress['streetAddress'];
@@ -120,11 +121,8 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
           forAria
             ? t('profileInformation.verifiedDataInformationAriaPrefix')
             : t('profileInformation.verifiedDataInformationPrefix'),
-          // eslint-disable-next-line jsx-a11y/anchor-has-content
-          <a
-            href={t('profileInformation.verifiedDataInformationLink')}
-            target="_blank"
-            rel="noopener noreferrer"
+          <NewWindowLinkWithChildrenAsTitle
+            link={t('profileInformation.verifiedDataInformationLink')}
             tabIndex={forAria ? 0 : -1}
           />,
         ]}

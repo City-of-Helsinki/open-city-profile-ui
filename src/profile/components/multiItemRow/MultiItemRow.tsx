@@ -17,6 +17,7 @@ import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
 import { getFormFields } from '../../helpers/formProperties';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
+import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 
 type EmailAndPhoneFormikValue = { value: string };
 
@@ -34,6 +35,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
     actionHandler,
     isNew,
     editButtonId,
+    removeButtonId,
   } = useCommonEditHandling(props);
   const schema = dataType === 'phones' ? phoneSchema : emailSchema;
   const inputValue: string =
@@ -90,6 +92,10 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
                     aria-labelledby={`${dataType}-value-helper`}
                     autoFocus
                   />
+                  <AccessibleFormikErrors
+                    formikProps={formikProps}
+                    dataType={dataType}
+                  />
                   <FormButtons
                     handler={actionHandler}
                     disabled={disableButtons}
@@ -122,6 +128,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
           setPrimary: true,
         }}
         editButtonId={editButtonId}
+        removeButtonId={removeButtonId}
         disabled={disableButtons || disableEditButtons}
         testId={testId}
         ariaLabels={ariaLabels}

@@ -13,7 +13,12 @@ type UseActionHandlingReturnType = {
   isNew: boolean;
   actionHandler: ActionHandler;
   editButtonId: string;
+  removeButtonId: string;
 };
+
+export interface ActionRejection {
+  removeCancelled: boolean;
+}
 
 export const useCommonEditHandling = (
   props: RowItemProps
@@ -24,6 +29,9 @@ export const useCommonEditHandling = (
   const [currentAction, setCurrentAction] = useState<Action>(undefined);
   const [editButtonId, setFocusToEditButton] = useFocusSetter({
     targetId: `${testId}-edit-button`,
+  });
+  const [removeButtonId, setFocusToRemoveButton] = useFocusSetter({
+    targetId: `${testId}-remove-button`,
   });
   const actionHandler: ActionHandler = async (action, newValue) => {
     if (action === 'set-primary' || action === 'remove' || action === 'save') {
@@ -38,6 +46,9 @@ export const useCommonEditHandling = (
     }
     if (err || action !== 'remove') {
       setCurrentAction(undefined);
+    }
+    if (err && ((err as unknown) as ActionRejection).removeCancelled) {
+      setFocusToRemoveButton();
     }
     if ((action === 'cancel' || action === 'save') && !err) {
       setFocusToEditButton();
@@ -54,5 +65,6 @@ export const useCommonEditHandling = (
     currentAction,
     isNew,
     editButtonId,
+    removeButtonId,
   };
 };
