@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
 
 import authService from '../../authService';
+import { useErrorPageRedirect } from '../../../profile/hooks/useErrorPageRedirect';
 
-type AuthenticationError =
-  | 'deviceTimeError'
-  | 'permissionDeniedByUserError'
-  | 'unknown';
-
-function OidcCallback({ history }: RouteChildrenProps): React.ReactElement {
+function OidcCallback({
+  history,
+}: RouteChildrenProps): React.ReactElement | null {
   const { t } = useTranslation();
-  const [
-    authenticationError,
-    setAuthenticationError,
-  ] = useState<AuthenticationError | null>(null);
+  const redirectToErrorPage = useErrorPageRedirect();
 
   useEffect(() => {
     authService
@@ -29,39 +24,30 @@ function OidcCallback({ history }: RouteChildrenProps): React.ReactElement {
           error.message.includes('iat is in the future') ||
           error.message.includes('exp is in the past')
         ) {
-          setAuthenticationError('deviceTimeError');
+          redirectToErrorPage({
+            message: t('authentication.deviceTimeError.message'),
+          });
         } else if (
           // Handle error caused by end user choosing Deny in Tunnistamo's
           // permission request
           error.message ===
           'The resource owner or authorization server denied the request'
         ) {
-          setAuthenticationError('permissionDeniedByUserError');
+          redirectToErrorPage({
+            message: t('authentication.permissionRequestDenied.message'),
+          });
         } else {
           // Send other errors to Sentry for analysis
           Sentry.captureException(error);
           // Give user a generic error
-          setAuthenticationError('unknown');
+          redirectToErrorPage({
+            message: t('authentication.genericError.message'),
+          });
         }
       });
-  }, [history, t]);
+  }, [history, redirectToErrorPage, t]);
 
-  const isDeviceTimeError = authenticationError === 'deviceTimeError';
-  const isPermissionDeniedByUserError =
-    authenticationError === 'permissionDeniedByUserError';
-  const isUnknownError = authenticationError === 'unknown';
-
-  return (
-    <>
-      {isDeviceTimeError && (
-        <p>{t('authentication.deviceTimeError.message')}</p>
-      )}
-      {isPermissionDeniedByUserError && (
-        <p>{t('authentication.permissionRequestDenied.message')}</p>
-      )}
-      {isUnknownError && <p>{t('authentication.genericError.message')}</p>}
-    </>
-  );
+  return t('oidc.authenticating');
 }
 
 export default OidcCallback;
