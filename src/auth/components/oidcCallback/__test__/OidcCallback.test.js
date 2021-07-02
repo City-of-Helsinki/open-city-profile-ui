@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 import {
   mountWithProvider,
@@ -7,17 +8,30 @@ import {
 import authService from '../../../authService';
 import OidcCallback from '../OidcCallback';
 
-const defaultProps = {
+const mockedDefaultProps = {
   history: {
     replace: jest.fn(),
   },
 };
+
 const getWrapper = props =>
-  mountWithProvider(<OidcCallback {...defaultProps} {...props} />);
+  mountWithProvider(
+    <BrowserRouter>
+      <OidcCallback {...mockedDefaultProps} {...props} />
+    </BrowserRouter>
+  );
+
+const getHistoryReplaceCallArgument = () =>
+  mockedDefaultProps.history.replace.mock.calls[0][0];
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: jest.fn().mockImplementation(() => mockedDefaultProps.history),
+}));
 
 describe('<OidcCallback />', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    mockedDefaultProps.history.replace.mockReset();
   });
 
   it('as a user I want to see an error message about incorrect device time, because only I can fix it', async () => {
@@ -30,7 +44,9 @@ describe('<OidcCallback />', () => {
     await updateWrapper(wrapper);
 
     expect(
-      wrapper.text().includes('authentication.deviceTimeError.message')
+      getHistoryReplaceCallArgument().includes(
+        'authentication.deviceTimeError.message'
+      )
     ).toBe(true);
   });
 
@@ -49,7 +65,9 @@ describe('<OidcCallback />', () => {
     await updateWrapper(wrapper);
 
     expect(
-      wrapper.text().includes('authentication.permissionRequestDenied.message')
+      getHistoryReplaceCallArgument().includes(
+        'authentication.permissionRequestDenied.message'
+      )
     ).toBe(true);
   });
 
@@ -73,7 +91,7 @@ describe('<OidcCallback />', () => {
 
       await updateWrapper(wrapper);
 
-      expect(defaultProps.history.replace).toHaveBeenCalledTimes(1);
+      expect(mockedDefaultProps.history.replace).toHaveBeenCalledTimes(1);
     });
   });
 });
