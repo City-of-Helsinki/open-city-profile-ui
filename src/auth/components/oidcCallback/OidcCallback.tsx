@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
+import { LoadingSpinner } from 'hds-react';
 
 import authService from '../../authService';
 import { useErrorPageRedirect } from '../../../profile/hooks/useErrorPageRedirect';
+import styles from './OidcCallback.module.css';
 
 function OidcCallback({
   history,
@@ -47,7 +49,12 @@ function OidcCallback({
       });
   }, [history, redirectToErrorPage, t]);
 
-  return t('oidc.authenticating');
+  return (
+    <div className={styles.wrapper}>
+      <LoadingSpinner small />
+      <p>{t('oidc.authenticating')}</p>
+    </div>
+  );
 }
 
 export default OidcCallback;
