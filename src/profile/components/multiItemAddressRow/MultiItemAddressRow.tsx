@@ -21,6 +21,7 @@ import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
+import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 
 type FormikValues = AddressValue;
 
@@ -53,6 +54,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
     actionHandler,
     currentAction,
     editButtonId,
+    removeButtonId,
   } = useCommonEditHandling(props);
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     FormikValues
@@ -124,10 +126,11 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                     name="countryCode"
                     id={`${testId}-countryCode`}
                     options={countryOptions}
-                    label={t(formFields.country.translationKey)}
+                    label={t(formFields.countryCode.translationKey)}
                     default={countryCode}
                     invalid={hasFieldError(formikProps, 'countryCode')}
                     error={getFieldErrorMessage(formikProps, 'countryCode')}
+                    aria-describedby={`${dataType}-countryCode-helper`}
                     toggleButtonAriaLabel={t(
                       'profileInformation.ariaShowOptions'
                     )}
@@ -141,6 +144,10 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                   />
                 </div>
               </div>
+              <AccessibleFormikErrors
+                formikProps={formikProps}
+                dataType={dataType}
+              />
               <FormButtons
                 handler={actionHandler}
                 disabled={disableButtons}
@@ -183,7 +190,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
           testId={`${testId}-city`}
         />
         <LabeledValue
-          label={t(formFields.country.translationKey)}
+          label={t(formFields.countryCode.translationKey)}
           value={getCountry(value.countryCode, lang)}
           testId={`${testId}-countryCode`}
         />
@@ -198,6 +205,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
           }}
           buttonClassNames={commonFormStyles['actions-wrapper-button']}
           editButtonId={editButtonId}
+          removeButtonId={removeButtonId}
           disabled={disableButtons || disableEditButtons}
           testId={testId}
           ariaLabels={ariaLabels}

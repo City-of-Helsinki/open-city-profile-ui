@@ -24,7 +24,7 @@ function HelsinkiLogo({
       <Link
         to="/"
         className={classNames(logoStyle, className)}
-        aria-label={t('helsinkiLogo')}
+        title={t('nav.titleAriaLabel')}
       />
     );
   }
@@ -32,7 +32,7 @@ function HelsinkiLogo({
   return (
     <span
       className={classNames(logoStyle, className)}
-      aria-label={t('helsinkiLogo')}
+      aria-label={t('nav.titleAriaLabel')}
     />
   );
 }

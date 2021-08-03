@@ -7,7 +7,6 @@ import Explanation from '../explanation/Explanation';
 type Props = {
   children?: React.ReactNode;
   description?: string;
-  titleButton?: React.ReactNode;
   title?: string;
   titleVariant?: 'h2' | 'h3';
   hasVerifiedUserData?: boolean;
@@ -16,11 +15,11 @@ type Props = {
 function ProfileSection({
   children,
   description,
-  titleButton,
   titleVariant,
   title,
   hasVerifiedUserData,
 }: Props): React.ReactElement {
+  const hasTitleRowContent = !!(title || description);
   return (
     <section
       className={classNames(
@@ -28,16 +27,17 @@ function ProfileSection({
         hasVerifiedUserData && styles['verified-data']
       )}
     >
-      <div className={styles['profile-section-title-row']}>
-        <Explanation
-          variant="flush"
-          className={styles['profile-section-title']}
-          titleVariant={titleVariant}
-          main={title || ''}
-          small={description}
-        />
-        {titleButton}
-      </div>
+      {hasTitleRowContent && (
+        <div className={styles['profile-section-title-row']}>
+          <Explanation
+            variant="flush"
+            className={styles['profile-section-title']}
+            titleVariant={titleVariant}
+            main={title || ''}
+            small={description}
+          />
+        </div>
+      )}
       {children}
     </section>
   );

@@ -24,6 +24,8 @@ import {
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import { useConfirmationModal } from '../../hooks/useConfirmationModal';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
+import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
+import { ActionRejection } from '../../hooks/useCommonEditHandling';
 
 type Props = {
   dataType: EditDataType;
@@ -132,7 +134,9 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
           })
         );
         if (rejected) {
-          return Promise.reject({ removeCancelled: true });
+          return Promise.reject({
+            removeCancelled: true,
+          } as ActionRejection);
         }
       }
       return executeActionAndNotifyUser(action, item, newValue);
@@ -187,6 +191,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
           </li>
         ))}
       </ul>
+      <AccessibilityFieldHelpers dataType={dataType} />
       <EditingNotifications content={content} dataType={dataType} />
       <Button
         iconLeft={<IconPlusCircle />}

@@ -9,9 +9,10 @@ import LanguageSwitcher from '../../i18n/components/languageSwitcher/LanguageSwi
 import UserDropdown from './userDropdown/UserDropdown';
 import styles from './Header.module.css';
 import { ProfileContext } from '../../profile/context/ProfileContext';
+import getLanguageCode from '../helpers/getLanguageCode';
 
 function Header(): React.ReactElement {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const history = useHistory();
   const location = useLocation();
   const currentPath = location.pathname;
@@ -20,11 +21,14 @@ function Header(): React.ReactElement {
 
   const { isComplete } = useContext(ProfileContext);
 
-  const onClick = (path: string, e: MouseEvent) => {
-    e.preventDefault();
+  const onClick = (path: string, e?: MouseEvent) => {
+    e && e.preventDefault();
     history.push(path);
     trackEvent({ category: 'nav', action: `${path} click` });
   };
+
+  const lang = getLanguageCode(i18n.languages[0]);
+  const logoLanguage = lang === 'sv' ? 'sv' : 'fi';
 
   return (
     <Navigation
@@ -32,7 +36,10 @@ function Header(): React.ReactElement {
       skipToContentLabel={t('skipToContent')}
       menuToggleAriaLabel={t('nav.menuButtonLabel')}
       title={t('appName')}
+      titleAriaLabel={t('nav.titleAriaLabel')}
       className={styles['z-index-fix']}
+      logoLanguage={logoLanguage}
+      onTitleClick={() => onClick('/')}
     >
       {isComplete && (
         <Navigation.Row>
