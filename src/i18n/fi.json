@@ -86,7 +86,6 @@
     "services": "Käyttämäsi palvelut",
     "signin": "Kirjaudu sisään",
     "signout": "Kirjaudu ulos",
-    "subscriptions": "Tilaukset",
     "titleAriaLabel": "Siirry Profiilin etusivulle"
   },
   "notification": {
@@ -211,14 +210,6 @@
     "title": "Palvelut, joilla on lupa käyttää tietojasi"
   },
   "skipToContent": "Siirry suoraan sisältöön",
-  "subscriptions": {
-    "empty": "Ei tilattavia palveluita / ilmoituksia",
-    "explanation": "Tilaa ilmoituksia ja uutiskirjeitä.",
-    "saveSuccess": "Tallennettu!",
-    "saveSuccessMessage": "Tilaukset tallennettu onnistuneesti.",
-    "subscribed": "Tilattu!",
-    "title": "Tilaukset ja uutiskirjeet"
-  },
   "validation": {
     "email": "Sähköpostiosoite ei kelpaa.",
     "maxLength": "Kentän maksimipituus on {{max}} merkkiä.",

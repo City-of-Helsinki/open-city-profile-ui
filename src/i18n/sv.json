@@ -86,7 +86,6 @@
     "services": "Dina tjänster",
     "signin": "Logga in",
     "signout": "Logga ut",
-    "subscriptions": "Prenumerationer",
     "titleAriaLabel": "SV: Siirry Profiilin etusivulle"
   },
   "notification": {
@@ -211,14 +210,6 @@
     "title": "Tjänster som har tillstånd att använda dina uppgifter"
   },
   "skipToContent": "Hoppa till innehåll",
-  "subscriptions": {
-    "empty": "Inga prenumerationer / nyhetsbrev",
-    "explanation": "Prenumerera på meddelanden och nyhetsbrev.",
-    "saveSuccess": "Sparade!",
-    "saveSuccessMessage": "Prenumerationer sparades framgångsrikt.",
-    "subscribed": "Prenumererar!",
-    "title": "Prenumerationer och nyhetsbrev"
-  },
   "validation": {
     "email": "Inte ett giltigt epost-adress",
     "maxLength": "Fältet får vara högst {{max}} tecken långt.",
