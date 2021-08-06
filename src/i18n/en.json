@@ -86,7 +86,8 @@
     "services": "Your services",
     "signin": "Log in",
     "signout": "Sign out",
-    "titleAriaLabel": "Go to homepage of the Profile"
+    "titleAriaLabel": "Go to homepage of the Profile",
+    "goToHomePage": "Go to homepage"
   },
   "notification": {
     "closeButtonText": "Close",
