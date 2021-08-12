@@ -7375,6 +7375,11 @@ http-proxy@^1.17.0:
     follow-redirects "^1.0.0"
     requires-port "^1.0.0"
 
+http-status-typed@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/http-status-typed/-/http-status-typed-1.0.0.tgz#2dbf0a036a7c5e4c0447fa22bc8f42f0221b9481"
+  integrity sha512-pDW3/qUMd9IRxJ7WLizQbD2EY6qp/Zf5FB96gIbNoz9QuxdY5LAEl/z4eNQX2p/cKYKngaUNTqmQ1XgLwi/bhg==
+
 https-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
