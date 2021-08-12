@@ -19,3 +19,5 @@ jest.mock('react-router', () => ({
     pathname: '/',
   }),
 }));
+
+jest.mock('./auth/http-poller');
