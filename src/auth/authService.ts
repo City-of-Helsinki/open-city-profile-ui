@@ -6,8 +6,10 @@ import {
   WebStorageStateStore,
 } from 'oidc-client';
 import * as Sentry from '@sentry/browser';
+import HttpStatusCode from 'http-status-typed';
 
 import pickProfileApiToken from './pickProfileApiToken';
+import createHttpPoller from './http-poller';
 
 const origin = window.location.origin;
 export const API_TOKEN = 'apiToken';
@@ -50,6 +52,39 @@ export class AuthService {
     this.renewToken = this.renewToken.bind(this);
     this.logout = this.logout.bind(this);
 
+    const userInfoFetchFunction = async (): Promise<Response | undefined> => {
+      const uri = await this.userManager.metadataService.getUserInfoEndpoint();
+      const user = await this.getUser();
+      const accessToken = user && user.access_token;
+      if (!accessToken) {
+        return Promise.reject(new Error('Access token not set'));
+      }
+      const headers = new Headers();
+      headers.append('Authorization', `Bearer ${accessToken}`);
+
+      return fetch(uri, {
+        method: 'GET',
+        headers,
+      });
+    };
+
+    const userSessionValidityPoller = createHttpPoller({
+      pollFunction: userInfoFetchFunction,
+      shouldPoll: () => this.isAuthenticated(),
+      onError: returnedHttpStatus => {
+        if (
+          this.isAuthenticated() &&
+          returnedHttpStatus &&
+          (returnedHttpStatus === HttpStatusCode.FORBIDDEN ||
+            returnedHttpStatus === HttpStatusCode.UNAUTHORIZED)
+        ) {
+          this.logout();
+          return { keepPolling: false };
+        }
+        return { keepPolling: this.isAuthenticated() };
+      },
+    });
+
     // Events
     this.userManager.events.addAccessTokenExpired(() => {
       this.logout();
@@ -58,12 +93,18 @@ export class AuthService {
     this.userManager.events.addUserSignedOut(() => {
       this.userManager.clearStaleState();
       sessionStorage.removeItem(API_TOKEN);
+      userSessionValidityPoller.stop();
     });
 
     this.userManager.events.addUserLoaded(async user => {
       if (!this._isProcessingLogin && this.isAuthenticatedUser(user)) {
         this.fetchApiToken(user);
       }
+      userSessionValidityPoller.start();
+    });
+
+    this.userManager.events.addUserUnloaded(() => {
+      userSessionValidityPoller.stop();
     });
   }
 
