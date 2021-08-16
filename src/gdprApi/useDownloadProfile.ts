@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  useQuery,
   useLazyQuery,
   LazyQueryHookOptions,
   LazyQueryResult,
@@ -22,7 +21,6 @@ function useDownloadProfile<TQuery>(
   query: DocumentNode,
   options?: LazyQueryHookOptions<TQuery, TVariables>
 ): [() => void, LazyQueryResult<TQuery, TVariables>, boolean] {
-  const { data } = useQuery<GdprServiceConnectionsRoot>(SERVICE_CONNECTIONS);
   const [downloadProfile, queryResult] = useLazyQuery<TQuery>(query, {
     ...options,
     onCompleted: (...args) => {
@@ -52,14 +50,26 @@ function useDownloadProfile<TQuery>(
     handleAuthorizationCodeCallback
   );
 
-  const handleDownloadActionInitialization = React.useCallback(() => {
-    const queryScopes = getQueryScopes(data);
+  const handleDownloadActionInitialization = React.useCallback(
+    serviceConnectionsResult => {
+      const queryScopes = getQueryScopes(serviceConnectionsResult);
 
-    startFetchingAuthorizationCode(queryScopes);
-  }, [data, startFetchingAuthorizationCode]);
+      startFetchingAuthorizationCode(queryScopes);
+    },
+    [startFetchingAuthorizationCode]
+  );
+
+  const [getServiceConnections] = useLazyQuery<GdprServiceConnectionsRoot>(
+    SERVICE_CONNECTIONS,
+    {
+      onCompleted: data => {
+        handleDownloadActionInitialization(data);
+      },
+    }
+  );
 
   return [
-    handleDownloadActionInitialization,
+    getServiceConnections,
     queryResult,
     isAuthorizing || queryResult.loading,
   ];
