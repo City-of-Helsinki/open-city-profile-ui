@@ -36,7 +36,8 @@
     "accept": "I understand what deleting my data means and wish to proceed.",
     "delete": "Delete my information",
     "explanation": "If you want to, you can delete all information we have stored about you. The information cannot be restored after it has been deleted. If you have connected your profile to one of the services of the City of Helsinki, you can no longer use the service until you create a new profile. After deleting you will be automatically logged out of this service. Note that the account you have used to log in (for example Google or Facebook) will not be deleted.",
-    "title": "Do you want to delete your information?"
+    "title": "Do you want to delete your information?",
+    "loadingServices": "EN: Haetaan profiiliin yhdistettyjä palveluita"
   },
   "deleteProfileModal": {
     "delete": "Delete my information",

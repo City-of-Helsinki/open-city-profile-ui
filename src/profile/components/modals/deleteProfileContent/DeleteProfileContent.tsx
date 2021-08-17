@@ -1,18 +1,20 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { ServiceConnectionsRoot } from '../../../../graphql/typings';
 import getServices from '../../../helpers/getServices';
 
 export type Props = {
-  description: string;
   data?: ServiceConnectionsRoot;
 };
 
-function DeleteProfileContent({
-  data,
-  description,
-}: Props): React.ReactElement | null {
+function DeleteProfileContent({ data }: Props): React.ReactElement | null {
+  const { t } = useTranslation();
   const servicesArray = getServices(data);
+  const description =
+    data?.myProfile?.serviceConnections?.edges?.length !== 0
+      ? t('deleteProfileModal.explanation')
+      : t('deleteProfileModal.noServiceExplanation');
   return (
     <>
       <p>{description}</p>

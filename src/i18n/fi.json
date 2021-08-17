@@ -36,7 +36,8 @@
     "accept": "Ymmärrän mitä tietojeni poistaminen tarkoittaa ja haluan jatkaa.",
     "delete": "Poista omat tiedot",
     "explanation": "Jos haluat, voit poistaa kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Jos olet yhdistänyt profiilisi johonkin Helsingin kaupungin palveluun, et enää pysty käyttämään kyseistä palvelua ennen kuin luot uuden profiilin. Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta. Huomaa, että kirjautumiseen käyttämääsi tiliä (esim. Google, Facebook) ei poisteta.",
-    "title": "Haluatko poistaa omat tietosi?"
+    "title": "Haluatko poistaa omat tietosi?",
+    "loadingServices": "Haetaan profiiliin yhdistettyjä palveluita"
   },
   "deleteProfileModal": {
     "delete": "Poista omat tiedot",

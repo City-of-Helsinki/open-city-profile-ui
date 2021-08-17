@@ -1,3 +1,14 @@
 .button {
   margin-top: var(--spacing-m);
 }
+
+.loading-info {
+  display: flex;
+  align-items: center;
+  margin: var(--spacing-xs) 0;
+}
+
+.loading-info p {
+  margin: 0;
+  padding-left: var(--spacing-m);
+}

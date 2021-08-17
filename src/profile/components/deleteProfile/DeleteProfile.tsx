@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useLazyQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
-import { Button, Checkbox } from 'hds-react';
+import { Button, Checkbox, LoadingSpinner } from 'hds-react';
 import { useHistory } from 'react-router';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
@@ -25,6 +25,14 @@ const SERVICE_CONNECTIONS = loader(
 function DeleteProfile(): React.ReactElement {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [deleteInstructions, setDeleteInstructions] = useState(false);
+  const notStartedLoadState = 'not-started';
+  const loadingLoadState = 'loading';
+  const loadedLoadState = 'loaded';
+  const [dataLoadState, setDataLoadState] = useState<
+    | typeof notStartedLoadState
+    | typeof loadingLoadState
+    | typeof loadedLoadState
+  >(notStartedLoadState);
   const { createToast } = useToast();
   const history = useHistory();
   const { trackEvent } = useMatomo();
@@ -52,23 +60,51 @@ function DeleteProfile(): React.ReactElement {
     targetId: `delete-profile-button`,
   });
 
-  const { data, refetch } = useQuery<ServiceConnectionsRoot>(
-    SERVICE_CONNECTIONS,
-    {
-      onError: (error: Error) => {
-        Sentry.captureException(error);
-        createToast({ type: 'error' });
-      },
-    }
-  );
+  const [getServiceConnections, { data, refetch }] = useLazyQuery<
+    ServiceConnectionsRoot
+  >(SERVICE_CONNECTIONS, {
+    onCompleted: () => {
+      setDataLoadState(loadedLoadState);
+    },
+    onError: (error: Error) => {
+      setDataLoadState(notStartedLoadState);
+      Sentry.captureException(error);
+      createToast({ type: 'error' });
+    },
+  });
 
   useEffect(() => {
-    const cb = () => refetch();
+    const cb = () => {
+      if (refetch) {
+        const asyncRefetch = async () => {
+          setDataLoadState(loadingLoadState);
+          await refetch();
+          setDataLoadState(loadedLoadState);
+        };
+        asyncRefetch();
+      }
+    };
     i18n.on('languageChanged', cb);
     return () => {
       i18n.off('languageChanged', cb);
     };
   });
+
+  const loadServiceConnections = useCallback(() => {
+    if (dataLoadState === notStartedLoadState) {
+      getServiceConnections();
+      setDataLoadState(loadingLoadState);
+    }
+  }, [getServiceConnections, setDataLoadState, dataLoadState]);
+
+  const onExpandingPanelChange = useCallback(
+    isOpen => {
+      if (isOpen) {
+        loadServiceConnections();
+      }
+    },
+    [loadServiceConnections]
+  );
 
   const handleDeleteInstructions = () => {
     setDeleteInstructions(prevState => !prevState);
@@ -88,48 +124,53 @@ function DeleteProfile(): React.ReactElement {
 
     deleteProfile();
   };
-  const userHasServices =
-    data?.myProfile?.serviceConnections?.edges?.length !== 0;
   const initiallyOpen = deleteProfileResult.loading;
-  const description = userHasServices
-    ? t('deleteProfileModal.explanation')
-    : t('deleteProfileModal.noServiceExplanation');
-
   return (
     <React.Fragment>
       <ExpandingPanel
         title={t('deleteProfile.title')}
         initiallyOpen={initiallyOpen}
         scrollIntoViewOnMount={initiallyOpen}
+        onChange={onExpandingPanelChange}
       >
         <p>{t('deleteProfile.explanation')}</p>
+        {dataLoadState !== loadedLoadState ? (
+          <div
+            className={styles['loading-info']}
+            aria-live="polite"
+            aria-busy="true"
+          >
+            <LoadingSpinner small />
+            <p>{t('deleteProfile.loadingServices')}</p>
+          </div>
+        ) : (
+          <React.Fragment>
+            <Checkbox
+              onChange={handleDeleteInstructions}
+              id="deleteInstructions"
+              name="deleteInstructions"
+              checked={deleteInstructions}
+              label={t('deleteProfile.accept')}
+            />
 
-        <Checkbox
-          onChange={handleDeleteInstructions}
-          id="deleteInstructions"
-          name="deleteInstructions"
-          checked={deleteInstructions}
-          label={t('deleteProfile.accept')}
-        />
-
-        <Button
-          type="button"
-          onClick={handleConfirmationModal}
-          disabled={!deleteInstructions}
-          className={styles.button}
-          id={removeButtonId}
-        >
-          {t('deleteProfile.delete')}
-        </Button>
+            <Button
+              type="button"
+              onClick={handleConfirmationModal}
+              disabled={!deleteInstructions}
+              className={styles.button}
+              id={removeButtonId}
+            >
+              {t('deleteProfile.delete')}
+            </Button>
+          </React.Fragment>
+        )}
       </ExpandingPanel>
 
       <ConfirmationModal
         isOpen={deleteConfirmationModal}
         onClose={handleConfirmationModal}
         onConfirm={handleProfileDelete}
-        content={() => (
-          <ModalServicesContent description={description} data={data} />
-        )}
+        content={() => <ModalServicesContent data={data} />}
         title={t('deleteProfileModal.title')}
         actionButtonText={t('deleteProfileModal.delete')}
       />

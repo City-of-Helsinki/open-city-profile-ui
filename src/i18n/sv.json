@@ -36,7 +36,8 @@
     "accept": "Jag förstår vad att radera min information betyder och vill fortsätta.",
     "delete": "Radera min information",
     "explanation": "Om du vill, kan du radera all information som vi har lagrat om dig. Informationen kan inte återställas efter att den har raderats. Om du har anslutit din profil till en av Helsingfors stads tjänster kan du inte längre använda tjänsten förrän du skapar en ny profil. Efter radering kommer du automatiskt att logga ut från den här tjänsten. Observera att kontot du har använt för att logga in (till exempel Google eller Facebook) inte kommer att raderas.",
-    "title": "Vill du radera din information?"
+    "title": "Vill du radera din information?",
+    "loadingServices": "SV: Haetaan profiiliin yhdistettyjä palveluita"
   },
   "deleteProfileModal": {
     "delete": "Radera min information",
@@ -65,8 +66,8 @@
   "landmarks": {
     "navigation": {
       "language": "Språk: Svenska. Ändra språk. Vaihda kieli. Change language.",
-      "main": "",
-      "user": ""
+      "main": "SV: Pää",
+      "user": "SV: Käyttäjä"
     }
   },
   "LANGUAGE_OPTIONS": {
@@ -174,7 +175,7 @@
     "permanentForeignAddress": "SV: Vakinainen ulkomainen osoite",
     "primaryEmail": "SV: Ensisijainen sähköpostiosoite",
     "primaryPhone": "SV: Ensisijainen puhelinnumero",
-    "primaryAddressAriaDescription": "SV :Tämä on ensisijainen osoitteesi",
+    "primaryAddressAriaDescription": "SV: Tämä on ensisijainen osoitteesi",
     "primaryEmailAriaDescription": "SV: Tämä on ensisijainen sähköpostiosoitteesi",
     "primaryPhoneAriaDescription": "SV: Tämä on ensisijainen puhelinnumerosi",
     "verifiedDataInformationPrefix": "SV: Merkityt",
