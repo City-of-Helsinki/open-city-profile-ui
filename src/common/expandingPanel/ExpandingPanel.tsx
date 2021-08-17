@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useRef } from 'react';
+import React, { PropsWithChildren, useEffect, useRef } from 'react';
 import {
   Button,
   Card,
@@ -15,6 +15,7 @@ type Props = PropsWithChildren<{
   showInformationText?: boolean;
   initiallyOpen: boolean;
   scrollIntoViewOnMount?: boolean;
+  onChange?: (isOpen: boolean) => void;
 }>;
 
 function ExpandingPanel({
@@ -23,6 +24,7 @@ function ExpandingPanel({
   showInformationText,
   scrollIntoViewOnMount,
   title,
+  onChange,
 }: Props): React.ReactElement {
   const container = useRef<HTMLDivElement | null>(null);
   const { t } = useTranslation();
@@ -40,6 +42,11 @@ function ExpandingPanel({
   const { isOpen, buttonProps, contentProps } = useAccordion({
     initiallyOpen,
   });
+  useEffect(() => {
+    if (onChange) {
+      onChange(isOpen);
+    }
+  }, [isOpen, onChange]);
   const Icon = isOpen ? IconAngleUp : IconAngleDown;
   const buttonText = isOpen
     ? t('expandingPanel.hideInformation')
