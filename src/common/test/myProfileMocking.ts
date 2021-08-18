@@ -184,7 +184,6 @@ export const getVerifiedData = (
   lastName: 'verifiedLastName',
   givenName: 'verifiedGivenName',
   nationalIdentificationNumber: 'nationalIdentificationNumber',
-  email: 'vip@email.com',
   municipalityOfResidence: 'municipalityOfResidence',
   municipalityOfResidenceNumber: 'municipalityOfResidenceNumber',
   permanentAddress: {
