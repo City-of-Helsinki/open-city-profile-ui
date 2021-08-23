@@ -93,6 +93,7 @@ The following envs are used:
 | `REACT_APP_OIDC_CLIENT_ID`                        | ID of the client that has to be configured in tunnistamo.                                                                          |
 | `REACT_APP_OIDC_SCOPE`                            | Which scopes the app requires.                                                                                                     |
 | `REACT_APP_PROFILE_AUDIENCE`                      | Name of the api-token that client uses profile-api with.                                                                           |
+| `REACT_APP_PROFILE_BE_GDPR_CLIENT_ID`             | Client id used when getting gdpr authentication token for connected services                                                       |
 | `REACT_APP_PROFILE_GRAPHQL`                       | URL to the profile graphql.                                                                                                        |
 | `REACT_APP_SENTRY_DSN`                            | Sentry public dns-key.                                                                                                             |
 | `REACT_APP_OIDC_RESPONSE_TYPE`                    | Which response type to require.                                                                                                    |
