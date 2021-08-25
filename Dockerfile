@@ -76,6 +76,6 @@ COPY ./scripts/env.sh /opt/env.sh
 COPY .env /opt/.env
 RUN chmod +x /opt/env.sh
 
-EXPOSE 8080
+EXPOSE 80
 
 CMD ["/bin/bash", "-c", "/opt/env.sh /opt /usr/share/nginx/html && nginx -g \"daemon off;\""]
