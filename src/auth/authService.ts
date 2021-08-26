@@ -14,7 +14,7 @@ export const API_TOKEN = 'apiToken';
 
 export class AuthService {
   userManager: UserManager;
-
+  private _isProcessingLogin = false;
   constructor() {
     const settings: UserManagerSettings = {
       automaticSilentRenew: true,
@@ -61,7 +61,9 @@ export class AuthService {
     });
 
     this.userManager.events.addUserLoaded(async user => {
-      this.fetchApiToken(user);
+      if (!this._isProcessingLogin) {
+        this.fetchApiToken(user);
+      }
     });
   }
 
@@ -95,10 +97,11 @@ export class AuthService {
   }
 
   public async endLogin(): Promise<User> {
+    this._isProcessingLogin = true;
     const user = await this.userManager.signinRedirectCallback();
 
     await this.fetchApiToken(user);
-
+    this._isProcessingLogin = false;
     return user;
   }
 
