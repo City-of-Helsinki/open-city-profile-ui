@@ -37,7 +37,10 @@ describe('<Profile />', () => {
   };
 
   const mockUser = (): void => {
-    const user = ({ profile: { name: 'Mock User' } } as unknown) as User;
+    const user = ({
+      profile: { name: 'Mock User' },
+      access_token: 'huuhaa',
+    } as unknown) as User;
     const userManager = authService.userManager;
     jest.spyOn(userManager, 'getUser').mockResolvedValueOnce(user);
   };

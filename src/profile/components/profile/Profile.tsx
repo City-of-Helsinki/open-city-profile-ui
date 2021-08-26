@@ -57,12 +57,11 @@ function Profile(): React.ReactElement {
     authService
       .getUser()
       .then(user => {
-        if (!user || user.expired) {
+        if (!authService.isAuthenticatedUser(user)) {
           return history.push('/login');
         }
-
         checkProfileExists();
-        setTunnistamoUser(user);
+        setTunnistamoUser(user as User);
         setIsCheckingAuthState(false);
         return undefined;
       })
