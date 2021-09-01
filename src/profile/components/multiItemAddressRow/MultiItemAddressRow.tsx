@@ -63,7 +63,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
   const { primary, saving } = data;
   const disableButtons = !!currentAction || !!saving;
   const ariaLabels = createActionAriaLabels(dataType, value.address, t);
-
+  const formFieldStyle = commonFormStyles['form-field'];
   if (isEditing) {
     return (
       <Formik
@@ -98,6 +98,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                   label={t(formFields.address.translationKey)}
                   autoFocus
                   aria-labelledby={`${dataType}-address-helper`}
+                  className={formFieldStyle}
                 />
                 <Field
                   name="postalCode"
@@ -109,6 +110,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                   errorText={getFieldErrorMessage(formikProps, 'postalCode')}
                   label={t(formFields.postalCode.translationKey)}
                   aria-labelledby={`${dataType}-postalCode-helper`}
+                  className={formFieldStyle}
                 />
                 <Field
                   name="city"
@@ -120,6 +122,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                   errorText={getFieldErrorMessage(formikProps, 'city')}
                   label={t(formFields.city.translationKey)}
                   aria-labelledby={`${dataType}-city-helper`}
+                  className={formFieldStyle}
                 />
                 <div className={commonFormStyles['form-field']}>
                   <FormikDropdown
