@@ -5,7 +5,7 @@ import to from 'await-to-js';
 import { Button, IconPlusCircle } from 'hds-react';
 
 import ProfileSection from '../../../common/profileSection/ProfileSection';
-import MultiItemRow from '../multiItemRow/MultiItemRow';
+import MultiItemPhoneRow from '../multiItemPhoneRow/MultiItemPhoneRow';
 import MultiItemAddressRow from '../multiItemAddressRow/MultiItemAddressRow';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import useNotificationContent from '../editingNotifications/useNotificationContent';
@@ -65,7 +65,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   const hasAddressList = dataType === 'addresses';
   const isAddButtonDisabled = hasNew();
   const setPrimaryInProgress = isSettingPrimary(editDataList);
-  const RowComponent = hasAddressList ? MultiItemAddressRow : MultiItemRow;
+  const RowComponent = hasAddressList ? MultiItemAddressRow : MultiItemPhoneRow;
   const texts = (function() {
     if (dataType === 'phones') {
       return {

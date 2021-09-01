@@ -4,7 +4,7 @@ import { Field, Formik, FormikProps, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import styles from './multiItemRow.module.css';
+import styles from './multiItemPhoneRow.module.css';
 import { EditDataType, PhoneValue } from '../../helpers/editData';
 import { createFormFieldHelpers } from '../../helpers/formik';
 import { phoneSchema } from '../../../common/schemas/schemas';
@@ -21,7 +21,7 @@ import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikEr
 
 type PhoneFormikValue = { value: string };
 
-function MultiItemRow(props: RowItemProps): React.ReactElement {
+function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
   const {
     data: { value, primary, saving },
     testId,
@@ -127,4 +127,4 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
   );
 }
 
-export default MultiItemRow;
+export default MultiItemPhoneRow;
