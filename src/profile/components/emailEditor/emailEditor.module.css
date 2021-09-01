@@ -1,0 +1,19 @@
+.form-content-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-content-wrapper > * {
+  max-width: 350px;
+  padding: var(--spacing-xs) 0;
+  box-sizing: border-box;
+}
+
+.text-content-wrapper {
+  display: flex;
+  padding-bottom: var(--spacing-m);
+}
+
+.notification-wrapper {
+  margin: 0 0 var(--spacing-m) 0;
+}

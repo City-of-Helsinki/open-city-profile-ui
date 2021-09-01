@@ -101,7 +101,7 @@ export const createProfilePhoneSchema = yup.object().shape({
     .max(phonesMax, createMaxLengthMessage(phonesMax)),
 });
 export const emailSchema = yup.object().shape({
-  value: yup.mixed().test('isValidEmail', 'validation.email', function() {
-    return this.parent?.value ? validator.isEmail(this.parent?.value) : false;
+  email: yup.mixed().test('isValidEmail', 'validation.email', function() {
+    return this.parent?.email ? validator.isEmail(this.parent?.email) : false;
   }),
 });

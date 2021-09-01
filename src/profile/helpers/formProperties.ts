@@ -64,7 +64,7 @@ export const formFieldsByDataType: FormFieldsByDataType = {
     },
   },
   emails: {
-    value: {
+    email: {
       required: true,
       min: 1,
       max: 255,
