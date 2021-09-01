@@ -31,7 +31,9 @@ import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChil
 describe('<MultiItemEditor /> ', () => {
   const responses: MockedResponse[] = [];
   const initialProfile = getMyProfile().myProfile as ProfileData;
-  const renderTestSuite = (dataType: EditDataType) => {
+  const renderTestSuite = (
+    dataType: Extract<EditDataType, 'addresses' | 'phones'>
+  ) => {
     const responseProvider: ResponseProvider = () =>
       responses.shift() as MockedResponse;
     return renderComponentWithMocksAndContexts(
@@ -69,12 +71,6 @@ describe('<MultiItemEditor /> ', () => {
         phone: '555-555-123',
       },
     },
-    emails: {
-      fields: ['email'],
-      formValues: {
-        email: 'test-email@email.com',
-      },
-    },
   };
 
   beforeEach(() => {
@@ -91,7 +87,7 @@ describe('<MultiItemEditor /> ', () => {
     return Promise.resolve(testTools);
   };
 
-  const multiItemDataTypes: EditDataType[] = ['emails', 'phones', 'addresses'];
+  const multiItemDataTypes: EditDataType[] = ['phones', 'addresses'];
   multiItemDataTypes.forEach(dataType => {
     // test only node at index 0;
     const testIndex = 0;

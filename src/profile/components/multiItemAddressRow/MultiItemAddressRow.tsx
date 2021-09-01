@@ -6,7 +6,7 @@ import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
-import { AddressValue } from '../../helpers/editData';
+import { AddressValue, EditDataType } from '../../helpers/editData';
 import { createFormFieldHelpers } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
 import FormButtons from '../formButtons/FormButtons';
@@ -26,7 +26,8 @@ import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikEr
 type FormikValues = AddressValue;
 
 function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
-  const { data, testId, dataType, disableEditButtons } = props;
+  const dataType: EditDataType = 'addresses';
+  const { data, testId, disableEditButtons } = props;
   const value = data.value as AddressValue;
   const { address, city, postalCode, countryCode } = value;
   const { t, i18n } = useTranslation();
