@@ -202,7 +202,7 @@ describe('useProfileMutations.ts ', () => {
 
         const newEmail = {
           id: '456',
-          primary: false,
+          primary: true,
           email: 'new-test-email@eee.com',
         };
 
