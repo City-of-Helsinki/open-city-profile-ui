@@ -24,10 +24,13 @@ import {
   updateItems,
   setPrimary,
   movePrimaryAsFirst,
+  getEmailEditDataForUI,
 } from '../editData';
 import {
   cloneProfileAndProvideManipulationFunctions,
   getMyProfile,
+  getMyProfileQueryWithoutSomeEmailData,
+  getPrimaryEmailNode,
 } from '../../../common/test/myProfileMocking';
 import {
   AddressNode,
@@ -46,8 +49,9 @@ describe('editData.ts ', () => {
   const singleDataTypes: EditDataType[] = [
     basicDataType,
     additionalInformationType,
+    'emails',
   ];
-  const multiItemDataTypes: EditDataType[] = ['addresses', 'emails', 'phones'];
+  const multiItemDataTypes: EditDataType[] = ['addresses', 'phones'];
   const allDataTypes: EditDataType[] = [
     ...singleDataTypes,
     ...multiItemDataTypes,
@@ -297,9 +301,7 @@ describe('editData.ts ', () => {
         expect(newItem.id).toEqual('');
         expect(newItem.primary).toBeFalsy();
         expect(newItem.saving).toBeUndefined();
-        if (dataType === 'emails') {
-          expect((newItem.value as EmailValue).email).toBeDefined();
-        } else if (dataType === 'phones') {
+        if (dataType === 'phones') {
           expect((newItem.value as PhoneValue).phone).toBeDefined();
         } else if (dataType === 'addresses') {
           expect((newItem.value as AddressValue).address).toBeDefined();
@@ -691,6 +693,95 @@ describe('editData.ts ', () => {
         primary: false,
         saving: undefined,
       });
+    });
+  });
+
+  describe(`getEmailEditDataForUI() `, () => {
+    const validEmail = 'valid@domain.com';
+    it(`returns the primary email picked from email items. The primaryEmail prop is not used.`, () => {
+      const profileQueryWithoutPrimaryEmailProperty = getMyProfileQueryWithoutSomeEmailData(
+        {
+          clearPrimaryEmail: true,
+        }
+      );
+      const { getEditData } = createEditorForDataType(
+        profileQueryWithoutPrimaryEmailProperty,
+        'emails'
+      );
+      const item = getEmailEditDataForUI(getEditData());
+      const primaryEmailNode = getPrimaryEmailNode(
+        profileQueryWithoutPrimaryEmailProperty
+      ) as EmailNode;
+      expect(item.id).toEqual(primaryEmailNode.id);
+      expect(item.primary).toBeTruthy();
+    });
+    it(`If emails exist, but none have primary = true, an empty editData item is returned`, () => {
+      const profileQueryWithoutPrimaryEmail = getMyProfileQueryWithoutSomeEmailData(
+        {
+          noPrimary: true,
+        }
+      );
+
+      expect(
+        getPrimaryEmailNode(profileQueryWithoutPrimaryEmail)
+      ).toBeUndefined();
+
+      const { getEditData } = createEditorForDataType(
+        profileQueryWithoutPrimaryEmail,
+        'emails'
+      );
+      const emptyItem = getEmailEditDataForUI(getEditData());
+      expect(emptyItem.id).toEqual('');
+      expect((emptyItem.value as EmailValue).email).toEqual('');
+    });
+    it(`All emails are included in the save data. Also those not visible in UI. Item's email is updated.`, () => {
+      const {
+        getEditData,
+        updateItemAndCreateSaveData,
+      } = createEditorForDataType(myProfile, 'emails');
+      expect(getEditData()).toHaveLength(2);
+      const item = getEmailEditDataForUI(getEditData());
+      const index = getEditData().findIndex(
+        arrayItem => arrayItem.id === item.id
+      );
+      const saveData = updateItemAndCreateSaveData(item, {
+        email: validEmail,
+      });
+      const emailData = saveData.emails as EmailNode[];
+      expect(emailData).toHaveLength(2);
+      expect(emailData[index].id).toEqual(item.id);
+      expect(emailData[index].email).toEqual(validEmail);
+    });
+    it(`When a new email is added, it has 'primary' set to 'true' and all emails are included in the save data`, () => {
+      const profileQueryWithoutPrimaryEmails = getMyProfileQueryWithoutSomeEmailData(
+        { noPrimary: true }
+      );
+      const {
+        getEditData,
+        addItem,
+        updateItemAndCreateSaveData,
+      } = createEditorForDataType(profileQueryWithoutPrimaryEmails, 'emails');
+      expect(getEditData()).toHaveLength(2);
+      addItem();
+      expect(getEditData()).toHaveLength(3);
+      const item = getEmailEditDataForUI(getEditData());
+      expect(item.primary).toBeTruthy();
+      expect((item.value as EmailValue).email).toEqual('');
+
+      const saveData = updateItemAndCreateSaveData(item, {
+        email: validEmail,
+      });
+      // new item is always the last
+      const newEmailInSaveData = (saveData.emails as EmailNode[]).pop() as EmailNode;
+      expect(newEmailInSaveData.primary).toBeTruthy();
+      expect(newEmailInSaveData.email).toEqual(validEmail);
+    });
+  });
+  describe(`Adding a new email`, () => {
+    it(`An error is thrown when adding a new email, but primary email already exists`, () => {
+      const profileData = getMyProfile();
+      const { addItem } = createEditorForDataType(profileData, 'emails');
+      expect(() => addItem()).toThrow();
     });
   });
 });

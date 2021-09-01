@@ -17,6 +17,7 @@ import {
   PrimaryPhone,
   PrimaryEmail,
   PrimaryAddress,
+  Emails,
 } from '../../graphql/typings';
 import {
   AdditionalInformationSource,
@@ -32,6 +33,7 @@ import {
   MultiItemProfileNode,
   pickSources,
 } from '../../profile/helpers/editData';
+import getEmailsFromNode from '../../profile/helpers/getEmailsFromNode';
 
 export type ManipulationFunctions = {
   getProfile: () => ProfileData;
@@ -57,6 +59,13 @@ export type ManipulationFunctions = {
   setAdditionalInformation: (
     basicData: AdditionalInformationValue
   ) => ManipulationFunctions;
+};
+
+type GetEmailDataProps = {
+  noPrimary?: boolean;
+  noEmails?: boolean;
+  clearPrimaryEmail?: boolean;
+  profileData?: ProfileData;
 };
 
 export const getMyProfile = (): ProfileRoot => ({
@@ -390,3 +399,43 @@ export function cloneProfileAndProvideManipulationFunctions(
     },
   };
 }
+
+export const getPrimaryEmailNode = (
+  myProfile: ProfileRoot
+): EmailNode | undefined =>
+  getEmailsFromNode(myProfile, true).filter(node => node.primary)[0];
+
+export const getProfileDataWithoutSomeEmailData = ({
+  noPrimary,
+  noEmails,
+  clearPrimaryEmail,
+  profileData,
+}: GetEmailDataProps): ProfileData => {
+  const initialData = profileData || (getMyProfile().myProfile as ProfileData);
+  const profileManipulator = cloneProfileAndProvideManipulationFunctions(
+    initialData
+  );
+  if (clearPrimaryEmail || noPrimary || noEmails) {
+    profileManipulator.setPrimary('emails', null);
+  }
+  if (noEmails) {
+    const data = profileManipulator.getProfile();
+    (data.emails as Mutable<Emails>).edges = [];
+    return data;
+  } else if (noPrimary) {
+    const primaryEmailNode = getPrimaryEmailNode({
+      myProfile: profileManipulator.getProfile(),
+    });
+    if (primaryEmailNode) {
+      profileManipulator.edit('emails', {
+        id: primaryEmailNode.id,
+        primary: false,
+      });
+    }
+  }
+  return profileManipulator.getProfile();
+};
+
+export const getMyProfileQueryWithoutSomeEmailData = (
+  props: GetEmailDataProps
+): ProfileRoot => ({ myProfile: getProfileDataWithoutSomeEmailData(props) });
