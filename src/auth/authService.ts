@@ -14,7 +14,7 @@ export const API_TOKEN = 'apiToken';
 
 export class AuthService {
   userManager: UserManager;
-
+  private _isProcessingLogin = false;
   constructor() {
     const settings: UserManagerSettings = {
       automaticSilentRenew: true,
@@ -61,7 +61,9 @@ export class AuthService {
     });
 
     this.userManager.events.addUserLoaded(async user => {
-      this.fetchApiToken(user);
+      if (!this._isProcessingLogin && this.isAuthenticatedUser(user)) {
+        this.fetchApiToken(user);
+      }
     });
   }
 
@@ -73,14 +75,16 @@ export class AuthService {
     return sessionStorage.getItem(API_TOKEN);
   }
 
+  public isAuthenticatedUser(user?: User | null): boolean {
+    return !!user && user.expired !== true && !!user.access_token;
+  }
+
   public isAuthenticated(): boolean {
     const userKey = `oidc.user:${window._env_.REACT_APP_OIDC_AUTHORITY}:${window._env_.REACT_APP_OIDC_CLIENT_ID}`;
     const oidcStorage = sessionStorage.getItem(userKey);
     const apiTokens = this.getToken();
-
-    return (
-      !!oidcStorage && !!JSON.parse(oidcStorage).access_token && !!apiTokens
-    );
+    const parsedUser = oidcStorage && JSON.parse(oidcStorage);
+    return this.isAuthenticatedUser(parsedUser) && !!apiTokens;
   }
 
   public async login(path = '/'): Promise<void> {
@@ -95,10 +99,13 @@ export class AuthService {
   }
 
   public async endLogin(): Promise<User> {
+    this._isProcessingLogin = true;
     const user = await this.userManager.signinRedirectCallback();
-
+    if (!this.isAuthenticatedUser(user)) {
+      return Promise.reject(new Error('Login failed - no valid user returned'));
+    }
     await this.fetchApiToken(user);
-
+    this._isProcessingLogin = false;
     return user;
   }
 
