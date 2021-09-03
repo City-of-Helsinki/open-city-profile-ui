@@ -51,3 +51,5 @@ jobs:
           K8S_SECRET_REACT_APP_ENVIRONMENT: 'staging'
           K8S_SECRET_REACT_APP_OIDC_AUTHORITY: 'https://tunnistamo.${{ env.BASE_DOMAIN }}/'
           K8S_SECRET_REACT_APP_PROFILE_GRAPHQL: 'https://profiili-api.${{ env.BASE_DOMAIN }}/graphql/'
+          K8S_SECRET_REACT_APP_OIDC_CLIENT_ID: 'https://api.hel.fi/auth/helsinkiprofile-ui'
+          K8S_SECRET_REACT_APP_OIDC_SCOPE: 'openid profile https://api.hel.fi/auth/helsinkiprofile'
