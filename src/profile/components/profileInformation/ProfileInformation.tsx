@@ -6,6 +6,7 @@ import styles from './ProfileInformation.module.css';
 import ProfileInformationAccountManagementLink from './ProfileInformationAccountManagementLink';
 import { ProfileContext } from '../../context/ProfileContext';
 import BasicData from '../basicData/BasicData';
+import EmailEditor from '../emailEditor/EmailEditor';
 import MultiItemEditor from '../multiItemEditor/MultiItemEditor';
 import AdditionalInformation from '../additionalInformation/AdditionalInformation';
 import VerifiedPersonalInformation from '../verifiedPersonalInformation/VerifiedPersonalInformation';
@@ -22,8 +23,8 @@ function ProfileInformation(): React.ReactElement {
       {data && (
         <Fragment>
           <UserDataComponent />
+          <EmailEditor />
           <MultiItemEditor dataType="addresses" />
-          <MultiItemEditor dataType="emails" />
           <MultiItemEditor dataType="phones" />
           <AdditionalInformation />
         </Fragment>

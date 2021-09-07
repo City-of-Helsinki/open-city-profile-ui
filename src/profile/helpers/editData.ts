@@ -196,6 +196,15 @@ export function pickSources(
   }
 }
 
+export function getEmailEditDataForUI(emailItems: EditData[]): EditData {
+  const primaryEmail = emailItems.filter(item => item.primary)[0];
+  if (primaryEmail) {
+    return primaryEmail;
+  }
+  const newNode = createNewProfileNode('emails', { primary: true });
+  return createNewItem(newNode, 'emails');
+}
+
 function cloneAndMutateItem(
   data: EditData,
   overrides?: Partial<EditData>
@@ -550,7 +559,16 @@ export function createEditorForDataType(
       if (hasNewItem(allItems)) {
         throw new Error('EditData already has a new item');
       }
-      const newNode = createNewProfileNode(dataType);
+      if (
+        dataType === 'emails' &&
+        allItems.findIndex(item => item.primary) > -1
+      ) {
+        throw new Error('Cannot add a new email if a primary already exists');
+      }
+      const newNode = createNewProfileNode(
+        dataType,
+        dataType === 'emails' ? { primary: true } : undefined
+      );
       const editData = createNewItem(newNode, dataType);
       allItems = _.cloneDeep(allItems);
       allItems.push(editData);

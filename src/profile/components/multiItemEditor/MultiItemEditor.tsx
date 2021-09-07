@@ -5,7 +5,7 @@ import to from 'await-to-js';
 import { Button, IconPlusCircle } from 'hds-react';
 
 import ProfileSection from '../../../common/profileSection/ProfileSection';
-import MultiItemRow from '../multiItemRow/MultiItemRow';
+import MultiItemPhoneRow from '../multiItemPhoneRow/MultiItemPhoneRow';
 import MultiItemAddressRow from '../multiItemAddressRow/MultiItemAddressRow';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import useNotificationContent from '../editingNotifications/useNotificationContent';
@@ -28,14 +28,13 @@ import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers
 import { ActionRejection } from '../../hooks/useCommonEditHandling';
 
 type Props = {
-  dataType: EditDataType;
+  dataType: Extract<EditDataType, 'addresses' | 'phones'>;
 };
 
 export type RowItemProps = {
   data: EditData;
   onAction: ActionListener;
   testId: string;
-  dataType: EditDataType;
   disableEditButtons: boolean;
 };
 
@@ -66,18 +65,8 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   const hasAddressList = dataType === 'addresses';
   const isAddButtonDisabled = hasNew();
   const setPrimaryInProgress = isSettingPrimary(editDataList);
-  const RowComponent = hasAddressList ? MultiItemAddressRow : MultiItemRow;
+  const RowComponent = hasAddressList ? MultiItemAddressRow : MultiItemPhoneRow;
   const texts = (function() {
-    if (dataType === 'emails') {
-      return {
-        modalTitle: t('confirmationModal.removeEmail'),
-        title: t('profileInformation.emails'),
-        listAriaLabel: t('profileInformation.ariaListTitleEmails'),
-        listNumberTitle: t('profileInformation.email'),
-        addNew: t('profileForm.addAnotherEmail'),
-        noContent: t('profileInformation.noEmails'),
-      };
-    }
     if (dataType === 'phones') {
       return {
         modalTitle: t('confirmationModal.removePhone'),
@@ -185,7 +174,6 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
               data={item}
               onAction={onAction}
               testId={`${dataType}-${index}`}
-              dataType={dataType}
               disableEditButtons={setPrimaryInProgress}
             />
           </li>

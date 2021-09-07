@@ -1,13 +1,13 @@
-import { PhoneInput, TextInput } from 'hds-react';
+import { PhoneInput } from 'hds-react';
 import React from 'react';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import styles from './multiItemRow.module.css';
-import { EditDataValue, EmailValue, PhoneValue } from '../../helpers/editData';
+import styles from './multiItemPhoneRow.module.css';
+import { EditDataType, PhoneValue } from '../../helpers/editData';
 import { createFormFieldHelpers } from '../../helpers/formik';
-import { phoneSchema, emailSchema } from '../../../common/schemas/schemas';
+import { phoneSchema } from '../../../common/schemas/schemas';
 import FormButtons from '../formButtons/FormButtons';
 import EditButtons from '../editButtons/EditButtons';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
@@ -19,15 +19,15 @@ import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 
-type EmailAndPhoneFormikValue = { value: string };
+type PhoneFormikValue = { value: string };
 
-function MultiItemRow(props: RowItemProps): React.ReactElement {
+function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
   const {
     data: { value, primary, saving },
     testId,
-    dataType,
     disableEditButtons,
   } = props;
+  const dataType: EditDataType = 'phones';
   const { t } = useTranslation();
   const {
     isEditing,
@@ -37,28 +37,16 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
     editButtonId,
     removeButtonId,
   } = useCommonEditHandling(props);
-  const schema = dataType === 'phones' ? phoneSchema : emailSchema;
-  const inputValue: string =
-    (dataType === 'phones'
-      ? (value as PhoneValue).phone
-      : (value as EmailValue).email) || '';
-
+  const inputValue: string = (value as PhoneValue).phone || '';
   const inputId = `${testId}-value`;
   const formFields = getFormFields(dataType);
   const disableButtons = !!currentAction || !!saving;
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
-    EmailAndPhoneFormikValue
+    PhoneFormikValue
   >(t, isNew);
-  const convertFormPropsToEditDataValue = (
-    formValues: EmailAndPhoneFormikValue
-  ): Partial<EditDataValue> => {
-    const formValue = formValues.value;
-    const propName = dataType === 'phones' ? 'phone' : 'email';
-    return {
-      [propName]: formValue,
-    };
-  };
+
   const ariaLabels = createActionAriaLabels(dataType, inputValue, t);
+
   if (isEditing) {
     return (
       <div
@@ -72,12 +60,13 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
             value: inputValue,
           }}
           onSubmit={async values => {
-            const editDataValues = convertFormPropsToEditDataValue(values);
-            await actionHandler('save', editDataValues);
+            await actionHandler('save', {
+              phone: values.value,
+            });
           }}
-          validationSchema={schema}
+          validationSchema={phoneSchema}
         >
-          {(formikProps: FormikProps<EmailAndPhoneFormikValue>) => (
+          {(formikProps: FormikProps<PhoneFormikValue>) => (
             <Form>
               <FocusKeeper targetId={inputId}>
                 <div className={styles['editable-row']}>
@@ -85,7 +74,7 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
                     name="value"
                     id={inputId}
                     maxLength={formFields.value.max as number}
-                    as={dataType === 'phones' ? PhoneInput : TextInput}
+                    as={PhoneInput}
                     invalid={hasFieldError(formikProps, 'value')}
                     aria-invalid={hasFieldError(formikProps, 'value')}
                     errorText={getFieldErrorMessage(formikProps, 'value')}
@@ -138,4 +127,4 @@ function MultiItemRow(props: RowItemProps): React.ReactElement {
   );
 }
 
-export default MultiItemRow;
+export default MultiItemPhoneRow;
