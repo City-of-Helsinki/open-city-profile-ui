@@ -180,7 +180,7 @@
     "primaryPhoneAriaDescription": "Tämä on ensisijainen puhelinnumerosi",
     "verifiedDataInformationPrefix": "Merkityt",
     "verifiedDataInformationAriaPrefix": "Alla olevat",
-    "verifiedDataInformation": "<0></0> tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä ei voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <1>siirry suomi.fi palveluun </1>",
+    "verifiedDataInformation": "<0></0> tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <1>siirry suomi.fi palveluun </1>",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Vahvistettu tieto",
     "verifiedBasicData": "Vahvistetut perustiedot",
