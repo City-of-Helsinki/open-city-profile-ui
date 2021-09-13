@@ -9,13 +9,14 @@ import * as Sentry from '@sentry/browser';
 import HttpStatusCode from 'http-status-typed';
 
 import pickProfileApiToken from './pickProfileApiToken';
-import createHttpPoller from './http-poller';
+import createHttpPoller, { HttpPoller } from './http-poller';
 
 const origin = window.location.origin;
 export const API_TOKEN = 'apiToken';
 
 export class AuthService {
   userManager: UserManager;
+  userSessionValidityPoller: HttpPoller;
   private _isProcessingLogin = false;
   constructor() {
     const settings: UserManagerSettings = {
@@ -68,7 +69,7 @@ export class AuthService {
       });
     };
 
-    const userSessionValidityPoller = createHttpPoller({
+    this.userSessionValidityPoller = createHttpPoller({
       pollFunction: userInfoFetchFunction,
       shouldPoll: () => this.isAuthenticated(),
       onError: returnedHttpStatus => {
@@ -93,23 +94,32 @@ export class AuthService {
     this.userManager.events.addUserSignedOut(() => {
       this.userManager.clearStaleState();
       sessionStorage.removeItem(API_TOKEN);
-      userSessionValidityPoller.stop();
+      this.userSessionValidityPoller.stop();
     });
 
     this.userManager.events.addUserLoaded(async user => {
       if (!this._isProcessingLogin && this.isAuthenticatedUser(user)) {
         this.fetchApiToken(user);
       }
-      userSessionValidityPoller.start();
+      this.userSessionValidityPoller.start();
     });
 
     this.userManager.events.addUserUnloaded(() => {
-      userSessionValidityPoller.stop();
+      this.userSessionValidityPoller.stop();
     });
   }
 
   public getUser(): Promise<User | null> {
     return this.userManager.getUser();
+  }
+
+  public async getAuthenticatedUser(): Promise<User | null> {
+    const user = await this.getUser();
+    if (!this.isAuthenticatedUser(user)) {
+      return Promise.reject(null);
+    }
+    this.userSessionValidityPoller.start();
+    return Promise.resolve(user);
   }
 
   public getToken(): string | null {
