@@ -55,11 +55,8 @@ function Profile(): React.ReactElement {
 
   useEffect(() => {
     authService
-      .getUser()
+      .getAuthenticatedUser()
       .then(user => {
-        if (!authService.isAuthenticatedUser(user)) {
-          return history.push('/login');
-        }
         checkProfileExists();
         setTunnistamoUser(user as User);
         setIsCheckingAuthState(false);

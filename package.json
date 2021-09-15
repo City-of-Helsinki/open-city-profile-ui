@@ -44,6 +44,7 @@
     "hds-core": "1.1.0",
     "hds-design-tokens": "1.1.0",
     "hds-react": "1.1.0",
+    "http-status-typed": "^1.0.0",
     "i18n-iso-countries": "^6.8.0",
     "i18next": "^20.3.2",
     "i18next-browser-languagedetector": "^6.1.2",

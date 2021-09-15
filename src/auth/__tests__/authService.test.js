@@ -1,8 +1,30 @@
+import to from 'await-to-js';
+
 import authService, { API_TOKEN } from '../authService';
+import { getHttpPollerMockData } from '../__mocks__/http-poller';
 
 describe('authService', () => {
   const userManager = authService.userManager;
-  const oidcUserKey = `oidc.user:${window._env_.REACT_APP_OIDC_AUTHORITY}:${window._env_.REACT_APP_OIDC_CLIENT_ID}`;
+
+  const setSession = ({ validUser, validApiToken, optionalUserProps }) => {
+    const validAccessToken = 'db237bc3-e197-43de-8c86-3feea4c5f886';
+    const oidcUserKey = `oidc.user:${window._env_.REACT_APP_OIDC_AUTHORITY}:${window._env_.REACT_APP_OIDC_CLIENT_ID}`;
+    const sessionApiToken =
+      validApiToken !== false ? '5ed3abc5-9b65-4879-8d09-3cd8499650eh' : null;
+    const sessionUser = {
+      name: 'Mr. Louisa Tromp',
+      access_token: validUser !== false ? validAccessToken : '',
+      expired: false,
+      ...optionalUserProps,
+    };
+    jest.spyOn(authService, 'getToken').mockReturnValue(sessionApiToken);
+    jest.spyOn(userManager, 'getUser').mockResolvedValue(sessionUser);
+    sessionStorage.setItem(oidcUserKey, JSON.stringify(sessionUser));
+    return {
+      sessionUser,
+      sessionApiToken,
+    };
+  };
 
   afterEach(() => {
     sessionStorage.clear();
@@ -12,13 +34,14 @@ describe('authService', () => {
   describe('getUser', () => {
     it('should resolve to the user value which has been resolved from getUser', async () => {
       expect.assertions(1);
-      const mockUser = { name: 'Sam Littel' };
-
-      jest.spyOn(userManager, 'getUser').mockResolvedValueOnce(mockUser);
+      const { sessionUser } = setSession({
+        validUser: true,
+        optionalUserProps: { name: 'Sam Littel' },
+      });
 
       const user = await authService.getUser();
 
-      expect(user).toBe(mockUser);
+      expect(user).toBe(sessionUser);
     });
   });
 
@@ -33,39 +56,33 @@ describe('authService', () => {
 
   describe('isAuthenticated', () => {
     it('should return false if no token can be found', () => {
-      jest.spyOn(authService, 'getToken').mockReturnValue(null);
-
+      setSession({
+        validApiToken: false,
+      });
       expect(authService.isAuthenticated()).toBe(false);
     });
 
     it("should return false if oidc user from sessionStorage doesn't exist", () => {
-      const apiTokens = '5ed3abc5-9b65-4879-8d09-3cd8499650ef';
-      jest.spyOn(authService, 'getToken').mockReturnValue(apiTokens);
+      setSession({
+        validToken: true,
+        validUser: true,
+      });
       sessionStorage.clear();
-
       expect(authService.isAuthenticated()).toBe(false);
     });
 
     it("should return false if oidc user from sessionStorage doesn't have an access_token property", () => {
-      const apiTokens = '5ed3abc5-9b65-4879-8d09-3cd8499650eg';
-      const invalidUser = JSON.stringify({});
-
-      jest.spyOn(authService, 'getToken').mockReturnValue(apiTokens);
-      sessionStorage.setItem(oidcUserKey, invalidUser);
+      setSession({
+        validApiToken: true,
+        validUser: true,
+        optionalUserProps: { access_token: null },
+      });
 
       expect(authService.isAuthenticated()).toBe(false);
     });
 
     it('should return true if oidc user is valid and tokens are returned from getToken', () => {
-      const apiToken = '5ed3abc5-9b65-4879-8d09-3cd8499650eh';
-      const validUser = JSON.stringify({
-        name: 'Mr. Louisa Tromp',
-        access_token: '5ed3abc5-9b65-4879-8d09-3cd8499650eh',
-      });
-
-      jest.spyOn(authService, 'getToken').mockReturnValue(apiToken);
-      sessionStorage.setItem(oidcUserKey, validUser);
-
+      setSession({ validApiToken: true, validUser: true });
       expect(authService.isAuthenticated()).toBe(true);
     });
   });
@@ -82,19 +99,19 @@ describe('authService', () => {
   });
 
   describe('endLogin', () => {
+    let sessionUser;
     beforeEach(() => {
       global.fetch.mockResponse(JSON.stringify({ data: {} }));
+      sessionUser = setSession({
+        validApiToken: true,
+        validUser: true,
+      }).sessionUser;
     });
-    const access_token = 'db237bc3-e197-43de-8c86-3feea4c5f886';
-    const mockUser = {
-      name: 'Penelope Krajcik',
-      access_token,
-    };
 
     it('should call signinRedirectCallback from oidc', () => {
       const signinRedirectCallback = jest
         .spyOn(userManager, 'signinRedirectCallback')
-        .mockImplementation(() => Promise.resolve(mockUser));
+        .mockImplementation(() => Promise.resolve(sessionUser));
 
       authService.endLogin();
 
@@ -105,11 +122,11 @@ describe('authService', () => {
       expect.assertions(1);
       jest
         .spyOn(userManager, 'signinRedirectCallback')
-        .mockReturnValue(Promise.resolve(mockUser));
+        .mockReturnValue(Promise.resolve(sessionUser));
 
       const user = await authService.endLogin();
 
-      expect(user).toBe(mockUser);
+      expect(user).toBe(sessionUser);
     });
 
     it('should call fetchApiToken with the user object', async () => {
@@ -117,11 +134,11 @@ describe('authService', () => {
       jest.spyOn(authService, 'fetchApiToken');
       jest
         .spyOn(userManager, 'signinRedirectCallback')
-        .mockResolvedValue(mockUser);
+        .mockResolvedValue(sessionUser);
 
       await authService.endLogin();
 
-      expect(authService.fetchApiToken).toHaveBeenNthCalledWith(1, mockUser);
+      expect(authService.fetchApiToken).toHaveBeenNthCalledWith(1, sessionUser);
     });
 
     it('should set the user in sessionStorage before the function returns', async () => {
@@ -129,7 +146,7 @@ describe('authService', () => {
       expect.assertions(1);
       jest
         .spyOn(userManager, 'signinRedirectCallback')
-        .mockResolvedValue(mockUser);
+        .mockResolvedValue(sessionUser);
       jest.spyOn(authService, 'fetchApiToken');
 
       await authService.endLogin();
@@ -239,6 +256,58 @@ describe('authService', () => {
           "71ffd52c-5985-46d3-b445-490554f4012a",
         ]
       `);
+    });
+  });
+
+  describe('getAuthenticatedUser', () => {
+    it('should resolve to the user value when user is valid', async () => {
+      const { sessionUser } = setSession({
+        validUser: true,
+        validApiToken: true,
+      });
+      const [error, returnedUser] = await to(
+        authService.getAuthenticatedUser()
+      );
+      expect(returnedUser).toEqual(sessionUser);
+      expect(error).toBeNull();
+    });
+    it('should reject when user is invalid', async () => {
+      setSession({ validUser: false });
+      const [error, returnedUser] = await to(
+        authService.getAuthenticatedUser()
+      );
+      expect(error).toBeDefined();
+      expect(returnedUser).toBeUndefined();
+    });
+  });
+
+  describe('Session polling ', () => {
+    const mockHttpPoller = getHttpPollerMockData();
+    afterEach(() => {
+      mockHttpPoller.start.mockReset();
+      mockHttpPoller.stop.mockReset();
+    });
+    it('should start when authService.getAuthenticatedUser is called and session is valid', async () => {
+      setSession({ validUser: true });
+      await authService.getAuthenticatedUser();
+      expect(mockHttpPoller.start).toHaveBeenCalled();
+    });
+    it('should not start when authService.getAuthenticatedUser is called and session is invalid', async () => {
+      setSession({ validUser: false });
+      await to(authService.getAuthenticatedUser());
+      expect(mockHttpPoller.start).toHaveBeenCalledTimes(0);
+    });
+    it('should start when user is loaded', () => {
+      userManager.events._userLoaded.raise({});
+      expect(mockHttpPoller.start).toHaveBeenCalledTimes(1);
+    });
+    it('should stop when user is unloaded', () => {
+      userManager.events._userUnloaded.raise();
+      expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+    });
+    it('should stop when user is signedOut', () => {
+      userManager.events._userSignedOut.raise();
+      expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
     });
   });
 });
