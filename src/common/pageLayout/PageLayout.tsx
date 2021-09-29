@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import classNames from 'classnames';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,7 @@ import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import styles from './PageLayout.module.css';
 import PageMeta from '../pageMeta/PageMeta';
+import { CookieConsentContext } from '../../cookieConsent/components/CookieConsentContext';
 
 type Props = React.PropsWithChildren<{
   className?: string;
@@ -16,6 +17,7 @@ type Props = React.PropsWithChildren<{
 
 function PageLayout(props: Props): React.ReactElement {
   const { trackPageView } = useMatomo();
+  const { willRenderCookieConsentDialog } = useContext(CookieConsentContext);
   const { t } = useTranslation();
   const { title = 'appName' } = props;
 
@@ -30,7 +32,13 @@ function PageLayout(props: Props): React.ReactElement {
   }, [trackPageView, pageTitle]);
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={classNames([
+        styles.wrapper,
+        willRenderCookieConsentDialog ? styles['no-scroll'] : '',
+      ])}
+      aria-hidden={willRenderCookieConsentDialog ? 'true' : 'false'}
+    >
       <Header />
       <PageMeta title={pageTitle} />
       <main
