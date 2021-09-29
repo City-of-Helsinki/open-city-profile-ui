@@ -21,6 +21,9 @@ import ToastProvider from './toast/ToastProvider';
 import authService from './auth/authService';
 import config from './config';
 import PageNotFound from './common/pageNotFound/PageNotFound';
+import CookieConsent from './cookieConsent/components/CookieConsent';
+import { commonConsents } from './cookieConsent/cookieConsentController';
+import { Provider as CookieContextProvider } from './cookieConsent/components/CookieConsentContext';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -31,10 +34,11 @@ const instance = createInstance({
   siteId: 60,
 });
 
+const isTrackingDisabled = window._env_.REACT_APP_ENVIRONMENT !== 'production';
 // Prevent non-production data from being submitted to Matomo
 // by pretending to require consent to process analytics data and never ask for it.
 // https://developer.matomo.org/guides/tracking-javascript-guide#step-1-require-consent
-if (window._env_.REACT_APP_ENVIRONMENT !== 'production') {
+if (isTrackingDisabled) {
   window._paq.push(['requireConsent']);
 }
 
@@ -45,37 +49,73 @@ function App(): React.ReactElement {
     authService.login();
   }
 
+  const redirectPaths = ['/loginsso', '/gdpr-callback', '/callback'];
+  const doNotRenderCookieConsent = redirectPaths.includes(location.pathname);
+
   return (
     <ApolloProvider client={graphqlClient}>
       <ToastProvider>
         <MatomoProvider value={instance}>
-          <ProfileProvider>
-            <Switch>
-              <Route path="/callback" component={OidcCallback} />
-              <Route path="/gdpr-callback">
-                <GdprAuthorizationCodeManagerCallback />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path={['/', '/connected-services']} exact>
-                <Profile />
-              </Route>
-              <Route path="/accessibility" exact>
-                <AccessibilityStatement />
-              </Route>
-              <Route path="/profile-deleted" exact>
-                <ProfileDeleted />
-              </Route>
-              <Route path={config.errorPagePath} exact>
-                <ErrorPage />
-              </Route>
-              <Route path="/loginsso" exact />
-              <Route path="*">
-                <PageNotFound />
-              </Route>
-            </Switch>
-          </ProfileProvider>
+          <CookieContextProvider
+            requiredConsents={[
+              commonConsents.tunnistamo,
+              commonConsents.language,
+            ]}
+            optionalConsents={[
+              commonConsents.matomo,
+              commonConsents.preferences,
+              commonConsents.marketing,
+            ]}
+            onAllConsentsGiven={consents => {
+              if (isTrackingDisabled) {
+                return;
+              }
+              if (consents.matomo) {
+                window._paq.push(['setConsentGiven']);
+                window._paq.push(['setCookieConsentGiven']);
+              }
+            }}
+            onConsentsParsed={consents => {
+              if (isTrackingDisabled) {
+                return;
+              }
+              if (!consents.matomo) {
+                window._paq.push(['requireConsent']);
+                window._paq.push(['requireCookieConsent']);
+              } else {
+                window._paq.push(['trackPageView']);
+              }
+            }}
+          >
+            <ProfileProvider>
+              {!doNotRenderCookieConsent && <CookieConsent />}
+              <Switch>
+                <Route path="/callback" component={OidcCallback} />
+                <Route path="/gdpr-callback">
+                  <GdprAuthorizationCodeManagerCallback />
+                </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path={['/', '/connected-services']} exact>
+                  <Profile />
+                </Route>
+                <Route path="/accessibility" exact>
+                  <AccessibilityStatement />
+                </Route>
+                <Route path="/profile-deleted" exact>
+                  <ProfileDeleted />
+                </Route>
+                <Route path={config.errorPagePath} exact>
+                  <ErrorPage />
+                </Route>
+                <Route path="/loginsso" exact />
+                <Route path="*">
+                  <PageNotFound />
+                </Route>
+              </Switch>
+            </ProfileProvider>
+          </CookieContextProvider>
         </MatomoProvider>
       </ToastProvider>
     </ApolloProvider>
