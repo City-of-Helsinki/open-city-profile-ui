@@ -1,0 +1,135 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgb(0, 0, 0);
+  pointer-events: none;
+}
+
+.aligner {
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  overflow-y: scroll;
+  max-height: 100%;
+}
+
+.container .aligner {
+  transform: translateY(100%);
+  transition: transform 1s;
+}
+.container .overlay {
+  opacity: 0.01;
+  transition: opacity 1s;
+}
+
+.container.animate-in .aligner {
+  transform: translateY(0%);
+}
+.container.animate-in .overlay {
+  opacity: 0.7;
+}
+
+.content-spacing-and-border {
+  border-top: 8px solid var(--color-bus);
+  margin-top: 40px;
+  box-sizing: border-box;
+}
+.content {
+  position: relative;
+  padding: 20px 20px 0 20px;
+  background: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.text-content {
+  padding: 0;
+}
+
+.buttons {
+  padding: 20px 0;
+}
+
+.buttons > * {
+  margin: 0 20px 20px 0;
+}
+
+.language-switcher {
+  position: absolute;
+  z-index: 3;
+  right: -57px;
+  top: 20px;
+  max-width: 200px;
+  box-sizing: border-box;
+  --header-focus-outline-color: var(--color-coat-of-arms);
+}
+
+.list {
+  list-style: none;
+  margin-top: 0;
+  padding-left: 0;
+}
+
+.list li {
+  padding-bottom: 10px;
+}
+
+.list li label {
+  padding-left: 10px;
+}
+
+.plain-text-button {
+  border: none;
+  background: transparent;
+  display: inline-block;
+  text-decoration: underline;
+  color: var(--color-bus);
+  padding: 0;
+  cursor: pointer;
+}
+
+.emulated-h1 {
+  font-size: var(--fontsize-heading-m);
+  font-weight: bold;
+  display: block;
+  padding: 0;
+}
+
+.emulated-h2 {
+  font-size: var(--fontsize-heading-s);
+  font-weight: bold;
+  display: block;
+  padding: 1.2em 0 0.5em;
+}
+
+.emulated-h2 + p {
+  margin-top: 0;
+}
+
+.screen-reader-save-notification + p {
+  margin-top: 0;
+}
+
+.content .emulated-h1 {
+  margin-right: 50px;
+}
+
+@media (min-width: 768px) {
+  .language-switcher {
+    right: 20px;
+  }
+  .buttons > * {
+    margin-bottom: 0;
+  }
+}
