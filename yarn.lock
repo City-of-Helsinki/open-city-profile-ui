@@ -7108,20 +7108,20 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hds-core@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-1.1.0.tgz#de4b696c39e70b1c8256a0f104463ec509259576"
-  integrity sha512-eXT/X3Ts7pdGjH6nYoBuyGjZZDz534TUMJZD3uvvE4U0ousUwJ8J8QQBAggLUyhmiR8piSl7ODuzU3ZFJQYOMg==
+hds-core@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-1.5.0.tgz#ab5e317fb55ff19b3687d03e6fc066e5b90eb666"
+  integrity sha512-OTLfTw5s0K1n3igEX3Wj5RttxtWgUU8bk2D+72p3e9EDKeWYkqH6En2aXJrOyvwqmUGZwR+lPFfhsD1IIcnb2A==
 
-hds-design-tokens@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-1.1.0.tgz#a5bec355e0f6224fb4dc2de46e7bc62bfc192973"
-  integrity sha512-N6/UY6NZxc5rA7uULE7TcwIdpWomoIyq+ByBYh4KbB2SpLrMkxTFNcoat2Iqct1uiSw1hZinQd8/JtBuwLrjDg==
+hds-design-tokens@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-1.5.0.tgz#c1f8f780a92506a8cb2af2fca489244e8abea9fd"
+  integrity sha512-Gt9wQCoLkQkRobltqNnNY5AAiDT/N2W9sgKfWqTMmb0GpEye1NpSVlDrfvxZp/wd+lHWdnb3n9UJT78DePEI4Q==
 
-hds-react@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-1.1.0.tgz#0caa01f41c30b1137eea84fbfcff1bf23d908c8a"
-  integrity sha512-K9pz/Ffsl9AmGn0vplTbuCJ1BNC3GWIy7bGNFD/vsRdI5mLbvLkUheDsD5m+xpsafgCQtG1XraHVvVADlrLNUg==
+hds-react@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-1.5.0.tgz#0123f139811414cdb6ef2436a4366b196d8af109"
+  integrity sha512-0HTJpoLY+DDlpMM4ZNYPIZQaALX8oASqfyPNg2FreEqv9TSo7SeOO7aAF9VBGo5ykoqFfq8Ghg3tkqIXWCPjJA==
   dependencies:
     "@babel/runtime" "7.11.2"
     "@juggle/resize-observer" "3.2.0"
@@ -7129,10 +7129,11 @@ hds-react@1.1.0:
     "@react-aria/visually-hidden" "3.2.0"
     date-fns "2.16.1"
     downshift "6.0.6"
-    hds-core "1.1.0"
+    hds-core "1.5.0"
     lodash.isequal "4.5.0"
     lodash.isfunction "3.0.9"
     lodash.uniqueid "4.0.1"
+    lodash.xor "^4.5.0"
     react-merge-refs "1.1.0"
     react-popper "2.2.3"
     react-spring "9.0.0-rc.3"
@@ -8979,6 +8980,11 @@ lodash.uniqueid@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.uniqueid/-/lodash.uniqueid-4.0.1.tgz#3268f26a7c88e4f4b1758d679271814e31fa5b26"
   integrity sha1-MmjyanyI5PSxdY1nknGBTjH6WyY=
+
+lodash.xor@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.xor/-/lodash.xor-4.5.0.tgz#4d48ed7e98095b0632582ba714d3ff8ae8fb1db6"
+  integrity sha1-TUjtfpgJWwYyWCunFNP/iuj7HbY=
 
 lodash.xorby@^4.7.0:
   version "4.7.0"
