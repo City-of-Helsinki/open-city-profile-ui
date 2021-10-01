@@ -11,7 +11,6 @@ import PageMeta from '../pageMeta/PageMeta';
 
 type Props = React.PropsWithChildren<{
   className?: string;
-  hideFooterLogo?: boolean;
   title?: string;
 }>;
 
@@ -40,7 +39,7 @@ function PageLayout(props: Props): React.ReactElement {
       >
         {props.children}
       </main>
-      <Footer hideFooterLogo={props.hideFooterLogo} />
+      <Footer />
     </div>
   );
 }

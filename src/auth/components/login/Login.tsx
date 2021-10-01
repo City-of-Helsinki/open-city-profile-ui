@@ -13,7 +13,7 @@ function Login(): React.ReactElement {
   const { trackEvent } = useMatomo();
 
   return (
-    <PageLayout hideFooterLogo={true} title={'login.login'}>
+    <PageLayout title={'login.login'}>
       <div className={styles.wrapper}>
         <div className={styles.content}>
           <HelsinkiLogo className={styles.logo} />
