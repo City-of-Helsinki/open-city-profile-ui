@@ -60,7 +60,10 @@
     "feedback": "Anna palautetta",
     "feedbackLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/anna-palautetta",
     "privacy": "Rekisteriseloste",
-    "reserveRights": "Kaikki oikeudet pidätetään"
+    "reserveRights": "Kaikki oikeudet pidätetään",
+    "contactUs": "Ota yhteyttä",
+    "contactUsLink": "https://hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/ota-yhteytta/ota-yhteytta",
+    "backToTop": "Sivun alkuun"
   },
   "helsinkiLogo": "Helsinki-logo",
   "landmarks": {
@@ -146,7 +149,7 @@
     "termsLabel": "Olen tutustunut palvelun rekisteriselosteeseen ja kaupungin tietosuojakäytäntöön",
     "terms": "Lue palvelun <0>rekisteriseloste</0> ja kaupungin <1>tietosuojakäytännöt</1> ",
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietosuoja/",
-    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf",
+    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Sahkoisten%20asiointipalveluiden%20rekisteri.pdf",
     "nationalIdentificationNumber": "Henkilötunnus",
     "municipalityOfResidence": "Kotikunta"
   },
@@ -232,5 +235,6 @@
     "tunnistusSuomifi": "Suomi.fi"
   },
   "opensInNewWindow": "{{title}}. Avautuu uudessa ikkunassa.",
-  "accessibilityStatement": "Saavutettavuusseloste"
+  "accessibilityStatement": "Saavutettavuusseloste",
+  "cityOfHelsinki": "Helsingin kaupunki"
 }
