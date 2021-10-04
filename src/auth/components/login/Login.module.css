@@ -17,18 +17,12 @@
   flex-direction: column;
 }
 
-.logo {
-  width: 170px;
-  height: 80px;
-  background-color: var(--color-black);
-}
-
 button.button {
   margin-top: var(--spacing-layout-m);
 }
 
 .content h1 {
-  font-size: var(--fontsize-heading-l);
+  font-size: var(--fontsize-heading-m);
 }
 
 .content h2 {
@@ -36,11 +30,7 @@ button.button {
   font-size: var(--fontsize-heading-xs);
 }
 
-@media (min-width: 450px) {
-  button.button {
-    width: 230px;
-  }
-
+@media (min-width: 768px) {
   .content h1 {
     font-size: var(--fontsize-heading-xl);
   }

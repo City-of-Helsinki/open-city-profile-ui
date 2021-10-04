@@ -16,7 +16,7 @@ function Login(): React.ReactElement {
     <PageLayout title={'login.login'}>
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <HelsinkiLogo className={styles.logo} />
+          <HelsinkiLogo />
           <h1>{t('login.title')}</h1>
           <h2>{t('login.description')}</h2>
           <Button

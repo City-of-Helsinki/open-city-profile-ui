@@ -19,22 +19,14 @@ function HelsinkiLogo({
   const lang = getLanguageCode(i18n.languages[0]);
   const logoStyle = lang === 'sv' ? styles['logo-sv'] : styles['logo-fi'];
 
+  const logoClassName = classNames(styles['logo'], logoStyle, className);
+  const titleAndAriaLabel = t('nav.titleAriaLabel');
+
   if (isLinkToFrontPage) {
-    return (
-      <Link
-        to="/"
-        className={classNames(logoStyle, className)}
-        title={t('nav.titleAriaLabel')}
-      />
-    );
+    return <Link to="/" className={logoClassName} title={titleAndAriaLabel} />;
   }
 
-  return (
-    <span
-      className={classNames(logoStyle, className)}
-      aria-label={t('nav.titleAriaLabel')}
-    />
-  );
+  return <span className={logoClassName} aria-label={titleAndAriaLabel} />;
 }
 
 export default HelsinkiLogo;
