@@ -2,7 +2,10 @@ import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import ErrorPage, { ErrorPageQueryParams } from '../ErrorPage';
+import ErrorPage, {
+  ErrorPageContent,
+  ErrorPageQueryParams,
+} from '../ErrorPage';
 import i18n from '../../../../common/test/testi18nInit';
 import authService from '../../../../auth/authService';
 import config from '../../../../config';
@@ -34,7 +37,7 @@ describe('<ErrorPage /> ', () => {
   };
 
   const getErrorsFromElementAndParamsMatch = (
-    params: ErrorPageQueryParams
+    params: ErrorPageQueryParams | ErrorPageContent
   ): string => {
     const titleElementCount = getElementCount(
       () => result.getAllByText(params.title || genericTitle).length
@@ -49,8 +52,15 @@ describe('<ErrorPage /> ', () => {
       () => result.getAllByTestId('error-page-frontpage-link').length
     );
 
-    const expectedLoginButtonCount = params.hideLoginButton ? 0 : 1;
-    const expectedFrontPageLinkCount = params.hideFrontPageLink ? 0 : 1;
+    const expectedLoginButtonCount =
+      params.hideLoginButton === false || params.hideLoginButton === undefined
+        ? 1
+        : 0;
+    const expectedFrontPageLinkCount =
+      params.hideFrontPageLink === false ||
+      params.hideFrontPageLink === undefined
+        ? 1
+        : 0;
     if (titleElementCount !== 1) {
       return `There should be only one element with given title, but found ${titleElementCount}`;
     }
@@ -67,6 +77,10 @@ describe('<ErrorPage /> ', () => {
 
     return '';
   };
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
   it(`renders 
       - generic title
@@ -198,5 +212,49 @@ describe('<ErrorPage /> ', () => {
           'user is authenticated so this must be set to expect 0 login buttons',
       })
     ).toBe('');
+  });
+  it(`uses "content"-prop and creates content from that even if url params are set`, async () => {
+    const title = 'test_title';
+    const message = 'test_message';
+    const hideLoginButton = 'anyValue';
+    const hideFrontPageLink = 'anyValue';
+    mockUseLocationValue.search = `title=${title}`;
+    mockUseLocationValue.search += `&message=${message}`;
+    mockUseLocationValue.search += `&hideLoginButton=${hideLoginButton}`;
+    mockUseLocationValue.search += `&hideFrontPageLink=${hideFrontPageLink}`;
+
+    const content = {
+      title: 'title in content',
+      message: 'message in content',
+      hideLoginButton: false,
+      hideFrontPageLink: false,
+    };
+
+    result = render(
+      <MemoryRouter>
+        <ErrorPage content={content} />
+      </MemoryRouter>
+    );
+    expect(getErrorsFromElementAndParamsMatch(content)).toBe('');
+  });
+  it(`hides front page link and login button according to "content"-prop boolean values`, async () => {
+    const title = 'test_title';
+    const message = 'test_message';
+    mockUseLocationValue.search = `title=${title}`;
+    mockUseLocationValue.search += `&message=${message}`;
+
+    const content = {
+      title: 'title in content',
+      message: 'message in content',
+      hideLoginButton: true,
+      hideFrontPageLink: true,
+    };
+
+    result = render(
+      <MemoryRouter>
+        <ErrorPage content={content} />
+      </MemoryRouter>
+    );
+    expect(getErrorsFromElementAndParamsMatch(content)).toBe('');
   });
 });
