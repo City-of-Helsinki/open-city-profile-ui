@@ -236,5 +236,7 @@
   },
   "opensInNewWindow": "{{title}}. Öppnas i ett nytt fönster.",
   "accessibilityStatement": "Tillgänglighetsutlåtande",
-  "cityOfHelsinki": "Helsingfors stad"
+  "cityOfHelsinki": "Helsingfors stad",
+  "pageNotFoundTitle": "SV: Sivua ei löytynyt",
+  "pageNotFoundText": "SV: Tarkista URL-osoitteen oikeinkirjoitus (tarkista isot ja pienet kirjaimet sekä välimerkit). Tai palaa edelliselle sivulle napsauttamalla selaimen Edellinen-painiketta. Voit mennä myös etusivulle alla olevasta linkistä."
 }

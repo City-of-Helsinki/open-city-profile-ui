@@ -20,6 +20,7 @@ import GdprAuthorizationCodeManagerCallback from './gdprApi/GdprAuthorizationCod
 import ToastProvider from './toast/ToastProvider';
 import authService from './auth/authService';
 import config from './config';
+import PageNotFound from './common/pageNotFound/PageNotFound';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -70,7 +71,9 @@ function App(): React.ReactElement {
                 <ErrorPage />
               </Route>
               <Route path="/loginsso" exact />
-              <Route path="*">404 - not found</Route>
+              <Route path="*">
+                <PageNotFound />
+              </Route>
             </Switch>
           </ProfileProvider>
         </MatomoProvider>
