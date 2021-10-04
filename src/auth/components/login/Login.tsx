@@ -20,7 +20,7 @@ function Login(): React.ReactElement {
           <h1>{t('login.title')}</h1>
           <h2>{t('login.description')}</h2>
           <Button
-            variant="secondary"
+            variant="primary"
             className={styles.button}
             onClick={() => {
               trackEvent({ category: 'action', action: 'Log in' });
