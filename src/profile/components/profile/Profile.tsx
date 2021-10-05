@@ -5,6 +5,7 @@ import { useHistory, useLocation } from 'react-router';
 import { loader } from 'graphql.macro';
 import { User } from 'oidc-client';
 import * as Sentry from '@sentry/browser';
+import { Button } from 'hds-react';
 
 import Notification from '../../../common/copyOfHDSNotification/Notification';
 import PageLayout from '../../../common/pageLayout/PageLayout';
@@ -67,7 +68,8 @@ function Profile(): React.ReactElement {
 
   const isDoingProfileChecks = isCheckingAuthState || loading;
   const isProfileFound = !!(data && data.myProfile);
-  const hasGraphQLError = !!(error && error.graphQLErrors.length);
+  const failedToFetchUserProfileData =
+    tunnistamoUser && !isProfileFound && !!error;
   if (isProfileFound && !isProfileInitialized) {
     fetchProfile();
   }
@@ -87,18 +89,35 @@ function Profile(): React.ReactElement {
         return 'appName';
     }
   };
-
-  if (!isProfileFound && tunnistamoUser && hasGraphQLError) {
+  if (failedToFetchUserProfileData) {
     return (
-      <PageLayout title={getPageTitle()} data-testid="profile-error-layout">
-        <div className={styles['error-wrapper']}>
+      <PageLayout title={'notification.defaultErrorTitle'}>
+        <div
+          className={styles['error-wrapper']}
+          data-testid="profile-check-error-layout"
+        >
           <div className={responsive['max-width-centered']}>
             <Notification
               type={'error'}
               label={t('notification.defaultErrorTitle')}
             >
-              {t('notification.defaultErrorText')}
+              {t('profile.loadErrorText')}
             </Notification>
+            <div className={styles['error-button-wrapper']}>
+              <Button
+                onClick={() => checkProfileExists()}
+                data-testid={'profile-check-error-reload-button'}
+              >
+                {t('profile.reload')}
+              </Button>
+              <Button
+                onClick={() => authService.logout()}
+                data-testid={'profile-check-error-logout-button'}
+                variant={'secondary'}
+              >
+                {t('nav.signout')}
+              </Button>
+            </div>
           </div>
         </div>
       </PageLayout>
