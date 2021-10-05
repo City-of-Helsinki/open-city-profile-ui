@@ -3,6 +3,8 @@ import { Navigation } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
+import getLanguageCode from '../../../common/helpers/getLanguageCode';
+
 function LanguageSwitcher(): React.ReactElement {
   const { i18n, t } = useTranslation();
   const { trackEvent } = useMatomo();
@@ -11,6 +13,7 @@ function LanguageSwitcher(): React.ReactElement {
     i18n.changeLanguage(code);
     trackEvent({ category: 'action', action: `Language selected ${code}` });
   };
+  const i18NLanguageCode = getLanguageCode(i18n.language);
   const languages = [
     { code: 'fi', label: 'Suomeksi' },
     { code: 'sv', label: 'På svenska' },
@@ -18,7 +21,7 @@ function LanguageSwitcher(): React.ReactElement {
   ];
   return (
     <Navigation.LanguageSelector
-      label={i18n.language.toUpperCase()}
+      label={i18NLanguageCode.toUpperCase()}
       buttonAriaLabel={t('landmarks.navigation.language')}
     >
       {languages.map(lang => (
@@ -26,7 +29,7 @@ function LanguageSwitcher(): React.ReactElement {
           href="#"
           onClick={(e: React.MouseEvent) => setLanguage(lang.code, e)}
           label={lang.label}
-          active={i18n.language === lang.code}
+          active={i18NLanguageCode === lang.code}
           key={lang.code}
           lang={lang.code}
         />
