@@ -7,11 +7,12 @@
 .profile-content {
   background: var(--color-black-ultra-light);
   flex: 1;
-  padding-bottom: 50px;
+  padding-bottom: var(--spacing-l);
 }
 
 .content-wrapper {
   flex: 1;
   padding-top: var(--spacing-l);
   background-color: var(--color-black-ultra-light);
+  padding-bottom: var(--spacing-l);
 }

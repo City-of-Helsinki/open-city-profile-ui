@@ -1,5 +1,5 @@
 .create-profile {
-  padding: 0 15px 50px;
+  padding: 0 var(--spacing-s) var(--spacing-l);
   display: flex;
   flex-direction: column;
   width: 100%;
