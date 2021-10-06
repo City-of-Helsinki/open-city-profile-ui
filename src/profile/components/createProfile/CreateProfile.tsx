@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import * as Sentry from '@sentry/browser';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
+import { Section } from 'hds-react';
 
 import CreateProfileForm, {
   FormValues,
@@ -19,6 +20,7 @@ import {
 import { EmailType, Language, PhoneType } from '../../../graphql/typings';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import useToast from '../../../toast/useToast';
+import Explanation from '../../../common/explanation/Explanation';
 
 const CREATE_PROFILE = loader('../../graphql/CreateMyProfile.graphql');
 
@@ -80,29 +82,33 @@ function CreateProfile({
   };
   return (
     <div className={styles['create-profile']}>
-      <PageHeading
-        text={t('createProfile.pageTitle')}
-        className={responsive['max-width-centered']}
-        dataTestId="create-profile-heading"
-      />
-      <div className={responsive['max-width-centered']}>
-        <ProfileSection
-          title={t('createProfile.heading')}
-          titleVariant="h2"
-          description={t('createProfile.helpText')}
-        >
-          <CreateProfileForm
-            profile={{
-              firstName: tunnistamoUser.profile.given_name || '',
-              lastName: tunnistamoUser.profile.family_name || '',
-              email: tunnistamoUser.profile.email || '',
-              profileLanguage: Language.FINNISH,
-              phone: '',
-            }}
-            isSubmitting={loading}
-            onValues={handleOnValues}
+      <Section korosType="basic">
+        <PageHeading
+          text={t('createProfile.pageTitle')}
+          dataTestId="create-profile-heading"
+        />
+      </Section>
+      <div className={styles['content-wrapper']}>
+        <div className={responsive['max-width-centered']}>
+          <Explanation
+            main={t('createProfile.heading')}
+            titleVariant="h2"
+            small={t('createProfile.helpText')}
           />
-        </ProfileSection>
+          <ProfileSection>
+            <CreateProfileForm
+              profile={{
+                firstName: tunnistamoUser.profile.given_name || '',
+                lastName: tunnistamoUser.profile.family_name || '',
+                email: tunnistamoUser.profile.email || '',
+                profileLanguage: Language.FINNISH,
+                phone: '',
+              }}
+              isSubmitting={loading}
+              onValues={handleOnValues}
+            />
+          </ProfileSection>
+        </div>
       </div>
     </div>
   );
