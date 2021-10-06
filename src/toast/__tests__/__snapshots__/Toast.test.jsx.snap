@@ -184,7 +184,7 @@ exports[`Toast should render correct toast 1`] = `
                     title="notification.closeButtonText"
                     type="button"
                   >
-                    <D
+                    <j
                       aria-hidden={true}
                     >
                       <svg
@@ -209,7 +209,7 @@ exports[`Toast should render correct toast 1`] = `
                           />
                         </g>
                       </svg>
-                    </D>
+                    </j>
                   </button>
                 </section>
               </ConditionalVisuallyHidden>

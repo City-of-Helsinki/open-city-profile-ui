@@ -44,7 +44,7 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
           target="_blank"
         >
           profileInformation.doGoToAccountManagement
-          <I
+          <M
             aria-hidden={true}
           >
             <svg
@@ -68,7 +68,7 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
                 />
               </g>
             </svg>
-          </I>
+          </M>
         </a>
       </NewWindowLink>
     </div>
@@ -120,7 +120,7 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
           target="_blank"
         >
           profileInformation.doGoToAccountManagement
-          <I
+          <M
             aria-hidden={true}
           >
             <svg
@@ -144,7 +144,7 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
                 />
               </g>
             </svg>
-          </I>
+          </M>
         </a>
       </NewWindowLink>
     </div>

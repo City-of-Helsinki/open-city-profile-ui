@@ -14,7 +14,7 @@
 .inner-wrapper {
   width: auto;
   margin-left: var(--spacing-xs);
-  margin-bottom: var(--spacing-layout-m);
+  margin-bottom: var(--spacing-layout-l);
 }
 
 .inner-wrapper p {

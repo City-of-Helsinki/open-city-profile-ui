@@ -1,44 +1,28 @@
 .wrapper {
-  background-color: var(--color-bus);
+  background: var(--color-black-ultra-light);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
+  padding: var(--spacing-layout-l) 0;
 }
 
 .content {
-  margin: 20px 10px;
   width: 95%;
   text-align: center;
-  color: var(--color-white);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-.logo {
-  width: 170px;
-  height: 80px;
-  background-color: var(--color-white);
-}
-
 button.button {
-  margin-top: 50px;
-  background-color: var(--color-white);
-  width: 100%;
-}
-button.button.button:hover {
-  background-color: var(--background-color-hover);
-}
-
-button.button.button:focus {
-  background-color: var(--background-color-hover);
+  margin-top: var(--spacing-layout-m);
 }
 
 .content h1 {
-  font-size: var(--fontsize-heading-l);
+  font-size: var(--fontsize-heading-m);
 }
 
 .content h2 {
@@ -46,11 +30,7 @@ button.button.button:focus {
   font-size: var(--fontsize-heading-xs);
 }
 
-@media (min-width: 450px) {
-  button.button {
-    width: 230px;
-  }
-
+@media (min-width: 768px) {
   .content h1 {
     font-size: var(--fontsize-heading-xl);
   }
@@ -59,5 +39,8 @@ button.button.button:focus {
 @media (min-width: 600px) {
   .content {
     width: 600px;
+  }
+  .wrapper {
+    padding: var(--spacing-layout-2-xl) 0;
   }
 }
