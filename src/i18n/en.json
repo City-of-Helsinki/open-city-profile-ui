@@ -236,5 +236,7 @@
   },
   "opensInNewWindow": "{{title}}. Opens in a new window.",
   "accessibilityStatement": "Accessibility Statement",
-  "cityOfHelsinki": "City of Helsinki"
+  "cityOfHelsinki": "City of Helsinki",
+  "pageNotFoundTitle": "Page not found",
+  "pageNotFoundText": "EN: Tarkista URL-osoitteen oikeinkirjoitus (tarkista isot ja pienet kirjaimet sekä välimerkit). Tai palaa edelliselle sivulle napsauttamalla selaimen Edellinen-painiketta. Voit mennä myös etusivulle alla olevasta linkistä."
 }

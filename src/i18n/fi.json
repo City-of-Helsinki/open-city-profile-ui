@@ -236,5 +236,7 @@
   },
   "opensInNewWindow": "{{title}}. Avautuu uudessa ikkunassa.",
   "accessibilityStatement": "Saavutettavuusseloste",
-  "cityOfHelsinki": "Helsingin kaupunki"
+  "cityOfHelsinki": "Helsingin kaupunki",
+  "pageNotFoundTitle": "Sivua ei löytynyt",
+  "pageNotFoundText": "Tarkista URL-osoitteen oikeinkirjoitus (tarkista isot ja pienet kirjaimet sekä välimerkit). Tai palaa edelliselle sivulle napsauttamalla selaimen Edellinen-painiketta. Voit mennä myös etusivulle alla olevasta linkistä."
 }

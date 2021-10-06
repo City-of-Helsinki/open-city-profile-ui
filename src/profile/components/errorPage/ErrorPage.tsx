@@ -16,15 +16,45 @@ export type ErrorPageQueryParams = {
   hideFrontPageLink?: string;
 };
 
-function ErrorPage(): React.ReactElement {
+export type ErrorPageContent = {
+  message?: string;
+  title?: string;
+  hideLoginButton: boolean;
+  hideFrontPageLink: boolean;
+};
+
+type ErrorPageProps = {
+  // eslint-disable-next-line react/no-unused-prop-types
+  content?: ErrorPageContent;
+};
+
+function ErrorPage(props?: ErrorPageProps): React.ReactElement {
   const { t } = useTranslation();
   const location = useLocation();
+
+  const getContentFromPropsOrUrl = (
+    pageProps?: ErrorPageProps
+  ): ErrorPageContent => {
+    if (pageProps && pageProps.content) {
+      return pageProps.content;
+    }
+    const contentFromUrl = queryParamsToObject<ErrorPageQueryParams>(
+      location.search
+    );
+    return {
+      message: contentFromUrl.message,
+      title: contentFromUrl.title,
+      hideLoginButton: contentFromUrl.hideLoginButton !== undefined,
+      hideFrontPageLink: contentFromUrl.hideFrontPageLink !== undefined,
+    };
+  };
+
   const {
     message,
     title,
     hideLoginButton,
     hideFrontPageLink,
-  } = queryParamsToObject<ErrorPageQueryParams>(location.search);
+  } = getContentFromPropsOrUrl(props);
   const notificationMessage = message || t('notification.defaultErrorText');
   const notificationTitle = title || t('notification.defaultErrorTitle');
   const isAuthenticated = authService.isAuthenticated();
@@ -38,7 +68,7 @@ function ErrorPage(): React.ReactElement {
           dataTestId={'error-page-notification'}
         >
           <p>{notificationMessage}</p>
-          {hideFrontPageLink === undefined && (
+          {hideFrontPageLink !== true && (
             <p>
               <Link to="/" data-testid={'error-page-frontpage-link'}>
                 {t('nav.goToHomePage')}
@@ -47,7 +77,7 @@ function ErrorPage(): React.ReactElement {
           )}
         </Notification>
         <div className={styles.buttons}>
-          {hideLoginButton === undefined && !isAuthenticated && (
+          {hideLoginButton !== true && !isAuthenticated && (
             <Button
               onClick={() => authService.login()}
               data-testid={'error-page-login-button'}
