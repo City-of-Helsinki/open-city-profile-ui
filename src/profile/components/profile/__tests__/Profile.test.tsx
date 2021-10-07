@@ -99,4 +99,27 @@ describe('<Profile />', () => {
       await waitForElement({ testId: 'mock-toast-type-error' });
     });
   });
+  it('should render an error notification when PROFILE_EXISTS query fails', async () => {
+    const responses: MockedResponse[] = [{ errorType: 'networkError' }];
+    mockUser();
+    await act(async () => {
+      const { waitForElement } = await renderTestSuite(responses);
+      await waitForElement({ testId: 'profile-check-error-layout' });
+    });
+  });
+  it('should retry PROFILE_EXISTS query when reload button is clicked', async () => {
+    // two responses for PROFILE_EXISTS and one for MY_PROFILE_QUERY error
+    const responses: MockedResponse[] = [
+      { errorType: 'networkError' },
+      { profileData: getMyProfile().myProfile as ProfileData },
+      { profileData: getMyProfile().myProfile as ProfileData },
+    ];
+    mockUser();
+    await act(async () => {
+      const { waitForElement, clickElement } = await renderTestSuite(responses);
+      await waitForElement({ testId: 'profile-check-error-layout' });
+      await clickElement({ testId: 'profile-check-error-reload-button' });
+      await waitForElement({ testId: 'view-profile-heading' });
+    });
+  });
 });

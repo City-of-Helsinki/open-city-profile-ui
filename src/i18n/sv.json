@@ -111,7 +111,9 @@
     "authenticating": "Autentiserar..."
   },
   "profile": {
-    "loading": "Laddar profil..."
+    "loading": "Laddar profil...",
+    "loadErrorText": "SV: Profiilin haku epäonnistui! Yritä hakea uudelleen tai kirjaudu ulos.",
+    "reload": "SV: Hae uudelleen"
   },
   "profileDeleted": {
     "message": "Du kan återskapa det senare om du vill. Du kommer att loggas ut efter {{time}} sekunder.",

@@ -111,7 +111,9 @@
     "authenticating": "Tunnistaudutaan..."
   },
   "profile": {
-    "loading": "Ladataan profiilia..."
+    "loading": "Ladataan profiilia...",
+    "loadErrorText": "Profiilin haku epäonnistui! Yritä hakea uudelleen tai kirjaudu ulos.",
+    "reload": "Hae uudelleen"
   },
   "profileDeleted": {
     "message": "Jos haluat, voit luoda profiilisi uudestaan myöhemmin. Sinut kirjataan ulos {{time}} sekunnin kuluttua.",
