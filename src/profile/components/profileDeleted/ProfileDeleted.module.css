@@ -1,14 +1,19 @@
 .wrapper {
-  width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex: 1;
 }
 
 .content {
-  margin: 100px 0 var(--spacing-l);
-  background-color: var(--color-white);
-  padding: 20px;
-  text-align: center;
+  padding: var(--spacing-layout-xs) var(--content-horizontal-padding);
 }
 
-.content h2 {
-  margin-bottom: 40px;
+.inner-content {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-white);
+  padding: var(--spacing-layout-xs) var(--content-horizontal-padding);
 }

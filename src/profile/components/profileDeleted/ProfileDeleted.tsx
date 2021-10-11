@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import styles from './ProfileDeleted.module.css';
-import responsive from '../../../common/cssHelpers/responsive.module.css';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import authService from '../../../auth/authService';
+import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 
 function ProfileDeleted(): React.ReactElement {
   const [timeUntilLogout, setTimeUntilLogout] = useState(10);
@@ -25,10 +26,16 @@ function ProfileDeleted(): React.ReactElement {
   const title = t('profileDeleted.title');
   return (
     <PageLayout title={title}>
-      <div className={styles.wrapper}>
-        <div className={responsive['max-width-centered']}>
-          <div className={styles.content}>
-            <h2>{title}</h2>
+      <div className={styles['wrapper']}>
+        <div
+          className={classNames([
+            commonContentStyles['common-content-area'],
+            commonContentStyles['common-bottom-padding'],
+            styles['content'],
+          ])}
+        >
+          <div className={styles['inner-content']}>
+            <h1>{title}</h1>
             <p>{t('profileDeleted.message', { time: timeUntilLogout })}</p>
           </div>
         </div>
