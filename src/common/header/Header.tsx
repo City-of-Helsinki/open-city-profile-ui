@@ -20,6 +20,9 @@ function Header(): React.ReactElement {
   const { trackEvent } = useMatomo();
 
   const { isComplete } = useContext(ProfileContext);
+  const profilePagePaths = ['/', '/connected-services'];
+  const [myProfilePath, connectedServicesPath] = profilePagePaths;
+  const isProfilePagePath = profilePagePaths.includes(currentPath);
 
   const onClick = (path: string, e?: MouseEvent) => {
     e && e.preventDefault();
@@ -39,23 +42,23 @@ function Header(): React.ReactElement {
       titleAriaLabel={t('nav.titleAriaLabel')}
       className={styles['z-index-fix']}
       logoLanguage={logoLanguage}
-      onTitleClick={() => onClick('/')}
+      onTitleClick={() => onClick(myProfilePath)}
     >
-      {isComplete && (
+      {isComplete && isProfilePagePath && (
         <Navigation.Row>
           <Navigation.Item
             label={t('nav.information')}
-            href="/"
+            href={myProfilePath}
             variant="secondary"
-            onClick={(e: MouseEvent) => onClick('/', e)}
-            active={currentPath === '/'}
+            onClick={(e: MouseEvent) => onClick(myProfilePath, e)}
+            active={currentPath === myProfilePath}
           />
           <Navigation.Item
             label={t('nav.services')}
-            href="/connected-services"
+            href={connectedServicesPath}
             variant="secondary"
-            onClick={(e: MouseEvent) => onClick('/connected-services', e)}
-            active={currentPath === '/connected-services'}
+            onClick={(e: MouseEvent) => onClick(connectedServicesPath, e)}
+            active={currentPath === connectedServicesPath}
           />
         </Navigation.Row>
       )}
