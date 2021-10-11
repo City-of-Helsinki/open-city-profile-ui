@@ -5,7 +5,6 @@ import { useQuery } from '@apollo/client';
 import { format } from 'date-fns';
 import * as Sentry from '@sentry/browser';
 
-import responsive from '../../../common/cssHelpers/responsive.module.css';
 import Explanation from '../../../common/explanation/Explanation';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import CheckedLabel from '../../../common/checkedLabel/CheckedLabel';
@@ -54,47 +53,45 @@ function ServiceConnections(props: Props): React.ReactElement {
   const services = getServices(data);
   const hasNoServices = !loading && services.length === 0;
   return (
-    <div className={styles['service-connections']}>
-      <div className={responsive['max-width-centered']}>
-        <Explanation
-          main={t('serviceConnections.title')}
-          small={
-            hasNoServices
-              ? t('serviceConnections.empty')
-              : t('serviceConnections.explanation')
-          }
-          titleVariant="h2"
-        />
-        <div className={styles['panel-container']}>
-          {services.map((service, index) => (
-            <ExpandingPanel
-              key={index}
-              title={service.title || ''}
-              showInformationText
-              initiallyOpen={false}
-            >
-              <p>{service.description}</p>
-              <p className={styles['service-information']}>
-                {t('serviceConnections.servicePersonalData')}
-              </p>
-              {getAllowedDataFieldsFromService(service).map(node => (
-                <CheckedLabel
-                  key={node.fieldName}
-                  value={node.label || node.fieldName}
-                  className={styles['allowed-data-field']}
-                />
-              ))}
-              <p className={styles['created-at']}>
-                {t('serviceConnections.created')}
-              </p>
-              <p className={styles['date-and-time']}>
-                {getDateTime(service.createdAt)}
-              </p>
-            </ExpandingPanel>
-          ))}
-        </div>
+    <React.Fragment>
+      <Explanation
+        main={t('serviceConnections.title')}
+        small={
+          hasNoServices
+            ? t('serviceConnections.empty')
+            : t('serviceConnections.explanation')
+        }
+        titleVariant="h2"
+      />
+      <div className={styles['panel-container']}>
+        {services.map((service, index) => (
+          <ExpandingPanel
+            key={index}
+            title={service.title || ''}
+            showInformationText
+            initiallyOpen={false}
+          >
+            <p>{service.description}</p>
+            <p className={styles['service-information']}>
+              {t('serviceConnections.servicePersonalData')}
+            </p>
+            {getAllowedDataFieldsFromService(service).map(node => (
+              <CheckedLabel
+                key={node.fieldName}
+                value={node.label || node.fieldName}
+                className={styles['allowed-data-field']}
+              />
+            ))}
+            <p className={styles['created-at']}>
+              {t('serviceConnections.created')}
+            </p>
+            <p className={styles['date-and-time']}>
+              {getDateTime(service.createdAt)}
+            </p>
+          </ExpandingPanel>
+        ))}
       </div>
-    </div>
+    </React.Fragment>
   );
 }
 

@@ -1,12 +1,7 @@
-.service-connections {
-  background: var(--color-black-ultra-light);
-  flex: 1;
-  padding-bottom: var(--spacing-l);
-}
-
-.empty {
-  margin-top: var(--spacing-2-xl);
-  margin-left: var(--spacing-s);
+.panel-container {
+  display: grid;
+  grid-row-gap: var(--spacing-m);
+  grid-template-rows: auto;
 }
 
 .service-information {
@@ -29,17 +24,4 @@
 
 .date-and-time {
   margin-top: 0;
-}
-
-.panel-container {
-  display: grid;
-  grid-row-gap: var(--spacing-m);
-  grid-template-rows: auto;
-  margin: var(--spacing-2-xl) 0 0;
-}
-
-@media (min-width: 1200px) {
-  .empty {
-    margin-left: 0;
-  }
 }
