@@ -1,16 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import styles from './AccessibilityStatement.module.css';
-import Header from '../common/header/Header';
-import Footer from '../common/footer/Footer';
 import AccessibilityStatementFi from './AccessibilityStatementFi';
 import AccessibilityStatementSv from './AccessibilityStatementSv';
 import AccessibilityStatementEn from './AccessibilityStatementEn';
-import PageMeta from '../common/pageMeta/PageMeta';
+import commonContentStyles from '../common/cssHelpers/content.module.css';
+import PageLayout from '../common/pageLayout/PageLayout';
 
 function AccessibilityStatement(): React.ReactElement {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const selectStatement = () => {
     const lang =
       i18n.languages[0].length > 2
@@ -30,14 +30,19 @@ function AccessibilityStatement(): React.ReactElement {
   };
 
   return (
-    <div className={styles['page-wrapper']}>
-      <Header />
-      <PageMeta title={t('accessibilityStatement')} />
-      <main className={styles['container']}>
-        <div className={styles['inner-wrapper']}>{selectStatement()}</div>
-      </main>
-      <Footer />
-    </div>
+    <PageLayout title={'accessibilityStatement'}>
+      <div className={styles['wrapper']}>
+        <div
+          className={classNames([
+            commonContentStyles['common-content-area'],
+            commonContentStyles['common-bottom-padding'],
+            styles['content'],
+          ])}
+        >
+          <main className={styles['inner-content']}>{selectStatement()}</main>
+        </div>
+      </div>
+    </PageLayout>
   );
 }
 
