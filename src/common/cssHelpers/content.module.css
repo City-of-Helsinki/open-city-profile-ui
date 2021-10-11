@@ -1,0 +1,33 @@
+.common-content-area {
+  --content-horizontal-padding: var(--spacing-m);
+  --horizontal-whitespace: var(--spacing-m);
+  display: flex;
+  flex-direction: column;
+  padding-left: var(--spacing-m);
+  padding-right: var(--spacing-m);
+}
+
+.common-vertical-padding {
+  padding-top: var(--common-top-spacing);
+  padding-bottom: var(--common-bottom-spacing);
+}
+
+.common-bottom-padding {
+  padding-bottom: var(--common-bottom-spacing);
+}
+
+@media (min-width: 600px) {
+  .common-content-area {
+    --content-horizontal-padding: var(--spacing-xl);
+    --horizontal-whitespace: var(--spacing-xl);
+  }
+}
+
+@media (min-width: 992px) {
+  .common-content-area {
+    margin: 0 auto;
+    max-width: var(--breakpoint-xl);
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
