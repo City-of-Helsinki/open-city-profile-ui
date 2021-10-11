@@ -1,18 +1,4 @@
-.view-profile {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.profile-content {
-  background: var(--color-black-ultra-light);
+.content {
   flex: 1;
-  padding-bottom: var(--spacing-l);
-}
-
-.content-wrapper {
-  flex: 1;
-  padding-top: var(--spacing-l);
-  background-color: var(--color-black-ultra-light);
-  padding-bottom: var(--spacing-l);
+  padding-top: var(--common-top-spacing);
 }
