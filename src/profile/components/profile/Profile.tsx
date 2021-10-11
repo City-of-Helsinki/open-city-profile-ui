@@ -127,7 +127,6 @@ function Profile(): React.ReactElement {
   return (
     <PageLayout title={getPageTitle()}>
       <Loading
-        loadingClassName={styles['loading']}
         isLoading={isDoingProfileChecks || isLoadingProfile}
         loadingText={t('profile.loading')}
       >
