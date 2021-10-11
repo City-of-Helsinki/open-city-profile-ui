@@ -1,30 +1,27 @@
 .wrapper {
-  background: var(--color-black-ultra-light);
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  width: 100%;
-  padding: var(--spacing-layout-l) 0;
+  flex-direction: row;
+  flex: 1;
 }
 
-.content {
-  width: 95%;
+.content.content {
   text-align: center;
-  display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  max-width: 600px;
+  padding-top: var(--common-top-spacing);
+  padding-bottom: var(--common-top-spacing);
 }
 
 button.button {
   margin-top: var(--spacing-layout-m);
 }
-
 .content h1 {
+  margin-top: var(--common-top-spacing);
   font-size: var(--fontsize-heading-m);
 }
-
 .content h2 {
   line-height: var(--lineheight-l);
   font-size: var(--fontsize-heading-xs);
@@ -33,14 +30,5 @@ button.button {
 @media (min-width: 768px) {
   .content h1 {
     font-size: var(--fontsize-heading-xl);
-  }
-}
-
-@media (min-width: 600px) {
-  .content {
-    width: 600px;
-  }
-  .wrapper {
-    padding: var(--spacing-layout-2-xl) 0;
   }
 }
