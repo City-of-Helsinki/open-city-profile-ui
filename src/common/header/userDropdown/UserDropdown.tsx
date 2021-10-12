@@ -68,7 +68,7 @@ function UserDropdown(): React.ReactElement {
     >
       <Navigation.Item
         onClick={(e: React.MouseEvent): Promise<void> => onClick(e)}
-        variant="secondary"
+        variant="supplementary"
         label={label}
         href="/logout"
         data-testid="header-logout-button"
