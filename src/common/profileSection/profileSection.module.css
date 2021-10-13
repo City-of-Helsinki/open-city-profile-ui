@@ -1,5 +1,6 @@
 .profile-section {
   --title-fontsize: var(--fontsize-heading-m);
+  --horizontal-whitespace: var(--spacing-m);
   background: var(--color-white);
   border-radius: 2px;
   padding: var(--spacing-l) var(--horizontal-whitespace);
@@ -14,7 +15,6 @@
 }
 
 .profile-section-title h1 {
-  font-size: var(--title-fontsize);
   margin-top: 0;
   margin-bottom: var(--spacing-s);
 }
