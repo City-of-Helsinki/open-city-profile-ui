@@ -25,7 +25,7 @@ function Login(): React.ReactElement {
         >
           <HelsinkiLogo />
           <h1>{t('login.title')}</h1>
-          <h2>{t('login.description')}</h2>
+          <p className={styles.ingress}>{t('login.description')}</p>
           <Button
             variant="primary"
             className={styles.button}
