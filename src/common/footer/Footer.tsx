@@ -20,12 +20,7 @@ function Footer(): React.ReactElement {
   };
 
   return (
-    <HDSFooter
-      theme="dark"
-      title={t('appName')}
-      logoLanguage={logoLanguage}
-      className={styles['custom-theme']}
-    >
+    <HDSFooter theme="dark" title={t('appName')} logoLanguage={logoLanguage}>
       <HDSFooter.Utilities backToTopLabel={t('footer.backToTop')}>
         <HDSFooter.Item
           href={t('footer.contactUsLink')}
