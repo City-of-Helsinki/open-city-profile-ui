@@ -1,26 +1,8 @@
 .profile-section {
-  --title-fontsize: var(--fontsize-heading-m);
-  --horizontal-whitespace: var(--spacing-m);
   background: var(--color-white);
   border-radius: 2px;
-  padding: var(--spacing-l) var(--horizontal-whitespace);
+  padding: var(--spacing-l) var(--content-horizontal-padding);
   margin-bottom: var(--spacing-xl);
-}
-
-.profile-section-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--spacing-l);
-}
-
-.profile-section-title h1 {
-  margin-top: 0;
-  margin-bottom: var(--spacing-s);
-}
-
-.profile-section-title p {
-  margin-bottom: 0;
 }
 
 .verified-data {
