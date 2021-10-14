@@ -55,13 +55,12 @@ function ServiceConnections(props: Props): React.ReactElement {
   return (
     <React.Fragment>
       <Explanation
-        main={t('serviceConnections.title')}
-        small={
+        heading={t('serviceConnections.title')}
+        text={
           hasNoServices
             ? t('serviceConnections.empty')
             : t('serviceConnections.explanation')
         }
-        titleVariant="h2"
       />
       <div className={styles['panel-container']}>
         {services.map((service, index) => (

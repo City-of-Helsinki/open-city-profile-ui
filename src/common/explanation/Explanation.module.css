@@ -1,15 +1,14 @@
 .container {
   padding-bottom: var(--spacing-xl);
-}
-
-.container.margin {
   margin: 0 var(--content-horizontal-padding);
 }
 
-.heading {
-  margin-bottom: 30px;
+.container h2,
+.container h3 {
+  margin-top: 0;
 }
 
-.text {
+.container p {
   margin-top: 0;
+  margin-bottom: 0;
 }
