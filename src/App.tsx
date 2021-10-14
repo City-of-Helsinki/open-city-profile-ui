@@ -61,7 +61,7 @@ function App(): React.ReactElement {
               <Route path={['/', '/connected-services']} exact>
                 <Profile />
               </Route>
-              <Route path="/accessibility">
+              <Route path="/accessibility" exact>
                 <AccessibilityStatement />
               </Route>
               <Route path="/profile-deleted" exact>

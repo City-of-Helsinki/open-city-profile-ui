@@ -1,23 +1,22 @@
 import React from 'react';
-import classNames from 'classnames';
+import { LoadingSpinner } from 'hds-react';
 
 import styles from './Loading.module.css';
 
 type Props = React.PropsWithChildren<{
   isLoading: boolean;
   loadingText: string;
-  loadingClassName: string;
 }>;
 function Loading(props: Props): React.ReactElement {
   return (
     <>
       {props.isLoading ? (
-        <span
-          className={classNames(styles.loading, props.loadingClassName)}
-          data-testid="load-indicator"
-        >
-          {props.loadingText}
-        </span>
+        <div className={styles.wrapper} data-testid="load-indicator">
+          <div className={styles.content}>
+            <LoadingSpinner small />
+            <p>{props.loadingText}</p>
+          </div>
+        </div>
       ) : (
         props.children
       )}

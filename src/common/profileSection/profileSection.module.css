@@ -1,5 +1,4 @@
 .profile-section {
-  --horizontal-whitespace: var(--spacing-m);
   --title-fontsize: var(--fontsize-heading-m);
   background: var(--color-white);
   border-radius: 2px;
@@ -26,10 +25,4 @@
 
 .verified-data {
   background: none;
-}
-
-@media (min-width: 600px) {
-  .profile-section {
-    --horizontal-whitespace: var(--spacing-xl);
-  }
 }

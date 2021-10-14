@@ -1,11 +1,9 @@
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  padding: var(--spacing-l) var(--spacing-xs);
+.wrapper.wrapper {
   width: 100%;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  box-sizing: border-box;
 }
 
 .buttons {
@@ -13,6 +11,7 @@
   margin: var(--spacing-xs) 0 0;
   justify-content: flex-end;
 }
+
 .buttons button {
   margin-left: var(--spacing-xs);
 }

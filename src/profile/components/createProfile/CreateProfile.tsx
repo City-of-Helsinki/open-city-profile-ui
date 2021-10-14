@@ -5,14 +5,13 @@ import { useMutation } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import * as Sentry from '@sentry/browser';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
-import { Section } from 'hds-react';
+import classNames from 'classnames';
 
 import CreateProfileForm, {
   FormValues,
 } from '../createProfileForm/CreateProfileForm';
 import PageHeading from '../../../common/pageHeading/PageHeading';
 import styles from './CreateProfile.module.css';
-import responsive from '../../../common/cssHelpers/responsive.module.css';
 import {
   CreateMyProfile as CreateMyProfileRoot,
   CreateMyProfileVariables,
@@ -21,6 +20,8 @@ import { EmailType, Language, PhoneType } from '../../../graphql/typings';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import useToast from '../../../toast/useToast';
 import Explanation from '../../../common/explanation/Explanation';
+import commonContentStyles from '../../../common/cssHelpers/content.module.css';
+import TopSectionWithKoros from '../../../common/topSectionWithKoros/TopSectionWithKoros';
 
 const CREATE_PROFILE = loader('../../graphql/CreateMyProfile.graphql');
 
@@ -81,36 +82,40 @@ function CreateProfile({
       });
   };
   return (
-    <div className={styles['create-profile']}>
-      <Section korosType="basic">
+    <React.Fragment>
+      <TopSectionWithKoros>
         <PageHeading
           text={t('createProfile.pageTitle')}
           dataTestId="create-profile-heading"
         />
-      </Section>
-      <div className={styles['content-wrapper']}>
-        <div className={responsive['max-width-centered']}>
-          <Explanation
-            main={t('createProfile.heading')}
-            titleVariant="h2"
-            small={t('createProfile.helpText')}
+      </TopSectionWithKoros>
+      <div
+        className={classNames([
+          commonContentStyles['common-content-area'],
+          commonContentStyles['common-bottom-padding'],
+          styles['content'],
+        ])}
+      >
+        <Explanation
+          main={t('createProfile.heading')}
+          titleVariant="h2"
+          small={t('createProfile.helpText')}
+        />
+        <ProfileSection>
+          <CreateProfileForm
+            profile={{
+              firstName: tunnistamoUser.profile.given_name || '',
+              lastName: tunnistamoUser.profile.family_name || '',
+              email: tunnistamoUser.profile.email || '',
+              profileLanguage: Language.FINNISH,
+              phone: '',
+            }}
+            isSubmitting={loading}
+            onValues={handleOnValues}
           />
-          <ProfileSection>
-            <CreateProfileForm
-              profile={{
-                firstName: tunnistamoUser.profile.given_name || '',
-                lastName: tunnistamoUser.profile.family_name || '',
-                email: tunnistamoUser.profile.email || '',
-                profileLanguage: Language.FINNISH,
-                phone: '',
-              }}
-              isSubmitting={loading}
-              onValues={handleOnValues}
-            />
-          </ProfileSection>
-        </div>
+        </ProfileSection>
       </div>
-    </div>
+    </React.Fragment>
   );
 }
 

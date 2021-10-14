@@ -80,4 +80,13 @@
   --hds-primary-font: var(--font-helsinki-grotesk);
   font-family: var(--font-helsinki-grotesk);
   --color-black-ultra-light: #fafafb;
+  --common-top-spacing: var(--spacing-layout-s);
+  --common-bottom-spacing: var(--spacing-layout-l);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --common-top-spacing: var(--spacing-layout-l);
+    --common-bottom-spacing: var(--spacing-layout-xl);
+  }
 }

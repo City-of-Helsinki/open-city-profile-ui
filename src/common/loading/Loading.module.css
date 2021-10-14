@@ -1,4 +1,22 @@
-.loading {
-  text-align: center;
-  display: block;
+.wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  padding-bottom: var(--common-bottom-spacing);
+  padding-top: var(--common-top-spacing);
+}
+
+.content p {
+  line-height: 24px;
+  margin: 0;
+  padding: 0 var(--spacing-m);
 }

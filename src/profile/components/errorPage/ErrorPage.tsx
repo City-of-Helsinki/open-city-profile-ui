@@ -2,12 +2,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from 'hds-react';
+import classNames from 'classnames';
 
 import Notification from '../../../common/copyOfHDSNotification/Notification';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import queryParamsToObject from '../../../common/helpers/queryParamsToObject';
 import styles from './ErrorPage.module.css';
 import authService from '../../../auth/authService';
+import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 
 export type ErrorPageQueryParams = {
   message?: string;
@@ -61,7 +63,13 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
 
   return (
     <PageLayout title={notificationTitle} data-testid="error-page-layout">
-      <div className={styles.wrapper}>
+      <div
+        className={classNames([
+          commonContentStyles['common-content-area'],
+          commonContentStyles['common-vertical-padding'],
+          styles.wrapper,
+        ])}
+      >
         <Notification
           type={'error'}
           label={notificationTitle}
