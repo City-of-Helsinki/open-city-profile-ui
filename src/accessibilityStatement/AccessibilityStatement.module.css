@@ -20,28 +20,10 @@
   margin: var(--spacing-layout-2-xs) 0;
 }
 
-.inner-content h1 {
-  font-size: var(--fontsize-heading-m);
-  margin-top: 0;
-}
-
-.inner-content h2 {
-  margin-top: var(--spacing-layout-xs);
-  font-size: var(--fontsize-heading-s);
-}
-
 @media (min-width: 768px) {
   .inner-content {
     width: 768px;
     margin-left: auto;
     margin-right: auto;
-  }
-
-  .inner-content h1 {
-    font-size: var(--fontsize-heading-l);
-  }
-
-  .inner-content h2 {
-    font-size: var(--fontsize-heading-m);
   }
 }

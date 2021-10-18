@@ -43,15 +43,8 @@ function Explanation({
         className
       )}
     >
-      <HeadingTagName
-        className={classNames(styles.main, {
-          [styles.h2]: titleVariant === 'h2',
-          [styles.h3]: titleVariant === 'h3',
-        })}
-      >
-        {main}
-      </HeadingTagName>
-      {small && <p className={styles.small}>{small}</p>}
+      <HeadingTagName className={styles.heading}>{main}</HeadingTagName>
+      {small && <p className={styles.text}>{small}</p>}
     </div>
   );
 }

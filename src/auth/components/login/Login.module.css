@@ -18,17 +18,13 @@
 button.button {
   margin-top: var(--spacing-layout-m);
 }
+
 .content h1 {
   margin-top: var(--common-top-spacing);
-  font-size: var(--fontsize-heading-m);
-}
-.content h2 {
-  line-height: var(--lineheight-l);
-  font-size: var(--fontsize-heading-xs);
 }
 
-@media (min-width: 768px) {
-  .content h1 {
-    font-size: var(--fontsize-heading-xl);
-  }
+.ingress {
+  line-height: var(--lineheight-l);
+  font-size: var(--fontsize-body-l);
+  font-weight: bold;
 }
