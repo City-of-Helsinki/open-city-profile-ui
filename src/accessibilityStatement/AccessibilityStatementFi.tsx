@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement } from 'react';
 
-import NewWindowLink from '../common/newWindowLink/NewWindowLink';
+import { Link } from '../common/copyOfHDSLink/Link';
 
 function AccessibilityStatementFi(): ReactElement {
   return (
@@ -52,10 +52,9 @@ function AccessibilityStatementFi(): ReactElement {
         muodossa, voi käyttäjä pyytää näitä tietoja sähköpostilla{' '}
         <a href="mailto:helsinki.palaute@hel.fi">helsinki.palaute@hel.fi</a> tai
         palautelomakkeella{' '}
-        <NewWindowLink
-          link="https://www.hel.fi/palaute"
-          title="www.hel.fi/palaute"
-        />
+        <Link href="https://www.hel.fi/palaute" external openInNewTab>
+          www.hel.fi/palaute
+        </Link>
         . Tiedusteluun pyritään vastaamaan kohtuullisessa ajassa.
       </p>
 

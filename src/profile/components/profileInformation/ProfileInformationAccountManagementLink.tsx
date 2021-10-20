@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconAngleRight } from 'hds-react';
+import { IconAngleRight, IconProps } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 
 import useProfile from '../../../auth/useProfile';
@@ -9,7 +9,7 @@ import {
   getAmrUrl,
 } from './profileInformationAccountManagementLinkUtils';
 import styles from './profileInformationAccountManagementLink.module.css';
-import NewWindowLink from '../../../common/newWindowLink/NewWindowLink';
+import { Link } from '../../../common/copyOfHDSLink/Link';
 
 function ProfileInformationAccountManagementLink(): React.ReactElement | null {
   const { t } = useTranslation();
@@ -24,6 +24,9 @@ function ProfileInformationAccountManagementLink(): React.ReactElement | null {
   const authenticationMethodReferenceUrl = getAmrUrl(amr);
   const authenticationMethodReferenceName = t(`identityProvider.${amr}`);
 
+  const LinkIcon = (props: IconProps) => (
+    <IconAngleRight {...props} size={'s'} />
+  );
   return (
     <div className={styles['container']}>
       <div className={styles['label-section']}>
@@ -33,13 +36,14 @@ function ProfileInformationAccountManagementLink(): React.ReactElement | null {
         />
       </div>
       <div className={styles['link']}>
-        <NewWindowLink
-          link={authenticationMethodReferenceUrl}
-          title={t('profileInformation.doGoToAccountManagement')}
-          hideIcon
+        <Link
+          href={authenticationMethodReferenceUrl}
+          iconReplacement={LinkIcon}
+          external
+          openInNewTab
         >
-          <IconAngleRight aria-hidden />
-        </NewWindowLink>
+          {t('profileInformation.doGoToAccountManagement')}
+        </Link>
       </div>
     </div>
   );

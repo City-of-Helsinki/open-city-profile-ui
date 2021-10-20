@@ -31,46 +31,56 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
     <div
       className="link"
     >
-      <NewWindowLink
-        hideIcon={true}
-        link="https://test-url"
-        title="profileInformation.doGoToAccountManagement"
+      <Link
+        external={true}
+        href="https://test-url"
+        iconReplacement={[Function]}
+        openInNewTab={true}
       >
         <a
-          aria-label="opensInNewWindow"
-          className="link"
+          aria-label="profileInformation.doGoToAccountManagement. openInNewTabAriaLabel openInExternalDomainAriaLabel"
+          className="link linkM"
           href="https://test-url"
-          rel="noopener noreferrer"
+          rel="noopener"
+          style={Object {}}
           target="_blank"
         >
           profileInformation.doGoToAccountManagement
-          <M
+          <LinkIcon
             aria-hidden={true}
+            className="icon verticalAlignSmallOrMediumIcon"
+            size="xs"
           >
-            <svg
+            <M
               aria-hidden={true}
-              className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
-              role="img"
-              style={Object {}}
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+              className="icon verticalAlignSmallOrMediumIcon"
+              size="s"
             >
-              <g
-                fill="none"
-                fillRule="evenodd"
+              <svg
+                aria-hidden={true}
+                className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik icon verticalAlignSmallOrMediumIcon"
+                role="img"
+                style={Object {}}
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <polygon
-                  points="0 24 0 0 24 0 24 24"
-                />
-                <polygon
-                  fill="currentColor"
-                  points="13.5 12 8.5 7 10 5.5 16.5 12 10 18.5 8.5 17"
-                />
-              </g>
-            </svg>
-          </M>
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                >
+                  <polygon
+                    points="0 24 0 0 24 0 24 24"
+                  />
+                  <polygon
+                    fill="currentColor"
+                    points="13.5 12 8.5 7 10 5.5 16.5 12 10 18.5 8.5 17"
+                  />
+                </g>
+              </svg>
+            </M>
+          </LinkIcon>
         </a>
-      </NewWindowLink>
+      </Link>
     </div>
   </div>
 </ProfileInformationAccountManagementLink>
@@ -107,46 +117,56 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
     <div
       className="link"
     >
-      <NewWindowLink
-        hideIcon={true}
-        link="https://test-url-suomif-fi"
-        title="profileInformation.doGoToAccountManagement"
+      <Link
+        external={true}
+        href="https://test-url-suomif-fi"
+        iconReplacement={[Function]}
+        openInNewTab={true}
       >
         <a
-          aria-label="opensInNewWindow"
-          className="link"
+          aria-label="profileInformation.doGoToAccountManagement. openInNewTabAriaLabel openInExternalDomainAriaLabel"
+          className="link linkM"
           href="https://test-url-suomif-fi"
-          rel="noopener noreferrer"
+          rel="noopener"
+          style={Object {}}
           target="_blank"
         >
           profileInformation.doGoToAccountManagement
-          <M
+          <LinkIcon
             aria-hidden={true}
+            className="icon verticalAlignSmallOrMediumIcon"
+            size="xs"
           >
-            <svg
+            <M
               aria-hidden={true}
-              className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
-              role="img"
-              style={Object {}}
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+              className="icon verticalAlignSmallOrMediumIcon"
+              size="s"
             >
-              <g
-                fill="none"
-                fillRule="evenodd"
+              <svg
+                aria-hidden={true}
+                className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik icon verticalAlignSmallOrMediumIcon"
+                role="img"
+                style={Object {}}
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <polygon
-                  points="0 24 0 0 24 0 24 24"
-                />
-                <polygon
-                  fill="currentColor"
-                  points="13.5 12 8.5 7 10 5.5 16.5 12 10 18.5 8.5 17"
-                />
-              </g>
-            </svg>
-          </M>
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                >
+                  <polygon
+                    points="0 24 0 0 24 0 24 24"
+                  />
+                  <polygon
+                    fill="currentColor"
+                    points="13.5 12 8.5 7 10 5.5 16.5 12 10 18.5 8.5 17"
+                  />
+                </g>
+              </svg>
+            </M>
+          </LinkIcon>
         </a>
-      </NewWindowLink>
+      </Link>
     </div>
   </div>
 </ProfileInformationAccountManagementLink>

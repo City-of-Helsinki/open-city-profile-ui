@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement } from 'react';
 
-import NewWindowLink from '../common/newWindowLink/NewWindowLink';
+import { Link } from '../common/copyOfHDSLink/Link';
 
 function AccessibilityStatementEn(): ReactElement {
   return (
@@ -40,10 +40,9 @@ function AccessibilityStatementEn(): ReactElement {
         accessible format, they can request for this information by e-mail at{' '}
         <a href="mailto:helsinki.palaute@hel.fi">helsinki.palaute@hel.fi</a> or
         through the feedback form at{' '}
-        <NewWindowLink
-          link="https://www.hel.fi/feedback"
-          title="www.hel.fi/feedback"
-        />
+        <Link href="https://www.hel.fi/feedback" external openInNewTab>
+          www.hel.fi/feedback
+        </Link>
         . The aim is to reply to the enquiry within a reasonable time frame.
       </p>
 

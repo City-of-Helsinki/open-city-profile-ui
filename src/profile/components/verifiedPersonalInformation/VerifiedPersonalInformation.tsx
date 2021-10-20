@@ -14,7 +14,7 @@ import {
   PermanentAddress,
 } from '../../../graphql/typings';
 import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
-import NewWindowLinkWithChildrenAsTitle from '../../../common/newWindowLink/NewWindowLinkWithChildrenAsTitle';
+import { Link } from '../../../common/copyOfHDSLink/Link';
 
 type CommonAddress = {
   streetAddress: PermanentAddress['streetAddress'];
@@ -120,10 +120,14 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
         }
         components={{
           suomiFiLink: (
-            <NewWindowLinkWithChildrenAsTitle
-              link={t('profileInformation.verifiedDataInformationLink')}
+            <Link
+              href={t('profileInformation.verifiedDataInformationLink')}
               tabIndex={forAria ? 0 : -1}
-            />
+              external
+              openInNewTab
+            >
+              {''}
+            </Link>
           ),
         }}
       />
