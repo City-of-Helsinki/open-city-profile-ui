@@ -534,13 +534,13 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node
   readonly type: ServiceType | null;
   readonly title: string | null;
   readonly description: string | null;
-  readonly createdAt: any;
   readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;
 }
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
   readonly __typename: "ServiceConnectionType";
   readonly service: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
+  readonly createdAt: any;
 }
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges {
@@ -768,7 +768,7 @@ export interface UpdateMyProfile {
    * 
    * Possible error codes:
    * 
-   * * `TODO`
+   * * `PROFILE_MUST_HAVE_PRIMARY_EMAIL`: If trying to get rid of the profile's primary email.
    */
   readonly updateMyProfile: UpdateMyProfile_updateMyProfile | null;
 }
