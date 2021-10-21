@@ -1,23 +1,19 @@
 .container {
-  --ep-horizontal-whitespace: var(--spacing-m);
-  --ep-vertical-whitespace: var(--spacing-l);
-  --ep-background: var(--color-white);
-  --ep-accent-color: var(--color-bus);
-  width: 100%;
-  background: var(--ep-background);
+  --vertical-padding: var(--spacing-m);
+  display: flex;
+  flex-direction: column;
+  background: var(--color-white);
+  padding: var(--vertical-padding) var(--content-horizontal-padding);
 }
 
 .title {
-  padding: 0 var(--ep-horizontal-whitespace);
-  min-height: 60px;
-  height: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .title h2 {
-  margin: var(--ep-vertical-whitespace) 0;
+  margin: 0;
   font-size: var(--h3-size);
   color: var(--color-bus);
 }
@@ -36,24 +32,16 @@
   margin-right: var(--spacing-s);
   font-size: var(--fontsize-body-s);
   font-weight: bold;
-  color: var(--ep-accent-color);
+  color: var(--color-bus);
   text-transform: uppercase;
 }
 
 .card {
-  padding-left: var(--ep-horizontal-whitespace);
-  padding-right: var(--ep-horizontal-whitespace);
-  /* Negates some of the padding has in order to place the content */
-  /* closer to the title. */
-  margin-top: -50px;
+  padding: 0;
 }
 
 @media (min-width: 600px) {
-  .container {
-    --ep-horizontal-whitespace: var(--spacing-xl);
-  }
-
   .card {
-    width: 80%;
+    max-width: 600px;
   }
 }
