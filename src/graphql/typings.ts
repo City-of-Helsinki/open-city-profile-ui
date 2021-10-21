@@ -16,7 +16,6 @@ import {
   ProfileInput as ProfileInputInterface,
   MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress,
   MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress,
   ServiceConnectionsQuery,
   ServiceConnectionsQuery_myProfile_serviceConnections_edges_node,
   ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service,
@@ -72,7 +71,6 @@ export type ProfileInput = ProfileInputInterface;
 
 export type PermanentForeignAddress = MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress;
 export type PermanentAddress = MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress;
-export type TemporaryAddress = MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress;
 
 export type ServiceConnectionsRoot = ServiceConnectionsQuery;
 export type ServiceConnectionsNode = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node;

@@ -71,11 +71,6 @@ query MyProfileQuery {
         postalCode
         postOffice
       }
-      temporaryAddress {
-        streetAddress
-        postalCode
-        postOffice
-      }
       permanentForeignAddress {
         streetAddress
         additionalAddress

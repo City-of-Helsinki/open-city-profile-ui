@@ -315,22 +315,6 @@ export interface MyProfileQuery_myProfile_verifiedPersonalInformation_permanentA
   readonly postOffice: string;
 }
 
-export interface MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress {
-  readonly __typename: "VerifiedPersonalInformationAddressNode";
-  /**
-   * Street address with possible house number etc.
-   */
-  readonly streetAddress: string;
-  /**
-   * Postal code.
-   */
-  readonly postalCode: string;
-  /**
-   * Post office.
-   */
-  readonly postOffice: string;
-}
-
 export interface MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress {
   readonly __typename: "VerifiedPersonalInformationForeignAddressNode";
   /**
@@ -374,10 +358,6 @@ export interface MyProfileQuery_myProfile_verifiedPersonalInformation {
    * The permanent residency address in Finland.
    */
   readonly permanentAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress | null;
-  /**
-   * The temporary residency address in Finland.
-   */
-  readonly temporaryAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_temporaryAddress | null;
   /**
    * The temporary foreign (i.e. not in Finland) residency address.
    */
@@ -768,7 +748,7 @@ export interface UpdateMyProfile {
    * 
    * Possible error codes:
    * 
-   * * `TODO`
+   * * `PROFILE_MUST_HAVE_PRIMARY_EMAIL`: If trying to get rid of the profile's primary email.
    */
   readonly updateMyProfile: UpdateMyProfile_updateMyProfile | null;
 }
