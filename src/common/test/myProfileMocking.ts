@@ -201,12 +201,6 @@ export const getVerifiedData = (
     postalCode: 'permanent.postalCode',
     postOffice: 'permanent.postOffice',
   },
-  temporaryAddress: {
-    __typename: 'VerifiedPersonalInformationAddressNode',
-    streetAddress: 'temporaryAddress.streetAddress',
-    postalCode: 'temporaryAddress.postalCode',
-    postOffice: 'temporaryAddress.postOffice',
-  },
   permanentForeignAddress: {
     __typename: 'VerifiedPersonalInformationForeignAddressNode',
     streetAddress: 'permanentForeignAddress.streetAddress',

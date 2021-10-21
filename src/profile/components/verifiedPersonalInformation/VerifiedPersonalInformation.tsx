@@ -26,7 +26,7 @@ type CommonAddress = {
 };
 
 type AddressProps = {
-  type: 'permanent' | 'temporary' | 'foreign';
+  type: 'permanent' | 'foreign';
   address: CommonAddress;
 };
 
@@ -49,7 +49,6 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     givenName,
     lastName,
     permanentAddress,
-    temporaryAddress,
     permanentForeignAddress,
     nationalIdentificationNumber,
     municipalityOfResidence,
@@ -70,8 +69,6 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
         >
           {type === 'permanent'
             ? t('profileInformation.permanentAddress')
-            : type === 'temporary'
-            ? t('profileInformation.temporaryAddress')
             : t('profileInformation.permanentForeignAddress')}
         </h3>
         <div className={commonFormStyles['multi-item-wrapper']}>
@@ -169,10 +166,6 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
       <AddressComponent
         type="permanent"
         address={permanentAddress as CommonAddress}
-      />
-      <AddressComponent
-        type="temporary"
-        address={temporaryAddress as CommonAddress}
       />
       <AddressComponent
         type="foreign"

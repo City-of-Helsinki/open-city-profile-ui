@@ -17,7 +17,6 @@ import {
   VerifiedPersonalInformation as VerifiedPersonalInformationType,
   PermanentAddress,
   PermanentForeignAddress,
-  TemporaryAddress,
   ProfileData,
 } from '../../../../graphql/typings';
 import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
@@ -62,7 +61,6 @@ describe('<VerifiedPersonalInformation />', () => {
     const { getElement } = await initTests(currentVIP);
     const permanentAddress = currentVIP.permanentAddress as PermanentAddress;
     const permanentForeignAddress = currentVIP.permanentForeignAddress as PermanentForeignAddress;
-    const temporaryAddress = currentVIP.temporaryAddress as TemporaryAddress;
     const permanentForeignAddressCountryCodeAsText = 'Afganistan';
     expect(!!getElement({ text: currentVIP.firstName })).toBeTruthy();
     expect(!!getElement({ text: currentVIP.lastName })).toBeTruthy();
@@ -74,10 +72,6 @@ describe('<VerifiedPersonalInformation />', () => {
     expect(!!getElement({ text: permanentAddress.streetAddress })).toBeTruthy();
     expect(!!getElement({ text: permanentAddress.postOffice })).toBeTruthy();
     expect(!!getElement({ text: permanentAddress.postalCode })).toBeTruthy();
-    expect(!!getElement({ testId: 'vpi-address-temporary' })).toBeTruthy();
-    expect(!!getElement({ text: temporaryAddress.streetAddress })).toBeTruthy();
-    expect(!!getElement({ text: temporaryAddress.postOffice })).toBeTruthy();
-    expect(!!getElement({ text: temporaryAddress.postalCode })).toBeTruthy();
     expect(!!getElement({ testId: 'vpi-address-foreign' })).toBeTruthy();
     expect(
       !!getElement({ text: permanentForeignAddress.additionalAddress })
@@ -92,12 +86,10 @@ describe('<VerifiedPersonalInformation />', () => {
   it('should not render address blocks if not present in data', async () => {
     const currentVIP = getVerifiedData({
       permanentAddress: null,
-      temporaryAddress: null,
       permanentForeignAddress: null,
     });
     const { getElement } = await initTests(currentVIP);
     expect(() => getElement({ testId: 'vpi-address-permanent' })).toThrow();
-    expect(() => getElement({ testId: 'vpi-address-temporary' })).toThrow();
     expect(() => getElement({ testId: 'vpi-address-foreign' })).toThrow();
   });
 });
