@@ -113,16 +113,19 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
   const LongDescription = ({ forAria }: { forAria?: boolean }) => (
     <p className={forAria ? commonFormStyles['visually-hidden'] : ''}>
       <Trans
-        i18nKey="profileInformation.verifiedDataInformation"
-        components={[
+        i18nKey={
           forAria
-            ? t('profileInformation.verifiedDataInformationAriaPrefix')
-            : t('profileInformation.verifiedDataInformationPrefix'),
-          <NewWindowLinkWithChildrenAsTitle
-            link={t('profileInformation.verifiedDataInformationLink')}
-            tabIndex={forAria ? 0 : -1}
-          />,
-        ]}
+            ? 'profileInformation.verifiedDataInformationForScreenReaders'
+            : 'profileInformation.verifiedDataInformation'
+        }
+        components={{
+          suomiFiLink: (
+            <NewWindowLinkWithChildrenAsTitle
+              link={t('profileInformation.verifiedDataInformationLink')}
+              tabIndex={forAria ? 0 : -1}
+            />
+          ),
+        }}
       />
     </p>
   );

@@ -163,14 +163,18 @@ function CreateProfileForm(props: Props): React.ReactElement {
             <p>
               <Trans
                 i18nKey="profileForm.terms"
-                components={[
-                  <NewWindowLinkWithChildrenAsTitle
-                    link={t('profileForm.termsFileDescriptionLink')}
-                  />,
-                  <NewWindowLinkWithChildrenAsTitle
-                    link={t('profileForm.termsDataProtectionLink')}
-                  />,
-                ]}
+                components={{
+                  fileDescriptionLink: (
+                    <NewWindowLinkWithChildrenAsTitle
+                      link={t('profileForm.termsFileDescriptionLink')}
+                    />
+                  ),
+                  dataProtectionLink: (
+                    <NewWindowLinkWithChildrenAsTitle
+                      link={t('profileForm.termsDataProtectionLink')}
+                    />
+                  ),
+                }}
               />
             </p>
             <Field
