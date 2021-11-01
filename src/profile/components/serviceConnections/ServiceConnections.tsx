@@ -10,7 +10,7 @@ import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import CheckedLabel from '../../../common/checkedLabel/CheckedLabel';
 import styles from './ServiceConnections.module.css';
 import { ServiceConnectionsRoot } from '../../../graphql/typings';
-import getServices from '../../helpers/getServices';
+import getServiceConnectionData from '../../helpers/getServiceConnectionData';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
 import useToast from '../../../toast/useToast';
 
@@ -50,7 +50,7 @@ function ServiceConnections(props: Props): React.ReactElement {
     return `${day}, ${t('serviceConnections.clock')} ${time}`;
   };
 
-  const services = getServices(data);
+  const services = getServiceConnectionData(data);
   const hasNoServices = !loading && services.length === 0;
   return (
     <React.Fragment>
@@ -86,7 +86,7 @@ function ServiceConnections(props: Props): React.ReactElement {
               {t('serviceConnections.created')}
             </p>
             <p className={styles['date-and-time']}>
-              {getDateTime(service.createdAt)}
+              {getDateTime(service.connectionCreatedAt)}
             </p>
           </ExpandingPanel>
         ))}

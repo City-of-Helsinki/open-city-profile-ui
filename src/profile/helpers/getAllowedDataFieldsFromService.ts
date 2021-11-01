@@ -1,7 +1,8 @@
-import { Service, ServiceAllowedFieldsNode } from '../../graphql/typings';
+import { ServiceAllowedFieldsNode } from '../../graphql/typings';
+import { ServiceConnectionData } from './getServiceConnectionData';
 
 export default function getAllowedDataFieldsFromService(
-  service: Service
+  service: ServiceConnectionData
 ): ServiceAllowedFieldsNode[] {
   return service.allowedDataFields.edges
     .map(edge => {
