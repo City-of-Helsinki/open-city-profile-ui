@@ -177,7 +177,6 @@
     "authenticationMethod": "Tunnistautumistapa",
     "primaryAddress": "Ensisijainen osoite",
     "permanentAddress": "Vakinainen osoite",
-    "temporaryAddress": "Väliaikainen osoite",
     "permanentForeignAddress": "Vakinainen ulkomainen osoite",
     "primaryEmail": "Ensisijainen sähköpostiosoite",
     "primaryPhone": "Ensisijainen puhelinnumero",

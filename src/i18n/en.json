@@ -177,7 +177,6 @@
     "authenticationMethod": "Authentication method",
     "primaryAddress": "Primary address",
     "permanentAddress": "Permanent address",
-    "temporaryAddress": "Temporary address",
     "permanentForeignAddress": "Permanent foreign address",
     "primaryEmail": "Primary email",
     "primaryPhone": "Primary phone number",

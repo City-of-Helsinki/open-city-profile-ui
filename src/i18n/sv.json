@@ -177,7 +177,6 @@
     "authenticationMethod": "Autentiseringsmetod",
     "primaryAddress": "Primär adress",
     "permanentAddress": "Stadigvarande adress",
-    "temporaryAddress": "Tillfällig adress",
     "permanentForeignAddress": "Stadigvarande utländsk adress",
     "primaryEmail": "Primär e-postadress",
     "primaryPhone": "Primärt telefonnummer",
