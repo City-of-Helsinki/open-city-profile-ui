@@ -8,6 +8,10 @@
   text-align: center;
 }
 
+.page-heading h1 {
+  margin: 0;
+}
+
 .user-icon {
   width: 54px;
   height: 54px;

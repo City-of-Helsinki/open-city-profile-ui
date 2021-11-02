@@ -1,6 +1,5 @@
 .common-content-area {
   --content-horizontal-padding: var(--spacing-m);
-  --horizontal-whitespace: var(--spacing-m);
   display: flex;
   flex-direction: column;
   padding-left: var(--spacing-m);
@@ -19,7 +18,6 @@
 @media (min-width: 600px) {
   .common-content-area {
     --content-horizontal-padding: var(--spacing-xl);
-    --horizontal-whitespace: var(--spacing-xl);
   }
 }
 

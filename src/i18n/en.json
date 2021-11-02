@@ -235,6 +235,8 @@
     "tunnistusSuomifi": "Suomi.fi"
   },
   "opensInNewWindow": "{{title}}. Opens in a new window.",
+  "openInNewTabAriaLabel": "Opens in a new tab.",
+  "openInExternalDomainAriaLabel": "EN: Siirtyy toiseen sivustoon.",
   "accessibilityStatement": "Accessibility Statement",
   "cityOfHelsinki": "City of Helsinki",
   "pageNotFoundTitle": "Page not found",

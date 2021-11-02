@@ -15,7 +15,7 @@ import {
   basicDataSchema,
   createProfilePhoneSchema,
 } from '../../../common/schemas/schemas';
-import NewWindowLinkWithChildrenAsTitle from '../../../common/newWindowLink/NewWindowLinkWithChildrenAsTitle';
+import { Link } from '../../../common/copyOfHDSLink/Link';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
 const termsSchema = yup
@@ -165,14 +165,22 @@ function CreateProfileForm(props: Props): React.ReactElement {
                 i18nKey="profileForm.terms"
                 components={{
                   fileDescriptionLink: (
-                    <NewWindowLinkWithChildrenAsTitle
-                      link={t('profileForm.termsFileDescriptionLink')}
-                    />
+                    <Link
+                      href={t('profileForm.termsFileDescriptionLink')}
+                      external
+                      openInNewTab
+                    >
+                      {''}
+                    </Link>
                   ),
                   dataProtectionLink: (
-                    <NewWindowLinkWithChildrenAsTitle
-                      link={t('profileForm.termsDataProtectionLink')}
-                    />
+                    <Link
+                      href={t('profileForm.termsDataProtectionLink')}
+                      external
+                      openInNewTab
+                    >
+                      {''}
+                    </Link>
                   ),
                 }}
               />

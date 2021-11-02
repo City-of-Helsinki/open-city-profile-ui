@@ -1,18 +1,16 @@
 .container {
-  --padding-v: var(--spacing-m);
-  --padding-h: var(--spacing-m);
-
+  --vertical-padding: var(--spacing-m);
   display: flex;
   flex-direction: column;
-  padding: var(--padding-v) var(--padding-h);
-
+  padding: var(--vertical-padding) var(--content-horizontal-padding);
   background: var(--color-white);
 }
 
 .label-section {
   flex-grow: 1;
-  margin-bottom: var(--spacing-m);
+  margin-bottom: var(--vertical-padding);
 }
+
 .label-section > div {
   margin-bottom: 0;
 }
@@ -42,11 +40,5 @@
 
   .link {
     justify-content: flex-end;
-  }
-}
-
-@media (min-width: 600px) {
-  .container {
-    --padding-h: var(--spacing-xl);
   }
 }

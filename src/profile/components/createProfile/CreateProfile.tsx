@@ -97,9 +97,8 @@ function CreateProfile({
         ])}
       >
         <Explanation
-          main={t('createProfile.heading')}
-          titleVariant="h2"
-          small={t('createProfile.helpText')}
+          heading={t('createProfile.heading')}
+          text={t('createProfile.helpText')}
         />
         <ProfileSection>
           <CreateProfileForm

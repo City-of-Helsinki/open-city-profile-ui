@@ -39,9 +39,8 @@ function ViewProfile(): React.ReactElement {
               </Route>
               <Route path="/">
                 <Explanation
-                  main={t('profileInformation.title')}
-                  titleVariant="h2"
-                  small={t('profileInformation.description')}
+                  heading={t('profileInformation.title')}
+                  text={t('profileInformation.description')}
                 />
                 <ProfileInformation />
               </Route>
