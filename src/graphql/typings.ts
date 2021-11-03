@@ -79,12 +79,6 @@ export type Service = ServiceConnectionsQuery_myProfile_serviceConnections_edges
 export type ServiceAllowedFieldsNode = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node;
 export type GdprServiceConnectionsRoot = GdprServiceConnectionsQuery;
 
-export {
-  PhoneType,
-  EmailType,
-  AddressType,
-  ServiceType,
-  Language,
-} from './generatedTypes';
+export { PhoneType, EmailType, AddressType, Language } from './generatedTypes';
 
 export type AnyObject<T = unknown> = Record<string, T>;

@@ -5,7 +5,6 @@ query ServiceConnectionsQuery {
       edges {
         node {
           service {
-            type
             title
             description
             allowedDataFields {
