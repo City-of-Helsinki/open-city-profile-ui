@@ -45,6 +45,11 @@
     "noServiceExplanation": "Jatkamalla menetät kaikki tallennetut tietosi.",
     "title": "Haluatko varmasti poistaa kaikki tietosi?"
   },
+  "deleteProfileErrorModal": {
+    "notAllowed": "Et voi poistaa profiiliasi, koska jokin sitä käyttävistä palveluista tarvitsee tietojasi esimerkiksi laskutukseen.",
+    "title": "Poisto epäonnistui!",
+    "genericError": "Profiilin poistaminen ei onnistunut. Yritä myöhemmin uudelleen."
+  },
   "downloadData": {
     "button": "Lataa omat tiedot",
     "panelText": "Jos haluat nähdä kaikki sinusta tallentamamme tiedot, voit ladata ne tästä. Tiedot toimitetaan määrämuotoisena tiedostona, jotta voit halutessasi siirtää tiedot johonkin toiseen järjestelmään.",

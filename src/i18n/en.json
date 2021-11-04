@@ -45,6 +45,11 @@
     "noServiceExplanation": "By continuing you will lose all of your stored data.",
     "title": "Are you sure you want to delete your information?"
   },
+  "deleteProfileErrorModal": {
+    "notAllowed": "EN: Et voi poistaa profiiliasi, koska jokin sitä käyttävistä palveluista tarvitsee tietojasi esimerkiksi laskutukseen.",
+    "title": "EN: Poisto epäonnistui!",
+    "genericError": "EN: Profiilin poistaminen ei onnistunut. Yritä myöhemmin uudelleen."
+  },
   "downloadData": {
     "button": "Download my information",
     "panelText": "If you want to see all our stored information about you, you can download them here. The information will be delivered as a file in a fixed format so you can move it into some other system if you want to.",

@@ -45,6 +45,11 @@
     "noServiceExplanation": "Genom att fortsätta kommer du att förlora alla dina lagrade information.",
     "title": "Är du säker på att du vill radera din information?"
   },
+  "deleteProfileErrorModal": {
+    "notAllowed": "SV: Et voi poistaa profiiliasi, koska jokin sitä käyttävistä palveluista tarvitsee tietojasi esimerkiksi laskutukseen.",
+    "title": "SV: Poisto epäonnistui!",
+    "genericError": "SV: Profiilin poistaminen ei onnistunut. Yritä myöhemmin uudelleen."
+  },
   "downloadData": {
     "button": "Ladda ner min information",
     "panelText": "Om du vill se alla uppgifter som vi lagrat om dig, kan du ladda ned dem här. Informationen levereras som en formbunden fil så att du kan överföra uppgifterna till ett annat system om du vill.",

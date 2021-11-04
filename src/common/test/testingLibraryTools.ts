@@ -10,6 +10,7 @@ import {
   cleanup as cleanupHooks,
 } from '@testing-library/react-hooks';
 import { GraphQLError } from 'graphql';
+import to from 'await-to-js';
 
 import { resetApolloMocks, ResponseProvider } from './MockApolloClientProvider';
 import { AnyObject } from '../../graphql/typings';
@@ -310,3 +311,25 @@ export const getErrorMessage = (error?: Error | GraphQLError): string => {
   }
   return retypedError.message;
 };
+
+export const createDomHelpersWithTesting = (
+  renderResult: RenderResult
+): {
+  findByTestId: (testId: string) => Promise<HTMLElement | null>;
+  findById: (id: string) => Promise<HTMLElement | null>;
+  click: (target: HTMLElement) => Promise<void>;
+} => ({
+  findByTestId: async (testId: string): Promise<HTMLElement | null> => {
+    const [, el] = await to(renderResult.findByTestId(testId));
+    return Promise.resolve(el || null);
+  },
+  findById: async (id: string): Promise<HTMLElement | null> => {
+    const el = renderResult.baseElement.querySelector(`#${id}`);
+    return Promise.resolve((el as HTMLElement) || null);
+  },
+  click: async (target: HTMLElement) => {
+    expect(!!target).toBeTruthy();
+    fireEvent.click(target as Element);
+    Promise.resolve();
+  },
+});
