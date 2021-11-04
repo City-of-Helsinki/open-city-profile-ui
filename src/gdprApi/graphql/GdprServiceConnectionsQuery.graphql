@@ -5,7 +5,6 @@ query GdprServiceConnectionsQuery {
       edges {
         node {
           service {
-            type
             gdprQueryScope
             gdprDeleteScope
           }

@@ -1,8 +1,4 @@
-import {
-  ServiceConnectionsRoot,
-  Service,
-  ServiceType,
-} from '../../graphql/typings';
+import { ServiceConnectionsRoot, Service } from '../../graphql/typings';
 
 export type ServiceConnectionData = Pick<
   Service,
@@ -28,10 +24,7 @@ export default function getServiceConnectionData(
   if (data?.myProfile?.serviceConnections) {
     return data.myProfile.serviceConnections.edges
       .map(edge => {
-        if (
-          edge?.node?.service &&
-          edge?.node?.service?.type !== ServiceType.HKI_MY_DATA
-        ) {
+        if (edge?.node) {
           return createServiceConnectionData(
             edge.node.service,
             edge.node.createdAt

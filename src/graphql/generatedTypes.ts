@@ -21,8 +21,9 @@ export interface GdprDeleteMyProfileMutation {
    * Possible error codes:
    * 
    * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
-   * 
-   * * `TODO`
+   * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing a connected service.
+   * * `CONNECTED_SERVICE_DELETION_NOT_ALLOWED_ERROR`: The profile deletion is disallowed by one or more connected services.
+   * * `CONNECTED_SERVICE_DELETION_FAILED_ERROR`: The profile deletion failed for one or more connected services.
    */
   readonly deleteMyProfile: GdprDeleteMyProfileMutation_deleteMyProfile | null;
 }
@@ -42,7 +43,6 @@ export interface GdprDeleteMyProfileMutationVariables {
 
 export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
   readonly __typename: "ServiceNode";
-  readonly type: ServiceType | null;
   /**
    * GDPR API query operation scope
    */
@@ -155,13 +155,13 @@ export interface CreateMyProfileVariables {
 
 export interface DownloadMyProfileQuery {
   /**
-   * Get the user information stored in the profile as machine readable JSON.
+   * Get the user information stored in the profile and its connected services as machine readable JSON.
    * 
    * Requires authentication.
    * 
    * Possible error codes:
    * 
-   * * `TODO`
+   * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing a connected service.
    */
   readonly downloadMyProfile: any | null;
 }
@@ -267,7 +267,7 @@ export interface MyProfileQuery_myProfile_primaryPhone {
    * The ID of the object.
    */
   readonly id: string;
-  readonly phone: string | null;
+  readonly phone: string;
   readonly primary: boolean;
   readonly phoneType: PhoneType | null;
 }
@@ -279,7 +279,7 @@ export interface MyProfileQuery_myProfile_phones_edges_node {
    * The ID of the object.
    */
   readonly id: string;
-  readonly phone: string | null;
+  readonly phone: string;
   readonly phoneType: PhoneType | null;
 }
 
@@ -511,7 +511,6 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
   readonly __typename: "ServiceNode";
-  readonly type: ServiceType | null;
   readonly title: string | null;
   readonly description: string | null;
   readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;
@@ -661,7 +660,7 @@ export interface UpdateMyProfile_updateMyProfile_profile_primaryPhone {
    * The ID of the object.
    */
   readonly id: string;
-  readonly phone: string | null;
+  readonly phone: string;
   readonly primary: boolean;
   readonly phoneType: PhoneType | null;
 }
@@ -673,7 +672,7 @@ export interface UpdateMyProfile_updateMyProfile_profile_phones_edges_node {
    * The ID of the object.
    */
   readonly id: string;
-  readonly phone: string | null;
+  readonly phone: string;
   readonly phoneType: PhoneType | null;
 }
 
@@ -803,13 +802,6 @@ export enum PhoneType {
   NONE = "NONE",
   OTHER = "OTHER",
   WORK = "WORK",
-}
-
-export enum ServiceType {
-  BERTH = "BERTH",
-  GODCHILDREN_OF_CULTURE = "GODCHILDREN_OF_CULTURE",
-  HKI_MY_DATA = "HKI_MY_DATA",
-  YOUTH_MEMBERSHIP = "YOUTH_MEMBERSHIP",
 }
 
 export interface CreateAddressInput {
