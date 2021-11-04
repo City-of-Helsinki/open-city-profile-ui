@@ -63,9 +63,10 @@ function DeleteProfile(): React.ReactElement {
     targetId: `delete-profile-button`,
   });
 
-  const [getServiceConnections, { data, refetch }] = useLazyQuery<
-    ServiceConnectionsRoot
-  >(SERVICE_CONNECTIONS, {
+  const [
+    getServiceConnections,
+    { data: serviceConnections, refetch },
+  ] = useLazyQuery<ServiceConnectionsRoot>(SERVICE_CONNECTIONS, {
     onCompleted: () => {
       setDataLoadState(loadedLoadState);
     },
@@ -94,11 +95,18 @@ function DeleteProfile(): React.ReactElement {
   });
 
   const loadServiceConnections = useCallback(() => {
-    if (dataLoadState === notStartedLoadState) {
+    if (serviceConnections) {
+      setDataLoadState(loadedLoadState);
+    } else if (dataLoadState === notStartedLoadState) {
       getServiceConnections();
       setDataLoadState(loadingLoadState);
     }
-  }, [getServiceConnections, setDataLoadState, dataLoadState]);
+  }, [
+    getServiceConnections,
+    setDataLoadState,
+    dataLoadState,
+    serviceConnections,
+  ]);
 
   const onExpandingPanelChange = useCallback(
     isOpen => {
@@ -121,7 +129,7 @@ function DeleteProfile(): React.ReactElement {
   const handleProfileDelete = async () => {
     setDeleteConfirmationModal(false);
 
-    if (data === undefined) {
+    if (serviceConnections === undefined) {
       throw Error('Could not find services to delete');
     }
 
@@ -173,7 +181,7 @@ function DeleteProfile(): React.ReactElement {
         isOpen={deleteConfirmationModal}
         onClose={handleConfirmationModal}
         onConfirm={handleProfileDelete}
-        content={() => <ModalServicesContent data={data} />}
+        content={() => <ModalServicesContent data={serviceConnections} />}
         title={t('deleteProfileModal.title')}
         actionButtonText={t('deleteProfileModal.delete')}
       />
