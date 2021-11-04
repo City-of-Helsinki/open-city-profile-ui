@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useLazyQuery } from '@apollo/client';
+import { ApolloError, useLazyQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
@@ -13,10 +13,9 @@ import { ServiceConnectionsRoot } from '../../../graphql/typings';
 import useToast from '../../../toast/useToast';
 import styles from './deleteProfile.module.css';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
-import checkBerthError from '../../helpers/checkBerthError';
-import BerthErrorModal from '../modals/berthError/BerthErrorModal';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
+import DeleteProfileError from '../modals/deleteProfileError/DeleteProfileError';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -36,7 +35,9 @@ function DeleteProfile(): React.ReactElement {
   const { createToast } = useToast();
   const history = useHistory();
   const { trackEvent } = useMatomo();
-  const [berthError, setBerthError] = useState(false);
+  const [resultError, setResultError] = useState<
+    ApolloError | Error | undefined
+  >(undefined);
   const [deleteProfile, deleteProfileResult] = useDeleteProfile({
     onCompleted: returnedData => {
       if (returnedData) {
@@ -45,12 +46,14 @@ function DeleteProfile(): React.ReactElement {
       }
     },
     onError: error => {
-      if (checkBerthError(error.graphQLErrors)) {
-        setBerthError(true);
+      if (error.graphQLErrors) {
+        error.graphQLErrors.forEach(graphQlError => {
+          Sentry.captureException(new Error(graphQlError.message));
+        });
       } else {
         Sentry.captureException(error);
-        createToast({ type: 'error' });
       }
+      setResultError(error);
     },
   });
 
@@ -174,9 +177,9 @@ function DeleteProfile(): React.ReactElement {
         title={t('deleteProfileModal.title')}
         actionButtonText={t('deleteProfileModal.delete')}
       />
-      <BerthErrorModal
-        isOpen={berthError}
-        onClose={() => setBerthError(prevState => !prevState)}
+      <DeleteProfileError
+        error={resultError}
+        onClose={() => setResultError(undefined)}
       />
     </React.Fragment>
   );
