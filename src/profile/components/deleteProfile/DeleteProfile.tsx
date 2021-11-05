@@ -172,6 +172,7 @@ function DeleteProfile(): React.ReactElement {
         initiallyOpen={initiallyOpen}
         scrollIntoViewOnMount={initiallyOpen}
         onChange={onExpandingPanelChange}
+        dataTestId={'delete-profile'}
       >
         <p>{t('deleteProfile.explanation')}</p>
         {dataLoadState !== loadedLoadState ? (

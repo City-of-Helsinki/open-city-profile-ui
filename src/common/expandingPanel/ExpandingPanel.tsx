@@ -16,6 +16,7 @@ type Props = PropsWithChildren<{
   initiallyOpen: boolean;
   scrollIntoViewOnMount?: boolean;
   onChange?: (isOpen: boolean) => void;
+  dataTestId?: string;
 }>;
 
 function ExpandingPanel({
@@ -24,6 +25,7 @@ function ExpandingPanel({
   showInformationText,
   scrollIntoViewOnMount,
   title,
+  dataTestId,
   onChange,
 }: Props): React.ReactElement {
   const container = useRef<HTMLDivElement | null>(null);
@@ -51,6 +53,9 @@ function ExpandingPanel({
   const buttonText = isOpen
     ? t('expandingPanel.hideInformation')
     : t('expandingPanel.showInformation');
+  const buttonTestId = dataTestId
+    ? { 'data-testid': `${dataTestId}-toggle-button` }
+    : null;
   return (
     <div className={styles['container']} ref={handleContainerRef}>
       <div className={styles['title']}>
@@ -61,6 +66,7 @@ function ExpandingPanel({
             variant={'supplementary'}
             iconRight={<Icon aria-hidden />}
             {...buttonProps}
+            {...buttonTestId}
           >
             {showInformationText && (
               <span className={styles['show-information']} aria-hidden>

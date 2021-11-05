@@ -4,12 +4,17 @@ import { GraphQLError } from 'graphql';
 import fetchMock from 'jest-fetch-mock';
 
 import graphqlClient from '../../graphql/client';
-import { ProfileData, UpdateProfileData } from '../../graphql/typings';
+import {
+  ProfileData,
+  ServiceConnectionsRoot,
+  UpdateProfileData,
+} from '../../graphql/typings';
 import { UpdateMyProfileVariables } from '../../graphql/generatedTypes';
 
 export type MockedResponse = {
   profileData?: ProfileData;
   updatedProfileData?: UpdateProfileData;
+  profileDataWithServiceConnections?: ServiceConnectionsRoot;
   errorType?: 'networkError' | 'graphQLError';
 };
 
@@ -44,9 +49,20 @@ export function MockApolloClientProvider({
 const getResponseData = (
   response: MockedResponse
 ): Record<string, unknown> | undefined => {
-  const { errorType, profileData, updatedProfileData } = response;
+  const {
+    errorType,
+    profileData,
+    updatedProfileData,
+    profileDataWithServiceConnections,
+  } = response;
   if (errorType) {
     return undefined;
+  }
+  if (profileDataWithServiceConnections) {
+    return (profileDataWithServiceConnections as unknown) as Record<
+      string,
+      unknown
+    >;
   }
   return profileData
     ? { myProfile: profileData }
