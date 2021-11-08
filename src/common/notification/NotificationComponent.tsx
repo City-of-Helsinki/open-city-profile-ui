@@ -1,8 +1,7 @@
 import React, { PropsWithChildren } from 'react';
-import { NotificationType } from 'hds-react';
+import { Notification, NotificationType } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 
-import Notification from '../copyOfHDSNotification/Notification';
 import styles from './NotificationComponent.module.css';
 
 type Props = PropsWithChildren<{

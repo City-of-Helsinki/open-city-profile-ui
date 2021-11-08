@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
-import { Button, IconPlusCircle, TextInput } from 'hds-react';
+import { Button, IconPlusCircle, TextInput, Notification } from 'hds-react';
 import to from 'await-to-js';
 
 import styles from './emailEditor.module.css';
@@ -31,7 +31,6 @@ import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
-import Notification from '../../../common/copyOfHDSNotification/Notification';
 
 function EmailEditor(): React.ReactElement | null {
   const dataType: EditDataType = 'emails';
