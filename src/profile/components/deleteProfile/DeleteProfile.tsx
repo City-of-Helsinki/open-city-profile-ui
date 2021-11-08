@@ -10,12 +10,12 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import { ServiceConnectionsRoot } from '../../../graphql/typings';
-import useToast from '../../../toast/useToast';
 import styles from './deleteProfile.module.css';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
 import DeleteProfileError from '../modals/deleteProfileError/DeleteProfileError';
+import Notification from '../../../common/copyOfHDSNotification/Notification';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -27,12 +27,13 @@ function DeleteProfile(): React.ReactElement {
   const notStartedLoadState = 'not-started';
   const loadingLoadState = 'loading';
   const loadedLoadState = 'loaded';
+  const errorLoadState = 'error';
   const [dataLoadState, setDataLoadState] = useState<
     | typeof notStartedLoadState
     | typeof loadingLoadState
     | typeof loadedLoadState
+    | typeof errorLoadState
   >(notStartedLoadState);
-  const { createToast } = useToast();
   const history = useHistory();
   const { trackEvent } = useMatomo();
   const [resultError, setResultError] = useState<
@@ -71,9 +72,8 @@ function DeleteProfile(): React.ReactElement {
       setDataLoadState(loadedLoadState);
     },
     onError: (error: Error) => {
-      setDataLoadState(notStartedLoadState);
+      setDataLoadState(errorLoadState);
       Sentry.captureException(error);
-      createToast({ type: 'error' });
     },
   });
 
@@ -94,19 +94,17 @@ function DeleteProfile(): React.ReactElement {
     };
   });
 
-  const loadServiceConnections = useCallback(() => {
-    if (serviceConnections) {
-      setDataLoadState(loadedLoadState);
-    } else if (dataLoadState === notStartedLoadState) {
-      getServiceConnections();
-      setDataLoadState(loadingLoadState);
-    }
-  }, [
-    getServiceConnections,
-    setDataLoadState,
-    dataLoadState,
-    serviceConnections,
-  ]);
+  const loadServiceConnections = useCallback(
+    (reloadAfterError = false) => {
+      if (dataLoadState !== loadedLoadState && serviceConnections) {
+        setDataLoadState(loadedLoadState);
+      } else if (dataLoadState === notStartedLoadState || reloadAfterError) {
+        getServiceConnections();
+        setDataLoadState(loadingLoadState);
+      }
+    },
+    [getServiceConnections, setDataLoadState, dataLoadState, serviceConnections]
+  );
 
   const onExpandingPanelChange = useCallback(
     isOpen => {
@@ -136,6 +134,37 @@ function DeleteProfile(): React.ReactElement {
     deleteProfile();
   };
   const initiallyOpen = deleteProfileResult.loading;
+
+  const ServiceConnectionLoadIndicator = () => (
+    <div
+      className={styles['loading-info']}
+      aria-live="polite"
+      aria-busy="true"
+      data-testid="delete-profile-load-indicator"
+    >
+      <LoadingSpinner small />
+      <p>{t('deleteProfile.loadingServices')}</p>
+    </div>
+  );
+  const ServiceConnectionLoadError = () => (
+    <Notification label={t('notification.defaultErrorText')} type={'error'}>
+      <Button
+        type="button"
+        onClick={() => loadServiceConnections(true)}
+        className={styles.button}
+        data-testid="reload-service-connections"
+      >
+        {t('notification.tryAgain')}
+      </Button>
+    </Notification>
+  );
+  const LoadStateIndicator = () =>
+    dataLoadState === errorLoadState ? (
+      <ServiceConnectionLoadError />
+    ) : (
+      <ServiceConnectionLoadIndicator />
+    );
+
   return (
     <React.Fragment>
       <ExpandingPanel
@@ -146,14 +175,7 @@ function DeleteProfile(): React.ReactElement {
       >
         <p>{t('deleteProfile.explanation')}</p>
         {dataLoadState !== loadedLoadState ? (
-          <div
-            className={styles['loading-info']}
-            aria-live="polite"
-            aria-busy="true"
-          >
-            <LoadingSpinner small />
-            <p>{t('deleteProfile.loadingServices')}</p>
-          </div>
+          <LoadStateIndicator />
         ) : (
           <React.Fragment>
             <Checkbox
