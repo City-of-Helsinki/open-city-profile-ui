@@ -24,6 +24,7 @@ import {
   MyProfileQuery_myProfile_primaryAddress,
   MyProfileQuery_myProfile_primaryEmail,
   MyProfileQuery_myProfile_primaryPhone,
+  ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges,
 } from './generatedTypes';
 
 export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
@@ -77,6 +78,8 @@ export type ServiceConnectionsNode = ServiceConnectionsQuery_myProfile_serviceCo
 export type Service = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
 // eslint-disable-next-line max-len
 export type ServiceAllowedFieldsNode = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node;
+// eslint-disable-next-line max-len
+export type ServiceAllowedFieldsEdge = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges;
 export type GdprServiceConnectionsRoot = GdprServiceConnectionsQuery;
 
 export { PhoneType, EmailType, AddressType, Language } from './generatedTypes';
