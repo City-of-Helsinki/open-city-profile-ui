@@ -1,10 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from 'hds-react';
+import { Button, Notification } from 'hds-react';
 import classNames from 'classnames';
 
-import Notification from '../../../common/copyOfHDSNotification/Notification';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import queryParamsToObject from '../../../common/helpers/queryParamsToObject';
 import styles from './ErrorPage.module.css';

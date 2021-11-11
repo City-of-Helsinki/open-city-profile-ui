@@ -3,7 +3,7 @@ import { ApolloError, useLazyQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
-import { Button, Checkbox, LoadingSpinner } from 'hds-react';
+import { Button, Checkbox, LoadingSpinner, Notification } from 'hds-react';
 import { useHistory } from 'react-router';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
@@ -15,7 +15,6 @@ import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
 import DeleteProfileError from '../modals/deleteProfileError/DeleteProfileError';
-import Notification from '../../../common/copyOfHDSNotification/Notification';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
