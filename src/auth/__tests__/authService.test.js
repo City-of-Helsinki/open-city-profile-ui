@@ -2,6 +2,7 @@ import to from 'await-to-js';
 
 import authService, { API_TOKEN } from '../authService';
 import { getHttpPollerMockData } from '../__mocks__/http-poller';
+import i18n from '../../common/test/testi18nInit';
 
 describe('authService', () => {
   const userManager = authService.userManager;
@@ -88,13 +89,29 @@ describe('authService', () => {
   });
 
   describe('login', () => {
-    it('should call signinRedirect from oidc with the provided path', () => {
+    const defaultSigninParams = {
+      data: { path: '/' },
+      ui_locales: 'fi',
+    };
+    it('should call signinRedirect from oidc with the provided path', async () => {
       const path = '/applications';
       const signinRedirect = jest.spyOn(userManager, 'signinRedirect');
 
-      authService.login(path);
+      await to(authService.login(path));
 
-      expect(signinRedirect).toHaveBeenNthCalledWith(1, { data: { path } });
+      expect(signinRedirect).toHaveBeenNthCalledWith(1, {
+        ...defaultSigninParams,
+        data: { path },
+      });
+    });
+    it('should reflect i18n language changes in the login url', async () => {
+      const signinRedirect = jest.spyOn(userManager, 'signinRedirect');
+      i18n.changeLanguage('sv');
+      await to(authService.login());
+      expect(signinRedirect).toHaveBeenNthCalledWith(1, {
+        ...defaultSigninParams,
+        ui_locales: 'sv',
+      });
     });
   });
 
