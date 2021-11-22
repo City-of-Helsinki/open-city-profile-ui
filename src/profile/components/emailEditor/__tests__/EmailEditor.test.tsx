@@ -1,5 +1,6 @@
 import React from 'react';
 import { act } from '@testing-library/react';
+import fetchMock from 'jest-fetch-mock';
 
 import {
   cloneProfileAndProvideManipulationFunctions,
@@ -185,6 +186,34 @@ describe('<EmailEditor /> ', () => {
       });
       // values are reset to previous values
       await verifyEmailValue(getTextOrInputValue, getDataFromInitialProfile(0));
+    });
+  });
+  it('saving unchanged email does not send requests or show verify email notification', async () => {
+    await act(async () => {
+      const {
+        clickElement,
+        setInputValue,
+        getTextOrInputValue,
+        getElement,
+      } = await initTests();
+      // initial profile has been fetched
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      const email = (await getTextOrInputValue(valueSelector)) as string;
+      await clickElement(editButtonSelector);
+      await setEmailToInput(setInputValue, { email });
+      await clickElement(submitButtonSelector);
+      // save indicator is not shown
+      expect(() =>
+        getElement({ testId: `${dataType}-save-indicator` })
+      ).toThrow();
+      // "verify email" notification should not be rendered
+      expect(() => getElement(verifyEmailSelector)).toThrow();
+      // focus is set to edit button
+      await waitForElementFocus(() => getElement(editButtonSelector));
+      // same value is still shown
+      await verifyEmailValue(getTextOrInputValue, { email });
+      // new requests haven't been done
+      expect(fetchMock).toHaveBeenCalledTimes(1);
     });
   });
   it('invalid email is indicated and setting a valid value removes error', async () => {

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { Button, IconPlusCircle, TextInput, Notification } from 'hds-react';
 import to from 'await-to-js';
+import _ from 'lodash';
 
 import styles from './emailEditor.module.css';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
@@ -31,6 +32,7 @@ import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
+import { AnyObject } from '../../../graphql/typings';
 
 function EmailEditor(): React.ReactElement | null {
   const dataType: EditDataType = 'emails';
@@ -62,6 +64,11 @@ function EmailEditor(): React.ReactElement | null {
   const actionHandler: ActionHandler = async (action, newValue) => {
     clearMessage();
     if (action === 'save') {
+      if (_.isMatch(newValue as AnyObject, editData.value)) {
+        setFocusToEditButton();
+        setEditing(false);
+        return Promise.resolve();
+      }
       const [error] = await to(save(editData, newValue as EditDataValue));
       if (error) {
         setErrorMessage('save');
