@@ -5,8 +5,12 @@ import {
 } from '../../../auth/useProfile';
 import config from '../../../config';
 
-export function getAmr(profile: Profile | null): AMRStatic | null {
-  const amr = profile?.amr;
+function getAmrFromProfileData(profile: Profile | null): string | undefined {
+  return profile && profile.amr ? profile.amr[0] : '';
+}
+
+export function getAmrStatic(profile: Profile | null): AMRStatic | null {
+  const amr = getAmrFromProfileData(profile);
 
   // If amr designates helsinki account, switch the value into a static
   // value. This setup allows the amr for Helsinki account to be
@@ -51,4 +55,8 @@ export function getAmrUrl(authenticationMethodReference: AMRStatic): string {
         `Unexpected authentication method reference "${authenticationMethodReference}"`
       );
   }
+}
+
+export function hasTunnistusSuomiFiAmr(profile: Profile | null): boolean {
+  return getAmrFromProfileData(profile) === tunnistusSuomifiAMR;
 }

@@ -18,7 +18,7 @@ jest.mock('../../../../auth/useProfile', () => () => mockUserCreator());
 
 jest.mock('../profileInformationAccountManagementLinkUtils', () => ({
   ...jest.requireActual('../profileInformationAccountManagementLinkUtils'),
-  getAmr: () => mockCurrentAmr,
+  getAmrStatic: () => mockCurrentAmr,
 }));
 
 describe('<ProfileInformationAuthenticationSourceBackLink /> ', () => {

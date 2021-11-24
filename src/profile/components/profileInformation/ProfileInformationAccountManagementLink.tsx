@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import useProfile from '../../../auth/useProfile';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import {
-  getAmr,
+  getAmrStatic,
   getAmrUrl,
 } from './profileInformationAccountManagementLinkUtils';
 import styles from './profileInformationAccountManagementLink.module.css';
@@ -15,7 +15,7 @@ function ProfileInformationAccountManagementLink(): React.ReactElement | null {
   const { t } = useTranslation();
   const { profile } = useProfile();
 
-  const amr = getAmr(profile);
+  const amr = getAmrStatic(profile);
 
   if (!amr) {
     return null;
