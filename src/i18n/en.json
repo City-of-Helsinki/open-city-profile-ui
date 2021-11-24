@@ -2,7 +2,7 @@
   "appName": "Profile",
   "authentication": {
     "deviceTimeError": {
-      "message": "Believe it or not, but we can’t allow you to log in because the clock on your device is off by more than five minutes. Please set the time and try again."
+      "message": "You cannot log in because the clock on your device is off by more than 5 minutes. Adjust the clock and try again."
     },
     "permissionRequestDenied": {
       "message": "You need to approve our request to access your Tunnistamo profile in order to use this service. Please try logging in again."
@@ -35,7 +35,7 @@
   "deleteProfile": {
     "accept": "I understand what deleting my data means and wish to proceed.",
     "delete": "Delete my information",
-    "explanation": "If you want to, you can delete all information we have stored about you. The information cannot be restored after it has been deleted. If you have connected your profile to one of the services of the City of Helsinki, you can no longer use the service until you create a new profile. After deleting you will be automatically logged out of this service. Note that the account you have used to log in (for example Google or Facebook) will not be deleted.",
+    "explanation": "If you want, you can delete all the data we hold on you. Once deleted, the data cannot be restored. If you have linked your profile to a City of Helsinki service, you will no longer be able to use that service until you create a new profile. After the deletion, you will be automatically logged out of this service. If you have used a third-party service provider account (such as Google or Facebook) to log in, that account will not be deleted.",
     "title": "Do you want to delete your information?",
     "loadingServices": "Searching for services connected to the profile"
   },
@@ -46,9 +46,9 @@
     "title": "Are you sure you want to delete your information?"
   },
   "deleteProfileErrorModal": {
-    "notAllowed": "EN: Et voi poistaa profiiliasi, koska jokin sitä käyttävistä palveluista tarvitsee tietojasi esimerkiksi laskutukseen.",
-    "title": "EN: Poisto epäonnistui!",
-    "genericError": "EN: Profiilin poistaminen ei onnistunut. Yritä myöhemmin uudelleen."
+    "notAllowed": "You cannot delete your profile because one of the services using it needs your information, for example, for invoicing.",
+    "title": "The deletion failed!",
+    "genericError": "The profile could not be deleted. Please try again later."
   },
   "downloadData": {
     "button": "Download my information",
@@ -117,7 +117,7 @@
   },
   "profile": {
     "loading": "Loading profile...",
-    "loadErrorText": "EN: Profiilin haku epäonnistui! Yritä hakea uudelleen tai kirjaudu ulos.",
+    "loadErrorText": "Failed to retrieve profile! Try to retrieve it again or log out.",
     "reload": "Retry"
   },
   "profileDeleted": {
@@ -170,7 +170,7 @@
     "ariaSelectedOption": "{{value}} is selected",
     "ariaNoSelectedItemForLabel": "{{label}} is not selected",
     "deleteProfile": "Delete your profile",
-    "description": "The Helsinki profile makes it possible to use your data in all of Helsinki's web services, where identification is required. The same data, easy to use in different services. Convenient, isn't it?",
+    "description": "The Helsinki profile enables you to use your data in all City of Helsinki online services that require authentication. One set of data, easily accessible on various services.",
     "downloadData": "Download your data",
     "email": "Email",
     "name": "Name",
@@ -188,8 +188,8 @@
     "primaryAddressAriaDescription": "This is your primary address",
     "primaryEmailAriaDescription": "This is your primary email",
     "primaryPhoneAriaDescription": "This is your primary phone number",
-    "verifiedDataInformation": "Marked data has been verified from the official Population Information System and they can thus not be edited in the Helsinki Profile. You can check your data in the Population Information System through the suomi.fi web service: <suomiFiLink>go to the suomi.fi service </suomiFiLink>",
-    "verifiedDataInformationForScreenReaders": "The data below has been verified from the official Population Information System and they can thus not be edited in the Helsinki Profile. You can check your data in the Population Information System through the suomi.fi web service: <suomiFiLink>go to the suomi.fi service </suomiFiLink>",
+    "verifiedDataInformation": "The marked data have been confirmed from the national Population Information System and therefore cannot be edited in your Helsinki profile. If you want, you can view your personal data stored in the Population Information System in the suomi.fi web service: <suomiFiLink>go to the suomi.fi service </suomiFiLink>",
+    "verifiedDataInformationForScreenReaders": "The data below have been confirmed from the national Population Information System and therefore cannot be edited in your Helsinki profile. If you want, you can view your personal data stored in the Population Information System in the suomi.fi web service: <suomiFiLink>go to the suomi.fi service </suomiFiLink>",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Verified data",
     "verifiedBasicData": "Verified basic data",
@@ -210,8 +210,8 @@
     "noPhones": "You haven't given any phone numbers",
     "noEmails": "You haven't given any emails",
     "noAddresses": "You haven't given any addresses",
-    "noEmail": "EN: Et ole antanut sähköpostiosoitetta",
-    "verifyEmailText": "EN: Olemme lähettäneet lisäämääsi sähköpostiosoitteeseen vahvistusviestin. Sähköpostiosoitteesi toimii myös sisäänkirjautumistunnuksena, joten et voi kirjautua sisään jos et ole vahvistanut tunnustasi. Jos et saanut viestiä, tarkasta myös sähköpostin roskaposti-kansio.",
+    "noEmail": "You have not entered an email address.",
+    "verifyEmailText": "We have sent a verification email to the email address you have entered. Your email address is also your login ID, so you will not be able to log in unless you have verified your ID. If you did not receive the verification email, please check your junk mail folder.",
     "verifyEmailTitle": "Verify email"
   },
   "sanityCheck": "open-city-profile.en",
@@ -219,7 +219,7 @@
     "clock": "at",
     "created": "Created:",
     "empty": "You currently don't have any services connected to your profile.",
-    "explanation": "You have given the following services permission to use your Helsinki Profile data.",
+    "explanation": "You have granted the following services the right to use the data stored on your Helsinki profile.",
     "servicePersonalData": "Information which the service will know about you:",
     "title": "Services with permission to use your data"
   },
@@ -232,7 +232,7 @@
     "errorTitleForScreenReaders": "The form has the following errors:"
   },
   "identityProvider": {
-    "helsinkiAccount": "Helsinki account",
+    "helsinkiAccount": "Helsinki Profile user ID",
     "github": "GitHub",
     "google": "Google",
     "facebook": "Facebook",
@@ -241,9 +241,9 @@
   },
   "opensInNewWindow": "{{title}}. Opens in a new window.",
   "openInNewTabAriaLabel": "Opens in a new tab.",
-  "openInExternalDomainAriaLabel": "EN: Siirtyy toiseen sivustoon.",
+  "openInExternalDomainAriaLabel": "Goes to another site.",
   "accessibilityStatement": "Accessibility Statement",
   "cityOfHelsinki": "City of Helsinki",
   "pageNotFoundTitle": "Page not found",
-  "pageNotFoundText": "EN: Tarkista URL-osoitteen oikeinkirjoitus (tarkista isot ja pienet kirjaimet sekä välimerkit). Tai palaa edelliselle sivulle napsauttamalla selaimen Edellinen-painiketta. Voit mennä myös etusivulle alla olevasta linkistä."
+  "pageNotFoundText": "Check the spelling of the URL (upper and lower case letters and punctuation marks). Or click the Back button on your browser to return to the previous page. You can also go to the front page via the link below."
 }

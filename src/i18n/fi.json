@@ -2,7 +2,7 @@
   "appName": "Profiili",
   "authentication": {
     "deviceTimeError": {
-      "message": "Usko tai älä usko, mutta et voi kirjautua sisään koska laitteesi kello on yli 5 minuuttia väärässä. Säädä kelloa ja kokeile uudestaan."
+      "message": "Et voi kirjautua sisään, koska laitteesi kello on yli 5 minuuttia väärässä. Säädä kelloa ja kokeile uudestaan."
     },
     "permissionRequestDenied": {
       "message": "Sinun täytyy hyväksyä pyytämämme oikeudet Tunnistamossa käyttääksesi tätä palvelua. Ole hyvä ja yritä kirjautua uudelleen."
@@ -35,7 +35,7 @@
   "deleteProfile": {
     "accept": "Ymmärrän mitä tietojeni poistaminen tarkoittaa ja haluan jatkaa.",
     "delete": "Poista omat tiedot",
-    "explanation": "Jos haluat, voit poistaa kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Jos olet yhdistänyt profiilisi johonkin Helsingin kaupungin palveluun, et enää pysty käyttämään kyseistä palvelua ennen kuin luot uuden profiilin. Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta. Huomaa, että kirjautumiseen käyttämääsi tiliä (esim. Google, Facebook) ei poisteta.",
+    "explanation": "Jos haluat, voit poistaa kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Jos olet yhdistänyt profiilisi johonkin Helsingin kaupungin palveluun, et enää pysty käyttämään kyseistä palvelua ennen kuin luot uuden profiilin. Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta. Jos olet käyttänyt kirjautumisessa ulkopuolisen palveluntarjoajan tiliä (esim. Google tai Facebook), kyseistä tiliä ei poisteta. ",
     "title": "Haluatko poistaa omat tietosi?",
     "loadingServices": "Haetaan profiiliin yhdistettyjä palveluita"
   },
@@ -170,7 +170,7 @@
     "ariaSelectedOption": "{{value}} on valittu",
     "ariaNoSelectedItemForLabel": "{{label}} ei ole valittuna",
     "deleteProfile": "Poista omat tietosi",
-    "description": "Helsinki Profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa. Kätevää eikö?",
+    "description": "Helsinki-profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa, joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa.",
     "downloadData": "Lataa omat tietosi",
     "email": "Sähköpostiosoite",
     "name": "Nimi",
@@ -188,8 +188,8 @@
     "primaryAddressAriaDescription": "Tämä on ensisijainen osoitteesi",
     "primaryEmailAriaDescription": "Tämä on ensisijainen sähköpostiosoitteesi",
     "primaryPhoneAriaDescription": "Tämä on ensisijainen puhelinnumerosi",
-    "verifiedDataInformation": "Merkityt tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink>",
-    "verifiedDataInformationForScreenReaders": "Alla olevat tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki Profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink>",
+    "verifiedDataInformation": "Merkityt tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki-profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink>",
+    "verifiedDataInformationForScreenReaders": "Alla olevat tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki-profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink>",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Vahvistettu tieto",
     "verifiedBasicData": "Vahvistetut perustiedot",
@@ -211,7 +211,7 @@
     "noEmails": "Et ole antanut sähköpostiosoitteita",
     "noAddresses": "Et ole antanut osoitteita",
     "noEmail": "Et ole antanut sähköpostiosoitetta",
-    "verifyEmailText": "Olemme lähettäneet lisäämääsi sähköpostiosoitteeseen vahvistusviestin. Sähköpostiosoitteesi toimii myös sisäänkirjautumistunnuksena, joten et voi kirjautua sisään jos et ole vahvistanut tunnustasi. Jos et saanut viestiä, tarkasta myös sähköpostin roskaposti-kansio.",
+    "verifyEmailText": "Olemme lähettäneet lisäämääsi sähköpostiosoitteeseen vahvistusviestin. Sähköpostiosoitteesi toimii myös sisäänkirjautumistunnuksena, joten et voi kirjautua sisään jos et ole vahvistanut tunnustasi. Jos et saanut viestiä, tarkasta myös sähköpostin roskapostikansio.",
     "verifyEmailTitle": "Vahvista sähköpostiosoite"
   },
   "sanityCheck": "open-city-profile.fi",
@@ -219,7 +219,7 @@
     "clock": "klo",
     "created": "Luotu:",
     "empty": "Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi.",
-    "explanation": "Olet antanut seuraaville palveluille oikeuden käyttää Helsinki Profiili -tietojasi.",
+    "explanation": "Olet antanut seuraaville palveluille oikeuden käyttää Helsinki-profiiliin tallennettuja tietojasi.",
     "servicePersonalData": "Palvelu saa tietää sinusta:",
     "title": "Palvelut, joilla on lupa käyttää tietojasi"
   },
@@ -232,7 +232,7 @@
     "errorTitleForScreenReaders": "Lomakkeella on seuraavat virheet:"
   },
   "identityProvider": {
-    "helsinkiAccount": "Helsinki-tunnus",
+    "helsinkiAccount": "Helsinki-profiilin käyttäjätunnus",
     "github": "GitHub",
     "google": "Google",
     "facebook": "Facebook",
