@@ -4,12 +4,16 @@ import { Profile } from '../../auth/useProfile';
 
 export type MockedUserOverrides = {
   userOverrides?: Partial<User>;
-  profileOverrides?: Partial<Profile>;
+  profileOverrides?: Omit<Partial<Profile>, 'amr'> & {
+    amr?: string | string[];
+  };
 };
 
-export function mockProfileCreator(overrides?: Partial<Profile>): Profile {
+export function mockProfileCreator(
+  overrides?: MockedUserOverrides['profileOverrides']
+): Profile {
   return {
-    amr: 'helusername-test',
+    amr: ['helusername-test'],
     auth_time: 1593431180,
     email: 'email@email.com',
     email_verified: false,
@@ -19,7 +23,7 @@ export function mockProfileCreator(overrides?: Partial<Profile>): Profile {
     nickname: 'Betty',
     sub: 'uuidvalue',
     ...overrides,
-  };
+  } as Profile;
 }
 
 export function mockUserCreator({

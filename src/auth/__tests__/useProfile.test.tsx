@@ -84,17 +84,24 @@ describe('useProfile', () => {
     jest.restoreAllMocks();
   });
 
-  it('should return the profile which the authService.getUser() provides', async () => {
+  it('should return the profile which the authService.getUser() provides where amr is always an array', async () => {
+    const amr = 'string-arm';
     const {
       getInfo,
       getProfile,
       getMockedUserData,
       hasCalledGetUser,
-    } = renderTestComponent();
+    } = renderTestComponent({
+      profileOverrides: { amr },
+    });
     const userData = getMockedUserData();
     await waitFor(() => expect(getInfo()).toEqual(loadedStatus));
     expect(hasCalledGetUser()).toBeTruthy();
-    expect(getProfile()).toEqual(userData.profile);
+    const profileWithConvertedAmr = {
+      ...userData.profile,
+      amr: [amr],
+    };
+    expect(getProfile()).toEqual(profileWithConvertedAmr);
   });
 
   it('should provide no profile if it has expired', async () => {
@@ -115,6 +122,19 @@ describe('useProfile', () => {
     });
     await waitFor(() => expect(getInfo()).toEqual(loadedStatus));
     expect(getProfile()).toEqual(noProfile);
+  });
+
+  it('should return an empty array if arm is undefined', async () => {
+    const { getInfo, getProfile, getMockedUserData } = renderTestComponent({
+      profileOverrides: { amr: undefined },
+    });
+    const userData = getMockedUserData();
+    await waitFor(() => expect(getInfo()).toEqual(loadedStatus));
+    const profileWithConvertedAmr = {
+      ...userData.profile,
+      amr: [],
+    };
+    expect(getProfile()).toEqual(profileWithConvertedAmr);
   });
 
   it('should return error when authService.getUser() fails', async () => {

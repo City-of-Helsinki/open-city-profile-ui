@@ -1,17 +1,9 @@
+import { User } from 'oidc-client';
 import React from 'react';
 
-import config from '../config';
 import authService from './authService';
 
 export const tunnistusSuomifiAMR = 'heltunnistussuomifi';
-
-export type AMR =
-  | 'github'
-  | 'google'
-  | 'facebook'
-  | 'yletunnus'
-  | typeof tunnistusSuomifiAMR
-  | typeof config.helsinkiAccountAMR;
 
 export type AMRStatic =
   | 'github'
@@ -22,7 +14,7 @@ export type AMRStatic =
   | 'tunnistusSuomifi';
 
 export interface Profile {
-  amr: AMR;
+  amr: NonNullable<User['profile']['amr']>;
   auth_time: number;
   email: string;
   email_verified: boolean;
@@ -37,6 +29,20 @@ interface ProfileState {
   profile: Profile | null;
   loading: boolean;
   error: Error | null;
+}
+
+function getUserProfile(user: User | null): Profile | null {
+  if (user === null || user.expired !== false) {
+    return null;
+  }
+  const profile = { ...user.profile } as Profile;
+  const amr = user.profile.amr;
+  if (!amr) {
+    profile.amr = [];
+  } else if (typeof amr === 'string') {
+    profile.amr = [amr];
+  }
+  return profile;
 }
 
 function useProfile(): ProfileState {
@@ -56,11 +62,7 @@ function useProfile(): ProfileState {
           if (ignore) {
             return;
           }
-          setProfile(
-            user && user.expired === false
-              ? ((user.profile as unknown) as Profile)
-              : null
-          );
+          setProfile(getUserProfile(user));
         })
         .catch(() => {
           if (ignore) {
