@@ -28,7 +28,8 @@ export type ConsentController = {
   save: () => ConsentObject;
 };
 
-const COOKIE_NAME = 'city-of-helsinki-cookie-consents';
+export const COOKIE_NAME = 'city-of-helsinki-cookie-consents';
+export const COOKIE_EXPIRATION_TIME = 60 * 60 * 24 * 365;
 
 export const commonConsents = {
   matomo: 'matomo',
@@ -36,6 +37,7 @@ export const commonConsents = {
   language: 'language',
   marketing: 'marketing',
   preferences: 'preferences',
+  consents: COOKIE_NAME,
 };
 
 function convertStringArrayToKeyConsentObject(array: string[]): ConsentObject {
@@ -76,12 +78,11 @@ function createCookieController(): {
   set: (data: string) => void;
 } {
   const cookieController = new CookieController();
-  const oneYearInSeconds = 60 * 60 * 24 * 365;
   const defaultCookieSetOptions: CookieSetOptions = {
     path: '/',
     secure: false,
     sameSite: 'strict',
-    maxAge: oneYearInSeconds,
+    maxAge: COOKIE_EXPIRATION_TIME,
   };
 
   const getCookieDomainFromUrl = (): string =>
