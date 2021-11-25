@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import enzymeToJson from 'enzyme-to-json';
 
 import ProfileInformationAuthenticationSourceBackLink from '../ProfileInformationAccountManagementLink';
+import { mockUserCreator } from '../../../../common/test/userMocking';
 
 let mockCurrentAmr;
 const helsinkiAccountAMR = 'helusername-test';
@@ -13,19 +14,7 @@ jest.mock('../../../../config', () => ({
   helsinkiAccountAMR,
 }));
 
-jest.mock('../../../../auth/useProfile', () => () => ({
-  profile: {
-    amr: 'helusername-test',
-    auth_time: 1593431180,
-    email: 'email@email.com',
-    email_verified: false,
-    family_name: 'Betty',
-    given_name: 'Smith',
-    name: 'Betty Smith',
-    nickname: 'Betty',
-    sub: 'uuidvalue',
-  },
-}));
+jest.mock('../../../../auth/useProfile', () => () => mockUserCreator());
 
 jest.mock('../profileInformationAccountManagementLinkUtils', () => ({
   ...jest.requireActual('../profileInformationAccountManagementLinkUtils'),
