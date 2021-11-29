@@ -22,8 +22,11 @@ import authService from './auth/authService';
 import config from './config';
 import PageNotFound from './common/pageNotFound/PageNotFound';
 import CookieConsent from './cookieConsent/components/CookieConsent';
-import { commonConsents } from './cookieConsent/cookieConsentController';
 import { Provider as CookieContextProvider } from './cookieConsent/components/CookieConsentContext';
+import {
+  getRequiredAndOptionalConsentKeys,
+  hasConsentForMatomo,
+} from './cookieConsent/consents';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -57,20 +60,12 @@ function App(): React.ReactElement {
       <ToastProvider>
         <MatomoProvider value={instance}>
           <CookieContextProvider
-            requiredConsents={[
-              commonConsents.tunnistamo,
-              commonConsents.language,
-            ]}
-            optionalConsents={[
-              commonConsents.matomo,
-              commonConsents.preferences,
-              commonConsents.marketing,
-            ]}
+            {...getRequiredAndOptionalConsentKeys()}
             onAllConsentsGiven={consents => {
               if (isTrackingDisabled) {
                 return;
               }
-              if (consents.matomo) {
+              if (hasConsentForMatomo(consents)) {
                 window._paq.push(['setConsentGiven']);
                 window._paq.push(['setCookieConsentGiven']);
               }
@@ -79,7 +74,7 @@ function App(): React.ReactElement {
               if (isTrackingDisabled) {
                 return;
               }
-              if (!consents.matomo) {
+              if (!hasConsentForMatomo(consents)) {
                 window._paq.push(['requireConsent']);
                 window._paq.push(['requireCookieConsent']);
               } else {
