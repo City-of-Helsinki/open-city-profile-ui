@@ -27,6 +27,18 @@ import { EditDataType, EmailValue } from '../../../helpers/editData';
 import i18n from '../../../../common/test/testi18nInit';
 import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
 import getEmailsFromNode from '../../../helpers/getEmailsFromNode';
+import { mockProfileCreator } from '../../../../common/test/userMocking';
+import { AMRStatic } from '../../../../auth/useProfile';
+
+let mockedAmr: AMRStatic;
+const suomifiAmr: AMRStatic = 'tunnistusSuomifi';
+
+jest.mock('../../../../auth/useProfile', () => ({
+  __esModule: true,
+  ...jest.requireActual('../../../../auth/useProfile'),
+  tunnistusSuomifiAMR: suomifiAmr,
+  default: () => ({ profile: mockProfileCreator({ amr: [mockedAmr] }) }),
+}));
 
 describe('<EmailEditor /> ', () => {
   const responses: MockedResponse[] = [];
@@ -60,6 +72,7 @@ describe('<EmailEditor /> ', () => {
 
   beforeEach(() => {
     responses.length = 0;
+    mockedAmr = suomifiAmr;
   });
   afterEach(() => {
     cleanComponentMocks();
@@ -114,15 +127,15 @@ describe('<EmailEditor /> ', () => {
       );
     });
   });
-  it('sends new data and returns to view mode when saved and shows notifications.', async () => {
+  it('sends new data and returns to view mode when saved and shows only save notifications', async () => {
     await act(async () => {
+      mockedAmr = 'google';
       const {
         clickElement,
         setInputValue,
         submit,
         getTextOrInputValue,
         getElement,
-        waitForElement,
       } = await initTests();
       await clickElement(editButtonSelector);
       await setEmailToInput(setInputValue, validEmailValue);
@@ -145,11 +158,31 @@ describe('<EmailEditor /> ', () => {
       await submit({
         waitForOnSaveNotification,
       });
-      // "verify email" notification should be rendered
-      await waitForElement(verifyEmailSelector);
+      // "verify email" notification should not be rendered with current amr
+      expect(() => getElement(verifyEmailSelector)).toThrow();
       await verifyEmailValue(getTextOrInputValue, validEmailValue);
       // focus is set to edit button
       await waitForElementFocus(() => getElement(editButtonSelector));
+    });
+  });
+  it("will render email verification information when user's amr is tunnistusSuomifiAMR", async () => {
+    await act(async () => {
+      const { clickElement, setInputValue, waitForElement } = await initTests();
+      await clickElement(editButtonSelector);
+      await setEmailToInput(setInputValue, validEmailValue);
+      // add the graphQL response
+      const updatedProfileData = cloneProfileAndProvideManipulationFunctions(
+        initialProfile
+      )
+        .add(dataType, validEmailValue)
+        .getProfile();
+      // add the graphQL response
+      responses.push({
+        updatedProfileData,
+      });
+      await clickElement(submitButtonSelector);
+      // "verify email" notification should be rendered
+      await waitForElement(verifyEmailSelector);
     });
   });
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {

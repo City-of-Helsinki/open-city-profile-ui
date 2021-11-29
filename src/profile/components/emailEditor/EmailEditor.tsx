@@ -33,6 +33,8 @@ import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
 import { AnyObject } from '../../../graphql/typings';
+import useProfile from '../../../auth/useProfile';
+import { hasTunnistusSuomiFiAmr } from '../profileInformation/profileInformationAccountManagementLinkUtils';
 
 function EmailEditor(): React.ReactElement | null {
   const dataType: EditDataType = 'emails';
@@ -56,6 +58,8 @@ function EmailEditor(): React.ReactElement | null {
   const { email } = value as EmailValue;
   const formFields = getFormFields(dataType);
   const ariaLabels = createActionAriaLabels(dataType, email, t);
+  const { profile } = useProfile();
+  const willSendEmailVerificationCode = hasTunnistusSuomiFiAmr(profile);
 
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     EmailValue
@@ -76,7 +80,9 @@ function EmailEditor(): React.ReactElement | null {
         setFocusToEditButton();
         setSuccessMessage('save');
         setEditing(false);
-        setShowVerifyEmailInfo(true);
+        if (willSendEmailVerificationCode) {
+          setShowVerifyEmailInfo(true);
+        }
       }
     }
     if (action === 'cancel') {
