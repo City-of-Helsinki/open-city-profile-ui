@@ -7107,20 +7107,20 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hds-core@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-1.6.0.tgz#7ef6984f0f92f3e837d2234d1d6c9548112b7bb8"
-  integrity sha512-1tTYKvXPTgbSal7jF52ZWYRMcibufCxrgh1x3woldxAFOIyh6HJpPadr02yuTAM9Tq+jbqIISS6NuGlIdPVMLQ==
+hds-core@1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-1.7.1.tgz#f4b82e101b206a43680429ccc6e37d4d1c1265f1"
+  integrity sha512-eRADYXzxd+02IxA+i0VLEQQo8szTYr61cyDojrKk8cxJax7bLua94CQwsAb0NlqbqYSrZhzd63is3YNXqnNYdg==
 
-hds-design-tokens@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-1.6.0.tgz#97645bc7ddf03eb98eb8a86e7601b49e59c39fc4"
-  integrity sha512-pGlAdGiLnz7rqj8yHM5/o/BHgwe6fWg2rU6YVxN7nPcV0brcIC9oh+JoGsZE4blDxEB9WVnBjeRej9nTU/LoVg==
+hds-design-tokens@1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-1.7.1.tgz#272340d2e5b9b79471d64475760d0b7579f9c1cd"
+  integrity sha512-xoYV9NedhGT5gZb0WhA+bljlZMHEUYnzWaQdv5JOHwnAf+WiadjHuR9xUSYPci5PanRj9JYx1tKKWngM3/oMXQ==
 
-hds-react@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-1.6.0.tgz#2b55df1518acacb5494f23ed7dbb56e8149db1e0"
-  integrity sha512-tAX73InTBID1VISlm+dIF+Z6pq4N/KZPSxKJ5nJ948loVAN8L8q5xaDmvpFzigw7jtNebk2KAcwjKiTcYTuPAw==
+hds-react@1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-1.7.1.tgz#08286eba53bee4aff9016ed0201ba84cb3fac00d"
+  integrity sha512-ZCD0nSIcaNgflGkW+FfYBRHR/fosew2J9tuAwZTjIDGshdQb4Jbyn3qg5ba3qJanFDQvasByzf2JbnpsOwq0ZA==
   dependencies:
     "@babel/runtime" "7.11.2"
     "@juggle/resize-observer" "3.2.0"
@@ -7128,7 +7128,7 @@ hds-react@1.6.0:
     "@react-aria/visually-hidden" "3.2.0"
     date-fns "2.16.1"
     downshift "6.0.6"
-    hds-core "1.6.0"
+    hds-core "1.7.1"
     lodash.isequal "4.5.0"
     lodash.isfunction "3.0.9"
     lodash.uniqueid "4.0.1"
