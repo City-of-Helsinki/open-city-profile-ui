@@ -8,8 +8,8 @@ import {
 } from './cookieConsentController';
 
 type ConsentInfo = {
-  nameTranslationKey?: string;
-  descriptionTranslationKey?: string;
+  titleTranslationKey?: string;
+  textTranslationKey?: string;
   expirationTimeInSeconds: number;
   provider: string;
 };
@@ -29,25 +29,26 @@ type Consents = {
   requiredConsents?: ConsentList;
 };
 
-export const expirationTimeNever = -1;
-export const expirationTimeSession = 0;
-export const expirationTimeHour = 60 * 60;
-export const expirationTimeDay = expirationTimeHour * 24;
-export const expirationTimeYear = expirationTimeDay * 365;
+const expirationTimeSession = -1;
+const expirationTimeHour = 60 * 60;
+const expirationTimeDay = expirationTimeHour * 24;
+const expirationTimeYear = expirationTimeDay * 365;
 
 const tunnistusUrl = 'tunnistus.hel.fi';
 const profileUrl = 'profiili.hel.fi';
 const ssoUrl = 'api.hel.fi/sso';
 const allHelSubdomains = '*.hel.fi';
 
+const generalAuthenticationTranslationKey = 'generalAuthenticationText';
+const generalLocaleTranslationKey = 'generalLocaleText';
+const generalSecuriryTranslationKey = 'generalSecurityText';
+
 export function getExpirationTimeTranslation(
   expirationTimeInSeconds: number,
   t: TFunction
 ): string {
-  if (expirationTimeInSeconds === expirationTimeNever) {
-    return t('cookieConsent.expirationTimeNever');
-  } else if (expirationTimeInSeconds === expirationTimeSession) {
-    return t('cookieConsent.expirationTimeSession');
+  if (expirationTimeInSeconds === expirationTimeSession) {
+    return t('cookies.expirationTimeSession');
   } else if (expirationTimeInSeconds < expirationTimeDay) {
     const count = Math.round(expirationTimeInSeconds / expirationTimeHour);
     return t('hours', { count });
@@ -66,67 +67,80 @@ export const requiredConsentsInfo: Record<string, ConsentInfo> = {
     provider: allHelSubdomains,
   },
   technicalRouting: {
-    nameTranslationKey: 'cookieConsent.technicalRouting',
+    titleTranslationKey: 'cookies.technicalRoutingTitle',
     expirationTimeInSeconds: expirationTimeSession,
     provider: allHelSubdomains,
   },
   AUTH_SESSION_ID: {
     expirationTimeInSeconds: expirationTimeSession,
     provider: tunnistusUrl,
+    textTranslationKey: generalAuthenticationTranslationKey,
   },
   AUTH_SESSION_ID_LEGACY: {
     expirationTimeInSeconds: expirationTimeSession,
     provider: tunnistusUrl,
+    textTranslationKey: generalAuthenticationTranslationKey,
   },
   KEYCLOAK_SESSION: {
     expirationTimeInSeconds: expirationTimeHour * 10,
     provider: tunnistusUrl,
+    textTranslationKey: generalAuthenticationTranslationKey,
   },
   KEYCLOAK_SESSION_LEGACY: {
     expirationTimeInSeconds: expirationTimeHour * 10,
     provider: tunnistusUrl,
+    textTranslationKey: generalAuthenticationTranslationKey,
   },
   KEYCLOAK_IDENTITY: {
     expirationTimeInSeconds: expirationTimeSession,
     provider: tunnistusUrl,
+    textTranslationKey: generalAuthenticationTranslationKey,
   },
   KEYCLOAK_IDENTITY_LEGACY: {
     expirationTimeInSeconds: expirationTimeSession,
     provider: tunnistusUrl,
+    textTranslationKey: generalAuthenticationTranslationKey,
   },
   KC_RESTART: {
     expirationTimeInSeconds: expirationTimeSession,
     provider: tunnistusUrl,
+    textTranslationKey: generalAuthenticationTranslationKey,
   },
   KEYCLOAK_REMEMBER_ME: {
-    expirationTimeInSeconds: expirationTimeNever,
-    provider: tunnistusUrl,
-  },
-  KEYCLOAK_LOCALE: {
     expirationTimeInSeconds: expirationTimeSession,
     provider: tunnistusUrl,
+    textTranslationKey: generalAuthenticationTranslationKey,
   },
   'sso-sessionid': {
     expirationTimeInSeconds: expirationTimeSession,
     provider: ssoUrl,
+    textTranslationKey: generalAuthenticationTranslationKey,
   },
-  'sso-csrftoken': {
-    expirationTimeInSeconds: expirationTimeYear,
-    provider: ssoUrl,
+  KEYCLOAK_LOCALE: {
+    expirationTimeInSeconds: expirationTimeSession,
+    provider: tunnistusUrl,
+    textTranslationKey: generalLocaleTranslationKey,
   },
   i18next: {
     expirationTimeInSeconds: expirationTimeSession,
     provider: profileUrl,
+    textTranslationKey: generalLocaleTranslationKey,
+  },
+  'sso-csrftoken': {
+    expirationTimeInSeconds: expirationTimeYear,
+    provider: ssoUrl,
+    textTranslationKey: generalSecuriryTranslationKey,
   },
   'profiili-test-csrftoken': {
     expirationTimeInSeconds: expirationTimeYear,
     provider: profileUrl,
+    textTranslationKey: generalSecuriryTranslationKey,
   },
 };
 
 export const optionalConsentsInfo: Record<string, ConsentInfo> = {
   [commonConsents.matomo]: {
-    nameTranslationKey: 'cookieConsent.matomo',
+    titleTranslationKey: 'cookies.matomo',
     expirationTimeInSeconds: expirationTimeYear,
     provider: profileUrl,
   },
@@ -140,17 +154,20 @@ export function getConsentInfo(
   const list =
     target === 'required' ? requiredConsentsInfo : optionalConsentsInfo;
 
-  return Object.entries(list).map(([key, info]) => ({
-    id: key,
-    title: info.nameTranslationKey ? t(info.nameTranslationKey) : key,
-    text: t(`cookies.${key}Text`),
-    ariaInputLabel: t(`cookies.${key}AriaInputText`, {
-      consentText: t(`cookies.${key}Text`),
-    }),
-    duration: getExpirationTimeTranslation(info.expirationTimeInSeconds, t),
-    provider: info.provider,
-    value: currentConsents ? currentConsents[key] === true : false,
-  }));
+  return Object.entries(list).map(([key, info]) => {
+    const text = t(`cookies.${info.textTranslationKey || `${key}Text`}`);
+    return {
+      id: key,
+      title: info.titleTranslationKey ? t(info.titleTranslationKey) : key,
+      text,
+      ariaInputLabel: t(`cookies.${key}AriaInputText`, {
+        consentText: text,
+      }),
+      duration: getExpirationTimeTranslation(info.expirationTimeInSeconds, t),
+      provider: info.provider,
+      value: currentConsents ? currentConsents[key] === true : false,
+    };
+  });
 }
 
 export function getRequiredAndOptionalConsentKeys(): Consents {
