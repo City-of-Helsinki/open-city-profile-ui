@@ -6,6 +6,7 @@ import { ConsentController, ConsentObject } from '../cookieConsentController';
 import CookieToggler from './CookieToggler';
 import styles from './CookieConsent.module.css';
 import RequiredCookieInformation from './RequiredCookieInformation';
+import { getConsentInfo } from '../consents';
 
 export type CookieDetailProps = {
   requiredConsents: ConsentObject;
@@ -43,15 +44,14 @@ function CookieDetails({
         {t('cookies.requiredConsentsTitle')}
       </span>
       <p>{t('cookies.requiredConsentsText')}</p>
-      <RequiredCookieInformation consents={requiredConsents} />
+      <RequiredCookieInformation consentList={getConsentInfo('required', t)} />
       {optionalConsents && (
         <React.Fragment>
           <span className={styles['emulated-h2']} role="heading" aria-level={2}>
             {t('cookies.optionalConsentsTitle')}
           </span>
           <CookieToggler
-            isRequired={false}
-            consents={optionalConsents}
+            consentList={getConsentInfo('optional', t, optionalConsents)}
             onChange={onChange}
           />
           <Button

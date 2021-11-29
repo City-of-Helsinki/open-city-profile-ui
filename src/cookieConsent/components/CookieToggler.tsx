@@ -1,46 +1,39 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Checkbox } from 'hds-react';
 
 import styles from './CookieConsent.module.css';
-import { ConsentController, ConsentObject } from '../cookieConsentController';
+import { ConsentController } from '../cookieConsentController';
+import { ConsentData } from '../consents';
 
 export type CookieTogglerProps = {
-  consents: ConsentObject;
-  isRequired: boolean;
+  consentList: ConsentData[];
   onChange: ConsentController['update'];
 };
-type ConsentData = {
+
+type ConsentDataForCheckbox = {
   id: string;
   checked: boolean;
   text: string;
   ariaLabel: string;
   onToggle: () => void;
 };
-type ConsentList = ConsentData[];
 
 function CookieToggler({
-  consents,
+  consentList,
   onChange,
 }: CookieTogglerProps): React.ReactElement {
-  const { t } = useTranslation();
-  const consentEntries = Object.entries(consents);
-  const consentList: ConsentList = consentEntries.map<ConsentData>(
-    ([key, value]) => ({
-      id: `optional-cookie-consent-${key}`,
-      checked: Boolean(value),
-      text: t(`cookies.${key}Text`),
-      ariaLabel: t(`cookies.${key}AriaInputText`, {
-        consentText: t(`cookies.${key}Text`),
-      }),
-      onToggle: () => {
-        onChange(key, !value);
-      },
-    })
-  );
+  const list = consentList.map<ConsentDataForCheckbox>(data => ({
+    id: `optional-cookie-consent-${data.id}`,
+    checked: data.value,
+    text: data.text,
+    ariaLabel: data.ariaInputLabel,
+    onToggle: () => {
+      onChange(data.id, !data.value);
+    },
+  }));
   return (
     <ul className={styles['list']}>
-      {consentList.map(data => (
+      {list.map(data => (
         <li key={data.id}>
           <Checkbox
             onChange={data.onToggle}
