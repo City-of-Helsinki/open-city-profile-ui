@@ -48,7 +48,7 @@ function CookieDetails({
       {optionalConsents && (
         <React.Fragment>
           <span className={styles['emulated-h2']} role="heading" aria-level={2}>
-            {t('cookies.optionalConsentsTitle')}
+            {t('cookies.optionalConsentsAndDataGathering')}
           </span>
           <CookieToggler
             consentList={getConsentInfo('optional', t, optionalConsents)}

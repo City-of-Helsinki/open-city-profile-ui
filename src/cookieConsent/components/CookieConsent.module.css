@@ -125,6 +125,20 @@
   margin-right: 50px;
 }
 
+.consent-data-table-container table tbody tr > *:nth-child(1) {
+  width: 30%;
+  word-break: break-word;
+}
+.consent-data-table-container table tbody tr > *:nth-child(2) {
+  width: 50%;
+}
+.consent-data-table-container table tbody tr > *:nth-child(3) {
+  width: 10%;
+}
+.consent-data-table-container table tbody tr > *:nth-child(4) {
+  width: 10%;
+}
+
 @media (min-width: 768px) {
   .language-switcher {
     right: 20px;
