@@ -268,7 +268,7 @@
     "optionalConsentsAndDataGathering": "EN: Muut evästeet ja tietojen kerääminen",
     "approveSelectionsAndRequired": "Accept the selected and necessary cookies",
     "backToBeginning": "Back to the beginning",
-    "matomoTitle": "",
+    "matomoTitle": "EN: Tilastointievästeet ja tietojen kerääminen",
     "matomoText": "The information collected by statistics cookies is used for developing the website.",
     "matomoAriaInputText": "Accept or reject statistics cookies. {{consentText}}",
     "consentSettingsSaved": "EN: Evästeasetukset tallennettu!",

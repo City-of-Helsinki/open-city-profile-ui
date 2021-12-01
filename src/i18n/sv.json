@@ -272,12 +272,12 @@
     "matomoText": "De uppgifter statistikkakorna samlar in används för att utveckla webbplatsen.",
     "matomoAriaInputText": "Acceptera eller förkasta kakan om statistikföring. {{consentText}}",
     "consentSettingsSaved": "Inställningarna om kakor har sparats!",
-    "city-of-helsinki-cookie-consentsText": "",
-    "technicalRoutingTitle": "",
-    "technicalRoutingText": "",
-    "generalAuthenticationText": "",
-    "generalLocaleText": "",
-    "generalSecurityText": "",
-    "expirationTimeSession": ""
+    "city-of-helsinki-cookie-consentsText": "SV: Mahdollistaa evästehallinnan kaikilla *.hel.fi -sivuilla",
+    "technicalRoutingTitle": "SV: Satunnainen merkkijono, pituus 32, esimerkiksi 189d982e74367c6908a2c780aa220d5e",
+    "technicalRoutingText": "SV: Verkkoliikenteen tekninen reititys.",
+    "generalAuthenticationText": "SV: Tunnistautumisistunnon säilymiseksi vaadittu eväste.",
+    "generalLocaleText": "SV: Eväste vaaditaan jotta käyttäjän kielivalinta säilyisi.",
+    "generalSecurityText": "SV: Tietoturvakontrolli (CSRF)",
+    "expirationTimeSession": "SV: Istunto"
   }
 }
