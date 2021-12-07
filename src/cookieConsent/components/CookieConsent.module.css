@@ -45,12 +45,18 @@
   margin-top: 40px;
   box-sizing: border-box;
 }
+
 .content {
   position: relative;
   padding: 20px 20px 0 20px;
   background: #ffffff;
   width: 100%;
   box-sizing: border-box;
+}
+
+.settings-page-content {
+  margin-top: var(--spacing-layout-xs);
+  background: transparent;
 }
 
 .text-content {
@@ -137,6 +143,10 @@
 }
 .consent-data-table-container table tbody tr > *:nth-child(4) {
   width: 10%;
+}
+
+.notification {
+  margin-top: var(--spacing-layout-xs);
 }
 
 @media (min-width: 768px) {
