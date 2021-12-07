@@ -27,7 +27,7 @@ function CookieMainInformation({
       </span>
 
       <p id="cookie-consent-description">
-        {t('cookies.informationText')}
+        {t('cookies.informationText')} {t('cookies.settingsDescription')}
         &nbsp;
         <button
           className={styles['plain-text-button']}

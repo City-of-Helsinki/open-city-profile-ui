@@ -254,7 +254,7 @@
   "years_plural": "SV: {{count}} vuotta",
   "cookies": {
     "informationTitle": "Profil använder kakor",
-    "informationText": "Den här webbplatsen använder nödvändiga kakor för att säkra att allt fungerar och för allmän uppföljning av trafiken. Dessutom använder vi oss av riktade kakor för att förbättra användarupplevelsen, analysera trafiken och visa riktat innehåll. Genom att fortsätta använda webbplatsen utan att ändra på inställningarna godkänner du användningen av kakor.",
+    "informationText": "SV: Tämä sivusto käyttää välttämättömiä evästeitä suorituskyvyn varmistamiseksi sekä yleiseen käytön seurantaan. Lisäksi käytämme evästeitä käyttäjäkokemuksen parantamiseksi sekä analytiikkaan. Jatkamalla sivuston käyttöä ilman asetusten muuttamista hyväksyt välttämättömien evästeiden käytön.",
     "showCookies": "Visa kakor",
     "approveAll": "Godkänn alla kakor",
     "approveRequired": "Endast nödvändiga kakor",
@@ -278,6 +278,7 @@
     "generalAuthenticationText": "SV: Tunnistautumisistunnon säilymiseksi vaadittu eväste.",
     "generalLocaleText": "SV: Eväste vaaditaan jotta käyttäjän kielivalinta säilyisi.",
     "generalSecurityText": "SV: Tietoturvakontrolli (CSRF)",
-    "expirationTimeSession": "SV: Istunto"
+    "expirationTimeSession": "SV: Istunto",
+    "settingsDescription": "SV: Voit myöhemmin muuttaa evästeasetuksia sivun alalaidasta löytyvästä linkistä. Linkin takaa löytyy myös evästeiden tarkemmat tiedot."
   }
 }

@@ -254,7 +254,7 @@
   "years_plural": "{{count}} vuotta",
   "cookies": {
     "informationTitle": "Profiili käyttää evästeitä",
-    "informationText": "Tämä sivusto käyttää välttämättömiä evästeitä suorituskyvyn varmistamiseksi sekä yleisen käytön seurantaan. Lisäksi käytämme kohdennusevästeitä käyttäjäkokemuksen parantamiseksi, analytiikkaan ja kohdistetun sisällön näyttämiseen. Jatkamalla sivuston käyttöä ilman asetusten muuttamista hyväksyt välttämättömien evästeiden käytön.",
+    "informationText": "Tämä sivusto käyttää välttämättömiä evästeitä suorituskyvyn varmistamiseksi sekä yleiseen käytön seurantaan. Lisäksi käytämme evästeitä käyttäjäkokemuksen parantamiseksi sekä analytiikkaan. Jatkamalla sivuston käyttöä ilman asetusten muuttamista hyväksyt välttämättömien evästeiden käytön.",
     "showCookies": "Näytä evästeet",
     "approveAll": "Hyväksy kaikki evästeet",
     "approveRequired": "Vain välttämättömät evästeet",
@@ -278,6 +278,7 @@
     "generalAuthenticationText": "Tunnistautumisistunnon säilymiseksi vaadittu eväste.",
     "generalLocaleText": "Eväste vaaditaan jotta käyttäjän kielivalinta säilyisi.",
     "generalSecurityText": "Tietoturvakontrolli (CSRF)",
-    "expirationTimeSession": "Istunto"
+    "expirationTimeSession": "Istunto",
+    "settingsDescription": "Voit myöhemmin muuttaa evästeasetuksia sivun alalaidasta löytyvästä linkistä. Linkin takaa löytyy myös evästeiden tarkemmat tiedot."
   }
 }

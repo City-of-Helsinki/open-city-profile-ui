@@ -254,7 +254,7 @@
   "years_plural": "{{count}} years",
   "cookies": {
     "informationTitle": "Profile uses cookies",
-    "informationText": "This website uses essential cookies to ensure site performance and for basic analytics. In addition, we use uses targeting cookies to improve the user experience, for analytics and showing targeted content. By continuing to use the site, you agree to the use of essential cookies.",
+    "informationText": "This website uses essential cookies to ensure site performance and for basic analytics. In addition, we use targeting cookies to improve the user experience and for analytics. By continuing to use the site, you agree to the use of essential cookies.",
     "showCookies": "Show cookies",
     "approveAll": "Accept all cookies",
     "approveRequired": "Only essential cookies",
@@ -278,6 +278,7 @@
     "generalAuthenticationText": "Required to persist the authentication session.",
     "generalLocaleText": "Required to persist the user's chosen language.",
     "generalSecurityText": "A security control (CSRF).",
-    "expirationTimeSession": "Session"
+    "expirationTimeSession": "Session",
+    "settingsDescription": "EN: Voit myöhemmin muuttaa evästeasetuksia sivun alalaidasta löytyvästä linkistä. Linkin takaa löytyy myös evästeiden tarkemmat tiedot."
   }
 }
