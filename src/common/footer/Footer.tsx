@@ -61,6 +61,13 @@ function Footer(): React.ReactElement {
         >
           {t('footer.accessibility')}
         </HDSFooter.Item>
+        <HDSFooter.Item
+          as={Link}
+          to="/cookie-consents"
+          title={t('cookies.cookieSettings')}
+        >
+          {t('cookies.cookieSettings')}
+        </HDSFooter.Item>
       </HDSFooter.Base>
     </HDSFooter>
   );

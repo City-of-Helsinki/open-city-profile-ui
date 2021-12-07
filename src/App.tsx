@@ -27,6 +27,7 @@ import {
   getRequiredAndOptionalConsentKeys,
   hasConsentForMatomo,
 } from './cookieConsent/consents';
+import CookieConsentPage from './cookieConsent/components/CookieConsentPage';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -105,6 +106,9 @@ function App(): React.ReactElement {
                   <ErrorPage />
                 </Route>
                 <Route path="/loginsso" exact />
+                <Route path="/cookie-consents" exact>
+                  <CookieConsentPage />
+                </Route>
                 <Route path="*">
                   <PageNotFound />
                 </Route>
