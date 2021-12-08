@@ -9,7 +9,7 @@ describe('graphql client', () => {
     jest.spyOn(authService, 'getToken').mockReturnValue('foo.bar.baz');
   });
 
-  it('sets Authorization-header to requests', async () => {
+  it('sets authorization-header to requests', async () => {
     global.fetch.mockResponse(
       JSON.stringify({
         data: {
@@ -30,7 +30,7 @@ describe('graphql client', () => {
 
     const fetchOptions = global.fetch.mock.calls[0][1] as RequestInit;
     expect(fetchOptions.headers).toHaveProperty(
-      'Authorization',
+      'authorization',
       'Bearer foo.bar.baz'
     );
   });

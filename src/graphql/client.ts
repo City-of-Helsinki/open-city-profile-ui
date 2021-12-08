@@ -15,7 +15,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   if (token) {
     operation.setContext({
       headers: {
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
         'Accept-Language': i18n.languages[0],
       },
     });
