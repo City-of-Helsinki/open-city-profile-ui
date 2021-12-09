@@ -170,7 +170,9 @@ export class AuthService {
   public async logout(): Promise<void> {
     sessionStorage.removeItem(API_TOKEN);
     this.userManager.clearStaleState();
-    await this.userManager.signoutRedirect();
+    await this.userManager.signoutRedirect({
+      extraQueryParams: { ui_locales: i18n.language },
+    });
   }
 
   async fetchApiToken(user: User): Promise<void> {

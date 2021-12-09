@@ -196,12 +196,17 @@ describe('authService', () => {
   });
 
   describe('logout', () => {
-    it('should call signoutRedirect from oidc', () => {
+    it('should call signoutRedirect from oidc. Ui_locales is found in extraQueryParams', () => {
       const signoutRedirect = jest.spyOn(userManager, 'signoutRedirect');
-
+      i18n.changeLanguage('sv');
       authService.logout();
 
       expect(signoutRedirect).toHaveBeenCalledTimes(1);
+      expect(signoutRedirect).toHaveBeenNthCalledWith(1, {
+        extraQueryParams: {
+          ui_locales: 'sv',
+        },
+      });
     });
 
     it('should remove the tokens from sessionStorage', async () => {
