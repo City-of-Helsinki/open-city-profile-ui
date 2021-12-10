@@ -7,6 +7,7 @@ import {
 } from 'oidc-client';
 import * as Sentry from '@sentry/browser';
 import HttpStatusCode from 'http-status-typed';
+import i18n from 'i18next';
 
 import pickProfileApiToken from './pickProfileApiToken';
 import createHttpPoller, { HttpPoller } from './http-poller';
@@ -140,12 +141,14 @@ export class AuthService {
 
   public async login(path = '/'): Promise<void> {
     let success = true;
-    await this.userManager.signinRedirect({ data: { path } }).catch(error => {
-      success = false;
-      if (error.message !== 'Network Error') {
-        Sentry.captureException(error);
-      }
-    });
+    await this.userManager
+      .signinRedirect({ data: { path }, ui_locales: i18n.language })
+      .catch(error => {
+        success = false;
+        if (error.message !== 'Network Error') {
+          Sentry.captureException(error);
+        }
+      });
     return success ? Promise.resolve() : Promise.reject();
   }
 
@@ -167,7 +170,9 @@ export class AuthService {
   public async logout(): Promise<void> {
     sessionStorage.removeItem(API_TOKEN);
     this.userManager.clearStaleState();
-    await this.userManager.signoutRedirect();
+    await this.userManager.signoutRedirect({
+      extraQueryParams: { ui_locales: i18n.language },
+    });
   }
 
   async fetchApiToken(user: User): Promise<void> {
