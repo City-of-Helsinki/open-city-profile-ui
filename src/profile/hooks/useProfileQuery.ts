@@ -1,6 +1,6 @@
 import { ApolloError, FetchResult, useLazyQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePersistFn } from 'ahooks';
 import _ from 'lodash';
 
@@ -19,16 +19,20 @@ type QueryReturnType = {
 };
 
 /*
-  note: there is a bug in Apollo client.
-  https://github.com/apollographql/apollo-client/issues/5531
-  onError is triggered only once, unless notifyOnNetworkStatusChange:true.
-  That will cause unnecessary re-renders on every network status change
-  so will not use it.
+  note:
+  onError is not triggered when errorPolicy === 'all'
+  If user is logged in with weak authentication, there is always a graphQL error included.
+  If errorPolicy is 'none', graphQL errors are not allowed. Profile won't load.
+  If errorPolicy is 'ignore', graphQL errors are not populated and cannot be detected.
   Work-around: useEffect will trigger onError when error changes.
 */
 export function useProfileQuery(props?: {
   onError: (queryError: ApolloError) => void;
 }): QueryReturnType {
+  const errorToTriggerRef = useRef<ApolloError | undefined>(undefined);
+  const storeTriggeredError = (newRef: ApolloError | undefined) => {
+    errorToTriggerRef.current = newRef;
+  };
   const [fetch, { data, error, loading, refetch }] = useLazyQuery<ProfileRoot>(
     MY_PROFILE,
     {
@@ -39,16 +43,23 @@ export function useProfileQuery(props?: {
     props && props.onError ? props.onError : _.noop
   );
   useEffect(() => {
-    if (error) {
+    if (!errorToTriggerRef.current && error) {
       dependencySafeOnError(error);
+      storeTriggeredError(error);
     }
   }, [dependencySafeOnError, error]);
 
   return {
-    fetch,
+    fetch: () => {
+      storeTriggeredError(undefined);
+      return fetch();
+    },
     data,
     error,
     loading,
-    refetch,
+    refetch: () => {
+      storeTriggeredError(undefined);
+      return refetch();
+    },
   };
 }

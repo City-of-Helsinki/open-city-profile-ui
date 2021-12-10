@@ -69,9 +69,13 @@ function Profile(): React.ReactElement {
   const isProfileFound = !!(data && data.myProfile);
   const failedToFetchUserProfileData =
     tunnistamoUser && !isProfileFound && !!error;
-  if (isProfileFound && !isProfileInitialized) {
-    fetchProfile();
-  }
+
+  useEffect(() => {
+    if (isProfileFound && !isProfileInitialized) {
+      fetchProfile();
+    }
+  }, [fetchProfile, isProfileFound, isProfileInitialized]);
+
   const isLoadingProfile = isProfileFound && !isProfileComplete;
 
   const getPageTitle = () => {

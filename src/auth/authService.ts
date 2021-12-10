@@ -61,7 +61,7 @@ export class AuthService {
         return Promise.reject(new Error('Access token not set'));
       }
       const headers = new Headers();
-      headers.append('Authorization', `Bearer ${accessToken}`);
+      headers.append('authorization', `Bearer ${accessToken}`);
 
       return fetch(uri, {
         method: 'GET',
@@ -174,7 +174,7 @@ export class AuthService {
     const url = `${window._env_.REACT_APP_OIDC_AUTHORITY}api-tokens/`;
     const response = await fetch(url, {
       headers: {
-        Authorization: `bearer ${user.access_token}`,
+        authorization: `bearer ${user.access_token}`,
       },
     });
     const result = await response.json();

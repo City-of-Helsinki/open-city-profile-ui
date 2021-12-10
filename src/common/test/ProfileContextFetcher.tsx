@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { ProfileContext } from '../../profile/context/ProfileContext';
 
@@ -7,12 +7,11 @@ function ProfileContextFetcher({
 }: {
   children: React.ReactElement | React.ReactNodeArray;
 }): React.ReactElement {
-  const [fetchStarted, setFetchStarted] = useState(false);
   const { data, fetch } = useContext(ProfileContext);
-  if (!fetchStarted) {
+
+  useEffect(() => {
     fetch();
-    setFetchStarted(true);
-  }
+  });
 
   if (!data) {
     return <div data-testid="no-data-fetched"></div>;

@@ -237,7 +237,7 @@ describe('authService', () => {
           "https://api.hel.fi/sso/openid/api-tokens/",
           Object {
             "headers": Object {
-              "Authorization": "bearer db237bc3-e197-43de-8c86-3feea4c5f886",
+              "authorization": "bearer db237bc3-e197-43de-8c86-3feea4c5f886",
             },
           },
         ]
