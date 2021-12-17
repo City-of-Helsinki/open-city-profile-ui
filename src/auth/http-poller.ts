@@ -10,6 +10,7 @@ export type HttpPollerProps = {
   pollFunction: () => Promise<Response | undefined>;
   shouldPoll: () => boolean;
   onError: (returnedHttpStatus?: number) => { keepPolling: boolean };
+  onSuccess?: (response: Response) => { keepPolling: boolean };
   pollIntervalInMs?: number;
 };
 
@@ -19,6 +20,7 @@ export default function createHttpPoller({
   pollFunction,
   shouldPoll,
   onError,
+  onSuccess,
   pollIntervalInMs = defaultPollIntervalInMs,
 }: HttpPollerProps): HttpPoller {
   let isPolling = false;
@@ -61,7 +63,14 @@ export default function createHttpPoller({
     }
     const responseStatus = data && data.status;
     const isErrorResponse = responseStatus !== HttpStatusCode.OK;
-    if ((!err && !isErrorResponse) || onError(responseStatus).keepPolling) {
+    const success = !err && !isErrorResponse;
+    if (success && onSuccess) {
+      const { keepPolling } = onSuccess(data as Response);
+      if (!keepPolling) {
+        return;
+      }
+    }
+    if (success || onError(responseStatus).keepPolling) {
       startTimer();
     }
   };
