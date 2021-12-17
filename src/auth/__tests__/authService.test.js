@@ -7,15 +7,15 @@ import i18n from '../../common/test/testi18nInit';
 
 describe('authService', () => {
   const userManager = authService.userManager;
+  const apiToken = '5ed3abc5-9b65-4879-8d09-3cd8499650eh';
+  const accessToken = 'db237bc3-e197-43de-8c86-3feea4c5f886';
 
   const setSession = ({ validUser, validApiToken, optionalUserProps }) => {
-    const validAccessToken = 'db237bc3-e197-43de-8c86-3feea4c5f886';
     const oidcUserKey = `oidc.user:${window._env_.REACT_APP_OIDC_AUTHORITY}:${window._env_.REACT_APP_OIDC_CLIENT_ID}`;
-    const sessionApiToken =
-      validApiToken !== false ? '5ed3abc5-9b65-4879-8d09-3cd8499650eh' : null;
+    const sessionApiToken = validApiToken !== false ? apiToken : null;
     const sessionUser = {
       name: 'Mr. Louisa Tromp',
-      access_token: validUser !== false ? validAccessToken : '',
+      access_token: validUser !== false ? accessToken : '',
       expired: false,
       ...optionalUserProps,
     };
@@ -38,8 +38,7 @@ describe('authService', () => {
   const mockFetchApiToken = () =>
     global.fetch.mockResponse(
       JSON.stringify({
-        [window._env_.REACT_APP_PROFILE_AUDIENCE]:
-          '71ffd52c-5985-46d3-b445-490554f4012a',
+        [window._env_.REACT_APP_PROFILE_AUDIENCE]: apiToken,
       })
     );
 
@@ -220,16 +219,19 @@ describe('authService', () => {
       expect(user).toBe(sessionUser);
     });
 
-    it('should call fetchApiToken with the user object', async () => {
+    it('should call fetchAndStoreApiToken with the user object', async () => {
       expect.assertions(1);
-      jest.spyOn(authService, 'fetchApiToken');
+      jest.spyOn(authService, 'fetchAndStoreApiToken');
       jest
         .spyOn(userManager, 'signinRedirectCallback')
         .mockResolvedValue(sessionUser);
 
       await authService.endLogin();
 
-      expect(authService.fetchApiToken).toHaveBeenNthCalledWith(1, sessionUser);
+      expect(authService.fetchAndStoreApiToken).toHaveBeenNthCalledWith(
+        1,
+        sessionUser
+      );
     });
 
     it('should set the user in sessionStorage before the function returns', async () => {
@@ -303,8 +305,8 @@ describe('authService', () => {
     });
   });
 
-  describe('fetchApiToken', () => {
-    const access_token = 'db237bc3-e197-43de-8c86-3feea4c5f886';
+  describe('fetchAndStoreApiToken', () => {
+    const access_token = accessToken;
     const mockUser = {
       name: 'Penelope Krajcik',
       access_token,
@@ -317,7 +319,7 @@ describe('authService', () => {
 
     it('should call fetch with the right arguments', async () => {
       expect.assertions(2);
-      await authService.fetchApiToken(mockUser);
+      await authService.fetchAndStoreApiToken(mockUser);
 
       expect(global.fetch).toHaveBeenCalledTimes(1);
       expect(global.fetch.mock.calls[0]).toMatchInlineSnapshot(`
@@ -325,7 +327,7 @@ describe('authService', () => {
           "https://api.hel.fi/sso/openid/api-tokens/",
           Object {
             "headers": Object {
-              "authorization": "bearer db237bc3-e197-43de-8c86-3feea4c5f886",
+              "authorization": "bearer ${accessToken}",
             },
           },
         ]
@@ -335,13 +337,13 @@ describe('authService', () => {
     it('should call sessionStorage.setItem with the right arguments', async () => {
       const setSpy = jest.spyOn(Storage.prototype, 'setItem');
       expect.assertions(2);
-      await authService.fetchApiToken(mockUser);
+      await authService.fetchAndStoreApiToken(mockUser);
 
       expect(setSpy).toHaveBeenCalledTimes(1);
       expect(setSpy.mock.calls[0]).toMatchInlineSnapshot(`
         Array [
           "apiToken",
-          "71ffd52c-5985-46d3-b445-490554f4012a",
+          "${apiToken}",
         ]
       `);
     });

@@ -178,7 +178,7 @@ export class AuthService {
     if (!this.isAuthenticatedUser(user)) {
       return Promise.reject(new Error('Login failed - no valid user returned'));
     }
-    const apiTokenSuccess = await this.fetchApiToken(user);
+    const apiTokenSuccess = await this.fetchAndStoreApiToken(user);
     if (!apiTokenSuccess) {
       await this.userManager.removeUser();
       return Promise.reject(
@@ -200,21 +200,37 @@ export class AuthService {
     });
   }
 
-  async fetchApiToken(user: User): Promise<boolean> {
+  async fetchApiToken(user: User): Promise<Response | undefined> {
     const url = `${window._env_.REACT_APP_OIDC_AUTHORITY}api-tokens/`;
-    const [, response] = await to(
-      fetch(url, {
-        headers: {
-          authorization: `bearer ${user.access_token}`,
-        },
-      })
-    );
+    return fetch(url, {
+      headers: {
+        authorization: `bearer ${user.access_token}`,
+      },
+    });
+  }
+
+  async parseApiTokenResponse(response: Response): Promise<string> {
+    const result = await response.json();
+    return pickProfileApiToken(result);
+  }
+
+  async parseAndStoreApiToken(
+    response: Response | undefined
+  ): Promise<string | void> {
+    if (response) {
+      const apiToken = await this.parseApiTokenResponse(response);
+      sessionStorage.setItem(API_TOKEN, apiToken);
+      return Promise.resolve(apiToken);
+    }
+    return Promise.resolve();
+  }
+
+  async fetchAndStoreApiToken(user: User): Promise<boolean> {
+    const [, response] = await to(this.fetchApiToken(user));
     if (!response) {
       return Promise.resolve(false);
     }
-    const result = await response.json();
-    const apiToken = pickProfileApiToken(result);
-    sessionStorage.setItem(API_TOKEN, apiToken);
+    const apiToken = await this.parseAndStoreApiToken(response);
     return Promise.resolve(!!apiToken);
   }
 
