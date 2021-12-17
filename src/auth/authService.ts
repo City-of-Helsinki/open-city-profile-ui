@@ -8,12 +8,28 @@ import {
 import * as Sentry from '@sentry/browser';
 import HttpStatusCode from 'http-status-typed';
 import i18n from 'i18next';
+import to from 'await-to-js';
 
 import pickProfileApiToken from './pickProfileApiToken';
 import createHttpPoller, { HttpPoller } from './http-poller';
 
 const origin = window.location.origin;
 export const API_TOKEN = 'apiToken';
+
+function isUserExpired(user?: Partial<User> | null): boolean {
+  if (!user) {
+    return true;
+  }
+  if (user.expired !== undefined) {
+    return user.expired;
+  }
+  const expiresAtInSeconds = user.expires_at;
+
+  if (expiresAtInSeconds) {
+    return expiresAtInSeconds - Date.now() / 1000 <= 0;
+  }
+  return true;
+}
 
 export class AuthService {
   userManager: UserManager;
@@ -92,21 +108,22 @@ export class AuthService {
       this.logout();
     });
 
-    this.userManager.events.addUserSignedOut(() => {
-      this.userManager.clearStaleState();
-      sessionStorage.removeItem(API_TOKEN);
-      this.userSessionValidityPoller.stop();
+    this.userManager.events.addUserSignedOut(async () => {
+      await this.cleanUpUserSessionAndApiTokens();
     });
 
+    // This is called by userManager while processing endLogin()
+    // and when silent renew is complete
+    // endLogin() also calls fetchApiToken. Multiple calls are prevented with _isProcessingLogin
     this.userManager.events.addUserLoaded(async user => {
       if (!this._isProcessingLogin && this.isAuthenticatedUser(user)) {
-        this.fetchApiToken(user);
+        await this.fetchApiToken(user);
       }
-      this.userSessionValidityPoller.start();
+      return Promise.resolve();
     });
 
-    this.userManager.events.addUserUnloaded(() => {
-      this.userSessionValidityPoller.stop();
+    this.userManager.events.addUserUnloaded(async () => {
+      await this.cleanUpUserSessionAndApiTokens();
     });
   }
 
@@ -114,6 +131,9 @@ export class AuthService {
     return this.userManager.getUser();
   }
 
+  // It is assumed that user and api tokens are removed hand in hand.
+  // If user tokens exists, api tokens must also exist.
+  // That is why api tokens are not checked here.
   public async getAuthenticatedUser(): Promise<User | null> {
     const user = await this.getUser();
     if (!this.isAuthenticatedUser(user)) {
@@ -128,7 +148,7 @@ export class AuthService {
   }
 
   public isAuthenticatedUser(user?: User | null): boolean {
-    return !!user && user.expired !== true && !!user.access_token;
+    return !!user && !isUserExpired(user) && !!user.access_token;
   }
 
   public isAuthenticated(): boolean {
@@ -158,8 +178,15 @@ export class AuthService {
     if (!this.isAuthenticatedUser(user)) {
       return Promise.reject(new Error('Login failed - no valid user returned'));
     }
-    await this.fetchApiToken(user);
+    const apiTokenSuccess = await this.fetchApiToken(user);
+    if (!apiTokenSuccess) {
+      await this.userManager.removeUser();
+      return Promise.reject(
+        new Error('Api token error - no valid api token returned')
+      );
+    }
     this._isProcessingLogin = false;
+    this.userSessionValidityPoller.start();
     return user;
   }
 
@@ -168,24 +195,33 @@ export class AuthService {
   }
 
   public async logout(): Promise<void> {
-    sessionStorage.removeItem(API_TOKEN);
-    this.userManager.clearStaleState();
     await this.userManager.signoutRedirect({
       extraQueryParams: { ui_locales: i18n.language },
     });
   }
 
-  async fetchApiToken(user: User): Promise<void> {
+  async fetchApiToken(user: User): Promise<boolean> {
     const url = `${window._env_.REACT_APP_OIDC_AUTHORITY}api-tokens/`;
-    const response = await fetch(url, {
-      headers: {
-        authorization: `bearer ${user.access_token}`,
-      },
-    });
+    const [, response] = await to(
+      fetch(url, {
+        headers: {
+          authorization: `bearer ${user.access_token}`,
+        },
+      })
+    );
+    if (!response) {
+      return Promise.resolve(false);
+    }
     const result = await response.json();
     const apiToken = pickProfileApiToken(result);
-
     sessionStorage.setItem(API_TOKEN, apiToken);
+    return Promise.resolve(!!apiToken);
+  }
+
+  async cleanUpUserSessionAndApiTokens(): Promise<void> {
+    await this.userManager.clearStaleState();
+    sessionStorage.removeItem(API_TOKEN);
+    this.userSessionValidityPoller.stop();
   }
 }
 

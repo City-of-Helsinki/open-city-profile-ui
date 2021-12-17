@@ -1,4 +1,5 @@
 import to from 'await-to-js';
+import { waitFor } from '@testing-library/react';
 
 import authService, { API_TOKEN } from '../authService';
 import { getHttpPollerMockData } from '../__mocks__/http-poller';
@@ -26,6 +27,26 @@ describe('authService', () => {
       sessionApiToken,
     };
   };
+
+  const spyAndMockSignoutRedirect = () =>
+    jest.spyOn(userManager, 'signoutRedirect').mockImplementation(async () => {
+      // mocking userManager: signout calls removeUser which triggers unload event
+      await userManager.events._userUnloaded.raise();
+      return Promise.resolve();
+    });
+
+  const mockFetchApiToken = () =>
+    global.fetch.mockResponse(
+      JSON.stringify({
+        [window._env_.REACT_APP_PROFILE_AUDIENCE]:
+          '71ffd52c-5985-46d3-b445-490554f4012a',
+      })
+    );
+
+  const spyAndMockSigninRedirect = user =>
+    jest
+      .spyOn(userManager, 'signinRedirectCallback')
+      .mockImplementation(() => Promise.resolve(user));
 
   afterEach(() => {
     sessionStorage.clear();
@@ -88,6 +109,63 @@ describe('authService', () => {
     });
   });
 
+  describe('isAuthenticatedUser', () => {
+    let validUserObj;
+    beforeEach(() => {
+      validUserObj = setSession({
+        validUser: true,
+      }).sessionUser;
+    });
+    const getCurrentTimeInSeconds = () => Math.round(Date.now() / 1000);
+    it('should return true if user is not expired and has access_token', () => {
+      expect(authService.isAuthenticatedUser(validUserObj)).toBe(true);
+    });
+    it('should return false if user is not expired and access_token is not valid', () => {
+      expect(
+        authService.isAuthenticatedUser({ ...validUserObj, access_token: '' })
+      ).toBe(false);
+    });
+    it('should return false if passed user is not a valid User object', () => {
+      expect(authService.isAuthenticatedUser()).toBe(false);
+      expect(authService.isAuthenticatedUser(null)).toBe(false);
+      expect(authService.isAuthenticatedUser({})).toBe(false);
+    });
+    it('should return true if user.expired is not set and time in user.expires_at has not passed', () => {
+      expect(
+        authService.isAuthenticatedUser({
+          ...validUserObj,
+          expired: undefined,
+          expires_at: getCurrentTimeInSeconds() + 1000,
+        })
+      ).toBe(true);
+    });
+    it('should return false if user.expired is not set and time in user.expires_at has passed', () => {
+      expect(
+        authService.isAuthenticatedUser({
+          ...validUserObj,
+          expired: undefined,
+          expires_at: getCurrentTimeInSeconds() - 1,
+        })
+      ).toBe(false);
+    });
+    it('should return !user.expired if it is set and ignore user.expires_at', () => {
+      expect(
+        authService.isAuthenticatedUser({
+          ...validUserObj,
+          expires_at: getCurrentTimeInSeconds() + 1000,
+          expired: true,
+        })
+      ).toBe(false);
+      expect(
+        authService.isAuthenticatedUser({
+          ...validUserObj,
+          expires_at: 1,
+          expired: false,
+        })
+      ).toBe(true);
+    });
+  });
+
   describe('login', () => {
     const defaultSigninParams = {
       data: { path: '/' },
@@ -118,28 +196,24 @@ describe('authService', () => {
   describe('endLogin', () => {
     let sessionUser;
     beforeEach(() => {
-      global.fetch.mockResponse(JSON.stringify({ data: {} }));
+      mockFetchApiToken();
       sessionUser = setSession({
         validApiToken: true,
         validUser: true,
       }).sessionUser;
     });
 
-    it('should call signinRedirectCallback from oidc', () => {
-      const signinRedirectCallback = jest
-        .spyOn(userManager, 'signinRedirectCallback')
-        .mockImplementation(() => Promise.resolve(sessionUser));
+    it('should call signinRedirectCallback from oidc', async () => {
+      const signinRedirectCallback = spyAndMockSigninRedirect(sessionUser);
 
-      authService.endLogin();
+      await authService.endLogin();
 
       expect(signinRedirectCallback).toHaveBeenCalledTimes(1);
     });
 
     it('should return the same user object returned from signinRedirectCallback', async () => {
       expect.assertions(1);
-      jest
-        .spyOn(userManager, 'signinRedirectCallback')
-        .mockReturnValue(Promise.resolve(sessionUser));
+      spyAndMockSigninRedirect(sessionUser);
 
       const user = await authService.endLogin();
 
@@ -164,7 +238,6 @@ describe('authService', () => {
       jest
         .spyOn(userManager, 'signinRedirectCallback')
         .mockResolvedValue(sessionUser);
-      jest.spyOn(authService, 'fetchApiToken');
 
       await authService.endLogin();
 
@@ -211,18 +284,17 @@ describe('authService', () => {
 
     it('should remove the tokens from sessionStorage', async () => {
       expect.assertions(1);
-      jest.spyOn(userManager, 'signoutRedirect').mockResolvedValue(undefined);
+      spyAndMockSignoutRedirect();
       const apiTokens = 'a8d56df4-7ae8-4fbf-bf73-f366cd6fc479';
 
       sessionStorage.setItem(API_TOKEN, apiTokens);
       await authService.logout();
-
       expect(sessionStorage.getItem(API_TOKEN)).toBeNull();
     });
 
     it('should call clearStaleState', async () => {
       expect.assertions(1);
-      jest.spyOn(userManager, 'signoutRedirect').mockResolvedValue(undefined);
+      spyAndMockSignoutRedirect();
       jest.spyOn(userManager, 'clearStaleState').mockResolvedValue();
 
       await authService.logout();
@@ -240,13 +312,7 @@ describe('authService', () => {
 
     beforeEach(() => {
       global.fetch.resetMocks();
-
-      global.fetch.mockResponse(
-        JSON.stringify({
-          [window._env_.REACT_APP_PROFILE_AUDIENCE]:
-            '71ffd52c-5985-46d3-b445-490554f4012a',
-        })
-      );
+      mockFetchApiToken();
     });
 
     it('should call fetch with the right arguments', async () => {
@@ -319,17 +385,26 @@ describe('authService', () => {
       await to(authService.getAuthenticatedUser());
       expect(mockHttpPoller.start).toHaveBeenCalledTimes(0);
     });
-    it('should start when user is loaded', () => {
-      userManager.events._userLoaded.raise({});
+    it('should start in endLogin', async () => {
+      const { sessionUser } = setSession({
+        validUser: true,
+        validApiToken: true,
+      });
+      spyAndMockSigninRedirect(sessionUser);
+      await authService.endLogin();
       expect(mockHttpPoller.start).toHaveBeenCalledTimes(1);
     });
-    it('should stop when user is unloaded', () => {
-      userManager.events._userUnloaded.raise();
-      expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+    it('should stop when user is unloaded', async () => {
+      await userManager.events._userUnloaded.raise();
+      await waitFor(() => {
+        expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+      });
     });
-    it('should stop when user is signedOut', () => {
-      userManager.events._userSignedOut.raise();
-      expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+    it('should stop when user is signedOut', async () => {
+      await userManager.events._userSignedOut.raise();
+      await waitFor(() => {
+        expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });
