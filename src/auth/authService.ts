@@ -12,6 +12,7 @@ import to from 'await-to-js';
 
 import pickProfileApiToken from './pickProfileApiToken';
 import createHttpPoller, { HttpPoller } from './http-poller';
+import retryPollingUntilSuccessful from './http-poller-with-promises';
 
 const origin = window.location.origin;
 export const API_TOKEN = 'apiToken';
@@ -117,7 +118,18 @@ export class AuthService {
     // endLogin() also calls fetchApiToken. Multiple calls are prevented with _isProcessingLogin
     this.userManager.events.addUserLoaded(async user => {
       if (!this._isProcessingLogin && this.isAuthenticatedUser(user)) {
-        await this.fetchApiToken(user);
+        const [, response] = await to(
+          retryPollingUntilSuccessful({
+            pollFunction: async () => this.fetchApiToken(user),
+            pollIntervalInMs: 500,
+            maxRetries: 4,
+          })
+        );
+        if (response) {
+          await this.parseAndStoreApiToken(response);
+        } else {
+          this.logout();
+        }
       }
       return Promise.resolve();
     });

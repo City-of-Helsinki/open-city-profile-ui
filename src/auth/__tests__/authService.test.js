@@ -2,7 +2,10 @@ import to from 'await-to-js';
 import { waitFor } from '@testing-library/react';
 
 import authService, { API_TOKEN } from '../authService';
-import { getHttpPollerMockData } from '../__mocks__/http-poller';
+import {
+  getHttpPollerMockData,
+  enableActualHttpPoller,
+} from '../__mocks__/http-poller';
 import i18n from '../../common/test/testi18nInit';
 
 describe('authService', () => {
@@ -349,7 +352,79 @@ describe('authService', () => {
     });
   });
 
-  describe('getAuthenticatedUser', () => {
+  describe(`Api tokens are fetched again after user tokens are renewed.
+            After silent renew completes, the _userLoaded event is raised and...`, () => {
+    beforeEach(() => {
+      global.fetch.resetMocks();
+      mockFetchApiToken();
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    beforeAll(() => {
+      enableActualHttpPoller(jest.requireActual('../http-poller'));
+    });
+
+    const defaultApiTokenPollIntervalInMs = 500;
+    const requestCompletionInMs = defaultApiTokenPollIntervalInMs + 1;
+
+    it('fetchApiToken is called and new token is stored when fetch is successful', async () => {
+      const { sessionUser } = setSession({
+        validUser: true,
+        validApiToken: true,
+      });
+      sessionStorage.setItem(API_TOKEN, 'old token to be replaced');
+
+      const fetcApiTokenSpy = jest.spyOn(authService, 'fetchApiToken');
+
+      await userManager.events._userLoaded.raise(sessionUser);
+      expect(fetcApiTokenSpy).toHaveBeenCalledTimes(1);
+      jest.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(fetcApiTokenSpy).toHaveBeenCalledTimes(1);
+        expect(sessionStorage.getItem(API_TOKEN)).toEqual(apiToken);
+      });
+    });
+    it('fetchApiToken calls are retried until maxRetries is reached. Then authService.logout() is called', async () => {
+      const { sessionUser } = setSession({
+        validUser: true,
+        validApiToken: true,
+      });
+      const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
+      const logoutSpy = jest
+        .spyOn(authService, 'logout')
+        .mockImplementation(() => undefined);
+      const fetcApiTokenSpy = jest
+        .spyOn(authService, 'fetchApiToken')
+        .mockImplementation(() => Promise.reject());
+
+      await userManager.events._userLoaded.raise(sessionUser);
+      expect(fetcApiTokenSpy).toHaveBeenCalledTimes(1);
+      jest.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(fetcApiTokenSpy).toHaveBeenCalledTimes(2);
+      });
+      jest.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(fetcApiTokenSpy).toHaveBeenCalledTimes(3);
+      });
+      jest.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(fetcApiTokenSpy).toHaveBeenCalledTimes(4);
+      });
+      jest.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(setItemSpy).not.toHaveBeenCalled();
+        expect(fetcApiTokenSpy).toHaveBeenCalledTimes(5);
+        expect(logoutSpy).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('getAuthenticatedUser ', () => {
     it('should resolve to the user value when user is valid', async () => {
       const { sessionUser } = setSession({
         validUser: true,
