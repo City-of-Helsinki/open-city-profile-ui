@@ -5,3 +5,31 @@
     margin-right: auto;
   }
 }
+
+/* composes not work inside media queries */
+@media (min-width: 768px) {
+  .visually-hidden-in-desktop {
+    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+    border: 0;
+    clip: 'rect(0 0 0 0)';
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+  }
+}
+@media (max-width: 767px) {
+  .visually-hidden-in-mobile {
+    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+    border: 0;
+    clip: 'rect(0 0 0 0)';
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+  }
+}

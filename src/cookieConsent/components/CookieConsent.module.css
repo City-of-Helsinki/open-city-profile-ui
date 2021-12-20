@@ -149,6 +149,24 @@
   margin-top: var(--spacing-layout-xs);
 }
 
+.mobile-table {
+  background-color: var(--color-black-5);
+  margin-top: var(--spacing-layout-xs);
+  padding-top: var(--spacing-layout-xs);
+}
+
+.mobile-table-data-set {
+  margin-bottom: var(--spacing-layout-xs);
+}
+.mobile-table-data-set div {
+  margin-bottom: var(--spacing-layout-2-xs);
+}
+
+.mobile-table-data-set p {
+  background-color: var(--color-white);
+  padding: var(--spacing-layout-2-xs);
+}
+
 @media (min-width: 768px) {
   .language-switcher {
     right: 20px;

@@ -3,10 +3,12 @@ import { Table } from 'hds-react';
 
 import { ConsentData } from '../consents';
 import styles from './CookieConsent.module.css';
+import responsiveStyles from '../../common/cssHelpers/responsive.module.css';
+import MobileTable from './MobileTable';
 
 type UsedProps = keyof Omit<ConsentData, 'value' | 'ariaInputLabel'>;
-type Columns = { key: UsedProps; headerName: string };
-type Row = { [key in UsedProps]: string };
+export type Columns = { key: UsedProps; headerName: string };
+export type Row = { [key in UsedProps]: string };
 
 function RequiredCookieInformation({
   consentList,
@@ -30,7 +32,14 @@ function RequiredCookieInformation({
 
   return (
     <div className={styles['consent-data-table-container']}>
-      <Table cols={cols} rows={rows} indexKey="id" renderIndexCol={false} />
+      <Table
+        cols={cols}
+        rows={rows}
+        indexKey="id"
+        renderIndexCol={false}
+        className={responsiveStyles['visually-hidden-in-mobile']}
+      />
+      <MobileTable cols={cols} rows={rows} />
     </div>
   );
 }
