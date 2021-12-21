@@ -24,7 +24,15 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
+const mockClearServiceConnectionCache = jest.fn();
+jest.mock('../../../../graphql/utils', () => ({
+  clearServiceConnectionCache: () => mockClearServiceConnectionCache(),
+}));
+
 describe('<LanguageSwitcher /> ', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   const selectedLanguageSelector = 'div a[aria-current="page"]';
   const renderComponentAndReturnElements = (): LanguageTestElements => {
     const result = render(
@@ -74,7 +82,8 @@ describe('<LanguageSwitcher /> ', () => {
     mockI18n.language = 'sv-x';
     testLang(renderComponentAndReturnElements(), mockI18n.language);
   });
-  it('calls the i18n.changeLanguage with "sv" when the "sv"-link in the language dropdown is clicked', async () => {
+  it(`calls the i18n.changeLanguage with "sv" when the "sv"-link in the language dropdown is clicked
+      Changing the language also calls a function to clear serviceConnections from cache`, async () => {
     mockI18n.language = 'fi';
     const elements = renderComponentAndReturnElements();
     elements.button.click();
@@ -87,5 +96,6 @@ describe('<LanguageSwitcher /> ', () => {
       expect(mockI18n.changeLanguage).toHaveBeenCalledTimes(1);
       expect(mockI18n.changeLanguage).toHaveBeenCalledWith('sv');
     });
+    expect(mockClearServiceConnectionCache).toHaveBeenCalledTimes(1);
   });
 });

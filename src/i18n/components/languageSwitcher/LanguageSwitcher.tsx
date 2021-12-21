@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
+import { clearServiceConnectionCache } from '../../../graphql/utils';
 
 function LanguageSwitcher(): React.ReactElement {
   const { i18n, t } = useTranslation();
@@ -12,6 +13,7 @@ function LanguageSwitcher(): React.ReactElement {
     e.preventDefault();
     i18n.changeLanguage(code);
     trackEvent({ category: 'action', action: `Language selected ${code}` });
+    clearServiceConnectionCache();
   };
   const i18NLanguageCode = getLanguageCode(i18n.language);
   const languages = [
