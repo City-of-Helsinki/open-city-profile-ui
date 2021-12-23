@@ -1,14 +1,16 @@
 import HttpStatusCode from 'http-status-typed';
 
-import createHttpPoller, { HttpPoller } from '../http-poller';
+import createHttpPoller, { HttpPoller, HttpPollerProps } from '../http-poller';
+
+export type TestResponse = {
+  status: HttpStatusCode.OK | HttpStatusCode.FORBIDDEN | -1;
+  data?: string;
+};
 
 type TestProps = {
-  requestResponse: {
-    status: HttpStatusCode.OK | HttpStatusCode.FORBIDDEN | -1;
-  };
+  requestResponses: TestResponse[];
   onErrorReturnValue: { keepPolling: boolean };
   shouldPollReturnValue: boolean;
-  maxPollCount: number;
 };
 
 jest.unmock('../http-poller');
@@ -18,42 +20,49 @@ describe(`http-poller`, () => {
   const onErrorMockCallback = jest.fn();
   const shouldPollMockCallback = jest.fn();
   const loadCallTracker = jest.fn();
+  const onSuccessMockCallback = jest.fn();
   const intervalInMs = 200;
   let poller: HttpPoller;
+  const forbiddenResponse: TestResponse = { status: HttpStatusCode.FORBIDDEN };
+  const errorResponse: TestResponse = { status: -1 };
+  const successResponse: TestResponse = { status: HttpStatusCode.OK };
   const pollerDefaultTestProps: TestProps = {
-    requestResponse: { status: HttpStatusCode.OK },
+    requestResponses: [successResponse, successResponse, successResponse],
     onErrorReturnValue: { keepPolling: true },
     shouldPollReturnValue: true,
-    maxPollCount: 0,
   };
-  function createPoller(responses: TestProps): HttpPoller {
-    let pollCount = 0;
+  function createPoller(
+    props: TestProps,
+    onSuccess?: HttpPollerProps['onSuccess']
+  ): HttpPoller {
+    const requestResponses = [...props.requestResponses];
     return createHttpPoller({
       pollFunction: async () => {
         pollFunctionMockCallback();
         return new Promise((resolve, reject) => {
           setTimeout(() => {
             loadCallTracker();
-            if (responses.requestResponse.status === -1) {
+            const response = requestResponses.shift() as Response;
+            if (response.status === -1) {
               reject(new Error('An error'));
             } else {
-              resolve(responses.requestResponse as Response);
+              resolve(response);
             }
           }, intervalInMs * 2);
         });
       },
       onError: returnedHttpStatus => {
         onErrorMockCallback(returnedHttpStatus);
-        return responses.onErrorReturnValue;
+        return props.onErrorReturnValue;
       },
       shouldPoll: () => {
         shouldPollMockCallback();
-        if (responses.maxPollCount > 0 && pollCount >= responses.maxPollCount) {
+        if (requestResponses.length === 0) {
           return false;
         }
-        pollCount += 1;
-        return responses.shouldPollReturnValue;
+        return props.shouldPollReturnValue;
       },
+      onSuccess,
       pollIntervalInMs: intervalInMs,
     });
   }
@@ -120,7 +129,7 @@ describe(`http-poller`, () => {
         Polling continues when onError returns {keepPolling : true}`, async () => {
       poller = createPoller({
         ...pollerDefaultTestProps,
-        requestResponse: { status: HttpStatusCode.FORBIDDEN },
+        requestResponses: [forbiddenResponse],
       });
       poller.start();
       await advanceFromStartTimerToLoadEnd();
@@ -134,7 +143,7 @@ describe(`http-poller`, () => {
         and polling stops after error when onError returns {keepPolling : false}`, async () => {
       poller = createPoller({
         ...pollerDefaultTestProps,
-        requestResponse: { status: -1 },
+        requestResponses: [errorResponse],
         onErrorReturnValue: { keepPolling: false },
       });
       poller.start();
@@ -161,7 +170,7 @@ describe(`http-poller`, () => {
     it('Response is ignored if poller.stop is called after load has started', async () => {
       poller = createPoller({
         ...pollerDefaultTestProps,
-        requestResponse: { status: HttpStatusCode.FORBIDDEN },
+        requestResponses: [forbiddenResponse],
       });
       poller.start();
       await advanceToTimerEnd();
@@ -177,7 +186,7 @@ describe(`http-poller`, () => {
     it('Multiple starts do not start multiple requests', async () => {
       poller = createPoller({
         ...pollerDefaultTestProps,
-        requestResponse: { status: HttpStatusCode.FORBIDDEN },
+        requestResponses: [forbiddenResponse],
       });
       poller.start();
       poller.start();
@@ -191,6 +200,78 @@ describe(`http-poller`, () => {
       expect(shouldPollMockCallback).toHaveBeenCalledTimes(1);
       expect(pollFunctionMockCallback).toHaveBeenCalledTimes(1);
       expect(loadCallTracker).toHaveBeenCalledTimes(1);
+    });
+    it(`the onSuccess is called with response object when response is successful
+        Polling continues when onSuccess returns { keepPolling: true }`, async () => {
+      const onSuccess: HttpPollerProps['onSuccess'] = response => {
+        onSuccessMockCallback(response);
+        return { keepPolling: true };
+      };
+      poller = createPoller(pollerDefaultTestProps, onSuccess);
+      poller.start();
+      await advanceFromStartTimerToLoadEnd();
+      expect(shouldPollMockCallback).toHaveBeenCalledTimes(1);
+      expect(onSuccessMockCallback).toHaveBeenCalledTimes(1);
+      expect(onSuccessMockCallback).toBeCalledWith(
+        pollerDefaultTestProps.requestResponses[0]
+      );
+      await advanceToTimerEnd();
+      expect(shouldPollMockCallback).toHaveBeenCalledTimes(2);
+      expect(onSuccessMockCallback).toHaveBeenCalledTimes(1);
+      await advanceFromTimerEndToLoadEnd();
+      expect(shouldPollMockCallback).toHaveBeenCalledTimes(2);
+      expect(onSuccessMockCallback).toHaveBeenCalledTimes(2);
+      await advanceFromStartTimerToLoadEnd();
+      expect(shouldPollMockCallback).toHaveBeenCalledTimes(3);
+      expect(onSuccessMockCallback).toHaveBeenCalledTimes(3);
+    });
+    it(`polling is stopped if onSuccess returns { keepPolling: false }`, async () => {
+      const onSuccess: HttpPollerProps['onSuccess'] = response => {
+        onSuccessMockCallback(response);
+        return { keepPolling: false };
+      };
+      poller = createPoller(pollerDefaultTestProps, onSuccess);
+      poller.start();
+      await advanceFromStartTimerToLoadEnd();
+      expect(shouldPollMockCallback).toHaveBeenCalledTimes(1);
+      expect(onSuccessMockCallback).toHaveBeenCalledTimes(1);
+      await advanceFromStartTimerToLoadEnd();
+      expect(shouldPollMockCallback).toHaveBeenCalledTimes(1);
+      expect(onSuccessMockCallback).toHaveBeenCalledTimes(1);
+      await advanceFromStartTimerToLoadEnd();
+      expect(shouldPollMockCallback).toHaveBeenCalledTimes(1);
+      expect(onSuccessMockCallback).toHaveBeenCalledTimes(1);
+    });
+    it(`the onSuccess is not called when response was not successful`, async () => {
+      const onSuccess: HttpPollerProps['onSuccess'] = response => {
+        onSuccessMockCallback(response);
+        return { keepPolling: false };
+      };
+      poller = createPoller(
+        {
+          ...pollerDefaultTestProps,
+          requestResponses: [forbiddenResponse],
+        },
+        onSuccess
+      );
+      poller.start();
+      await advanceFromStartTimerToLoadEnd();
+      expect(shouldPollMockCallback).toHaveBeenCalledTimes(1);
+      expect(onErrorMockCallback).toHaveBeenCalledTimes(1);
+      expect(onSuccessMockCallback).toHaveBeenCalledTimes(0);
+    });
+    it('the onSuccess is not called when poller.stop is called after load has started', async () => {
+      const onSuccess: HttpPollerProps['onSuccess'] = response => {
+        onSuccessMockCallback(response);
+        return { keepPolling: false };
+      };
+      poller = createPoller(pollerDefaultTestProps, onSuccess);
+      poller.start();
+      await advanceToTimerEnd();
+      poller.stop();
+      await advanceFromTimerEndToLoadEnd();
+      expect(loadCallTracker).toHaveBeenCalledTimes(1);
+      expect(onSuccessMockCallback).toHaveBeenCalledTimes(0);
     });
   });
 });

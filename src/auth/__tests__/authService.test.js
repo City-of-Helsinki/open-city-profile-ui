@@ -1,20 +1,24 @@
 import to from 'await-to-js';
+import { waitFor } from '@testing-library/react';
 
 import authService, { API_TOKEN } from '../authService';
-import { getHttpPollerMockData } from '../__mocks__/http-poller';
+import {
+  getHttpPollerMockData,
+  enableActualHttpPoller,
+} from '../__mocks__/http-poller';
 import i18n from '../../common/test/testi18nInit';
 
 describe('authService', () => {
   const userManager = authService.userManager;
+  const apiToken = '5ed3abc5-9b65-4879-8d09-3cd8499650eh';
+  const accessToken = 'db237bc3-e197-43de-8c86-3feea4c5f886';
 
   const setSession = ({ validUser, validApiToken, optionalUserProps }) => {
-    const validAccessToken = 'db237bc3-e197-43de-8c86-3feea4c5f886';
     const oidcUserKey = `oidc.user:${window._env_.REACT_APP_OIDC_AUTHORITY}:${window._env_.REACT_APP_OIDC_CLIENT_ID}`;
-    const sessionApiToken =
-      validApiToken !== false ? '5ed3abc5-9b65-4879-8d09-3cd8499650eh' : null;
+    const sessionApiToken = validApiToken !== false ? apiToken : null;
     const sessionUser = {
       name: 'Mr. Louisa Tromp',
-      access_token: validUser !== false ? validAccessToken : '',
+      access_token: validUser !== false ? accessToken : '',
       expired: false,
       ...optionalUserProps,
     };
@@ -26,6 +30,25 @@ describe('authService', () => {
       sessionApiToken,
     };
   };
+
+  const spyAndMockSignoutRedirect = () =>
+    jest.spyOn(userManager, 'signoutRedirect').mockImplementation(async () => {
+      // mocking userManager: signout calls removeUser which triggers unload event
+      await userManager.events._userUnloaded.raise();
+      return Promise.resolve();
+    });
+
+  const mockFetchApiToken = () =>
+    global.fetch.mockResponse(
+      JSON.stringify({
+        [window._env_.REACT_APP_PROFILE_AUDIENCE]: apiToken,
+      })
+    );
+
+  const spyAndMockSigninRedirect = user =>
+    jest
+      .spyOn(userManager, 'signinRedirectCallback')
+      .mockImplementation(() => Promise.resolve(user));
 
   afterEach(() => {
     sessionStorage.clear();
@@ -88,6 +111,63 @@ describe('authService', () => {
     });
   });
 
+  describe('isAuthenticatedUser', () => {
+    let validUserObj;
+    beforeEach(() => {
+      validUserObj = setSession({
+        validUser: true,
+      }).sessionUser;
+    });
+    const getCurrentTimeInSeconds = () => Math.round(Date.now() / 1000);
+    it('should return true if user is not expired and has access_token', () => {
+      expect(authService.isAuthenticatedUser(validUserObj)).toBe(true);
+    });
+    it('should return false if user is not expired and access_token is not valid', () => {
+      expect(
+        authService.isAuthenticatedUser({ ...validUserObj, access_token: '' })
+      ).toBe(false);
+    });
+    it('should return false if passed user is not a valid User object', () => {
+      expect(authService.isAuthenticatedUser()).toBe(false);
+      expect(authService.isAuthenticatedUser(null)).toBe(false);
+      expect(authService.isAuthenticatedUser({})).toBe(false);
+    });
+    it('should return true if user.expired is not set and time in user.expires_at has not passed', () => {
+      expect(
+        authService.isAuthenticatedUser({
+          ...validUserObj,
+          expired: undefined,
+          expires_at: getCurrentTimeInSeconds() + 1000,
+        })
+      ).toBe(true);
+    });
+    it('should return false if user.expired is not set and time in user.expires_at has passed', () => {
+      expect(
+        authService.isAuthenticatedUser({
+          ...validUserObj,
+          expired: undefined,
+          expires_at: getCurrentTimeInSeconds() - 1,
+        })
+      ).toBe(false);
+    });
+    it('should return !user.expired if it is set and ignore user.expires_at', () => {
+      expect(
+        authService.isAuthenticatedUser({
+          ...validUserObj,
+          expires_at: getCurrentTimeInSeconds() + 1000,
+          expired: true,
+        })
+      ).toBe(false);
+      expect(
+        authService.isAuthenticatedUser({
+          ...validUserObj,
+          expires_at: 1,
+          expired: false,
+        })
+      ).toBe(true);
+    });
+  });
+
   describe('login', () => {
     const defaultSigninParams = {
       data: { path: '/' },
@@ -118,44 +198,43 @@ describe('authService', () => {
   describe('endLogin', () => {
     let sessionUser;
     beforeEach(() => {
-      global.fetch.mockResponse(JSON.stringify({ data: {} }));
+      mockFetchApiToken();
       sessionUser = setSession({
         validApiToken: true,
         validUser: true,
       }).sessionUser;
     });
 
-    it('should call signinRedirectCallback from oidc', () => {
-      const signinRedirectCallback = jest
-        .spyOn(userManager, 'signinRedirectCallback')
-        .mockImplementation(() => Promise.resolve(sessionUser));
+    it('should call signinRedirectCallback from oidc', async () => {
+      const signinRedirectCallback = spyAndMockSigninRedirect(sessionUser);
 
-      authService.endLogin();
+      await authService.endLogin();
 
       expect(signinRedirectCallback).toHaveBeenCalledTimes(1);
     });
 
     it('should return the same user object returned from signinRedirectCallback', async () => {
       expect.assertions(1);
-      jest
-        .spyOn(userManager, 'signinRedirectCallback')
-        .mockReturnValue(Promise.resolve(sessionUser));
+      spyAndMockSigninRedirect(sessionUser);
 
       const user = await authService.endLogin();
 
       expect(user).toBe(sessionUser);
     });
 
-    it('should call fetchApiToken with the user object', async () => {
+    it('should call fetchAndStoreApiToken with the user object', async () => {
       expect.assertions(1);
-      jest.spyOn(authService, 'fetchApiToken');
+      jest.spyOn(authService, 'fetchAndStoreApiToken');
       jest
         .spyOn(userManager, 'signinRedirectCallback')
         .mockResolvedValue(sessionUser);
 
       await authService.endLogin();
 
-      expect(authService.fetchApiToken).toHaveBeenNthCalledWith(1, sessionUser);
+      expect(authService.fetchAndStoreApiToken).toHaveBeenNthCalledWith(
+        1,
+        sessionUser
+      );
     });
 
     it('should set the user in sessionStorage before the function returns', async () => {
@@ -164,7 +243,6 @@ describe('authService', () => {
       jest
         .spyOn(userManager, 'signinRedirectCallback')
         .mockResolvedValue(sessionUser);
-      jest.spyOn(authService, 'fetchApiToken');
 
       await authService.endLogin();
 
@@ -211,18 +289,17 @@ describe('authService', () => {
 
     it('should remove the tokens from sessionStorage', async () => {
       expect.assertions(1);
-      jest.spyOn(userManager, 'signoutRedirect').mockResolvedValue(undefined);
+      spyAndMockSignoutRedirect();
       const apiTokens = 'a8d56df4-7ae8-4fbf-bf73-f366cd6fc479';
 
       sessionStorage.setItem(API_TOKEN, apiTokens);
       await authService.logout();
-
       expect(sessionStorage.getItem(API_TOKEN)).toBeNull();
     });
 
     it('should call clearStaleState', async () => {
       expect.assertions(1);
-      jest.spyOn(userManager, 'signoutRedirect').mockResolvedValue(undefined);
+      spyAndMockSignoutRedirect();
       jest.spyOn(userManager, 'clearStaleState').mockResolvedValue();
 
       await authService.logout();
@@ -231,8 +308,8 @@ describe('authService', () => {
     });
   });
 
-  describe('fetchApiToken', () => {
-    const access_token = 'db237bc3-e197-43de-8c86-3feea4c5f886';
+  describe('fetchAndStoreApiToken', () => {
+    const access_token = accessToken;
     const mockUser = {
       name: 'Penelope Krajcik',
       access_token,
@@ -240,18 +317,12 @@ describe('authService', () => {
 
     beforeEach(() => {
       global.fetch.resetMocks();
-
-      global.fetch.mockResponse(
-        JSON.stringify({
-          [window._env_.REACT_APP_PROFILE_AUDIENCE]:
-            '71ffd52c-5985-46d3-b445-490554f4012a',
-        })
-      );
+      mockFetchApiToken();
     });
 
     it('should call fetch with the right arguments', async () => {
       expect.assertions(2);
-      await authService.fetchApiToken(mockUser);
+      await authService.fetchAndStoreApiToken(mockUser);
 
       expect(global.fetch).toHaveBeenCalledTimes(1);
       expect(global.fetch.mock.calls[0]).toMatchInlineSnapshot(`
@@ -259,7 +330,7 @@ describe('authService', () => {
           "https://api.hel.fi/sso/openid/api-tokens/",
           Object {
             "headers": Object {
-              "authorization": "bearer db237bc3-e197-43de-8c86-3feea4c5f886",
+              "authorization": "bearer ${accessToken}",
             },
           },
         ]
@@ -269,19 +340,91 @@ describe('authService', () => {
     it('should call sessionStorage.setItem with the right arguments', async () => {
       const setSpy = jest.spyOn(Storage.prototype, 'setItem');
       expect.assertions(2);
-      await authService.fetchApiToken(mockUser);
+      await authService.fetchAndStoreApiToken(mockUser);
 
       expect(setSpy).toHaveBeenCalledTimes(1);
       expect(setSpy.mock.calls[0]).toMatchInlineSnapshot(`
         Array [
           "apiToken",
-          "71ffd52c-5985-46d3-b445-490554f4012a",
+          "${apiToken}",
         ]
       `);
     });
   });
 
-  describe('getAuthenticatedUser', () => {
+  describe(`Api tokens are fetched again after user tokens are renewed.
+            After silent renew completes, the _userLoaded event is raised and...`, () => {
+    beforeEach(() => {
+      global.fetch.resetMocks();
+      mockFetchApiToken();
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    beforeAll(() => {
+      enableActualHttpPoller(jest.requireActual('../http-poller'));
+    });
+
+    const defaultApiTokenPollIntervalInMs = 500;
+    const requestCompletionInMs = defaultApiTokenPollIntervalInMs + 1;
+
+    it('fetchApiToken is called and new token is stored when fetch is successful', async () => {
+      const { sessionUser } = setSession({
+        validUser: true,
+        validApiToken: true,
+      });
+      sessionStorage.setItem(API_TOKEN, 'old token to be replaced');
+
+      const fetcApiTokenSpy = jest.spyOn(authService, 'fetchApiToken');
+
+      await userManager.events._userLoaded.raise(sessionUser);
+      expect(fetcApiTokenSpy).toHaveBeenCalledTimes(1);
+      jest.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(fetcApiTokenSpy).toHaveBeenCalledTimes(1);
+        expect(sessionStorage.getItem(API_TOKEN)).toEqual(apiToken);
+      });
+    });
+    it('fetchApiToken calls are retried until maxRetries is reached. Then authService.logout() is called', async () => {
+      const { sessionUser } = setSession({
+        validUser: true,
+        validApiToken: true,
+      });
+      const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
+      const logoutSpy = jest
+        .spyOn(authService, 'logout')
+        .mockImplementation(() => undefined);
+      const fetcApiTokenSpy = jest
+        .spyOn(authService, 'fetchApiToken')
+        .mockImplementation(() => Promise.reject());
+
+      await userManager.events._userLoaded.raise(sessionUser);
+      expect(fetcApiTokenSpy).toHaveBeenCalledTimes(1);
+      jest.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(fetcApiTokenSpy).toHaveBeenCalledTimes(2);
+      });
+      jest.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(fetcApiTokenSpy).toHaveBeenCalledTimes(3);
+      });
+      jest.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(fetcApiTokenSpy).toHaveBeenCalledTimes(4);
+      });
+      jest.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(setItemSpy).not.toHaveBeenCalled();
+        expect(fetcApiTokenSpy).toHaveBeenCalledTimes(5);
+        expect(logoutSpy).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('getAuthenticatedUser ', () => {
     it('should resolve to the user value when user is valid', async () => {
       const { sessionUser } = setSession({
         validUser: true,
@@ -319,17 +462,26 @@ describe('authService', () => {
       await to(authService.getAuthenticatedUser());
       expect(mockHttpPoller.start).toHaveBeenCalledTimes(0);
     });
-    it('should start when user is loaded', () => {
-      userManager.events._userLoaded.raise({});
+    it('should start in endLogin', async () => {
+      const { sessionUser } = setSession({
+        validUser: true,
+        validApiToken: true,
+      });
+      spyAndMockSigninRedirect(sessionUser);
+      await authService.endLogin();
       expect(mockHttpPoller.start).toHaveBeenCalledTimes(1);
     });
-    it('should stop when user is unloaded', () => {
-      userManager.events._userUnloaded.raise();
-      expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+    it('should stop when user is unloaded', async () => {
+      await userManager.events._userUnloaded.raise();
+      await waitFor(() => {
+        expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+      });
     });
-    it('should stop when user is signedOut', () => {
-      userManager.events._userSignedOut.raise();
-      expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+    it('should stop when user is signedOut', async () => {
+      await userManager.events._userSignedOut.raise();
+      await waitFor(() => {
+        expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });
