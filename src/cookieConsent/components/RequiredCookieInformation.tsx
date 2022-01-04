@@ -32,13 +32,9 @@ function RequiredCookieInformation({
 
   return (
     <div className={styles['consent-data-table-container']}>
-      <Table
-        cols={cols}
-        rows={rows}
-        indexKey="id"
-        renderIndexCol={false}
-        className={responsiveStyles['visually-hidden-in-mobile']}
-      />
+      <div className={responsiveStyles['visually-hidden-in-mobile']}>
+        <Table cols={cols} rows={rows} indexKey="id" renderIndexCol={false} />
+      </div>
       <MobileTable cols={cols} rows={rows} />
     </div>
   );
