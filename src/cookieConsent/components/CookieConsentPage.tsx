@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { Notification } from 'hds-react';
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import commonContentStyles from '../../common/cssHelpers/content.module.css';
 import PageLayout from '../../common/pageLayout/PageLayout';
@@ -78,6 +79,9 @@ function CookieConsentPage(): React.ReactElement | null {
               className={styles['notification']}
             />
           )}
+          <Link to="/" className={styles['frontpage-button']}>
+            {t('nav.goToHomePage')}
+          </Link>
         </div>
       </div>
     </PageLayout>

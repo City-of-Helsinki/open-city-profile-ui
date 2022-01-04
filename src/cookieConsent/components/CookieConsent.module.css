@@ -48,7 +48,7 @@
 
 .content {
   position: relative;
-  padding: 20px 20px 0 20px;
+  padding: var(--spacing-m);
   background: #ffffff;
   width: 100%;
   box-sizing: border-box;
@@ -145,8 +145,13 @@
   width: 10%;
 }
 
-.notification {
+.notification,
+.frontpage-button {
   margin-top: var(--spacing-layout-xs);
+}
+
+.frontpage-button {
+  display: block;
 }
 
 .mobile-table {

@@ -113,15 +113,17 @@ function CookieConsent(): React.ReactElement | null {
                 }}
               />
             )}
-            <CookieConsentButtons
-              onReadMore={!showMore ? () => setShowMore(true) : undefined}
-              onApproveAll={() => {
-                approveAll();
-              }}
-              onApproveRequired={() => {
-                approveRequired();
-              }}
-            />
+            {!showMore && (
+              <CookieConsentButtons
+                onReadMore={!showMore ? () => setShowMore(true) : undefined}
+                onApproveAll={() => {
+                  approveAll();
+                }}
+                onApproveRequired={() => {
+                  approveRequired();
+                }}
+              />
+            )}
             <div
               className={styles['language-switcher']}
               data-testid="cookie-consent-language-switcher"
