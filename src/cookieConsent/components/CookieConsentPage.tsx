@@ -10,6 +10,7 @@ import { ConsentController } from '../cookieConsentController';
 import styles from './CookieConsent.module.css';
 import { CookieConsentContext } from './CookieConsentContext';
 import CookieDetails from './CookieDetails';
+import CookieConsentButtons from './CookieConsentButtons';
 
 function CookieConsentPage(): React.ReactElement | null {
   const cookieConsentContext = useContext(CookieConsentContext);
@@ -66,11 +67,15 @@ function CookieConsentPage(): React.ReactElement | null {
             requiredConsents={cookieConsentContext.getRequired()}
             optionalConsents={cookieConsentContext.getOptional()}
             onChange={onChange}
-            onClose={() => undefined}
+            isOnSettingsPage
+          />
+          <CookieConsentButtons
+            onApproveRequired={() => {
+              approveRequired();
+            }}
             onApproveSelectionsAndRequired={() => {
               approveRequired();
             }}
-            isOnSettingsPage
           />
           {showSaveNotification && (
             <Notification

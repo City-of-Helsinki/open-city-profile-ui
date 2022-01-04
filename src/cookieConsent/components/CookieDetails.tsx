@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'hds-react';
 
 import { ConsentController, ConsentObject } from '../cookieConsentController';
 import CookieToggler from './CookieToggler';
@@ -12,16 +11,12 @@ export type CookieDetailProps = {
   requiredConsents: ConsentObject;
   optionalConsents: ConsentObject;
   onChange: ConsentController['update'];
-  onClose: () => void;
-  onApproveSelectionsAndRequired: () => void;
   isOnSettingsPage?: boolean;
 };
 
 function CookieDetails({
-  onClose,
   optionalConsents,
   onChange,
-  onApproveSelectionsAndRequired,
   isOnSettingsPage,
 }: CookieDetailProps): React.ReactElement {
   const { t } = useTranslation();
@@ -67,26 +62,7 @@ function CookieDetails({
             consentList={getConsentInfo('optional', t, optionalConsents)}
             onChange={onChange}
           />
-          <Button
-            variant="secondary"
-            onClick={() => {
-              onApproveSelectionsAndRequired();
-            }}
-            data-testid="cookie-consent-approve-selections-button"
-          >
-            {t('cookies.approveSelectionsAndRequired')}
-          </Button>
         </React.Fragment>
-      )}
-      {!isOnSettingsPage && (
-        <p>
-          <button
-            className={styles['plain-text-button']}
-            onClick={() => onClose()}
-          >
-            {t('cookies.backToBeginning')}
-          </button>
-        </p>
       )}
     </div>
   );

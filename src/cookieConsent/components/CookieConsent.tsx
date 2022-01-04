@@ -107,22 +107,36 @@ function CookieConsent(): React.ReactElement | null {
                 requiredConsents={cookieConsentContext.getRequired()}
                 optionalConsents={cookieConsentContext.getOptional()}
                 onChange={onChange}
-                onClose={() => setShowMore(false)}
-                onApproveSelectionsAndRequired={() => {
-                  approveRequired();
-                }}
               />
             )}
-            {!showMore && (
-              <CookieConsentButtons
-                onReadMore={!showMore ? () => setShowMore(true) : undefined}
-                onApproveAll={() => {
-                  approveAll();
-                }}
-                onApproveRequired={() => {
-                  approveRequired();
-                }}
-              />
+            <CookieConsentButtons
+              onApproveAll={
+                !showMore
+                  ? () => {
+                      approveAll();
+                    }
+                  : undefined
+              }
+              onApproveRequired={() => {
+                approveRequired();
+              }}
+              onApproveSelectionsAndRequired={
+                showMore
+                  ? () => {
+                      approveRequired();
+                    }
+                  : undefined
+              }
+            />
+            {showMore && (
+              <p>
+                <button
+                  className={styles['plain-text-button']}
+                  onClick={() => setShowMore(false)}
+                >
+                  {t('cookies.backToBeginning')}
+                </button>
+              </p>
             )}
             <div
               className={styles['language-switcher']}

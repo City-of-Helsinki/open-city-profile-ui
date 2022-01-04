@@ -255,20 +255,20 @@
   "cookies": {
     "informationTitle": "Profile uses cookies",
     "informationText": "This website uses essential cookies to ensure site performance and for basic analytics. In addition, we use targeting cookies to improve the user experience and for analytics. By continuing to use the site, you agree to the use of essential cookies.",
-    "showCookies": "Show cookies",
+    "showSettings": "Show settings",
+    "hideSettings": "Hide settings",
     "approveAll": "Accept all cookies",
-    "approveRequired": "Only essential cookies",
-    "approveRequiredAriaLabel": "Accept only essential cookies",
+    "approveRequired": "EN: Hyväksy vain pakolliset evästeet",
+    "approveSelected": "EN: Hyväksy valitut evästeet",
     "rejectAll": "Reject cookies",
     "cookieSettings": "Cookie settings",
     "detailsTitle": "About cookies on this site",
     "detailsText": "The cookies used on the website are categorised in accordance with their purpose. You can find information about the cookie categories and allow or disallow the use of cookies below.",
     "requiredConsentsTitle": "Essential cookies",
     "requiredConsentsText": "Strictly necessary cookies cannot be rejected. They enable the proper functioning of the website and affect the user-friendliness of the site.",
-    "optionalConsentsAndDataGathering": "EN: Muut evästeet ja tietojen kerääminen",
-    "approveSelectionsAndRequired": "Accept the selected and necessary cookies",
+    "optionalConsentsAndDataGathering": "Other cookies and data collection",
     "backToBeginning": "Back to the beginning",
-    "matomoTitle": "EN: Tilastointievästeet ja tietojen kerääminen",
+    "matomoTitle": "Statistical cookies and data collection",
     "matomoText": "The information collected by statistics cookies is used for developing the website.",
     "matomoAriaInputText": "Accept or reject statistics cookies. {{consentText}}",
     "consentSettingsSaved": "EN: Evästeasetukset tallennettu!",
@@ -279,6 +279,6 @@
     "generalLocaleText": "Required to persist the user's chosen language.",
     "generalSecurityText": "A security control (CSRF).",
     "expirationTimeSession": "Session",
-    "settingsDescription": "EN: Voit myöhemmin muuttaa evästeasetuksia sivun alalaidasta löytyvästä linkistä. Linkin takaa löytyy myös evästeiden tarkemmat tiedot."
+    "settingsDescription": "You can change your cookie settings later via the link at the bottom of the page. You can also find more detailed information about cookies via the link."
   }
 }

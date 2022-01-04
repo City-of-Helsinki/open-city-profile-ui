@@ -34,7 +34,7 @@ function CookieMainInformation({
           onClick={() => onReadMore()}
           data-testid="cookie-consent-read-more-text-button"
         >
-          {t('cookies.showCookies')}
+          {t('cookies.showSettings')}
         </button>
       </p>
     </div>
