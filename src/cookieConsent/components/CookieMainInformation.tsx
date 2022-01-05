@@ -2,13 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './CookieConsent.module.css';
-export type CookieMainInformationProps = {
-  onReadMore: () => void;
-};
 
-function CookieMainInformation({
-  onReadMore,
-}: CookieMainInformationProps): React.ReactElement {
+function CookieMainInformation(): React.ReactElement {
   const { t } = useTranslation();
   return (
     <div
@@ -28,14 +23,6 @@ function CookieMainInformation({
 
       <p id="cookie-consent-description">
         {t('cookies.informationText')} {t('cookies.settingsDescription')}
-        &nbsp;
-        <button
-          className={styles['plain-text-button']}
-          onClick={() => onReadMore()}
-          data-testid="cookie-consent-read-more-text-button"
-        >
-          {t('cookies.showSettings')}
-        </button>
       </p>
     </div>
   );
