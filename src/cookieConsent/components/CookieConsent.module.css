@@ -95,7 +95,7 @@
   padding-left: 10px;
 }
 
-.plain-text-button {
+.accordion-button {
   border: none;
   background: transparent;
   display: inline-block;
@@ -103,20 +103,39 @@
   color: var(--color-bus);
   padding: 0;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.accordion-button svg {
+  margin-left: -5px;
+}
+
+.accordion-button span {
+  padding-left: 0.3em;
 }
 
 .emulated-h1 {
-  font-size: var(--fontsize-heading-m);
+  font-size: var(--h2-size);
   font-weight: bold;
   display: block;
   padding: 0;
 }
 
-.emulated-h2 {
-  font-size: var(--fontsize-heading-s);
+.emulated-h2,
+.emulated-h3 {
+  font-size: var(--h3-size);
   font-weight: bold;
   display: block;
   padding: 1.2em 0 0.5em;
+}
+.emulated-h2:first-child {
+  padding-top: 0;
+}
+
+.emulated-h3 {
+  font-size: var(--fontsize-heading-s);
+  padding-bottom: 0;
 }
 
 .emulated-h2 + p {

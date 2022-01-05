@@ -28,7 +28,7 @@ function CookieDetails({
     children: React.ReactNode;
   }) => {
     if (isOnSettingsPage) {
-      return level === 1 ? <h2>{children}</h2> : <h3>{children}</h3>;
+      return level === 2 ? <h2>{children}</h2> : <h3>{children}</h3>;
     }
     return (
       <span
@@ -48,9 +48,9 @@ function CookieDetails({
       className={styles['text-content']}
       data-testid="cookie-consent-details"
     >
-      <Heading level={1}>{t('cookies.detailsTitle')}</Heading>
+      <Heading level={2}>{t('cookies.detailsTitle')}</Heading>
       <p>{t('cookies.detailsText')}</p>
-      <Heading level={2}>{t('cookies.requiredConsentsTitle')}</Heading>
+      <Heading level={3}>{t('cookies.requiredConsentsTitle')}</Heading>
       <p>{t('cookies.requiredConsentsText')}</p>
       <RequiredCookieInformation consentList={getConsentInfo('required', t)} />
       {optionalConsents && (

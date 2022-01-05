@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { Card, IconAngleUp, IconAngleDown, useAccordion } from 'hds-react';
 
 import styles from './CookieConsent.module.css';
 import CookieDetails from './CookieDetails';
@@ -19,7 +20,14 @@ function CookieConsent(): React.ReactElement | null {
 
   const [, forceUpdate] = useState<number>(0);
 
-  const [showMore, setShowMore] = useState<boolean>(false);
+  const { isOpen, buttonProps, contentProps } = useAccordion({
+    initiallyOpen: false,
+  });
+  const Icon = isOpen ? IconAngleUp : IconAngleDown;
+
+  const settingsButtonText = isOpen
+    ? t('cookies.hideSettings')
+    : t('cookies.showSettings');
 
   const [
     showScreenReaderSaveNotification,
@@ -99,19 +107,27 @@ function CookieConsent(): React.ReactElement | null {
             id="cookie-consent-content"
             aria-live="assertive"
           >
-            {!showMore && (
-              <CookieMainInformation onReadMore={() => setShowMore(true)} />
-            )}
-            {showMore && (
+            <CookieMainInformation />
+            <button {...buttonProps} className={styles['accordion-button']}>
+              <Icon aria-hidden />
+              <span>{settingsButtonText}</span>
+            </button>
+            <Card
+              {...contentProps}
+              theme={{
+                '--padding-horizontal': '0',
+                '--padding-vertical': ' var(--spacing-layout-2-xs)',
+              }}
+            >
               <CookieDetails
                 requiredConsents={cookieConsentContext.getRequired()}
                 optionalConsents={cookieConsentContext.getOptional()}
                 onChange={onChange}
               />
-            )}
+            </Card>
             <CookieConsentButtons
               onApproveAll={
-                !showMore
+                !isOpen
                   ? () => {
                       approveAll();
                     }
@@ -121,23 +137,13 @@ function CookieConsent(): React.ReactElement | null {
                 approveRequired();
               }}
               onApproveSelectionsAndRequired={
-                showMore
+                isOpen
                   ? () => {
                       approveRequired();
                     }
                   : undefined
               }
             />
-            {showMore && (
-              <p>
-                <button
-                  className={styles['plain-text-button']}
-                  onClick={() => setShowMore(false)}
-                >
-                  {t('cookies.backToBeginning')}
-                </button>
-              </p>
-            )}
             <div
               className={styles['language-switcher']}
               data-testid="cookie-consent-language-switcher"
