@@ -25,6 +25,8 @@ import {
   MyProfileQuery_myProfile_primaryEmail,
   MyProfileQuery_myProfile_primaryPhone,
   ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges,
+  HelTranslationLanguage,
+  ServiceConnectionsQueryVariables as ServiceConnectionsQueryVars,
 } from './generatedTypes';
 
 export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
@@ -75,6 +77,8 @@ export type PermanentAddress = MyProfileQuery_myProfile_verifiedPersonalInformat
 
 export type ServiceConnectionsRoot = ServiceConnectionsQuery;
 export type ServiceConnectionsNode = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node;
+export type TranslationLanguage = HelTranslationLanguage;
+export type ServiceConnectionsQueryVariables = ServiceConnectionsQueryVars;
 export type Service = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
 // eslint-disable-next-line max-len
 export type ServiceAllowedFieldsNode = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node;
