@@ -6,6 +6,9 @@ TARGETDIR=${2:-.}
 rm -f $TARGETDIR/env-config.js
 touch $TARGETDIR/env-config.js
 
+REACT_APP_VERSION=$(grep -m1 version $ENVDIR/package.json | awk -F: '{ print $2 }' | sed 's/[", ]//g')
+REACT_APP_APPLICATION_NAME=$(grep -m1 name $ENVDIR/package.json | awk -F: '{ print $2 }' | sed 's/[", ]//g')
+
 # Add assignment
 echo "window._env_ = {" >> $TARGETDIR/env-config.js
 
