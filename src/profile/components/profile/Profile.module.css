@@ -1,3 +1,16 @@
-.loading {
-  margin-top: 30px;
+.error-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--spacing-l) 0;
+}
+
+.error-button-wrapper {
+  display: flex;
+  flex-direction: row;
+  padding: var(--spacing-m) 0;
+}
+
+.error-button-wrapper > * {
+  margin-right: var(--spacing-m);
 }

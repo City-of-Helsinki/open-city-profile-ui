@@ -1,29 +1,46 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import FileSaver from 'file-saver';
+import * as Sentry from '@sentry/browser';
+import { loader } from 'graphql.macro';
+import { Button } from 'hds-react';
 
-import Button from '../../../common/button/Button';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './DownloadData.module.css';
+import { DownloadMyProfileQuery as DownloadMyProfileRoot } from '../../../graphql/generatedTypes';
+import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
+import useToast from '../../../toast/useToast';
 
-type Props = {
-  isDownloadingData: boolean;
-  isOpenByDefault: boolean;
-  onDownloadClick: () => void;
-};
+const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
-function DownloadData({
-  isDownloadingData,
-  isOpenByDefault,
-  onDownloadClick,
-}: Props) {
+function DownloadData(): React.ReactElement {
+  const { createToast } = useToast();
+  const [downloadProfileData, , loading] = useDownloadProfile<
+    DownloadMyProfileRoot
+  >(ALL_DATA, {
+    onCompleted: returnedData => {
+      const blob = new Blob([returnedData.downloadMyProfile], {
+        type: 'application/json',
+      });
+      FileSaver.saveAs(blob, 'helsinkiprofile_data.json');
+    },
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      createToast({ type: 'error' });
+    },
+    fetchPolicy: 'network-only',
+  });
   const { t } = useTranslation();
+  const isDownloadingData = loading;
+  const initiallyOpen = loading;
+  const onDownloadClick = downloadProfileData;
 
   return (
     <React.Fragment>
       <ExpandingPanel
         title={t('downloadData.panelTitle')}
-        defaultExpanded={isOpenByDefault}
-        scrollIntoViewOnMount={isOpenByDefault}
+        initiallyOpen={initiallyOpen}
+        scrollIntoViewOnMount={initiallyOpen}
       >
         <p>{t('downloadData.panelText')}</p>
         <Button

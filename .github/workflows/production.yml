@@ -16,6 +16,11 @@ env:
   BUILD_ARTIFACT_FOLDER: 'build_artifacts'
   SERVICE_ARTIFACT_FOLDER: 'service_artifacts'
   SERVICE_PORT: 80
+  K8S_REQUEST_CPU: 1m
+  K8S_REQUEST_RAM: 10Mi
+  K8S_LIMIT_CPU: 10m
+  K8S_LIMIT_RAM: 20Mi
+  K8S_REPLICACOUNT: 2
 
 jobs:
   build:
@@ -28,9 +33,6 @@ jobs:
         uses: andersinno/kolga-build-action@v2
         env:
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-production
-          DOCKER_BUILD_ARG_REACT_APP_ENVIRONMENT: 'production'
-          DOCKER_BUILD_ARG_REACT_APP_OIDC_AUTHORITY: "https://api.hel.fi/sso/"
-          DOCKER_BUILD_ARG_REACT_APP_PROFILE_GRAPHQL: "https://api.hel.fi/profiili/graphql/"
 
   production:
     if: startsWith(github.ref, 'refs/tags')
@@ -50,3 +52,9 @@ jobs:
           K8S_ADDITIONAL_HOSTNAMES: ${{ secrets.K8S_ADDITIONAL_HOSTNAMES }}
           ENVIRONMENT_URL: https://${{ secrets.ENVIRONMENT_URL_STABLE }}
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-production
+          K8S_SECRET_REACT_APP_ENVIRONMENT: 'production'
+          K8S_SECRET_REACT_APP_OIDC_AUTHORITY: 'https://api.hel.fi/sso/'
+          K8S_SECRET_REACT_APP_PROFILE_GRAPHQL: 'https://api.hel.fi/profiili/graphql/'
+          K8S_SECRET_REACT_APP_OIDC_RESPONSE_TYPE: 'id_token token'
+          K8S_SECRET_REACT_APP_OIDC_CLIENT_ID: 'https://api.hel.fi/auth/helsinkiprofile-ui'
+          K8S_SECRET_REACT_APP_OIDC_SCOPE: 'openid profile https://api.hel.fi/auth/helsinkiprofile'

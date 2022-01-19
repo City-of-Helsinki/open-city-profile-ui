@@ -19,14 +19,14 @@ interface Props {
   children: React.ReactElement;
 }
 
-function ToastProvider({ children }: Props) {
+function ToastProvider({ children }: Props): React.ReactElement {
   const [state, dispatch] = React.useReducer(toastReducer, { toasts: [] });
 
   const createToast = React.useCallback((toast: LaxToast = {}): string => {
     const id = uuid();
     const toastWithDefaults: ToastType = {
       id: uuid(),
-      type: 'notification',
+      type: 'info',
       hidden: false,
       ...toast,
     };
@@ -72,7 +72,7 @@ function ToastProvider({ children }: Props) {
       }}
     >
       {ReactDOM.createPortal(
-        <div className={styles.toastContainer}>
+        <div className={styles['toast-container']}>
           {toasts.map(toast => (
             <Toast
               key={toast.id}

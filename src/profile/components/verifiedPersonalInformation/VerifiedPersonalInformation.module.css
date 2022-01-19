@@ -1,0 +1,11 @@
+.verified-data-icon-information {
+  display: flex;
+  border-top: 1px solid var(--color-black-30);
+  width: 100%;
+  padding-top: var(--spacing-layout-2-xs);
+}
+
+.verified-data-icon-information p {
+  margin-top: 0;
+  padding-left: var(--spacing-layout-2-xs);
+}

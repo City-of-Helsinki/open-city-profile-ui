@@ -1,5 +1,16 @@
 {
   "appName": "Profiili",
+  "authentication": {
+    "deviceTimeError": {
+      "message": "Et voi kirjautua sisään, koska laitteesi kello on yli 5 minuuttia väärässä. Säädä kelloa ja kokeile uudestaan."
+    },
+    "permissionRequestDenied": {
+      "message": "Sinun täytyy hyväksyä pyytämämme oikeudet Tunnistamossa käyttääksesi tätä palvelua. Ole hyvä ja yritä kirjautua uudelleen."
+    },
+    "genericError": {
+      "message": "Tapahtui virhe. Yritä uudestaan"
+    }
+  },
   "berthErrors": {
     "close": "Sulje",
     "explanation": "Et voi poistaa tietojasi, koska Venepaikka-palvelu tarvitsee tietojasi laskutukseen. Ota yhteyttä Venepaikka-palvelun asiakaspalveluun irtisanoaksesi sopimuksesi ja yritä sen jälkeen poistoa uudelleen.",
@@ -9,6 +20,10 @@
     "cancel": "Peruuta",
     "close": "Sulje",
     "save": "Tallenna",
+    "remove": "Poista",
+    "removeEmail": "Poistetaanko sähköpostiosoite?",
+    "removePhone": "Poistetaanko puhelinnumero?",
+    "removeAddress": "Poistetaanko osoite?",
     "saveMessage": "Muuttamasi tiedot ovat heti käytössä seuraavissa Helsingin kaupungin palveluissa:",
     "saveTitle": "Haluatko tallentaa tekemäsi muutokset?"
   },
@@ -20,8 +35,9 @@
   "deleteProfile": {
     "accept": "Ymmärrän mitä tietojeni poistaminen tarkoittaa ja haluan jatkaa.",
     "delete": "Poista omat tiedot",
-    "explanation": "Jos haluat, voit poistaa kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Jos olet yhdistänyt profiilisi johonkin Helsingin kaupungin palveluun, et enää pysty käyttämään kyseistä palvelua ennen kuin luot uuden profiilin. Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta. Huomaa, että kirjautumiseen käyttämääsi tiliä (esim. Google, Facebook) ei poisteta.",
-    "title": "Haluatko poistaa omat tietosi?"
+    "explanation": "Jos haluat, voit poistaa kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Jos olet yhdistänyt profiilisi johonkin Helsingin kaupungin palveluun, et enää pysty käyttämään kyseistä palvelua ennen kuin luot uuden profiilin. Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta. Jos olet käyttänyt kirjautumisessa ulkopuolisen palveluntarjoajan tiliä (esim. Google tai Facebook), kyseistä tiliä ei poisteta. ",
+    "title": "Haluatko poistaa omat tietosi?",
+    "loadingServices": "Haetaan profiiliin yhdistettyjä palveluita"
   },
   "deleteProfileModal": {
     "delete": "Poista omat tiedot",
@@ -29,14 +45,19 @@
     "noServiceExplanation": "Jatkamalla menetät kaikki tallennetut tietosi.",
     "title": "Haluatko varmasti poistaa kaikki tietosi?"
   },
+  "deleteProfileErrorModal": {
+    "notAllowed": "Et voi poistaa profiiliasi, koska jokin sitä käyttävistä palveluista tarvitsee tietojasi esimerkiksi laskutukseen.",
+    "title": "Poisto epäonnistui!",
+    "genericError": "Profiilin poistaminen ei onnistunut. Yritä myöhemmin uudelleen."
+  },
   "downloadData": {
     "button": "Lataa omat tiedot",
     "panelText": "Jos haluat nähdä kaikki sinusta tallentamamme tiedot, voit ladata ne tästä. Tiedot toimitetaan määrämuotoisena tiedostona, jotta voit halutessasi siirtää tiedot johonkin toiseen järjestelmään.",
     "panelTitle": "Haluatko ladata omat tietosi?"
   },
   "expandingPanel": {
-    "hideInformation": "PIILOTA TIEDOT",
-    "showInformation": "NÄYTÄ TIEDOT"
+    "hideInformation": "Piilota tiedot",
+    "showInformation": "Näytä tiedot"
   },
   "footer": {
     "accessibility": "Saavutettavuusseloste",
@@ -44,12 +65,15 @@
     "feedback": "Anna palautetta",
     "feedbackLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/anna-palautetta",
     "privacy": "Rekisteriseloste",
-    "reserveRights": "Kaikki oikeudet pidätetään"
+    "reserveRights": "Kaikki oikeudet pidätetään",
+    "contactUs": "Ota yhteyttä",
+    "contactUsLink": "https://hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/ota-yhteytta/ota-yhteytta",
+    "backToTop": "Sivun alkuun"
   },
   "helsinkiLogo": "Helsinki-logo",
   "landmarks": {
     "navigation": {
-      "language": "Kieli",
+      "language": "Kieli: Suomi. Vaihda kieli. Change language. Ändra språk.",
       "main": "Pää",
       "user": "Käyttäjä"
     }
@@ -68,32 +92,46 @@
   "nav": {
     "information": "Omat tiedot",
     "menuButtonLabel": "Profiilivalikko",
-    "services": "Yhdistetyt palvelut",
+    "services": "Käyttämäsi palvelut",
     "signin": "Kirjaudu sisään",
     "signout": "Kirjaudu ulos",
-    "subscriptions": "Tilaukset"
+    "titleAriaLabel": "Siirry Profiilin etusivulle",
+    "goToHomePage": "Etusivulle"
   },
   "notification": {
     "closeButtonText": "Sulje",
     "defaultErrorText": "Jokin meni pieleen. Yritä hetken kuluttua uudelleen.",
-    "defaultErrorTitle": "Virhe"
+    "defaultErrorTitle": "Virhe",
+    "removeError": "Poisto epäonnistui.",
+    "removeSuccess": "Poisto onnistui!",
+    "saveError": "Tallennus epäonnistui.",
+    "saveSuccess": "Tallennus onnistui!",
+    "tryAgain": "Yritä uudelleen.",
+    "genericError": "Tapahtui virhe.",
+    "genericSuccess": "Toiminto onnistui!",
+    "saving": "Tallennetaan",
+    "removing": "Poistetaan"
   },
   "oidc": {
     "authenticating": "Tunnistaudutaan..."
   },
   "profile": {
-    "loading": "Ladataan profiilia..."
+    "loading": "Ladataan profiilia...",
+    "loadErrorText": "Profiilin haku epäonnistui! Yritä hakea uudelleen tai kirjaudu ulos.",
+    "reload": "Hae uudelleen"
   },
   "profileDeleted": {
     "message": "Jos haluat, voit luoda profiilisi uudestaan myöhemmin. Sinut kirjataan ulos {{time}} sekunnin kuluttua.",
     "title": "Profiilisi on poistettu onnistuneesti!"
   },
   "profileForm": {
-    "addAnotherAddress": "Lisää toinen osoite",
-    "addAnotherEmail": "Lisää toinen sähköpostiosoite",
-    "addAnotherPhone": "Lisää toinen puhelinnumero",
+    "addAnotherAddress": "Lisää uusi osoite",
+    "addAnotherEmail": "Lisää uusi sähköpostiosoite",
+    "addAnotherPhone": "Lisää uusi puhelinnumero",
+    "addEmail": "Lisää sähköpostiosoite",
     "additionalInfo": "Lisätiedot",
     "address": "Kotiosoite",
+    "basicData": "Perustiedot",
     "cancel": "Peruuta",
     "city": "Kaupunki",
     "country": "Maa",
@@ -101,21 +139,38 @@
     "edit": "Muokkaa",
     "email": "Sähköpostiosoite",
     "firstName": "Etunimi",
-    "language": "Profiilin kieli",
+    "givenName": "Kutsumanimi",
+    "language": "Asiointikieli",
     "lastName": "Sukunimi",
     "makeAddressPrimary": "Muuta ensisijaiseksi osoitteeksi",
     "makeEmailPrimary": "Muuta ensisijaiseksi sähköpostiosoitteeksi",
     "makePhonePrimary": "Muuta ensisijaiseksi puhelinnumeroksi",
+    "nickname": "Lempinimi",
     "phone": "Puhelinnumero",
     "postalCode": "Postinumero",
+    "postOffice": "Postitoimipaikka",
+    "primary": "Ensisijainen",
+    "remove": "Poista",
+    "setPrimary": "Aseta ensisijaiseksi",
     "submit": "Tallenna",
-    "terms": "Olen tutustunut palvelun <0>rekisteriselosteeseen</0> ja kaupungin <1>tietosuojakäytäntöön</1> ",
+    "termsLabel": "Olen tutustunut palvelun rekisteriselosteeseen ja kaupungin tietosuojakäytäntöön",
+    "terms": "Lue palvelun <fileDescriptionLink>rekisteriseloste</fileDescriptionLink> ja kaupungin <dataProtectionLink>tietosuojakäytännöt</dataProtectionLink>",
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietosuoja/",
-    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/S%C3%A4hk%C3%B6isten%20asiointipalveluiden%20rekisteri.pdf"
+    "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Sahkoisten%20asiointipalveluiden%20rekisteri.pdf",
+    "nationalIdentificationNumber": "Henkilötunnus",
+    "municipalityOfResidence": "Kotikunta"
   },
   "profileInformation": {
     "address": "Osoite",
+    "ariaEditAddress": "Muokkaa osoitetta {{value}}",
+    "ariaEditPhone": "Muokkaa puhelinnumeroa {{value}}",
+    "ariaEditEmail": "Muokkaa sähköpostiosoitetta {{value}}",
+    "ariaEditBasicData": "Muokkaa perustietoja",
+    "ariaShowOptions": "Näytä vaihtoehdot",
+    "ariaSelectedOption": "{{value}} on valittu",
+    "ariaNoSelectedItemForLabel": "{{label}} ei ole valittuna",
     "deleteProfile": "Poista omat tietosi",
+    "description": "Helsinki-profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa, joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa.",
     "downloadData": "Lataa omat tietosi",
     "email": "Sähköpostiosoite",
     "name": "Nimi",
@@ -124,37 +179,71 @@
     "title": "Omat tiedot",
     "visibility": "Helsinki-profiiliin on tallennettu sinusta alla olevat tiedot.",
     "doGoToAccountManagement": "Siirry tunnuksen hallintaan",
-    "authenticationMethod": "Tunnistautumistapa"
+    "authenticationMethod": "Tunnistautumistapa",
+    "primaryAddress": "Ensisijainen osoite",
+    "permanentAddress": "Vakinainen osoite",
+    "permanentForeignAddress": "Vakinainen ulkomainen osoite",
+    "primaryEmail": "Ensisijainen sähköpostiosoite",
+    "primaryPhone": "Ensisijainen puhelinnumero",
+    "primaryAddressAriaDescription": "Tämä on ensisijainen osoitteesi",
+    "primaryEmailAriaDescription": "Tämä on ensisijainen sähköpostiosoitteesi",
+    "primaryPhoneAriaDescription": "Tämä on ensisijainen puhelinnumerosi",
+    "verifiedDataInformation": "Merkityt tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki-profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink>",
+    "verifiedDataInformationForScreenReaders": "Alla olevat tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki-profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink>",
+    "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
+    "verifiedData": "Vahvistettu tieto",
+    "verifiedBasicData": "Vahvistetut perustiedot",
+    "phones": "Puhelinnumerot",
+    "emails": "Sähköpostiosoitteet",
+    "addresses": "Osoitteet",
+    "ariaComboBoxHelperText": "Valitse {{field}}. Etsi kirjoittamalla ja valitse lopuksi yksi vaihtoehto. {{requiredInfo}}",
+    "ariaInputFieldHelperText": "Kirjoita {{field}}.  {{requiredInfo}}",
+    "ariaListTitlePhones": "Antamasi puhelinnumerot",
+    "ariaListTitleEmails": "Antamasi sähköpostiosoitteet",
+    "ariaListTitleAddresses": "Antamasi osoitteet",
+    "ariaSetPrimaryAddressWithValue": "Aseta {{value}} ensisijaiseksi osoitteeksi",
+    "ariaSetPrimaryEmailWithValue": "Aseta {{value}} ensisijaiseksi sähköpostiosoitteeksi",
+    "ariaSetPrimaryPhoneWithValue": "Aseta {{value}} ensisijaiseksi puhelinnumeroksi",
+    "ariaRemoveAddressWithValue": "Poista osoite {{value}} ",
+    "ariaRemoveEmailWithValue": "Poista sähköpostiosoite {{value}}",
+    "ariaRemovePhoneWithValue": "Poista puhelinnumero {{value}}",
+    "noPhones": "Et ole antanut puhelinnumeroita",
+    "noEmails": "Et ole antanut sähköpostiosoitteita",
+    "noAddresses": "Et ole antanut osoitteita",
+    "noEmail": "Et ole antanut sähköpostiosoitetta",
+    "verifyEmailText": "Olemme lähettäneet lisäämääsi sähköpostiosoitteeseen vahvistusviestin. Sähköpostiosoitteesi toimii myös sisäänkirjautumistunnuksena, joten et voi kirjautua sisään jos et ole vahvistanut tunnustasi. Jos et saanut viestiä, tarkasta myös sähköpostin roskapostikansio.",
+    "verifyEmailTitle": "Vahvista sähköpostiosoite"
   },
   "sanityCheck": "open-city-profile.fi",
   "serviceConnections": {
     "clock": "klo",
     "created": "Luotu:",
     "empty": "Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi.",
-    "explanation": "Profiilisi on yhdistetty alla oleviin Helsingin kaupungin palveluihin. Muutokset omissa tiedoissasi ovat heti palveluiden käytössä. Sinun ei tarvitse muuttaa tietojasi jokaisessa palvelussa erikseen.",
+    "explanation": "Olet antanut seuraaville palveluille oikeuden käyttää Helsinki-profiiliin tallennettuja tietojasi.",
     "servicePersonalData": "Palvelu saa tietää sinusta:",
-    "title": "Yhdistetyt palvelut"
+    "title": "Palvelut, joilla on lupa käyttää tietojasi"
   },
   "skipToContent": "Siirry suoraan sisältöön",
-  "subscriptions": {
-    "empty": "Ei tilattavia palveluita / ilmoituksia",
-    "explanation": "Tilaa ilmoituksia ja uutiskirjeitä.",
-    "saveSuccess": "Tallennettu!",
-    "saveSuccessMessage": "Tilaukset tallennettu onnistuneesti.",
-    "subscribed": "Tilattu!",
-    "title": "Tilaukset ja uutiskirjeet"
-  },
   "validation": {
     "email": "Sähköpostiosoite ei kelpaa.",
     "maxLength": "Kentän maksimipituus on {{max}} merkkiä.",
     "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä.",
-    "required": "Tämä kenttä on pakollinen."
+    "required": "Tämä kenttä on pakollinen.",
+    "errorTitleForScreenReaders": "Lomakkeella on seuraavat virheet:"
   },
   "identityProvider": {
-    "helsinkiAccount": "Helsinki-tunnus",
+    "helsinkiAccount": "Helsinki-profiilin käyttäjätunnus",
     "github": "GitHub",
     "google": "Google",
     "facebook": "Facebook",
-    "yle": "Yle"
-  }
+    "yletunnus": "Yle",
+    "tunnistusSuomifi": "Suomi.fi"
+  },
+  "opensInNewWindow": "{{title}}. Avautuu uudessa ikkunassa.",
+  "openInNewTabAriaLabel": "Avautuu uudessa välilehdessä.",
+  "openInExternalDomainAriaLabel": "Siirtyy toiseen sivustoon.",
+  "accessibilityStatement": "Saavutettavuusseloste",
+  "cityOfHelsinki": "Helsingin kaupunki",
+  "pageNotFoundTitle": "Sivua ei löytynyt",
+  "pageNotFoundText": "Tarkista URL-osoitteen oikeinkirjoitus (tarkista isot ja pienet kirjaimet sekä välimerkit). Tai palaa edelliselle sivulle napsauttamalla selaimen Edellinen-painiketta. Voit mennä myös etusivulle alla olevasta linkistä."
 }

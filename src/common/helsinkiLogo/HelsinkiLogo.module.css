@@ -1,19 +1,17 @@
-.logoFi {
-    background-size: contain;
-    background-color: var(--color-black);
-    -webkit-mask: url("../svg/HelsinkiLogoFi.svg") no-repeat;
-    mask: url("../svg/HelsinkiLogoFi.svg") no-repeat;
+.logo {
+  background-color: var(--color-black);
+  background-size: contain;
+  height: 60px;
 }
 
-.logoSv {
-    background-size: contain;
-    background-color: var(--color-black);
-    -webkit-mask: url("../svg/HelsinkiLogoSv.svg") no-repeat;
-    mask: url("../svg/HelsinkiLogoSv.svg") no-repeat;
+.logo-fi {
+  width: 130px;
+  -webkit-mask: url('../svg/HelsinkiLogoFi.svg') no-repeat;
+  mask: url('../svg/HelsinkiLogoFi.svg') no-repeat;
 }
 
-@media (min-width: 400px) {
-    .logoSv {
-        margin-right: 20px;
-    }
+.logo-sv {
+  width: 175px;
+  -webkit-mask: url('../svg/HelsinkiLogoSv.svg') no-repeat;
+  mask: url('../svg/HelsinkiLogoSv.svg') no-repeat;
 }

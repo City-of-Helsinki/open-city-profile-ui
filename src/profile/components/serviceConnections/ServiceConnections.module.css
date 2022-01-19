@@ -1,47 +1,27 @@
-.serviceConnections {
-  background: var(--color-black-5);
-  flex: 1;
-}
-
-.empty {
-  margin-top: 45px;
-  margin-left: 15px;
-}
-
-.serviceInformation {
-  margin-left: 25px;
-  margin-top: 20px;
-  font-weight: bold;
-}
-
-.allowedDataField {
-  display: block;
-  margin-left: 25px;
-  margin-bottom: 10px;
-}
-.allowedDataField:first-of-type {
-  margin-top: 10px;
-}
-
-.createdAt {
-  font-weight: bold;
-  margin: 20px 25px 5px;
-}
-
-.dateAndTime {
-  margin-left: 25px;
-  margin-top: 0;
-}
-
-.panelContainer {
+.panel-container {
   display: grid;
   grid-row-gap: var(--spacing-m);
   grid-template-rows: auto;
-  margin: 50px 0;
 }
 
-@media (min-width: 1200px) {
-  .empty {
-    margin-left: 0;
-  }
+.service-information {
+  margin-top: var(--spacing-m);
+  font-weight: bold;
+}
+
+.allowed-data-field {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+}
+.allowed-data-field:first-of-type {
+  margin-top: var(--spacing-xs);
+}
+
+.created-at {
+  font-weight: bold;
+  margin: var(--spacing-m) 0 var(--spacing-2-xs);
+}
+
+.date-and-time {
+  margin-top: 0;
 }

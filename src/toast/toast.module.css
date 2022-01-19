@@ -1,4 +1,4 @@
-.toastContainer {
+.toast-container {
   /* 99 is the z-index for modals */
   --toast-z-index: calc(99 + 1);
   --top-whitespace: var(--spacing-layout-xl);

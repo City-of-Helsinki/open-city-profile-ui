@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import styles from './ProfileDeleted.module.css';
-import responsive from '../../../common/cssHelpers/responsive.module.css';
 import PageLayout from '../../../common/pageLayout/PageLayout';
-import useAuthenticate from '../../../auth/useAuthenticate';
+import authService from '../../../auth/authService';
+import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 
-function ProfileDeleted() {
+function ProfileDeleted(): React.ReactElement {
   const [timeUntilLogout, setTimeUntilLogout] = useState(10);
   const { t } = useTranslation();
-  const [, logout] = useAuthenticate();
 
   useEffect(() => {
     if (timeUntilLogout > 0) {
@@ -17,15 +17,25 @@ function ProfileDeleted() {
         setTimeUntilLogout(time => time - 1);
       }, 1000);
       return () => clearInterval(interval);
-    } else logout();
-  }, [logout, timeUntilLogout]);
+    } else {
+      authService.logout();
+      return undefined;
+    }
+  }, [timeUntilLogout]);
 
+  const title = t('profileDeleted.title');
   return (
-    <PageLayout>
-      <div className={styles.wrapper}>
-        <div className={responsive.maxWidthCentered}>
-          <div className={styles.content}>
-            <h2>{t('profileDeleted.title')}</h2>
+    <PageLayout title={title}>
+      <div className={styles['wrapper']}>
+        <div
+          className={classNames([
+            commonContentStyles['common-content-area'],
+            commonContentStyles['common-bottom-padding'],
+            styles['content'],
+          ])}
+        >
+          <div className={styles['inner-content']}>
+            <h1>{title}</h1>
             <p>{t('profileDeleted.message', { time: timeUntilLogout })}</p>
           </div>
         </div>

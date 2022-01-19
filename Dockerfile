@@ -27,14 +27,13 @@ COPY package*.json *yarn* ./
 ENV PATH /app/node_modules/.bin:$PATH
 
 USER root
-
-RUN apt-install.sh build-essential
+RUN bash /tools/apt-install.sh build-essential
 
 USER appuser
 RUN yarn && yarn cache clean --force
 
 USER root
-RUN apt-cleanup.sh build-essential
+RUN bash /tools/apt-cleanup.sh build-essential
 
 # =============================
 FROM appbase as development
@@ -54,21 +53,29 @@ CMD ["react-scripts", "start"]
 FROM appbase as staticbuilder
 # ===================================
 
-ARG REACT_APP_PROFILE_GRAPHQL
-ARG REACT_APP_OIDC_AUTHORITY
-ARG REACT_APP_ENVIRONMENT
-
-
 COPY . /app
 RUN yarn build
 
 # =============================
-FROM nginx:1.17 as production
+FROM registry.access.redhat.com/ubi8/nginx-118 as production
 # =============================
 
-# Nginx runs with user "nginx" by default
-COPY --from=staticbuilder --chown=nginx:nginx /app/build /usr/share/nginx/html
+USER root
 
-COPY .prod/nginx.conf /etc/nginx/conf.d/default.conf
+RUN chgrp -R 0 /usr/share/nginx/html && \
+    chmod -R g=u /usr/share/nginx/html
+
+# Copy static build
+COPY --from=staticbuilder /app/build /usr/share/nginx/html
+
+# Copy nginx config
+COPY .prod/nginx.conf  /etc/nginx/
+
+# Copy default environment config and setup script
+COPY ./scripts/env.sh /opt/env.sh
+COPY .env /opt/.env
+RUN chmod +x /opt/env.sh
 
 EXPOSE 80
+
+CMD ["/bin/bash", "-c", "/opt/env.sh /opt /usr/share/nginx/html && nginx -g \"daemon off;\""]

@@ -1,63 +1,30 @@
 .wrapper {
-    background-color: var(--color-bus);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex: 1;
 }
 
-.content {
-    margin: 20px 10px;
-    width: 95%;
-    text-align: center;
-    color: var(--color-white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.logo {
-    width: 170px;
-    height: 80px;
-    background-color: var(--color-white);
+.content.content {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+  padding-top: var(--common-top-spacing);
+  padding-bottom: var(--common-top-spacing);
 }
 
 button.button {
-    margin-top: 50px;
-    background-color: var(--color-white);
-    width: 100%;
-}
-
-button.button:hover {
-    background-color: var(--color-background-button-secondary-hover);
+  margin-top: var(--spacing-layout-m);
 }
 
 .content h1 {
-    font-size: var(--fontsize-h-2);
+  margin-top: var(--common-top-spacing);
 }
 
-.content h2 {
-    line-height: var(--lineheight-l);
-    font-size: var(--fontsize-h-5);
+.ingress {
+  line-height: var(--lineheight-l);
+  font-size: var(--fontsize-body-l);
+  font-weight: bold;
 }
-
-@media(min-width: 450px) {
-    button.button {
-        width: 230px;
-    }
-
-    .content h1 {
-        font-size: var(--fontsize-h-1);
-    }
-
-}
-
-@media (min-width: 600px) {
-    .content {
-        width: 600px;
-    }
-}
-
-

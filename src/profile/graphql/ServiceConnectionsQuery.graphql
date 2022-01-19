@@ -5,10 +5,8 @@ query ServiceConnectionsQuery {
       edges {
         node {
           service {
-            type
             title
             description
-            createdAt
             allowedDataFields {
               edges {
                 node {
@@ -18,6 +16,7 @@ query ServiceConnectionsQuery {
               }
             }
           }
+          createdAt
         }
       }
     }

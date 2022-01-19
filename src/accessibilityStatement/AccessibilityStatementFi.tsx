@@ -1,6 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, ReactElement } from 'react';
 
-function AccessibilityStatementFi() {
+import { Link } from '../common/copyOfHDSLink/Link';
+
+function AccessibilityStatementFi(): ReactElement {
   return (
     <Fragment>
       <h1>Saavutettavuusseloste</h1>
@@ -50,8 +52,10 @@ function AccessibilityStatementFi() {
         muodossa, voi käyttäjä pyytää näitä tietoja sähköpostilla{' '}
         <a href="mailto:helsinki.palaute@hel.fi">helsinki.palaute@hel.fi</a> tai
         palautelomakkeella{' '}
-        <a href="https://www.hel.fi/palaute">www.hel.fi/palaute</a>.
-        Tiedusteluun pyritään vastaamaan kohtuullisessa ajassa.
+        <Link href="https://www.hel.fi/palaute" external openInNewTab>
+          www.hel.fi/palaute
+        </Link>
+        . Tiedusteluun pyritään vastaamaan kohtuullisessa ajassa.
       </p>
 
       <h2>Palaute ja yhteystiedot</h2>

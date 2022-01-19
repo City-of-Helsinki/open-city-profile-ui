@@ -1,12 +1,12 @@
-import {
-  MyProfileQuery,
-  MyProfileQuery_myProfile_phones_edges_node as Phone,
-} from '../../graphql/generatedTypes';
+import { ProfileRoot, PhoneNode } from '../../graphql/typings';
 
-const getPhonesFromNode = (data?: MyProfileQuery) => {
-  const edge = data?.myProfile?.phones?.edges || [];
-  return edge
-    .filter(edge => !edge?.node?.primary)
+const getPhonesFromNode = (
+  data?: ProfileRoot,
+  keepPrimary = false
+): PhoneNode[] => {
+  const edges = data?.myProfile?.phones?.edges || [];
+  return edges
+    .filter(edge => keepPrimary || !edge?.node?.primary)
     .map(
       edge =>
         ({
@@ -15,7 +15,7 @@ const getPhonesFromNode = (data?: MyProfileQuery) => {
           phone: edge?.node?.phone,
           phoneType: edge?.node?.phoneType,
           __typename: 'PhoneNode',
-        } as Phone)
+        } as PhoneNode)
     );
 };
 

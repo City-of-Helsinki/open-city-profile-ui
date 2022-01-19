@@ -1,86 +1,147 @@
-import React, { useEffect, useState } from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
+import React, { useContext, useEffect, useState } from 'react';
+import { useLazyQuery, ApolloError } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router';
 import { loader } from 'graphql.macro';
 import { User } from 'oidc-client';
 import * as Sentry from '@sentry/browser';
+import { Button, Notification } from 'hds-react';
 
-import getAuthenticatedUser from '../../../auth/getAuthenticatedUser';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import CreateProfile from '../createProfile/CreateProfile';
 import ViewProfile from '../viewProfile/ViewProfile';
 import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
-import { ProfileExistsQuery } from '../../../graphql/generatedTypes';
+import { ProfileExistsQuery as ProfileExistsRoot } from '../../../graphql/generatedTypes';
+import authService from '../../../auth/authService';
+import responsive from '../../../common/cssHelpers/responsive.module.css';
+import {
+  ProfileContext,
+  useProfileErrorListener,
+} from '../../context/ProfileContext';
+import parseGraphQLError from '../../helpers/parseGraphQLError';
 import useToast from '../../../toast/useToast';
 
 const PROFILE_EXISTS = loader('../../graphql/ProfileExistsQuery.graphql');
 
-type Props = {};
-
-function Profile(props: Props) {
+function Profile(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const location = useLocation();
   const { createToast } = useToast();
 
-  const [checkProfileExists, { data, loading }] = useLazyQuery<
-    ProfileExistsQuery
+  const [checkProfileExists, { data, loading, error }] = useLazyQuery<
+    ProfileExistsRoot
   >(PROFILE_EXISTS, {
     fetchPolicy: 'no-cache',
-    onError: (error: Error) => {
-      Sentry.captureException(error);
-      createToast({ type: 'error' });
+    onError: (apolloError: ApolloError) => {
+      Sentry.captureException(apolloError);
     },
   });
+  const {
+    fetch: fetchProfile,
+    isInitialized: isProfileInitialized,
+    isComplete: isProfileComplete,
+  } = useContext(ProfileContext);
   const [isCheckingAuthState, setIsCheckingAuthState] = useState(true);
   const [tunnistamoUser, setTunnistamoUser] = useState<User>();
+  useProfileErrorListener((apolloError: ApolloError | Error) => {
+    if (parseGraphQLError(apolloError).isAllowedError) {
+      return;
+    }
+    Sentry.captureException(apolloError);
+    createToast({ type: 'error' });
+  });
 
   useEffect(() => {
-    getAuthenticatedUser()
+    authService
+      .getAuthenticatedUser()
       .then(user => {
         checkProfileExists();
-        setTunnistamoUser(user);
+        setTunnistamoUser(user as User);
         setIsCheckingAuthState(false);
+        return undefined;
       })
       .catch(() => history.push('/login'));
   }, [checkProfileExists, history]);
 
-  const isLoadingAnything = Boolean(isCheckingAuthState || loading);
-  const isProfileFound = data && data.myProfile;
+  const isDoingProfileChecks = isCheckingAuthState || loading;
+  const isProfileFound = !!(data && data.myProfile);
+  const failedToFetchUserProfileData =
+    tunnistamoUser && !isProfileFound && !!error;
+
+  useEffect(() => {
+    if (isProfileFound && !isProfileInitialized) {
+      fetchProfile();
+    }
+  }, [fetchProfile, isProfileFound, isProfileInitialized]);
+
+  const isLoadingProfile = isProfileFound && !isProfileComplete;
 
   const getPageTitle = () => {
     const pathname = location.pathname.substr(1);
 
-    if (!isLoadingAnything && pathname.length === 0) {
-      return isProfileFound ? 'nav.information' : 'profileForm.pageTitle';
+    if (!isDoingProfileChecks && pathname.length === 0) {
+      return isProfileFound ? 'nav.information' : 'createProfile.pageTitle';
     }
 
     switch (pathname) {
       case 'connected-services':
-        return 'serviceConnections.title';
-      case 'subscriptions':
-        return 'subscriptions.title';
+        return 'nav.services';
       default:
         return 'appName';
     }
   };
+  if (failedToFetchUserProfileData) {
+    return (
+      <PageLayout title={'notification.defaultErrorTitle'}>
+        <div
+          className={styles['error-wrapper']}
+          data-testid="profile-check-error-layout"
+        >
+          <div className={responsive['max-width-centered']}>
+            <Notification
+              type={'error'}
+              label={t('notification.defaultErrorTitle')}
+            >
+              {t('profile.loadErrorText')}
+            </Notification>
+            <div className={styles['error-button-wrapper']}>
+              <Button
+                onClick={() => checkProfileExists()}
+                data-testid={'profile-check-error-reload-button'}
+              >
+                {t('profile.reload')}
+              </Button>
+              <Button
+                onClick={() => authService.logout()}
+                data-testid={'profile-check-error-logout-button'}
+                variant={'secondary'}
+              >
+                {t('nav.signout')}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout title={getPageTitle()}>
       <Loading
-        loadingClassName={styles.loading}
-        isLoading={isLoadingAnything}
+        isLoading={isDoingProfileChecks || isLoadingProfile}
         loadingText={t('profile.loading')}
       >
         {isProfileFound ? (
           <ViewProfile />
         ) : (
-          <CreateProfile
-            tunnistamoUser={tunnistamoUser as User}
-            onProfileCreated={() => checkProfileExists()}
-          />
+          tunnistamoUser && (
+            <CreateProfile
+              tunnistamoUser={tunnistamoUser}
+              onProfileCreated={() => checkProfileExists()}
+            />
+          )
         )}
       </Loading>
     </PageLayout>

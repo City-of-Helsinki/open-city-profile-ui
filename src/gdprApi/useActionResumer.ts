@@ -22,8 +22,7 @@ function removeActionFromParams() {
 
 function useActionResumer(
   deferredAction: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onActionInitialization: (...args: any[]) => void,
+  onActionInitialization: (...args: string[][]) => void,
   callback: () => void
 ): [() => void, boolean] {
   const isActionSearchParamEvoked = getIsActionSearchParamEvoked(
@@ -34,8 +33,7 @@ function useActionResumer(
   );
 
   const startAction = React.useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (...args: any[]) => {
+    (...args: string[][]) => {
       setIsActionOngoing(true);
 
       onActionInitialization(...args);

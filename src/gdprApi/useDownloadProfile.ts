@@ -1,14 +1,13 @@
 import React from 'react';
 import {
-  useQuery,
   useLazyQuery,
   LazyQueryHookOptions,
-} from '@apollo/react-hooks';
-import { QueryResult } from '@apollo/react-common';
+  LazyQueryResult,
+} from '@apollo/client';
 import { DocumentNode } from 'graphql';
 import { loader } from 'graphql.macro';
 
-import { GdprServiceConnectionsQuery } from '../graphql/generatedTypes';
+import { GdprServiceConnectionsRoot } from '../graphql/typings';
 import { getQueryScopes } from './utils';
 import useAuthorizationCode from './useAuthorizationCode';
 
@@ -21,8 +20,7 @@ type TVariables = Record<string, unknown>;
 function useDownloadProfile<TQuery>(
   query: DocumentNode,
   options?: LazyQueryHookOptions<TQuery, TVariables>
-): [() => void, QueryResult<TQuery, TVariables>] {
-  const { data } = useQuery<GdprServiceConnectionsQuery>(SERVICE_CONNECTIONS);
+): [() => void, LazyQueryResult<TQuery, TVariables>, boolean] {
   const [downloadProfile, queryResult] = useLazyQuery<TQuery>(query, {
     ...options,
     onCompleted: (...args) => {
@@ -52,18 +50,29 @@ function useDownloadProfile<TQuery>(
     handleAuthorizationCodeCallback
   );
 
-  const handleDownloadActionInitialization = React.useCallback(() => {
-    const queryScopes = getQueryScopes(data);
+  const handleDownloadActionInitialization = React.useCallback(
+    serviceConnectionsResult => {
+      const queryScopes = getQueryScopes(serviceConnectionsResult);
 
-    startFetchingAuthorizationCode(queryScopes);
-  }, [data, startFetchingAuthorizationCode]);
+      startFetchingAuthorizationCode(queryScopes);
+    },
+    [startFetchingAuthorizationCode]
+  );
 
-  const injectedQueryResult = {
-    ...queryResult,
-    loading: isAuthorizing || queryResult.loading,
-  };
+  const [getServiceConnections] = useLazyQuery<GdprServiceConnectionsRoot>(
+    SERVICE_CONNECTIONS,
+    {
+      onCompleted: data => {
+        handleDownloadActionInitialization(data);
+      },
+    }
+  );
 
-  return [handleDownloadActionInitialization, injectedQueryResult];
+  return [
+    getServiceConnections,
+    queryResult,
+    isAuthorizing || queryResult.loading,
+  ];
 }
 
 export default useDownloadProfile;

@@ -1,17 +1,17 @@
 import React from 'react';
 import {
-  useQuery,
   useMutation,
   MutationHookOptions,
-} from '@apollo/react-hooks';
-import { MutationResult } from '@apollo/react-common';
+  MutationResult,
+  useLazyQuery,
+} from '@apollo/client';
 import { loader } from 'graphql.macro';
 
 import {
   GdprDeleteMyProfileMutation,
   GdprDeleteMyProfileMutationVariables,
-  GdprServiceConnectionsQuery,
 } from '../graphql/generatedTypes';
+import { GdprServiceConnectionsRoot } from '../graphql/typings';
 import { getDeleteScopes } from './utils';
 import useAuthorizationCode from './useAuthorizationCode';
 
@@ -26,7 +26,6 @@ function useDeleteProfile(
     GdprDeleteMyProfileMutationVariables
   >
 ): [() => void, MutationResult<GdprDeleteMyProfileMutation>] {
-  const { data } = useQuery<GdprServiceConnectionsQuery>(SERVICE_CONNECTIONS);
   const [deleteProfile, queryResult] = useMutation<
     GdprDeleteMyProfileMutation,
     GdprDeleteMyProfileMutationVariables
@@ -54,18 +53,31 @@ function useDeleteProfile(
     handleAuthorizationCodeCallback
   );
 
-  const handleDownloadActionInitialization = React.useCallback(() => {
-    const deleteScopes = getDeleteScopes(data);
+  const handleDownloadActionInitialization = React.useCallback(
+    serviceConnectionsResult => {
+      const deleteScopes = getDeleteScopes(serviceConnectionsResult);
 
-    startFetchingAuthorizationCode(deleteScopes);
-  }, [data, startFetchingAuthorizationCode]);
+      startFetchingAuthorizationCode(deleteScopes);
+    },
+    [startFetchingAuthorizationCode]
+  );
+
+  const [getServiceConnections] = useLazyQuery<GdprServiceConnectionsRoot>(
+    SERVICE_CONNECTIONS,
+    {
+      fetchPolicy: 'no-cache',
+      onCompleted: data => {
+        handleDownloadActionInitialization(data);
+      },
+    }
+  );
 
   const injectedMutationResult = {
     ...queryResult,
     loading: isAuthorizing || queryResult.loading,
   };
 
-  return [handleDownloadActionInitialization, injectedMutationResult];
+  return [getServiceConnections, injectedMutationResult];
 }
 
 export default useDeleteProfile;

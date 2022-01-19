@@ -8,92 +8,93 @@ exports[`Toast should render correct toast 1`] = `
         id="toast-root"
       >
         <div
-          class="toastContainer"
+          class="toast-container"
         >
           <div
             class="notification"
           >
-            <div
-              style="height: 0px; overflow-y: hidden; position: relative;"
+            <section
+              aria-atomic="true"
+              aria-label="Notification"
+              class="Notification-module_notification__2hN3H notification_hds-notification__2DQPN Notification-module_error__2sn9y notification_hds-notification--error__3T1Of"
             >
               <div
-                class="Notification-module_notification__2hN3H notification_hds-notification__2DQPN Notification-module_error__2sn9y notification_hds-notification--error__3T1Of"
+                class="Notification-module_content__ZZKvE notification_hds-notification__content__5ylSS"
               >
                 <div
+                  aria-level="2"
                   class="Notification-module_label__1bhNu notification_hds-notification__label__2t1lR"
+                  role="heading"
                 >
-                  <span
+                  <svg
                     aria-hidden="true"
-                    class="Notification-module_icon__1ans7 notification_hds-icon__29HQM"
+                    class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Notification-module_icon__1ans7 notification_hds-icon__29HQM"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <svg
-                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Notification-module_iconWarning__2bF7u undefined"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <g
+                      fill="none"
+                      fill-rule="evenodd"
                     >
-                      <g
-                        fill="none"
-                        fill-rule="evenodd"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                        />
-                        <path
-                          d="M11.128 2.51a1 1 0 011.7-.07l.044.07 9.562 17a1 1 0 01-.796 1.487l-.076.003H2.438a1 1 0 01-.906-1.423l.035-.067 9.562-17zM12 5.04L4.147 19h15.705L12 5.04zM13 16v2h-2v-2h2zm0-6.5v5h-2v-5h2z"
-                          fill="currentColor"
-                        />
-                      </g>
-                    </svg>
-                  </span>
-                  <span
-                    class="Notification-module_labelText__1qBt6 helpers_text-bold__1mCMR helpers_text-md__2Td0C"
-                  >
-                    test title
-                  </span>
+                      <rect
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        d="M11.1749534,3.45608205 C11.5239234,2.86969084 12.3977071,2.8487483 12.7841638,3.39325442 L12.8250466,3.45608205 L21.8770534,18.6666084 C22.2201691,19.2431624 21.8055019,19.9510257 21.123493,19.997576 L21.0520068,20 L2.94799316,20 C2.24813009,20 1.7986969,19.3113552 2.09013491,18.7266878 L2.1229466,18.6666084 L11.1749534,3.45608205 Z M13,16 L13,18 L11,18 L11,16 L13,16 Z M13,8.5 L13,14.5 L11,14.5 L11,8.5 L13,8.5 Z"
+                        fill="currentColor"
+                      />
+                    </g>
+                  </svg>
+                  test title
                 </div>
                 <div
-                  class="Notification-module_bodyText__2seBK notification_hds-notification__body__3cobH helpers_text-body__1PMI3"
+                  class="Notification-module_body__9BSAD notification_hds-notification__body__3cobH"
                 >
-                  <button
-                    aria-label="notification.closeButtonText"
-                    class="DismissableNotification-module_buttonClose__2HSH1 notification_hds-notification__close-button__1yGIj DismissableNotification-module_error__1lYkg notification_hds-notification--error__3T1Of"
-                    title="notification.closeButtonText"
-                    type="button"
-                  >
-                    <svg
-                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik DismissableNotification-module_iconClose__1JHO3 notification_hds-icon__29HQM"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g
-                        fill="none"
-                        fill-rule="evenodd"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                        />
-                        <path
-                          d="M17.657 7.757L13.414 12l4.243 4.243-1.414 1.414L12 13.414l-4.243 4.243-1.414-1.414L10.586 12 6.343 7.757l1.414-1.414L12 10.586l4.243-4.243z"
-                          fill="currentColor"
-                        />
-                      </g>
-                    </svg>
-                  </button>
                   <div
-                    class="messageWrapper"
+                    class="message-wrapper"
                   >
                     notification.defaultErrorText
                   </div>
                 </div>
               </div>
-            </div>
+              <button
+                aria-label="notification.closeButtonText"
+                class="Notification-module_close__JWYav notification_hds-notification__close-button__1yGIj Notification-module_error__2sn9y notification_hds-notification--error__3T1Of"
+                title="notification.closeButtonText"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fill="none"
+                    fill-rule="evenodd"
+                  >
+                    <rect
+                      height="24"
+                      width="24"
+                    />
+                    <polygon
+                      fill="currentColor"
+                      points="18 7.5 13.5 12 18 16.5 16.5 18 12 13.5 7.5 18 6 16.5 10.5 12 6 7.5 7.5 6 12 10.5 16.5 6"
+                    />
+                  </g>
+                </svg>
+              </button>
+            </section>
           </div>
         </div>
       </div>
     }
   >
     <div
-      className="toastContainer"
+      className="toast-container"
     >
       <Toast
         hidden={false}
@@ -112,201 +113,118 @@ exports[`Toast should render correct toast 1`] = `
           <div
             className="notification"
           >
-            <DismissableNotification
+            <ForwardRef
               closeButtonLabelText="notification.closeButtonText"
-              labelText="test title"
+              dismissible={true}
+              label="test title"
               onClose={[Function]}
               type="error"
             >
-              <Transition
-                config={
-                  Object {
-                    "friction": 30,
-                    "tension": 300,
-                  }
-                }
-                enter={
-                  Object {
-                    "height": "auto",
-                  }
-                }
-                items={true}
-                keys={[Function]}
-                leave={
-                  Object {
-                    "height": 0,
-                  }
-                }
-                onDestroyed={[Function]}
-                reset={false}
-                unique={false}
+              <Qd
+                visuallyHidden={false}
               >
-                <ForwardRef
-                  config={
-                    Object {
-                      "friction": 30,
-                      "tension": 300,
-                    }
-                  }
-                  delay={0}
-                  filter={[Function]}
-                  key="0"
-                  primitive={[Function]}
-                  reset={false}
-                  state="enter"
-                  states={
-                    Object {
-                      "enter": Object {
-                        "height": "auto",
-                      },
-                    }
-                  }
+                <Animated(section)
+                  aria-atomic="true"
+                  aria-label="Notification"
+                  className="Notification-module_notification__2hN3H notification_hds-notification__2DQPN Notification-module_error__2sn9y notification_hds-notification--error__3T1Of"
+                  style={Object {}}
                 >
-                  <KeyframesImpl
-                    config={
-                      Object {
-                        "friction": 30,
-                        "tension": 300,
-                      }
-                    }
-                    delay={0}
-                    filter={[Function]}
-                    forwardRef={null}
-                    primitive={[Function]}
-                    reset={false}
-                    state="enter"
-                    states={
-                      Object {
-                        "enter": Object {
-                          "height": "auto",
-                        },
-                      }
-                    }
+                  <section
+                    aria-atomic="true"
+                    aria-label="Notification"
+                    className="Notification-module_notification__2hN3H notification_hds-notification__2DQPN Notification-module_error__2sn9y notification_hds-notification--error__3T1Of"
+                    style={Object {}}
                   >
-                    <Spring
-                      config={
-                        Object {
-                          "friction": 30,
-                          "tension": 300,
-                        }
-                      }
-                      delay={0}
-                      force={false}
-                      from={Object {}}
-                      immediate={false}
-                      inject={[Function]}
-                      native={false}
-                      onRest={[Function]}
-                      reset={false}
-                      to={
-                        Object {
-                          "height": "auto",
-                        }
-                      }
+                    <div
+                      className="Notification-module_content__ZZKvE notification_hds-notification__content__5ylSS"
+                      role={null}
                     >
                       <div
-                        style={
-                          Object {
-                            "height": 0,
-                            "overflowY": "hidden",
-                            "position": "relative",
-                          }
-                        }
+                        aria-level={2}
+                        className="Notification-module_label__1bhNu notification_hds-notification__label__2t1lR"
+                        role="heading"
                       >
-                        <Notification
-                          closeButtonLabelText="notification.closeButtonText"
-                          labelText="test title"
-                          onClose={[Function]}
-                          type="error"
+                        <V
+                          aria-hidden={true}
+                          className="Notification-module_icon__1ans7 notification_hds-icon__29HQM"
                         >
-                          <div
-                            className="Notification-module_notification__2hN3H notification_hds-notification__2DQPN Notification-module_error__2sn9y notification_hds-notification--error__3T1Of"
+                          <svg
+                            aria-hidden={true}
+                            className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Notification-module_icon__1ans7 notification_hds-icon__29HQM"
+                            role="img"
+                            style={Object {}}
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <div
-                              className="Notification-module_label__1bhNu notification_hds-notification__label__2t1lR"
+                            <g
+                              fill="none"
+                              fillRule="evenodd"
                             >
-                              <span
-                                aria-hidden="true"
-                                className="Notification-module_icon__1ans7 notification_hds-icon__29HQM"
-                              >
-                                <IconError
-                                  className="Notification-module_iconWarning__2bF7u undefined"
-                                >
-                                  <svg
-                                    className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Notification-module_iconWarning__2bF7u undefined"
-                                    style={Object {}}
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <g
-                                      fill="none"
-                                      fillRule="evenodd"
-                                    >
-                                      <path
-                                        d="M0 0h24v24H0z"
-                                      />
-                                      <path
-                                        d="M11.128 2.51a1 1 0 011.7-.07l.044.07 9.562 17a1 1 0 01-.796 1.487l-.076.003H2.438a1 1 0 01-.906-1.423l.035-.067 9.562-17zM12 5.04L4.147 19h15.705L12 5.04zM13 16v2h-2v-2h2zm0-6.5v5h-2v-5h2z"
-                                        fill="currentColor"
-                                      />
-                                    </g>
-                                  </svg>
-                                </IconError>
-                              </span>
-                              <span
-                                className="Notification-module_labelText__1qBt6 helpers_text-bold__1mCMR helpers_text-md__2Td0C"
-                              >
-                                test title
-                              </span>
-                            </div>
-                            <div
-                              className="Notification-module_bodyText__2seBK notification_hds-notification__body__3cobH helpers_text-body__1PMI3"
-                            >
-                              <button
-                                aria-label="notification.closeButtonText"
-                                className="DismissableNotification-module_buttonClose__2HSH1 notification_hds-notification__close-button__1yGIj DismissableNotification-module_error__1lYkg notification_hds-notification--error__3T1Of"
-                                onClick={[Function]}
-                                title="notification.closeButtonText"
-                                type="button"
-                              >
-                                <IconCross
-                                  className="DismissableNotification-module_iconClose__1JHO3 notification_hds-icon__29HQM"
-                                >
-                                  <svg
-                                    className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik DismissableNotification-module_iconClose__1JHO3 notification_hds-icon__29HQM"
-                                    style={Object {}}
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <g
-                                      fill="none"
-                                      fillRule="evenodd"
-                                    >
-                                      <path
-                                        d="M0 0h24v24H0z"
-                                      />
-                                      <path
-                                        d="M17.657 7.757L13.414 12l4.243 4.243-1.414 1.414L12 13.414l-4.243 4.243-1.414-1.414L10.586 12 6.343 7.757l1.414-1.414L12 10.586l4.243-4.243z"
-                                        fill="currentColor"
-                                      />
-                                    </g>
-                                  </svg>
-                                </IconCross>
-                              </button>
-                              <div
-                                className="messageWrapper"
-                              >
-                                notification.defaultErrorText
-                              </div>
-                            </div>
-                          </div>
-                        </Notification>
+                              <rect
+                                height="24"
+                                width="24"
+                              />
+                              <path
+                                d="M11.1749534,3.45608205 C11.5239234,2.86969084 12.3977071,2.8487483 12.7841638,3.39325442 L12.8250466,3.45608205 L21.8770534,18.6666084 C22.2201691,19.2431624 21.8055019,19.9510257 21.123493,19.997576 L21.0520068,20 L2.94799316,20 C2.24813009,20 1.7986969,19.3113552 2.09013491,18.7266878 L2.1229466,18.6666084 L11.1749534,3.45608205 Z M13,16 L13,18 L11,18 L11,16 L13,16 Z M13,8.5 L13,14.5 L11,14.5 L11,8.5 L13,8.5 Z"
+                                fill="currentColor"
+                              />
+                            </g>
+                          </svg>
+                        </V>
+                        <Qd
+                          visuallyHidden={false}
+                        >
+                          test title
+                        </Qd>
                       </div>
-                    </Spring>
-                  </KeyframesImpl>
-                </ForwardRef>
-              </Transition>
-            </DismissableNotification>
+                      <div
+                        className="Notification-module_body__9BSAD notification_hds-notification__body__3cobH"
+                      >
+                        <div
+                          className="message-wrapper"
+                        >
+                          notification.defaultErrorText
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      aria-label="notification.closeButtonText"
+                      className="Notification-module_close__JWYav notification_hds-notification__close-button__1yGIj Notification-module_error__2sn9y notification_hds-notification--error__3T1Of"
+                      onClick={[Function]}
+                      title="notification.closeButtonText"
+                      type="button"
+                    >
+                      <j
+                        aria-hidden={true}
+                      >
+                        <svg
+                          aria-hidden={true}
+                          className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
+                          role="img"
+                          style={Object {}}
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <g
+                            fill="none"
+                            fillRule="evenodd"
+                          >
+                            <rect
+                              height="24"
+                              width="24"
+                            />
+                            <polygon
+                              fill="currentColor"
+                              points="18 7.5 13.5 12 18 16.5 16.5 18 12 13.5 7.5 18 6 16.5 10.5 12 6 7.5 7.5 6 12 10.5 16.5 6"
+                            />
+                          </g>
+                        </svg>
+                      </j>
+                    </button>
+                  </section>
+                </Animated(section)>
+              </Qd>
+            </ForwardRef>
           </div>
         </NotificationComponent>
       </Toast>

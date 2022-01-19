@@ -1,35 +1,24 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import styles from './profileSection.module.css';
-import Explanation from '../explanation/Explanation';
 
 type Props = {
   children?: React.ReactNode;
-  description?: string;
-  titleButton?: React.ReactNode;
-  title: string;
-  titleVariant?: 'h2' | 'h3';
+  hasVerifiedUserData?: boolean;
 };
 
 function ProfileSection({
   children,
-  description,
-  titleButton,
-  titleVariant,
-  title,
-}: Props) {
+  hasVerifiedUserData,
+}: Props): React.ReactElement {
   return (
-    <section className={styles.profileSection}>
-      <div className={styles.profileSectionTitleRow}>
-        <Explanation
-          variant="flush"
-          className={styles.profileSectionTitle}
-          titleVariant={titleVariant}
-          main={title}
-          small={description}
-        />
-        {titleButton}
-      </div>
+    <section
+      className={classNames(
+        styles['profile-section'],
+        hasVerifiedUserData && styles['verified-data']
+      )}
+    >
       {children}
     </section>
   );

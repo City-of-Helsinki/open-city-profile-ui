@@ -1,39 +1,14 @@
 .container {
-  --h2-fontsize: var(--fontsize-h-2);
-  --h3-fontsize: var(--fontsize-h-3);
+  padding-bottom: var(--spacing-xl);
+  margin: 0 var(--content-horizontal-padding);
 }
 
-.container.margin {
-  margin: 0 15px;
-}
-
-.main {
-  margin-bottom: 30px;
-}
-.main.h2 {
-  font-size: var(--fontsize-h-3);
-}
-.main.h3 {
-  font-size: var(--fontsize-h-4);
-}
-.small {
+.container h2,
+.container h3 {
   margin-top: 0;
-  color: var(--color-black-70);
-  font-size: 20px;
 }
 
-@media (min-width: 450px) {
-  .main.h2 {
-    font-size: var(--fontsize-h-2);
-  }
-
-  .main.h3 {
-    font-size: var(--fontsize-h-3);
-  }
-}
-
-@media (min-width: 1200px) {
-  .container.margin {
-    margin: 0;
-  }
+.container p {
+  margin-top: 0;
+  margin-bottom: 0;
 }

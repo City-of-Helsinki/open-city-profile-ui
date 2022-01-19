@@ -1,71 +1,89 @@
 import React from 'react';
-import ReactModal from 'react-modal';
 import { useTranslation } from 'react-i18next';
-import { IconCross } from 'hds-react';
+import { IconAlertCircle, Button, Dialog } from 'hds-react';
 
-import styles from './ConfirmationModal.module.css';
-import { ServiceConnectionsQuery } from '../../../../graphql/generatedTypes';
-import getServices from '../../../helpers/getServices';
-import Button from '../../../../common/button/Button';
+import { getModalProps } from '../getModalProps';
 
-type Props = {
+export type Props = {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  modalTitle?: string;
-  modalText?: string;
+  title?: string;
+  content?: React.FC<unknown> | string;
   actionButtonText: string;
-  services?: ServiceConnectionsQuery;
 };
 
 function ConfirmationModal({
   isOpen,
   onClose,
   onConfirm,
-  modalTitle,
-  modalText,
+  title,
+  content,
   actionButtonText,
-  services,
-}: Props) {
-  const servicesArray = getServices(services);
+}: Props): React.ReactElement {
   const { t } = useTranslation();
+  const id = 'confirmation-modal';
+  const closeButtonText = t('confirmationModal.cancel');
+  const {
+    titleId,
+    descriptionId,
+    dialogTargetElement,
+    close,
+    closeButtonLabelText,
+  } = getModalProps({
+    id,
+    onClose,
+    closeButtonText,
+  });
+  const ContentComponent: React.FC<unknown> =
+    typeof content === 'string' || typeof content === 'undefined'
+      ? () => <>{content || null}</>
+      : content;
+  const dialogCloseProps = closeButtonLabelText
+    ? {
+        close,
+        closeButtonLabelText,
+      }
+    : undefined;
   return (
-    <ReactModal
+    <Dialog
+      id={id}
+      aria-labelledby={titleId}
+      aria-describedby={descriptionId}
       isOpen={isOpen}
-      onRequestClose={onClose}
-      className={styles.container}
-      overlayClassName={styles.overlay}
-      shouldCloseOnOverlayClick
+      targetElement={dialogTargetElement}
+      {...dialogCloseProps}
     >
-      <div className={styles.content}>
-        <div className={styles.titleRow}>
-          <h3>{modalTitle}</h3>
-          <button
-            className={styles.closeButton}
-            type="button"
-            onClick={onClose}
-            aria-label={t('confirmationModal.close')}
-          >
-            <IconCross className={styles.icon} />
-          </button>
-        </div>
-        <p>{modalText}</p>
-        <ul>
-          {servicesArray.map((service, index) => (
-            <li key={index}>{service.title}</li>
-          ))}
-        </ul>
-      </div>
-
-      <div className={styles.actions}>
-        <Button className={styles.button} variant="outlined" onClick={onClose}>
-          {t('confirmationModal.cancel')}
-        </Button>
-        <Button className={styles.button} onClick={onConfirm}>
+      {title && (
+        <Dialog.Header
+          id={titleId}
+          title={title}
+          iconLeft={<IconAlertCircle aria-hidden="true" />}
+        />
+      )}
+      {content && (
+        <Dialog.Content>
+          <div id={descriptionId}>
+            <ContentComponent />
+          </div>
+        </Dialog.Content>
+      )}
+      <Dialog.ActionButtons>
+        <Button
+          onClick={onConfirm}
+          data-testid="confirmation-modal-confirm-button"
+        >
           {actionButtonText}
         </Button>
-      </div>
-    </ReactModal>
+        <Button
+          variant="secondary"
+          onClick={onClose}
+          data-testid="confirmation-modal-cancel-button"
+        >
+          {closeButtonText}
+        </Button>
+      </Dialog.ActionButtons>
+    </Dialog>
   );
 }
 

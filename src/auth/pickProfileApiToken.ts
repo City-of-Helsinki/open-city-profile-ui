@@ -1,4 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function(obj: Record<string, any>) {
-  return obj[process.env.REACT_APP_PROFILE_AUDIENCE as string];
+function pickProfileApiToken(obj: Record<string, string>): string {
+  return obj[window._env_.REACT_APP_PROFILE_AUDIENCE as string];
 }
+
+export default pickProfileApiToken;

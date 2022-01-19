@@ -1,24 +1,20 @@
+import { User } from 'oidc-client';
 import React from 'react';
 
-import getAuthenticatedUser from './getAuthenticatedUser';
-import config from '../config';
+import authService from './authService';
 
-export type AMR =
-  | 'github'
-  | 'google'
-  | 'facebook'
-  | 'yle'
-  | typeof config.helsinkiAccountAMR;
+export const tunnistusSuomifiAMR = 'heltunnistussuomifi';
 
 export type AMRStatic =
   | 'github'
   | 'google'
   | 'facebook'
-  | 'yle'
-  | 'helsinkiAccount';
+  | 'yletunnus'
+  | 'helsinkiAccount'
+  | 'tunnistusSuomifi';
 
 export interface Profile {
-  amr: AMR;
+  amr: NonNullable<User['profile']['amr']>;
   auth_time: number;
   email: string;
   email_verified: boolean;
@@ -35,6 +31,20 @@ interface ProfileState {
   error: Error | null;
 }
 
+function getUserProfile(user: User | null): Profile | null {
+  if (user === null || user.expired !== false) {
+    return null;
+  }
+  const profile = { ...user.profile } as Profile;
+  const amr = user.profile.amr;
+  if (!amr) {
+    profile.amr = [];
+  } else if (typeof amr === 'string') {
+    profile.amr = [amr];
+  }
+  return profile;
+}
+
 function useProfile(): ProfileState {
   const [profile, setProfile] = React.useState<Profile | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -46,13 +56,13 @@ function useProfile(): ProfileState {
     function getUser() {
       setIsLoading(true);
 
-      getAuthenticatedUser()
+      authService
+        .getUser()
         .then(user => {
           if (ignore) {
             return;
           }
-
-          setProfile(user.profile);
+          setProfile(getUserProfile(user));
         })
         .catch(() => {
           if (ignore) {

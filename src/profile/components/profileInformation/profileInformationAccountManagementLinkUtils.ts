@@ -1,8 +1,16 @@
-import { Profile, AMRStatic } from '../../../auth/useProfile';
+import {
+  Profile,
+  AMRStatic,
+  tunnistusSuomifiAMR,
+} from '../../../auth/useProfile';
 import config from '../../../config';
 
-export function getAmr(profile: Profile | null): AMRStatic | null {
-  const amr = profile?.amr;
+function getAmrFromProfileData(profile: Profile | null): string | undefined {
+  return profile && profile.amr ? profile.amr[0] : '';
+}
+
+export function getAmrStatic(profile: Profile | null): AMRStatic | null {
+  const amr = getAmrFromProfileData(profile);
 
   // If amr designates helsinki account, switch the value into a static
   // value. This setup allows the amr for Helsinki account to be
@@ -11,12 +19,15 @@ export function getAmr(profile: Profile | null): AMRStatic | null {
   if (amr === config.helsinkiAccountAMR) {
     return 'helsinkiAccount';
   }
+  if (amr === tunnistusSuomifiAMR) {
+    return 'tunnistusSuomifi';
+  }
 
   if (
     amr === 'github' ||
     amr === 'google' ||
     amr === 'facebook' ||
-    amr === 'yle'
+    amr === 'yletunnus'
   ) {
     return amr;
   }
@@ -35,11 +46,17 @@ export function getAmrUrl(authenticationMethodReference: AMRStatic): string {
       return config.identityProviderManagementUrlGoogle;
     case 'facebook':
       return config.identityProviderManagementUrlFacebook;
-    case 'yle':
+    case 'yletunnus':
       return config.identityProviderManagementUrlYle;
+    case 'tunnistusSuomifi':
+      return config.identityProviderManagementUrlTunnistusSuomifi;
     default:
       throw Error(
         `Unexpected authentication method reference "${authenticationMethodReference}"`
       );
   }
+}
+
+export function hasTunnistusSuomiFiAmr(profile: Profile | null): boolean {
+  return getAmrFromProfileData(profile) === tunnistusSuomifiAMR;
 }

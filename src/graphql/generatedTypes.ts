@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -19,11 +20,10 @@ export interface GdprDeleteMyProfileMutation {
    * 
    * Possible error codes:
    * 
-   * * `CANNOT_DELETE_PROFILE_WHILE_SERVICE_CONNECTED_ERROR`: Returned if the profile is connected to Berth service.
-   * 
    * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
-   * 
-   * * `TODO`
+   * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing a connected service.
+   * * `CONNECTED_SERVICE_DELETION_NOT_ALLOWED_ERROR`: The profile deletion is disallowed by one or more connected services.
+   * * `CONNECTED_SERVICE_DELETION_FAILED_ERROR`: The profile deletion failed for one or more connected services.
    */
   readonly deleteMyProfile: GdprDeleteMyProfileMutation_deleteMyProfile | null;
 }
@@ -34,6 +34,7 @@ export interface GdprDeleteMyProfileMutationVariables {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -42,7 +43,6 @@ export interface GdprDeleteMyProfileMutationVariables {
 
 export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
   readonly __typename: "ServiceNode";
-  readonly type: ServiceType | null;
   /**
    * GDPR API query operation scope
    */
@@ -101,6 +101,7 @@ export interface GdprServiceConnectionsQuery {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -130,8 +131,6 @@ export interface CreateMyProfile {
    * * Address
    * * Phone
    * 
-   * If youth data is given, a youth profile will also be created and linked to the profile.
-   * 
    * Requires authentication.
    * 
    * Possible error codes:
@@ -147,6 +146,7 @@ export interface CreateMyProfileVariables {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -155,13 +155,13 @@ export interface CreateMyProfileVariables {
 
 export interface DownloadMyProfileQuery {
   /**
-   * Get the user information stored in the profile as machine readable JSON.
+   * Get the user information stored in the profile and its connected services as machine readable JSON.
    * 
    * Requires authentication.
    * 
    * Possible error codes:
    * 
-   * * `TODO`
+   * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing a connected service.
    */
   readonly downloadMyProfile: any | null;
 }
@@ -172,6 +172,7 @@ export interface DownloadMyProfileQueryVariables {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -266,7 +267,7 @@ export interface MyProfileQuery_myProfile_primaryPhone {
    * The ID of the object.
    */
   readonly id: string;
-  readonly phone: string | null;
+  readonly phone: string;
   readonly primary: boolean;
   readonly phoneType: PhoneType | null;
 }
@@ -278,7 +279,7 @@ export interface MyProfileQuery_myProfile_phones_edges_node {
    * The ID of the object.
    */
   readonly id: string;
-  readonly phone: string | null;
+  readonly phone: string;
   readonly phoneType: PhoneType | null;
 }
 
@@ -296,6 +297,71 @@ export interface MyProfileQuery_myProfile_phones {
    * Contains the nodes in this connection.
    */
   readonly edges: ReadonlyArray<(MyProfileQuery_myProfile_phones_edges | null)>;
+}
+
+export interface MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress {
+  readonly __typename: "VerifiedPersonalInformationAddressNode";
+  /**
+   * Street address with possible house number etc.
+   */
+  readonly streetAddress: string;
+  /**
+   * Postal code.
+   */
+  readonly postalCode: string;
+  /**
+   * Post office.
+   */
+  readonly postOffice: string;
+}
+
+export interface MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress {
+  readonly __typename: "VerifiedPersonalInformationForeignAddressNode";
+  /**
+   * Street address or whatever is the _first part_ of the address.
+   */
+  readonly streetAddress: string;
+  /**
+   * Additional address information, perhaps town, county, state, country etc.
+   */
+  readonly additionalAddress: string;
+  /**
+   * An ISO 3166-1 country code.
+   */
+  readonly countryCode: string;
+}
+
+export interface MyProfileQuery_myProfile_verifiedPersonalInformation {
+  readonly __typename: "VerifiedPersonalInformationNode";
+  /**
+   * First name(s).
+   */
+  readonly firstName: string;
+  /**
+   * Last name.
+   */
+  readonly lastName: string;
+  /**
+   * The name the person is called with.
+   */
+  readonly givenName: string;
+  readonly nationalIdentificationNumber: string;
+  /**
+   * Official municipality of residence in Finland as a free form text.
+   */
+  readonly municipalityOfResidence: string;
+  /**
+   * Official municipality of residence in Finland as an official number.
+   */
+  readonly municipalityOfResidenceNumber: string;
+  /**
+   * The permanent residency address in Finland.
+   */
+  readonly permanentAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress | null;
+  /**
+   * The temporary foreign (i.e. not in Finland) residency address.
+   */
+  readonly permanentForeignAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress | null;
 }
 
 export interface MyProfileQuery_myProfile {
@@ -332,6 +398,12 @@ export interface MyProfileQuery_myProfile {
    * List of phone numbers of the profile.
    */
   readonly phones: MyProfileQuery_myProfile_phones | null;
+  /**
+   * Personal information that has been verified to be true. Can result into
+   * `PERMISSION_DENIED_ERROR` if the requester has no required privileges to
+   * access this information.
+   */
+  readonly verifiedPersonalInformation: MyProfileQuery_myProfile_verifiedPersonalInformation | null;
 }
 
 export interface MyProfileQuery {
@@ -349,6 +421,7 @@ export interface MyProfileQuery {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -377,6 +450,7 @@ export interface NameQuery {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -406,6 +480,7 @@ export interface ProfileExistsQuery {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -436,16 +511,15 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
   readonly __typename: "ServiceNode";
-  readonly type: ServiceType | null;
   readonly title: string | null;
   readonly description: string | null;
-  readonly createdAt: any;
   readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;
 }
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
   readonly __typename: "ServiceConnectionType";
   readonly service: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
+  readonly createdAt: any;
 }
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges {
@@ -491,6 +565,7 @@ export interface ServiceConnectionsQuery {
 
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -503,9 +578,42 @@ export interface UpdateMyProfile_updateMyProfile_profile_primaryAddress {
    * The ID of the object.
    */
   readonly id: string;
+  readonly primary: boolean;
   readonly address: string;
   readonly postalCode: string;
   readonly city: string;
+  readonly countryCode: string;
+  readonly addressType: AddressType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_addresses_edges_node {
+  readonly __typename: "AddressNode";
+  readonly primary: boolean;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly address: string;
+  readonly postalCode: string;
+  readonly city: string;
+  readonly countryCode: string;
+  readonly addressType: AddressType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_addresses_edges {
+  readonly __typename: "AddressNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: UpdateMyProfile_updateMyProfile_profile_addresses_edges_node | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_addresses {
+  readonly __typename: "AddressNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(UpdateMyProfile_updateMyProfile_profile_addresses_edges | null)>;
 }
 
 export interface UpdateMyProfile_updateMyProfile_profile_primaryEmail {
@@ -515,6 +623,35 @@ export interface UpdateMyProfile_updateMyProfile_profile_primaryEmail {
    */
   readonly id: string;
   readonly email: string;
+  readonly primary: boolean;
+  readonly emailType: EmailType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_emails_edges_node {
+  readonly __typename: "EmailNode";
+  readonly primary: boolean;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly email: string;
+  readonly emailType: EmailType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_emails_edges {
+  readonly __typename: "EmailNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: UpdateMyProfile_updateMyProfile_profile_emails_edges_node | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_emails {
+  readonly __typename: "EmailNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(UpdateMyProfile_updateMyProfile_profile_emails_edges | null)>;
 }
 
 export interface UpdateMyProfile_updateMyProfile_profile_primaryPhone {
@@ -523,7 +660,36 @@ export interface UpdateMyProfile_updateMyProfile_profile_primaryPhone {
    * The ID of the object.
    */
   readonly id: string;
-  readonly phone: string | null;
+  readonly phone: string;
+  readonly primary: boolean;
+  readonly phoneType: PhoneType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_phones_edges_node {
+  readonly __typename: "PhoneNode";
+  readonly primary: boolean;
+  /**
+   * The ID of the object.
+   */
+  readonly id: string;
+  readonly phone: string;
+  readonly phoneType: PhoneType | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_phones_edges {
+  readonly __typename: "PhoneNodeEdge";
+  /**
+   * The item at the end of the edge
+   */
+  readonly node: UpdateMyProfile_updateMyProfile_profile_phones_edges_node | null;
+}
+
+export interface UpdateMyProfile_updateMyProfile_profile_phones {
+  readonly __typename: "PhoneNodeConnection";
+  /**
+   * Contains the nodes in this connection.
+   */
+  readonly edges: ReadonlyArray<(UpdateMyProfile_updateMyProfile_profile_phones_edges | null)>;
 }
 
 export interface UpdateMyProfile_updateMyProfile_profile {
@@ -534,18 +700,32 @@ export interface UpdateMyProfile_updateMyProfile_profile {
   readonly id: string;
   readonly firstName: string;
   readonly lastName: string;
+  readonly nickname: string;
+  readonly language: Language | null;
   /**
    * Convenience field for the address which is marked as primary.
    */
   readonly primaryAddress: UpdateMyProfile_updateMyProfile_profile_primaryAddress | null;
   /**
+   * List of addresses of the profile.
+   */
+  readonly addresses: UpdateMyProfile_updateMyProfile_profile_addresses | null;
+  /**
    * Convenience field for the email which is marked as primary.
    */
   readonly primaryEmail: UpdateMyProfile_updateMyProfile_profile_primaryEmail | null;
   /**
+   * List of email addresses of the profile.
+   */
+  readonly emails: UpdateMyProfile_updateMyProfile_profile_emails | null;
+  /**
    * Convenience field for the phone which is marked as primary.
    */
   readonly primaryPhone: UpdateMyProfile_updateMyProfile_profile_primaryPhone | null;
+  /**
+   * List of phone numbers of the profile.
+   */
+  readonly phones: UpdateMyProfile_updateMyProfile_profile_phones | null;
 }
 
 export interface UpdateMyProfile_updateMyProfile {
@@ -563,15 +743,11 @@ export interface UpdateMyProfile {
    * * Address
    * * Phone
    * 
-   * If youth data is given, a youth profile will also be created and linked to the
-   * profile **or** the existing youth profile will be updated if the profile is
-   * already linked to a youth profile.
-   * 
    * Requires authentication.
    * 
    * Possible error codes:
    * 
-   * * `TODO`
+   * * `PROFILE_MUST_HAVE_PRIMARY_EMAIL`: If trying to get rid of the profile's primary email.
    */
   readonly updateMyProfile: UpdateMyProfile_updateMyProfile | null;
 }
@@ -582,132 +758,7 @@ export interface UpdateMyProfileVariables {
 
 /* tslint:disable */
 /* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: QueryMySubscriptions
-// ====================================================
-
-export interface QueryMySubscriptions_myProfile_subscriptions_edges_node_subscriptionType {
-  readonly __typename: "SubscriptionTypeNode";
-  readonly code: string;
-}
-
-export interface QueryMySubscriptions_myProfile_subscriptions_edges_node {
-  readonly __typename: "SubscriptionNode";
-  /**
-   * The ID of the object.
-   */
-  readonly id: string;
-  readonly enabled: boolean;
-  readonly subscriptionType: QueryMySubscriptions_myProfile_subscriptions_edges_node_subscriptionType;
-}
-
-export interface QueryMySubscriptions_myProfile_subscriptions_edges {
-  readonly __typename: "SubscriptionNodeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: QueryMySubscriptions_myProfile_subscriptions_edges_node | null;
-}
-
-export interface QueryMySubscriptions_myProfile_subscriptions {
-  readonly __typename: "SubscriptionNodeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(QueryMySubscriptions_myProfile_subscriptions_edges | null)>;
-}
-
-export interface QueryMySubscriptions_myProfile {
-  readonly __typename: "ProfileNode";
-  /**
-   * The ID of the object.
-   */
-  readonly id: string;
-  readonly subscriptions: QueryMySubscriptions_myProfile_subscriptions | null;
-}
-
-export interface QueryMySubscriptions {
-  /**
-   * Get the profile belonging to the currently authenticated user.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `TODO`
-   */
-  readonly myProfile: QueryMySubscriptions_myProfile | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: QuerySubscriptions
-// ====================================================
-
-export interface QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes_edges_node {
-  readonly __typename: "SubscriptionTypeNode";
-  readonly label: string | null;
-  /**
-   * The ID of the object.
-   */
-  readonly id: string;
-  readonly code: string;
-}
-
-export interface QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes_edges {
-  readonly __typename: "SubscriptionTypeNodeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes_edges_node | null;
-}
-
-export interface QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes {
-  readonly __typename: "SubscriptionTypeNodeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes_edges | null)>;
-}
-
-export interface QuerySubscriptions_subscriptionTypeCategories_edges_node {
-  readonly __typename: "SubscriptionTypeCategoryNode";
-  /**
-   * The ID of the object.
-   */
-  readonly id: string;
-  readonly code: string;
-  readonly label: string | null;
-  readonly subscriptionTypes: QuerySubscriptions_subscriptionTypeCategories_edges_node_subscriptionTypes;
-}
-
-export interface QuerySubscriptions_subscriptionTypeCategories_edges {
-  readonly __typename: "SubscriptionTypeCategoryNodeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: QuerySubscriptions_subscriptionTypeCategories_edges_node | null;
-}
-
-export interface QuerySubscriptions_subscriptionTypeCategories {
-  readonly __typename: "SubscriptionTypeCategoryNodeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(QuerySubscriptions_subscriptionTypeCategories_edges | null)>;
-}
-
-export interface QuerySubscriptions {
-  readonly subscriptionTypeCategories: QuerySubscriptions_subscriptionTypeCategories | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 //==============================================================
@@ -753,23 +804,6 @@ export enum PhoneType {
   WORK = "WORK",
 }
 
-export enum ServiceType {
-  BERTH = "BERTH",
-  GODCHILDREN_OF_CULTURE = "GODCHILDREN_OF_CULTURE",
-  HKI_MY_DATA = "HKI_MY_DATA",
-  YOUTH_MEMBERSHIP = "YOUTH_MEMBERSHIP",
-}
-
-export enum YouthLanguage {
-  ARABIC = "ARABIC",
-  ENGLISH = "ENGLISH",
-  ESTONIAN = "ESTONIAN",
-  FINNISH = "FINNISH",
-  RUSSIAN = "RUSSIAN",
-  SOMALI = "SOMALI",
-  SWEDISH = "SWEDISH",
-}
-
 export interface CreateAddressInput {
   readonly countryCode?: string | null;
   readonly primary?: boolean | null;
@@ -809,17 +843,16 @@ export interface ProfileInput {
   readonly language?: Language | null;
   readonly contactMethod?: ContactMethod | null;
   readonly addEmails?: ReadonlyArray<(CreateEmailInput | null)> | null;
+  readonly addPhones?: ReadonlyArray<(CreatePhoneInput | null)> | null;
+  readonly addAddresses?: ReadonlyArray<(CreateAddressInput | null)> | null;
+  readonly subscriptions?: ReadonlyArray<(SubscriptionInputType | null)> | null;
+  readonly sensitivedata?: SensitiveDataFields | null;
   readonly updateEmails?: ReadonlyArray<(UpdateEmailInput | null)> | null;
   readonly removeEmails?: ReadonlyArray<(string | null)> | null;
-  readonly addPhones?: ReadonlyArray<(CreatePhoneInput | null)> | null;
   readonly updatePhones?: ReadonlyArray<(UpdatePhoneInput | null)> | null;
   readonly removePhones?: ReadonlyArray<(string | null)> | null;
-  readonly addAddresses?: ReadonlyArray<(CreateAddressInput | null)> | null;
   readonly updateAddresses?: ReadonlyArray<(UpdateAddressInput | null)> | null;
   readonly removeAddresses?: ReadonlyArray<(string | null)> | null;
-  readonly subscriptions?: ReadonlyArray<(SubscriptionInputType | null)> | null;
-  readonly youthProfile?: YouthProfileFields | null;
-  readonly sensitivedata?: SensitiveDataFields | null;
 }
 
 export interface SensitiveDataFields {
@@ -858,18 +891,6 @@ export interface UpdatePhoneInput {
   readonly id: string;
   readonly phone?: string | null;
   readonly phoneType?: PhoneType | null;
-}
-
-export interface YouthProfileFields {
-  readonly schoolName?: string | null;
-  readonly schoolClass?: string | null;
-  readonly languageAtHome?: YouthLanguage | null;
-  readonly approverFirstName?: string | null;
-  readonly approverLastName?: string | null;
-  readonly approverPhone?: string | null;
-  readonly approverEmail?: string | null;
-  readonly birthDate?: any | null;
-  readonly photoUsageApproved?: boolean | null;
 }
 
 //==============================================================

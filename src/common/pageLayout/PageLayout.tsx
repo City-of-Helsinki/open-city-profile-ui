@@ -7,14 +7,14 @@ import { MAIN_CONTENT_ID } from '../constants';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import styles from './PageLayout.module.css';
+import PageMeta from '../pageMeta/PageMeta';
 
 type Props = React.PropsWithChildren<{
   className?: string;
-  hideFooterLogo?: boolean;
   title?: string;
 }>;
 
-function PageLayout(props: Props) {
+function PageLayout(props: Props): React.ReactElement {
   const { trackPageView } = useMatomo();
   const { t } = useTranslation();
   const { title = 'appName' } = props;
@@ -32,13 +32,14 @@ function PageLayout(props: Props) {
   return (
     <div className={styles.wrapper}>
       <Header />
+      <PageMeta title={pageTitle} />
       <main
         id={MAIN_CONTENT_ID}
         className={classNames(styles.content, props.className)}
       >
         {props.children}
       </main>
-      <Footer hideFooterLogo={props.hideFooterLogo} />
+      <Footer />
     </div>
   );
 }

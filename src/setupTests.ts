@@ -1,18 +1,23 @@
 import Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
-import { GlobalWithFetchMock } from 'jest-fetch-mock';
+import { enableFetchMocks } from 'jest-fetch-mock';
 import './common/test/testi18nInit';
 
-const customGlobal: GlobalWithFetchMock = global as GlobalWithFetchMock;
+enableFetchMocks();
+
+// Load generated runtime configuration to be available in tests
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-customGlobal.fetch = require('jest-fetch-mock');
-customGlobal.fetchMock = customGlobal.fetch;
+require('../public/test-env-config');
 
 configure({ adapter: new Adapter() });
 
+((global as unknown) as Window).scrollTo = jest.fn();
+
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
-  useHistory: () => ({
-    push: jest.fn(),
+  useLocation: () => ({
+    pathname: '/',
   }),
 }));
+
+jest.mock('./auth/http-poller');

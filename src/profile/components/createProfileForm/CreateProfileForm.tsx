@@ -1,27 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { TextInput, Checkbox } from 'hds-react';
+import { TextInput, Checkbox, Button, PhoneInput } from 'hds-react';
 import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
+import classNames from 'classnames';
 
-import { getIsInvalid, getError } from '../../helpers/formik';
-import FormikDropdown, {
-  HdsOptionType,
-} from '../../../common/formikDropdown/FormikDropdown';
-import Button from '../../../common/button/Button';
+import { getIsInvalid, getFieldError } from '../../helpers/formik';
+import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
-import { Language } from '../../../graphql/generatedTypes';
+import { Language } from '../../../graphql/typings';
+import { getFormFields } from '../../helpers/formProperties';
+import {
+  basicDataSchema,
+  createProfilePhoneSchema,
+} from '../../../common/schemas/schemas';
+import { Link } from '../../../common/copyOfHDSLink/Link';
+import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
-const schema = yup.object().shape({
-  firstName: yup.string().max(255, 'validation.maxLength'),
-  lastName: yup.string().max(255, 'validation.maxLength'),
-  phone: yup
-    .string()
-    .min(6, 'validation.phoneMin')
-    .max(255, 'validation.maxLength'),
-  terms: yup.boolean().oneOf([true], 'validation.required'),
-});
+const termsSchema = yup
+  .object()
+  .shape({ terms: yup.boolean().oneOf([true], 'validation.required') });
+const schema = basicDataSchema
+  .concat(termsSchema)
+  .concat(createProfilePhoneSchema);
 
 export type FormValues = {
   firstName: string;
@@ -41,26 +43,45 @@ type Props = {
   isSubmitting: boolean;
 };
 
-function CreateProfileForm(props: Props) {
+function CreateProfileForm(props: Props): React.ReactElement {
   const { t } = useTranslation();
+  const formFields = getFormFields('basic-data');
+  const phoneFields = getFormFields('phones');
+  const [submitAttempted, setSubmitAttempted] = useState<boolean>(false);
 
-  const getFieldError = (
+  const hasFieldError = (
     formikProps: FormikProps<FormikFormValues>,
-    fieldName: keyof FormikFormValues,
-    options: object
-  ) => {
-    const renderError = (message: string) => t(message, options);
+    fieldName: keyof FormikFormValues
+  ): boolean =>
+    getIsInvalid<FormikFormValues>(formikProps, fieldName, submitAttempted);
 
-    return getError<FormikFormValues>(formikProps, fieldName, renderError);
+  const getFieldErrorMessage = (
+    formikProps: FormikProps<FormikFormValues>,
+    fieldName: keyof FormikFormValues
+  ) => {
+    if (!hasFieldError(formikProps, fieldName)) {
+      return undefined;
+    }
+    return getFieldError<FormikFormValues>(
+      t,
+      formikProps,
+      fieldName,
+      submitAttempted
+    );
   };
 
-  const profileLanguageOptions = profileConstants.LANGUAGES.map(language => {
-    return {
-      value: language,
-      label: t(`LANGUAGE_OPTIONS.${language}`),
-    };
-  });
-
+  const profileLanguageOptions = profileConstants.LANGUAGES.map(language => ({
+    value: language,
+    label: t(`LANGUAGE_OPTIONS.${language}`),
+  }));
+  const formFieldStyle = classNames([
+    styles['form-field'],
+    commonFormStyles['form-field'],
+  ]);
+  const containerStyle = classNames([
+    styles['form-fields'],
+    commonFormStyles['multi-item-wrapper'],
+  ]);
   return (
     <Formik
       initialValues={{
@@ -83,98 +104,109 @@ function CreateProfileForm(props: Props) {
     >
       {formikProps => (
         <Form>
-          <div className={styles.formFields}>
+          <div className={containerStyle}>
             <Field
-              className={styles.formField}
+              className={formFieldStyle}
               name="firstName"
               id="firstName"
-              maxLength="255"
+              maxLength={formFields.firstName.max as number}
               as={TextInput}
-              invalid={getIsInvalid(formikProps, 'firstName')}
-              helperText={getFieldError(formikProps, 'firstName', {
-                max: 255,
-              })}
-              labelText={t('profileForm.firstName')}
+              invalid={hasFieldError(formikProps, 'firstName')}
+              errorText={getFieldErrorMessage(formikProps, 'firstName')}
+              label={t('profileForm.firstName')}
             />
             <Field
-              className={styles.formField}
+              className={formFieldStyle}
               name="lastName"
               id="lastName"
-              maxLength="255"
+              maxLength={formFields.lastName.max as number}
               as={TextInput}
-              invalid={getIsInvalid(formikProps, 'lastName')}
-              helperText={getFieldError(formikProps, 'lastName', { max: 255 })}
-              labelText={t('profileForm.lastName')}
+              invalid={hasFieldError(formikProps, 'lastName')}
+              errorText={getFieldErrorMessage(formikProps, 'lastName')}
+              label={t('profileForm.lastName')}
             />
 
             <FormikDropdown
-              className={styles.formField}
+              className={formFieldStyle}
               name={'profileLanguage'}
               options={profileLanguageOptions}
               default={formikProps.values.profileLanguage}
               label={t('profileForm.language')}
-              onChange={(option: HdsOptionType) =>
+              onChange={option =>
                 formikProps.setFieldValue('profileLanguage', option.value)
               }
             />
 
             <Field
-              className={styles.formField}
+              className={formFieldStyle}
               name="phone"
               id="phone"
-              as={TextInput}
-              type="tel"
-              minLength="6"
-              maxLength="255"
-              invalid={getIsInvalid(formikProps, 'phone')}
-              helperText={getFieldError(formikProps, 'phone', {
-                min: 6,
-                max: 255,
-              })}
-              labelText={t('profileForm.phone')}
+              as={PhoneInput}
+              minLength={phoneFields.value.min as number}
+              maxLength={phoneFields.value.max as number}
+              invalid={hasFieldError(formikProps, 'phone')}
+              errorText={getFieldErrorMessage(formikProps, 'phone')}
+              label={t('profileForm.phone')}
             />
 
-            <div className={styles.formField}>
-              <label className={styles.label}>{t('profileForm.email')}</label>
-              <span className={styles.email}>{props.profile.email}</span>
+            <div className={formFieldStyle}>
+              <TextInput
+                id={'create-profile-email'}
+                readOnly
+                label={t('profileForm.email')}
+                defaultValue={props.profile.email}
+              />
             </div>
           </div>
 
-          <div className={styles.terms}>
+          <div className={styles['terms']}>
+            <p>
+              <Trans
+                i18nKey="profileForm.terms"
+                components={{
+                  fileDescriptionLink: (
+                    <Link
+                      href={t('profileForm.termsFileDescriptionLink')}
+                      external
+                      openInNewTab
+                    >
+                      {''}
+                    </Link>
+                  ),
+                  dataProtectionLink: (
+                    <Link
+                      href={t('profileForm.termsDataProtectionLink')}
+                      external
+                      openInNewTab
+                    >
+                      {''}
+                    </Link>
+                  ),
+                }}
+              />
+            </p>
             <Field
               as={Checkbox}
               name="terms"
               id="terms"
               checked={formikProps.values.terms}
-              labelText={
-                <Trans
-                  i18nKey="profileForm.terms"
-                  components={[
-                    // eslint-disable-next-line jsx-a11y/anchor-has-content
-                    <a
-                      href={t('profileForm.termsFileDescriptionLink')}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    />,
-                    // eslint-disable-next-line jsx-a11y/anchor-has-content
-                    <a
-                      href={t('profileForm.termsDataProtectionLink')}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    />,
-                  ]}
-                />
-              }
+              label={t('profileForm.termsLabel')}
             />
           </div>
           <div>
             <Button
+              variant="primary"
               type="submit"
               disabled={Boolean(
                 formikProps.isSubmitting ||
                   formikProps.errors.terms ||
                   props.isSubmitting
               )}
+              onClick={() => {
+                if (!submitAttempted) {
+                  setSubmitAttempted(true);
+                }
+              }}
             >
               {t('profileForm.submit')}
             </Button>

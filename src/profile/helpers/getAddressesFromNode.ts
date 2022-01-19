@@ -1,12 +1,12 @@
-import {
-  MyProfileQuery,
-  MyProfileQuery_myProfile_addresses_edges_node as Address,
-} from '../../graphql/generatedTypes';
+import { ProfileRoot, AddressNode } from '../../graphql/typings';
 
-const getAddressesFromNode = (data?: MyProfileQuery) => {
-  const edge = data?.myProfile?.addresses?.edges || [];
-  return edge
-    .filter(edge => !edge?.node?.primary)
+const getAddressesFromNode = (
+  data?: ProfileRoot,
+  keepPrimary = false
+): AddressNode[] => {
+  const edges = data?.myProfile?.addresses?.edges || [];
+  return edges
+    .filter(edge => keepPrimary || !edge?.node?.primary)
     .map(
       edge =>
         ({
@@ -18,7 +18,7 @@ const getAddressesFromNode = (data?: MyProfileQuery) => {
           countryCode: edge?.node?.countryCode,
           addressType: edge?.node?.addressType,
           __typename: 'AddressNode',
-        } as Address)
+        } as AddressNode)
     );
 };
 

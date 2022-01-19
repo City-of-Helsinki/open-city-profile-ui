@@ -1,26 +1,27 @@
 import React from 'react';
 import { User } from 'oidc-client';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import * as Sentry from '@sentry/browser';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
+import classNames from 'classnames';
 
 import CreateProfileForm, {
   FormValues,
 } from '../createProfileForm/CreateProfileForm';
 import PageHeading from '../../../common/pageHeading/PageHeading';
 import styles from './CreateProfile.module.css';
-import responsive from '../../../common/cssHelpers/responsive.module.css';
 import {
-  CreateMyProfile as CreateMyProfileData,
+  CreateMyProfile as CreateMyProfileRoot,
   CreateMyProfileVariables,
-  EmailType,
-  Language,
-  PhoneType,
 } from '../../../graphql/generatedTypes';
+import { EmailType, Language, PhoneType } from '../../../graphql/typings';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import useToast from '../../../toast/useToast';
+import Explanation from '../../../common/explanation/Explanation';
+import commonContentStyles from '../../../common/cssHelpers/content.module.css';
+import TopSectionWithKoros from '../../../common/topSectionWithKoros/TopSectionWithKoros';
 
 const CREATE_PROFILE = loader('../../graphql/CreateMyProfile.graphql');
 
@@ -29,11 +30,14 @@ type Props = {
   onProfileCreated: () => void;
 };
 
-function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
+function CreateProfile({
+  tunnistamoUser,
+  onProfileCreated,
+}: Props): React.ReactElement {
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
   const [createProfile, { loading }] = useMutation<
-    CreateMyProfileData,
+    CreateMyProfileRoot,
     CreateMyProfileVariables
   >(CREATE_PROFILE);
   const { createToast } = useToast();
@@ -78,17 +82,25 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
       });
   };
   return (
-    <div className={styles.createProfile}>
-      <PageHeading
-        text={t('createProfile.pageTitle')}
-        className={responsive.maxWidthCentered}
-      />
-      <div className={responsive.maxWidthCentered}>
-        <ProfileSection
-          title={t('createProfile.heading')}
-          titleVariant="h2"
-          description={t('createProfile.helpText')}
-        >
+    <React.Fragment>
+      <TopSectionWithKoros>
+        <PageHeading
+          text={t('createProfile.pageTitle')}
+          dataTestId="create-profile-heading"
+        />
+      </TopSectionWithKoros>
+      <div
+        className={classNames([
+          commonContentStyles['common-content-area'],
+          commonContentStyles['common-bottom-padding'],
+          styles['content'],
+        ])}
+      >
+        <Explanation
+          heading={t('createProfile.heading')}
+          text={t('createProfile.helpText')}
+        />
+        <ProfileSection>
           <CreateProfileForm
             profile={{
               firstName: tunnistamoUser.profile.given_name || '',
@@ -102,7 +114,7 @@ function CreateProfile({ tunnistamoUser, onProfileCreated }: Props) {
           />
         </ProfileSection>
       </div>
-    </div>
+    </React.Fragment>
   );
 }
 

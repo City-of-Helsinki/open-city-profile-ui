@@ -1,48 +1,55 @@
-import { isEqual } from 'lodash';
+import _ from 'lodash';
 
 import {
-  FormValues,
-  Primary,
-} from '../components/editProfileForm/EditProfileForm';
-import {
-  AddressType,
   CreateAddressInput,
   CreateEmailInput,
   CreatePhoneInput,
-  EmailType,
-  MyProfileQuery,
-  MyProfileQuery_myProfile_addresses_edges_node as Address,
-  MyProfileQuery_myProfile_emails_edges_node as Email,
-  MyProfileQuery_myProfile_phones_edges_node as Phone,
-  PhoneType,
   UpdateAddressInput,
   UpdateEmailInput,
+  UpdateMyProfileVariables,
   UpdatePhoneInput,
 } from '../../graphql/generatedTypes';
+import {
+  AddressType,
+  EmailType,
+  PhoneType,
+  ProfileRoot,
+  AddressNode,
+  EmailNode,
+  PhoneNode,
+} from '../../graphql/typings';
 import getPhonesFromNode from './getPhonesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
 import getAddressesFromNode from './getAddressesFromNode';
 import { formConstants } from '../constants/formConstants';
+import { FormValues } from './editData';
+
+type Primary = 'primaryEmail' | 'primaryAddress' | 'primaryPhone';
 
 type EmailInputs = {
   addEmails: CreateEmailInput[] | null[];
   updateEmails: UpdateEmailInput[];
-  removeEmails?: (string | null)[] | null | undefined;
+  removeEmails?: (string | null)[] | null;
 };
 
 type AddressInputs = {
   addAddresses: CreateAddressInput[];
   updateAddresses: UpdateAddressInput[];
-  removeAddresses?: (string | null)[] | null | undefined;
+  removeAddresses?: (string | null)[] | null;
 };
 
 type PhoneInputs = {
   addPhones: CreatePhoneInput[];
   updatePhones: UpdatePhoneInput[];
-  removePhones?: (string | null)[] | null | undefined;
+  removePhones?: (string | null)[] | null;
 };
 
-const getPrimaryValue = (primary: Primary, profile?: MyProfileQuery) => {
+type CreatePartialProfileUpdateData = (
+  formValues: Partial<FormValues>,
+  profile?: ProfileRoot
+) => UpdateMyProfileVariables;
+
+const getPrimaryValue = (primary: Primary, profile?: ProfileRoot) => {
   const primaryValue = profile?.myProfile && profile.myProfile[primary];
   return primaryValue || { id: '' };
 };
@@ -63,7 +70,7 @@ const getEmptyObject = (primary: Primary) => {
   }
 };
 
-const getNodesFromProfile = (primary: Primary, profile?: MyProfileQuery) => {
+const getNodesFromProfile = (primary: Primary, profile?: ProfileRoot) => {
   switch (primary) {
     case 'primaryPhone':
       return getPhonesFromNode(profile);
@@ -76,12 +83,12 @@ const getNodesFromProfile = (primary: Primary, profile?: MyProfileQuery) => {
   }
 };
 
-const getObjectFields = (value: Address | Email | Phone) => {
+const getObjectFields = (value: AddressNode | EmailNode | PhoneNode) => {
   switch (value.__typename) {
     case 'EmailNode': {
       return {
+        id: value.id,
         email: value.email,
-        id: value.email,
         emailType: value.emailType || EmailType.OTHER,
         primary: value.primary,
       };
@@ -110,11 +117,11 @@ const getObjectFields = (value: Address | Email | Phone) => {
   }
 };
 
-function formMutationArrays<T extends Address | Email | Phone>(
+function formMutationArrays<T extends AddressNode | EmailNode | PhoneNode>(
   formValueArray: T[],
   primary: Primary,
-  profile?: MyProfileQuery
-) {
+  profile?: ProfileRoot
+): Record<string, unknown> {
   const profileValues = [
     getPrimaryValue(primary, profile),
     ...getNodesFromProfile(primary, profile),
@@ -122,7 +129,7 @@ function formMutationArrays<T extends Address | Email | Phone>(
 
   // Filter empty values (e.g user added new phone and pressed save without typing anything)
   const formValues: T[] = formValueArray.filter(
-    value => !isEqual(value, getEmptyObject(primary))
+    value => !_.isEqual(value, getEmptyObject(primary))
   );
 
   // Form array that contains values that needs to be updated.
@@ -130,10 +137,10 @@ function formMutationArrays<T extends Address | Email | Phone>(
   const updateValues = formValues
     .filter(value => {
       const profileValue = profileValues.find(
-        profileValue => profileValue?.id === value.id
+        profileValueItem => profileValueItem?.id === value.id
       );
 
-      return value.id && !isEqual(value, profileValue);
+      return value.id && !_.isEqual(value, profileValue);
     })
     .map(value => getObjectFields(value));
 
@@ -143,7 +150,7 @@ function formMutationArrays<T extends Address | Email | Phone>(
     .filter(value => !value.id)
     .map(value => {
       const val = getObjectFields(value);
-      // Sending empty id will cause backend error so we remove it
+      // @ts-expect-error: Sending empty id will cause backend error so we remove it
       delete val.id;
       return val;
     });
@@ -162,7 +169,9 @@ function formMutationArrays<T extends Address | Email | Phone>(
         addAddresses: addValues as CreateAddressInput[],
         updateAddresses: updateValues as UpdateAddressInput[],
       };
-      if (removeValues.length > 0) addressInputs.removeAddresses = removeValues;
+      if (removeValues.length > 0) {
+        addressInputs.removeAddresses = removeValues;
+      }
       return addressInputs;
     }
     case 'primaryEmail': {
@@ -170,7 +179,9 @@ function formMutationArrays<T extends Address | Email | Phone>(
         addEmails: addValues as CreateEmailInput[],
         updateEmails: updateValues as UpdateEmailInput[],
       };
-      if (removeValues.length > 0) emailInputs.removeEmails = removeValues;
+      if (removeValues.length > 0) {
+        emailInputs.removeEmails = removeValues;
+      }
       return emailInputs;
     }
     case 'primaryPhone': {
@@ -178,7 +189,9 @@ function formMutationArrays<T extends Address | Email | Phone>(
         addPhones: addValues as CreatePhoneInput[],
         updatePhones: updateValues as UpdatePhoneInput[],
       };
-      if (removeValues.length > 0) phoneInputs.removePhones = removeValues;
+      if (removeValues.length > 0) {
+        phoneInputs.removePhones = removeValues;
+      }
       return phoneInputs;
     }
     default:
@@ -186,31 +199,45 @@ function formMutationArrays<T extends Address | Email | Phone>(
   }
 }
 
-const updateMutationVariables = (
-  formValues: FormValues,
-  profile?: MyProfileQuery
+const updateMutationVariables: CreatePartialProfileUpdateData = (
+  formValues,
+  profile
 ) => {
+  const phoneData = formValues.phones
+    ? formMutationArrays<PhoneNode>(formValues.phones, 'primaryPhone', profile)
+    : null;
+  const emailData = formValues.emails
+    ? formMutationArrays<EmailNode>(formValues.emails, 'primaryEmail', profile)
+    : null;
+  const addressData = formValues.addresses
+    ? formMutationArrays<AddressNode>(
+        formValues.addresses,
+        'primaryAddress',
+        profile
+      )
+    : null;
+
+  const updateNameProps = _.pick(formValues, [
+    'firstName',
+    'nickname',
+    'lastName',
+  ]);
+  const updateNameCount = Object.keys(updateNameProps).length;
+
+  const userData = updateNameCount > 0 ? updateNameProps : null;
+  const additionalInformation = formValues.language
+    ? {
+        language: formValues.language,
+      }
+    : null;
   return {
     input: {
       profile: {
-        firstName: formValues.firstName,
-        lastName: formValues.lastName,
-        language: formValues.profileLanguage,
-        ...formMutationArrays<Address>(
-          formValues.addresses,
-          'primaryAddress',
-          profile
-        ),
-        ...formMutationArrays<Phone>(
-          formValues.phones,
-          'primaryPhone',
-          profile
-        ),
-        ...formMutationArrays<Email>(
-          formValues.emails,
-          'primaryEmail',
-          profile
-        ),
+        ...userData,
+        ...additionalInformation,
+        ...phoneData,
+        ...emailData,
+        ...addressData,
       },
     },
   };

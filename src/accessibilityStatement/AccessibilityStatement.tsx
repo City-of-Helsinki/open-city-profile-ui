@@ -1,14 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import styles from './AccessibilityStatement.module.css';
-import Header from '../common/header/Header';
-import Footer from '../common/footer/Footer';
 import AccessibilityStatementFi from './AccessibilityStatementFi';
 import AccessibilityStatementSv from './AccessibilityStatementSv';
 import AccessibilityStatementEn from './AccessibilityStatementEn';
+import commonContentStyles from '../common/cssHelpers/content.module.css';
+import PageLayout from '../common/pageLayout/PageLayout';
 
-function AccessibilityStatement() {
+function AccessibilityStatement(): React.ReactElement {
   const { i18n } = useTranslation();
   const selectStatement = () => {
     const lang =
@@ -29,13 +30,19 @@ function AccessibilityStatement() {
   };
 
   return (
-    <div className={styles.pageWrapper}>
-      <Header />
-      <div className={styles.container}>
-        <div className={styles.innerWrapper}>{selectStatement()}</div>
+    <PageLayout title={'accessibilityStatement'}>
+      <div className={styles['wrapper']}>
+        <div
+          className={classNames([
+            commonContentStyles['common-content-area'],
+            commonContentStyles['common-bottom-padding'],
+            styles['content'],
+          ])}
+        >
+          <main className={styles['inner-content']}>{selectStatement()}</main>
+        </div>
       </div>
-      <Footer />
-    </div>
+    </PageLayout>
   );
 }
 

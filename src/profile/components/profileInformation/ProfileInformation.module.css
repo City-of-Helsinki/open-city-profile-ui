@@ -1,28 +1,5 @@
-.edit {
-  /* These styles allow the button to better fit on the screen on */
-  /* mobile. */
-  padding-left: 0;
-  padding-right: 0;
-  min-width: 0;
-}
-
-@media (min-width: 768px) {
-  .storedInformation {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-  .storedInformation > * {
-    width: 50%;
-  }
-}
-
-.title {
-  font-size: var(--fontsize-h-3);
-}
-
-.boxGrid {
+.box-grid {
   display: grid;
-  grid-row-gap: var(--spacing-m);
+  grid-row-gap: var(--spacing-xl);
   grid-template-rows: auto;
 }

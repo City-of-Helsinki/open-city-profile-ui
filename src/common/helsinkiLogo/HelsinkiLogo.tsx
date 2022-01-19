@@ -10,28 +10,23 @@ type Props = {
   className?: string;
   isLinkToFrontPage?: boolean;
 };
-function HelsinkiLogo({ className, isLinkToFrontPage }: Props) {
+function HelsinkiLogo({
+  className,
+  isLinkToFrontPage,
+}: Props): React.ReactElement {
   const { t, i18n } = useTranslation();
 
   const lang = getLanguageCode(i18n.languages[0]);
-  const logoStyle = lang === 'sv' ? styles.logoSv : styles.logoFi;
+  const logoStyle = lang === 'sv' ? styles['logo-sv'] : styles['logo-fi'];
+
+  const logoClassName = classNames(styles['logo'], logoStyle, className);
+  const titleAndAriaLabel = t('nav.titleAriaLabel');
 
   if (isLinkToFrontPage) {
-    return (
-      <Link
-        to="/"
-        className={classNames(logoStyle, className)}
-        aria-label={t('helsinkiLogo')}
-      />
-    );
+    return <Link to="/" className={logoClassName} title={titleAndAriaLabel} />;
   }
 
-  return (
-    <span
-      className={classNames(logoStyle, className)}
-      aria-label={t('helsinkiLogo')}
-    />
-  );
+  return <span className={logoClassName} aria-label={titleAndAriaLabel} />;
 }
 
 export default HelsinkiLogo;

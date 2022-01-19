@@ -3,31 +3,25 @@ import { mount } from 'enzyme';
 import enzymeToJson from 'enzyme-to-json';
 
 import ProfileInformationAuthenticationSourceBackLink from '../ProfileInformationAccountManagementLink';
+import { mockUserCreator } from '../../../../common/test/userMocking';
+
+let mockCurrentAmr;
+const helsinkiAccountAMR = 'helusername-test';
 
 jest.mock('../../../../config', () => ({
   identityProviderManagementUrlHelsinki: 'https://test-url',
-  helsinkiAccountAMR: 'helusername-test',
+  identityProviderManagementUrlTunnistusSuomifi: 'https://test-url-suomif-fi',
+  helsinkiAccountAMR,
 }));
 
-jest.mock('../../../../auth/useProfile', () => () => ({
-  profile: {
-    amr: 'helusername-test',
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    auth_time: 1593431180,
-    email: 'email@email.com',
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    email_verified: false,
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    family_name: 'Betty',
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    given_name: 'Smith',
-    name: 'Betty Smith',
-    nickname: 'Betty',
-    sub: 'uuidvalue',
-  },
+jest.mock('../../../../auth/useProfile', () => () => mockUserCreator());
+
+jest.mock('../profileInformationAccountManagementLinkUtils', () => ({
+  ...jest.requireActual('../profileInformationAccountManagementLinkUtils'),
+  getAmrStatic: () => mockCurrentAmr,
 }));
 
-describe('<ProfileInformationAuthenticationSourceBackLink />', () => {
+describe('<ProfileInformationAuthenticationSourceBackLink /> ', () => {
   const defaultProps = {};
   const getWrapper = props =>
     mount(
@@ -36,18 +30,26 @@ describe('<ProfileInformationAuthenticationSourceBackLink />', () => {
         {...props}
       />
     );
+  describe('renders correctly when AMR is helsinkiAccountAMR', () => {
+    beforeAll(() => {
+      window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = helsinkiAccountAMR;
+    });
 
-  beforeAll(() => {
-    process.env.REACT_APP_HELSINKI_ACCOUNT_AMR = 'helusername-test';
+    afterAll(() => {
+      window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = 'helusername';
+    });
+
+    it('should render helsinki account link as expected based on config', () => {
+      mockCurrentAmr = 'helsinkiAccount';
+      const wrapper = getWrapper();
+      expect(enzymeToJson(wrapper)).toMatchSnapshot();
+    });
   });
-
-  afterAll(() => {
-    process.env.REACT_APP_HELSINKI_ACCOUNT_AMR = 'helusername';
-  });
-
-  it('should render helsinki account link as expected based on config', () => {
-    const wrapper = getWrapper();
-
-    expect(enzymeToJson(wrapper)).toMatchSnapshot();
+  describe('renders correctly when AMR is tunnistusSuomifiAMR', () => {
+    it('should render suomi.fi link as expected based on config', () => {
+      mockCurrentAmr = 'tunnistusSuomifi';
+      const wrapper = getWrapper();
+      expect(enzymeToJson(wrapper)).toMatchSnapshot();
+    });
   });
 });

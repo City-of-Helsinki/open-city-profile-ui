@@ -1,9 +1,9 @@
-import {
-  ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service as Service,
-  ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node as Node,
-} from '../../graphql/generatedTypes';
+import { ServiceAllowedFieldsNode } from '../../graphql/typings';
+import { ServiceConnectionData } from './getServiceConnectionData';
 
-export default function getAllowedDataFieldsFromService(service: Service) {
+export default function getAllowedDataFieldsFromService(
+  service: ServiceConnectionData
+): ServiceAllowedFieldsNode[] {
   return service.allowedDataFields.edges
     .map(edge => {
       if (edge?.node) {
@@ -11,5 +11,5 @@ export default function getAllowedDataFieldsFromService(service: Service) {
       }
       return false;
     })
-    .filter((node): node is Node => Boolean(node));
+    .filter((node): node is ServiceAllowedFieldsNode => Boolean(node));
 }

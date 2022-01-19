@@ -59,5 +59,23 @@ query MyProfileQuery {
         }
       }
     }
+    verifiedPersonalInformation {
+      firstName
+      lastName
+      givenName
+      nationalIdentificationNumber
+      municipalityOfResidence
+      municipalityOfResidenceNumber
+      permanentAddress {
+        streetAddress
+        postalCode
+        postOffice
+      }
+      permanentForeignAddress {
+        streetAddress
+        additionalAddress
+        countryCode
+      }
+    }
   }
 }

@@ -1,0 +1,38 @@
+.row-content-wrapper {
+  background: var(--color-black-ultra-light);
+  margin: 0 0 var(--spacing-m) 0;
+  padding: var(--spacing-m);
+}
+
+.row-content-wrapper form {
+  width: 100%;
+}
+
+.editable-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.value {
+  font-size: var(--fontsize-body-l);
+  padding: 0 0 var(--spacing-m) 0;
+  word-break: break-all;
+}
+
+@media (min-width: 768px) {
+  .row-content-wrapper {
+    flex-direction: row;
+    align-items: center;
+    padding: var(--spacing-m);
+  }
+  .value {
+    padding: 0 var(--spacing-2-xs) 0 0;
+  }
+
+  .editable-row {
+    flex-direction: row;
+  }
+  .editable-row > div:first-child {
+    width: 50%;
+  }
+}

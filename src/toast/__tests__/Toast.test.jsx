@@ -44,7 +44,7 @@ describe('Toast', () => {
   });
 
   afterAll(() => {
-    global.document.getElementById('toast').remove();
+    global.document.getElementById('toast-root').remove();
   });
 
   it('should render correct toast', async () => {

@@ -1,6 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, ReactElement } from 'react';
 
-function AccessibilityStatementEn() {
+import { Link } from '../common/copyOfHDSLink/Link';
+
+function AccessibilityStatementEn(): ReactElement {
   return (
     <Fragment>
       <h1>Accessibility Statement</h1>
@@ -38,8 +40,10 @@ function AccessibilityStatementEn() {
         accessible format, they can request for this information by e-mail at{' '}
         <a href="mailto:helsinki.palaute@hel.fi">helsinki.palaute@hel.fi</a> or
         through the feedback form at{' '}
-        <a href="https://www.hel.fi/feedback">www.hel.fi/feedback</a>. The aim
-        is to reply to the enquiry within a reasonable time frame.{' '}
+        <Link href="https://www.hel.fi/feedback" external openInNewTab>
+          www.hel.fi/feedback
+        </Link>
+        . The aim is to reply to the enquiry within a reasonable time frame.
       </p>
 
       <h2>Feedback and contact information</h2>

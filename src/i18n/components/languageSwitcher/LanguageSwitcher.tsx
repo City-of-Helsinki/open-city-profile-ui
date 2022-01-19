@@ -1,43 +1,42 @@
 import React from 'react';
+import { Navigation } from 'hds-react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
-import styles from './LanguageSwitcher.module.css';
+import getLanguageCode from '../../../common/helpers/getLanguageCode';
 
-const languages = [
-  { code: 'fi', label: 'Suomi' },
-  { code: 'sv', label: 'Svenska' },
-  { code: 'en', label: 'English' },
-];
-
-type Props = {
-  onLanguageChanged?: () => void;
-  className?: string;
-};
-
-function LanguageSwitcher(props: Props) {
-  const { i18n } = useTranslation();
-  const setLanguage = (code: string) => {
+function LanguageSwitcher(): React.ReactElement {
+  const { i18n, t } = useTranslation();
+  const { trackEvent } = useMatomo();
+  const setLanguage = (code: string, e: React.MouseEvent) => {
+    e.preventDefault();
     i18n.changeLanguage(code);
-    if (props.onLanguageChanged) {
-      props.onLanguageChanged();
-    }
+    trackEvent({ category: 'action', action: `Language selected ${code}` });
   };
+  const i18NLanguageCode = getLanguageCode(i18n.language);
+  const languages = [
+    { code: 'fi', label: 'Suomeksi' },
+    { code: 'sv', label: 'På svenska' },
+    { code: 'en', label: 'In English' },
+  ];
   return (
-    <ul className={classNames(props.className, styles.list)}>
+    <Navigation.LanguageSelector
+      label={i18NLanguageCode.toUpperCase()}
+      buttonAriaLabel={t('landmarks.navigation.language')}
+    >
       {languages.map(lang => (
-        <li key={lang.code} className={styles.item}>
-          <button
-            type="button"
-            lang={lang.code}
-            onClick={() => setLanguage(lang.code)}
-          >
-            {lang.label}
-          </button>
-        </li>
+        <Navigation.Item
+          href="#"
+          onClick={(e: React.MouseEvent) => setLanguage(lang.code, e)}
+          label={lang.label}
+          active={i18NLanguageCode === lang.code}
+          key={lang.code}
+          lang={lang.code}
+        />
       ))}
-    </ul>
+    </Navigation.LanguageSelector>
   );
 }
-
+// without the componentName, this component won't show beside the menu icon in mobile.
+LanguageSwitcher.componentName = 'NavigationLanguageSelector';
 export default LanguageSwitcher;

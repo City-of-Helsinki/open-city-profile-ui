@@ -1,4 +1,4 @@
-function getLanguageCode(langOrLangAndLocale: string) {
+function getLanguageCode(langOrLangAndLocale: string): string {
   const hasLocale = langOrLangAndLocale.includes('-');
 
   if (hasLocale) {
