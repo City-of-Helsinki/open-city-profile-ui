@@ -14,5 +14,5 @@ window._env_ = {
   REACT_APP_PROFILE_BE_GDPR_CLIENT_ID: 'https://api.hel.fi/auth/helsinkiprofile',
   REACT_APP_OIDC_RESPONSE_TYPE: 'code',
   REACT_APP_SENTRY_DSN: 'https://8b5b23e2171b42cd8617e2b1ad7353b6@sentry.hel.ninja/63',
-  REACT_APP_VERSION: '1.1.11'
+  REACT_APP_VERSION: '1.1.12'
 }

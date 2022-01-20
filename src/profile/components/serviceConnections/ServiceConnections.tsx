@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
@@ -9,10 +9,14 @@ import Explanation from '../../../common/explanation/Explanation';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import CheckedLabel from '../../../common/checkedLabel/CheckedLabel';
 import styles from './ServiceConnections.module.css';
-import { ServiceConnectionsRoot } from '../../../graphql/typings';
+import {
+  ServiceConnectionsQueryVariables,
+  ServiceConnectionsRoot,
+} from '../../../graphql/typings';
 import getServiceConnectionData from '../../helpers/getServiceConnectionData';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
 import useToast from '../../../toast/useToast';
+import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -23,25 +27,15 @@ type Props = Record<string, unknown>;
 function ServiceConnections(props: Props): React.ReactElement {
   const { t, i18n } = useTranslation();
   const { createToast } = useToast();
-
-  const { data, loading, refetch } = useQuery<ServiceConnectionsRoot>(
-    SERVICE_CONNECTIONS,
-    {
-      onError: (error: Error) => {
-        Sentry.captureException(error);
-        createToast({ type: 'error' });
-      },
-    }
-  );
-
-  // Refetch services when language changes, services are translated based on
-  // Accept-Language header which is set in the graphql-client (src/graphql/client).
-  useEffect(() => {
-    const cb = () => refetch();
-    i18n.on('languageChanged', cb);
-    return () => {
-      i18n.off('languageChanged', cb);
-    };
+  const { data, loading } = useQuery<
+    ServiceConnectionsRoot,
+    ServiceConnectionsQueryVariables
+  >(SERVICE_CONNECTIONS, {
+    variables: createServiceConnectionsQueryVariables(i18n.language),
+    onError: (error: Error) => {
+      Sentry.captureException(error);
+      createToast({ type: 'error' });
+    },
   });
 
   const getDateTime = (date: Date) => {
