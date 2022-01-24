@@ -72,8 +72,10 @@ COPY --from=staticbuilder /app/build /usr/share/nginx/html
 COPY .prod/nginx.conf  /etc/nginx/
 
 # Copy default environment config and setup script
+# Copy package.json so env.sh can read it
 COPY ./scripts/env.sh /opt/env.sh
 COPY .env /opt/.env
+COPY package.json /opt/package.json
 RUN chmod +x /opt/env.sh
 
 EXPOSE 8080
