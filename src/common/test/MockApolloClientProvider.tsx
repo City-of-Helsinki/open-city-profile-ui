@@ -6,7 +6,6 @@ import fetchMock from 'jest-fetch-mock';
 import graphqlClient from '../../graphql/client';
 import {
   ProfileData,
-  ServiceConnectionsQueryVariables,
   ServiceConnectionsRoot,
   UpdateProfileData,
 } from '../../graphql/typings';
@@ -20,7 +19,7 @@ export type MockedResponse = {
 };
 
 export type ResponseProvider = (
-  variables?: UpdateMyProfileVariables | ServiceConnectionsQueryVariables
+  variables?: UpdateMyProfileVariables
 ) => MockedResponse;
 
 export function MockApolloClientProvider({

@@ -1,17 +1,17 @@
-query ServiceConnectionsQuery($language: HelTranslationLanguage!) {
+query ServiceConnectionsQuery {
   myProfile {
     id
     serviceConnections {
       edges {
         node {
           service {
-            title @hel_translation(in: $language)
-            description @hel_translation(in: $language)
+            title
+            description
             allowedDataFields {
               edges {
                 node {
                   fieldName
-                  label @hel_translation(in: $language)
+                  label
                 }
               }
             }
