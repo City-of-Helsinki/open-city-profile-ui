@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ApolloError, useLazyQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
@@ -9,16 +9,12 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
-import {
-  ServiceConnectionsQueryVariables,
-  ServiceConnectionsRoot,
-} from '../../../graphql/typings';
+import { ServiceConnectionsRoot } from '../../../graphql/typings';
 import styles from './deleteProfile.module.css';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
 import DeleteProfileError from '../modals/deleteProfileError/DeleteProfileError';
-import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -67,11 +63,10 @@ function DeleteProfile(): React.ReactElement {
     targetId: `delete-profile-button`,
   });
 
-  const [getServiceConnections, { data: serviceConnections }] = useLazyQuery<
-    ServiceConnectionsRoot,
-    ServiceConnectionsQueryVariables
-  >(SERVICE_CONNECTIONS, {
-    variables: createServiceConnectionsQueryVariables(i18n.language),
+  const [
+    getServiceConnections,
+    { data: serviceConnections, refetch },
+  ] = useLazyQuery<ServiceConnectionsRoot>(SERVICE_CONNECTIONS, {
     onCompleted: () => {
       setDataLoadState(loadedLoadState);
     },
@@ -79,6 +74,23 @@ function DeleteProfile(): React.ReactElement {
       setDataLoadState(errorLoadState);
       Sentry.captureException(error);
     },
+  });
+
+  useEffect(() => {
+    const cb = () => {
+      if (refetch) {
+        const asyncRefetch = async () => {
+          setDataLoadState(loadingLoadState);
+          await refetch();
+          setDataLoadState(loadedLoadState);
+        };
+        asyncRefetch();
+      }
+    };
+    i18n.on('languageChanged', cb);
+    return () => {
+      i18n.off('languageChanged', cb);
+    };
   });
 
   const loadServiceConnections = useCallback(

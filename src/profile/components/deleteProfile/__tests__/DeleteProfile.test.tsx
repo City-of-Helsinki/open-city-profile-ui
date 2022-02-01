@@ -10,8 +10,6 @@ import {
 import DeleteProfile from '../DeleteProfile';
 import { ResponseProvider } from '../../../../common/test/MockApolloClientProvider';
 import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
-import i18n from '../../../../common/test/testi18nInit';
-import { ServiceConnectionsQueryVariables } from '../../../../graphql/typings';
 
 const mockStartFetchingAuthorizationCode = jest.fn();
 
@@ -23,7 +21,7 @@ jest.mock('../../../../gdprApi/useAuthorizationCode.ts', () => () => [
 describe('<DeleteProfile /> ', () => {
   let responseCounter = -1;
   const serviceConnections = getMyProfileWithServiceConnections();
-  const queryVariableTracker = jest.fn();
+
   let showComponent: React.Dispatch<React.SetStateAction<boolean>>;
 
   const ComponentRendererWithForceUpdate = (): React.ReactElement => {
@@ -33,9 +31,8 @@ describe('<DeleteProfile /> ', () => {
   };
 
   const renderTestSuite = (errorResponseIndex = -1) => {
-    const responseProvider: ResponseProvider = payload => {
+    const responseProvider: ResponseProvider = () => {
       responseCounter = responseCounter + 1;
-      queryVariableTracker(payload as ServiceConnectionsQueryVariables);
       return responseCounter === errorResponseIndex
         ? { errorType: 'networkError' }
         : { profileDataWithServiceConnections: serviceConnections };
@@ -71,7 +68,6 @@ describe('<DeleteProfile /> ', () => {
   });
   afterEach(() => {
     cleanComponentMocks();
-    jest.resetAllMocks();
   });
 
   const initTests = async (errorResponseIndex = -1): Promise<TestTools> => {
@@ -81,19 +77,13 @@ describe('<DeleteProfile /> ', () => {
 
   it(`toggle button opens the panel 
       which first loads service connections 
-      and then shows a checkbox and a submit button.
-      Current language is sent as a variable. Value must be in uppercase
-      `, async () => {
+      and then shows a checkbox and a submit button`, async () => {
     await act(async () => {
       const { clickElement, waitForElement } = await initTests();
       await clickElement(toggleButton);
       await waitForElement(loadIndicator);
       await waitForElement(checkbox);
       await waitForElement(submitButton);
-
-      expect(queryVariableTracker).toHaveBeenCalledWith({
-        language: i18n.language.toUpperCase(),
-      });
     });
   });
 

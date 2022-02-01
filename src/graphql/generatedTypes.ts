@@ -490,9 +490,6 @@ export interface ProfileExistsQuery {
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node {
   readonly __typename: "AllowedDataFieldNode";
   readonly fieldName: string;
-  /**
-   * Supports hel_translation directive.
-   */
   readonly label: string | null;
 }
 
@@ -514,13 +511,7 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
   readonly __typename: "ServiceNode";
-  /**
-   * Supports hel_translation directive.
-   */
   readonly title: string | null;
-  /**
-   * Supports hel_translation directive.
-   */
   readonly description: string | null;
   readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;
 }
@@ -570,10 +561,6 @@ export interface ServiceConnectionsQuery {
    * * `TODO`
    */
   readonly myProfile: ServiceConnectionsQuery_myProfile | null;
-}
-
-export interface ServiceConnectionsQueryVariables {
-  readonly language: HelTranslationLanguage;
 }
 
 /* tslint:disable */
@@ -800,12 +787,6 @@ export enum EmailType {
   WORK = "WORK",
 }
 
-export enum HelTranslationLanguage {
-  EN = "EN",
-  FI = "FI",
-  SV = "SV",
-}
-
 /**
  * An enumeration.
  */
@@ -854,14 +835,6 @@ export interface DeleteMyProfileMutationInput {
   readonly clientMutationId?: string | null;
 }
 
-/**
- * The following fields are deprecated:
- * 
- * * `image`
- * * `subscriptions`
- * 
- * There's no replacement for these.
- */
 export interface ProfileInput {
   readonly firstName?: string | null;
   readonly lastName?: string | null;
