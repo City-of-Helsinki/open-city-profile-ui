@@ -563,6 +563,10 @@ export interface ServiceConnectionsQuery {
   readonly myProfile: ServiceConnectionsQuery_myProfile | null;
 }
 
+export interface ServiceConnectionsQueryVariables {
+  readonly language: TranslationLanguage;
+}
+
 /* tslint:disable */
 /* eslint-disable */
 // @generated
@@ -804,6 +808,15 @@ export enum PhoneType {
   WORK = "WORK",
 }
 
+/**
+ * An enumeration.
+ */
+export enum TranslationLanguage {
+  EN = "EN",
+  FI = "FI",
+  SV = "SV",
+}
+
 export interface CreateAddressInput {
   readonly countryCode?: string | null;
   readonly primary?: boolean | null;
@@ -835,6 +848,14 @@ export interface DeleteMyProfileMutationInput {
   readonly clientMutationId?: string | null;
 }
 
+/**
+ * The following fields are deprecated:
+ * 
+ * * `image`
+ * * `subscriptions`
+ * 
+ * There's no replacement for these.
+ */
 export interface ProfileInput {
   readonly firstName?: string | null;
   readonly lastName?: string | null;
