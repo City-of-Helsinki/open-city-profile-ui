@@ -44,6 +44,29 @@ export default function getMyProfileWithServiceConnections(): ServiceConnections
             },
             __typename: 'ServiceConnectionTypeEdge',
           },
+          {
+            node: {
+              createdAt: '2020-03-10T11:34:14.719531+00:00',
+              service: {
+                title: 'Example UI',
+                description: 'Esimerkkiapplikaatio.',
+                allowedDataFields: {
+                  edges: [
+                    generateAllowedDataFieldEdge('name'),
+                    generateAllowedDataFieldEdge('email'),
+                    generateAllowedDataFieldEdge('addresses'),
+                    generateAllowedDataFieldEdge('phones'),
+                    generateAllowedDataFieldEdge('Personal_identity_code'),
+                    generateAllowedDataFieldEdge('Municipality_of_residence'),
+                  ],
+                  __typename: 'AllowedDataFieldNodeConnection',
+                },
+                __typename: 'ServiceNode',
+              },
+              __typename: 'ServiceConnectionType',
+            },
+            __typename: 'ServiceConnectionTypeEdge',
+          },
         ],
         __typename: 'ServiceConnectionTypeConnection',
       },
