@@ -1,17 +1,17 @@
-query ServiceConnectionsQuery {
+query ServiceConnectionsQuery($language: TranslationLanguage!) {
   myProfile {
     id
     serviceConnections {
       edges {
         node {
           service {
-            title
-            description
+            title(language: $language)
+            description(language: $language)
             allowedDataFields {
               edges {
                 node {
                   fieldName
-                  label
+                  label(language: $language)
                 }
               }
             }
