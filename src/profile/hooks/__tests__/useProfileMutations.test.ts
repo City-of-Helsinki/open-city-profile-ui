@@ -34,7 +34,7 @@ describe('useProfileMutations.ts ', () => {
     updateVariables.length = 0;
   });
   const responseProvider: ResponseProvider = variables => {
-    updateVariables.push(variables);
+    updateVariables.push(variables as UpdateMyProfileVariables);
     return responses.shift() as MockedResponse;
   };
 
