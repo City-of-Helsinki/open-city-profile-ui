@@ -45,7 +45,7 @@ function ServiceConnections(props: Props): React.ReactElement {
 
   if (loading) {
     return (
-      <div className={styles['load-indicator']}>
+      <div className={styles['load-indicator']} data-testid={'load-indicator'}>
         <LoadingSpinner small />
         <span>{t('loading')}</span>
       </div>
@@ -54,7 +54,11 @@ function ServiceConnections(props: Props): React.ReactElement {
 
   if (error) {
     return (
-      <Notification type={'error'} label={t('notification.genericError')}>
+      <Notification
+        type={'error'}
+        label={t('notification.genericError')}
+        dataTestId={'service-connections-load-error'}
+      >
         <p>{t('notification.defaultErrorText')}</p>
         <Button
           onClick={() => {
