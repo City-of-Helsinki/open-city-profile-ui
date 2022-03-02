@@ -249,7 +249,7 @@ describe('useProfileMutations.ts ', () => {
         const { result } = renderHookResult;
         profileRoot = result.current.profileData as ProfileRoot;
         expect(getPhonesFromNode(profileRoot, true)[0].phone).toEqual(
-          '0501234567'
+          '+358501234567'
         );
 
         // create update objects

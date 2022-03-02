@@ -94,7 +94,7 @@ export const getMyProfile = (): ProfileRoot => ({
     },
     primaryPhone: {
       id: '123',
-      phone: '0501234567',
+      phone: '+358501234567',
       phoneType: PhoneType.OTHER,
       primary: true,
       __typename: 'PhoneNode',
@@ -160,7 +160,7 @@ export const getMyProfile = (): ProfileRoot => ({
         {
           node: {
             id: '123',
-            phone: '0501234567',
+            phone: '+358501234567',
             phoneType: PhoneType.OTHER,
             primary: true,
             __typename: 'PhoneNode',
@@ -170,7 +170,7 @@ export const getMyProfile = (): ProfileRoot => ({
         {
           node: {
             id: '234',
-            phone: '0501234567',
+            phone: '+35840098765',
             phoneType: PhoneType.OTHER,
             primary: false,
             __typename: 'PhoneNode',
