@@ -27,13 +27,17 @@ import {
 } from '../../../helpers/editData';
 import i18n from '../../../../common/test/testi18nInit';
 import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
+import {
+  getCountryCallingCodes,
+  splitNumberAndCountryCallingCode,
+} from '../../../../i18n/countryCallingCodes.utils';
+
+type MultiItemDataTypes = Extract<EditDataType, 'addresses' | 'phones'>;
 
 describe('<MultiItemEditor /> ', () => {
   const responses: MockedResponse[] = [];
   const initialProfile = getMyProfile().myProfile as ProfileData;
-  const renderTestSuite = (
-    dataType: Extract<EditDataType, 'addresses' | 'phones'>
-  ) => {
+  const renderTestSuite = (dataType: MultiItemDataTypes) => {
     const responseProvider: ResponseProvider = () =>
       responses.shift() as MockedResponse;
     return renderComponentWithMocksAndContexts(
@@ -44,8 +48,7 @@ describe('<MultiItemEditor /> ', () => {
     );
   };
   const t = i18n.getFixedT('fi');
-
-  // data may be FormValues or EmailNode, PhoneNode, AddressNode
+  // data may be FormValues or PhoneNode or AddressNode
   // GeneralData type prevents casting all the time.
   // Data used in tests is anyway in <string, string> format
   type GeneralData = Record<string, string>;
@@ -53,6 +56,8 @@ describe('<MultiItemEditor /> ', () => {
     [x: string]: {
       fields: string[];
       formValues: GeneralData;
+      newValues: GeneralData;
+      invalidValues: GeneralData;
     };
   };
   const testData: TestData = {
@@ -64,11 +69,27 @@ describe('<MultiItemEditor /> ', () => {
         postalCode: '99999',
         countryCode: 'FI',
       },
+      newValues: {
+        address: 'test-address-2',
+        city: 'my-city',
+        postalCode: '00001',
+      },
+      invalidValues: {
+        address: '',
+        city: '',
+        postalCode: '',
+      },
     },
     phones: {
-      fields: ['phone'],
+      fields: ['number', 'countryCallingCode'],
       formValues: {
-        phone: '555-555-123',
+        phone: '+358123456789',
+      },
+      newValues: {
+        phone: '+4406123456789',
+      },
+      invalidValues: {
+        phone: '',
       },
     },
   };
@@ -80,14 +101,16 @@ describe('<MultiItemEditor /> ', () => {
     cleanComponentMocks();
   });
 
-  const initTests = async (dataType: EditDataType): Promise<TestTools> => {
+  const initTests = async (
+    dataType: MultiItemDataTypes
+  ): Promise<TestTools> => {
     responses.push({ profileData: initialProfile });
     const testTools = await renderTestSuite(dataType);
     await testTools.fetch();
     return Promise.resolve(testTools);
   };
 
-  const multiItemDataTypes: EditDataType[] = ['phones', 'addresses'];
+  const multiItemDataTypes: MultiItemDataTypes[] = ['phones', 'addresses'];
   multiItemDataTypes.forEach(dataType => {
     // test only node at index 0;
     const testIndex = 0;
@@ -104,12 +127,58 @@ describe('<MultiItemEditor /> ', () => {
       id: `${dataType}-add-button`,
     };
 
-    const { fields, formValues } = testData[dataType];
+    const { fields, formValues, newValues, invalidValues } = testData[dataType];
     const sourceNodeList = pickSources(
       initialProfile,
       dataType
     ) as MultiItemProfileNode[];
     const sourceNode = (sourceNodeList[testIndex] as unknown) as GeneralData;
+
+    const isCountryCallingCodeField = (fieldName: string): boolean =>
+      fieldName === 'countryCallingCode';
+
+    // countryCallingCode field is not present when not in edit mode
+    const isFieldVerifiyable = (
+      targetIsInput: boolean,
+      fieldName: string
+    ): boolean =>
+      !(
+        dataType === 'phones' &&
+        !targetIsInput &&
+        isCountryCallingCodeField(fieldName)
+      );
+
+    const convertFieldValue = (
+      targetIsInput: boolean,
+      fieldName: string,
+      source: GeneralData
+    ): string => {
+      if (dataType !== 'phones') {
+        return source[fieldName];
+      }
+      // When dataType is "phones", the fieldName is "phones" in graphQL
+      // That is why "number" is not used in source
+      const value = source['phone'];
+      if (!targetIsInput) {
+        return value;
+      }
+      const { countryCallingCode, number } = splitNumberAndCountryCallingCode(
+        value
+      );
+      if (fieldName === 'number') {
+        return number;
+      }
+      // default is "+358" so prevent that when no value is wanted
+      if (!value) {
+        return '';
+      }
+      const countryCallingCodeOptions = getCountryCallingCodes('fi').filter(
+        option => option.value === countryCallingCode
+      );
+      return countryCallingCodeOptions && countryCallingCodeOptions.length
+        ? countryCallingCodeOptions[0].label
+        : '';
+    };
 
     // verifies rendered data
     const verifyValues = async (
@@ -125,13 +194,20 @@ describe('<MultiItemEditor /> ', () => {
             : { testId: `${dataType}-${index}-${name}-value` };
         }
         return targetIsInput
-          ? { id: `${dataType}-${index}-value` }
+          ? {
+              id: `${dataType}-${index}-${name}${
+                isCountryCallingCodeField(name) ? `-input` : ''
+              }`,
+            }
           : { testId: `${dataType}-${index}-value` };
       };
       // cannot use forEach with async/await
       for (const field of fields) {
+        if (!isFieldVerifiyable(targetIsInput, field)) {
+          break;
+        }
         const selector = getSelector(field);
-        const value = source[field];
+        const value = convertFieldValue(targetIsInput, field, source);
         await expect(getTextOrInputValue(selector)).resolves.toBe(value);
       }
     };
@@ -140,19 +216,25 @@ describe('<MultiItemEditor /> ', () => {
     const setValues = async (
       setInputValue: TestTools['setInputValue'],
       source: GeneralData,
-      index: number
+      index: number,
+      comboBoxSelector: TestTools['comboBoxSelector']
     ) => {
       // cannot use forEach with async/await
       for (const field of fields) {
-        const value = source[field];
-        await setInputValue({
-          selector: {
-            id: `${dataType}-${index}-${
-              dataType === 'addresses' ? field : 'value'
-            }`,
-          },
-          newValue: value,
-        });
+        const value = convertFieldValue(true, field, source);
+        if (isCountryCallingCodeField(field)) {
+          await comboBoxSelector(
+            `${dataType}-${index}-countryCallingCode`,
+            value
+          );
+        } else {
+          await setInputValue({
+            selector: {
+              id: `${dataType}-${index}-${field}`,
+            },
+            newValue: value,
+          });
+        }
       }
     };
 
@@ -175,7 +257,7 @@ describe('<MultiItemEditor /> ', () => {
           initialProfile
         )
           .edit(dataType, {
-            ...formValues,
+            ...newValues,
             id: sourceNode.id,
           })
           .getProfile();
@@ -187,10 +269,11 @@ describe('<MultiItemEditor /> ', () => {
             submit,
             getTextOrInputValue,
             waitForElement,
+            comboBoxSelector,
           } = await initTests(dataType);
           await clickElement(editButtonSelector);
           await waitForElement(cancelButtonSelector);
-          await setValues(setInputValue, formValues, 0);
+          await setValues(setInputValue, newValues, 0, comboBoxSelector);
           // add the graphQL response
           responses.push({
             updatedProfileData,
@@ -213,7 +296,7 @@ describe('<MultiItemEditor /> ', () => {
             waitForAfterSaveNotification,
             optionalSubmitButtonSelector: submitButtonSelector,
           });
-          await verifyValues(getTextOrInputValue, formValues, testIndex);
+          await verifyValues(getTextOrInputValue, newValues, testIndex);
         });
       });
 
@@ -223,7 +306,7 @@ describe('<MultiItemEditor /> ', () => {
           initialProfile
         )
           .add(dataType, {
-            ...formValues,
+            ...newValues,
             id: '999',
           })
           .getProfile();
@@ -238,12 +321,18 @@ describe('<MultiItemEditor /> ', () => {
             getTextOrInputValue,
             isDisabled,
             getElement,
+            comboBoxSelector,
           } = await initTests(dataType);
-          const addButton = await clickElement(addButtonSelector);
+          await clickElement(addButtonSelector);
           await waitFor(() => {
-            expect(isDisabled(addButton)).toBeTruthy();
+            expect(isDisabled(getElement(addButtonSelector))).toBeTruthy();
           });
-          await setValues(setInputValue, formValues, newItemIndex);
+          await setValues(
+            setInputValue,
+            newValues,
+            newItemIndex,
+            comboBoxSelector
+          );
           // add the graphQL response
           responses.push({
             updatedProfileData,
@@ -254,9 +343,9 @@ describe('<MultiItemEditor /> ', () => {
             },
           });
           await waitFor(() => {
-            expect(isDisabled(addButton)).toBeFalsy();
+            expect(isDisabled(getElement(addButtonSelector))).toBeFalsy();
           });
-          await verifyValues(getTextOrInputValue, formValues, newItemIndex);
+          await verifyValues(getTextOrInputValue, newValues, newItemIndex);
           // focus is set to add button
           await waitForElementFocus(() => getElement(addButtonSelector));
         });
@@ -272,10 +361,16 @@ describe('<MultiItemEditor /> ', () => {
             getTextOrInputValue,
             waitForElement,
             getElement,
+            comboBoxSelector,
           } = await initTests(dataType);
           await clickElement(editButtonSelector);
           await waitForElement(cancelButtonSelector);
-          await setValues(setInputValue, formValues, testIndex);
+          await setValues(
+            setInputValue,
+            newValues,
+            testIndex,
+            comboBoxSelector
+          );
           // add the graphQL response
           responses.push({
             errorType: 'networkError',
@@ -292,7 +387,7 @@ describe('<MultiItemEditor /> ', () => {
             optionalSubmitButtonSelector: submitButtonSelector,
           });
           // input fields are still rendered
-          await verifyValues(getTextOrInputValue, formValues, testIndex, true);
+          await verifyValues(getTextOrInputValue, newValues, testIndex, true);
           await clickElement(cancelButtonSelector);
           // values are reset to previous values
           await verifyValues(getTextOrInputValue, sourceNode, testIndex);
@@ -443,19 +538,21 @@ describe('<MultiItemEditor /> ', () => {
               setInputValue,
               getElement,
               waitForElement,
+              comboBoxSelector,
             } = await initTests(dataType);
             await clickElement(editButtonSelector);
             await waitForElement(cancelButtonSelector);
-            const selector = `${dataType}-${testIndex}-${
-              dataType === 'addresses' ? field : 'value'
-            }`;
+            const selector = `${dataType}-${testIndex}-${field}`.replace(
+              'countryCallingCode',
+              'countryCallingCode-input'
+            );
 
             const testRun = {
               validData: formValues,
-              invalidData: { ...formValues, [field]: '' },
+              invalidData: { ...formValues, ...invalidValues },
               elementSelector: { id: `${selector}` },
               errorSelector: {
-                id: `${selector}-error`,
+                id: `${dataType}-${testIndex}-${field}-error`,
               },
             };
 
@@ -471,26 +568,38 @@ describe('<MultiItemEditor /> ', () => {
               getElement({ testId: `${dataType}-error-list` });
 
             // set invalid values
-            await setValues(setInputValue, invalidData, testIndex);
+            await setValues(
+              setInputValue,
+              invalidData,
+              testIndex,
+              comboBoxSelector
+            );
             // submit also validates the form
             await clickElement(submitButtonSelector);
             await waitForElementAttributeValue(
               elementGetter,
               'aria-invalid',
-              'true'
+              true
             );
             // getElement throws if element is not found
             expect(errorElementGetter).not.toThrow();
             expect(errorListElementGetter).not.toThrow();
             // set valid value
-            await setValues(setInputValue, validData, testIndex);
+            await setValues(
+              setInputValue,
+              validData,
+              testIndex,
+              comboBoxSelector
+            );
             await waitForElementAttributeValue(
               elementGetter,
               'aria-invalid',
-              'false'
+              false
             );
-            expect(errorElementGetter).toThrow();
-            expect(errorListElementGetter).toThrow();
+            await waitFor(() => {
+              expect(errorElementGetter).toThrow();
+              expect(errorListElementGetter).toThrow();
+            });
           });
         });
       });

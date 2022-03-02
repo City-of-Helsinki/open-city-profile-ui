@@ -32,7 +32,4 @@
   .editable-row {
     flex-direction: row;
   }
-  .editable-row > div:first-child {
-    width: 50%;
-  }
 }
