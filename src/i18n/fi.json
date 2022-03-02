@@ -158,7 +158,8 @@
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietosuoja/",
     "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Sahkoisten%20asiointipalveluiden%20rekisteri.pdf",
     "nationalIdentificationNumber": "Henkilötunnus",
-    "municipalityOfResidence": "Kotikunta"
+    "municipalityOfResidence": "Kotikunta",
+    "countryCallingCode": "Maan suuntanumero"
   },
   "profileInformation": {
     "address": "Osoite",
@@ -229,7 +230,9 @@
     "maxLength": "Kentän maksimipituus on {{max}} merkkiä.",
     "phoneMin": "Puhelinnumeron pitää olla vähintään {{min}} merkkiä pitkä.",
     "required": "Tämä kenttä on pakollinen.",
-    "errorTitleForScreenReaders": "Lomakkeella on seuraavat virheet:"
+    "errorTitleForScreenReaders": "Lomakkeella on seuraavat virheet:",
+    "countryCallingCodeRequiredIfNumber": "Maan suuntanumero on annettava puhelinnumerolle",
+    "numbersOnly": "Vain numerot sallittu"
   },
   "identityProvider": {
     "helsinkiAccount": "Helsinki-profiilin käyttäjätunnus",

@@ -158,7 +158,8 @@
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/dataskydd",
     "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Register%20over%20e-tjanster.pdf",
     "nationalIdentificationNumber": "Personbeteckning",
-    "municipalityOfResidence": "Hemkommun"
+    "municipalityOfResidence": "Hemkommun",
+    "countryCallingCode": "SV: Maan suuntanumero"
   },
   "profileInformation": {
     "address": "Adress",
@@ -229,7 +230,9 @@
     "maxLength": "Fältet får vara högst {{max}} tecken långt.",
     "phoneMin": "Telefonnumret måste vara mint {{min}} tecken långt.",
     "required": "Detta fält krävs.",
-    "errorTitleForScreenReaders": "Blanketten har följande fel:"
+    "errorTitleForScreenReaders": "Blanketten har följande fel:",
+    "countryCallingCodeRequiredIfNumber": "SV: Maan suuntanumero on annettava puhelinnumerolle",
+    "numbersOnly": "SV: Vain numerot sallittu"
   },
   "identityProvider": {
     "helsinkiAccount": "Användarnamnet för Helsingfors-profilen",
