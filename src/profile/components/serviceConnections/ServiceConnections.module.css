@@ -25,3 +25,10 @@
 .date-and-time {
   margin-top: 0;
 }
+
+.load-indicator {
+  display: flex;
+}
+.load-indicator span {
+  padding-left: var(--spacing-s);
+}

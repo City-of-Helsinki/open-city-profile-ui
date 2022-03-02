@@ -4,6 +4,7 @@ import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 import { format } from 'date-fns';
 import * as Sentry from '@sentry/browser';
+import { Button, LoadingSpinner, Notification } from 'hds-react';
 
 import Explanation from '../../../common/explanation/Explanation';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
@@ -15,7 +16,6 @@ import {
 } from '../../../graphql/typings';
 import getServiceConnectionData from '../../helpers/getServiceConnectionData';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
-import useToast from '../../../toast/useToast';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 
 const SERVICE_CONNECTIONS = loader(
@@ -26,15 +26,14 @@ type Props = Record<string, unknown>;
 
 function ServiceConnections(props: Props): React.ReactElement {
   const { t, i18n } = useTranslation();
-  const { createToast } = useToast();
-  const { data, loading } = useQuery<
+  const { data, loading, refetch, error } = useQuery<
     ServiceConnectionsRoot,
     ServiceConnectionsQueryVariables
   >(SERVICE_CONNECTIONS, {
     variables: createServiceConnectionsQueryVariables(i18n.language),
-    onError: (error: Error) => {
-      Sentry.captureException(error);
-      createToast({ type: 'error' });
+    notifyOnNetworkStatusChange: true,
+    onError: (loadError: Error) => {
+      Sentry.captureException(loadError);
     },
   });
 
@@ -43,6 +42,34 @@ function ServiceConnections(props: Props): React.ReactElement {
     const time = format(new Date(date), 'HH:mm');
     return `${day}, ${t('serviceConnections.clock')} ${time}`;
   };
+
+  if (loading) {
+    return (
+      <div className={styles['load-indicator']} data-testid={'load-indicator'}>
+        <LoadingSpinner small />
+        <span>{t('loading')}</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <Notification
+        type={'error'}
+        label={t('notification.genericError')}
+        dataTestId={'service-connections-load-error'}
+      >
+        <p>{t('notification.defaultErrorText')}</p>
+        <Button
+          onClick={() => {
+            refetch();
+          }}
+        >
+          {t('notification.tryAgain')}
+        </Button>
+      </Notification>
+    );
+  }
 
   const services = getServiceConnectionData(data);
   const hasNoServices = !loading && services.length === 0;
