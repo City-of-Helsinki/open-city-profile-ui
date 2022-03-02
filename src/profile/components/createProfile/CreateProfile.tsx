@@ -57,9 +57,9 @@ function CreateProfile({
             },
           ],
           addPhones: [
-            formValues.phone
+            formValues.number
               ? {
-                  phone: formValues.phone,
+                  phone: `${formValues.countryCallingCode}${formValues.number}`,
                   primary: true,
                   phoneType: PhoneType.OTHER,
                 }
@@ -107,7 +107,8 @@ function CreateProfile({
               lastName: tunnistamoUser.profile.family_name || '',
               email: tunnistamoUser.profile.email || '',
               profileLanguage: Language.FINNISH,
-              phone: '',
+              number: '',
+              countryCallingCode: '',
             }}
             isSubmitting={loading}
             onValues={handleOnValues}

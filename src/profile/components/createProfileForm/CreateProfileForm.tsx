@@ -6,7 +6,9 @@ import * as yup from 'yup';
 import classNames from 'classnames';
 
 import { getIsInvalid, getFieldError } from '../../helpers/formik';
-import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
+import FormikDropdown, {
+  OptionType,
+} from '../../../common/formikDropdown/FormikDropdown';
 import styles from './CreateProfileForm.module.css';
 import profileConstants from '../../constants/profileConstants';
 import { Language } from '../../../graphql/typings';
@@ -17,6 +19,11 @@ import {
 } from '../../../common/schemas/schemas';
 import { Link } from '../../../common/copyOfHDSLink/Link';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
+import getLanguageCode from '../../../common/helpers/getLanguageCode';
+import {
+  getMemoizedCountryCallingCodes,
+  getDefaultCountryCallingCode,
+} from '../../../i18n/countryCallingCodes.utils';
 
 const termsSchema = yup
   .object()
@@ -29,7 +36,8 @@ export type FormValues = {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
+  number: string;
+  countryCallingCode: string;
   profileLanguage: Language;
 };
 
@@ -44,11 +52,10 @@ type Props = {
 };
 
 function CreateProfileForm(props: Props): React.ReactElement {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const formFields = getFormFields('basic-data');
   const phoneFields = getFormFields('phones');
   const [submitAttempted, setSubmitAttempted] = useState<boolean>(false);
-
   const hasFieldError = (
     formikProps: FormikProps<FormikFormValues>,
     fieldName: keyof FormikFormValues
@@ -69,11 +76,19 @@ function CreateProfileForm(props: Props): React.ReactElement {
       submitAttempted
     );
   };
+  const countryCallingCodesList = getMemoizedCountryCallingCodes(
+    getLanguageCode(i18n.languages[0])
+  );
+  const defaultCountryCallingCodeValue = getDefaultCountryCallingCode();
+  const defaultCountryCallingCodeOption = countryCallingCodesList.find(
+    option => option.value === defaultCountryCallingCodeValue
+  ) as OptionType;
 
   const profileLanguageOptions = profileConstants.LANGUAGES.map(language => ({
     value: language,
     label: t(`LANGUAGE_OPTIONS.${language}`),
   }));
+  const defaultLanguageOption = profileLanguageOptions[0];
   const formFieldStyle = classNames([
     styles['form-field'],
     commonFormStyles['form-field'],
@@ -86,6 +101,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
     <Formik
       initialValues={{
         ...props.profile,
+        countryCallingCode: getDefaultCountryCallingCode(),
         terms: false,
       }}
       initialErrors={{
@@ -96,7 +112,8 @@ function CreateProfileForm(props: Props): React.ReactElement {
           firstName: values.firstName,
           lastName: values.lastName,
           email: props.profile.email,
-          phone: values.phone,
+          number: values.number,
+          countryCallingCode: values.countryCallingCode,
           profileLanguage: values.profileLanguage,
         });
       }}
@@ -108,7 +125,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
             <Field
               className={formFieldStyle}
               name="firstName"
-              id="firstName"
+              id="create-profile-firstName"
               maxLength={formFields.firstName.max as number}
               as={TextInput}
               invalid={hasFieldError(formikProps, 'firstName')}
@@ -118,7 +135,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
             <Field
               className={formFieldStyle}
               name="lastName"
-              id="lastName"
+              id="create-profile-lastName"
               maxLength={formFields.lastName.max as number}
               as={TextInput}
               invalid={hasFieldError(formikProps, 'lastName')}
@@ -128,25 +145,49 @@ function CreateProfileForm(props: Props): React.ReactElement {
 
             <FormikDropdown
               className={formFieldStyle}
+              id="create-profile-profileLanguage"
               name={'profileLanguage'}
               options={profileLanguageOptions}
-              default={formikProps.values.profileLanguage}
+              defaultOption={defaultLanguageOption}
               label={t('profileForm.language')}
               onChange={option =>
                 formikProps.setFieldValue('profileLanguage', option.value)
               }
             />
-
+            <FormikDropdown
+              className={formFieldStyle}
+              name={'countryCallingCode'}
+              id={'create-profile-countryCallingCode'}
+              label={t('profileForm.countryCallingCode')}
+              options={countryCallingCodesList}
+              defaultOption={defaultCountryCallingCodeOption}
+              invalid={hasFieldError(formikProps, 'countryCallingCode')}
+              error={getFieldErrorMessage(formikProps, 'countryCallingCode')}
+              toggleButtonAriaLabel={t('profileInformation.ariaShowOptions')}
+              onChange={option => {
+                formikProps.setFieldValue(
+                  'countryCallingCode',
+                  option ? option.value : ''
+                );
+              }}
+              allowSearch
+              virtualized
+            />
             <Field
               className={formFieldStyle}
-              name="phone"
-              id="phone"
+              name="number"
+              id="create-profile-number"
               as={PhoneInput}
-              minLength={phoneFields.value.min as number}
-              maxLength={phoneFields.value.max as number}
-              invalid={hasFieldError(formikProps, 'phone')}
-              errorText={getFieldErrorMessage(formikProps, 'phone')}
+              maxLength={phoneFields.number.max as number}
+              invalid={hasFieldError(formikProps, 'number')}
+              errorText={getFieldErrorMessage(formikProps, 'number')}
               label={t('profileForm.phone')}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                formikProps.setFieldValue(
+                  'number',
+                  event.target.value.replace(/\D/g, '')
+                );
+              }}
             />
 
             <div className={formFieldStyle}>
@@ -188,7 +229,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
             <Field
               as={Checkbox}
               name="terms"
-              id="terms"
+              id="create-profile-terms"
               checked={formikProps.values.terms}
               label={t('profileForm.termsLabel')}
             />
@@ -207,6 +248,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
                   setSubmitAttempted(true);
                 }
               }}
+              data-testid={'create-profile-submit-button'}
             >
               {t('profileForm.submit')}
             </Button>
