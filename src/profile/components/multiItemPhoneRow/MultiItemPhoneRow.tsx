@@ -18,8 +18,17 @@ import { getFormFields } from '../../helpers/formProperties';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
+import FormikDropdown, {
+  OptionType,
+} from '../../../common/formikDropdown/FormikDropdown';
+import getLanguageCode from '../../../common/helpers/getLanguageCode';
+import {
+  getDefaultCountryCallingCode,
+  getMemoizedCountryCallingCodes,
+  splitNumberAndCountryCallingCode,
+} from '../../../i18n/countryCallingCodes.utils';
 
-type PhoneFormikValue = { value: string };
+type PhoneFormikValue = { number: string; countryCallingCode: string };
 
 function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
   const {
@@ -28,7 +37,7 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
     disableEditButtons,
   } = props;
   const dataType: EditDataType = 'phones';
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const {
     isEditing,
     currentAction,
@@ -38,16 +47,30 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
     removeButtonId,
   } = useCommonEditHandling(props);
   const inputValue: string = (value as PhoneValue).phone || '';
-  const inputId = `${testId}-value`;
+  const inputId = `${testId}-number`;
+  const dropdownId = `${testId}-countryCallingCode`;
   const formFields = getFormFields(dataType);
   const disableButtons = !!currentAction || !!saving;
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     PhoneFormikValue
   >(t, isNew);
-
   const ariaLabels = createActionAriaLabels(dataType, inputValue, t);
-
   if (isEditing) {
+    const countryCallingCodes = getMemoizedCountryCallingCodes(
+      getLanguageCode(i18n.languages[0])
+    );
+    const { countryCallingCode, number } = splitNumberAndCountryCallingCode(
+      (value as PhoneValue).phone || ''
+    );
+    const initialCountryCallingCodeOption = countryCallingCodes.find(
+      option => option.value === countryCallingCode
+    ) as OptionType;
+
+    const defaultCountryCallingCodeValue = getDefaultCountryCallingCode();
+    const defaultCountryCallingCodeOption = countryCallingCodes.find(
+      option => option.value === defaultCountryCallingCodeValue
+    ) as OptionType;
+
     return (
       <div
         className={classNames([
@@ -57,30 +80,73 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
       >
         <Formik
           initialValues={{
-            value: inputValue,
+            number,
+            countryCallingCode,
           }}
           onSubmit={async values => {
             await actionHandler('save', {
-              phone: values.value,
+              phone: `${values.countryCallingCode}${values.number}`,
             });
           }}
           validationSchema={phoneSchema}
         >
           {(formikProps: FormikProps<PhoneFormikValue>) => (
             <Form>
-              <FocusKeeper targetId={inputId}>
+              <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
                 <div className={styles['editable-row']}>
-                  <Field
-                    name="value"
-                    id={inputId}
-                    maxLength={formFields.value.max as number}
-                    as={PhoneInput}
-                    invalid={hasFieldError(formikProps, 'value')}
-                    aria-invalid={hasFieldError(formikProps, 'value')}
-                    errorText={getFieldErrorMessage(formikProps, 'value')}
-                    aria-labelledby={`${dataType}-value-helper`}
-                    autoFocus
-                  />
+                  <div className={commonFormStyles['phone-number-wrapper']}>
+                    <FormikDropdown
+                      className={classNames(
+                        commonFormStyles['country-calling-code-dropdown'],
+                        commonFormStyles['form-field']
+                      )}
+                      name={'countryCallingCode'}
+                      id={dropdownId}
+                      label={t('profileForm.countryCallingCode')}
+                      options={countryCallingCodes}
+                      defaultOption={defaultCountryCallingCodeOption}
+                      disabled={!!saving}
+                      invalid={hasFieldError(formikProps, 'countryCallingCode')}
+                      error={getFieldErrorMessage(
+                        formikProps,
+                        'countryCallingCode'
+                      )}
+                      aria-describedby={`${dataType}-countryCallingCode-helper`}
+                      toggleButtonAriaLabel={t(
+                        'profileInformation.ariaShowOptions'
+                      )}
+                      onChange={option => {
+                        formikProps.setFieldValue(
+                          'countryCallingCode',
+                          option ? option.value : ''
+                        );
+                      }}
+                      allowSearch
+                      virtualized
+                      initialOption={initialCountryCallingCodeOption}
+                    />
+                    <Field
+                      className={commonFormStyles['phone-number']}
+                      name="number"
+                      id={inputId}
+                      maxLength={formFields.number.max as number}
+                      as={PhoneInput}
+                      invalid={hasFieldError(formikProps, 'number')}
+                      aria-invalid={hasFieldError(formikProps, 'number')}
+                      errorText={getFieldErrorMessage(formikProps, 'number')}
+                      aria-labelledby={`${dataType}-number-helper`}
+                      disabled={!!saving}
+                      label={t('profileForm.phone')}
+                      onChange={(
+                        event: React.ChangeEvent<HTMLInputElement>
+                      ) => {
+                        formikProps.setFieldValue(
+                          'number',
+                          event.target.value.replace(/\D/g, '')
+                        );
+                      }}
+                    />
+                  </div>
                   <AccessibleFormikErrors
                     formikProps={formikProps}
                     dataType={dataType}
@@ -89,6 +155,7 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
                     handler={actionHandler}
                     disabled={disableButtons}
                     testId={testId}
+                    alignWithLabeledInputs
                   />
                 </div>
                 <SaveIndicator action={currentAction} testId={testId} />
