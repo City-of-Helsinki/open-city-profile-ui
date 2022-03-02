@@ -84,21 +84,37 @@ export const basicDataSchema = yup.object().shape({
     .max(lastNameMax, createMaxLengthMessage(lastNameMax)),
 });
 
-const phonesProperties = formFieldsByDataType['phones'];
-const phonesMin = phonesProperties.value.min as number;
-const phonesMax = phonesProperties.value.max as number;
-export const phoneSchema = yup.object().shape({
-  value: yup
+const getDefaultPhoneSchema = () =>
+  yup
     .string()
-    .required(requiredValidation)
     .min(phonesMin, createMinLengthMessage(phonesMin, 'validation.phoneMin'))
-    .max(phonesMax, createMaxLengthMessage(phonesMax)),
+    .max(phonesMax, createMaxLengthMessage(phonesMax))
+    .test(
+      'numbersOnly',
+      'validation.numbersOnly',
+      value => !/\D/g.test(value || '')
+    );
+const phonesProperties = formFieldsByDataType['phones'];
+const phonesMin = phonesProperties.number.min as number;
+const phonesMax = phonesProperties.number.max as number;
+export const phoneSchema = yup.object().shape({
+  number: getDefaultPhoneSchema().required(requiredValidation),
+  countryCallingCode: yup.string().required(requiredValidation),
 });
 export const createProfilePhoneSchema = yup.object().shape({
-  phone: yup
+  number: getDefaultPhoneSchema(),
+  countryCallingCode: yup
     .string()
-    .min(phonesMin, createMinLengthMessage(phonesMin, 'validation.phoneMin'))
-    .max(phonesMax, createMaxLengthMessage(phonesMax)),
+    .test(
+      'isValidCountryCallingCode',
+      'validation.countryCallingCodeRequiredIfNumber',
+      function() {
+        if (this.parent.number) {
+          return !!this.parent.countryCallingCode;
+        }
+        return true;
+      }
+    ),
 });
 export const emailSchema = yup.object().shape({
   email: yup.mixed().test('isValidEmail', 'validation.email', function() {
