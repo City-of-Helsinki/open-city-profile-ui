@@ -211,7 +211,7 @@
     "noEmails": "Du har inte uppgett en e-postadress",
     "noAddresses": "Du har inte uppgett en adress",
     "noEmail": "Du har inte angett en e-postadress",
-    "verifyEmailText": "Vi har skickat en bekräftelse till e-postadressen som du angett. Din e-postadress är också ditt användarnamn vid inloggningen så du kan inte logga in om du inte har bekräftat användarnamnet. Om du inte har fått meddelandet, vänligen kontrollera skräpkorgen för e-post.",
+    "verifyEmailText": "Vi har skickat en bekräftelse till e-postadressen som du angett. Om du inte har fått meddelandet, vänligen kontrollera skräpkorgen för e-post.",
     "verifyEmailTitle": "Bekräfta e-postadressen"
   },
   "sanityCheck": "open-city-profile.sv",

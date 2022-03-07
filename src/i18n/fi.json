@@ -211,7 +211,7 @@
     "noEmails": "Et ole antanut sähköpostiosoitteita",
     "noAddresses": "Et ole antanut osoitteita",
     "noEmail": "Et ole antanut sähköpostiosoitetta",
-    "verifyEmailText": "Olemme lähettäneet lisäämääsi sähköpostiosoitteeseen vahvistusviestin. Sähköpostiosoitteesi toimii myös sisäänkirjautumistunnuksena, joten et voi kirjautua sisään jos et ole vahvistanut tunnustasi. Jos et saanut viestiä, tarkasta myös sähköpostin roskapostikansio.",
+    "verifyEmailText": "Olemme lähettäneet lisäämääsi sähköpostiosoitteeseen vahvistusviestin. Jos et saanut viestiä, tarkasta myös sähköpostin roskapostikansio.",
     "verifyEmailTitle": "Vahvista sähköpostiosoite"
   },
   "sanityCheck": "open-city-profile.fi",
