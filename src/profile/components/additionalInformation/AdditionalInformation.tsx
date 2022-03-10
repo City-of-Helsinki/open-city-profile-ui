@@ -45,9 +45,11 @@ function AdditionalInformation(): React.ReactElement | null {
       label: t(`LANGUAGE_OPTIONS.${languageOption}`),
     })
   );
-  const selectedOption = languageOptions.find(
+  const currentOption = languageOptions.find(
     option => option.value === language
   );
+  const defaultOption = languageOptions[0];
+
   const updateLanguage = async (newLanguage: FormValues['language']) => {
     clearMessage();
     const [error] = await to(
@@ -84,8 +86,8 @@ function AdditionalInformation(): React.ReactElement | null {
                 name={'language'}
                 label={t('profileForm.language')}
                 options={languageOptions}
-                default={''}
-                value={selectedOption}
+                defaultOption={defaultOption}
+                currentOption={currentOption}
                 disabled={!!saving}
                 onChange={option => {
                   const languageValue = option.value as FormValues['language'];

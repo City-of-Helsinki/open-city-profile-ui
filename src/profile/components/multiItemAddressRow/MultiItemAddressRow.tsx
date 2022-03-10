@@ -11,7 +11,9 @@ import { createFormFieldHelpers } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
 import FormButtons from '../formButtons/FormButtons';
 import EditButtons from '../editButtons/EditButtons';
-import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
+import FormikDropdown, {
+  OptionType,
+} from '../../../common/formikDropdown/FormikDropdown';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import getCountry from '../../helpers/getCountry';
@@ -48,6 +50,10 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
       }
       return 0;
     });
+  const defaultCountryOption = countryOptions[0];
+  const initialCountryOption = countryOptions.find(
+    option => option.value === countryCode
+  ) as OptionType;
   const formFields = getFormFields(dataType);
   const {
     isNew,
@@ -131,7 +137,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                     id={`${testId}-countryCode`}
                     options={countryOptions}
                     label={t(formFields.countryCode.translationKey)}
-                    default={countryCode}
+                    defaultOption={defaultCountryOption}
                     invalid={hasFieldError(formikProps, 'countryCode')}
                     error={getFieldErrorMessage(formikProps, 'countryCode')}
                     aria-describedby={`${dataType}-countryCode-helper`}
@@ -145,6 +151,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                         option ? option.value : ''
                       )
                     }
+                    initialOption={initialCountryOption}
                   />
                 </div>
               </div>

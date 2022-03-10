@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Select, SingleSelectProps, Combobox } from 'hds-react';
 import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 
-import { Language } from '../../graphql/typings';
-
 type Props = {
   name: string;
-  default: string | Language;
+  defaultOption: OptionType;
+  initialOption?: OptionType;
+  currentOption?: OptionType;
   toggleButtonAriaLabel?: string;
   allowSearch?: boolean;
-} & SingleSelectProps<OptionType>;
+  virtualized?: boolean;
+} & Omit<SingleSelectProps<OptionType>, 'defaultOption' | 'value'>;
 
 export type OptionType = {
   value: string;
@@ -18,22 +19,60 @@ export type OptionType = {
 };
 
 function FormikDropdown(props: Props): React.ReactElement {
-  const { t } = useTranslation();
-
+  const { t, i18n } = useTranslation();
   const {
     name,
-    default: defaultVal,
+    defaultOption,
+    initialOption,
+    currentOption,
     allowSearch,
     toggleButtonAriaLabel,
+    onChange: onChangeCallback,
+    virtualized,
     ...singleSelectProps
   } = props;
-  const defaultValue = singleSelectProps.options.find(
-    (option: OptionType) => option.value === defaultVal
+
+  const lastCheckedLanguage = useRef<string>(i18n.language);
+
+  const findOptionByValue = useCallback(
+    (value?: string): OptionType | undefined => {
+      if (!value) {
+        return undefined;
+      }
+      return singleSelectProps.options.find(
+        (option: OptionType) => option.value === value
+      );
+    },
+    [singleSelectProps.options]
   );
+
+  const [selectedOption, setSelectedOption] = useState<OptionType | undefined>(
+    currentOption || initialOption || defaultOption
+  );
+
+  useEffect(() => {
+    if (currentOption) {
+      return;
+    }
+    if (lastCheckedLanguage.current === i18n.language) {
+      return;
+    }
+    const selectedInCurrentOptions = findOptionByValue(selectedOption?.value);
+    if (
+      selectedOption &&
+      selectedInCurrentOptions &&
+      selectedInCurrentOptions.label !== selectedOption.label
+    ) {
+      setSelectedOption(selectedInCurrentOptions);
+    }
+    lastCheckedLanguage.current = i18n.language;
+  }, [i18n.language, selectedOption, findOptionByValue, currentOption]);
+
   const commonProps: SingleSelectProps<OptionType> = {
     ...singleSelectProps,
-    defaultValue,
     multiselect: false,
+    value: currentOption || selectedOption,
+    virtualized: process.env.NODE_ENV !== 'test' && virtualized,
     getA11yStatusMessage: selectionProps =>
       selectionProps.selectedItem
         ? t('profileInformation.ariaSelectedOption', {
@@ -42,10 +81,20 @@ function FormikDropdown(props: Props): React.ReactElement {
         : t('profileInformation.ariaNoSelectedItemForLabel', {
             label: singleSelectProps.label,
           }),
+    onChange: value => {
+      if (onChangeCallback) {
+        onChangeCallback(value);
+      }
+      setSelectedOption(value);
+    },
   };
-
   if (allowSearch && !toggleButtonAriaLabel) {
     throw new Error('Combobox requires toggleButtonAriaLabel');
+  }
+  if (currentOption && allowSearch) {
+    throw new Error(
+      'Cannot enable allowSearch and use search input when option is locked from outside via currentOption'
+    );
   }
   return (
     <Field name={props.name}>
