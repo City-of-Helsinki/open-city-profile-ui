@@ -4,17 +4,11 @@ UI for citizen-profile - This project was bootstrapped with [Create React App](h
 
 ## Environments
 
-Test: https://profiili.test.kuva.hel.ninja/
+Dev: https://profiili.dev.hel.ninja/
 
-Production: https://profiili.prod.kuva.hel.ninja/
+Test: https://profiili.test.hel.ninja/
 
-## Issues board
-
-https://helsinkisolutionoffice.atlassian.net/projects/OM/issues/?filter=allissues&=
-
-## CI
-
-The test-environment is built automatically from `develop`-branch.
+Production: https://profiili.hel.fi
 
 ## Available Scripts
 
