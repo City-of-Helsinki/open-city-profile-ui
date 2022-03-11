@@ -211,7 +211,7 @@
     "noEmails": "You haven't given any emails",
     "noAddresses": "You haven't given any addresses",
     "noEmail": "You have not entered an email address.",
-    "verifyEmailText": "We have sent a verification email to the email address you have entered. Your email address is also your login ID, so you will not be able to log in unless you have verified your ID. If you did not receive the verification email, please check your junk mail folder.",
+    "verifyEmailText": "We have sent a verification email to the email address you have entered. If you did not receive the verification email, please check your junk mail folder.",
     "verifyEmailTitle": "Verify email"
   },
   "sanityCheck": "open-city-profile.en",
