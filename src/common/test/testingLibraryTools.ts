@@ -34,6 +34,13 @@ export type WaitForElementAndValueProps = {
   value: string;
 };
 
+type ElementGetterResult = HTMLElement | Element | null;
+
+type ComboBoxSelector = (
+  selectorPrefix: string,
+  value: string
+) => Promise<void>;
+
 export type TestTools = RenderResult & {
   getElement: (selector: ElementSelector) => HTMLElement | null;
   waitForIsComplete: () => Promise<void>;
@@ -50,7 +57,7 @@ export type TestTools = RenderResult & {
     skipDataCheck?: boolean;
     optionalSubmitButtonSelector?: ElementSelector;
   }) => Promise<void>;
-  isDisabled: (element: HTMLElement | Element | null) => boolean;
+  isDisabled: (element: ElementGetterResult) => boolean;
   setInputValue: ({
     target,
     selector,
@@ -61,6 +68,7 @@ export type TestTools = RenderResult & {
     newValue: string;
   }) => Promise<void>;
   waitForElementAndValue: (props: WaitForElementAndValueProps) => Promise<void>;
+  comboBoxSelector: ComboBoxSelector;
 };
 
 export const cleanComponentMocks = (): void => {
@@ -74,22 +82,38 @@ export const submitButtonSelector: ElementSelector = {
   querySelector: 'button[type="submit"]',
 };
 
+export const getElementAttribute = async (
+  elementGetter: () => ElementGetterResult,
+  attribute: string
+): Promise<string | null> =>
+  waitFor(async () => {
+    const element = elementGetter();
+    if (!element) {
+      throw new Error('No element for getElementAttribute');
+    }
+    return element.getAttribute(attribute);
+  });
+
 export const waitForElementAttributeValue = async (
-  elementGetter: () => HTMLElement | Element | null,
+  elementGetter: () => ElementGetterResult,
   attribute: string,
-  value: string
+  value: string | boolean
 ): Promise<void> => {
   await waitFor(async () => {
-    const element = elementGetter();
-    const attributeValue = element && element.getAttribute(attribute);
-    if (attributeValue !== value) {
+    const attributeValue = await getElementAttribute(elementGetter, attribute);
+    const booleanMatch = typeof value === 'boolean';
+    const match = booleanMatch
+      ? (String(attributeValue) === 'true') === value
+      : attributeValue === value;
+
+    if (!match) {
       throw new Error('Attribute value mismatch');
     }
   });
 };
 
 export const waitForElementFocus = async (
-  elementGetter: () => HTMLElement | Element | null
+  elementGetter: () => ElementGetterResult
 ): Promise<void> =>
   waitFor(() => {
     const target = elementGetter();
@@ -199,7 +223,9 @@ export const renderComponentWithMocksAndContexts = async (
 
   const clickElement: TestTools['clickElement'] = async selector => {
     const button = getElement(selector);
-    fireEvent.click(button as Element);
+    await waitFor(() => {
+      fireEvent.click(button as Element);
+    });
     return Promise.resolve(button);
   };
 
@@ -250,7 +276,9 @@ export const renderComponentWithMocksAndContexts = async (
   const setInputValue: TestTools['setInputValue'] = async props => {
     const { newValue, target, selector } = props;
     const input = target || getElement(selector);
-    fireEvent.change(input as HTMLElement, { target: { value: newValue } });
+    await waitFor(() => {
+      fireEvent.change(input as HTMLElement, { target: { value: newValue } });
+    });
 
     return waitFor(
       async () => {
@@ -258,6 +286,46 @@ export const renderComponentWithMocksAndContexts = async (
       },
       { timeout: 60 }
     );
+  };
+
+  const comboBoxSelector: ComboBoxSelector = async (selectorPrefix, value) => {
+    const inputSelector = { id: `${selectorPrefix}-input` };
+    const currentValue = await getTextOrInputValue(inputSelector);
+    if (currentValue) {
+      await setInputValue({
+        selector: inputSelector,
+        newValue: '',
+      });
+      await waitForElementAndValue({
+        selector: inputSelector,
+        value: '',
+      });
+    } else {
+      await clickElement({
+        id: `${selectorPrefix}-toggle-button`,
+      });
+    }
+    // click toggle-button to blur input and show error when value is empty
+    if (!value) {
+      await clickElement({
+        id: `${selectorPrefix}-toggle-button`,
+      });
+      return;
+    }
+    if (currentValue === value) {
+      throw new Error(
+        'Do not try to change value to same value. Change cannot be detected reliably.'
+      );
+    }
+    // menu is auto-opened when input changes
+    // click the element with value as text
+    await clickElement({ text: value });
+    await waitForElementAndValue({
+      selector: inputSelector,
+      value,
+    });
+    // wait for combobox input to have the value
+    await waitForElement({ valueSelector: value });
   };
 
   return Promise.resolve({
@@ -273,6 +341,7 @@ export const renderComponentWithMocksAndContexts = async (
     isDisabled,
     setInputValue,
     waitForElementAndValue,
+    comboBoxSelector,
   });
 };
 
@@ -329,7 +398,9 @@ export const createDomHelpersWithTesting = (
   },
   click: async (target: HTMLElement) => {
     expect(!!target).toBeTruthy();
-    fireEvent.click(target as Element);
+    await waitFor(() => {
+      fireEvent.click(target as Element);
+    });
     Promise.resolve();
   },
 });

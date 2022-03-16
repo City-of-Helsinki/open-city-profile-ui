@@ -56,11 +56,16 @@ export const formFieldsByDataType: FormFieldsByDataType = {
     },
   },
   phones: {
-    value: {
+    number: {
       required: true,
-      min: 6,
-      max: 255,
+      min: 5,
+      max: 250,
       translationKey: 'profileForm.phone',
+    },
+    countryCallingCode: {
+      required: true,
+      comboBox: true,
+      translationKey: 'profileForm.countryCallingCode',
     },
   },
   emails: {

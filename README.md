@@ -68,6 +68,10 @@ Generation uses `react-scripts` internals, so values come from either environmen
 
 At the production deployment same generation is done with [`env.sh`](scripts/env.sh).
 
+### `yarn update-country-codes`
+
+Fetches country calling codes and generates src/i18n/countryCallingCodes.json file. See scripts/update-country-calling-codes.ts for more information.
+
 ## Environment variables
 
 Since this app uses react-scripts (Create React App) the env-files work a bit differently to what people are used to. Read more about them [here](https://create-react-app.dev/docs/adding-custom-environment-variables).

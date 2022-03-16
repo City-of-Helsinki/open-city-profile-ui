@@ -1,6 +1,6 @@
 {
   "name": "open-city-profile-ui",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -71,7 +71,8 @@
     "lint": "eslint --ext js,ts,tsx src",
     "codegen": "apollo client:codegen ./src/graphql/generatedTypes.ts --outputFlat --includes=./src/**/*.graphql --target=typescript --endpoint=https://profiili-api.test.kuva.hel.ninja/graphql/ --useReadOnlyTypes --addTypename",
     "update-translations": "ts-node -P ./scripts/tsconfig.json -r dotenv/config --files scripts/update-translations.ts",
-    "update-runtime-env": "ts-node -P ./scripts/tsconfig.json --files scripts/update-runtime-env.ts"
+    "update-runtime-env": "ts-node -P ./scripts/tsconfig.json --files scripts/update-runtime-env.ts",
+    "update-country-calling-codes": "ts-node -P ./scripts/tsconfig.json --files scripts/update-country-calling-codes.ts"
   },
   "browserslist": {
     "production": [

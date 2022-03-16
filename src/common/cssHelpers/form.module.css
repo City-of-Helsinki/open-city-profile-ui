@@ -188,4 +188,25 @@
   .edit-buttons.align-left > button {
     margin: 0 var(--spacing-xs) 0 0;
   }
+
+  .align-with-labeled-inputs {
+    padding-top: 28px;
+    align-items: start;
+  }
+
+  .phone-number-wrapper {
+    width: 100%;
+    display: flex;
+    flex-grow: 1;
+  }
+
+  .country-calling-code-dropdown {
+    margin-right: var(--spacing-m);
+    width: 40%;
+    min-width: 200px;
+  }
+
+  .phone-number {
+    flex-grow: 1;
+  }
 }

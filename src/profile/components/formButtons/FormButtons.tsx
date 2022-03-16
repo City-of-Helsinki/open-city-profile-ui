@@ -10,17 +10,25 @@ type Props = {
   handler: ActionHandler;
   disabled: boolean;
   alignLeft?: boolean;
+  alignWithLabeledInputs?: boolean;
   testId: string;
 };
 
 function FormButtons(props: Props): React.ReactElement {
   const { t } = useTranslation();
-  const { handler, alignLeft, disabled, testId } = props;
+  const {
+    handler,
+    alignLeft,
+    disabled,
+    testId,
+    alignWithLabeledInputs,
+  } = props;
   return (
     <div
       className={classNames([
         commonFormStyles['edit-buttons'],
         alignLeft && commonFormStyles['align-left'],
+        alignWithLabeledInputs && commonFormStyles['align-with-labeled-inputs'],
       ])}
     >
       <Button

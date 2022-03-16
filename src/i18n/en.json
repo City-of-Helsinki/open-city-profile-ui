@@ -158,7 +158,8 @@
     "termsDataProtectionLink": "https://www.hel.fi/helsinki/en/administration/information/data-protection",
     "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Sahkoisten%20asiointipalveluiden%20rekisteri.pdf",
     "nationalIdentificationNumber": "Personal identity code",
-    "municipalityOfResidence": "Municipality of residence"
+    "municipalityOfResidence": "Municipality of residence",
+    "countryCallingCode": "Country code"
   },
   "profileInformation": {
     "address": "Address",
@@ -229,7 +230,9 @@
     "maxLength": "This field can be max {{max}} characters.",
     "phoneMin": "The number must be at least {{min}} characters long.",
     "required": "This field is required.",
-    "errorTitleForScreenReaders": "The form has the following errors:"
+    "errorTitleForScreenReaders": "The form has the following errors:",
+    "countryCallingCodeRequiredIfNumber": "Country code is required with phone number",
+    "numbersOnly": "Only numbers allowed"
   },
   "identityProvider": {
     "helsinkiAccount": "Helsinki Profile user ID",
