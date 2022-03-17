@@ -123,23 +123,36 @@ export const exposeProfileContext = (
   return { ...result, waitForDataChange, waitForUpdate, waitForErrorChange };
 };
 
-export const exposeProfileMutationsHook = (
+export function exposeHook<T = unknown>(
   responseProvider: ResponseProvider,
-  dataType: EditDataType
-): RenderHookResult<RenderHookResultsChildren, MutationReturnType> => {
+  hookProvider: () => T,
+  waitForProfileData: boolean
+): RenderHookResult<RenderHookResultsChildren, T> {
+  const ChildWrapper = waitForProfileData
+    ? ProfileContextFetcher
+    : React.Fragment;
   const wrapper = ({ children }: RenderHookResultsChildren) => (
     <MockApolloClientProvider responseProvider={responseProvider}>
       <ProfileProvider>
-        <ProfileContextFetcher>{children}</ProfileContextFetcher>
+        <ChildWrapper>{children}</ChildWrapper>
       </ProfileProvider>
     </MockApolloClientProvider>
   );
 
-  const callback = () =>
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useProfileMutations({
-      dataType,
-    });
+  const callback = () => hookProvider();
 
   return renderHook(callback, { wrapper });
-};
+}
+
+export const exposeProfileMutationsHook = (
+  responseProvider: ResponseProvider,
+  dataType: EditDataType
+): RenderHookResult<RenderHookResultsChildren, MutationReturnType> =>
+  exposeHook<MutationReturnType>(
+    responseProvider,
+    () =>
+      useProfileMutations({
+        dataType,
+      }),
+    true
+  );
