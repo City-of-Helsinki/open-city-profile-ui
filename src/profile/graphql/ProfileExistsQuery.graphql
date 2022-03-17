@@ -1,5 +1,0 @@
-query ProfileExistsQuery {
-  myProfile {
-    id
-  }
-}
