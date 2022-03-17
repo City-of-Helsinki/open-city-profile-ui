@@ -1,6 +1,6 @@
 import React from 'react';
-import { ApolloProvider } from '@apollo/client';
-import { GraphQLError } from 'graphql';
+import { ApolloError, ApolloProvider } from '@apollo/client';
+import { ExecutionResult, GraphQLError } from 'graphql';
 import fetchMock from 'jest-fetch-mock';
 
 import graphqlClient from '../../graphql/client';
@@ -10,18 +10,26 @@ import {
   ServiceConnectionsRoot,
   UpdateProfileData,
 } from '../../graphql/typings';
-import { UpdateMyProfileVariables } from '../../graphql/generatedTypes';
+import {
+  UpdateMyProfileVariables,
+  ProfileInput,
+} from '../../graphql/generatedTypes';
 
 export type MockedResponse = {
-  profileData?: ProfileData;
+  profileData?: ProfileData | null;
+  createMyProfile?: ProfileInput;
   updatedProfileData?: UpdateProfileData;
   profileDataWithServiceConnections?: ServiceConnectionsRoot;
   errorType?: 'networkError' | 'graphQLError';
+  withAllowedPermissionError?: boolean;
 };
 
 export type ResponseProvider = (
   variables?: UpdateMyProfileVariables | ServiceConnectionsQueryVariables
 ) => MockedResponse;
+
+type ErrorReturnType = { error: Error };
+type ResponseReturnType = ExecutionResult<ProfileData> | ErrorReturnType;
 
 export function MockApolloClientProvider({
   responseProvider,
@@ -37,9 +45,11 @@ export function MockApolloClientProvider({
         payload ? (payload.variables as UpdateMyProfileVariables) : undefined
       )
     );
-    if (response.error) {
+    if ((response as ErrorReturnType).error) {
       return Promise.reject({
-        body: JSON.stringify({ message: (response.error as Error).message }),
+        body: JSON.stringify({
+          message: (response as ErrorReturnType).error.message,
+        }),
       });
     }
     return Promise.resolve({ body: JSON.stringify(response) });
@@ -54,6 +64,7 @@ const getResponseData = (
     errorType,
     profileData,
     updatedProfileData,
+    createMyProfile,
     profileDataWithServiceConnections,
   } = response;
   if (errorType) {
@@ -65,7 +76,14 @@ const getResponseData = (
       unknown
     >;
   }
-  return profileData
+  if (createMyProfile) {
+    return {
+      createMyProfile: {
+        profile: { id: 'only-id-required' },
+      },
+    };
+  }
+  return profileData !== undefined
     ? { myProfile: profileData }
     : { updateMyProfile: { profile: updatedProfileData } };
 };
@@ -73,10 +91,12 @@ const getResponseData = (
 const createResponse = (
   response: MockedResponse,
   data: unknown
-): Record<string, unknown> => {
-  const { errorType } = response;
+): ResponseReturnType => {
+  const { errorType, withAllowedPermissionError } = response;
   if (!errorType) {
-    return { data };
+    return withAllowedPermissionError
+      ? addAllowedPermissionErrorToResponse(data as ProfileData)
+      : { data: data as ProfileData };
   }
   return errorType === 'networkError'
     ? { error: new Error(`NetworkError at ${Date.now()}`) }
@@ -87,12 +107,31 @@ const createResponse = (
 
 const createMockedProfileResponse = (
   response: MockedResponse
-): Record<string, unknown> => {
+): ResponseReturnType => {
   if (!response) {
     throw new Error('No response provided');
   }
   return createResponse(response, getResponseData(response));
 };
+
+const createAllowedPermissionError = (): GraphQLError =>
+  (({
+    path: ['myProfile', 'verifiedPersonalInformation'],
+    extensions: { code: 'PERMISSION_DENIED_ERROR' },
+  } as unknown) as GraphQLError);
+
+const addAllowedPermissionErrorToResponse = (
+  data: ProfileData
+): ExecutionResult<ProfileData> => ({
+  data,
+  errors: [createAllowedPermissionError()],
+});
+
+export const createApolloErrorWithAllowedPermissionError = (): ApolloError =>
+  (({
+    message: 'This is a fake ApolloError with allowed permission error',
+    graphQLErrors: [createAllowedPermissionError()],
+  } as unknown) as ApolloError);
 
 export function resetApolloMocks(): void {
   fetchMock.resetMocks();
