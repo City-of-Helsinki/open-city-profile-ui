@@ -30,6 +30,7 @@ import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
+import { RequiredFieldsNote } from '../../../common/requiredFieldsNote/RequiredFieldsNote';
 
 type FormikValues = BasicDataValue;
 
@@ -108,6 +109,7 @@ function BasicData(): React.ReactElement | null {
             <h3 className={commonFormStyles['section-title']}>
               {t('profileForm.basicData')}
             </h3>
+            <RequiredFieldsNote />
             <Form>
               <FocusKeeper targetId={`${basicDataType}-firstName`}>
                 <div className={commonFormStyles['multi-item-wrapper']}>
@@ -120,7 +122,7 @@ function BasicData(): React.ReactElement | null {
                     invalid={hasFieldError(formikProps, 'firstName')}
                     aria-invalid={hasFieldError(formikProps, 'firstName')}
                     errorText={getFieldErrorMessage(formikProps, 'firstName')}
-                    label={t(formFields.firstName.translationKey)}
+                    label={`${t(formFields.firstName.translationKey)} *`}
                     aria-labelledby="basic-data-firstName-helper"
                     autoFocus
                   />
@@ -145,7 +147,7 @@ function BasicData(): React.ReactElement | null {
                     invalid={hasFieldError(formikProps, 'lastName')}
                     aria-invalid={hasFieldError(formikProps, 'lastName')}
                     errorText={getFieldErrorMessage(formikProps, 'lastName')}
-                    label={t(formFields.lastName.translationKey)}
+                    label={`${t(formFields.lastName.translationKey)} *`}
                     aria-labelledby={`${basicDataType}-lastName-helper`}
                   />
                 </div>
