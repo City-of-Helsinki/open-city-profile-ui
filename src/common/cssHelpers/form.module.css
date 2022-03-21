@@ -117,6 +117,12 @@
   display: none;
 }
 
+.note {
+  display: inline-block;
+  font-size: var(--fontsize-body-s);
+  padding-bottom: var(--spacing-xs);
+}
+
 @media (min-width: 768px) {
   .multi-item-wrapper {
     display: flex;

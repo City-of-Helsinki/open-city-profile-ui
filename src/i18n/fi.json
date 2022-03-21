@@ -232,7 +232,8 @@
     "required": "Tämä kenttä on pakollinen.",
     "errorTitleForScreenReaders": "Lomakkeella on seuraavat virheet:",
     "countryCallingCodeRequiredIfNumber": "Maan suuntanumero on annettava puhelinnumerolle",
-    "numbersOnly": "Vain numerot sallittu"
+    "numbersOnly": "Vain numerot sallittu",
+    "requiredFieldIndication": "Tähdellä (*) merkityt kentät ovat pakollisia."
   },
   "identityProvider": {
     "helsinkiAccount": "Helsinki-profiilin käyttäjätunnus",

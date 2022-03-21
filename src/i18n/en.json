@@ -232,7 +232,8 @@
     "required": "This field is required.",
     "errorTitleForScreenReaders": "The form has the following errors:",
     "countryCallingCodeRequiredIfNumber": "Country code is required with phone number",
-    "numbersOnly": "Only numbers allowed"
+    "numbersOnly": "Only numbers allowed",
+    "requiredFieldIndication": "Fields marked with an * are compulsory."
   },
   "identityProvider": {
     "helsinkiAccount": "Helsinki Profile user ID",
