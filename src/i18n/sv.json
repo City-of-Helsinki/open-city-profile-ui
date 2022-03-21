@@ -232,7 +232,8 @@
     "required": "Detta fält krävs.",
     "errorTitleForScreenReaders": "Blanketten har följande fel:",
     "countryCallingCodeRequiredIfNumber": "SV: Maan suuntanumero on annettava puhelinnumerolle",
-    "numbersOnly": "SV: Vain numerot sallittu"
+    "numbersOnly": "SV: Vain numerot sallittu",
+    "requiredFieldIndication": "Fälten markerade med en asterisk (*) är obligatoriska."
   },
   "identityProvider": {
     "helsinkiAccount": "Användarnamnet för Helsingfors-profilen",

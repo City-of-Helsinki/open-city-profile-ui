@@ -24,6 +24,7 @@ import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
+import { RequiredFieldsNote } from '../../../common/requiredFieldsNote/RequiredFieldsNote';
 
 type FormikValues = AddressValue;
 
@@ -92,6 +93,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                 ? t('profileInformation.primaryAddress')
                 : t('profileInformation.address')}
             </h4>
+            <RequiredFieldsNote />
             <FocusKeeper targetId={`${testId}-address`}>
               <div className={commonFormStyles['multi-item-wrapper']}>
                 <Field
@@ -102,7 +104,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                   invalid={hasFieldError(formikProps, 'address')}
                   aria-invalid={hasFieldError(formikProps, 'address')}
                   errorText={getFieldErrorMessage(formikProps, 'address')}
-                  label={t(formFields.address.translationKey)}
+                  label={`${t(formFields.address.translationKey)} *`}
                   autoFocus
                   aria-labelledby={`${dataType}-address-helper`}
                   className={formFieldStyle}
@@ -115,7 +117,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                   invalid={hasFieldError(formikProps, 'postalCode')}
                   aria-invalid={hasFieldError(formikProps, 'postalCode')}
                   errorText={getFieldErrorMessage(formikProps, 'postalCode')}
-                  label={t(formFields.postalCode.translationKey)}
+                  label={`${t(formFields.postalCode.translationKey)} *`}
                   aria-labelledby={`${dataType}-postalCode-helper`}
                   className={formFieldStyle}
                 />
@@ -127,7 +129,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                   invalid={hasFieldError(formikProps, 'city')}
                   aria-invalid={hasFieldError(formikProps, 'city')}
                   errorText={getFieldErrorMessage(formikProps, 'city')}
-                  label={t(formFields.city.translationKey)}
+                  label={`${t(formFields.city.translationKey)} *`}
                   aria-labelledby={`${dataType}-city-helper`}
                   className={formFieldStyle}
                 />
@@ -136,7 +138,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                     name="countryCode"
                     id={`${testId}-countryCode`}
                     options={countryOptions}
-                    label={t(formFields.countryCode.translationKey)}
+                    label={`${t(formFields.countryCode.translationKey)} *`}
                     defaultOption={defaultCountryOption}
                     invalid={hasFieldError(formikProps, 'countryCode')}
                     error={getFieldErrorMessage(formikProps, 'countryCode')}
