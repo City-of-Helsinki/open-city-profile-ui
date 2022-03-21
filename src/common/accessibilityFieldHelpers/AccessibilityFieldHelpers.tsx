@@ -39,7 +39,7 @@ function createElementData({ dataType }: Props, t: TFunction): ElementData[] {
 
 function AccessibilityFieldHelpers(props: Props): React.ReactElement {
   const { dataType } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const Helper = ({ id, content }: ElementData): React.ReactElement => (
     <span id={id} aria-hidden="true">
@@ -47,7 +47,10 @@ function AccessibilityFieldHelpers(props: Props): React.ReactElement {
     </span>
   );
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const data = useMemo(() => createElementData(props, t), [dataType]);
+  const data = useMemo(() => createElementData(props, t), [
+    dataType,
+    i18n.language,
+  ]);
   return (
     <div className={commonFormStyles['visually-hidden']}>
       {data.map(elementData => (
