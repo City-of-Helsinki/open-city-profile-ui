@@ -129,7 +129,7 @@ function Profile(): React.ReactElement {
   }
 
   return (
-    <PageLayout title={getPageTitle()}>
+    <PageLayout title={getPageTitle()} disableFocusing>
       <Loading
         isLoading={isDoingProfileChecks || isLoadingProfile}
         loadingText={t('profile.loading')}
