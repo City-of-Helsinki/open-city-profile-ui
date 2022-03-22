@@ -1,11 +1,12 @@
 import React, { Fragment, ReactElement } from 'react';
 
 import { Link } from '../common/copyOfHDSLink/Link';
+import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 function AccessibilityStatementFi(): ReactElement {
   return (
     <Fragment>
-      <h1>Saavutettavuusseloste</h1>
+      <FocusableH1>Saavutettavuusseloste</FocusableH1>
 
       <p>
         Tämä saavutettavuusseloste koskee Helsinki profiili- sivustoa. Sivuston

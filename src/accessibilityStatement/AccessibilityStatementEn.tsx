@@ -1,11 +1,12 @@
 import React, { Fragment, ReactElement } from 'react';
 
 import { Link } from '../common/copyOfHDSLink/Link';
+import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 function AccessibilityStatementEn(): ReactElement {
   return (
     <Fragment>
-      <h1>Accessibility Statement</h1>
+      <FocusableH1>Accessibility Statement</FocusableH1>
       <p>
         This accessibility statement applies to the Helsinki Profile website.
         The site address is https://hel.fi/profiili

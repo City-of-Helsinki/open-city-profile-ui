@@ -9,6 +9,7 @@ import styles from './Login.module.css';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 import authService from '../../authService';
+import FocusableH1 from '../../../common/focusableH1/FocusableH1';
 
 function Login(): React.ReactElement {
   const { t } = useTranslation();
@@ -24,7 +25,7 @@ function Login(): React.ReactElement {
           ])}
         >
           <HelsinkiLogo />
-          <h1>{t('login.title')}</h1>
+          <FocusableH1>{t('login.title')}</FocusableH1>
           <p className={styles.ingress}>{t('login.description')}</p>
           <Button
             variant="primary"
