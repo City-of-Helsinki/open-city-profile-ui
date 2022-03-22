@@ -21,6 +21,7 @@ import ToastProvider from './toast/ToastProvider';
 import authService from './auth/authService';
 import config from './config';
 import PageNotFound from './common/pageNotFound/PageNotFound';
+import { useHistoryListener } from './profile/hooks/useHistoryListener';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -44,6 +45,8 @@ function App(): React.ReactElement {
   if (location.pathname === '/loginsso') {
     authService.login();
   }
+
+  useHistoryListener();
 
   return (
     <ApolloProvider client={graphqlClient}>
