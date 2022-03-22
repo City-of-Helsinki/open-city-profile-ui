@@ -63,14 +63,14 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     const country = getCountry(address.countryCode, lang);
     return (
       <React.Fragment key={type}>
-        <h3
+        <h2
           className={commonFormStyles['section-title']}
           data-testid={`vpi-address-${type}`}
         >
           {type === 'permanent'
             ? t('profileInformation.permanentAddress')
             : t('profileInformation.permanentForeignAddress')}
-        </h3>
+        </h2>
         <div className={commonFormStyles['multi-item-wrapper']}>
           <LabeledValue
             label={t('profileForm.address')}
@@ -136,12 +136,12 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
 
   return (
     <ProfileSection hasVerifiedUserData>
-      <h3
+      <h2
         className={commonFormStyles['section-title']}
         aria-label={t('profileInformation.verifiedBasicData')}
       >
         {t('profileForm.basicData')}
-      </h3>
+      </h2>
       <LongDescription forAria />
       <div className={commonFormStyles['multi-item-wrapper']}>
         <LabeledValue

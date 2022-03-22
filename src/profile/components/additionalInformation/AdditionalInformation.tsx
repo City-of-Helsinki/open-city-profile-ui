@@ -65,9 +65,9 @@ function AdditionalInformation(): React.ReactElement | null {
 
   return (
     <ProfileSection>
-      <h3 className={commonFormStyles['section-title']}>
+      <h2 className={commonFormStyles['section-title']}>
         {t('profileForm.language')}
-      </h3>
+      </h2>
       <div className={commonFormStyles['multi-item-wrapper']}>
         <Formik
           initialValues={{ language }}
