@@ -143,9 +143,9 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   const NoItemsMessage = () => (
     <React.Fragment>
       {dataType === 'addresses' && (
-        <h3 className={commonFormStyles['section-title']}>
+        <h2 className={commonFormStyles['section-title']}>
           {texts.listNumberTitle}
-        </h3>
+        </h2>
       )}
       <p>{texts.noContent}</p>
     </React.Fragment>
@@ -153,14 +153,14 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
 
   return (
     <ProfileSection>
-      <h3
+      <h2
         className={classNames([
           commonFormStyles['section-title'],
           hasAddressList && commonFormStyles['visually-hidden'],
         ])}
       >
         {texts.title}
-      </h3>
+      </h2>
 
       {!editDataList || (!editDataList.length && <NoItemsMessage />)}
       <ul aria-label={texts.listAriaLabel} className={commonFormStyles['list']}>

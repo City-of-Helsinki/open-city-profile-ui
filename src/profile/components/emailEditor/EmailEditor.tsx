@@ -109,9 +109,9 @@ function EmailEditor(): React.ReactElement | null {
       >
         {(formikProps: FormikProps<EmailValue>) => (
           <ProfileSection>
-            <h3 className={commonFormStyles['section-title']}>
+            <h2 className={commonFormStyles['section-title']}>
               {t('profileForm.email')}
-            </h3>
+            </h2>
             <div className={commonFormStyles['content-wrapper']}>
               <Form>
                 <FocusKeeper targetId={`${dataType}-email`}>
@@ -160,9 +160,9 @@ function EmailEditor(): React.ReactElement | null {
   return (
     <ProfileSection>
       <div className={commonFormStyles['content-wrapper']}>
-        <h3 className={commonFormStyles['section-title']}>
+        <h2 className={commonFormStyles['section-title']}>
           {t('profileForm.email')}
-        </h3>
+        </h2>
         <div className={styles['text-content-wrapper']}>
           <span
             className={commonFormStyles['value']}
