@@ -61,7 +61,13 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
   const isAuthenticated = authService.isAuthenticated();
 
   return (
-    <PageLayout title={notificationTitle} data-testid="error-page-layout">
+    <PageLayout
+      title={notificationTitle}
+      data-testid="error-page-layout"
+      focusElementSelector={
+        '*[data-testid="error-page-notification"] *[role="heading"]'
+      }
+    >
       <div
         className={classNames([
           commonContentStyles['common-content-area'],

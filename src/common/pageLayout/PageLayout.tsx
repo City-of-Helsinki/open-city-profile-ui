@@ -8,16 +8,23 @@ import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import styles from './PageLayout.module.css';
 import PageMeta from '../pageMeta/PageMeta';
+import { usePageLoadFocusSetter } from '../../profile/hooks/usePageLoadFocusSetter';
 
 type Props = React.PropsWithChildren<{
   className?: string;
   title?: string;
+  disableFocusing?: boolean;
+  focusElementSelector?: string;
 }>;
 
 function PageLayout(props: Props): React.ReactElement {
   const { trackPageView } = useMatomo();
   const { t } = useTranslation();
-  const { title = 'appName' } = props;
+  const {
+    focusElementSelector,
+    disableFocusing = false,
+    title = 'appName',
+  } = props;
 
   const pageTitle =
     props.title !== 'appName' ? `${t(title)} - ${t('appName')}` : t('appName');
@@ -28,6 +35,8 @@ function PageLayout(props: Props): React.ReactElement {
       href: window.location.href,
     });
   }, [trackPageView, pageTitle]);
+
+  usePageLoadFocusSetter({ disableFocusing, selector: focusElementSelector });
 
   return (
     <div className={styles.wrapper}>
