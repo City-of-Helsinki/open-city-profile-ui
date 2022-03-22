@@ -7,6 +7,7 @@ import { LoadingSpinner } from 'hds-react';
 import authService from '../../authService';
 import { useErrorPageRedirect } from '../../../profile/hooks/useErrorPageRedirect';
 import styles from './OidcCallback.module.css';
+import { getLinkRedirectState } from '../../../profile/hooks/useHistoryListener';
 
 function OidcCallback({
   history,
@@ -18,7 +19,7 @@ function OidcCallback({
     authService
       .endLogin()
       .then(() => {
-        history.replace('/');
+        history.replace('/', getLinkRedirectState());
       })
       .catch((error: Error) => {
         // Handle error caused by device time being more than 5 minutes off
