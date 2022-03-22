@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 
 import { Link } from '../common/copyOfHDSLink/Link';
+import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 function AccessibilityStatementSv(): React.ReactElement {
   return (
     <Fragment>
-      <h1>Tillgänglighetsutlåtande</h1>
+      <FocusableH1>Tillgänglighetsutlåtande</FocusableH1>
       <p>
         Detta tillgänglighetsutlåtande gäller Helsingfors stads webbplats
         Helsingfors-profil. Webbplatsens adress är https://hel.fi/profiili
