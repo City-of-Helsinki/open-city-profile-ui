@@ -39,7 +39,7 @@ function AccessibilityStatement(): React.ReactElement {
             styles['content'],
           ])}
         >
-          <main className={styles['inner-content']}>{selectStatement()}</main>
+          <div className={styles['inner-content']}>{selectStatement()}</div>
         </div>
       </div>
     </PageLayout>
