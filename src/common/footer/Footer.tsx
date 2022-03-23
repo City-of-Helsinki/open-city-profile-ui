@@ -54,11 +54,7 @@ function Footer(): React.ReactElement {
         >
           <IconLinkExternal aria-hidden size={'xs'} />
         </HDSFooter.Item>
-        <HDSFooter.Item
-          as={Link}
-          to="/accessibility"
-          title={t('footer.accessibility')}
-        >
+        <HDSFooter.Item as={Link} to="/accessibility">
           {t('footer.accessibility')}
         </HDSFooter.Item>
       </HDSFooter.Base>
