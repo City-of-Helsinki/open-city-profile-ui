@@ -62,7 +62,7 @@ function ExpandingPanel({
         <h2>{title}</h2>
         <div className={styles['right-side-information']}>
           <Button
-            title={`${buttonText}: ${title}`}
+            title={title}
             variant={'supplementary'}
             iconRight={<Icon aria-hidden />}
             {...buttonProps}
