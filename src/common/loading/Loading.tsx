@@ -11,7 +11,11 @@ function Loading(props: Props): React.ReactElement {
   return (
     <>
       {props.isLoading ? (
-        <div className={styles.wrapper} data-testid="load-indicator">
+        <div
+          className={styles.wrapper}
+          data-testid="load-indicator"
+          aria-live="polite"
+        >
           <div className={styles.content}>
             <LoadingSpinner small />
             <p>{props.loadingText}</p>

@@ -2,28 +2,20 @@ import React from 'react';
 import classNames from 'classnames';
 
 import styles from './Explanation.module.css';
+import { usePageLoadFocusSetter } from '../../profile/hooks/usePageLoadFocusSetter';
+import FocusableH1 from '../focusableH1/FocusableH1';
 
 type Props = {
   heading: string;
   text: string;
   className?: string;
-  titleVariant?: 'h2' | 'h3';
 };
 
-function Explanation({
-  className,
-  heading,
-  text,
-  titleVariant = 'h2',
-}: Props): React.ReactElement {
-  const HeadingTagName = `${
-    titleVariant
-    // eslint-disable-next-line no-undef
-  }` as keyof JSX.IntrinsicElements;
-
+function Explanation({ className, heading, text }: Props): React.ReactElement {
+  usePageLoadFocusSetter();
   return (
     <div className={classNames(styles.container, className)}>
-      <HeadingTagName>{heading}</HeadingTagName>
+      <FocusableH1>{heading}</FocusableH1>
       <p>{text}</p>
     </div>
   );

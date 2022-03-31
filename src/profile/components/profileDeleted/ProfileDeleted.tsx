@@ -6,6 +6,7 @@ import styles from './ProfileDeleted.module.css';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import authService from '../../../auth/authService';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
+import FocusableH1 from '../../../common/focusableH1/FocusableH1';
 
 function ProfileDeleted(): React.ReactElement {
   const [timeUntilLogout, setTimeUntilLogout] = useState(10);
@@ -35,7 +36,7 @@ function ProfileDeleted(): React.ReactElement {
           ])}
         >
           <div className={styles['inner-content']}>
-            <h1>{title}</h1>
+            <FocusableH1>{title}</FocusableH1>
             <p>{t('profileDeleted.message', { time: timeUntilLogout })}</p>
           </div>
         </div>

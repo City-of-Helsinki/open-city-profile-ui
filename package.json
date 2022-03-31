@@ -1,6 +1,6 @@
 {
   "name": "open-city-profile-ui",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -44,6 +44,7 @@
     "hds-core": "1.6.0",
     "hds-design-tokens": "1.6.0",
     "hds-react": "1.6.0",
+    "history": "^4.9.0",
     "http-status-typed": "^1.0.0",
     "i18n-iso-countries": "^6.8.0",
     "i18next": "^20.3.2",

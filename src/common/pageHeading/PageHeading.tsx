@@ -17,7 +17,7 @@ function PageHeading(props: Props): React.ReactElement {
       data-testid={props.dataTestId}
     >
       <UserIcon className={styles['user-icon']} aria-hidden={'true'} />
-      <h1>{props.text}</h1>
+      <span>{props.text}</span>
     </div>
   );
 }

@@ -8,8 +8,10 @@
   text-align: center;
 }
 
-.page-heading h1 {
+.page-heading span {
   margin: 0;
+  font-size: var(--h1-size);
+  font-weight: bold;
 }
 
 .user-icon {
@@ -29,7 +31,7 @@
     height: 77px;
     margin-bottom: 0;
   }
-  .page-heading h1 {
+  .page-heading span {
     margin-left: var(--spacing-layout-xs);
   }
 }

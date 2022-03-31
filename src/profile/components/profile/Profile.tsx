@@ -21,6 +21,7 @@ import {
 } from '../../context/ProfileContext';
 import parseGraphQLError from '../../helpers/parseGraphQLError';
 import useToast from '../../../toast/useToast';
+import { getLinkRedirectState } from '../../hooks/useHistoryListener';
 
 const PROFILE_EXISTS = loader('../../graphql/ProfileExistsQuery.graphql');
 
@@ -62,7 +63,7 @@ function Profile(): React.ReactElement {
         setIsCheckingAuthState(false);
         return undefined;
       })
-      .catch(() => history.push('/login'));
+      .catch(() => history.push('/login', getLinkRedirectState()));
   }, [checkProfileExists, history]);
 
   const isDoingProfileChecks = isCheckingAuthState || loading;
@@ -128,7 +129,7 @@ function Profile(): React.ReactElement {
   }
 
   return (
-    <PageLayout title={getPageTitle()}>
+    <PageLayout title={getPageTitle()} disableFocusing>
       <Loading
         isLoading={isDoingProfileChecks || isLoadingProfile}
         loadingText={t('profile.loading')}

@@ -106,9 +106,9 @@ function BasicData(): React.ReactElement | null {
       >
         {(formikProps: FormikProps<FormikValues>) => (
           <ProfileSection>
-            <h3 className={commonFormStyles['section-title']}>
+            <h2 className={commonFormStyles['section-title']}>
               {t('profileForm.basicData')}
-            </h3>
+            </h2>
             <RequiredFieldsNote />
             <Form>
               <FocusKeeper targetId={`${basicDataType}-firstName`}>
@@ -181,9 +181,9 @@ function BasicData(): React.ReactElement | null {
   return (
     <ProfileSection>
       <div className={commonFormStyles['content-wrapper']}>
-        <h3 className={commonFormStyles['section-title']}>
+        <h2 className={commonFormStyles['section-title']}>
           {t('profileForm.basicData')}
-        </h3>
+        </h2>
         <div className={commonFormStyles['multi-item-wrapper']}>
           <LabeledValue
             label={t(formFields.firstName.translationKey)}

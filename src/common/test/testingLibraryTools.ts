@@ -112,13 +112,18 @@ export const waitForElementAttributeValue = async (
   });
 };
 
+export const getActiveElement = (
+  anyElement?: ElementGetterResult
+): Element | null =>
+  anyElement ? anyElement.ownerDocument.activeElement : null;
+
 export const waitForElementFocus = async (
   elementGetter: () => ElementGetterResult
 ): Promise<void> =>
   waitFor(() => {
     const target = elementGetter();
     if (target) {
-      expect(target.ownerDocument.activeElement).toEqual(target);
+      expect(getActiveElement(target)).toEqual(target);
     }
   });
 
