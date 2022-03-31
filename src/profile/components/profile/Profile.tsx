@@ -1,8 +1,6 @@
 import React from 'react';
-import { ApolloError } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import * as Sentry from '@sentry/browser';
 import { Button, Notification } from 'hds-react';
 
 import PageLayout from '../../../common/pageLayout/PageLayout';
@@ -12,30 +10,18 @@ import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
 import authService from '../../../auth/authService';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
-import { useProfileErrorListener } from '../../context/ProfileContext';
-import parseGraphQLError from '../../helpers/parseGraphQLError';
-import useToast from '../../../toast/useToast';
 import { useProfileLoadTracker } from '../../hooks/useProfileLoadTracker';
 import { WithAuthCheckChildProps } from '../withAuthCheck/WithAuthCheck';
 
 function Profile(props: WithAuthCheckChildProps): React.ReactElement {
   const { t } = useTranslation();
   const location = useLocation();
-  const { createToast } = useToast();
   const {
     hasExistingProfile,
     isProfileLoadComplete,
     didProfileLoadFail,
     reloadProfile,
   } = useProfileLoadTracker();
-
-  useProfileErrorListener((apolloError: ApolloError | Error) => {
-    if (parseGraphQLError(apolloError).isAllowedError) {
-      return;
-    }
-    Sentry.captureException(apolloError);
-    createToast({ type: 'error' });
-  });
 
   const getPageTitle = () => {
     const pathname = location.pathname.substr(1);

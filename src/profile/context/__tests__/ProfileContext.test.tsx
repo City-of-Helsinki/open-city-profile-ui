@@ -10,6 +10,14 @@ import {
 import { ProfileData } from '../../../graphql/typings';
 import { exposeProfileContext } from '../../../common/test/exposeHooksForTesting';
 
+const mockSentyCaptureException = jest.fn();
+jest.mock('@sentry/browser', () => ({
+  ...jest.requireActual('@sentry/browser'),
+  captureException: () => {
+    mockSentyCaptureException();
+  },
+}));
+
 describe('ProfileContext', () => {
   function createTestEnv(responses: MockedResponse[]) {
     const responseProvider: ResponseProvider = () =>
@@ -18,6 +26,7 @@ describe('ProfileContext', () => {
   }
 
   afterEach(() => {
+    mockSentyCaptureException.mockReset();
     cleanComponentMocks();
   });
 
@@ -77,7 +86,7 @@ describe('ProfileContext', () => {
       expect(context.getProfile()).toBeNull();
     });
   });
-  it('Fetch errors are handled and listeners triggered and disposed', async () => {
+  it('Fetch errors are handled and listeners triggered and disposed. Error is reported to Sentry', async () => {
     const responses: MockedResponse[] = [
       { errorType: 'graphQLError' },
       { errorType: 'networkError' },
@@ -101,17 +110,18 @@ describe('ProfileContext', () => {
       expect(context.isComplete).toEqual(false);
       expect(context.getProfile()).toBeNull();
       await waitFor(() => {
-        expect(errorListener.mock.calls.length).toEqual(1);
-        expect(errorListener2.mock.calls.length).toEqual(1);
+        expect(errorListener).toHaveBeenCalledTimes(1);
+        expect(errorListener2).toHaveBeenCalledTimes(1);
       });
       listenerDisposer();
       const secondErrorPromise = waitForErrorChange();
       context.refetch();
       await secondErrorPromise;
       await waitFor(() => {
-        expect(errorListener2.mock.calls.length).toEqual(2);
+        expect(errorListener2).toHaveBeenCalledTimes(2);
       });
-      expect(errorListener.mock.calls.length).toEqual(1);
+      expect(errorListener).toHaveBeenCalledTimes(1);
+      expect(mockSentyCaptureException).toHaveBeenCalledTimes(2);
     });
   });
 });
