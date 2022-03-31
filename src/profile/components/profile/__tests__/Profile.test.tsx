@@ -44,6 +44,8 @@ describe('<Profile />', () => {
     loadIndicator: { testId: 'load-indicator' },
     profileHeading: { testId: 'view-profile-heading' },
     createProfileHeading: { testId: 'create-profile-heading' },
+    errorLayout: { testId: 'profile-check-error-layout' },
+    errorLayoutReloadButton: { testId: 'profile-check-error-reload-button' },
   };
 
   it('should render load indicator and then CreateProfile when profile does not exist', async () => {
@@ -101,18 +103,18 @@ describe('<Profile />', () => {
       await waitForElement(selectors.profileHeading);
     });
   });
-  it('should render error Toast when query fails', async () => {
+  it('should render an error notification when query fails', async () => {
     const responses: MockedResponse[] = [{ errorType: 'graphQLError' }];
     await act(async () => {
       const { waitForElement } = await renderTestSuite(responses);
-      await waitForElement({ testId: 'mock-toast-type-error' });
+      await waitForElement(selectors.errorLayout);
     });
   });
   it('should render an error notification when profile load fails', async () => {
     const responses: MockedResponse[] = [{ errorType: 'networkError' }];
     await act(async () => {
       const { waitForElement } = await renderTestSuite(responses);
-      await waitForElement({ testId: 'profile-check-error-layout' });
+      await waitForElement(selectors.errorLayout);
     });
   });
   it('should retry profile load when reload button is clicked', async () => {
@@ -122,8 +124,8 @@ describe('<Profile />', () => {
     ];
     await act(async () => {
       const { waitForElement, clickElement } = await renderTestSuite(responses);
-      await waitForElement({ testId: 'profile-check-error-layout' });
-      await clickElement({ testId: 'profile-check-error-reload-button' });
+      await waitForElement(selectors.errorLayout);
+      await clickElement(selectors.errorLayoutReloadButton);
       await waitForElement(selectors.profileHeading);
     });
   });
