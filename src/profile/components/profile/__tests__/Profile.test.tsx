@@ -1,10 +1,12 @@
 import React from 'react';
 import { User } from 'oidc-client';
 import { act, cleanup } from '@testing-library/react';
-import { Route, Switch } from 'react-router';
 
 import { getMyProfile } from '../../../../common/test/myProfileMocking';
-import { renderComponentWithMocksAndContexts } from '../../../../common/test/testingLibraryTools';
+import {
+  ElementSelector,
+  renderComponentWithMocksAndContexts,
+} from '../../../../common/test/testingLibraryTools';
 import { ProfileData } from '../../../../graphql/typings';
 import Profile from '../Profile';
 import {
@@ -12,38 +14,23 @@ import {
   resetApolloMocks,
   ResponseProvider,
 } from '../../../../common/test/MockApolloClientProvider';
-import authService from '../../../../auth/authService';
+import { submitCreateProfileForm } from '../../../../common/test/commonUiActions';
+import { mockProfileCreator } from '../../../../common/test/userMocking';
 describe('<Profile />', () => {
-  const RouteOutputAsHTML = () => (
-    <div data-testid="context-as-html">
-      <Switch>
-        <Route path="/login">
-          <div data-testid="location-is-login">/login</div>
-        </Route>
-      </Switch>
-    </div>
-  );
-
   const renderTestSuite = (responses: MockedResponse[]) => {
     const responseProvider: ResponseProvider = () =>
       responses.shift() as MockedResponse;
-    return renderComponentWithMocksAndContexts(
-      responseProvider,
-      <React.Fragment>
-        <Profile />
-        <RouteOutputAsHTML />
-      </React.Fragment>
-    );
-  };
-
-  const mockUser = (): void => {
     const user = ({
-      profile: { name: 'Mock User' },
+      profile: mockProfileCreator(),
       access_token: 'huuhaa',
       expired: false,
     } as unknown) as User;
-    const userManager = authService.userManager;
-    jest.spyOn(userManager, 'getUser').mockResolvedValueOnce(user);
+    return renderComponentWithMocksAndContexts(
+      responseProvider,
+      <React.Fragment>
+        <Profile user={user} />
+      </React.Fragment>
+    );
   };
 
   afterEach(() => {
@@ -52,75 +39,92 @@ describe('<Profile />', () => {
     resetApolloMocks();
   });
 
-  it('should re-route to /login when user is not authenticated', async () => {
-    const { waitForElement } = await renderTestSuite([]);
-    await waitForElement({ testId: 'location-is-login' });
-  });
+  const selectors: Record<string, ElementSelector> = {
+    loginRouteIndicator: { testId: 'location-is-login' },
+    loadIndicator: { testId: 'load-indicator' },
+    profileHeading: { testId: 'view-profile-heading' },
+    createProfileHeading: { testId: 'create-profile-heading' },
+  };
 
   it('should render load indicator and then CreateProfile when profile does not exist', async () => {
-    // using 'updatedProfileData' or otherwise profileData is considered to exist.
-    const responses: MockedResponse[] = [
-      { updatedProfileData: ({ id: null } as unknown) as ProfileData },
-    ];
-    mockUser();
+    const responses: MockedResponse[] = [{ profileData: null }];
     await act(async () => {
       const { waitForElement, getElement } = await renderTestSuite(responses);
-      getElement({ testId: 'load-indicator' });
-      await waitForElement({ testId: 'create-profile-heading' });
+      getElement(selectors.loadIndicator);
+      await waitForElement(selectors.createProfileHeading);
+    });
+  });
+
+  it('should load and render profile after it has been created', async () => {
+    const responses: MockedResponse[] = [
+      { profileData: null },
+      { createMyProfile: {} },
+      { profileData: getMyProfile().myProfile as ProfileData },
+    ];
+    await act(async () => {
+      const testTools = await renderTestSuite(responses);
+      const { waitForElement, getElement } = testTools;
+      getElement(selectors.loadIndicator);
+      await waitForElement(selectors.createProfileHeading);
+      await submitCreateProfileForm(testTools);
+      await waitForElement(selectors.profileHeading);
     });
   });
 
   it('should render load indicator and then ViewProfile when profile exists', async () => {
-    // one response for PROFILE_EXISTS and one for MY_PROFILE_QUERY
     const responses: MockedResponse[] = [
       { profileData: getMyProfile().myProfile as ProfileData },
-      { profileData: getMyProfile().myProfile as ProfileData },
     ];
-    mockUser();
     await act(async () => {
       const {
         getElement,
         waitForIsComplete,
         waitForElement,
       } = await renderTestSuite(responses);
-      getElement({ testId: 'load-indicator' });
+      getElement(selectors.loadIndicator);
       await waitForIsComplete();
-      await waitForElement({ testId: 'view-profile-heading' });
+      await waitForElement(selectors.profileHeading);
+    });
+  });
+  it('should render profile when data has an allowed error', async () => {
+    const responses: MockedResponse[] = [
+      {
+        profileData: getMyProfile().myProfile as ProfileData,
+        withAllowedPermissionError: true,
+      },
+    ];
+    await act(async () => {
+      const { waitForIsComplete, waitForElement } = await renderTestSuite(
+        responses
+      );
+      await waitForIsComplete();
+      await waitForElement(selectors.profileHeading);
     });
   });
   it('should render error Toast when query fails', async () => {
-    // one response for PROFILE_EXISTS and one for MY_PROFILE_QUERY error
-    const responses: MockedResponse[] = [
-      { profileData: getMyProfile().myProfile as ProfileData },
-      { errorType: 'graphQLError' },
-    ];
-    mockUser();
+    const responses: MockedResponse[] = [{ errorType: 'graphQLError' }];
     await act(async () => {
       const { waitForElement } = await renderTestSuite(responses);
       await waitForElement({ testId: 'mock-toast-type-error' });
     });
   });
-  it('should render an error notification when PROFILE_EXISTS query fails', async () => {
+  it('should render an error notification when profile load fails', async () => {
     const responses: MockedResponse[] = [{ errorType: 'networkError' }];
-    mockUser();
     await act(async () => {
       const { waitForElement } = await renderTestSuite(responses);
       await waitForElement({ testId: 'profile-check-error-layout' });
     });
   });
-  it('should retry PROFILE_EXISTS query when reload button is clicked', async () => {
-    // two responses for PROFILE_EXISTS and one for MY_PROFILE_QUERY error
+  it('should retry profile load when reload button is clicked', async () => {
     const responses: MockedResponse[] = [
       { errorType: 'networkError' },
       { profileData: getMyProfile().myProfile as ProfileData },
-      { profileData: getMyProfile().myProfile as ProfileData },
     ];
-    mockUser();
     await act(async () => {
       const { waitForElement, clickElement } = await renderTestSuite(responses);
       await waitForElement({ testId: 'profile-check-error-layout' });
       await clickElement({ testId: 'profile-check-error-reload-button' });
-      await waitForElement({ testId: 'view-profile-heading' });
+      await waitForElement(selectors.profileHeading);
     });
   });
 });
