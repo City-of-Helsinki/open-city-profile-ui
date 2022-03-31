@@ -22,6 +22,7 @@ import authService from './auth/authService';
 import config from './config';
 import PageNotFound from './common/pageNotFound/PageNotFound';
 import { useHistoryListener } from './profile/hooks/useHistoryListener';
+import WithAuthCheck from './profile/components/withAuthCheck/WithAuthCheck';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -62,7 +63,7 @@ function App(): React.ReactElement {
                 <Login />
               </Route>
               <Route path={['/', '/connected-services']} exact>
-                <Profile />
+                <WithAuthCheck AuthenticatedComponent={Profile}></WithAuthCheck>
               </Route>
               <Route path="/accessibility" exact>
                 <AccessibilityStatement />
