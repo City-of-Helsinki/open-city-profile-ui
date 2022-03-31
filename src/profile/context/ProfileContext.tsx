@@ -32,6 +32,7 @@ export type ProfileContextData = {
   isInitialized: boolean;
   isComplete: boolean;
   getName: (preferNickOrGivenName?: boolean) => string;
+  getProfile: () => ProfileRoot | null;
 };
 
 export const ProfileContext = createContext<ProfileContextData>({
@@ -46,6 +47,7 @@ export const ProfileContext = createContext<ProfileContextData>({
   isInitialized: false,
   isComplete: false,
   getName: () => '',
+  getProfile: () => null,
 });
 
 export const Provider = (props: ContextProps): React.ReactElement => {
@@ -145,6 +147,8 @@ export const Provider = (props: ContextProps): React.ReactElement => {
           : `${source.firstName} ${source.lastName}`;
       }
     },
+    getProfile: () =>
+      profileData && profileData.myProfile ? profileData : null,
   };
 
   return (
