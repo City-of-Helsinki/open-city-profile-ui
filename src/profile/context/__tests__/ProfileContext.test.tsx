@@ -28,6 +28,7 @@ describe('ProfileContext', () => {
     expect(context.loading).toEqual(false);
     expect(context.isInitialized).toEqual(false);
     expect(context.isComplete).toEqual(false);
+    expect(context.getProfile()).toBeNull();
   });
 
   it("after fetch(), context indicates 'loading' state and data updates when fetch is finished", async () => {
@@ -56,6 +57,24 @@ describe('ProfileContext', () => {
       expect(context.data?.myProfile?.firstName).toEqual('Teemu');
       expect(context.getName()).toEqual('Teemu Testaaja');
       expect(context.getName(true)).toEqual('Teme');
+      expect(context.getProfile()).toEqual(getMyProfile());
+    });
+  });
+  it("load is successful also when user's profile does not exist", async () => {
+    const responses: MockedResponse[] = [{ profileData: null }];
+    const { result, waitForUpdate } = createTestEnv(responses);
+    let context = result.current;
+    await act(async () => {
+      const loadingPromise = waitForUpdate();
+      context.fetch();
+      await loadingPromise;
+      context = result.current;
+      const dataLoadedPromise = waitForUpdate();
+      await dataLoadedPromise;
+      context = result.current;
+      expect(context.data).toEqual({ myProfile: null });
+      expect(context.isComplete).toEqual(true);
+      expect(context.getProfile()).toBeNull();
     });
   });
   it('Fetch errors are handled and listeners triggered and disposed', async () => {
@@ -80,6 +99,7 @@ describe('ProfileContext', () => {
       expect(context.loading).toEqual(false);
       expect(context.isInitialized).toEqual(true);
       expect(context.isComplete).toEqual(false);
+      expect(context.getProfile()).toBeNull();
       await waitFor(() => {
         expect(errorListener.mock.calls.length).toEqual(1);
         expect(errorListener2.mock.calls.length).toEqual(1);
