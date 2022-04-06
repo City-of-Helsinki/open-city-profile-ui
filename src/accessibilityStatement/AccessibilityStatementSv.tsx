@@ -6,16 +6,10 @@ import FocusableH1 from '../common/focusableH1/FocusableH1';
 function AccessibilityStatementSv(): React.ReactElement {
   return (
     <Fragment>
-      <FocusableH1>Tillgänglighetsutlåtande</FocusableH1>
+      <FocusableH1>Tillgänglighets­utlåtande</FocusableH1>
       <p>
         Detta tillgänglighetsutlåtande gäller Helsingfors stads webbplats
-        Helsingfors-profil. Webbplatsens adress är https://hel.fi/profiili
-      </p>
-
-      <h2>Lagbestämmelser som gäller webbplatsen</h2>
-      <p>
-        Denna webbplats har offentliggjorts efter 23.9.2018. Webbplatsen ska
-        uppfylla lagens krav på tillgänglighet.
+        Helsingfors-profli. Webbplatsens adress är https://profiili.hel.fi.
       </p>
 
       <h2>Stadens mål</h2>
@@ -27,24 +21,50 @@ function AccessibilityStatementSv(): React.ReactElement {
 
       <h2>Fullgörandestatus</h2>
       <p>
-        Denna webbplats förenlighet med tillgänglighetskraven är inte ännu
-        bedömd.
+        Denna webbplats uppfyller de kritiska tillgänglighetskraven som lagen
+        ställer.
       </p>
 
       <h2>Utarbetande av tillgänglighetsutlåtande</h2>
-      <p>Detta utlåtande har upprättats 6.4.2020</p>
+      <p>Detta utlåtande upprättades den 5 april 2022.</p>
 
-      <h2>Uppdatering av tillgänglighetsutlåtande</h2>
+      <h3>Bedömning av tillgänglighet</h3>
       <p>
-        Tillgänglighetsutlåtandet uppdateras till att motsvara de observationer
-        som gjorts om överensstämmelse med tillgänglighetskraven efter att en
-        granskning genomförts.
+        Vid bedömning av tillgänglighet har vi följt Helsingfors stads
+        arbetsanvisning och metoder som strävar efter att säkerställa
+        webbplatsens tillgänglighet i alla arbetsfaser.
+      </p>
+      <p>
+        Tillgängligheten är kontrollerad genom revision av en extern expert samt
+        genom egen utvärdering.
+      </p>
+      <p>
+        Tillgängligheten är kontrollerad med hjälp av automatisk
+        tillgänglighetskontroll samt manuell kontroll av webbplatsen och
+        innehållet. Automatisk granskning av tillgängligheten har utförts med
+        det automatiska testningsverktyget och webbläsartillägget Siteimprove.
+      </p>
+      <p>Den externa expertrevisionen har utförts av Siteimprove.</p>
+
+      <h3>Uppdatering av tillgänglighetsutlåtande</h3>
+      <p>
+        Webbplatsens tillgänglighet kontrolleras genom kontinuerlig tillsyn när
+        tekniken eller innehållet förändras, samt granskning med regelbundna
+        intervall. Detta utlåtande uppdateras i samband med ändringar av
+        webbplatsen samt granskningar av tillgänglighet.
       </p>
 
-      <h2>Begäran om uppgifter i tillgänglig form</h2>
+      <h2>Återkoppling och kontaktuppgifter</h2>
       <p>
-        Om användaren inte upplever sig få webbplatsens innehåll i tillgänglig
-        form, kan användaren begära dessa uppgifter per e-post{' '}
+        Stadskansliet
+        <br />
+        Helsingfors
+      </p>
+
+      <h3>Anmälan om ej tillgängligt innehåll</h3>
+      <p>
+        Om användaren upplever att kraven på tillgänglighet ändå inte uppfylls
+        kan detta anmälas per e-post{' '}
         <a href="mailto:helsinki.palaute@hel.fi">helsinki.palaute@hel.fi</a>{' '}
         eller med responsformulär på{' '}
         <Link
@@ -54,14 +74,48 @@ function AccessibilityStatementSv(): React.ReactElement {
         >
           www.hel.fi/feedback
         </Link>
-        . Strävan är att svara på förfrågan inom rimlig tid.
+        .
       </p>
 
-      <h2>Återkoppling och kontaktuppgifter</h2>
+      <h3>Begäran om uppgifter i tillgänglig form</h3>
       <p>
-        Stadskansliet, Helsingfors
+        Om användaren inte upplever sig få webbplatsens innehåll i tillgänglig
+        form, kan användaren begära denna information per e-post{' '}
+        <a href="mailto:helsinki.palaute@hel.fi">helsinki.palaute@hel.fi</a>{' '}
+        eller med responsformulär på{' '}
+        <Link
+          href="https://www.hel.fi/helsinki/sv/stad-och-forvaltning/delta/feedback"
+          external
+          openInNewTab
+        >
+          www.hel.fi/feedback
+        </Link>{' '}
+        . Vår strävan är att svara på förfrågan inom rimlig tid.
+      </p>
+
+      <h2>Rättsskydd för tillgänglighet, Verkställighetsförfarande</h2>
+      <p>
+        Om en person upplever att svar inte har erhållits på hans eller hennes
+        anmälan eller förfrågan, eller om svaret inte är tillfredsställande, kan
+        ärendet anmälas till regionförvaltningsverket i Södra Finland. På
+        webbplatsen för regionförvaltningsverket i Södra Finland finns
+        detaljerad information om hur ärendet behandlas.
+      </p>
+      <p>
+        <strong>Regionförvaltningsverket i Södra Finland</strong>
         <br />
-        <a href="tel:+35893101641">+358 9 310 1641</a>
+        <br />
+        Enheten för tillgänglighetstillsyn
+        <br />
+        <Link href="https://www.tillganglighetskrav.fi" external openInNewTab>
+          www.tillganglighetskrav.fi
+        </Link>
+        <br />
+        <a href="mailto:webbtillganglighet@rfv.fi">webbtillganglighet@rfv.fi</a>
+        <br />
+        Telefonväxel: <a href="tel:0295 016 000">0295 016 000</a>
+        <br />
+        Öppet: må-fr kl. 8.00-16.15
       </p>
 
       <h2>Helsingfors stad och tillgänglighet</h2>
@@ -82,7 +136,7 @@ function AccessibilityStatementSv(): React.ReactElement {
         strävan är att genomföra nödvändiga ändringar så snabbt som möjligt.
       </p>
 
-      <h2>Handikappade och hjälpmedelsanvändare</h2>
+      <h3>Handikappade och hjälpmedelsanvändare</h3>
       <p>
         Staden erbjuder rådgivning och stöd för handikappade och
         hjälpmedelsanvändare. Stöd kan fås på de rådgivningssidor som anges på
@@ -90,11 +144,11 @@ function AccessibilityStatementSv(): React.ReactElement {
       </p>
 
       <h2>Godkännande av tillgänglighetsutlåtande</h2>
-      <p>Detta utlåtande har godkänts 17.4.2020</p>
+      <p>Detta utlåtande godkändes den 5 april 2022</p>
       <p>
-        Helsingfors stadskansliet,
+        Stadskansliet
         <br />
-        Helsingfors stad
+        Helsingfors
       </p>
     </Fragment>
   );
