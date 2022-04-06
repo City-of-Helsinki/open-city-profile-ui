@@ -454,36 +454,6 @@ export interface NameQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: ProfileExistsQuery
-// ====================================================
-
-export interface ProfileExistsQuery_myProfile {
-  readonly __typename: "ProfileNode";
-  /**
-   * The ID of the object.
-   */
-  readonly id: string;
-}
-
-export interface ProfileExistsQuery {
-  /**
-   * Get the profile belonging to the currently authenticated user.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `TODO`
-   */
-  readonly myProfile: ProfileExistsQuery_myProfile | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: ServiceConnectionsQuery
 // ====================================================
 

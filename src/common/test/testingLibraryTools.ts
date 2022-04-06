@@ -379,9 +379,14 @@ export const getErrorMessage = (error?: Error | GraphQLError): string => {
   if (!error) {
     return '';
   }
-  const retypedError = (error as unknown) as AnyObject<string>;
+  const retypedError = (error as unknown) as {
+    message: string;
+    networkError: string | { body: string };
+  };
   if (retypedError.networkError) {
-    return retypedError.networkError;
+    return typeof retypedError.networkError !== 'string'
+      ? retypedError.networkError.body
+      : retypedError.networkError;
   }
   return retypedError.message;
 };

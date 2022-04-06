@@ -9,10 +9,12 @@ import React, {
   useState,
 } from 'react';
 import { usePersistFn } from 'ahooks';
+import * as Sentry from '@sentry/browser';
 
 import { ProfileRoot } from '../../graphql/typings';
 import getVerifiedPersonalInformation from '../helpers/getVerifiedPersonalInformation';
 import { useProfileQuery, QueryResult } from '../hooks/useProfileQuery';
+import parseGraphQLError from '../helpers/parseGraphQLError';
 
 type ContextProps = {
   children: React.ReactNode | React.ReactNode[] | null;
@@ -32,6 +34,14 @@ export type ProfileContextData = {
   isInitialized: boolean;
   isComplete: boolean;
   getName: (preferNickOrGivenName?: boolean) => string;
+  getProfile: () => ProfileRoot | null;
+};
+
+const reportErrorToSentry = (apolloError: ApolloError) => {
+  if (parseGraphQLError(apolloError).isAllowedError) {
+    return;
+  }
+  Sentry.captureException(apolloError);
 };
 
 export const ProfileContext = createContext<ProfileContextData>({
@@ -46,6 +56,7 @@ export const ProfileContext = createContext<ProfileContextData>({
   isInitialized: false,
   isComplete: false,
   getName: () => '',
+  getProfile: () => null,
 });
 
 export const Provider = (props: ContextProps): React.ReactElement => {
@@ -68,6 +79,7 @@ export const Provider = (props: ContextProps): React.ReactElement => {
   const { data, loading, error, fetch, refetch } = useProfileQuery({
     onError: (queryError: ApolloError) => {
       triggerListeners(queryError);
+      reportErrorToSentry(queryError);
     },
   });
   const [profileData, updateData] = useState(data);
@@ -145,6 +157,8 @@ export const Provider = (props: ContextProps): React.ReactElement => {
           : `${source.firstName} ${source.lastName}`;
       }
     },
+    getProfile: () =>
+      profileData && profileData.myProfile ? profileData : null,
   };
 
   return (

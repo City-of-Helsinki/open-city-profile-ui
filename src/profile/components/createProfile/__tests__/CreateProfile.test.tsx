@@ -1,10 +1,9 @@
 import React from 'react';
 import { User } from 'oidc-client';
-import { act, cleanup, waitFor } from '@testing-library/react';
+import { act, cleanup } from '@testing-library/react';
 
 import {
   renderComponentWithMocksAndContexts,
-  TestTools,
   waitForElementAttributeValue,
 } from '../../../../common/test/testingLibraryTools';
 import { ProfileData } from '../../../../graphql/typings';
@@ -19,13 +18,11 @@ import {
   getDefaultCountryCallingCode,
   getCountryCallingCodes,
 } from '../../../../i18n/countryCallingCodes.utils';
+import { submitCreateProfileForm } from '../../../../common/test/commonUiActions';
+import { mockProfileCreator } from '../../../../common/test/userMocking';
 describe('<CreateProfile />', () => {
   const tunnistamoUser = ({
-    profile: {
-      given_name: 'MyFirstName',
-      family_name: 'MyLastName',
-      email: 'email@domain.com',
-    },
+    profile: mockProfileCreator(),
     access_token: 'huuhaa',
     expired: false,
   } as unknown) as User;
@@ -57,17 +54,6 @@ describe('<CreateProfile />', () => {
     resetApolloMocks();
   });
 
-  const submitForm = async (testTools: TestTools): Promise<void> => {
-    const { clickElement, isDisabled, getElement } = testTools;
-    await clickElement({ id: 'create-profile-terms' });
-    await waitFor(() => {
-      if (isDisabled(getElement({ testId: 'create-profile-submit-button' }))) {
-        throw new Error('Button is disabled');
-      }
-    });
-    await clickElement({ testId: 'create-profile-submit-button' });
-  };
-
   it('is auto-filled with user data', async () => {
     await act(async () => {
       const { getTextOrInputValue } = await renderTestSuite();
@@ -94,7 +80,7 @@ describe('<CreateProfile />', () => {
         selector: { id: 'create-profile-lastName' },
         newValue: '',
       });
-      await submitForm(testTools);
+      await submitCreateProfileForm(testTools);
       await waitForElement({ id: 'create-profile-firstName-error' });
       await waitForElement({ id: 'create-profile-lastName-error' });
     });
@@ -116,7 +102,7 @@ describe('<CreateProfile />', () => {
         newValue: '123456',
       });
       await comboBoxSelector('create-profile-countryCallingCode', '');
-      await submitForm(testTools);
+      await submitCreateProfileForm(testTools);
       await waitForElement({ id: 'create-profile-countryCallingCode-error' });
       await waitForElementAttributeValue(
         () => getElement({ id: 'create-profile-countryCallingCode-input' }),
@@ -150,7 +136,7 @@ describe('<CreateProfile />', () => {
         },
         newValue: '123456',
       });
-      await submitForm(testTools);
+      await submitCreateProfileForm(testTools);
       await waitForElement({ testId: 'mock-toast-type-error' });
     });
   });
