@@ -5,7 +5,7 @@ import fetchMock from 'jest-fetch-mock';
 import {
   cloneProfileAndProvideManipulationFunctions,
   getMyProfile,
-  getProfileDataWithoutSomeEmailData,
+  getProfileDataWithoutSomeNodes,
 } from '../../../../common/test/myProfileMocking';
 import {
   renderComponentWithMocksAndContexts,
@@ -282,8 +282,9 @@ describe('<EmailEditor /> ', () => {
   });
   it('When there is no email, an add button is rendered and email can be added', async () => {
     await act(async () => {
-      const profileWithoutEmails = getProfileDataWithoutSomeEmailData({
-        noEmails: true,
+      const profileWithoutEmails = getProfileDataWithoutSomeNodes({
+        noNodes: true,
+        dataType,
       });
       const {
         clickElement,

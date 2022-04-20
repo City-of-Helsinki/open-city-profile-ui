@@ -18,6 +18,9 @@ import {
   PrimaryEmail,
   PrimaryAddress,
   Emails,
+  Addresses,
+  Phones,
+  InsertableNode,
 } from '../../graphql/typings';
 import {
   AdditionalInformationSource,
@@ -33,7 +36,7 @@ import {
   MultiItemProfileNode,
   pickSources,
 } from '../../profile/helpers/editData';
-import getEmailsFromNode from '../../profile/helpers/getEmailsFromNode';
+import { getNodesFromProfile } from '../../profile/helpers/updateMutationVariables';
 
 export type ManipulationFunctions = {
   getProfile: () => ProfileData;
@@ -61,11 +64,12 @@ export type ManipulationFunctions = {
   ) => ManipulationFunctions;
 };
 
-type GetEmailDataProps = {
+type GetModifiedProfileDataProps = {
   noPrimary?: boolean;
-  noEmails?: boolean;
-  clearPrimaryEmail?: boolean;
+  noNodes?: boolean;
+  clearPrimary?: boolean;
   profileData?: ProfileData;
+  dataType: Extract<EditDataType, 'addresses' | 'phones' | 'emails'>;
 };
 
 export const getMyProfile = (): ProfileRoot => ({
@@ -396,33 +400,45 @@ export function cloneProfileAndProvideManipulationFunctions(
 
 export const getPrimaryEmailNode = (
   myProfile: ProfileRoot
-): EmailNode | undefined =>
-  getEmailsFromNode(myProfile, true).filter(node => node.primary)[0];
+): EmailNode | undefined => getPrimaryNode<EmailNode>('emails', myProfile);
 
-export const getProfileDataWithoutSomeEmailData = ({
+const getPrimaryNode = <T extends InsertableNode>(
+  dataType: GetModifiedProfileDataProps['dataType'],
+  profileRoot: ProfileRoot
+): T | undefined => {
+  const nodes = getNodesFromProfile(
+    getPrimaryPropName(dataType),
+    profileRoot,
+    true
+  ) as T[];
+  return nodes.filter(node => node.primary)[0];
+};
+
+export const getProfileDataWithoutSomeNodes = ({
   noPrimary,
-  noEmails,
-  clearPrimaryEmail,
+  noNodes,
+  clearPrimary,
   profileData,
-}: GetEmailDataProps): ProfileData => {
+  dataType,
+}: GetModifiedProfileDataProps): ProfileData => {
   const initialData = profileData || (getMyProfile().myProfile as ProfileData);
   const profileManipulator = cloneProfileAndProvideManipulationFunctions(
     initialData
   );
-  if (clearPrimaryEmail || noPrimary || noEmails) {
-    profileManipulator.setPrimary('emails', null);
+  if (clearPrimary || noPrimary || noNodes) {
+    profileManipulator.setPrimary(dataType, null);
   }
-  if (noEmails) {
+  if (noNodes) {
     const data = profileManipulator.getProfile();
-    (data.emails as Mutable<Emails>).edges = [];
+    (data[dataType] as Mutable<Emails | Addresses | Phones>).edges = [];
     return data;
   } else if (noPrimary) {
-    const primaryEmailNode = getPrimaryEmailNode({
+    const primaryNode = getPrimaryNode(dataType, {
       myProfile: profileManipulator.getProfile(),
     });
-    if (primaryEmailNode) {
-      profileManipulator.edit('emails', {
-        id: primaryEmailNode.id,
+    if (primaryNode) {
+      profileManipulator.edit(dataType, {
+        id: primaryNode.id,
         primary: false,
       });
     }
@@ -430,6 +446,8 @@ export const getProfileDataWithoutSomeEmailData = ({
   return profileManipulator.getProfile();
 };
 
-export const getMyProfileQueryWithoutSomeEmailData = (
-  props: GetEmailDataProps
-): ProfileRoot => ({ myProfile: getProfileDataWithoutSomeEmailData(props) });
+export const getMyProfileQueryWithoutSomeNodes = (
+  props: GetModifiedProfileDataProps
+): ProfileRoot => ({
+  myProfile: getProfileDataWithoutSomeNodes(props),
+});
