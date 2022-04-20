@@ -17,6 +17,7 @@ import {
   AddressNode,
   EmailNode,
   PhoneNode,
+  InsertableNode,
 } from '../../graphql/typings';
 import getPhonesFromNode from './getPhonesFromNode';
 import getEmailsFromNode from './getEmailsFromNode';
@@ -70,14 +71,18 @@ const getEmptyObject = (primary: Primary) => {
   }
 };
 
-const getNodesFromProfile = (primary: Primary, profile?: ProfileRoot) => {
+export const getNodesFromProfile = (
+  primary: Primary,
+  profile?: ProfileRoot,
+  keepPrimary = false
+): InsertableNode[] => {
   switch (primary) {
     case 'primaryPhone':
-      return getPhonesFromNode(profile);
+      return getPhonesFromNode(profile, keepPrimary);
     case 'primaryEmail':
-      return getEmailsFromNode(profile);
+      return getEmailsFromNode(profile, keepPrimary);
     case 'primaryAddress':
-      return getAddressesFromNode(profile);
+      return getAddressesFromNode(profile, keepPrimary);
     default:
       return [];
   }
