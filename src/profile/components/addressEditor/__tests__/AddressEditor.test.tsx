@@ -378,7 +378,7 @@ describe('<AddressEditor /> ', () => {
 
       // info text is shown instead of an address
       await expect(getTextOrInputValue(selectors.noDataText)).resolves.toBe(
-        t('profileInformation.noAddresses')
+        t('profileInformation.noAddress')
       );
       // click add button to create an address
       await clickElement(selectors.addButton);

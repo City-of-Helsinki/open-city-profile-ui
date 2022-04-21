@@ -280,7 +280,7 @@ function AddressEditor(): React.ReactElement | null {
             className={commonFormStyles['text-content-wrapper']}
             data-testid={`${dataType}-no-data`}
           >
-            {t('profileInformation.noAddresses')}
+            {t('profileInformation.noAddress')}
           </div>
           <EditingNotifications content={content} dataType={dataType} />
           <Button
@@ -294,7 +294,7 @@ function AddressEditor(): React.ReactElement | null {
             variant="secondary"
             className={commonFormStyles['responsive-button']}
           >
-            {t('profileForm.addAnotherAddress')}
+            {t('profileForm.addAddress')}
           </Button>
         </Content>
       </ProfileSection>
