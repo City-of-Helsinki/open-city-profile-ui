@@ -11,6 +11,7 @@ import MultiItemEditor from '../multiItemEditor/MultiItemEditor';
 import AdditionalInformation from '../additionalInformation/AdditionalInformation';
 import VerifiedPersonalInformation from '../verifiedPersonalInformation/VerifiedPersonalInformation';
 import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
+import AddressEditor from '../addressEditor/AddressEditor';
 
 function ProfileInformation(): React.ReactElement {
   const { data } = useContext(ProfileContext);
@@ -24,7 +25,7 @@ function ProfileInformation(): React.ReactElement {
         <Fragment>
           <UserDataComponent />
           <EmailEditor />
-          <MultiItemEditor dataType="addresses" />
+          <AddressEditor />
           <MultiItemEditor dataType="phones" />
           <AdditionalInformation />
         </Fragment>
