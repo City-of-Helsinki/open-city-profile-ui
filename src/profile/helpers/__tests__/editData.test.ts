@@ -25,12 +25,14 @@ import {
   setPrimary,
   movePrimaryAsFirst,
   getEmailEditDataForUI,
+  getAddressEditDataForUI,
 } from '../editData';
 import {
   cloneProfileAndProvideManipulationFunctions,
   getMyProfile,
   getMyProfileQueryWithoutSomeNodes,
-  getPrimaryEmailNode,
+  getNodesByDataType,
+  getPrimaryNode,
 } from '../../../common/test/myProfileMocking';
 import {
   AddressNode,
@@ -50,8 +52,9 @@ describe('editData.ts ', () => {
     basicDataType,
     additionalInformationType,
     'emails',
+    'addresses',
   ];
-  const multiItemDataTypes: EditDataType[] = ['addresses', 'phones'];
+  const multiItemDataTypes: EditDataType[] = ['phones'];
   const allDataTypes: EditDataType[] = [
     ...singleDataTypes,
     ...multiItemDataTypes,
@@ -133,6 +136,25 @@ describe('editData.ts ', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     formValues[dataType] as MultiItemProfileNode[];
+
+  const getProfileWithOneNode = (
+    dataType: Extract<EditDataType, 'addresses' | 'phones' | 'emails'>
+  ): ProfileRoot => {
+    const profileManipulator = cloneProfileAndProvideManipulationFunctions(
+      myProfile.myProfile as ProfileData
+    );
+    // remove all nodes after index 0
+    getNodesByDataType(dataType, myProfile)
+      .slice(1)
+      .forEach(node => {
+        profileManipulator.remove(dataType, node);
+      });
+    const modifiedMyProfile = profileManipulator.getProfile();
+    expect(
+      getNodesByDataType(dataType, { myProfile: modifiedMyProfile })
+    ).toHaveLength(1);
+    return { myProfile: modifiedMyProfile };
+  };
 
   allDataTypes.forEach(dataType => {
     it(`Picks correct data from myProfile when dataType is ${dataType}`, () => {
@@ -711,7 +733,8 @@ describe('editData.ts ', () => {
         dataType
       );
       const item = getEmailEditDataForUI(getEditData());
-      const primaryEmailNode = getPrimaryEmailNode(
+      const primaryEmailNode = getPrimaryNode(
+        dataType,
         profileQueryWithoutPrimaryEmailProperty
       ) as EmailNode;
       expect(item.id).toEqual(primaryEmailNode.id);
@@ -726,7 +749,7 @@ describe('editData.ts ', () => {
       );
 
       expect(
-        getPrimaryEmailNode(profileQueryWithoutPrimaryEmail)
+        getPrimaryNode(dataType, profileQueryWithoutPrimaryEmail)
       ).toBeUndefined();
 
       const { getEditData } = createEditorForDataType(
@@ -781,9 +804,107 @@ describe('editData.ts ', () => {
     });
   });
   describe(`Adding a new email`, () => {
-    it(`An error is thrown when adding a new email, but primary email already exists`, () => {
-      const profileData = getMyProfile();
-      const { addItem } = createEditorForDataType(profileData, 'emails');
+    it(`An error is thrown when adding a new email, but primary node already exists`, () => {
+      const profileDataWithOneEmailNode = getProfileWithOneNode('emails');
+      const { addItem } = createEditorForDataType(
+        profileDataWithOneEmailNode,
+        'emails'
+      );
+      expect(() => addItem()).toThrow();
+    });
+  });
+  describe(`getAddressEditDataForUI() `, () => {
+    const dataType: EditDataType = 'addresses';
+    it(`returns the primary address picked from list of address nodes. 
+        The primaryAddress prop in profileData is not used, only node list.`, () => {
+      const profileQueryWithoutPrimaryAddressProperty = getMyProfileQueryWithoutSomeNodes(
+        {
+          clearPrimary: true,
+          dataType,
+        }
+      );
+      const { getEditData } = createEditorForDataType(
+        profileQueryWithoutPrimaryAddressProperty,
+        dataType
+      );
+      const item = getAddressEditDataForUI(getEditData());
+      const primaryNode = getPrimaryNode(
+        dataType,
+        profileQueryWithoutPrimaryAddressProperty
+      ) as AddressNode;
+      expect(item.id).toEqual(primaryNode.id);
+      expect(item.primary).toBeTruthy();
+    });
+    it(`If none of the nodes have primary = true, the first node is returned. 
+        This way user can remove all addresses.`, () => {
+      const profileQueryWithoutPrimaryAddress = getMyProfileQueryWithoutSomeNodes(
+        {
+          noPrimary: true,
+          dataType,
+        }
+      );
+
+      const { getEditData } = createEditorForDataType(
+        profileQueryWithoutPrimaryAddress,
+        dataType
+      );
+
+      const addressesInProfile = getAddressesFromNode(
+        profileQueryWithoutPrimaryAddress,
+        true
+      )[0];
+
+      const addressInEditData = getAddressEditDataForUI(getEditData());
+      expect(addressInEditData.id).toEqual(addressesInProfile.id);
+      expect((addressInEditData.value as AddressValue).address).toEqual(
+        addressesInProfile.address
+      );
+    });
+    it(`If addresses do not exist, an empty editData item is returned`, () => {
+      const profileQueryWithoutAddresses = getMyProfileQueryWithoutSomeNodes({
+        noNodes: true,
+        dataType,
+      });
+
+      const { getEditData } = createEditorForDataType(
+        profileQueryWithoutAddresses,
+        dataType
+      );
+      const emptyItem = getAddressEditDataForUI(getEditData());
+      expect(emptyItem.id).toEqual('');
+      expect((emptyItem.value as AddressValue).address).toEqual('');
+    });
+    it(`All addresses are included in the save data. Also those not visible in UI. Item's data is updated.`, () => {
+      const {
+        getEditData,
+        updateItemAndCreateSaveData,
+      } = createEditorForDataType(myProfile, dataType);
+      expect(getEditData()).toHaveLength(2);
+      const validAddress: AddressValue = {
+        address: 'valid-address',
+        city: 'valid-city',
+        postalCode: '123',
+        countryCode: 'FI',
+      };
+      const item = getAddressEditDataForUI(getEditData());
+      const index = getEditData().findIndex(
+        arrayItem => arrayItem.id === item.id
+      );
+      const saveData = updateItemAndCreateSaveData(item, validAddress);
+      const addressData = saveData.addresses as AddressNode[];
+      const addressInSaveData = pickValue(addressData[index], dataType);
+      expect(addressData).toHaveLength(2);
+      expect(addressData[index].id).toEqual(item.id);
+      expect(addressInSaveData).toEqual(validAddress);
+    });
+  });
+  describe(`Adding a new address`, () => {
+    it(`An error is thrown when adding a second address`, () => {
+      const profileDataWithOneAddressNode = getProfileWithOneNode('addresses');
+      const { addItem } = createEditorForDataType(
+        profileDataWithOneAddressNode,
+        'addresses'
+      );
       expect(() => addItem()).toThrow();
     });
   });

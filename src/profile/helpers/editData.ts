@@ -205,6 +205,20 @@ export function getEmailEditDataForUI(emailItems: EditData[]): EditData {
   return createNewItem(newNode, 'emails');
 }
 
+export function getAddressEditDataForUI(addressItems: EditData[]): EditData {
+  const primaryAddress = addressItems.filter(item => item.primary)[0];
+  if (primaryAddress) {
+    return primaryAddress;
+  }
+  return (
+    addressItems[0] ||
+    createNewItem(
+      createNewProfileNode('addresses', { primary: true }),
+      'addresses'
+    )
+  );
+}
+
 function cloneAndMutateItem(
   data: EditData,
   overrides?: Partial<EditData>
@@ -564,6 +578,9 @@ export function createEditorForDataType(
         allItems.findIndex(item => item.primary) > -1
       ) {
         throw new Error('Cannot add a new email if a primary already exists');
+      }
+      if (dataType === 'addresses' && allItems.length) {
+        throw new Error('Cannot add a multiple addresses');
       }
       const newNode = createNewProfileNode(
         dataType,
