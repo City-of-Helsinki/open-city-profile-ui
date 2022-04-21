@@ -6,7 +6,6 @@ import { Button, IconPlusCircle } from 'hds-react';
 
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import MultiItemPhoneRow from '../multiItemPhoneRow/MultiItemPhoneRow';
-import MultiItemAddressRow from '../multiItemAddressRow/MultiItemAddressRow';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import useNotificationContent from '../editingNotifications/useNotificationContent';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
@@ -28,7 +27,7 @@ import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers
 import { ActionRejection } from '../../hooks/useCommonEditHandling';
 
 type Props = {
-  dataType: Extract<EditDataType, 'addresses' | 'phones'>;
+  dataType: Extract<EditDataType, 'phones'>;
 };
 
 export type RowItemProps = {
@@ -62,28 +61,16 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   const [addButtonId, setFocusToAddButton] = useFocusSetter({
     targetId: `${dataType}-add-button`,
   });
-  const hasAddressList = dataType === 'addresses';
   const isAddButtonDisabled = hasNew();
   const setPrimaryInProgress = isSettingPrimary(editDataList);
-  const RowComponent = hasAddressList ? MultiItemAddressRow : MultiItemPhoneRow;
   const texts = (function() {
-    if (dataType === 'phones') {
-      return {
-        modalTitle: t('confirmationModal.removePhone'),
-        title: t('profileInformation.phones'),
-        listAriaLabel: t('profileInformation.ariaListTitlePhones'),
-        listNumberTitle: t('profileInformation.phone'),
-        addNew: t('profileForm.addAnotherPhone'),
-        noContent: t('profileInformation.noPhones'),
-      };
-    }
     return {
-      modalTitle: t('confirmationModal.removeAddress'),
-      title: t('profileInformation.addresses'),
-      listAriaLabel: t('profileInformation.ariaListTitleAddresses'),
-      listNumberTitle: t('profileInformation.address'),
-      addNew: t('profileForm.addAnotherAddress'),
-      noContent: t('profileInformation.noAddresses'),
+      modalTitle: t('confirmationModal.removePhone'),
+      title: t('profileInformation.phones'),
+      listAriaLabel: t('profileInformation.ariaListTitlePhones'),
+      listNumberTitle: t('profileInformation.phone'),
+      addNew: t('profileForm.addAnotherPhone'),
+      noContent: t('profileInformation.noPhones'),
     };
   })();
 
@@ -142,23 +129,13 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
 
   const NoItemsMessage = () => (
     <React.Fragment>
-      {dataType === 'addresses' && (
-        <h2 className={commonFormStyles['section-title']}>
-          {texts.listNumberTitle}
-        </h2>
-      )}
       <p>{texts.noContent}</p>
     </React.Fragment>
   );
 
   return (
     <ProfileSection>
-      <h2
-        className={classNames([
-          commonFormStyles['section-title'],
-          hasAddressList && commonFormStyles['visually-hidden'],
-        ])}
-      >
+      <h2 className={classNames([commonFormStyles['section-title']])}>
         {texts.title}
       </h2>
 
@@ -170,7 +147,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
             aria-label={`${texts.listNumberTitle} ${index + 1}`}
             key={item.id || 'new'}
           >
-            <RowComponent
+            <MultiItemPhoneRow
               data={item}
               onAction={onAction}
               testId={`${dataType}-${index}`}

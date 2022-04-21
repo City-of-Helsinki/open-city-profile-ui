@@ -32,7 +32,7 @@ import {
   splitNumberAndCountryCallingCode,
 } from '../../../../i18n/countryCallingCodes.utils';
 
-type MultiItemDataTypes = Extract<EditDataType, 'addresses' | 'phones'>;
+type MultiItemDataTypes = Extract<EditDataType, 'phones'>;
 
 describe('<MultiItemEditor /> ', () => {
   const responses: MockedResponse[] = [];
@@ -48,7 +48,7 @@ describe('<MultiItemEditor /> ', () => {
     );
   };
   const t = i18n.getFixedT('fi');
-  // data may be FormValues or PhoneNode or AddressNode
+  // data may be FormValues or PhoneNode
   // GeneralData type prevents casting all the time.
   // Data used in tests is anyway in <string, string> format
   type GeneralData = Record<string, string>;
@@ -61,25 +61,6 @@ describe('<MultiItemEditor /> ', () => {
     };
   };
   const testData: TestData = {
-    addresses: {
-      fields: ['address', 'city', 'postalCode'],
-      formValues: {
-        address: 'test-address',
-        city: 'test-city',
-        postalCode: '99999',
-        countryCode: 'FI',
-      },
-      newValues: {
-        address: 'test-address-2',
-        city: 'my-city',
-        postalCode: '00001',
-      },
-      invalidValues: {
-        address: '',
-        city: '',
-        postalCode: '',
-      },
-    },
     phones: {
       fields: ['number', 'countryCallingCode'],
       formValues: {
@@ -110,7 +91,7 @@ describe('<MultiItemEditor /> ', () => {
     return Promise.resolve(testTools);
   };
 
-  const multiItemDataTypes: MultiItemDataTypes[] = ['phones', 'addresses'];
+  const multiItemDataTypes: MultiItemDataTypes[] = ['phones'];
   multiItemDataTypes.forEach(dataType => {
     // test only node at index 0;
     const testIndex = 0;
@@ -187,20 +168,14 @@ describe('<MultiItemEditor /> ', () => {
       index: number,
       targetIsInput = false
     ) => {
-      const getSelector = (name: string): GeneralData => {
-        if (dataType === 'addresses') {
-          return targetIsInput
-            ? { id: `${dataType}-${index}-${name}` }
-            : { testId: `${dataType}-${index}-${name}-value` };
-        }
-        return targetIsInput
+      const getSelector = (name: string): GeneralData =>
+        targetIsInput
           ? {
               id: `${dataType}-${index}-${name}${
                 isCountryCallingCodeField(name) ? `-input` : ''
               }`,
             }
           : { testId: `${dataType}-${index}-value` };
-      };
       // cannot use forEach with async/await
       for (const field of fields) {
         if (!isFieldVerifiyable(targetIsInput, field)) {
