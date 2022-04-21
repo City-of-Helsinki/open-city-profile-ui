@@ -371,7 +371,7 @@ describe('<FormikDropdown /> ', () => {
         const values = await submitFormAndReturnData(testTools);
         expect(values).toEqual({ value: newOption.value });
       }
-    });
+    }, 10000);
     it(`Using current option prevents visible changes from within the FormikDropdown.
         Button text does not change even when option is changed. 
         Form value changes, but the component which set the current option should handle it.
