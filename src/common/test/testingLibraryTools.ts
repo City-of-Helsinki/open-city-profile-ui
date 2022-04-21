@@ -262,14 +262,14 @@ export const renderComponentWithMocksAndContexts = async (
     const currentSubmitButtonSelector =
       optionalSubmitButtonSelector || submitButtonSelector;
     await clickElement(currentSubmitButtonSelector);
-    if (waitForOnSaveNotification) {
-      await waitForElementAndValue(waitForOnSaveNotification);
-    }
     await waitFor(() => {
       if (!isDisabled(getElement(currentSubmitButtonSelector))) {
         throw new Error('NOT DISABLED');
       }
     });
+    if (waitForOnSaveNotification) {
+      await waitForElementAndValue(waitForOnSaveNotification);
+    }
     if (waitForAfterSaveNotification) {
       await waitForElementAndValue(waitForAfterSaveNotification);
     }
