@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconAlertCircle, Button, Dialog } from 'hds-react';
+import { IconAlertCircle, Button, Dialog, DialogProps } from 'hds-react';
 
 import { getModalProps } from '../getModalProps';
 
@@ -40,10 +40,10 @@ function ConfirmationModal({
       ? () => <>{content || null}</>
       : content;
   const dialogCloseProps = closeButtonLabelText
-    ? {
+    ? ({
         close,
         closeButtonLabelText,
-      }
+      } as Extract<DialogProps, 'close' | 'closeButtonLabelText'>)
     : undefined;
   return (
     <Dialog
