@@ -1,5 +1,5 @@
 # ===============================================
-FROM helsinkitest/node:12-slim as appbase
+FROM helsinkitest/node:14-slim as appbase
 # ===============================================
 # Offical image has npm log verbosity as info. More info - https://github.com/nodejs/docker-node#verbosity
 ENV NPM_CONFIG_LOGLEVEL warn
