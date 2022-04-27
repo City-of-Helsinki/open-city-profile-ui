@@ -84,6 +84,9 @@ export const basicDataSchema = yup.object().shape({
     .max(lastNameMax, createMaxLengthMessage(lastNameMax)),
 });
 
+const phonesProperties = formFieldsByDataType['phones'];
+const phonesMin = phonesProperties.number.min as number;
+const phonesMax = phonesProperties.number.max as number;
 const getDefaultPhoneSchema = () =>
   yup
     .string()
@@ -94,9 +97,7 @@ const getDefaultPhoneSchema = () =>
       'validation.numbersOnly',
       value => !/\D/g.test(value || '')
     );
-const phonesProperties = formFieldsByDataType['phones'];
-const phonesMin = phonesProperties.number.min as number;
-const phonesMax = phonesProperties.number.max as number;
+
 export const phoneSchema = yup.object().shape({
   number: getDefaultPhoneSchema().required(requiredValidation),
   countryCallingCode: yup.string().required(requiredValidation),

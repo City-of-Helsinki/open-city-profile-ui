@@ -31,32 +31,6 @@ export type ResponseProvider = (
 type ErrorReturnType = { error: Error };
 type ResponseReturnType = ExecutionResult<ProfileData> | ErrorReturnType;
 
-export function MockApolloClientProvider({
-  responseProvider,
-  children,
-}: {
-  children: React.ReactElement | React.ReactNodeArray;
-  responseProvider: ResponseProvider;
-}): React.ReactElement {
-  fetchMock.mockIf(/.*\/graphql\/.*$/, async (req: Request) => {
-    const payload = await req.json();
-    const response = createMockedProfileResponse(
-      responseProvider(
-        payload ? (payload.variables as UpdateMyProfileVariables) : undefined
-      )
-    );
-    if ((response as ErrorReturnType).error) {
-      return Promise.reject({
-        body: JSON.stringify({
-          message: (response as ErrorReturnType).error.message,
-        }),
-      });
-    }
-    return Promise.resolve({ body: JSON.stringify(response) });
-  });
-  return <ApolloProvider client={graphqlClient}>{children}</ApolloProvider>;
-}
-
 const getResponseData = (
   response: MockedResponse
 ): Record<string, unknown> | undefined => {
@@ -88,6 +62,19 @@ const getResponseData = (
     : { updateMyProfile: { profile: updatedProfileData } };
 };
 
+const createAllowedPermissionError = (): GraphQLError =>
+  (({
+    path: ['myProfile', 'verifiedPersonalInformation'],
+    extensions: { code: 'PERMISSION_DENIED_ERROR' },
+  } as unknown) as GraphQLError);
+
+const addAllowedPermissionErrorToResponse = (
+  data: ProfileData
+): ExecutionResult<ProfileData> => ({
+  data,
+  errors: [createAllowedPermissionError()],
+});
+
 const createResponse = (
   response: MockedResponse,
   data: unknown
@@ -114,18 +101,31 @@ const createMockedProfileResponse = (
   return createResponse(response, getResponseData(response));
 };
 
-const createAllowedPermissionError = (): GraphQLError =>
-  (({
-    path: ['myProfile', 'verifiedPersonalInformation'],
-    extensions: { code: 'PERMISSION_DENIED_ERROR' },
-  } as unknown) as GraphQLError);
-
-const addAllowedPermissionErrorToResponse = (
-  data: ProfileData
-): ExecutionResult<ProfileData> => ({
-  data,
-  errors: [createAllowedPermissionError()],
-});
+export function MockApolloClientProvider({
+  responseProvider,
+  children,
+}: {
+  children: React.ReactElement | React.ReactNodeArray;
+  responseProvider: ResponseProvider;
+}): React.ReactElement {
+  fetchMock.mockIf(/.*\/graphql\/.*$/, async (req: Request) => {
+    const payload = await req.json();
+    const response = createMockedProfileResponse(
+      responseProvider(
+        payload ? (payload.variables as UpdateMyProfileVariables) : undefined
+      )
+    );
+    if ((response as ErrorReturnType).error) {
+      return Promise.reject({
+        body: JSON.stringify({
+          message: (response as ErrorReturnType).error.message,
+        }),
+      });
+    }
+    return Promise.resolve({ body: JSON.stringify(response) });
+  });
+  return <ApolloProvider client={graphqlClient}>{children}</ApolloProvider>;
+}
 
 export const createApolloErrorWithAllowedPermissionError = (): ApolloError =>
   (({

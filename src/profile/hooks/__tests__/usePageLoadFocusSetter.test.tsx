@@ -57,6 +57,20 @@ describe('usePageLoadFocusSetter.ts ', () => {
     focusTracker(source);
   };
 
+  const Nav = () => {
+    const location = useLocation();
+    return (
+      <div>
+        {scenarios.map(path => (
+          <Link to={path} data-testid={getLinkTestId(path)} key={path}>
+            {getLinkText(path)}
+          </Link>
+        ))}
+        <span data-testid={pathIndicatorTestId}>{location.pathname}</span>
+      </div>
+    );
+  };
+
   const TestWrapper = ({
     scenario,
     children,
@@ -83,20 +97,6 @@ describe('usePageLoadFocusSetter.ts ', () => {
     );
   };
 
-  const Nav = () => {
-    const location = useLocation();
-    return (
-      <div>
-        {scenarios.map(path => (
-          <Link to={path} data-testid={getLinkTestId(path)} key={path}>
-            {getLinkText(path)}
-          </Link>
-        ))}
-        <span data-testid={pathIndicatorTestId}>{location.pathname}</span>
-      </div>
-    );
-  };
-
   const Root = () => (
     <main>
       <Nav />
@@ -113,7 +113,7 @@ describe('usePageLoadFocusSetter.ts ', () => {
       'data-testid': getElementTestId(scenario),
     };
     if (scenario === focusableH1 || scenario === disabledFocus) {
-      return <FocusableH1 {...commonProps}>I'm focusable h1</FocusableH1>;
+      return <FocusableH1 {...commonProps}>I am focusable h1</FocusableH1>;
     }
     if (scenario === plainH1) {
       return <h1 {...commonProps}>Just a plain h1</h1>;
