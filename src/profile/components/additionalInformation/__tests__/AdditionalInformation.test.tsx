@@ -45,6 +45,7 @@ describe('<AdditionalInformation /> ', () => {
 
   const languageSelectionIdPrefix = `${additionalInformationType}-language`;
   const initialLanguage = initialProfile.language as Language;
+  const t = i18n.getFixedT('fi');
 
   const findLanguageIndex = (language: Language): number =>
     profileConstants.LANGUAGES.findIndex(lang => lang === language);
@@ -82,8 +83,6 @@ describe('<AdditionalInformation /> ', () => {
       waitForElementAndValue,
     });
   };
-
-  const t = i18n.getFixedT('fi');
 
   beforeEach(() => {
     responses.length = 0;

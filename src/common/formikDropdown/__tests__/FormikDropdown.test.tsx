@@ -236,6 +236,10 @@ describe('<FormikDropdown /> ', () => {
   });
 
   describe('renders Combobox where ', () => {
+    const defaultTestValue = getDefaultCountryCallingCode();
+    const initialTestValue = countryCallingCodes['GB'][0];
+    const currentTestValue = countryCallingCodes['CK'][0];
+
     const renderAndVerifyInputAndFormValue = async (
       testScenarioProps: RenderProps,
       expectedValue: string
@@ -255,10 +259,6 @@ describe('<FormikDropdown /> ', () => {
       expect(values).toEqual({ value: expectedValue });
       return testTools;
     };
-
-    const defaultTestValue = getDefaultCountryCallingCode();
-    const initialTestValue = countryCallingCodes['GB'][0];
-    const currentTestValue = countryCallingCodes['CK'][0];
 
     it(`input value equals the label of the default option when
         initial or current options are not set`, async () => {
