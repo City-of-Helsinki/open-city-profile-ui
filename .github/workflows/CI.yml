@@ -1,6 +1,6 @@
 name: Automated Tests and Linting
 
-on: 
+on:
   push:
   pull_request:
 
@@ -12,8 +12,8 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '12'
-          
+          node-version: '14.19.1'
+
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -31,7 +31,7 @@ jobs:
 
       - name: Run code linting
         run: yarn lint
-          
+
       - name: Run test
         run: yarn ci
 
@@ -39,7 +39,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           files: ./coverage/lcov.info
-          fail_ci_if_error: true 
+          fail_ci_if_error: true
 
       - name: Build
         run: yarn build
