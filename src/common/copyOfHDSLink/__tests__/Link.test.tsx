@@ -23,6 +23,7 @@ describe('<Link /> ', () => {
         <Trans
           defaults={`<0>${children}</0>`}
           components={[
+            // eslint-disable-next-line react/jsx-key
             <Link {...rest} id={id}>
               {''}
             </Link>,

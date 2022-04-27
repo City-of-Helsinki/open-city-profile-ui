@@ -319,6 +319,7 @@ describe('useProfileMutations.ts ', () => {
             getMyProfile()
           );
           expect('this should never run').toBeFalsy();
+          // eslint-disable-next-line no-empty
         } catch (e) {}
 
         expect(JSON.stringify(result.current.profileData)).toEqual(

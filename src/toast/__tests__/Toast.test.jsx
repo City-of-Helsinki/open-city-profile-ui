@@ -6,6 +6,7 @@ import { updateWrapper } from '../../common/test/testUtils';
 import ToastProvider from '../ToastProvider';
 import useToast from '../useToast';
 
+// eslint-disable-next-line react/prop-types
 function TestInvoker({ toast }) {
   const { createToast } = useToast();
 
