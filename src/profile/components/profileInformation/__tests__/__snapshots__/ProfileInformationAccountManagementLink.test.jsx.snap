@@ -51,7 +51,7 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
             className="icon verticalAlignSmallOrMediumIcon"
             size="xs"
           >
-            <M
+            <S
               aria-hidden={true}
               className="icon verticalAlignSmallOrMediumIcon"
               size="s"
@@ -77,7 +77,7 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
                   />
                 </g>
               </svg>
-            </M>
+            </S>
           </LinkIcon>
         </a>
       </Link>
@@ -137,7 +137,7 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
             className="icon verticalAlignSmallOrMediumIcon"
             size="xs"
           >
-            <M
+            <S
               aria-hidden={true}
               className="icon verticalAlignSmallOrMediumIcon"
               size="s"
@@ -163,7 +163,7 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
                   />
                 </g>
               </svg>
-            </M>
+            </S>
           </LinkIcon>
         </a>
       </Link>
