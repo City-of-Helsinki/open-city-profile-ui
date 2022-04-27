@@ -8,17 +8,13 @@ function toastReducer(state: ToastState, action: ToastActions): ToastState {
         toasts: [...state.toasts, action.toast],
       };
     case DELETE_TOAST:
-      const deleteId = action.toastId;
-
       return {
-        toasts: state.toasts.filter(toast => toast.id !== deleteId),
+        toasts: state.toasts.filter(toast => toast.id !== action.toastId),
       };
     case HIDE_TOAST:
-      const hideId = action.toastId;
-
       return {
         toasts: state.toasts.map(toast => {
-          if (toast.id !== hideId) {
+          if (toast.id !== action.toastId) {
             return toast;
           }
 

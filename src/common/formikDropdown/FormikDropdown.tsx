@@ -21,7 +21,6 @@ export type OptionType = {
 function FormikDropdown(props: Props): React.ReactElement {
   const { t, i18n } = useTranslation();
   const {
-    name,
     defaultOption,
     initialOption,
     currentOption,
@@ -72,6 +71,7 @@ function FormikDropdown(props: Props): React.ReactElement {
     ...singleSelectProps,
     multiselect: false,
     value: currentOption || selectedOption,
+    // eslint-disable-next-line no-undef
     virtualized: process.env.NODE_ENV !== 'test' && virtualized,
     getA11yStatusMessage: selectionProps =>
       selectionProps.selectedItem

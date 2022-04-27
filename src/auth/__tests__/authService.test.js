@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-interpolation-in-snapshots */
 import to from 'await-to-js';
 import { waitFor } from '@testing-library/react';
 
