@@ -69,7 +69,8 @@
     "jest/expect-expect": "off",
     "jest/no-mocks-import": "off",
     "jest/no-export": "off",
-    "jest/no-standalone-expect": "off"
+    "jest/no-standalone-expect": "off",
+    "import/no-named-as-default-member": "off"
   },
   "settings": {
     "react": {
