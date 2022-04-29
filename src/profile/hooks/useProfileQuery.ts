@@ -1,7 +1,7 @@
 import { ApolloError, FetchResult, useLazyQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useEffect, useRef } from 'react';
-import { usePersistFn } from 'ahooks';
+import { useMemoizedFn } from 'ahooks';
 import _ from 'lodash';
 
 import { ProfileRoot } from '../../graphql/typings';
@@ -39,7 +39,7 @@ export function useProfileQuery(props?: {
       errorPolicy: 'all',
     }
   );
-  const dependencySafeOnError = usePersistFn(
+  const dependencySafeOnError = useMemoizedFn(
     props && props.onError ? props.onError : _.noop
   );
   useEffect(() => {
