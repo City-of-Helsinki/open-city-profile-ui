@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { usePersistFn } from 'ahooks';
+import { useMemoizedFn } from 'ahooks';
 import * as Sentry from '@sentry/browser';
 
 import { ProfileRoot } from '../../graphql/typings';
@@ -171,7 +171,7 @@ export const Provider = (props: ContextProps): React.ReactElement => {
 export const useProfileErrorListener = (listener: ErrorListener): void => {
   const { addErrorListener } = useContext(ProfileContext);
 
-  const rerenderFreeFunc = usePersistFn(listener);
+  const rerenderFreeFunc = useMemoizedFn(listener);
   const disposeListener = useMemo(() => addErrorListener(rerenderFreeFunc), [
     addErrorListener,
     rerenderFreeFunc,
