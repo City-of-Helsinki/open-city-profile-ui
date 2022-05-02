@@ -237,6 +237,21 @@ export const renderComponentWithMocksAndContexts = async (
   const isDisabled: TestTools['isDisabled'] = element =>
     !!element && element.getAttribute('disabled') !== null;
 
+  const waitForElementAndValue: TestTools['waitForElementAndValue'] = async props => {
+    const { selector, value } = props;
+    return waitFor(async () => {
+      const elementValue = await getTextOrInputValue(selector);
+      if (value === '' && elementValue === '') {
+        return;
+      }
+      if (!elementValue || !elementValue.includes(value)) {
+        throw new Error(
+          `element value (${elementValue}) does not include given value ${value}`
+        );
+      }
+    });
+  };
+
   const submit: TestTools['submit'] = async ({
     waitForOnSaveNotification,
     waitForAfterSaveNotification,
@@ -261,21 +276,6 @@ export const renderComponentWithMocksAndContexts = async (
     if (!skipDataCheck) {
       await waitForDataChange(previousDataChangeTime);
     }
-  };
-
-  const waitForElementAndValue: TestTools['waitForElementAndValue'] = async props => {
-    const { selector, value } = props;
-    return waitFor(async () => {
-      const elementValue = await getTextOrInputValue(selector);
-      if (value === '' && elementValue === '') {
-        return;
-      }
-      if (!elementValue || !elementValue.includes(value)) {
-        throw new Error(
-          `element value (${elementValue}) does not include given value ${value}`
-        );
-      }
-    });
   };
 
   const setInputValue: TestTools['setInputValue'] = async props => {
@@ -360,15 +360,11 @@ export const createResultPropertyTracker = <T>({
   const currentPicker = (): T => renderHookResult.result.current;
   const waitForChange = () => {
     const initialValue = valuePicker(currentPicker());
-    return new Promise<void>(async resolve => {
-      await waitFor(() => {
-        const newValue = valuePicker(currentPicker());
-        if (newValue !== initialValue) {
-          resolve();
-        } else {
-          throw new Error('waiting...');
-        }
-      });
+    return waitFor(() => {
+      const newValue = valuePicker(currentPicker());
+      if (newValue === initialValue) {
+        throw new Error('waiting...');
+      }
     });
   };
 
