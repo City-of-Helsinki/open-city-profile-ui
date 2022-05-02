@@ -56,6 +56,8 @@
     "jest-fetch-mock": "^3.0.3",
     "lodash": "^4.17.21",
     "oidc-client": "1.11.5",
+    "path": "^0.12.7",
+    "postcss-normalize": "^10.0.1",
     "prettier": "^1.18.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
