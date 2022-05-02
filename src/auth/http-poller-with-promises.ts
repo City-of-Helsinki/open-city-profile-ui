@@ -24,7 +24,7 @@ export default async function retryPollingUntilSuccessful({
     poller = undefined;
   };
 
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     poller = createHttpPoller({
       pollFunction: async () => pollFunction(),
       onSuccess: successResponse => {

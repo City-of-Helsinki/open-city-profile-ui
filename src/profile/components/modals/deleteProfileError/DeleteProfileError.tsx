@@ -27,7 +27,7 @@ function DeleteProfileError({
     const graphQlErrors = (resultError as ApolloError).graphQLErrors;
     if (graphQlErrors) {
       const errorCodes: string[] = graphQlErrors.map(
-        graphQlError => graphQlError?.extensions?.code
+        graphQlError => graphQlError?.extensions?.code as string
       );
       if (
         errorCodes.includes(
