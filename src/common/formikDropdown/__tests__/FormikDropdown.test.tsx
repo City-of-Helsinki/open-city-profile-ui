@@ -236,6 +236,10 @@ describe('<FormikDropdown /> ', () => {
   });
 
   describe('renders Combobox where ', () => {
+    const defaultTestValue = getDefaultCountryCallingCode();
+    const initialTestValue = countryCallingCodes['GB'][0];
+    const currentTestValue = countryCallingCodes['CK'][0];
+
     const renderAndVerifyInputAndFormValue = async (
       testScenarioProps: RenderProps,
       expectedValue: string
@@ -255,10 +259,6 @@ describe('<FormikDropdown /> ', () => {
       expect(values).toEqual({ value: expectedValue });
       return testTools;
     };
-
-    const defaultTestValue = getDefaultCountryCallingCode();
-    const initialTestValue = countryCallingCodes['GB'][0];
-    const currentTestValue = countryCallingCodes['CK'][0];
 
     it(`input value equals the label of the default option when
         initial or current options are not set`, async () => {
@@ -371,7 +371,7 @@ describe('<FormikDropdown /> ', () => {
         const values = await submitFormAndReturnData(testTools);
         expect(values).toEqual({ value: newOption.value });
       }
-    });
+    }, 15000);
     it(`Using current option prevents visible changes from within the FormikDropdown.
         Button text does not change even when option is changed. 
         Form value changes, but the component which set the current option should handle it.

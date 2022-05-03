@@ -11,15 +11,12 @@ type Props = {
 
 const FocusKeeper = (props: Props): React.ReactElement => {
   const { children, className, targetId, autoFocus } = props;
-  const moveFocusToTarget = React.useCallback(
-    (e?: unknown) => {
-      const target = document.getElementById(targetId);
-      if (target) {
-        target.focus();
-      }
-    },
-    [targetId]
-  );
+  const moveFocusToTarget = React.useCallback(() => {
+    const target = document.getElementById(targetId);
+    if (target) {
+      target.focus();
+    }
+  }, [targetId]);
 
   useEffect(() => {
     if (autoFocus) {

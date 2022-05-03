@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Dialog, IconAlertCircle } from 'hds-react';
+import { Button, Dialog, DialogProps, IconAlertCircle } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import { ApolloError } from '@apollo/client';
 
@@ -27,7 +27,7 @@ function DeleteProfileError({
     const graphQlErrors = (resultError as ApolloError).graphQLErrors;
     if (graphQlErrors) {
       const errorCodes: string[] = graphQlErrors.map(
-        graphQlError => graphQlError?.extensions?.code
+        graphQlError => graphQlError?.extensions?.code as string
       );
       if (
         errorCodes.includes(
@@ -54,10 +54,10 @@ function DeleteProfileError({
     closeButtonText,
   });
   const dialogCloseProps = closeButtonLabelText
-    ? {
+    ? ({
         close,
         closeButtonLabelText,
-      }
+      } as Extract<DialogProps, 'close' | 'closeButtonLabelText'>)
     : undefined;
   return (
     <Dialog

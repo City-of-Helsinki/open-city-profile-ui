@@ -108,6 +108,10 @@ export function getCountryAndCallingCodeForNumber(
   })[0];
 }
 
+export function getDefaultCountryCallingCode(): string {
+  return countryCallingCodes['FI'][0];
+}
+
 export function splitNumberAndCountryCallingCode(
   phoneNumber: string
 ): ParsedNumber {
@@ -119,8 +123,4 @@ export function splitNumberAndCountryCallingCode(
     countryCallingCode: countryCallingCode || getDefaultCountryCallingCode(),
     number,
   };
-}
-
-export function getDefaultCountryCallingCode(): string {
-  return countryCallingCodes['FI'][0];
 }

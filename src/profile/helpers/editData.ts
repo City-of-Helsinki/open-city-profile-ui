@@ -196,6 +196,16 @@ export function pickSources(
   }
 }
 
+export function createNewProfileNode<T extends MultiItemProfileNode>(
+  dataType: EditDataType,
+  overrides?: Partial<T>
+): T {
+  return {
+    ...(formConstants.EMPTY_VALUES[dataType] as T),
+    ...overrides,
+  };
+}
+
 export function getEmailEditDataForUI(emailItems: EditData[]): EditData {
   const primaryEmail = emailItems.filter(item => item.primary)[0];
   if (primaryEmail) {
@@ -245,16 +255,6 @@ function updateItemAndCloneList(
   const newList = _.cloneDeep(allItems);
   newList[index] = updatedItem;
   return newList;
-}
-
-export function createNewProfileNode<T extends MultiItemProfileNode>(
-  dataType: EditDataType,
-  overrides?: Partial<T>
-): T {
-  return {
-    ...(formConstants.EMPTY_VALUES[dataType] as T),
-    ...overrides,
-  };
 }
 
 function createFormValues(

@@ -26,6 +26,7 @@ describe('graphql client', () => {
           }
         `,
       });
+      // eslint-disable-next-line no-empty
     } catch (e) {}
 
     const fetchOptions = global.fetch.mock.calls[0][1] as RequestInit;

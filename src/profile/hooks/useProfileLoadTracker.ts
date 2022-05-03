@@ -36,12 +36,12 @@ function didLoadFail(currentStatus?: Status): boolean {
   return currentStatus === STATUS_FAILED;
 }
 
-function isLoadComplete(currentStatus?: Status): boolean {
-  return didLoadFail(currentStatus) || isLoadedSuccessfully(currentStatus);
-}
-
 function isLoadedSuccessfully(currentStatus?: Status): boolean {
   return currentStatus === STATUS_SUCCESS;
+}
+
+function isLoadComplete(currentStatus?: Status): boolean {
+  return didLoadFail(currentStatus) || isLoadedSuccessfully(currentStatus);
 }
 
 function canStartLoading(currentStatus?: Status): boolean {

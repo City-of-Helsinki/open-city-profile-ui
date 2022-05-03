@@ -162,7 +162,7 @@ Clone https://github.com/City-of-Helsinki/open-city-profile/.
 
 ### open-city-profile-ui
 
-If running on Linux or MacOS, easiest way is to just run the app without docker. Any semi-new version of node should probably work, the docker-image is set to use node 12.
+If running on Linux or MacOS, easiest way is to just run the app without docker. Any semi-new version of node should probably work, the docker-image is set to use node 14.
 
 `docker-compose up` starts the container.
 
