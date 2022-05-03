@@ -148,7 +148,12 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
           {texts.listNumberTitle}
         </h2>
       )}
-      <p>{texts.noContent}</p>
+      <div
+        className={commonFormStyles['text-content-wrapper']}
+        data-testid={`${dataType}-no-data`}
+      >
+        {texts.noContent}
+      </div>
     </React.Fragment>
   );
 
