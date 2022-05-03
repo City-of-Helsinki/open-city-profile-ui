@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 import to from 'await-to-js';
 import { Button, IconPlusCircle } from 'hds-react';
 
@@ -159,14 +158,9 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
 
   return (
     <ProfileSection>
-      <h2
-        className={classNames([
-          commonFormStyles['section-title'],
-          hasAddressList && commonFormStyles['visually-hidden'],
-        ])}
-      >
-        {texts.title}
-      </h2>
+      {!hasAddressList && (
+        <h2 className={commonFormStyles['section-title']}>{texts.title}</h2>
+      )}
 
       {!editDataList || (!editDataList.length && <NoItemsMessage />)}
       <ul aria-label={texts.listAriaLabel} className={commonFormStyles['list']}>
