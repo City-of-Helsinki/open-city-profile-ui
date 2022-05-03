@@ -125,7 +125,7 @@
     "title": "Din profil har tagits bort!"
   },
   "profileForm": {
-    "addAnotherAddress": "Lägg till ny adress",
+    "addAddress": "Lägg till en adress",
     "addAnotherEmail": "Lägg till ny epostadress",
     "addAnotherPhone": "Lägg till nytt telefonnummer",
     "addEmail": "Lägg till en e-postadress",
@@ -189,8 +189,8 @@
     "primaryAddressAriaDescription": "Det här är din primära adress",
     "primaryEmailAriaDescription": "Det här är din primära e-postadress",
     "primaryPhoneAriaDescription": "Det här är ditt primära telefonnummer",
-    "verifiedDataInformation": "Uppgifterna som märkts ut har bekräftats utgående från det officiella befolkningsdatasystemet och kan därför inte ändras i Helsingfors-profilen. Om du vill kan du se uppgifterna om dig som sparats i befolkningsdatasystemet i webbtjänsten suomi.fi <suomiFiLink>gå till suomi.fi </suomiFiLink>",
-    "verifiedDataInformationForScreenReaders": "De nedanstående uppgifterna har bekräftats utgående från det officiella befolkningsdatasystemet och kan därför inte ändras i Helsingfors-profilen. Om du vill kan du se uppgifterna om dig som sparats i befolkningsdatasystemet i webbtjänsten suomi.fi <suomiFiLink>gå till suomi.fi </suomiFiLink>",
+    "verifiedDataInformation": "SV: Uppgifterna som märkts ut har bekräftats utgående från det officiella befolkningsdatasystemet och kan därför inte ändras i Helsingfors-profilen. Om du vill kan du se uppgifterna om dig som sparats i befolkningsdatasystemet i webbtjänsten suomi.fi <suomiFiLink>gå till suomi.fi </suomiFiLink>",
+    "verifiedDataInformationForScreenReaders": "SV: De nedanstående uppgifterna har bekräftats utgående från det officiella befolkningsdatasystemet och kan därför inte ändras i Helsingfors-profilen. Om du vill kan du se uppgifterna om dig som sparats i befolkningsdatasystemet i webbtjänsten suomi.fi <suomiFiLink>gå till suomi.fi </suomiFiLink>",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Verifierad uppgift",
     "verifiedBasicData": "Verifierade basuppgifter",
@@ -210,7 +210,7 @@
     "ariaRemovePhoneWithValue": "Ta bort telefonnummer {{value}}",
     "noPhones": "Du har inte uppgett ett telefonnummer",
     "noEmails": "Du har inte uppgett en e-postadress",
-    "noAddresses": "Du har inte uppgett en adress",
+    "noAddress": "Du har inte uppgett en adress",
     "noEmail": "Du har inte angett en e-postadress",
     "verifyEmailText": "Vi har skickat en bekräftelse till e-postadressen som du angett. Om du inte har fått meddelandet, vänligen kontrollera skräpkorgen för e-post.",
     "verifyEmailTitle": "Bekräfta e-postadressen"
