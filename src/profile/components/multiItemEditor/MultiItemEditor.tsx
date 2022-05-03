@@ -64,6 +64,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   });
   const hasAddressList = dataType === 'addresses';
   const isAddButtonDisabled = hasNew();
+  const hideAddButton = hasAddressList && editDataList.length > 0;
   const setPrimaryInProgress = isSettingPrimary(editDataList);
   const RowComponent = hasAddressList ? MultiItemAddressRow : MultiItemPhoneRow;
   const texts = (function() {
@@ -82,8 +83,8 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
       title: t('profileInformation.addresses'),
       listAriaLabel: t('profileInformation.ariaListTitleAddresses'),
       listNumberTitle: t('profileInformation.address'),
-      addNew: t('profileForm.addAnotherAddress'),
-      noContent: t('profileInformation.noAddresses'),
+      addNew: t('profileForm.addAddress'),
+      noContent: t('profileInformation.noAddress'),
     };
   })();
 
@@ -181,19 +182,21 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
       </ul>
       <AccessibilityFieldHelpers dataType={dataType} />
       <EditingNotifications content={content} dataType={dataType} />
-      <Button
-        iconLeft={<IconPlusCircle />}
-        onClick={async () => {
-          clearMessage();
-          add();
-        }}
-        variant="secondary"
-        disabled={isAddButtonDisabled}
-        className={commonFormStyles['responsive-button']}
-        id={addButtonId}
-      >
-        {texts.addNew}
-      </Button>
+      {!hideAddButton && (
+        <Button
+          iconLeft={<IconPlusCircle />}
+          onClick={async () => {
+            clearMessage();
+            add();
+          }}
+          variant="secondary"
+          disabled={isAddButtonDisabled}
+          className={commonFormStyles['responsive-button']}
+          id={addButtonId}
+        >
+          {texts.addNew}
+        </Button>
+      )}
       <ConfirmationModal {...modalProps} />
     </ProfileSection>
   );

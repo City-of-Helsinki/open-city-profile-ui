@@ -125,7 +125,7 @@
     "title": "Profiilisi on poistettu onnistuneesti!"
   },
   "profileForm": {
-    "addAnotherAddress": "Lisää uusi osoite",
+    "addAddress": "Lisää osoite",
     "addAnotherEmail": "Lisää uusi sähköpostiosoite",
     "addAnotherPhone": "Lisää uusi puhelinnumero",
     "addEmail": "Lisää sähköpostiosoite",
@@ -189,8 +189,8 @@
     "primaryAddressAriaDescription": "Tämä on ensisijainen osoitteesi",
     "primaryEmailAriaDescription": "Tämä on ensisijainen sähköpostiosoitteesi",
     "primaryPhoneAriaDescription": "Tämä on ensisijainen puhelinnumerosi",
-    "verifiedDataInformation": "Merkityt tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki-profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink>",
-    "verifiedDataInformationForScreenReaders": "Alla olevat tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki-profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink>",
+    "verifiedDataInformation": "Merkityt tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki-profiilissa. Voit tutustua väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink> <br/><br/> Voit halutessasi lisätä vaihtoehtoiset yhteystietosi alle.",
+    "verifiedDataInformationForScreenReaders": "Alla olevat tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki-profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink>. Voit halutessasi lisätä vaihtoehtoiset yhteystietosi alle.",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Vahvistettu tieto",
     "verifiedBasicData": "Vahvistetut perustiedot",
@@ -210,7 +210,7 @@
     "ariaRemovePhoneWithValue": "Poista puhelinnumero {{value}}",
     "noPhones": "Et ole antanut puhelinnumeroita",
     "noEmails": "Et ole antanut sähköpostiosoitteita",
-    "noAddresses": "Et ole antanut osoitteita",
+    "noAddress": "Et ole antanut osoitetta",
     "noEmail": "Et ole antanut sähköpostiosoitetta",
     "verifyEmailText": "Olemme lähettäneet lisäämääsi sähköpostiosoitteeseen vahvistusviestin. Jos et saanut viestiä, tarkasta myös sähköpostin roskapostikansio.",
     "verifyEmailTitle": "Vahvista sähköpostiosoite"

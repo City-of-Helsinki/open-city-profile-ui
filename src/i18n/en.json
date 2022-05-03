@@ -125,7 +125,7 @@
     "title": "Your profile has been successfully removed!"
   },
   "profileForm": {
-    "addAnotherAddress": "Add new address",
+    "addAddress": "Add an address",
     "addAnotherEmail": "Add new email address",
     "addAnotherPhone": "Add new phone number",
     "addEmail": "Add an email address",
@@ -189,8 +189,8 @@
     "primaryAddressAriaDescription": "This is your primary address",
     "primaryEmailAriaDescription": "This is your primary email",
     "primaryPhoneAriaDescription": "This is your primary phone number",
-    "verifiedDataInformation": "The marked data have been confirmed from the national Population Information System and therefore cannot be edited in your Helsinki profile. If you want, you can view your personal data stored in the Population Information System in the suomi.fi web service: <suomiFiLink>go to the suomi.fi service </suomiFiLink>",
-    "verifiedDataInformationForScreenReaders": "The data below have been confirmed from the national Population Information System and therefore cannot be edited in your Helsinki profile. If you want, you can view your personal data stored in the Population Information System in the suomi.fi web service: <suomiFiLink>go to the suomi.fi service </suomiFiLink>",
+    "verifiedDataInformation": "EN: The marked data have been confirmed from the national Population Information System and therefore cannot be edited in your Helsinki profile. If you want, you can view your personal data stored in the Population Information System in the suomi.fi web service: <suomiFiLink>go to the suomi.fi service </suomiFiLink>",
+    "verifiedDataInformationForScreenReaders": "EN: The data below have been confirmed from the national Population Information System and therefore cannot be edited in your Helsinki profile. If you want, you can view your personal data stored in the Population Information System in the suomi.fi web service: <suomiFiLink>go to the suomi.fi service </suomiFiLink>",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Verified data",
     "verifiedBasicData": "Verified basic data",
@@ -210,7 +210,7 @@
     "ariaRemovePhoneWithValue": "Remove phone number {{value}}",
     "noPhones": "You haven't given any phone numbers",
     "noEmails": "You haven't given any emails",
-    "noAddresses": "You haven't given any addresses",
+    "noAddress": "You have not entered an address",
     "noEmail": "You have not entered an email address.",
     "verifyEmailText": "We have sent a verification email to the email address you have entered. If you did not receive the verification email, please check your junk mail folder.",
     "verifyEmailTitle": "Verify email"

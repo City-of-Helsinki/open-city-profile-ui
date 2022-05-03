@@ -5,10 +5,6 @@
   position: relative;
 }
 
-.multi-item-content-wrapper {
-  padding-bottom: var(--spacing-xl);
-}
-
 .section-title {
   font-size: var(--h3-size);
   border-bottom: 1px solid var(--color-black-30);
@@ -111,6 +107,10 @@
 
 .list-item {
   text-align: left;
+}
+
+.list .list-item:not(:last-child) .multi-item-content-wrapper {
+  padding-bottom: var(--spacing-xl);
 }
 
 .hidden-labels label {
