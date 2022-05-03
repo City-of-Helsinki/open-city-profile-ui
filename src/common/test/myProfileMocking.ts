@@ -398,20 +398,18 @@ export function cloneProfileAndProvideManipulationFunctions(
   };
 }
 
-export const getPrimaryEmailNode = (
-  myProfile: ProfileRoot
-): EmailNode | undefined => getPrimaryNode<EmailNode>('emails', myProfile);
+export const getNodesByDataType = (
+  dataType: GetModifiedProfileDataProps['dataType'],
+  profileRoot: ProfileRoot
+): InsertableNode[] =>
+  getNodesFromProfile(getPrimaryPropName(dataType), profileRoot, true) || [];
 
-const getPrimaryNode = <T extends InsertableNode>(
+export const getPrimaryNode = <T extends InsertableNode>(
   dataType: GetModifiedProfileDataProps['dataType'],
   profileRoot: ProfileRoot
 ): T | undefined => {
-  const nodes = getNodesFromProfile(
-    getPrimaryPropName(dataType),
-    profileRoot,
-    true
-  ) as T[];
-  return nodes.filter(node => node.primary)[0];
+  const nodes = getNodesByDataType(dataType, profileRoot);
+  return nodes.filter(node => node.primary)[0] as T;
 };
 
 export const getProfileDataWithoutSomeNodes = ({
