@@ -88,11 +88,9 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
       >
         {(formikProps: FormikProps<FormikValues>) => (
           <Form className={commonFormStyles['multi-item-form']}>
-            <h3 className={commonFormStyles['section-title']}>
-              {primary
-                ? t('profileInformation.primaryAddress')
-                : t('profileInformation.address')}
-            </h3>
+            <h2 className={commonFormStyles['section-title']}>
+              {t('profileInformation.address')}
+            </h2>
             <RequiredFieldsNote />
             <FocusKeeper targetId={`${testId}-address`}>
               <div className={commonFormStyles['multi-item-wrapper']}>
@@ -181,11 +179,9 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
         commonFormStyles['multi-item-content-wrapper'],
       ])}
     >
-      <h3 className={commonFormStyles['section-title']}>
-        {primary
-          ? t('profileInformation.primaryAddress')
-          : t('profileInformation.address')}
-      </h3>
+      <h2 className={commonFormStyles['section-title']}>
+        {t('profileInformation.address')}
+      </h2>
       <div className={commonFormStyles['multi-item-wrapper']}>
         <LabeledValue
           label={t(formFields.address.translationKey)}
