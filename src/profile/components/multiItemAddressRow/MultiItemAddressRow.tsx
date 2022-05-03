@@ -212,9 +212,9 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
         <EditButtons
           handler={actionHandler}
           actions={{
-            removable: !primary,
+            removable: true,
             primary,
-            setPrimary: true,
+            setPrimary: false,
           }}
           buttonClassNames={commonFormStyles['actions-wrapper-button']}
           editButtonId={editButtonId}
