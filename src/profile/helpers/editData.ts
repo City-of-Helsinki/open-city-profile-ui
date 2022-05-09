@@ -565,6 +565,9 @@ export function createEditorForDataType(
       ) {
         throw new Error('Cannot add a new email if a primary already exists');
       }
+      if (dataType === 'addresses' && allItems.length) {
+        throw new Error('Cannot add a second address. Maximum is 1.');
+      }
       const newNode = createNewProfileNode(
         dataType,
         dataType === 'emails' ? { primary: true } : undefined

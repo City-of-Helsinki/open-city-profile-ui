@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 import to from 'await-to-js';
 import { Button, IconPlusCircle } from 'hds-react';
 
@@ -64,6 +63,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   });
   const hasAddressList = dataType === 'addresses';
   const isAddButtonDisabled = hasNew();
+  const hideAddButton = hasAddressList && editDataList.length > 0;
   const setPrimaryInProgress = isSettingPrimary(editDataList);
   const RowComponent = hasAddressList ? MultiItemAddressRow : MultiItemPhoneRow;
   const texts = (function() {
@@ -82,8 +82,8 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
       title: t('profileInformation.addresses'),
       listAriaLabel: t('profileInformation.ariaListTitleAddresses'),
       listNumberTitle: t('profileInformation.address'),
-      addNew: t('profileForm.addAnotherAddress'),
-      noContent: t('profileInformation.noAddresses'),
+      addNew: t('profileForm.addAddress'),
+      noContent: t('profileInformation.noAddress'),
     };
   })();
 
@@ -147,20 +147,20 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
           {texts.listNumberTitle}
         </h2>
       )}
-      <p>{texts.noContent}</p>
+      <div
+        className={commonFormStyles['text-content-wrapper']}
+        data-testid={`${dataType}-no-data`}
+      >
+        {texts.noContent}
+      </div>
     </React.Fragment>
   );
 
   return (
     <ProfileSection>
-      <h2
-        className={classNames([
-          commonFormStyles['section-title'],
-          hasAddressList && commonFormStyles['visually-hidden'],
-        ])}
-      >
-        {texts.title}
-      </h2>
+      {!hasAddressList && (
+        <h2 className={commonFormStyles['section-title']}>{texts.title}</h2>
+      )}
 
       {!editDataList || (!editDataList.length && <NoItemsMessage />)}
       <ul aria-label={texts.listAriaLabel} className={commonFormStyles['list']}>
@@ -181,19 +181,21 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
       </ul>
       <AccessibilityFieldHelpers dataType={dataType} />
       <EditingNotifications content={content} dataType={dataType} />
-      <Button
-        iconLeft={<IconPlusCircle />}
-        onClick={async () => {
-          clearMessage();
-          add();
-        }}
-        variant="secondary"
-        disabled={isAddButtonDisabled}
-        className={commonFormStyles['responsive-button']}
-        id={addButtonId}
-      >
-        {texts.addNew}
-      </Button>
+      {!hideAddButton && (
+        <Button
+          iconLeft={<IconPlusCircle />}
+          onClick={async () => {
+            clearMessage();
+            add();
+          }}
+          variant="secondary"
+          disabled={isAddButtonDisabled}
+          className={commonFormStyles['responsive-button']}
+          id={addButtonId}
+        >
+          {texts.addNew}
+        </Button>
+      )}
       <ConfirmationModal {...modalProps} />
     </ProfileSection>
   );

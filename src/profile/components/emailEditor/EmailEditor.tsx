@@ -163,7 +163,7 @@ function EmailEditor(): React.ReactElement | null {
         <h2 className={commonFormStyles['section-title']}>
           {t('profileForm.email')}
         </h2>
-        <div className={styles['text-content-wrapper']}>
+        <div className={commonFormStyles['text-content-wrapper']}>
           <span
             className={commonFormStyles['value']}
             data-testid={`${dataType}-email`}

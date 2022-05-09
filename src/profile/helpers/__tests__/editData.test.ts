@@ -29,8 +29,9 @@ import {
 import {
   cloneProfileAndProvideManipulationFunctions,
   getMyProfile,
-  getMyProfileQueryWithoutSomeEmailData,
-  getPrimaryEmailNode,
+  getMyProfileQueryWithoutSomeNodes,
+  getNodesByDataType,
+  getPrimaryNode,
 } from '../../../common/test/myProfileMocking';
 import {
   AddressNode,
@@ -50,8 +51,9 @@ describe('editData.ts ', () => {
     basicDataType,
     additionalInformationType,
     'emails',
+    'addresses',
   ];
-  const multiItemDataTypes: EditDataType[] = ['addresses', 'phones'];
+  const multiItemDataTypes: EditDataType[] = ['phones'];
   const allDataTypes: EditDataType[] = [
     ...singleDataTypes,
     ...multiItemDataTypes,
@@ -133,6 +135,25 @@ describe('editData.ts ', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     formValues[dataType] as MultiItemProfileNode[];
+
+  const getProfileWithOneNode = (
+    dataType: Extract<EditDataType, 'addresses' | 'phones' | 'emails'>
+  ): ProfileRoot => {
+    const profileManipulator = cloneProfileAndProvideManipulationFunctions(
+      myProfile.myProfile as ProfileData
+    );
+    // remove all nodes after index 0
+    getNodesByDataType(dataType, myProfile)
+      .slice(1)
+      .forEach(node => {
+        profileManipulator.remove(dataType, node);
+      });
+    const modifiedMyProfile = profileManipulator.getProfile();
+    expect(
+      getNodesByDataType(dataType, { myProfile: modifiedMyProfile })
+    ).toHaveLength(1);
+    return { myProfile: modifiedMyProfile };
+  };
 
   allDataTypes.forEach(dataType => {
     it(`Picks correct data from myProfile when dataType is ${dataType}`, () => {
@@ -697,38 +718,42 @@ describe('editData.ts ', () => {
   });
 
   describe(`getEmailEditDataForUI() `, () => {
+    const dataType: EditDataType = 'emails';
     const validEmail = 'valid@domain.com';
     it(`returns the primary email picked from email items. The primaryEmail prop is not used.`, () => {
-      const profileQueryWithoutPrimaryEmailProperty = getMyProfileQueryWithoutSomeEmailData(
+      const profileQueryWithoutPrimaryEmailProperty = getMyProfileQueryWithoutSomeNodes(
         {
-          clearPrimaryEmail: true,
+          clearPrimary: true,
+          dataType,
         }
       );
       const { getEditData } = createEditorForDataType(
         profileQueryWithoutPrimaryEmailProperty,
-        'emails'
+        dataType
       );
       const item = getEmailEditDataForUI(getEditData());
-      const primaryEmailNode = getPrimaryEmailNode(
+      const primaryEmailNode = getPrimaryNode(
+        dataType,
         profileQueryWithoutPrimaryEmailProperty
       ) as EmailNode;
       expect(item.id).toEqual(primaryEmailNode.id);
       expect(item.primary).toBeTruthy();
     });
     it(`If emails exist, but none have primary = true, an empty editData item is returned`, () => {
-      const profileQueryWithoutPrimaryEmail = getMyProfileQueryWithoutSomeEmailData(
+      const profileQueryWithoutPrimaryEmail = getMyProfileQueryWithoutSomeNodes(
         {
           noPrimary: true,
+          dataType,
         }
       );
 
       expect(
-        getPrimaryEmailNode(profileQueryWithoutPrimaryEmail)
+        getPrimaryNode(dataType, profileQueryWithoutPrimaryEmail)
       ).toBeUndefined();
 
       const { getEditData } = createEditorForDataType(
         profileQueryWithoutPrimaryEmail,
-        'emails'
+        dataType
       );
       const emptyItem = getEmailEditDataForUI(getEditData());
       expect(emptyItem.id).toEqual('');
@@ -738,7 +763,7 @@ describe('editData.ts ', () => {
       const {
         getEditData,
         updateItemAndCreateSaveData,
-      } = createEditorForDataType(myProfile, 'emails');
+      } = createEditorForDataType(myProfile, dataType);
       expect(getEditData()).toHaveLength(2);
       const item = getEmailEditDataForUI(getEditData());
       const index = getEditData().findIndex(
@@ -753,14 +778,14 @@ describe('editData.ts ', () => {
       expect(emailData[index].email).toEqual(validEmail);
     });
     it(`When a new email is added, it has 'primary' set to 'true' and all emails are included in the save data`, () => {
-      const profileQueryWithoutPrimaryEmails = getMyProfileQueryWithoutSomeEmailData(
-        { noPrimary: true }
+      const profileQueryWithoutPrimaryEmails = getMyProfileQueryWithoutSomeNodes(
+        { noPrimary: true, dataType }
       );
       const {
         getEditData,
         addItem,
         updateItemAndCreateSaveData,
-      } = createEditorForDataType(profileQueryWithoutPrimaryEmails, 'emails');
+      } = createEditorForDataType(profileQueryWithoutPrimaryEmails, dataType);
       expect(getEditData()).toHaveLength(2);
       addItem();
       expect(getEditData()).toHaveLength(3);
@@ -778,9 +803,22 @@ describe('editData.ts ', () => {
     });
   });
   describe(`Adding a new email`, () => {
-    it(`An error is thrown when adding a new email, but primary email already exists`, () => {
-      const profileData = getMyProfile();
-      const { addItem } = createEditorForDataType(profileData, 'emails');
+    it(`An error is thrown when adding a new email, but primary node already exists`, () => {
+      const profileDataWithOneEmailNode = getProfileWithOneNode('emails');
+      const { addItem } = createEditorForDataType(
+        profileDataWithOneEmailNode,
+        'emails'
+      );
+      expect(() => addItem()).toThrow();
+    });
+  });
+  describe(`Adding a new address`, () => {
+    it(`An error is thrown when adding a second address`, () => {
+      const profileDataWithOneAddressNode = getProfileWithOneNode('addresses');
+      const { addItem } = createEditorForDataType(
+        profileDataWithOneAddressNode,
+        'addresses'
+      );
       expect(() => addItem()).toThrow();
     });
   });
