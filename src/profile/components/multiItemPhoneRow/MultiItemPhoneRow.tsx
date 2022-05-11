@@ -179,9 +179,9 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
       <EditButtons
         handler={actionHandler}
         actions={{
-          removable: !primary,
+          removable: true,
           primary,
-          setPrimary: true,
+          setPrimary: false,
         }}
         editButtonId={editButtonId}
         removeButtonId={removeButtonId}
