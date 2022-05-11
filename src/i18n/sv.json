@@ -126,7 +126,7 @@
   },
   "profileForm": {
     "addAddress": "Lägg till en adress",
-    "addAnotherPhone": "Lägg till nytt telefonnummer",
+    "addPhone": "Lägg till ett telefonnummer",
     "addEmail": "Lägg till en e-postadress",
     "additionalInfo": "Ytterligare information",
     "address": "Hemadress",
@@ -198,7 +198,7 @@
     "ariaRemoveAddressWithValue": "Ta bort adress {{value}} ",
     "ariaRemoveEmailWithValue": "Ta bort e-postadress {{value}}",
     "ariaRemovePhoneWithValue": "Ta bort telefonnummer {{value}}",
-    "noPhones": "Du har inte uppgett ett telefonnummer",
+    "noPhone": "Du har inte uppgett ett telefonnummer",
     "noEmails": "Du har inte uppgett en e-postadress",
     "noAddress": "Du har inte uppgett en adress",
     "noEmail": "Du har inte angett en e-postadress",

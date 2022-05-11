@@ -126,7 +126,7 @@
   },
   "profileForm": {
     "addAddress": "Add an address",
-    "addAnotherPhone": "Add new phone number",
+    "addPhone": "Add a phone number",
     "addEmail": "Add an email address",
     "additionalInfo": "Additional Information",
     "address": "Home address",
@@ -198,7 +198,7 @@
     "ariaRemoveAddressWithValue": "Remove address {{value}}",
     "ariaRemoveEmailWithValue": "Remove email {{value}}",
     "ariaRemovePhoneWithValue": "Remove phone number {{value}}",
-    "noPhones": "You haven't given any phone numbers",
+    "noPhone": "You haven't given a phone number",
     "noEmails": "You haven't given any emails",
     "noAddress": "You have not entered an address",
     "noEmail": "You have not entered an email address.",
