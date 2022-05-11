@@ -126,7 +126,7 @@
   },
   "profileForm": {
     "addAddress": "Lisää osoite",
-    "addAnotherPhone": "Lisää uusi puhelinnumero",
+    "addPhone": "Lisää puhelinnumero",
     "addEmail": "Lisää sähköpostiosoite",
     "additionalInfo": "Lisätiedot",
     "address": "Kotiosoite",
@@ -198,7 +198,7 @@
     "ariaRemoveAddressWithValue": "Poista osoite {{value}} ",
     "ariaRemoveEmailWithValue": "Poista sähköpostiosoite {{value}}",
     "ariaRemovePhoneWithValue": "Poista puhelinnumero {{value}}",
-    "noPhones": "Et ole antanut puhelinnumeroita",
+    "noPhone": "Et ole antanut puhelinnumeroa",
     "noEmails": "Et ole antanut sähköpostiosoitteita",
     "noAddress": "Et ole antanut osoitetta",
     "noEmail": "Et ole antanut sähköpostiosoitetta",

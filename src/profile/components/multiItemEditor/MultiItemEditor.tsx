@@ -63,7 +63,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   });
   const hasAddressList = dataType === 'addresses';
   const isAddButtonDisabled = hasNew();
-  const hideAddButton = hasAddressList && editDataList.length > 0;
+  const hideAddButton = editDataList.length > 0;
   const setPrimaryInProgress = isSettingPrimary(editDataList);
   const RowComponent = hasAddressList ? MultiItemAddressRow : MultiItemPhoneRow;
   const texts = (function() {
@@ -73,8 +73,8 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
         title: t('profileInformation.phones'),
         listAriaLabel: t('profileInformation.ariaListTitlePhones'),
         listNumberTitle: t('profileInformation.phone'),
-        addNew: t('profileForm.addAnotherPhone'),
-        noContent: t('profileInformation.noPhones'),
+        addNew: t('profileForm.addPhone'),
+        noContent: t('profileInformation.noPhone'),
       };
     }
     return {
