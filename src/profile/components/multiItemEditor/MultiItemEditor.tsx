@@ -70,7 +70,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
     if (dataType === 'phones') {
       return {
         modalTitle: t('confirmationModal.removePhone'),
-        title: t('profileInformation.phones'),
+        title: t('profileInformation.phone'),
         listAriaLabel: t('profileInformation.ariaListTitlePhones'),
         listNumberTitle: t('profileInformation.phone'),
         addNew: t('profileForm.addPhone'),
