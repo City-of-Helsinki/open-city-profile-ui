@@ -15,8 +15,8 @@
 
 .value {
   font-size: var(--fontsize-body-l);
-  padding: 0 0 var(--spacing-m) 0;
   word-break: break-all;
+  margin-bottom: var(--spacing-s);
 }
 
 @media (min-width: 768px) {
@@ -24,9 +24,6 @@
     flex-direction: row;
     align-items: center;
     padding: var(--spacing-m);
-  }
-  .value {
-    padding: 0 var(--spacing-2-xs) 0 0;
   }
 
   .editable-row {
