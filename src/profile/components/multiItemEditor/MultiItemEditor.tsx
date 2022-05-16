@@ -61,27 +61,25 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   const [addButtonId, setFocusToAddButton] = useFocusSetter({
     targetId: `${dataType}-add-button`,
   });
-  const hasAddressList = dataType === 'addresses';
   const isAddButtonDisabled = hasNew();
-  const hideAddButton = hasAddressList && editDataList.length > 0;
+  const hideAddButton = editDataList.length > 0;
   const setPrimaryInProgress = isSettingPrimary(editDataList);
-  const RowComponent = hasAddressList ? MultiItemAddressRow : MultiItemPhoneRow;
+  const RowComponent =
+    dataType === 'addresses' ? MultiItemAddressRow : MultiItemPhoneRow;
   const texts = (function() {
     if (dataType === 'phones') {
       return {
         modalTitle: t('confirmationModal.removePhone'),
-        title: t('profileInformation.phones'),
+        title: t('profileInformation.phone'),
         listAriaLabel: t('profileInformation.ariaListTitlePhones'),
-        listNumberTitle: t('profileInformation.phone'),
-        addNew: t('profileForm.addAnotherPhone'),
-        noContent: t('profileInformation.noPhones'),
+        addNew: t('profileForm.addPhone'),
+        noContent: t('profileInformation.noPhone'),
       };
     }
     return {
       modalTitle: t('confirmationModal.removeAddress'),
       title: t('profileInformation.addresses'),
       listAriaLabel: t('profileInformation.ariaListTitleAddresses'),
-      listNumberTitle: t('profileInformation.address'),
       addNew: t('profileForm.addAddress'),
       noContent: t('profileInformation.noAddress'),
     };
@@ -142,11 +140,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
 
   const NoItemsMessage = () => (
     <React.Fragment>
-      {dataType === 'addresses' && (
-        <h2 className={commonFormStyles['section-title']}>
-          {texts.listNumberTitle}
-        </h2>
-      )}
+      <h2 className={commonFormStyles['section-title']}>{texts.title}</h2>
       <div
         className={commonFormStyles['text-content-wrapper']}
         data-testid={`${dataType}-no-data`}
@@ -158,16 +152,12 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
 
   return (
     <ProfileSection>
-      {!hasAddressList && (
-        <h2 className={commonFormStyles['section-title']}>{texts.title}</h2>
-      )}
-
       {!editDataList || (!editDataList.length && <NoItemsMessage />)}
       <ul aria-label={texts.listAriaLabel} className={commonFormStyles['list']}>
         {editDataList.map((item, index) => (
           <li
             className={commonFormStyles['list-item']}
-            aria-label={`${texts.listNumberTitle} ${index + 1}`}
+            aria-label={`${texts.title} ${index + 1}`}
             key={item.id || 'new'}
           >
             <RowComponent

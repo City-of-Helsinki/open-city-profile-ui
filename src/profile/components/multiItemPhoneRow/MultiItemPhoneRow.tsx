@@ -72,123 +72,125 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
     ) as OptionType;
 
     return (
-      <div
-        className={classNames([
-          commonFormStyles['content-wrapper'],
-          styles['row-content-wrapper'],
-        ])}
+      <Formik
+        initialValues={{
+          number,
+          countryCallingCode,
+        }}
+        onSubmit={async values => {
+          await actionHandler('save', {
+            phone: `${values.countryCallingCode}${values.number}`,
+          });
+        }}
+        validationSchema={phoneSchema}
       >
-        <Formik
-          initialValues={{
-            number,
-            countryCallingCode,
-          }}
-          onSubmit={async values => {
-            await actionHandler('save', {
-              phone: `${values.countryCallingCode}${values.number}`,
-            });
-          }}
-          validationSchema={phoneSchema}
-        >
-          {(formikProps: FormikProps<PhoneFormikValue>) => (
-            <Form>
-              <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
-                <div className={styles['editable-row']}>
-                  <div className={commonFormStyles['phone-number-wrapper']}>
-                    <FormikDropdown
-                      className={classNames(
-                        commonFormStyles['country-calling-code-dropdown'],
-                        commonFormStyles['form-field']
-                      )}
-                      name={'countryCallingCode'}
-                      id={dropdownId}
-                      label={t('profileForm.countryCallingCode')}
-                      options={countryCallingCodes}
-                      defaultOption={defaultCountryCallingCodeOption}
-                      disabled={!!saving}
-                      invalid={hasFieldError(formikProps, 'countryCallingCode')}
-                      error={getFieldErrorMessage(
-                        formikProps,
-                        'countryCallingCode'
-                      )}
-                      aria-describedby={`${dataType}-countryCallingCode-helper`}
-                      toggleButtonAriaLabel={t(
-                        'profileInformation.ariaShowOptions'
-                      )}
-                      onChange={option => {
-                        formikProps.setFieldValue(
-                          'countryCallingCode',
-                          option ? option.value : ''
-                        );
-                      }}
-                      allowSearch
-                      virtualized
-                      initialOption={initialCountryCallingCodeOption}
-                    />
-                    <Field
-                      className={commonFormStyles['phone-number']}
-                      name="number"
-                      id={inputId}
-                      maxLength={formFields.number.max as number}
-                      as={PhoneInput}
-                      invalid={hasFieldError(formikProps, 'number')}
-                      aria-invalid={hasFieldError(formikProps, 'number')}
-                      errorText={getFieldErrorMessage(formikProps, 'number')}
-                      aria-labelledby={`${dataType}-number-helper`}
-                      disabled={!!saving}
-                      label={t('profileForm.phone')}
-                      onChange={(
-                        event: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        formikProps.setFieldValue(
-                          'number',
-                          event.target.value.replace(/\D/g, '')
-                        );
-                      }}
-                    />
-                  </div>
-                  <AccessibleFormikErrors
-                    formikProps={formikProps}
-                    dataType={dataType}
+        {(formikProps: FormikProps<PhoneFormikValue>) => (
+          <Form className={commonFormStyles['multi-item-form']}>
+            <h2 className={commonFormStyles['section-title']}>
+              {t('profileInformation.phone')}
+            </h2>
+            <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
+              <div className={styles['editable-row']}>
+                <div className={commonFormStyles['multi-item-wrapper']}>
+                  <FormikDropdown
+                    className={classNames(
+                      commonFormStyles['country-calling-code-dropdown'],
+                      commonFormStyles['form-field']
+                    )}
+                    name={'countryCallingCode'}
+                    id={dropdownId}
+                    label={t('profileForm.countryCallingCode')}
+                    options={countryCallingCodes}
+                    defaultOption={defaultCountryCallingCodeOption}
+                    disabled={!!saving}
+                    invalid={hasFieldError(formikProps, 'countryCallingCode')}
+                    error={getFieldErrorMessage(
+                      formikProps,
+                      'countryCallingCode'
+                    )}
+                    aria-describedby={`${dataType}-countryCallingCode-helper`}
+                    toggleButtonAriaLabel={t(
+                      'profileInformation.ariaShowOptions'
+                    )}
+                    onChange={option => {
+                      formikProps.setFieldValue(
+                        'countryCallingCode',
+                        option ? option.value : ''
+                      );
+                    }}
+                    allowSearch
+                    virtualized
+                    initialOption={initialCountryCallingCodeOption}
                   />
-                  <FormButtons
-                    handler={actionHandler}
-                    disabled={disableButtons}
-                    testId={testId}
-                    alignWithLabeledInputs
+                  <Field
+                    className={commonFormStyles['phone-number']}
+                    name="number"
+                    id={inputId}
+                    maxLength={formFields.number.max as number}
+                    as={PhoneInput}
+                    invalid={hasFieldError(formikProps, 'number')}
+                    aria-invalid={hasFieldError(formikProps, 'number')}
+                    errorText={getFieldErrorMessage(formikProps, 'number')}
+                    aria-labelledby={`${dataType}-number-helper`}
+                    disabled={!!saving}
+                    label={t('profileForm.phone')}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      formikProps.setFieldValue(
+                        'number',
+                        event.target.value.replace(/\D/g, '')
+                      );
+                    }}
                   />
                 </div>
-                <SaveIndicator action={currentAction} testId={testId} />
-              </FocusKeeper>
-            </Form>
-          )}
-        </Formik>
-      </div>
+                <AccessibleFormikErrors
+                  formikProps={formikProps}
+                  dataType={dataType}
+                />
+                <FormButtons
+                  handler={actionHandler}
+                  disabled={disableButtons}
+                  testId={testId}
+                  alignWithLabeledInputs
+                />
+              </div>
+              <SaveIndicator action={currentAction} testId={testId} />
+            </FocusKeeper>
+          </Form>
+        )}
+      </Formik>
     );
   }
   return (
     <div
       className={classNames([
         commonFormStyles['content-wrapper'],
-        styles['row-content-wrapper'],
+        commonFormStyles['multi-item-content-wrapper'],
       ])}
     >
-      <span className={styles['value']} data-testid={`${testId}-value`}>
-        {inputValue || '–'}
-      </span>
-      <EditButtons
-        handler={actionHandler}
-        actions={{
-          removable: !primary,
-          primary,
-          setPrimary: true,
-        }}
-        editButtonId={editButtonId}
-        removeButtonId={removeButtonId}
-        disabled={disableButtons || disableEditButtons}
-        testId={testId}
-        ariaLabels={ariaLabels}
-      />
+      <h2 className={commonFormStyles['section-title']}>
+        {t('profileInformation.phone')}
+      </h2>
+      <div className={commonFormStyles['multi-item-wrapper']}>
+        <span className={styles['value']} data-testid={`${testId}-value`}>
+          {inputValue || '–'}
+        </span>
+      </div>
+      <div className={commonFormStyles['actions-wrapper']}>
+        <EditButtons
+          handler={actionHandler}
+          actions={{
+            removable: true,
+            primary,
+            setPrimary: false,
+          }}
+          buttonClassNames={commonFormStyles['actions-wrapper-button']}
+          editButtonId={editButtonId}
+          removeButtonId={removeButtonId}
+          disabled={disableButtons || disableEditButtons}
+          testId={testId}
+          ariaLabels={ariaLabels}
+        />
+      </div>
       <SaveIndicator action={currentAction} testId={testId} />
     </div>
   );

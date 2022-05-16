@@ -32,6 +32,7 @@ import {
   getMyProfileQueryWithoutSomeNodes,
   getNodesByDataType,
   getPrimaryNode,
+  getProfileDataWithoutSomeNodes,
 } from '../../../common/test/myProfileMocking';
 import {
   AddressNode,
@@ -46,17 +47,18 @@ import getAddressesFromNode from '../getAddressesFromNode';
 import getEmailsFromNode from '../getEmailsFromNode';
 import getPhonesFromNode from '../getPhonesFromNode';
 
+type AddableDataType = Extract<EditDataType, 'addresses' | 'phones'>;
+
 describe('editData.ts ', () => {
   const singleDataTypes: EditDataType[] = [
     basicDataType,
     additionalInformationType,
     'emails',
-    'addresses',
   ];
-  const multiItemDataTypes: EditDataType[] = ['phones'];
+  const addableDataTypes: AddableDataType[] = ['addresses', 'phones'];
   const allDataTypes: EditDataType[] = [
     ...singleDataTypes,
-    ...multiItemDataTypes,
+    ...addableDataTypes,
   ];
   let myProfile: ProfileRoot;
   beforeEach(() => {
@@ -113,19 +115,23 @@ describe('editData.ts ', () => {
   const pickItemIds = (itemList: (EditData | MultiItemProfileNode)[]) =>
     itemList.map(item => item.id);
 
-  const createTestDataWithNewItem = (dataType: EditDataType) => {
-    const editor = createEditorForDataType(myProfile, dataType);
-    const oldList = editor.getEditData();
+  const createTestDataWithNewItem = (dataType: AddableDataType) => {
+    const profileDataWithoutItems = {
+      myProfile: getProfileDataWithoutSomeNodes({
+        dataType,
+        profileData: myProfile.myProfile as ProfileData,
+        noNodes: true,
+      }),
+    } as ProfileRoot;
+    const editor = createEditorForDataType(profileDataWithoutItems, dataType);
     const newItem = editor.addItem();
     const newList = editor.getEditData();
     //list of ids is stored for checking wrong items are not removed.
-    const oldIdList = pickItemIds(oldList);
     return {
       editor,
-      oldList,
       newList,
       newItem,
-      oldIdList,
+      profileData: profileDataWithoutItems.myProfile as ProfileData,
     };
   };
   const pickMultiItemFormValues = (
@@ -315,7 +321,7 @@ describe('editData.ts ', () => {
       });
     });
   });
-  multiItemDataTypes.forEach(dataType => {
+  addableDataTypes.forEach(dataType => {
     describe(`addItem `, () => {
       it(`creates new ${dataType} item with correct properties`, () => {
         const { newItem } = createTestDataWithNewItem(dataType);
@@ -344,22 +350,15 @@ describe('editData.ts ', () => {
         );
       });
       it(`creates new ${dataType} item and helper functions detect it correctly`, () => {
-        const {
-          newList,
-          newItem,
-          oldList,
-          oldIdList,
-        } = createTestDataWithNewItem(dataType);
-        expect(newList.length).toEqual(oldList.length + 1);
-        expect(pickItemIds(newList)).toEqual([...oldIdList, '']);
+        const { newList, newItem } = createTestDataWithNewItem(dataType);
+        expect(newList.length).toEqual(1);
+        expect(pickItemIds(newList)).toEqual(['']);
 
         expect(isNewItem(newItem)).toEqual(true);
-        expect(isNewItem(newList[0])).toEqual(false);
+        expect(isNewItem(newList[0])).toEqual(true);
 
         expect(hasNewItem(newList)).toEqual(true);
-        expect(hasNewItem(oldList)).toEqual(false);
 
-        expect(getNewItem(oldList)).toBeUndefined();
         expect(getNewItem(newList)).toMatchObject(newItem);
         // new item is last one in the array
         expect(newList[newList.length - 1]).toMatchObject(newItem);
@@ -370,13 +369,13 @@ describe('editData.ts ', () => {
       });
       it(`updateData updates profile data with new item when dataType is ${dataType}. 
       New item does not exist after update`, () => {
-        const { editor, newItem, oldIdList } = createTestDataWithNewItem(
+        const { editor, newItem, profileData } = createTestDataWithNewItem(
           dataType
         );
         const newValue = createUniqueEditDataValue(newItem, dataType);
         editor.updateItemAndCreateSaveData(newItem, newValue);
         const profileManipulator = cloneProfileAndProvideManipulationFunctions(
-          myProfile.myProfile as ProfileData
+          profileData
         );
         const newItemId = '999';
         profileManipulator.add(dataType, { ...newValue, id: newItemId });
@@ -389,83 +388,55 @@ describe('editData.ts ', () => {
           newValue
         );
         expect(updatedItems[updatedItems.length - 1].id).toEqual(newItemId);
-        expect(pickItemIds(updatedItems)).toEqual([...oldIdList, newItemId]);
+        expect(pickItemIds(updatedItems)).toEqual([newItemId]);
       });
     });
     describe(`removeItem `, () => {
       it(`removing old ${dataType} item does not remove it until data is updated. 
       Old item removal returns formValues without the removed item. `, () => {
-        const { editor, newList } = createTestDataWithNewItem(dataType);
-        // index of item to remove
+        const profileDataWithOneNode = getProfileWithOneNode(dataType);
+        const editor = createEditorForDataType(
+          profileDataWithOneNode,
+          dataType
+        );
+        const items = editor.getEditData();
+        // there can be only one item
         const testIndex = 0;
         // item to remove
-        const removeItem = newList[testIndex];
+        const removeItem = items[testIndex];
         // removeItem() returns new formValues
         const saveData = editor.removeItem(removeItem) as FormValues;
         // old item is not removed, just marked by setting item.saving = 'remove'
         const editDataWithRemovedItem = editor.getEditData();
         const updatedItem = editDataWithRemovedItem[testIndex];
-        expect(saveData).toBeDefined();
         expect(updatedItem.saving).toEqual('remove');
         // original item is not mutated
         expect(removeItem.saving).toBeUndefined();
-        const itemsInFormValues = pickMultiItemFormValues(saveData, dataType);
-        // item at target index has chaged
-        expect(itemsInFormValues[testIndex].id).toEqual(
-          editDataWithRemovedItem[testIndex + 1].id
-        );
-        // edit data have not changed yet
-        expect(editDataWithRemovedItem.length).toEqual(newList.length);
-        expect(pickItemIds(editDataWithRemovedItem)).toEqual(
-          pickItemIds(newList)
-        );
-        // formValues do not have removed item
-        expect(editDataWithRemovedItem.length).toEqual(
-          itemsInFormValues.length + 1
-        );
-        const newIdListWithoutRemovedItem = pickItemIds(newList);
-        newIdListWithoutRemovedItem.shift();
-        // removed id not found in ids
-        expect(pickItemIds(itemsInFormValues)).toEqual(
-          newIdListWithoutRemovedItem
-        );
-
-        // update data and verify item @testIndex has different item
-        const nextFirstItem = editDataWithRemovedItem[testIndex + 1];
-
+        // the one item was removed
+        expect(saveData[dataType]).toHaveLength(0);
+        // update editor without removed item
         const profileManipulator = cloneProfileAndProvideManipulationFunctions(
-          myProfile.myProfile as ProfileData
+          profileDataWithOneNode.myProfile as ProfileData
         );
         profileManipulator.remove(dataType, removeItem);
-
         editor.updateData({
           myProfile: profileManipulator.getProfile(),
         });
         const updatedItems = editor.getEditData();
-        expect(updatedItems.length).toEqual(newList.length - 1);
-        expect(updatedItems[testIndex]).toMatchObject(nextFirstItem);
-        const updatedIdList = pickItemIds(updatedItems);
-        expect(updatedIdList).toEqual(newIdListWithoutRemovedItem);
-        expect(updatedIdList.indexOf(removeItem.id)).toEqual(-1);
-        // new item is still found as last item
-        expect(isNewItem(updatedItems[updatedItems.length - 1])).toBeTruthy();
+        expect(updatedItems).toHaveLength(0);
       });
 
       it(`removes new ${dataType} item. 
       New item removal does not return new formValues but 'null'. 
       Item list is immediately updated.`, () => {
-        const {
-          newItem,
-          editor,
-          newList,
-          oldIdList,
-        } = createTestDataWithNewItem(dataType);
+        const { newItem, editor, newList } = createTestDataWithNewItem(
+          dataType
+        );
         const formValues = editor.removeItem(newItem);
         const listWithoutNew = editor.getEditData();
         expect(hasNewItem(listWithoutNew)).toBeFalsy();
         expect(formValues).toBeNull();
         expect(editor.getEditData().length).toEqual(newList.length - 1);
-        expect(pickItemIds(listWithoutNew)).toEqual(oldIdList);
       });
       it(`removing missing items throw`, () => {
         const { editor } = createTestDataWithNewItem(dataType);
@@ -480,6 +451,16 @@ describe('editData.ts ', () => {
         expect(() => {
           editor.removeItem(item);
         }).toThrow();
+      });
+    });
+    describe(`Adding a second item to ${dataType} `, () => {
+      it(`throws an error`, () => {
+        const profileDataWithOneAddressNode = getProfileWithOneNode(dataType);
+        const { addItem } = createEditorForDataType(
+          profileDataWithOneAddressNode,
+          dataType
+        );
+        expect(() => addItem()).toThrow();
       });
     });
     describe(`updateItems `, () => {
@@ -808,16 +789,6 @@ describe('editData.ts ', () => {
       const { addItem } = createEditorForDataType(
         profileDataWithOneEmailNode,
         'emails'
-      );
-      expect(() => addItem()).toThrow();
-    });
-  });
-  describe(`Adding a new address`, () => {
-    it(`An error is thrown when adding a second address`, () => {
-      const profileDataWithOneAddressNode = getProfileWithOneNode('addresses');
-      const { addItem } = createEditorForDataType(
-        profileDataWithOneAddressNode,
-        'addresses'
       );
       expect(() => addItem()).toThrow();
     });
