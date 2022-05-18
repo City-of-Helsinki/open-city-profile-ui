@@ -10,6 +10,9 @@ import {
   PrimaryEmail,
   PrimaryPhone,
   Language,
+  AddressType,
+  EmailType,
+  PhoneType,
 } from '../../graphql/typings';
 import { formConstants } from '../constants/formConstants';
 import getAddressesFromNode from '../helpers/getAddressesFromNode';
@@ -72,6 +75,13 @@ export type FormValues = {
   phones: PhoneNode[];
 };
 
+type MultiItemNodeValueType = 'emailType' | 'phoneType' | 'addressType';
+
+type SaveDataMutator = (
+  node: Partial<MultiItemProfileNode>,
+  editData: EditData
+) => Partial<MultiItemProfileNode>;
+
 export const saveTypeSetPrimary = 'set-primary';
 
 export type SaveType =
@@ -84,6 +94,7 @@ export type EditData = {
   readonly id: string;
   readonly value: EditDataValue;
   readonly primary?: boolean;
+  readonly type?: AddressType | EmailType | PhoneType | null;
   readonly saving: SaveType;
 };
 
@@ -151,12 +162,58 @@ function getValueProps(dataType: EditDataType): string[] {
   }
 }
 
+function getTypeProp(
+  dataType: EditDataType
+): MultiItemNodeValueType | undefined {
+  if (dataType === 'phones') {
+    return 'phoneType';
+  } else if (dataType === 'emails') {
+    return 'emailType';
+  } else if (dataType === 'addresses') {
+    return 'addressType';
+  } else {
+    return undefined;
+  }
+}
+
+function getUneditedProps(
+  editData: EditData,
+  dataType: EditDataType
+): Record<string, string> | undefined {
+  if (!isMultiItemDataType(dataType)) {
+    return undefined;
+  }
+  const targetProp = getTypeProp(dataType);
+  if (targetProp && editData.type) {
+    return {
+      [targetProp]: editData.type,
+    };
+  }
+  return undefined;
+}
+
 export function pickValue(
   profileDataItem: EditDataProfileSource,
   dataType: EditDataType
 ): EditDataValue {
   const pickProps = getValueProps(dataType);
   return _.pick(profileDataItem, pickProps) as EditDataValue;
+}
+
+export function pickType(
+  profileDataItem: EditDataProfileSource,
+  dataType: EditDataType
+): EditData['type'] {
+  if (dataType === 'emails') {
+    return (profileDataItem as EmailNode).emailType;
+  }
+  if (dataType === 'addresses') {
+    return (profileDataItem as AddressNode).addressType;
+  }
+  if (dataType === 'phones') {
+    return (profileDataItem as PhoneNode).phoneType;
+  }
+  return undefined;
 }
 
 function createNewItem(
@@ -167,6 +224,7 @@ function createNewItem(
   return {
     id: profileData.id,
     primary: (profileData as MultiItemProfileNode).primary,
+    type: pickType(profileData, dataType),
     value: pickValue(profileData, dataType),
     saving: undefined,
     ...overrides,
@@ -259,7 +317,8 @@ function updateItemAndCloneList(
 
 function createFormValues(
   allItems: EditData[],
-  dataType: EditDataType
+  dataType: EditDataType,
+  dataMutator: SaveDataMutator = data => data
 ): Partial<FormValues> {
   if (!isMultiItemDataType(dataType)) {
     const value = allItems[0].value as
@@ -272,11 +331,14 @@ function createFormValues(
     const nodes = allItems
       .filter(item => item.saving !== 'remove')
       .map(item =>
-        createNewProfileNode(dataType, {
-          ...item.value,
-          primary: item.primary,
-          id: item.id,
-        })
+        dataMutator(
+          createNewProfileNode<MultiItemProfileNode>(dataType, {
+            ...item.value,
+            primary: item.primary,
+            id: item.id,
+          }),
+          item
+        )
       );
     return {
       [dataType]: nodes,
@@ -479,7 +541,26 @@ export function createEditorForDataType(
         newValue,
         'value'
       );
-      return createFormValues(allItems, dataType);
+
+      const restoreUneditedData:
+        | SaveDataMutator
+        | undefined = isMultiItemDataType(dataType)
+        ? (node, editData) => {
+            if (isNewItem(editData)) {
+              return node;
+            }
+            const unEditedProps = getUneditedProps(editData, dataType);
+            if (unEditedProps) {
+              return {
+                ...node,
+                ...unEditedProps,
+              };
+            }
+            return node;
+          }
+        : undefined;
+
+      return createFormValues(allItems, dataType, restoreUneditedData);
     },
     updateData: (newProfileRoot: ProfileRoot) => {
       const newSources = pickSources(
