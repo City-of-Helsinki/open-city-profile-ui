@@ -26,7 +26,8 @@
     padding: var(--spacing-m);
   }
 
-  .editable-row {
-    flex-direction: row;
+  .input-wrapper > * {
+    flex-basis: unset;
+    flex-grow: 1;
   }
 }
