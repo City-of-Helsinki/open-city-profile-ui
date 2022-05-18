@@ -9,7 +9,7 @@ it('returns correct array of emails', () => {
       email: 'test@email.com',
       id: '234',
       primary: false,
-      emailType: 'OTHER',
+      emailType: 'PERSONAL',
       __typename: 'EmailNode',
     },
   ]);
