@@ -163,7 +163,6 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                 handler={actionHandler}
                 disabled={disableButtons}
                 testId={testId}
-                alignLeft
               />
               <SaveIndicator action={currentAction} testId={testId} />
             </FocusKeeper>

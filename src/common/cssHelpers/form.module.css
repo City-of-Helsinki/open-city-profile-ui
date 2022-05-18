@@ -185,24 +185,11 @@
     flex-direction: row;
     border: 0;
     margin: 0;
-    justify-content: flex-end;
-  }
-
-  .edit-buttons button {
-    margin: 0 0 0 var(--spacing-xs);
-  }
-
-  .align-left {
     justify-content: flex-start;
     padding: var(--spacing-m) 0 0 0;
   }
 
-  .edit-buttons.align-left > button {
+  .edit-buttons button {
     margin: 0 var(--spacing-xs) 0 0;
-  }
-
-  .align-with-labeled-inputs {
-    padding-top: 28px;
-    align-items: start;
   }
 }

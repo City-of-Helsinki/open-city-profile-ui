@@ -140,7 +140,6 @@ function EmailEditor(): React.ReactElement | null {
                     <FormButtons
                       handler={actionHandler}
                       disabled={!!saving}
-                      alignLeft
                       testId={dataType}
                     />
                   </div>
