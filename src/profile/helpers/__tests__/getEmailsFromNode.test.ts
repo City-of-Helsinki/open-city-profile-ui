@@ -1,32 +1,33 @@
 import getEmailsFromNode from '../getEmailsFromNode';
-import { MyProfileQuery } from '../../../graphql/generatedTypes';
-import { getMyProfile } from '../../../common/test/myProfileMocking';
+import {
+  getMyProfile,
+  getProfileDataWithoutSomeNodes,
+} from '../../../common/test/myProfileMocking';
+import { ProfileData, ProfileRoot } from '../../../graphql/typings';
 
 it('returns correct array of emails', () => {
-  const emails = getEmailsFromNode(getMyProfile());
-  expect(emails).toEqual([
-    {
-      email: 'test@email.com',
-      id: '234',
-      primary: false,
-      emailType: 'PERSONAL',
-      __typename: 'EmailNode',
-    },
+  const profile = getMyProfile();
+  const emailsPickedByDefault = getEmailsFromNode(getMyProfile());
+  expect(emailsPickedByDefault).toHaveLength(1);
+  expect(emailsPickedByDefault).toEqual([
+    profile.myProfile?.emails?.edges[1]?.node,
   ]);
+  const emailsWithKeptPrimary = getEmailsFromNode(getMyProfile(), true);
+  expect(emailsWithKeptPrimary).toHaveLength(2);
+  expect(emailsWithKeptPrimary).toEqual(
+    profile.myProfile?.emails?.edges.map(edge => edge?.node)
+  );
 });
 
-it('emails is empty', () => {
-  const myProfile = getMyProfile().myProfile;
+it('returns an empty array when profile has no emails', () => {
   const emptyEmailProfile = {
-    myProfile: {
-      ...myProfile,
-      emails: {
-        edges: [],
-        __typename: 'EmailNodeConnection',
-      },
-    },
-  };
+    myProfile: getProfileDataWithoutSomeNodes({
+      dataType: 'emails',
+      profileData: getMyProfile().myProfile as ProfileData,
+      noNodes: true,
+    }),
+  } as ProfileRoot;
 
-  const emails = getEmailsFromNode(emptyEmailProfile as MyProfileQuery);
+  const emails = getEmailsFromNode(emptyEmailProfile);
   expect(emails).toEqual([]);
 });
