@@ -163,7 +163,6 @@ function BasicData(): React.ReactElement | null {
                 <FormButtons
                   handler={actionHandler}
                   disabled={!!saving}
-                  alignLeft
                   testId={basicDataType}
                 />
                 <SaveIndicator
