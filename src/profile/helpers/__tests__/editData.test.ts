@@ -25,6 +25,7 @@ import {
   setPrimary,
   movePrimaryAsFirst,
   getEmailEditDataForUI,
+  pickType,
 } from '../editData';
 import {
   cloneProfileAndProvideManipulationFunctions,
@@ -65,6 +66,7 @@ describe('editData.ts ', () => {
     myProfile = getMyProfile();
   });
 
+  const nodeTypeDefaultValue = 'OTHER';
   let updateCounter = 1;
   const createNewValue = (valueType: keyof FormValues): string => {
     updateCounter = updateCounter + 1;
@@ -257,9 +259,14 @@ describe('editData.ts ', () => {
         // new id and primary match with old
         expect(newTarget.id).toEqual(target.id);
         expect(newTarget.primary).toEqual(target.primary);
-        // nodes should have id
         if (isMultiItem) {
+          // node should have id
           expect((newFormValue as MultiItemProfileNode).id).toEqual(target.id);
+          // node EmailType / AddressType / PhoneType must match editData type where is was stored
+          expect(target.type).toBeDefined();
+          expect(
+            pickType(newFormValue as MultiItemProfileNode, dataType)
+          ).toEqual(target.type);
         }
 
         // verify cloning is done: editing old data does not affect new data
@@ -347,6 +354,10 @@ describe('editData.ts ', () => {
         expect(updatedNewItem.value).toMatchObject(newValue);
         expect(pickValue(newNodeInFormValues, dataType)).toMatchObject(
           newValue
+        );
+        expect(newItem.type).toBe(nodeTypeDefaultValue);
+        expect(pickType(newNodeInFormValues, dataType)).toBe(
+          nodeTypeDefaultValue
         );
       });
       it(`creates new ${dataType} item and helper functions detect it correctly`, () => {

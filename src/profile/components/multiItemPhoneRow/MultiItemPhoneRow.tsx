@@ -91,12 +91,14 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
             </h2>
             <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
               <div className={styles['editable-row']}>
-                <div className={commonFormStyles['multi-item-wrapper']}>
+                <div
+                  className={classNames(
+                    commonFormStyles['multi-item-wrapper'],
+                    styles['input-wrapper']
+                  )}
+                >
                   <FormikDropdown
-                    className={classNames(
-                      commonFormStyles['country-calling-code-dropdown'],
-                      commonFormStyles['form-field']
-                    )}
+                    className={classNames(commonFormStyles['form-field'])}
                     name={'countryCallingCode'}
                     id={dropdownId}
                     label={t('profileForm.countryCallingCode')}
@@ -123,7 +125,7 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
                     initialOption={initialCountryCallingCodeOption}
                   />
                   <Field
-                    className={commonFormStyles['phone-number']}
+                    className={commonFormStyles['form-field']}
                     name="number"
                     id={inputId}
                     maxLength={formFields.number.max as number}
@@ -150,7 +152,6 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
                   handler={actionHandler}
                   disabled={disableButtons}
                   testId={testId}
-                  alignWithLabeledInputs
                 />
               </div>
               <SaveIndicator action={currentAction} testId={testId} />
@@ -170,7 +171,12 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
       <h2 className={commonFormStyles['section-title']}>
         {t('profileInformation.phone')}
       </h2>
-      <div className={commonFormStyles['multi-item-wrapper']}>
+      <div
+        className={classNames(
+          commonFormStyles['multi-item-wrapper'],
+          styles['input-wrapper']
+        )}
+      >
         <span className={styles['value']} data-testid={`${testId}-value`}>
           {inputValue || '–'}
         </span>

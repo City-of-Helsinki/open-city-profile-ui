@@ -1,13 +1,3 @@
-.row-content-wrapper {
-  background: var(--color-black-ultra-light);
-  margin: 0 0 var(--spacing-m) 0;
-  padding: var(--spacing-m);
-}
-
-.row-content-wrapper form {
-  width: 100%;
-}
-
 .editable-row {
   display: flex;
   flex-direction: column;
@@ -20,13 +10,8 @@
 }
 
 @media (min-width: 768px) {
-  .row-content-wrapper {
-    flex-direction: row;
-    align-items: center;
-    padding: var(--spacing-m);
-  }
-
-  .editable-row {
-    flex-direction: row;
+  .input-wrapper > * {
+    flex-basis: unset;
+    flex-grow: 1;
   }
 }

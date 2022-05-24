@@ -1,7 +1,6 @@
 import { Button } from 'hds-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import { ActionHandler } from '../editButtons/EditButtons';
@@ -9,28 +8,14 @@ import { ActionHandler } from '../editButtons/EditButtons';
 type Props = {
   handler: ActionHandler;
   disabled: boolean;
-  alignLeft?: boolean;
-  alignWithLabeledInputs?: boolean;
   testId: string;
 };
 
 function FormButtons(props: Props): React.ReactElement {
   const { t } = useTranslation();
-  const {
-    handler,
-    alignLeft,
-    disabled,
-    testId,
-    alignWithLabeledInputs,
-  } = props;
+  const { handler, disabled, testId } = props;
   return (
-    <div
-      className={classNames([
-        commonFormStyles['edit-buttons'],
-        alignLeft && commonFormStyles['align-left'],
-        alignWithLabeledInputs && commonFormStyles['align-with-labeled-inputs'],
-      ])}
-    >
+    <div className={commonFormStyles['edit-buttons']}>
       <Button
         type="submit"
         disabled={disabled}
