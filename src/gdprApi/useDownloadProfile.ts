@@ -65,6 +65,11 @@ function useDownloadProfile<TQuery>(
       onCompleted: data => {
         handleDownloadActionInitialization(data);
       },
+      onError: error => {
+        if (options?.onError) {
+          options.onError(error);
+        }
+      },
     }
   );
 
