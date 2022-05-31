@@ -154,9 +154,14 @@ describe('<EmailEditor /> ', () => {
         selector: { testId: `${dataType}-save-indicator` },
         value: t('notification.saving'),
       };
+      const waitForAfterSaveNotification: WaitForElementAndValueProps = {
+        selector: { id: `${dataType}-edit-notifications` },
+        value: t('notification.saveSuccess'),
+      };
       // submit and wait for "saving" notification
       await submit({
         waitForOnSaveNotification,
+        waitForAfterSaveNotification,
       });
       // "verify email" notification should not be rendered with current amr
       expect(() => getElement(verifyEmailSelector)).toThrow();
@@ -167,7 +172,12 @@ describe('<EmailEditor /> ', () => {
   });
   it("will render email verification information when user's amr is tunnistusSuomifiAMR", async () => {
     await act(async () => {
-      const { clickElement, setInputValue, waitForElement } = await initTests();
+      const {
+        clickElement,
+        setInputValue,
+        waitForElement,
+        getElement,
+      } = await initTests();
       await clickElement(editButtonSelector);
       await setEmailToInput(setInputValue, validEmailValue);
       // add the graphQL response
@@ -183,6 +193,10 @@ describe('<EmailEditor /> ', () => {
       await clickElement(submitButtonSelector);
       // "verify email" notification should be rendered
       await waitForElement(verifyEmailSelector);
+      // save success is not rendered with verify notification
+      expect(() =>
+        getElement({ id: `${dataType}-edit-notifications` })
+      ).toThrow();
     });
   });
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {
