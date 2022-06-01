@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import FileSaver from 'file-saver';
 import * as Sentry from '@sentry/browser';
 import { loader } from 'graphql.macro';
-import { Button } from 'hds-react';
+import { Button, Notification } from 'hds-react';
 
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './DownloadData.module.css';
 import { DownloadMyProfileQuery as DownloadMyProfileRoot } from '../../../graphql/generatedTypes';
 import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
-import useToast from '../../../toast/useToast';
 
 const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
 function DownloadData(): React.ReactElement {
-  const { createToast } = useToast();
+  const [hasError, setError] = useState(false);
   const [downloadProfileData, , loading] = useDownloadProfile<
     DownloadMyProfileRoot
   >(ALL_DATA, {
@@ -26,15 +25,17 @@ function DownloadData(): React.ReactElement {
     },
     onError: (error: Error) => {
       Sentry.captureException(error);
-      createToast({ type: 'error' });
+      setError(true);
     },
     fetchPolicy: 'network-only',
   });
   const { t } = useTranslation();
   const isDownloadingData = loading;
   const initiallyOpen = loading;
-  const onDownloadClick = downloadProfileData;
-
+  const onDownloadClick = () => {
+    setError(false);
+    downloadProfileData();
+  };
   return (
     <React.Fragment>
       <ExpandingPanel
@@ -43,6 +44,12 @@ function DownloadData(): React.ReactElement {
         scrollIntoViewOnMount={initiallyOpen}
       >
         <p>{t('downloadData.panelText')}</p>
+        {hasError && (
+          <Notification
+            label={t('notification.defaultErrorText')}
+            type={'error'}
+          ></Notification>
+        )}
         <Button
           onClick={onDownloadClick}
           className={styles.button}
