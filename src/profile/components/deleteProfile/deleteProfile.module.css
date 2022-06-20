@@ -1,5 +1,9 @@
 .button {
-  margin-top: var(--spacing-m);
+  margin-top: var(--spacing-l);
+}
+
+.checkbox-container {
+  margin-top: var(--spacing-l);
 }
 
 .loading-info {
