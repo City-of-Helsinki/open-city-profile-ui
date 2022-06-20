@@ -35,7 +35,7 @@
   "deleteProfile": {
     "accept": "Ymmärrän mitä tietojeni poistaminen tarkoittaa ja haluan jatkaa.",
     "delete": "Poista omat tiedot",
-    "explanation": "Jos haluat, voit poistaa kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Jos olet yhdistänyt profiilisi johonkin Helsingin kaupungin palveluun, et enää pysty käyttämään kyseistä palvelua ennen kuin luot uuden profiilin. Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta. Jos olet käyttänyt kirjautumisessa ulkopuolisen palveluntarjoajan tiliä (esim. Google tai Facebook), kyseistä tiliä ei poisteta. ",
+    "explanation": "Halutessasi voit poistaa Helsinki-profiilisi ja kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Helsinki-profiiliisi yhdistettyjä asiointipalveluja käyttääksesi on luotava uusi Helsinki-profiili.<br/><br/>Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta.<br/><br/>Jos olet käyttänyt kirjautumisessa ulkopuolisen palveluntarjoajan tiliä (esim. Google tai Facebook), kyseistä tiliä ei poisteta.",
     "title": "Haluatko poistaa omat tietosi?",
     "loadingServices": "Haetaan profiiliin yhdistettyjä palveluita"
   },
@@ -52,7 +52,7 @@
   },
   "downloadData": {
     "button": "Lataa omat tiedot",
-    "panelText": "Jos haluat nähdä kaikki sinusta tallentamamme tiedot, voit ladata ne tästä. Tiedot toimitetaan määrämuotoisena tiedostona, jotta voit halutessasi siirtää tiedot johonkin toiseen järjestelmään.",
+    "panelText": "Voit ladata kaikki sinuun liittyvät tiedot tästä tiedostona. Tiedosto pitää sisällään kaikki sinusta Helsinki-profiiliin tallennetut tiedot sekä tiedot kaikista siihen liitetyistä asiointipalveluista.",
     "panelTitle": "Haluatko ladata omat tietosi?"
   },
   "expandingPanel": {
@@ -140,6 +140,7 @@
     "firstName": "Etunimi",
     "givenName": "Kutsumanimi",
     "language": "Asiointikieli",
+    "languageDescription": "Kerro kaupungille, millä kielellä toivot sinua lähestyttävän.",
     "lastName": "Sukunimi",
     "nickname": "Lempinimi",
     "phone": "Puhelinnumero",
@@ -159,6 +160,8 @@
   },
   "profileInformation": {
     "address": "Osoite",
+    "addressDescription": "Nämä tiedot olet itse lisännyt Helsinki-profiili -palveluun tai muuhun Helsingin kaupungin asiointipalveluun. Tätä osoitetietoa käytämme silloin, kun olet tunnistautunut kevyesti, eli jotain muuta kuin Suomi.fi -tunnistautumista hyödyntäen. Voit halutessasi poistaa tiedot Helsinki-profiilista, jolloin ne poistuvat myös muista asiointipalveluista. Älä poista tietoja jos sinulla on asiointi kesken.",
+    "addressTitleWhenHasVerifiedData": "Muu osoite",
     "ariaEditAddress": "Muokkaa osoitetta {{value}}",
     "ariaEditPhone": "Muokkaa puhelinnumeroa {{value}}",
     "ariaEditEmail": "Muokkaa sähköpostiosoitetta {{value}}",
@@ -167,7 +170,7 @@
     "ariaSelectedOption": "{{value}} on valittu",
     "ariaNoSelectedItemForLabel": "{{label}} ei ole valittuna",
     "deleteProfile": "Poista omat tietosi",
-    "description": "Helsinki-profiili mahdollistaa tietojesi käytön kaikissa Helsingin verkkopalveluissa, joissa vaaditaan tunnistautumista. Yhdet tiedot, helposti käytettävissä monissa eri palveluissa.",
+    "description": "Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <linkToServices>{{linkToServicesText}} välilehdeltä</linkToServices>.",
     "downloadData": "Lataa omat tietosi",
     "email": "Sähköpostiosoite",
     "name": "Nimi",
@@ -179,11 +182,10 @@
     "authenticationMethod": "Tunnistautumistapa",
     "permanentAddress": "Vakinainen osoite",
     "permanentForeignAddress": "Vakinainen ulkomainen osoite",
-    "verifiedDataInformation": "Merkityt tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki-profiilissa. Voit tutustua väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink> <br/><br/> Voit halutessasi lisätä vaihtoehtoiset yhteystietosi alle.",
-    "verifiedDataInformationForScreenReaders": "Alla olevat tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki-profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink>. Voit halutessasi lisätä vaihtoehtoiset yhteystietosi alle.",
+    "verifiedDataInformation": "Viralliset tiedot näet vain, kun olet vahvasti tunnistautunut Suomi.fi -kirjautumisen avulla. Tiedot on haettu virallisesta väestötietojärjestelmästä, eikä niitä voi muokata Helsinki-profiilin kautta. Voit tutustua väestötietojärjestelmään tallennettuihin tietoihisi <suomiFiLink>suomi.fi -verkkopalvelussa</suomiFiLink>.",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Vahvistettu tieto",
-    "verifiedBasicData": "Vahvistetut perustiedot",
+    "verifiedBasicData": "Viralliset tiedot",
     "phones": "Puhelinnumerot",
     "emails": "Sähköpostiosoitteet",
     "addresses": "Osoitteet",
