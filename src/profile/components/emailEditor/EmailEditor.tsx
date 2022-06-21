@@ -212,6 +212,9 @@ function EmailEditor(): React.ReactElement | null {
           {t('profileForm.addEmail')}
         </Button>
       )}
+      {!willSendEmailVerificationCode && (
+        <EditingNotifications content={content} dataType={dataType} />
+      )}
     </ProfileSection>
   );
 }
