@@ -212,7 +212,6 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
           testId={`${testId}-countryCode`}
         />
       </div>
-      <p>{t('profileInformation.addressNote')}</p>
       <div className={commonFormStyles['actions-wrapper']}>
         <EditButtons
           handler={actionHandler}
