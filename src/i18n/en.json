@@ -35,7 +35,7 @@
   "deleteProfile": {
     "accept": "I understand what deleting my data means and wish to proceed.",
     "delete": "Delete my information",
-    "explanation": "If you want, you can delete all the data we hold on you. Once deleted, the data cannot be restored. If you have linked your profile to a City of Helsinki service, you will no longer be able to use that service until you create a new profile. After the deletion, you will be automatically logged out of this service. If you have used a third-party service provider account (such as Google or Facebook) to log in, that account will not be deleted.",
+    "explanation": "EN: Halutessasi voit poistaa Helsinki-profiilisi ja kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Helsinki-profiiliisi yhdistettyjä asiointipalveluja käyttääksesi on luotava uusi Helsinki-profiili.<br/><br/>Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta.<br/><br/>Jos olet käyttänyt kirjautumisessa ulkopuolisen palveluntarjoajan tiliä (esim. Google tai Facebook), kyseistä tiliä ei poisteta.",
     "title": "Do you want to delete your information?",
     "loadingServices": "Searching for services connected to the profile"
   },
@@ -52,7 +52,7 @@
   },
   "downloadData": {
     "button": "Download my information",
-    "panelText": "If you want to see all our stored information about you, you can download them here. The information will be delivered as a file in a fixed format so you can move it into some other system if you want to.",
+    "panelText": "EN: Voit ladata kaikki sinuun liittyvät tiedot tästä tiedostona. Tiedosto pitää sisällään kaikki sinusta Helsinki-profiiliin tallennetut tiedot sekä tiedot kaikista siihen liitetyistä asiointipalveluista.",
     "panelTitle": "Do you want to download your information?"
   },
   "expandingPanel": {
@@ -140,6 +140,7 @@
     "firstName": "First name",
     "givenName": "Given name",
     "language": "Language of communication",
+    "languageDescription": "EN: Kerro kaupungille, millä kielellä toivot sinua lähestyttävän.",
     "lastName": "Last name",
     "nickname": "Nickname",
     "phone": "Phone number",
@@ -159,6 +160,8 @@
   },
   "profileInformation": {
     "address": "Address",
+    "addressDescription": "EN: Nämä tiedot olet itse lisännyt Helsinki-profiili -palveluun tai muuhun Helsingin kaupungin asiointipalveluun. Tätä osoitetietoa käytämme silloin, kun olet tunnistautunut kevyesti, eli jotain muuta kuin Suomi.fi -tunnistautumista hyödyntäen. Voit halutessasi poistaa tiedot Helsinki-profiilista, jolloin ne poistuvat myös muista asiointipalveluista. Älä poista tietoja jos sinulla on asiointi kesken.",
+    "addressTitleWhenHasVerifiedData": "EN: Muu osoite",
     "ariaEditAddress": "Edit address {{value}}",
     "ariaEditPhone": "Edit phone number {{value}}",
     "ariaEditEmail": "Edit email {{value}}",
@@ -167,7 +170,7 @@
     "ariaSelectedOption": "{{value}} is selected",
     "ariaNoSelectedItemForLabel": "{{label}} is not selected",
     "deleteProfile": "Delete your profile",
-    "description": "The Helsinki profile enables you to use your data in all City of Helsinki online services that require authentication. One set of data, easily accessible on various services.",
+    "description": "EN: Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <linkToServices>{{linkToServicesText}} välilehdeltä</linkToServices>",
     "downloadData": "Download your data",
     "email": "Email",
     "name": "Name",
@@ -179,11 +182,10 @@
     "authenticationMethod": "Authentication method",
     "permanentAddress": "Permanent address",
     "permanentForeignAddress": "Permanent foreign address",
-    "verifiedDataInformation": "EN: The marked data have been confirmed from the national Population Information System and therefore cannot be edited in your Helsinki profile. If you want, you can view your personal data stored in the Population Information System in the suomi.fi web service: <suomiFiLink>go to the suomi.fi service </suomiFiLink>",
-    "verifiedDataInformationForScreenReaders": "EN: The data below have been confirmed from the national Population Information System and therefore cannot be edited in your Helsinki profile. If you want, you can view your personal data stored in the Population Information System in the suomi.fi web service: <suomiFiLink>go to the suomi.fi service </suomiFiLink>",
+    "verifiedDataInformation": "EN: Viralliset tiedot näet vain, kun olet vahvasti tunnistautunut Suomi.fi -kirjautumisen avulla. Tiedot on haettu virallisesta väestötietojärjestelmästä, eikä niitä voi muokata Helsinki-profiilin kautta. Voit tutustua väestötietojärjestelmään tallennettuihin tietoihisi <suomiFiLink>suomi.fi -verkkopalvelussa</suomiFiLink>.",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Verified data",
-    "verifiedBasicData": "Verified basic data",
+    "verifiedBasicData": "EN: Viralliset tiedot",
     "phones": "Phone numbers",
     "emails": "Emails",
     "addresses": "Addresses",

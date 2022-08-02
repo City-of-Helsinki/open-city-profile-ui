@@ -35,7 +35,7 @@
   "deleteProfile": {
     "accept": "Jag förstår vad att radera min information betyder och vill fortsätta.",
     "delete": "Radera min information",
-    "explanation": "Om du vill kan du ta bort alla uppgifter som vi har sparat om dig. Uppgifterna kan inter återtas när de har avlägsnats. Om du har fört samman din profil med en tjänst som Helsingfors stad tillhandahåller kan du inte använda tjänsten förrän du skapar en ny profil. Efter att du har avlägsnat uppgifterna loggas du automatiskt ut ur den här tjänsten. Om du vid inloggningen har använt en utomstående serviceleverantörs konto (t.ex. Google eller Facebook) avlägsnas kontot inte.",
+    "explanation": "SV: Halutessasi voit poistaa Helsinki-profiilisi ja kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Helsinki-profiiliisi yhdistettyjä asiointipalveluja käyttääksesi on luotava uusi Helsinki-profiili.<br/><br/>Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta.<br/><br/>Jos olet käyttänyt kirjautumisessa ulkopuolisen palveluntarjoajan tiliä (esim. Google tai Facebook), kyseistä tiliä ei poisteta.",
     "title": "Vill du radera din information?",
     "loadingServices": "Söker efter tjänster som är kopplade till profilen"
   },
@@ -52,7 +52,7 @@
   },
   "downloadData": {
     "button": "Ladda ner min information",
-    "panelText": "Om du vill se alla uppgifter som vi lagrat om dig, kan du ladda ned dem här. Informationen levereras som en formbunden fil så att du kan överföra uppgifterna till ett annat system om du vill.",
+    "panelText": "SV: Voit ladata kaikki sinuun liittyvät tiedot tästä tiedostona. Tiedosto pitää sisällään kaikki sinusta Helsinki-profiiliin tallennetut tiedot sekä tiedot kaikista siihen liitetyistä asiointipalveluista.",
     "panelTitle": "Vill du ladda ner din information?"
   },
   "expandingPanel": {
@@ -140,6 +140,7 @@
     "firstName": "Förnamn",
     "givenName": "Tilltalsnamn",
     "language": "Kontaktspråk",
+    "languageDescription": "SV: Kerro kaupungille, millä kielellä toivot sinua lähestyttävän.",
     "lastName": "Efternamn",
     "nickname": "Smeknamn",
     "phone": "Telefonnummer",
@@ -159,6 +160,8 @@
   },
   "profileInformation": {
     "address": "Adress",
+    "addressDescription": "SV: Nämä tiedot olet itse lisännyt Helsinki-profiili -palveluun tai muuhun Helsingin kaupungin asiointipalveluun. Tätä osoitetietoa käytämme silloin, kun olet tunnistautunut kevyesti, eli jotain muuta kuin Suomi.fi -tunnistautumista hyödyntäen. Voit halutessasi poistaa tiedot Helsinki-profiilista, jolloin ne poistuvat myös muista asiointipalveluista. Älä poista tietoja jos sinulla on asiointi kesken.",
+    "addressTitleWhenHasVerifiedData": "SV: Muu osoite",
     "ariaEditAddress": "Redigera adress {{value}}",
     "ariaEditPhone": "Redigera telefonnummer {{value}}",
     "ariaEditEmail": "Redigera e-postadress {{value}}",
@@ -167,7 +170,7 @@
     "ariaSelectedOption": "{{value}} har valts",
     "ariaNoSelectedItemForLabel": "{{label}} har inte valts",
     "deleteProfile": "Radera profil",
-    "description": "Helsingfors-profilen gör det möjligt att använda dina uppgifter i alla Helsingfors webbtjänster som kräver identifiering. Samma information, enkel att använda i många olika tjänster.",
+    "description": "SV: Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <linkToServices>{{linkToServicesText}} välilehdeltä</linkToServices>",
     "downloadData": "Ladda ner min information",
     "email": "Epost",
     "name": "Namn",
@@ -179,11 +182,10 @@
     "authenticationMethod": "Autentiseringsmetod",
     "permanentAddress": "Stadigvarande adress",
     "permanentForeignAddress": "Stadigvarande utländsk adress",
-    "verifiedDataInformation": "SV: Uppgifterna som märkts ut har bekräftats utgående från det officiella befolkningsdatasystemet och kan därför inte ändras i Helsingfors-profilen. Om du vill kan du se uppgifterna om dig som sparats i befolkningsdatasystemet i webbtjänsten suomi.fi <suomiFiLink>gå till suomi.fi </suomiFiLink>",
-    "verifiedDataInformationForScreenReaders": "SV: De nedanstående uppgifterna har bekräftats utgående från det officiella befolkningsdatasystemet och kan därför inte ändras i Helsingfors-profilen. Om du vill kan du se uppgifterna om dig som sparats i befolkningsdatasystemet i webbtjänsten suomi.fi <suomiFiLink>gå till suomi.fi </suomiFiLink>",
+    "verifiedDataInformation": "SV: Viralliset tiedot näet vain, kun olet vahvasti tunnistautunut Suomi.fi -kirjautumisen avulla. Tiedot on haettu virallisesta väestötietojärjestelmästä, eikä niitä voi muokata Helsinki-profiilin kautta. Voit tutustua väestötietojärjestelmään tallennettuihin tietoihisi <suomiFiLink>suomi.fi -verkkopalvelussa</suomiFiLink>.",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Verifierad uppgift",
-    "verifiedBasicData": "Verifierade basuppgifter",
+    "verifiedBasicData": "SV: Viralliset tiedot",
     "phones": "Telefonnummer",
     "emails": "E-postadresser",
     "addresses": "Adresser",
