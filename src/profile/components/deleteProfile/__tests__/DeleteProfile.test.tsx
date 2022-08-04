@@ -15,6 +15,7 @@ import { ServiceConnectionsQueryVariables } from '../../../../graphql/typings';
 import { GdprDeleteMyProfileMutationVariables } from '../../../../graphql/generatedTypes';
 
 const mockStartFetchingAuthorizationCode = jest.fn();
+const mockHistoryPushListener = jest.fn();
 
 jest.mock(
   '../../../../gdprApi/useAuthorizationCode.ts',
@@ -30,6 +31,13 @@ jest.mock(
     false,
   ]
 );
+
+jest.mock('react-router', () => ({
+  ...jest.requireActual('react-router'),
+  useHistory: jest.fn().mockImplementation(() => ({
+    push: mockHistoryPushListener,
+  })),
+}));
 
 describe('<DeleteProfile /> ', () => {
   let responseCounter = -1;
@@ -90,7 +98,7 @@ describe('<DeleteProfile /> ', () => {
   });
   afterEach(() => {
     cleanComponentMocks();
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   const initTests = async (errorResponseIndex = -1): Promise<TestTools> => {
@@ -127,20 +135,26 @@ describe('<DeleteProfile /> ', () => {
       expect(queryVariableTracker).toHaveBeenCalledWith({
         language: i18n.language.toUpperCase(),
       });
+      await waitFor(() => {
+        expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);
+      });
     });
   });
 
-  it(`When re-rendered, service connections are fetched from cache.
-    UI won't get stuck on "loading" -state, but works like on first load.`, async () => {
+  it(`UI won't get stuck on "loading" -state when re-rendered.`, async () => {
     await act(async () => {
-      const { getElement, waitForElement } = await initTests();
-      await waitForElement(checkbox);
+      const { clickElement, getElement, waitForElement } = await initTests();
+      await clickElement(checkbox);
+      await clickElement(submitButton);
+      await waitForElement(confirmButtonSelector);
       showComponent(false);
       await waitFor(() => {
         expect(() => getElement(checkbox)).toThrow();
       });
       showComponent(true);
-      await waitForElement(checkbox);
+      await clickElement(checkbox);
+      await clickElement(submitButton);
+      await waitForElement(confirmButtonSelector);
     });
   });
 
@@ -157,6 +171,9 @@ describe('<DeleteProfile /> ', () => {
       await clickElement(errorModalButtonSelector);
       await clickElement(submitButton);
       await clickElement(confirmButtonSelector);
+      await waitFor(() => {
+        expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);
+      });
     });
   });
   it(`When deleting starts, an indicator is shown`, async () => {
@@ -172,6 +189,9 @@ describe('<DeleteProfile /> ', () => {
         expect(mockStartFetchingAuthorizationCode).toHaveBeenCalledTimes(1);
       });
       await waitForElement(deletingProfileSelector);
+      await waitFor(() => {
+        expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });
