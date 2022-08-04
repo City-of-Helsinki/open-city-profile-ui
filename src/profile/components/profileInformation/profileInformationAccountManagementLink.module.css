@@ -4,6 +4,7 @@
   flex-direction: column;
   padding: var(--vertical-padding) var(--content-horizontal-padding);
   background: var(--color-white);
+  margin-bottom: var(--spacing-xl);
 }
 
 .label-section {
