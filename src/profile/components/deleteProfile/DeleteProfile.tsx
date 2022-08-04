@@ -158,7 +158,7 @@ function DeleteProfile(): React.ReactElement {
 
   if (isDeletingProfile) {
     return (
-      <div data-test-id={'delete-profile'}>
+      <div data-testid={'deleting-profile'}>
         <h2>{t('deleteProfile.title')}</h2>
         <LoadIndicator text={`${t('notification.removing')}...`} />
       </div>
