@@ -170,7 +170,7 @@
     "ariaSelectedOption": "{{value}} is selected",
     "ariaNoSelectedItemForLabel": "{{label}} is not selected",
     "deleteProfile": "Delete your profile",
-    "description": "EN: Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <linkToServices>{{linkToServicesText}} välilehdeltä</linkToServices>",
+    "description": "EN: Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <linkToServices>{{linkToServicesText}} välilehdeltä</linkToServices>.",
     "downloadData": "Download your data",
     "email": "Email",
     "name": "Name",

@@ -160,7 +160,7 @@
   },
   "profileInformation": {
     "address": "Osoite",
-    "addressDescription": "Nämä tiedot olet itse lisännyt Helsinki-profiili -palveluun tai muuhun Helsingin kaupungin asiointipalveluun. Tätä osoitetietoa käytämme silloin, kun olet tunnistautunut kevyesti, eli jotain muuta kuin Suomi.fi -tunnistautumista hyödyntäen. Voit halutessasi poistaa tiedot Helsinki-profiilista, jolloin ne poistuvat myös muista asiointipalveluista. Älä poista tietoja jos sinulla on asiointi kesken.",
+    "addressDescription": "Nämä tiedot olet itse lisännyt Helsinki-profiili -palveluun tai muuhun Helsingin kaupungin asiointipalveluun. Tätä osoitetietoa käytämme silloin, kun olet tunnistautunut kevyesti, eli jotain muuta kuin Suomi.fi -tunnistautumista hyödyntäen. Voit halutessasi poistaa tiedot Helsinki-profiilista, jolloin ne poistuvat myös muista asiointipalveluista. Älä poista tietoja, jos sinulla on asiointi kesken.",
     "addressTitleWhenHasVerifiedData": "Muu osoite",
     "ariaEditAddress": "Muokkaa osoitetta {{value}}",
     "ariaEditPhone": "Muokkaa puhelinnumeroa {{value}}",
@@ -170,7 +170,7 @@
     "ariaSelectedOption": "{{value}} on valittu",
     "ariaNoSelectedItemForLabel": "{{label}} ei ole valittuna",
     "deleteProfile": "Poista omat tietosi",
-    "description": "Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <linkToServices>{{linkToServicesText}} välilehdeltä</linkToServices>",
+    "description": "Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <linkToServices>{{linkToServicesText}} välilehdeltä</linkToServices>.",
     "downloadData": "Lataa omat tietosi",
     "email": "Sähköpostiosoite",
     "name": "Nimi",

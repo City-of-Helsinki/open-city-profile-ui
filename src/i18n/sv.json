@@ -170,7 +170,7 @@
     "ariaSelectedOption": "{{value}} har valts",
     "ariaNoSelectedItemForLabel": "{{label}} har inte valts",
     "deleteProfile": "Radera profil",
-    "description": "SV: Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <linkToServices>{{linkToServicesText}} välilehdeltä</linkToServices>",
+    "description": "SV: Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <linkToServices>{{linkToServicesText}} välilehdeltä</linkToServices>.",
     "downloadData": "Ladda ner min information",
     "email": "Epost",
     "name": "Namn",
