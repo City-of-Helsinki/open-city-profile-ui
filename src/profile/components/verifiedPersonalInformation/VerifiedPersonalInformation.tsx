@@ -61,7 +61,10 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     const country = getCountry(address.countryCode, lang);
     return (
       <React.Fragment key={type}>
-        <div className={commonFormStyles['multi-item-wrapper']}>
+        <div
+          className={commonFormStyles['multi-item-wrapper']}
+          data-testid={`vpi-address-${type}`}
+        >
           <LabeledValue
             label={t('profileForm.address')}
             value={address.streetAddress}
