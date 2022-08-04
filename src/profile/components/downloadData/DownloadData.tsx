@@ -5,11 +5,11 @@ import * as Sentry from '@sentry/browser';
 import { loader } from 'graphql.macro';
 import { Button } from 'hds-react';
 
-import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './DownloadData.module.css';
 import { DownloadMyProfileQuery as DownloadMyProfileRoot } from '../../../graphql/generatedTypes';
 import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
 import useToast from '../../../toast/useToast';
+import ProfileSection from '../../../common/profileSection/ProfileSection';
 
 const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
@@ -32,26 +32,20 @@ function DownloadData(): React.ReactElement {
   });
   const { t } = useTranslation();
   const isDownloadingData = loading;
-  const initiallyOpen = loading;
-  const onDownloadClick = downloadProfileData;
+  const onDownloadClick = () => downloadProfileData();
 
   return (
-    <React.Fragment>
-      <ExpandingPanel
-        title={t('downloadData.panelTitle')}
-        initiallyOpen={initiallyOpen}
-        scrollIntoViewOnMount={initiallyOpen}
+    <ProfileSection hasVerifiedUserData>
+      <h2>{t('downloadData.panelTitle')}</h2>
+      <p>{t('downloadData.panelText')}</p>
+      <Button
+        onClick={onDownloadClick}
+        className={styles.button}
+        disabled={isDownloadingData}
       >
-        <p>{t('downloadData.panelText')}</p>
-        <Button
-          onClick={onDownloadClick}
-          className={styles.button}
-          disabled={isDownloadingData}
-        >
-          {isDownloadingData ? t('loading') : t('downloadData.button')}
-        </Button>
-      </ExpandingPanel>
-    </React.Fragment>
+        {isDownloadingData ? t('loading') : t('downloadData.button')}
+      </Button>
+    </ProfileSection>
   );
 }
 
