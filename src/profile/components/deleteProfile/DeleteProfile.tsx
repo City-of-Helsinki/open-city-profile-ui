@@ -161,7 +161,9 @@ function DeleteProfile(): React.ReactElement {
         onChange={onExpandingPanelChange}
         dataTestId={'delete-profile'}
       >
-        <p>{t('deleteProfile.explanation')}</p>
+        <p
+          dangerouslySetInnerHTML={{ __html: t('deleteProfile.explanation') }}
+        />
         {dataLoadState !== loadedLoadState ? (
           <LoadStateIndicator />
         ) : (
