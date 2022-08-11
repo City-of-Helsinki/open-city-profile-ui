@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import FileSaver from 'file-saver';
 import * as Sentry from '@sentry/browser';
 import { loader } from 'graphql.macro';
-import { Button, Notification } from 'hds-react';
+import { Button } from 'hds-react';
 
-import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import styles from './DownloadData.module.css';
 import { DownloadMyProfileQuery as DownloadMyProfileRoot } from '../../../graphql/generatedTypes';
 import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
+import useToast from '../../../toast/useToast';
+import ProfileSection from '../../../common/profileSection/ProfileSection';
 
 const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
 function DownloadData(): React.ReactElement {
-  const [hasError, setError] = useState(false);
+  const { createToast } = useToast();
   const [downloadProfileData, , loading] = useDownloadProfile<
     DownloadMyProfileRoot
   >(ALL_DATA, {
@@ -25,40 +26,26 @@ function DownloadData(): React.ReactElement {
     },
     onError: (error: Error) => {
       Sentry.captureException(error);
-      setError(true);
+      createToast({ type: 'error' });
     },
     fetchPolicy: 'network-only',
   });
   const { t } = useTranslation();
   const isDownloadingData = loading;
-  const initiallyOpen = loading;
-  const onDownloadClick = () => {
-    setError(false);
-    downloadProfileData();
-  };
+  const onDownloadClick = () => downloadProfileData();
+
   return (
-    <React.Fragment>
-      <ExpandingPanel
-        title={t('downloadData.panelTitle')}
-        initiallyOpen={initiallyOpen}
-        scrollIntoViewOnMount={initiallyOpen}
+    <ProfileSection hasVerifiedUserData>
+      <h2>{t('downloadData.panelTitle')}</h2>
+      <p>{t('downloadData.panelText')}</p>
+      <Button
+        onClick={onDownloadClick}
+        className={styles.button}
+        disabled={isDownloadingData}
       >
-        <p>{t('downloadData.panelText')}</p>
-        {hasError && (
-          <Notification
-            label={t('notification.defaultErrorText')}
-            type={'error'}
-          ></Notification>
-        )}
-        <Button
-          onClick={onDownloadClick}
-          className={styles.button}
-          disabled={isDownloadingData}
-        >
-          {isDownloadingData ? t('loading') : t('downloadData.button')}
-        </Button>
-      </ExpandingPanel>
-    </React.Fragment>
+        {isDownloadingData ? t('loading') : t('downloadData.button')}
+      </Button>
+    </ProfileSection>
   );
 }
 
