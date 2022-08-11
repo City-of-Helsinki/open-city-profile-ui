@@ -10,10 +10,22 @@
   border-bottom: 1px solid var(--color-black-30);
   width: 100%;
   padding-bottom: var(--spacing-layout-2-xs);
+  margin-bottom: var(--spacing-layout-2-xs);
 }
 
-.section-title:first-of-type {
+section > .section-title:first-of-type,
+.content-wrapper > .section-title:first-of-type {
   margin-top: 0;
+}
+
+.section-title-with-explanation {
+  border-bottom: 1px solid var(--color-black-30);
+  margin-bottom: var(--spacing-layout-s);
+}
+.section-title-with-explanation h2 {
+  margin-top: 0;
+  border: 0;
+  padding-bottom: 0;
 }
 
 .form-field {

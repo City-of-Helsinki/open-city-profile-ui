@@ -184,7 +184,6 @@
     "permanentAddress": "Stadigvarande adress",
     "permanentForeignAddress": "Stadigvarande utländsk adress",
     "verifiedDataInformation": "Du ser de officiella uppgifterna endast när du loggat in med stark identifiering, det vill säga Suomi-fi-identifieringen. Uppgifterna har hämtats från det officiella Befolkningsdatasystemet och de kan inte tas bort via Helsingforsprofilen. Du kan se uppgifterna om dig i befolkningsdatasystemet <suomiFiLink>i webbtjänsten suomi.fi</suomiFiLink>.",
-    "verifiedDataInformationForScreenReaders": "SV: De nedanstående uppgifterna har bekräftats utgående från det officiella befolkningsdatasystemet och kan därför inte ändras i Helsingfors-profilen. Om du vill kan du se uppgifterna om dig som sparats i befolkningsdatasystemet i webbtjänsten suomi.fi <suomiFiLink>gå till suomi.fi </suomiFiLink>",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Verifierad uppgift",
     "verifiedBasicData": "Officiella uppgifter",
