@@ -69,6 +69,11 @@ function useDeleteProfile(
       onCompleted: data => {
         handleDownloadActionInitialization(data);
       },
+      onError: e => {
+        if (options.onError) {
+          options.onError(e);
+        }
+      },
     }
   );
 
