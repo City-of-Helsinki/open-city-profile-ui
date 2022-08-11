@@ -13,6 +13,8 @@ import {
 import {
   UpdateMyProfileVariables,
   ProfileInput,
+  GdprDeleteMyProfileMutationVariables,
+  GdprDeleteMyProfileMutation_deleteMyProfile,
 } from '../../graphql/generatedTypes';
 
 export type MockedResponse = {
@@ -22,10 +24,14 @@ export type MockedResponse = {
   profileDataWithServiceConnections?: ServiceConnectionsRoot;
   errorType?: 'networkError' | 'graphQLError';
   withAllowedPermissionError?: boolean;
+  deleteMyProfile?: null | Partial<GdprDeleteMyProfileMutation_deleteMyProfile>;
 };
 
 export type ResponseProvider = (
-  variables?: UpdateMyProfileVariables | ServiceConnectionsQueryVariables
+  variables?:
+    | UpdateMyProfileVariables
+    | ServiceConnectionsQueryVariables
+    | GdprDeleteMyProfileMutationVariables
 ) => MockedResponse;
 
 type ErrorReturnType = { error: Error };
@@ -39,10 +45,14 @@ const getResponseData = (
     profileData,
     updatedProfileData,
     createMyProfile,
+    deleteMyProfile,
     profileDataWithServiceConnections,
   } = response;
   if (errorType) {
     return undefined;
+  }
+  if (deleteMyProfile) {
+    return { deleteMyProfile };
   }
   if (profileDataWithServiceConnections) {
     return (profileDataWithServiceConnections as unknown) as Record<
