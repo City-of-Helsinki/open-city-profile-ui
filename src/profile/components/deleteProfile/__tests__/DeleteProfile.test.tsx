@@ -12,13 +12,32 @@ import { ResponseProvider } from '../../../../common/test/MockApolloClientProvid
 import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
 import i18n from '../../../../common/test/testi18nInit';
 import { ServiceConnectionsQueryVariables } from '../../../../graphql/typings';
+import { GdprDeleteMyProfileMutationVariables } from '../../../../graphql/generatedTypes';
 
 const mockStartFetchingAuthorizationCode = jest.fn();
+const mockHistoryPushListener = jest.fn();
 
-jest.mock('../../../../gdprApi/useAuthorizationCode.ts', () => () => [
-  mockStartFetchingAuthorizationCode,
-  false,
-]);
+jest.mock(
+  '../../../../gdprApi/useAuthorizationCode.ts',
+  () => (...args: [string, (code: string) => void]) => [
+    async () => {
+      const cb = args[1];
+      mockStartFetchingAuthorizationCode();
+      await new Promise(resolve => {
+        setTimeout(resolve, 100);
+      });
+      return Promise.resolve(cb('code'));
+    },
+    false,
+  ]
+);
+
+jest.mock('react-router', () => ({
+  ...jest.requireActual('react-router'),
+  useHistory: jest.fn().mockImplementation(() => ({
+    push: mockHistoryPushListener,
+  })),
+}));
 
 describe('<DeleteProfile /> ', () => {
   let responseCounter = -1;
@@ -36,6 +55,14 @@ describe('<DeleteProfile /> ', () => {
     const responseProvider: ResponseProvider = payload => {
       responseCounter = responseCounter + 1;
       queryVariableTracker(payload as ServiceConnectionsQueryVariables);
+      if (
+        payload &&
+        (payload as GdprDeleteMyProfileMutationVariables).input &&
+        (payload as GdprDeleteMyProfileMutationVariables).input
+          .authorizationCode
+      ) {
+        return { deleteMyProfile: { clientMutationId: '' } };
+      }
       return responseCounter === errorResponseIndex
         ? { errorType: 'networkError' }
         : { profileDataWithServiceConnections: serviceConnections };
@@ -47,14 +74,8 @@ describe('<DeleteProfile /> ', () => {
     );
   };
 
-  const toggleButton: ElementSelector = {
-    testId: 'delete-profile-toggle-button',
-  };
   const loadIndicator: ElementSelector = {
     testId: 'delete-profile-load-indicator',
-  };
-  const checkbox: ElementSelector = {
-    id: 'deleteInstructions',
   };
   const submitButton: ElementSelector = {
     id: 'delete-profile-button',
@@ -62,8 +83,11 @@ describe('<DeleteProfile /> ', () => {
   const confirmButtonSelector: ElementSelector = {
     testId: 'confirmation-modal-confirm-button',
   };
-  const reloadButtonSelector: ElementSelector = {
-    testId: 'reload-service-connections',
+  const errorModalButtonSelector: ElementSelector = {
+    testId: 'delete-profile-error-modal-close-button',
+  };
+  const deletingProfileSelector: ElementSelector = {
+    testId: 'deleting-profile',
   };
 
   beforeEach(() => {
@@ -71,7 +95,7 @@ describe('<DeleteProfile /> ', () => {
   });
   afterEach(() => {
     cleanComponentMocks();
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   const initTests = async (errorResponseIndex = -1): Promise<TestTools> => {
@@ -79,76 +103,75 @@ describe('<DeleteProfile /> ', () => {
     return Promise.resolve(testTools);
   };
 
-  it(`toggle button opens the panel 
-      which first loads service connections 
-      and then shows a checkbox and a submit button.
-      Current language is sent as a variable. Value must be in uppercase
-      `, async () => {
-    await act(async () => {
-      const { clickElement, waitForElement } = await initTests();
-      await clickElement(toggleButton);
-      await waitForElement(loadIndicator);
-      await waitForElement(checkbox);
-      await waitForElement(submitButton);
-
-      expect(queryVariableTracker).toHaveBeenCalledWith({
-        language: i18n.language.toUpperCase(),
-      });
-    });
-  });
-
-  it(`Submit button is disabled until checkbox is checked.
-      Submitting opens a confirmation dialog and after confirmation
+  it(`Submitting starts to load serviceConnections.
+      When loaded, a confirmation dialog is shown and after confirmation
       authorisation code is fetched.
       `, async () => {
     await act(async () => {
-      const {
-        clickElement,
-        getElement,
-        isDisabled,
-        waitForElement,
-      } = await initTests();
-      await clickElement(toggleButton);
-      await waitFor(() => {
-        expect(isDisabled(getElement(submitButton))).toBeTruthy();
-      });
-      await clickElement(checkbox);
-      await waitFor(() => {
-        expect(isDisabled(getElement(submitButton))).toBeFalsy();
-      });
+      const { clickElement, waitForElement } = await initTests();
       await clickElement(submitButton);
+      await waitForElement(loadIndicator);
       await waitForElement(confirmButtonSelector);
       await clickElement(confirmButtonSelector);
       await waitFor(() => {
         expect(mockStartFetchingAuthorizationCode).toHaveBeenCalledTimes(1);
       });
+      expect(queryVariableTracker).toHaveBeenCalledWith({
+        language: i18n.language.toUpperCase(),
+      });
+      await waitFor(() => {
+        expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);
+      });
     });
   });
 
-  it(`When re-rendered, service connections are fetched from cache.
-    UI won't get stuck on "loading" -state, but works like on first load.`, async () => {
+  it(`UI won't get stuck on "loading" -state when re-rendered.`, async () => {
     await act(async () => {
       const { clickElement, getElement, waitForElement } = await initTests();
-      await clickElement(toggleButton);
-      await waitForElement(checkbox);
+      await clickElement(submitButton);
+      await waitForElement(confirmButtonSelector);
       showComponent(false);
       await waitFor(() => {
-        expect(() => getElement(checkbox)).toThrow();
+        expect(() => getElement(submitButton)).toThrow();
       });
       showComponent(true);
-      await clickElement(toggleButton);
-      await waitForElement(checkbox);
+      await clickElement(submitButton);
+      await waitForElement(confirmButtonSelector);
     });
   });
 
   it(`When service connection load fails, an error is shown.
-    Clicking "Try again"-button reloads data`, async () => {
+    Modal can be closed and delete started again`, async () => {
     await act(async () => {
-      const { clickElement, waitForElement } = await initTests(0);
-      await clickElement(toggleButton);
-      await waitForElement(reloadButtonSelector);
-      await clickElement(reloadButtonSelector);
-      await waitForElement(checkbox);
+      const { clickElement, waitForElement } = await initTests(1);
+      await clickElement(submitButton);
+      await waitForElement(loadIndicator);
+      await waitForElement(confirmButtonSelector);
+      await clickElement(confirmButtonSelector);
+      await waitForElement(errorModalButtonSelector);
+      await clickElement(errorModalButtonSelector);
+      await clickElement(submitButton);
+      await clickElement(confirmButtonSelector);
+      await waitFor(() => {
+        expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
+  it(`When deleting starts, an indicator is shown`, async () => {
+    await act(async () => {
+      const { clickElement, waitForElement } = await initTests();
+      await clickElement(submitButton);
+      await waitForElement(loadIndicator);
+      await waitForElement(confirmButtonSelector);
+      await clickElement(confirmButtonSelector);
+
+      await waitFor(() => {
+        expect(mockStartFetchingAuthorizationCode).toHaveBeenCalledTimes(1);
+      });
+      await waitForElement(deletingProfileSelector);
+      await waitFor(() => {
+        expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });
