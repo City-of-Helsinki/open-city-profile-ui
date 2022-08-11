@@ -2,7 +2,6 @@ import React, { Fragment, useContext } from 'react';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import DownloadData from '../downloadData/DownloadData';
-import styles from './ProfileInformation.module.css';
 import AuthenticationProviderInformation from './AuthenticationProviderInformation';
 import { ProfileContext } from '../../context/ProfileContext';
 import BasicData from '../basicData/BasicData';
@@ -29,11 +28,9 @@ function ProfileInformation(): React.ReactElement {
           <AdditionalInformation />
         </Fragment>
       )}
-      <div className={styles['box-grid']}>
-        <AuthenticationProviderInformation />
-        <DownloadData />
-        <DeleteProfile />
-      </div>
+      <AuthenticationProviderInformation />
+      <DownloadData />
+      <DeleteProfile />
     </Fragment>
   );
 }

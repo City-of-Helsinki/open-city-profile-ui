@@ -1,5 +1,0 @@
-.box-grid {
-  display: grid;
-  grid-row-gap: var(--spacing-xl);
-  grid-template-rows: auto;
-}
