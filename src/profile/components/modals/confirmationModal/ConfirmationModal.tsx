@@ -44,7 +44,7 @@ function ConfirmationModal({
         close,
         closeButtonLabelText,
       } as Extract<DialogProps, 'close' | 'closeButtonLabelText'>)
-    : undefined;
+    : {};
   return (
     <Dialog
       id={id}
