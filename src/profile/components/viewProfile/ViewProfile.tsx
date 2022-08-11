@@ -4,28 +4,20 @@ import { Switch, Route } from 'react-router-dom';
 import classNames from 'classnames';
 
 import styles from './ViewProfile.module.css';
-import PageHeading from '../../../common/pageHeading/PageHeading';
 import ProfileInformation from '../profileInformation/ProfileInformation';
 import ServiceConnections from '../serviceConnections/ServiceConnections';
 import Explanation from '../../../common/explanation/Explanation';
 import { ProfileContext } from '../../context/ProfileContext';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
-import TopSectionWithKoros from '../../../common/topSectionWithKoros/TopSectionWithKoros';
 
 function ViewProfile(): React.ReactElement {
   const { t } = useTranslation();
-  const { isComplete, getName } = useContext(ProfileContext);
+  const { isComplete } = useContext(ProfileContext);
 
   return (
     <React.Fragment>
       {isComplete && (
         <React.Fragment>
-          <TopSectionWithKoros>
-            <PageHeading
-              text={getName(true)}
-              dataTestId="view-profile-heading"
-            />
-          </TopSectionWithKoros>
           <div
             className={classNames([
               commonContentStyles['common-content-area'],
