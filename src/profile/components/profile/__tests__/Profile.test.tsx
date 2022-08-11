@@ -42,7 +42,7 @@ describe('<Profile />', () => {
   const selectors: Record<string, ElementSelector> = {
     loginRouteIndicator: { testId: 'location-is-login' },
     loadIndicator: { testId: 'load-indicator' },
-    profileHeading: { testId: 'view-profile-heading' },
+    profileHeading: { testId: 'profile-information-explanation' },
     createProfileHeading: { testId: 'create-profile-heading' },
     errorLayout: { testId: 'profile-check-error-layout' },
     errorLayoutReloadButton: { testId: 'profile-check-error-reload-button' },
