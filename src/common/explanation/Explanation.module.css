@@ -1,6 +1,5 @@
 .container {
   padding-bottom: var(--spacing-xl);
-  margin: 0 var(--content-horizontal-padding);
 }
 .container h1 {
   font-size: var(--h2-size);

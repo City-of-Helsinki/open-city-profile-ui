@@ -1,3 +1,8 @@
+.content {
+  flex: 1;
+  padding-top: var(--common-top-spacing);
+}
+
 .common-content-area {
   --content-horizontal-padding: var(--spacing-m);
   display: flex;
@@ -13,6 +18,10 @@
 
 .common-bottom-padding {
   padding-bottom: var(--common-bottom-spacing);
+}
+
+.common-content-area-dark-bg {
+  background: var(--color-black-ultra-light);
 }
 
 @media (min-width: 600px) {
