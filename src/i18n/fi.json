@@ -184,7 +184,6 @@
     "permanentAddress": "Vakinainen osoite",
     "permanentForeignAddress": "Vakinainen ulkomainen osoite",
     "verifiedDataInformation": "Viralliset tiedot näet vain, kun olet vahvasti tunnistautunut Suomi.fi -kirjautumisen avulla. Tiedot on haettu virallisesta väestötietojärjestelmästä, eikä niitä voi muokata Helsinki-profiilin kautta. Voit tutustua väestötietojärjestelmään tallennettuihin tietoihisi <suomiFiLink>suomi.fi -verkkopalvelussa</suomiFiLink>.",
-    "verifiedDataInformationForScreenReaders": "Alla olevat tiedot on vahvistettu virallisesta väestötietojärjestelmästä, eikä niitä voi tämän takia muokata Helsinki-profiilissa. Voit tutustua halutessasi väestötietojärjestelmään tallennettuihin tietoihisi suomi.fi verkkopalvelussa: <suomiFiLink>siirry suomi.fi palveluun </suomiFiLink>. Voit halutessasi lisätä vaihtoehtoiset yhteystietosi alle.",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Vahvistettu tieto",
     "verifiedBasicData": "Viralliset tiedot",

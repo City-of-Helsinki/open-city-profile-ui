@@ -167,7 +167,7 @@ function DeleteProfile(): React.ReactElement {
         {dataLoadState !== loadedLoadState ? (
           <LoadStateIndicator />
         ) : (
-          <React.Fragment>
+          <div className={styles['checkbox-container']}>
             <Checkbox
               onChange={handleDeleteInstructions}
               id="deleteInstructions"
@@ -185,7 +185,7 @@ function DeleteProfile(): React.ReactElement {
             >
               {t('deleteProfile.delete')}
             </Button>
-          </React.Fragment>
+          </div>
         )}
       </ExpandingPanel>
 

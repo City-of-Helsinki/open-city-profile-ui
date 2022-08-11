@@ -185,4 +185,7 @@ export const useProfileErrorListener = (listener: ErrorListener): void => {
   );
 };
 
+export const useVerifiedPersonalInformation = () =>
+  getVerifiedPersonalInformation(useContext(ProfileContext).data);
+
 export const { Consumer } = ProfileContext;

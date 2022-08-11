@@ -9,3 +9,7 @@
   margin-top: 0;
   padding-left: var(--spacing-layout-2-xs);
 }
+
+.verified-data-explanation {
+  margin-top: var(--spacing-layout-s);
+}

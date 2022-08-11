@@ -184,7 +184,6 @@
     "permanentAddress": "Permanent address",
     "permanentForeignAddress": "Permanent foreign address",
     "verifiedDataInformation": "You can only see the official information when you have logged in using strong authentication via the Suomi.fi service. The information has been retrieved from The National Population Information System and cannot be edited via your Helsinki profile. You can check the data stored about you in the Population Information System in the <suomiFiLink>suomi.fi -web service</suomiFiLink>.",
-    "verifiedDataInformationForScreenReaders": "EN: The data below have been confirmed from the national Population Information System and therefore cannot be edited in your Helsinki profile. If you want, you can view your personal data stored in the Population Information System in the suomi.fi web service: <suomiFiLink>go to the suomi.fi service </suomiFiLink>",
     "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
     "verifiedData": "Verified data",
     "verifiedBasicData": "Official information",
