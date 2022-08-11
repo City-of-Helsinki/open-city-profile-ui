@@ -73,15 +73,29 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
   const disableButtons = !!currentAction || !!saving;
   const ariaLabels = createActionAriaLabels(dataType, value.address, t);
   const formFieldStyle = commonFormStyles['form-field'];
+  const userIsVerified = !!useVerifiedPersonalInformation();
 
   const Explanation = () => {
-    const title = useVerifiedPersonalInformation()
+    const title = userIsVerified
       ? t('profileInformation.addressTitleWhenHasVerifiedData')
       : t('profileInformation.address');
+
+    const DescriptionElement = (): React.ReactElement | null => {
+      if (!isNew) {
+        return <p>{t('profileInformation.addressDescription')}</p>;
+      }
+      return (
+        <p>
+          {userIsVerified
+            ? t('profileInformation.addressDescriptionNoWeakAddress')
+            : t('profileInformation.addressDescriptionNoAddress')}
+        </p>
+      );
+    };
     return (
       <div className={commonFormStyles['section-title-with-explanation']}>
         <h2 className={commonFormStyles['section-title']}>{title}</h2>
-        <p>{t('profileInformation.addressDescription')}</p>
+        <DescriptionElement />
       </div>
     );
   };

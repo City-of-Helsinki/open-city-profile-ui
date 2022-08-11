@@ -6,6 +6,7 @@ import {
   cloneProfileAndProvideManipulationFunctions,
   getMyProfile,
   getProfileDataWithoutSomeNodes,
+  getVerifiedData,
 } from '../../../../common/test/myProfileMocking';
 import {
   renderComponentWithMocksAndContexts,
@@ -185,6 +186,59 @@ describe('<MultiItemAddressRow /> ', () => {
     }
   };
 
+  const verifyTitleAndDescription = (
+    testTools: TestTools,
+    scenario:
+      | 'verifiedUserWithoutAddress'
+      | 'verifiedUserWithAddress'
+      | 'unverifiedUserWithNoAddress'
+      | 'unverifiedUserWithOneAddress'
+      | 'unverifiedUserWithTwoAddresses'
+  ) => {
+    const noAddressText = 'profileInformation.addressDescriptionNoAddress';
+    const unverifiedUserTitle = 'profileInformation.address';
+    const verifiedUserTitle =
+      'profileInformation.addressTitleWhenHasVerifiedData';
+
+    const verifyZeroTextInstanceExists = (translationKey: string) => {
+      if (testTools.queryByText(String(t(translationKey)))) {
+        throw new Error(`Expected to find zero ${translationKey} texts`);
+      }
+    };
+
+    const verifyOneTextInstanceExists = (translationKey: string) => {
+      // getByText will throw if resulting element count is not 1
+      testTools.getByText(String(t(translationKey)));
+    };
+
+    const verifyTwoTextInstanceExists = (translationKey: string) => {
+      if (testTools.getAllByText(String(t(translationKey))).length !== 2) {
+        throw new Error(
+          `Expected to find exactly 2 ${translationKey} text instances`
+        );
+      }
+    };
+
+    if (scenario === 'verifiedUserWithoutAddress') {
+      verifyOneTextInstanceExists(verifiedUserTitle);
+      verifyOneTextInstanceExists(
+        'profileInformation.addressDescriptionNoWeakAddress'
+      );
+    } else if (scenario === 'verifiedUserWithAddress') {
+      verifyOneTextInstanceExists(verifiedUserTitle);
+      verifyOneTextInstanceExists('profileInformation.addressDescription');
+    } else if (scenario === 'unverifiedUserWithNoAddress') {
+      verifyOneTextInstanceExists(unverifiedUserTitle);
+      verifyOneTextInstanceExists(noAddressText);
+    } else if (scenario === 'unverifiedUserWithOneAddress') {
+      verifyOneTextInstanceExists(unverifiedUserTitle);
+      verifyZeroTextInstanceExists(noAddressText);
+    } else if (scenario === 'unverifiedUserWithTwoAddresses') {
+      verifyTwoTextInstanceExists(unverifiedUserTitle);
+      verifyZeroTextInstanceExists(noAddressText);
+    }
+  };
+
   const initTests = async (
     profileData: ProfileData = initialProfile
   ): Promise<TestTools> => {
@@ -193,6 +247,14 @@ describe('<MultiItemAddressRow /> ', () => {
     await testTools.fetch();
     return Promise.resolve(testTools);
   };
+
+  const initTestsWithVerifiedUser = async (
+    profileData: ProfileData = initialProfile
+  ): Promise<TestTools> =>
+    initTests({
+      ...profileData,
+      verifiedPersonalInformation: getVerifiedData(),
+    });
 
   const initialAddressInProfile = getAddressesFromNode(
     { myProfile: initialProfile },
@@ -218,6 +280,7 @@ describe('<MultiItemAddressRow /> ', () => {
         index += 1;
       }
       expect(() => getElement(getSelector('addButton'))).toThrow();
+      verifyTitleAndDescription(testTools, 'unverifiedUserWithTwoAddresses');
     });
   });
 
@@ -373,13 +436,14 @@ describe('<MultiItemAddressRow /> ', () => {
         getTextOrInputValue,
       } = testTools;
 
+      verifyTitleAndDescription(testTools, 'unverifiedUserWithNoAddress');
       // edit button is not rendered
       expect(() => getElement(getSelector('editButton'))).toThrow();
 
       // info text is shown instead of an address
       await expect(
         getTextOrInputValue(getSelector('noDataText'))
-      ).resolves.toBe(t('profileInformation.noAddress'));
+      ).resolves.toBe(t('profileInformation.addressDescriptionNoAddress'));
       // click add button to create an address
       await clickElement(getSelector('addButton'));
       expect(() => getElement(getSelector('addButton'))).toThrow();
@@ -403,6 +467,7 @@ describe('<MultiItemAddressRow /> ', () => {
 
       await verifyValuesFromElements(testTools, validAddressValues);
       expect(() => getElement(getSelector('addButton'))).toThrow();
+      verifyTitleAndDescription(testTools, 'unverifiedUserWithOneAddress');
     });
   });
   it(`When removing an address, a confirmation modal is shown. 
@@ -480,6 +545,26 @@ describe('<MultiItemAddressRow /> ', () => {
       expect(() => getElement(getSelector('noDataText'))).not.toThrow();
       // focus is set to add button
       await waitForElementFocus(() => getElement(getSelector('addButton')));
+    });
+  });
+  it('When user is logged in with suomi.fi, there is one additional description and different title.', async () => {
+    await act(async () => {
+      const profileWithoutAddresses = getProfileWithoutAddresses();
+      const testTools = await initTestsWithVerifiedUser(
+        profileWithoutAddresses
+      );
+      const { clickElement } = testTools;
+      verifyTitleAndDescription(testTools, 'verifiedUserWithoutAddress');
+      await clickElement(getSelector('addButton'));
+      // same title + text in edit mode
+      verifyTitleAndDescription(testTools, 'verifiedUserWithoutAddress');
+    });
+  });
+  it('If verified user has an addresses, title and description are different than without addresses.', async () => {
+    await act(async () => {
+      const profileWithAddress = getProfileWithAddress(validAddressValues);
+      const testTools = await initTestsWithVerifiedUser(profileWithAddress);
+      verifyTitleAndDescription(testTools, 'verifiedUserWithAddress');
     });
   });
 });
