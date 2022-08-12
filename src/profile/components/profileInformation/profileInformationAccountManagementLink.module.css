@@ -2,7 +2,7 @@
   --vertical-padding: var(--spacing-m);
   display: flex;
   flex-direction: column;
-  padding: var(--vertical-padding) var(--content-horizontal-padding);
+  padding: var(--vertical-padding) 0;
   background: var(--color-white);
 }
 
