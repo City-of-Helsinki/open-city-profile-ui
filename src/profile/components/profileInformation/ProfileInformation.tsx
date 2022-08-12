@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import DownloadData from '../downloadData/DownloadData';
-import ProfileInformationAccountManagementLink from './ProfileInformationAccountManagementLink';
+import ProfileInformationAccountManagementLink from './AuthenticationProviderInformation';
 import { ProfileContext } from '../../context/ProfileContext';
 import BasicData from '../basicData/BasicData';
 import EmailEditor from '../emailEditor/EmailEditor';

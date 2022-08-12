@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import enzymeToJson from 'enzyme-to-json';
 
-import ProfileInformationAuthenticationSourceBackLink from '../ProfileInformationAccountManagementLink';
+import AuthenticationProviderInformation from '../AuthenticationProviderInformation';
 import { mockUserCreator } from '../../../../common/test/userMocking';
 
 let mockCurrentAmr;
@@ -16,20 +16,15 @@ jest.mock('../../../../config', () => ({
 
 jest.mock('../../../../auth/useProfile', () => () => mockUserCreator());
 
-jest.mock('../profileInformationAccountManagementLinkUtils', () => ({
-  ...jest.requireActual('../profileInformationAccountManagementLinkUtils'),
+jest.mock('../authenticationProviderUtil', () => ({
+  ...jest.requireActual('../authenticationProviderUtil'),
   getAmrStatic: () => mockCurrentAmr,
 }));
 
-describe('<ProfileInformationAuthenticationSourceBackLink /> ', () => {
+describe('<AuthenticationProviderInformation /> ', () => {
   const defaultProps = {};
   const getWrapper = props =>
-    mount(
-      <ProfileInformationAuthenticationSourceBackLink
-        {...defaultProps}
-        {...props}
-      />
-    );
+    mount(<AuthenticationProviderInformation {...defaultProps} {...props} />);
   describe('renders correctly when AMR is helsinkiAccountAMR', () => {
     beforeAll(() => {
       window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = helsinkiAccountAMR;
@@ -39,14 +34,14 @@ describe('<ProfileInformationAuthenticationSourceBackLink /> ', () => {
       window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = 'helusername';
     });
 
-    it('should render helsinki account link as expected based on config', () => {
+    it('should render helsinki account information as expected based on config', () => {
       mockCurrentAmr = 'helsinkiAccount';
       const wrapper = getWrapper();
       expect(enzymeToJson(wrapper)).toMatchSnapshot();
     });
   });
   describe('renders correctly when AMR is tunnistusSuomifiAMR', () => {
-    it('should render suomi.fi link as expected based on config', () => {
+    it('should render suomi.fi information as expected based on config', () => {
       mockCurrentAmr = 'tunnistusSuomifi';
       const wrapper = getWrapper();
       expect(enzymeToJson(wrapper)).toMatchSnapshot();
