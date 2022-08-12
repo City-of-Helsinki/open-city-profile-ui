@@ -4,6 +4,9 @@
   align-items: center;
   flex-direction: row;
   flex: 1;
+  background-color: var(--color-black-ultra-light);
+  /* footer koros is 14px high and "bleeds" bg color. This shifts the koros up and hides the bleed */
+  margin-bottom: -14px;
 }
 
 .content.content {
