@@ -33,9 +33,9 @@ function ProfileInformation(): React.ReactElement {
         {data && (
           <Fragment>
             <UserDataComponent />
-            <EmailEditor />
             <MultiItemEditor dataType="addresses" />
             <MultiItemEditor dataType="phones" />
+            <EmailEditor />
             <AdditionalInformation />
           </Fragment>
         )}
