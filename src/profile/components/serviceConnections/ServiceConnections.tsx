@@ -43,12 +43,34 @@ function ServiceConnections(): React.ReactElement {
     return `${day}, ${t('serviceConnections.clock')} ${time}`;
   };
 
+  const ContentWrapper = ({
+    children,
+  }: {
+    children: React.ReactNode;
+  }): React.ReactElement => (
+    <div
+      className={classNames([
+        commonContentStyles['common-bottom-padding'],
+        commonContentStyles['content'],
+      ])}
+    >
+      <div className={classNames([commonContentStyles['common-content-area']])}>
+        {children}
+      </div>
+    </div>
+  );
+
   if (loading) {
     return (
-      <div className={styles['load-indicator']} data-testid={'load-indicator'}>
-        <LoadingSpinner small />
-        <span>{t('loading')}</span>
-      </div>
+      <ContentWrapper>
+        <div
+          className={styles['load-indicator']}
+          data-testid={'load-indicator'}
+        >
+          <LoadingSpinner small />
+          <span>{t('loading')}</span>
+        </div>
+      </ContentWrapper>
     );
   }
 
@@ -74,51 +96,44 @@ function ServiceConnections(): React.ReactElement {
   const services = getServiceConnectionData(data);
   const hasNoServices = !loading && services.length === 0;
   return (
-    <div
-      className={classNames([
-        commonContentStyles['common-bottom-padding'],
-        commonContentStyles['content'],
-      ])}
-    >
-      <div className={classNames([commonContentStyles['common-content-area']])}>
-        <Explanation
-          heading={t('serviceConnections.title')}
-          text={
-            hasNoServices
-              ? t('serviceConnections.empty')
-              : t('serviceConnections.explanation')
-          }
-        />
-        <div className={styles['panel-container']}>
-          {services.map((service, index) => (
-            <ExpandingPanel
-              key={index}
-              title={service.title || ''}
-              showInformationText
-              initiallyOpen={false}
-            >
-              <p>{service.description}</p>
-              <p className={styles['service-information']}>
-                {t('serviceConnections.servicePersonalData')}
-              </p>
-              {getAllowedDataFieldsFromService(service).map(node => (
-                <CheckedLabel
-                  key={node.fieldName}
-                  value={node.label || node.fieldName}
-                  className={styles['allowed-data-field']}
-                />
-              ))}
-              <p className={styles['created-at']}>
-                {t('serviceConnections.created')}
-              </p>
-              <p className={styles['date-and-time']}>
-                {getDateTime(service.connectionCreatedAt)}
-              </p>
-            </ExpandingPanel>
-          ))}
-        </div>
+    <ContentWrapper>
+      <Explanation
+        heading={t('serviceConnections.title')}
+        text={
+          hasNoServices
+            ? t('serviceConnections.empty')
+            : t('serviceConnections.explanation')
+        }
+      />
+      <div className={styles['panel-container']}>
+        {services.map((service, index) => (
+          <ExpandingPanel
+            key={index}
+            title={service.title || ''}
+            showInformationText
+            initiallyOpen={false}
+          >
+            <p>{service.description}</p>
+            <p className={styles['service-information']}>
+              {t('serviceConnections.servicePersonalData')}
+            </p>
+            {getAllowedDataFieldsFromService(service).map(node => (
+              <CheckedLabel
+                key={node.fieldName}
+                value={node.label || node.fieldName}
+                className={styles['allowed-data-field']}
+              />
+            ))}
+            <p className={styles['created-at']}>
+              {t('serviceConnections.created')}
+            </p>
+            <p className={styles['date-and-time']}>
+              {getDateTime(service.connectionCreatedAt)}
+            </p>
+          </ExpandingPanel>
+        ))}
       </div>
-    </div>
+    </ContentWrapper>
   );
 }
 
