@@ -2,9 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import useProfile from '../../../auth/useProfile';
-import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import { getAmrStatic } from './authenticationProviderUtil';
-import styles from './authenticationProviderInformation.module.css';
+import ProfileSection from '../../../common/profileSection/ProfileSection';
+import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
 function AuthenticationProviderInformation(): React.ReactElement | null {
   const { t } = useTranslation();
@@ -19,14 +19,18 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
   const authenticationMethodReferenceName = t(`identityProvider.${amr}`);
 
   return (
-    <div className={styles['container']}>
-      <div className={styles['label-section']}>
-        <LabeledValue
-          label={t('profileInformation.authenticationMethod')}
-          value={authenticationMethodReferenceName}
-        />
+    <ProfileSection>
+      <div className={commonFormStyles['content-wrapper']}>
+        <h2 className={commonFormStyles['section-title']}>
+          {t('profileInformation.authenticationMethod')}
+        </h2>
+        <div className={commonFormStyles['text-content-wrapper']}>
+          <span className={commonFormStyles['value']}>
+            {authenticationMethodReferenceName}
+          </span>
+        </div>
       </div>
-    </div>
+    </ProfileSection>
   );
 }
 
