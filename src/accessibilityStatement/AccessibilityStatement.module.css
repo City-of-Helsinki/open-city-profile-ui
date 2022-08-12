@@ -11,19 +11,11 @@
 }
 
 .inner-content {
-  background: var(--color-white);
-  padding: var(--spacing-layout-xs) var(--content-horizontal-padding) 0;
+  padding: var(--spacing-layout-xs) 0 0;
   box-sizing: border-box;
+  max-width: var(--breakpoint-m);
 }
 
 .inner-content p {
   margin: var(--spacing-layout-2-xs) 0;
-}
-
-@media (min-width: 768px) {
-  .inner-content {
-    width: 768px;
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
