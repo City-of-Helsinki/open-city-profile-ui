@@ -28,6 +28,7 @@ function ProfileInformation(): React.ReactElement {
         <Explanation
           heading={t('profileInformation.title')}
           text={t('profileInformation.description')}
+          dataTestId="profile-information-explanation"
         />
         {data && (
           <Fragment>

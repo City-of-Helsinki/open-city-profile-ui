@@ -104,6 +104,7 @@ function ServiceConnections(): React.ReactElement {
             ? t('serviceConnections.empty')
             : t('serviceConnections.explanation')
         }
+        dataTestId="service-connections-explanation"
       />
       <div className={styles['panel-container']}>
         {services.map((service, index) => (
