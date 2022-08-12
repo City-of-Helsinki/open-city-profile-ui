@@ -55,10 +55,6 @@
   width: 100%;
 }
 
-.actions-wrapper {
-  padding-bottom: var(--spacing-xl);
-}
-
 .actions-wrapper .actions-wrapper-button {
   border: 2px solid var(--color-bus);
   margin-bottom: var(--spacing-xs);
