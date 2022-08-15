@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import useProfile from '../../../auth/useProfile';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
-import { getAmrStatic } from './profileInformationAccountManagementLinkUtils';
-import styles from './profileInformationAccountManagementLink.module.css';
+import { getAmrStatic } from './authenticationProviderUtil';
+import styles from './authenticationProviderInformation.module.css';
 
-function ProfileInformationAccountManagementLink(): React.ReactElement | null {
+function AuthenticationProviderInformation(): React.ReactElement | null {
   const { t } = useTranslation();
   const { profile } = useProfile();
 
@@ -30,4 +30,4 @@ function ProfileInformationAccountManagementLink(): React.ReactElement | null {
   );
 }
 
-export default ProfileInformationAccountManagementLink;
+export default AuthenticationProviderInformation;
