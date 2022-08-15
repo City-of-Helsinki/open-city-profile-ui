@@ -36,27 +36,6 @@ export function getAmrStatic(profile: Profile | null): AMRStatic | null {
   return null;
 }
 
-export function getAmrUrl(authenticationMethodReference: AMRStatic): string {
-  switch (authenticationMethodReference) {
-    case 'helsinkiAccount':
-      return config.identityProviderManagementUrlHelsinki;
-    case 'github':
-      return config.identityProviderManagementUrlGithub;
-    case 'google':
-      return config.identityProviderManagementUrlGoogle;
-    case 'facebook':
-      return config.identityProviderManagementUrlFacebook;
-    case 'yletunnus':
-      return config.identityProviderManagementUrlYle;
-    case 'tunnistusSuomifi':
-      return config.identityProviderManagementUrlTunnistusSuomifi;
-    default:
-      throw Error(
-        `Unexpected authentication method reference "${authenticationMethodReference}"`
-      );
-  }
-}
-
 export function hasTunnistusSuomiFiAmr(profile: Profile | null): boolean {
   return getAmrFromProfileData(profile) === tunnistusSuomifiAMR;
 }
