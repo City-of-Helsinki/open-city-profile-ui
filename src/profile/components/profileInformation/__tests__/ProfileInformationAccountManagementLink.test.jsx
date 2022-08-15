@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import enzymeToJson from 'enzyme-to-json';
 
-import ProfileInformationAuthenticationSourceBackLink from '../ProfileInformationAccountManagementLink';
+import AuthenticationProviderInformation from '../AuthenticationProviderInformation';
 import { mockUserCreator } from '../../../../common/test/userMocking';
 
 let mockCurrentAmr;
@@ -14,20 +14,15 @@ jest.mock('../../../../config', () => ({
 
 jest.mock('../../../../auth/useProfile', () => () => mockUserCreator());
 
-jest.mock('../profileInformationAccountManagementLinkUtils', () => ({
-  ...jest.requireActual('../profileInformationAccountManagementLinkUtils'),
+jest.mock('../authenticationProviderUtil', () => ({
+  ...jest.requireActual('../authenticationProviderUtil'),
   getAmrStatic: () => mockCurrentAmr,
 }));
 
 describe('<ProfileInformationAuthenticationSourceBackLink /> ', () => {
   const defaultProps = {};
   const getWrapper = props =>
-    mount(
-      <ProfileInformationAuthenticationSourceBackLink
-        {...defaultProps}
-        {...props}
-      />
-    );
+    mount(<AuthenticationProviderInformation {...defaultProps} {...props} />);
   describe('renders correctly when AMR is helsinkiAccountAMR', () => {
     beforeAll(() => {
       window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = helsinkiAccountAMR;
