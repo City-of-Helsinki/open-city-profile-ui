@@ -9,8 +9,6 @@ let mockCurrentAmr;
 const helsinkiAccountAMR = 'helusername-test';
 
 jest.mock('../../../../config', () => ({
-  identityProviderManagementUrlHelsinki: 'https://test-url',
-  identityProviderManagementUrlTunnistusSuomifi: 'https://test-url-suomif-fi',
   helsinkiAccountAMR,
 }));
 
