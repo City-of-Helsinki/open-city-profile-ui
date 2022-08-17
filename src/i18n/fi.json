@@ -175,7 +175,6 @@
     "phone": "Puhelinnumero",
     "title": "Omat tiedot",
     "visibility": "Helsinki-profiiliin on tallennettu sinusta alla olevat tiedot.",
-    "doGoToAccountManagement": "Siirry tunnuksen hallintaan",
     "authenticationMethod": "Tunnistautumistapa",
     "permanentAddress": "Vakinainen osoite",
     "permanentForeignAddress": "Vakinainen ulkomainen osoite",

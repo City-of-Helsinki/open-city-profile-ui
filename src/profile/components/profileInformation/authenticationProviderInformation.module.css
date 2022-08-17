@@ -15,30 +15,11 @@
   margin-bottom: 0;
 }
 
-.link {
-  display: flex;
-}
-
-.link > a {
-  display: inline-flex;
-  align-items: center;
-
-  font-size: var(--fontsize-body-default);
-  font-weight: bold;
-  color: var(--color-bus);
-  text-decoration: none;
-}
-
 @media (min-width: 450px) {
   .container {
     flex-direction: row;
   }
-
   .label-section {
     margin-bottom: 0;
-  }
-
-  .link {
-    justify-content: flex-end;
   }
 }

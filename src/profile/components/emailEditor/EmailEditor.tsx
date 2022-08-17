@@ -34,7 +34,7 @@ import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikEr
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
 import { AnyObject } from '../../../graphql/typings';
 import useProfile from '../../../auth/useProfile';
-import { hasTunnistusSuomiFiAmr } from '../profileInformation/profileInformationAccountManagementLinkUtils';
+import { hasTunnistusSuomiFiAmr } from '../profileInformation/authenticationProviderUtil';
 
 function EmailEditor(): React.ReactElement | null {
   const dataType: EditDataType = 'emails';

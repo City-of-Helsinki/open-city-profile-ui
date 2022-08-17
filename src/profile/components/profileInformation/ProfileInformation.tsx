@@ -3,7 +3,7 @@ import React, { Fragment, useContext } from 'react';
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import DownloadData from '../downloadData/DownloadData';
 import styles from './ProfileInformation.module.css';
-import ProfileInformationAccountManagementLink from './ProfileInformationAccountManagementLink';
+import AuthenticationProviderInformation from './AuthenticationProviderInformation';
 import { ProfileContext } from '../../context/ProfileContext';
 import BasicData from '../basicData/BasicData';
 import EmailEditor from '../emailEditor/EmailEditor';
@@ -30,7 +30,7 @@ function ProfileInformation(): React.ReactElement {
         </Fragment>
       )}
       <div className={styles['box-grid']}>
-        <ProfileInformationAccountManagementLink />
+        <AuthenticationProviderInformation />
         <DownloadData />
         <DeleteProfile />
       </div>

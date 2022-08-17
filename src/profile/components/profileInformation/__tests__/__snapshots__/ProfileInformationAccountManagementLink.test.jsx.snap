@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly when AMR is helsinkiAccountAMR should render helsinki account link as expected based on config 1`] = `
-<ProfileInformationAccountManagementLink>
+<AuthenticationProviderInformation>
   <div
     className="container"
   >
@@ -28,66 +28,12 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
         </div>
       </LabeledValue>
     </div>
-    <div
-      className="link"
-    >
-      <Link
-        external={true}
-        href="https://test-url"
-        iconReplacement={[Function]}
-        openInNewTab={true}
-      >
-        <a
-          aria-label="profileInformation.doGoToAccountManagement. openInNewTabAriaLabel openInExternalDomainAriaLabel"
-          className="link linkM"
-          href="https://test-url"
-          rel="noopener"
-          style={Object {}}
-          target="_blank"
-        >
-          profileInformation.doGoToAccountManagement
-          <LinkIcon
-            aria-hidden={true}
-            className="icon verticalAlignSmallOrMediumIcon"
-            size="xs"
-          >
-            <S
-              aria-hidden={true}
-              className="icon verticalAlignSmallOrMediumIcon"
-              size="s"
-            >
-              <svg
-                aria-hidden={true}
-                className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik icon verticalAlignSmallOrMediumIcon"
-                role="img"
-                style={Object {}}
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g
-                  fill="none"
-                  fillRule="evenodd"
-                >
-                  <polygon
-                    points="0 24 0 0 24 0 24 24"
-                  />
-                  <polygon
-                    fill="currentColor"
-                    points="13.5 12 8.5 7 10 5.5 16.5 12 10 18.5 8.5 17"
-                  />
-                </g>
-              </svg>
-            </S>
-          </LinkIcon>
-        </a>
-      </Link>
-    </div>
   </div>
-</ProfileInformationAccountManagementLink>
+</AuthenticationProviderInformation>
 `;
 
 exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly when AMR is tunnistusSuomifiAMR should render suomi.fi link as expected based on config 1`] = `
-<ProfileInformationAccountManagementLink>
+<AuthenticationProviderInformation>
   <div
     className="container"
   >
@@ -114,60 +60,6 @@ exports[`<ProfileInformationAuthenticationSourceBackLink />  renders correctly w
         </div>
       </LabeledValue>
     </div>
-    <div
-      className="link"
-    >
-      <Link
-        external={true}
-        href="https://test-url-suomif-fi"
-        iconReplacement={[Function]}
-        openInNewTab={true}
-      >
-        <a
-          aria-label="profileInformation.doGoToAccountManagement. openInNewTabAriaLabel openInExternalDomainAriaLabel"
-          className="link linkM"
-          href="https://test-url-suomif-fi"
-          rel="noopener"
-          style={Object {}}
-          target="_blank"
-        >
-          profileInformation.doGoToAccountManagement
-          <LinkIcon
-            aria-hidden={true}
-            className="icon verticalAlignSmallOrMediumIcon"
-            size="xs"
-          >
-            <S
-              aria-hidden={true}
-              className="icon verticalAlignSmallOrMediumIcon"
-              size="s"
-            >
-              <svg
-                aria-hidden={true}
-                className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik icon verticalAlignSmallOrMediumIcon"
-                role="img"
-                style={Object {}}
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g
-                  fill="none"
-                  fillRule="evenodd"
-                >
-                  <polygon
-                    points="0 24 0 0 24 0 24 24"
-                  />
-                  <polygon
-                    fill="currentColor"
-                    points="13.5 12 8.5 7 10 5.5 16.5 12 10 18.5 8.5 17"
-                  />
-                </g>
-              </svg>
-            </S>
-          </LinkIcon>
-        </a>
-      </Link>
-    </div>
   </div>
-</ProfileInformationAccountManagementLink>
+</AuthenticationProviderInformation>
 `;

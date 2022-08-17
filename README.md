@@ -78,23 +78,17 @@ Since this app uses react-scripts (Create React App) the env-files work a bit di
 
 The following envs are used:
 
-| Name                                              | Description                                                                                                                        |
-| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `REACT_APP_HELSINKI_ACCOUNT_AMR`                  | Authentication method reference for Helsinki account. </br> **default:** `helusername`                                             |
-| `REACT_APP_IPD_MANAGEMENT_URL_HELSINKI_ACCOUNT`   | Account management url for Helsinki account. </br> **default:** `https://salasana.hel.ninja/auth/realms/helsinki-salasana/account` |
-| `REACT_APP_IPD_MANAGEMENT_URL_GITHUB`             | Account management url for GitHub. </br> **default:** `https://github.com/settings/profile`                                        |
-| `REACT_APP_IPD_MANAGEMENT_URL_GOOGLE`             | Account management url for Google. </br> **default:** `https://myaccount.google.com`                                               |
-| `REACT_APP_IPD_MANAGEMENT_URL_FACEBOOK`           | Account management url for Facebook. </br> **default:** `http://facebook.com/settings`                                             |
-| `REACT_APP_IPD_MANAGEMENT_URL_YLE`                | Account management url for Yle. </br> **default:** `https://tunnus.yle.fi/#omat-tiedot`                                            |
-| `REACT_APP_IPD_MANAGEMENT_URL_TUNNISTUS_SUOMI_FI` | Account management url for Suomi.fi tunnistus. </br> **default:** `https://suomi.fi`                                               |
-| `REACT_APP_OIDC_AUTHORITY`                        | This is the URL to tunnistamo.                                                                                                     |
-| `REACT_APP_OIDC_CLIENT_ID`                        | ID of the client that has to be configured in tunnistamo.                                                                          |
-| `REACT_APP_OIDC_SCOPE`                            | Which scopes the app requires.                                                                                                     |
-| `REACT_APP_PROFILE_AUDIENCE`                      | Name of the api-token that client uses profile-api with.                                                                           |
-| `REACT_APP_PROFILE_BE_GDPR_CLIENT_ID`             | Client id used when getting gdpr authentication token for connected services                                                       |
-| `REACT_APP_PROFILE_GRAPHQL`                       | URL to the profile graphql.                                                                                                        |
-| `REACT_APP_SENTRY_DSN`                            | Sentry public dns-key.                                                                                                             |
-| `REACT_APP_OIDC_RESPONSE_TYPE`                    | Which response type to require.                                                                                                    |
+| Name                                  | Description                                                                            |
+| ------------------------------------- | -------------------------------------------------------------------------------------- |
+| `REACT_APP_HELSINKI_ACCOUNT_AMR`      | Authentication method reference for Helsinki account. </br> **default:** `helusername` |
+| `REACT_APP_OIDC_AUTHORITY`            | This is the URL to tunnistamo.                                                         |
+| `REACT_APP_OIDC_CLIENT_ID`            | ID of the client that has to be configured in tunnistamo.                              |
+| `REACT_APP_OIDC_SCOPE`                | Which scopes the app requires.                                                         |
+| `REACT_APP_PROFILE_AUDIENCE`          | Name of the api-token that client uses profile-api with.                               |
+| `REACT_APP_PROFILE_BE_GDPR_CLIENT_ID` | Client id used when getting gdpr authentication token for connected services           |
+| `REACT_APP_PROFILE_GRAPHQL`           | URL to the profile graphql.                                                            |
+| `REACT_APP_SENTRY_DSN`                | Sentry public dns-key.                                                                 |
+| `REACT_APP_OIDC_RESPONSE_TYPE`        | Which response type to require.                                                        |
 
 ## Setting up local development environment with Docker
 
