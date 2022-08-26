@@ -2,3 +2,11 @@
   border: none;
   outline: none;
 }
+
+.button-as-link {
+  border: none;
+  cursor: pointer;
+  background: none;
+  color: var(--color-bus);
+  padding: var(--spacing-2-xs);
+}

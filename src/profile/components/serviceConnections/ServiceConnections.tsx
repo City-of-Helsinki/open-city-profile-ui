@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
@@ -12,6 +12,7 @@ import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
 import CheckedLabel from '../../../common/checkedLabel/CheckedLabel';
 import styles from './ServiceConnections.module.css';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
+import commonStyles from '../../../common/cssHelpers/common.module.css';
 import {
   ServiceConnectionsQueryVariables,
   ServiceConnectionsRoot,
@@ -19,6 +20,7 @@ import {
 import getServiceConnectionData from '../../helpers/getServiceConnectionData';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
+import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -26,6 +28,7 @@ const SERVICE_CONNECTIONS = loader(
 
 function ServiceConnections(): React.ReactElement {
   const { t, i18n } = useTranslation();
+  const [connectionToDelete, deleteConnection] = useState(0);
   const { data, loading, refetch, error } = useQuery<
     ServiceConnectionsRoot,
     ServiceConnectionsQueryVariables
@@ -95,6 +98,12 @@ function ServiceConnections(): React.ReactElement {
 
   const services = getServiceConnectionData(data);
   const hasNoServices = !loading && services.length === 0;
+  const onClick = () => {
+    deleteConnection(1);
+  };
+  const ConfirmationModalContent = (props: { connectionToDelete: number }) => (
+    <p>DELETE {props.connectionToDelete}?</p>
+  );
   return (
     <ContentWrapper>
       <Explanation
@@ -112,7 +121,7 @@ function ServiceConnections(): React.ReactElement {
             key={index}
             title={service.title || ''}
             showInformationText
-            initiallyOpen={false}
+            initiallyOpen={false || connectionToDelete === index + 1}
           >
             <p>{service.description}</p>
             <p className={styles['service-information']}>
@@ -131,9 +140,34 @@ function ServiceConnections(): React.ReactElement {
             <p className={styles['date-and-time']}>
               {getDateTime(service.connectionCreatedAt)}
             </p>
+            <p className={styles['xx']}>
+              {t('deletemessage')}
+              <button
+                type="button"
+                className={commonStyles['button-as-link']}
+                onClick={onClick}
+              >
+                link
+              </button>
+            </p>
           </ExpandingPanel>
         ))}
       </div>
+      <ConfirmationModal
+        isOpen={connectionToDelete > 0}
+        onClose={() => {
+          deleteConnection(0);
+        }}
+        onConfirm={() => {
+          deleteConnection(0);
+          //
+        }}
+        content={() => (
+          <ConfirmationModalContent connectionToDelete={connectionToDelete} />
+        )}
+        title={t('deleteProfileModal.title')}
+        actionButtonText={t('deleteProfileModal.delete')}
+      />
     </ContentWrapper>
   );
 }
