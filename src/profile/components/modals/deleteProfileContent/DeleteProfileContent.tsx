@@ -25,6 +25,16 @@ function DeleteProfileContent({ data }: Props): React.ReactElement | null {
           ))}
         </ul>
       ) : null}
+      <p>{t('cannotdelete.description')}</p>
+      {servicesArray.length ? (
+        <ul>
+          {servicesArray.map((service, index) => (
+            <li key={index}>{service.title}</li>
+          ))}
+        </ul>
+      ) : null}
+      <p>{t('delete.instructions')}</p>
+      <p>{t('onebutton.only')}</p>
     </>
   );
 }
