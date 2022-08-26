@@ -3,7 +3,7 @@ import { ApolloError, useLazyQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
-import { Button, Checkbox, LoadingSpinner, Notification } from 'hds-react';
+import { Button, LoadingSpinner, Notification } from 'hds-react';
 import { useHistory } from 'react-router';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
@@ -26,7 +26,6 @@ const SERVICE_CONNECTIONS = loader(
 
 function DeleteProfile(): React.ReactElement {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [isDeleteApproved, setDeleteApproved] = useState(false);
   const notStartedLoadState = 'not-started';
   const loadingLoadState = 'loading';
   const loadedLoadState = 'loaded';
@@ -95,10 +94,6 @@ function DeleteProfile(): React.ReactElement {
     },
     [getServiceConnections, setDataLoadState, dataLoadState, serviceConnections]
   );
-
-  const toggleDeleteApproval = () => {
-    setDeleteApproved(prevState => !prevState);
-  };
 
   const handleConfirmationModal = () => {
     setShowConfirmationModal(prevState => !prevState);
@@ -172,25 +167,14 @@ function DeleteProfile(): React.ReactElement {
       {dataLoadState == loadingLoadState || dataLoadState == errorLoadState ? (
         <LoadStateIndicator />
       ) : (
-        <div className={styles['checkbox-container']}>
-          <Checkbox
-            onChange={toggleDeleteApproval}
-            id="deleteInstructions"
-            name="deleteInstructions"
-            checked={isDeleteApproved}
-            label={t('deleteProfile.accept')}
-          />
-
-          <Button
-            type="button"
-            onClick={handleDeleteClick}
-            disabled={!isDeleteApproved}
-            className={styles.button}
-            id={removeButtonId}
-          >
-            {t('deleteProfile.delete')}
-          </Button>
-        </div>
+        <Button
+          type="button"
+          onClick={handleDeleteClick}
+          className={styles.button}
+          id={removeButtonId}
+        >
+          {t('deleteProfile.delete')}
+        </Button>
       )}
       <ConfirmationModal
         isOpen={showConfirmationModal}
