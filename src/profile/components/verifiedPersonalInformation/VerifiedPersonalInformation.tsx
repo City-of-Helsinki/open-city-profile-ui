@@ -1,19 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { IconCheckCircleFill } from 'hds-react';
 import classNames from 'classnames';
 
 import styles from './VerifiedPersonalInformation.module.css';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
-import { ProfileContext } from '../../context/ProfileContext';
+import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
 import getCountry from '../../helpers/getCountry';
 import {
   PermanentForeignAddress,
   PermanentAddress,
 } from '../../../graphql/typings';
-import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
 import { Link } from '../../../common/copyOfHDSLink/Link';
 
 type CommonAddress = {
@@ -31,12 +29,10 @@ type AddressProps = {
 };
 
 function VerifiedPersonalInformation(): React.ReactElement | null {
-  const { data } = useContext(ProfileContext);
+  const verifiedPersonalInformation = useVerifiedPersonalInformation();
 
   const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];
-
-  const verifiedPersonalInformation = getVerifiedPersonalInformation(data);
 
   if (!verifiedPersonalInformation) {
     return null;
@@ -54,6 +50,8 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     municipalityOfResidence,
   } = verifiedPersonalInformation;
 
+  const titleStyle = commonFormStyles['section-title'];
+
   const AddressComponent = (props: AddressProps): React.ReactElement | null => {
     const { type } = props;
     const address = props.address;
@@ -63,15 +61,10 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     const country = getCountry(address.countryCode, lang);
     return (
       <React.Fragment key={type}>
-        <h2
-          className={commonFormStyles['section-title']}
+        <div
+          className={commonFormStyles['multi-item-wrapper']}
           data-testid={`vpi-address-${type}`}
         >
-          {type === 'permanent'
-            ? t('profileInformation.permanentAddress')
-            : t('profileInformation.permanentForeignAddress')}
-        </h2>
-        <div className={commonFormStyles['multi-item-wrapper']}>
           <LabeledValue
             label={t('profileForm.address')}
             value={address.streetAddress}
@@ -110,19 +103,14 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     );
   };
 
-  const LongDescription = ({ forAria }: { forAria?: boolean }) => (
-    <p className={forAria ? commonFormStyles['visually-hidden'] : ''}>
+  const LongDescription = () => (
+    <p>
       <Trans
-        i18nKey={
-          forAria
-            ? 'profileInformation.verifiedDataInformationForScreenReaders'
-            : 'profileInformation.verifiedDataInformation'
-        }
+        i18nKey={'profileInformation.verifiedDataInformation'}
         components={{
           suomiFiLink: (
             <Link
               href={t('profileInformation.verifiedDataInformationLink')}
-              tabIndex={forAria ? 0 : -1}
               external
               openInNewTab
             >
@@ -136,13 +124,18 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
 
   return (
     <ProfileSection hasVerifiedUserData>
-      <h2
-        className={commonFormStyles['section-title']}
-        aria-label={t('profileInformation.verifiedBasicData')}
+      <div
+        className={classNames(
+          commonFormStyles['section-title-with-explanation'],
+          styles['verified-data-explanation']
+        )}
       >
-        {t('profileForm.basicData')}
-      </h2>
-      <LongDescription forAria />
+        <h2 className={titleStyle}>
+          {t('profileInformation.verifiedBasicData')}
+        </h2>
+        <LongDescription />
+      </div>
+
       <div className={commonFormStyles['multi-item-wrapper']}>
         <LabeledValue
           label={t('profileForm.firstName')}
@@ -178,16 +171,6 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
         type="foreign"
         address={permanentForeignAddress as CommonAddress}
       />
-      <div
-        className={classNames([styles['verified-data-icon-information']])}
-        id="verified-data-information"
-        aria-hidden="true"
-      >
-        <span className={commonFormStyles['icon']}>
-          <IconCheckCircleFill />
-        </span>
-        <LongDescription />
-      </div>
     </ProfileSection>
   );
 }

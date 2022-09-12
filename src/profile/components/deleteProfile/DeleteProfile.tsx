@@ -161,11 +161,13 @@ function DeleteProfile(): React.ReactElement {
         onChange={onExpandingPanelChange}
         dataTestId={'delete-profile'}
       >
-        <p>{t('deleteProfile.explanation')}</p>
+        <p
+          dangerouslySetInnerHTML={{ __html: t('deleteProfile.explanation') }}
+        />
         {dataLoadState !== loadedLoadState ? (
           <LoadStateIndicator />
         ) : (
-          <React.Fragment>
+          <div className={styles['checkbox-container']}>
             <Checkbox
               onChange={handleDeleteInstructions}
               id="deleteInstructions"
@@ -183,7 +185,7 @@ function DeleteProfile(): React.ReactElement {
             >
               {t('deleteProfile.delete')}
             </Button>
-          </React.Fragment>
+          </div>
         )}
       </ExpandingPanel>
 

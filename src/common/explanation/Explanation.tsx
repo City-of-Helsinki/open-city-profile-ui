@@ -7,7 +7,7 @@ import FocusableH1 from '../focusableH1/FocusableH1';
 
 type Props = {
   heading: string;
-  text: string;
+  text: string | React.ReactNode;
   className?: string;
 };
 

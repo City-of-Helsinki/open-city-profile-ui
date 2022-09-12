@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Switch, Route } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
+import { Switch, Route, Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import styles from './ViewProfile.module.css';
@@ -40,7 +40,17 @@ function ViewProfile(): React.ReactElement {
               <Route path="/">
                 <Explanation
                   heading={t('profileInformation.title')}
-                  text={t('profileInformation.description')}
+                  text={
+                    <Trans
+                      i18nKey="profileInformation.description"
+                      components={{
+                        linkToServices: (
+                          <Link to={'/connected-services'}>{''}</Link>
+                        ),
+                        linkToServicesText: t('nav.services'),
+                      }}
+                    />
+                  }
                 />
                 <ProfileInformation />
               </Route>

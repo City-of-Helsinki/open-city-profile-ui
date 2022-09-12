@@ -25,6 +25,7 @@ import { useConfirmationModal } from '../../hooks/useConfirmationModal';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
 import { ActionRejection } from '../../hooks/useCommonEditHandling';
+import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
 
 type Props = {
   dataType: Extract<EditDataType, 'addresses' | 'phones'>;
@@ -64,6 +65,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   const isAddButtonDisabled = hasNew();
   const hideAddButton = editDataList.length > 0;
   const setPrimaryInProgress = isSettingPrimary(editDataList);
+  const userIsVerified = !!useVerifiedPersonalInformation();
   const RowComponent =
     dataType === 'addresses' ? MultiItemAddressRow : MultiItemPhoneRow;
   const texts = (function() {
@@ -78,10 +80,14 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
     }
     return {
       modalTitle: t('confirmationModal.removeAddress'),
-      title: t('profileInformation.addresses'),
+      title: userIsVerified
+        ? t('profileInformation.addressTitleWhenHasVerifiedData')
+        : t('profileInformation.address'),
       listAriaLabel: t('profileInformation.ariaListTitleAddresses'),
       addNew: t('profileForm.addAddress'),
-      noContent: t('profileInformation.noAddress'),
+      noContent: userIsVerified
+        ? t('profileInformation.addressDescriptionNoWeakAddress')
+        : t('profileInformation.addressDescriptionNoAddress'),
     };
   })();
 
@@ -139,15 +145,10 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   };
 
   const NoItemsMessage = () => (
-    <React.Fragment>
+    <div className={commonFormStyles['section-title-with-explanation']}>
       <h2 className={commonFormStyles['section-title']}>{texts.title}</h2>
-      <div
-        className={commonFormStyles['text-content-wrapper']}
-        data-testid={`${dataType}-no-data`}
-      >
-        {texts.noContent}
-      </div>
-    </React.Fragment>
+      <p data-testid={`${dataType}-no-data`}>{texts.noContent}</p>
+    </div>
   );
 
   return (

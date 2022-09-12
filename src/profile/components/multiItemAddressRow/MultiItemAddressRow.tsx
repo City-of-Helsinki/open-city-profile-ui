@@ -25,6 +25,7 @@ import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import { RequiredFieldsNote } from '../../../common/requiredFieldsNote/RequiredFieldsNote';
+import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
 
 type FormikValues = AddressValue;
 
@@ -72,6 +73,32 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
   const disableButtons = !!currentAction || !!saving;
   const ariaLabels = createActionAriaLabels(dataType, value.address, t);
   const formFieldStyle = commonFormStyles['form-field'];
+  const userIsVerified = !!useVerifiedPersonalInformation();
+
+  const Explanation = () => {
+    const title = userIsVerified
+      ? t('profileInformation.addressTitleWhenHasVerifiedData')
+      : t('profileInformation.address');
+
+    const DescriptionElement = (): React.ReactElement | null => {
+      if (!isNew) {
+        return <p>{t('profileInformation.addressDescription')}</p>;
+      }
+      return (
+        <p>
+          {userIsVerified
+            ? t('profileInformation.addressDescriptionNoWeakAddress')
+            : t('profileInformation.addressDescriptionNoAddress')}
+        </p>
+      );
+    };
+    return (
+      <div className={commonFormStyles['section-title-with-explanation']}>
+        <h2 className={commonFormStyles['section-title']}>{title}</h2>
+        <DescriptionElement />
+      </div>
+    );
+  };
   if (isEditing) {
     return (
       <Formik
@@ -88,9 +115,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
       >
         {(formikProps: FormikProps<FormikValues>) => (
           <Form className={commonFormStyles['multi-item-form']}>
-            <h2 className={commonFormStyles['section-title']}>
-              {t('profileInformation.address')}
-            </h2>
+            <Explanation />
             <RequiredFieldsNote />
             <FocusKeeper targetId={`${testId}-address`}>
               <div className={commonFormStyles['multi-item-wrapper']}>
@@ -178,9 +203,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
         commonFormStyles['multi-item-content-wrapper'],
       ])}
     >
-      <h2 className={commonFormStyles['section-title']}>
-        {t('profileInformation.address')}
-      </h2>
+      <Explanation />
       <div className={commonFormStyles['multi-item-wrapper']}>
         <LabeledValue
           label={t(formFields.address.translationKey)}
