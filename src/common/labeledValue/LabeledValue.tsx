@@ -1,23 +1,15 @@
 import React from 'react';
-import { IconCheckCircleFill } from 'hds-react';
 import classNames from 'classnames';
 
 import styles from './LabeledValue.module.css';
-import commonFormStyles from '../cssHelpers/form.module.css';
 
 type Props = {
   label: string;
   value: string | null | undefined;
-  verifiedInfoText?: string;
   testId?: string;
 };
 
-function LabeledValue({
-  label,
-  value,
-  verifiedInfoText,
-  testId,
-}: Props): React.ReactElement {
+function LabeledValue({ label, value, testId }: Props): React.ReactElement {
   const labelTestId = testId ? { 'data-testid': `${testId}-label` } : null;
   const valueTestId = testId ? { 'data-testid': `${testId}-value` } : null;
   return (
@@ -25,24 +17,8 @@ function LabeledValue({
       <strong className={styles['label']} {...labelTestId}>
         {label}
       </strong>
-      <span
-        className={classNames(
-          styles['value'],
-          verifiedInfoText && styles['with-icon']
-        )}
-        {...valueTestId}
-      >
+      <span className={classNames(styles['value'])} {...valueTestId}>
         {value || '–'}
-        {verifiedInfoText && (
-          <span
-            className={classNames(commonFormStyles['icon'], styles['icon'])}
-          >
-            <IconCheckCircleFill aria-hidden="true" />
-            <span className={commonFormStyles['visually-hidden']}>
-              {verifiedInfoText}
-            </span>
-          </span>
-        )}
       </span>
     </div>
   );
