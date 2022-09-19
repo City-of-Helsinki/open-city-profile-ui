@@ -21,3 +21,5 @@ jest.mock('react-router', () => ({
 }));
 
 jest.mock('./auth/http-poller');
+
+global.HTMLElement.prototype.scrollIntoView = jest.fn();
