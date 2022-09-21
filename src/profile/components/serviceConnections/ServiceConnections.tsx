@@ -19,6 +19,7 @@ import {
 import getServiceConnectionData from '../../helpers/getServiceConnectionData';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
+import ProfileSection from '../../../common/profileSection/ProfileSection';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -106,34 +107,36 @@ function ServiceConnections(): React.ReactElement {
         }
         dataTestId="service-connections-explanation"
       />
-      <div className={styles['panel-container']}>
-        {services.map((service, index) => (
-          <ExpandingPanel
-            key={index}
-            title={service.title || ''}
-            showInformationText
-            initiallyOpen={false}
-          >
-            <p>{service.description}</p>
-            <p className={styles['service-information']}>
-              {t('serviceConnections.servicePersonalData')}
-            </p>
-            {getAllowedDataFieldsFromService(service).map(node => (
-              <CheckedLabel
-                key={node.fieldName}
-                value={node.label || node.fieldName}
-                className={styles['allowed-data-field']}
-              />
-            ))}
-            <p className={styles['created-at']}>
-              {t('serviceConnections.created')}
-            </p>
-            <p className={styles['date-and-time']}>
-              {getDateTime(service.connectionCreatedAt)}
-            </p>
-          </ExpandingPanel>
-        ))}
-      </div>
+      <ProfileSection>
+        <div className={styles['panel-container']}>
+          {services.map((service, index) => (
+            <ExpandingPanel
+              key={index}
+              title={service.title || ''}
+              showInformationText
+              initiallyOpen={false}
+            >
+              <p>{service.description}</p>
+              <p className={styles['service-information']}>
+                {t('serviceConnections.servicePersonalData')}
+              </p>
+              {getAllowedDataFieldsFromService(service).map(node => (
+                <CheckedLabel
+                  key={node.fieldName}
+                  value={node.label || node.fieldName}
+                  className={styles['allowed-data-field']}
+                />
+              ))}
+              <p className={styles['created-at']}>
+                {t('serviceConnections.created')}
+              </p>
+              <p className={styles['date-and-time']}>
+                {getDateTime(service.connectionCreatedAt)}
+              </p>
+            </ExpandingPanel>
+          ))}
+        </div>
+      </ProfileSection>
     </ContentWrapper>
   );
 }
