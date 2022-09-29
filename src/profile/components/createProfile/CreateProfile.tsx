@@ -10,7 +10,6 @@ import classNames from 'classnames';
 import CreateProfileForm, {
   FormValues,
 } from '../createProfileForm/CreateProfileForm';
-import PageHeading from '../../../common/pageHeading/PageHeading';
 import styles from './CreateProfile.module.css';
 import {
   CreateMyProfile as CreateMyProfileRoot,
@@ -21,7 +20,6 @@ import ProfileSection from '../../../common/profileSection/ProfileSection';
 import useToast from '../../../toast/useToast';
 import Explanation from '../../../common/explanation/Explanation';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
-import TopSectionWithKoros from '../../../common/topSectionWithKoros/TopSectionWithKoros';
 
 const CREATE_PROFILE = loader('../../graphql/CreateMyProfile.graphql');
 
@@ -82,40 +80,33 @@ function CreateProfile({
       });
   };
   return (
-    <React.Fragment>
-      <TopSectionWithKoros>
-        <PageHeading
-          text={t('createProfile.pageTitle')}
-          dataTestId="create-profile-heading"
+    <div
+      className={classNames([
+        commonContentStyles['common-content-area'],
+        commonContentStyles['common-bottom-padding'],
+        styles['content'],
+      ])}
+    >
+      <Explanation
+        heading={t('createProfile.heading')}
+        text={t('createProfile.helpText')}
+        dataTestId="create-profile-heading"
+      />
+      <ProfileSection>
+        <CreateProfileForm
+          profile={{
+            firstName: tunnistamoUser.profile.given_name || '',
+            lastName: tunnistamoUser.profile.family_name || '',
+            email: tunnistamoUser.profile.email || '',
+            profileLanguage: Language.FINNISH,
+            number: '',
+            countryCallingCode: '',
+          }}
+          isSubmitting={loading}
+          onValues={handleOnValues}
         />
-      </TopSectionWithKoros>
-      <div
-        className={classNames([
-          commonContentStyles['common-content-area'],
-          commonContentStyles['common-bottom-padding'],
-          styles['content'],
-        ])}
-      >
-        <Explanation
-          heading={t('createProfile.heading')}
-          text={t('createProfile.helpText')}
-        />
-        <ProfileSection>
-          <CreateProfileForm
-            profile={{
-              firstName: tunnistamoUser.profile.given_name || '',
-              lastName: tunnistamoUser.profile.family_name || '',
-              email: tunnistamoUser.profile.email || '',
-              profileLanguage: Language.FINNISH,
-              number: '',
-              countryCallingCode: '',
-            }}
-            isSubmitting={loading}
-            onValues={handleOnValues}
-          />
-        </ProfileSection>
-      </div>
-    </React.Fragment>
+      </ProfileSection>
+    </div>
   );
 }
 
