@@ -165,7 +165,7 @@ function DeleteProfile(): React.ReactElement {
     );
   }
   return (
-    <ProfileSection hasVerifiedUserData data-test-id={'delete-profile'}>
+    <ProfileSection data-test-id={'delete-profile'}>
       <h2>{t('deleteProfile.title')}</h2>
       <p dangerouslySetInnerHTML={{ __html: t('deleteProfile.explanation') }} />
 

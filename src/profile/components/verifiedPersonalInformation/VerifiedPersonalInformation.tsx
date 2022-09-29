@@ -113,7 +113,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
   );
 
   return (
-    <ProfileSection hasVerifiedUserData>
+    <ProfileSection>
       <div
         className={classNames(
           commonFormStyles['section-title-with-explanation'],
