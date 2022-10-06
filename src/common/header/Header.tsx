@@ -19,7 +19,7 @@ function Header(): React.ReactElement {
 
   const { trackEvent } = useMatomo();
 
-  const { isComplete } = useContext(ProfileContext);
+  const { getProfile } = useContext(ProfileContext);
   const profilePagePaths = ['/', '/connected-services'];
   const [myProfilePath, connectedServicesPath] = profilePagePaths;
   const isProfilePagePath = profilePagePaths.includes(currentPath);
@@ -44,7 +44,7 @@ function Header(): React.ReactElement {
       logoLanguage={logoLanguage}
       onTitleClick={() => onClick(myProfilePath)}
     >
-      {isComplete && isProfilePagePath && (
+      {!!getProfile() && isProfilePagePath && (
         <Navigation.Row>
           <Navigation.Item
             label={t('nav.information')}

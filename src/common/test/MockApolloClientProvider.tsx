@@ -13,6 +13,9 @@ import {
 import {
   UpdateMyProfileVariables,
   ProfileInput,
+  GdprDeleteMyProfileMutationVariables,
+  GdprDeleteMyProfileMutation_deleteMyProfile,
+  DownloadMyProfileQueryVariables,
 } from '../../graphql/generatedTypes';
 
 export type MockedResponse = {
@@ -22,10 +25,16 @@ export type MockedResponse = {
   profileDataWithServiceConnections?: ServiceConnectionsRoot;
   errorType?: 'networkError' | 'graphQLError';
   withAllowedPermissionError?: boolean;
+  deleteMyProfile?: null | Partial<GdprDeleteMyProfileMutation_deleteMyProfile>;
+  downloadMyProfile?: null | unknown;
 };
 
 export type ResponseProvider = (
-  variables?: UpdateMyProfileVariables | ServiceConnectionsQueryVariables
+  variables?:
+    | UpdateMyProfileVariables
+    | ServiceConnectionsQueryVariables
+    | GdprDeleteMyProfileMutationVariables
+    | DownloadMyProfileQueryVariables
 ) => MockedResponse;
 
 type ErrorReturnType = { error: Error };
@@ -39,10 +48,18 @@ const getResponseData = (
     profileData,
     updatedProfileData,
     createMyProfile,
+    deleteMyProfile,
+    downloadMyProfile,
     profileDataWithServiceConnections,
   } = response;
   if (errorType) {
     return undefined;
+  }
+  if (deleteMyProfile) {
+    return { deleteMyProfile };
+  }
+  if (downloadMyProfile) {
+    return { downloadMyProfile: JSON.stringify({ key: 'value' }) };
   }
   if (profileDataWithServiceConnections) {
     return (profileDataWithServiceConnections as unknown) as Record<

@@ -4,6 +4,7 @@
   align-items: center;
   flex-direction: row;
   flex: 1;
+  background-color: var(--color-black-ultra-light);
 }
 
 .content.content {
@@ -12,7 +13,7 @@
   align-items: center;
   max-width: 600px;
   padding-top: var(--common-top-spacing);
-  padding-bottom: var(--common-top-spacing);
+  padding-bottom: var(--spacing-layout-l);
 }
 
 button.button {

@@ -38,8 +38,6 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     return null;
   }
 
-  const verifiedInfoText = t('profileInformation.verifiedData');
-
   const {
     firstName,
     givenName,
@@ -68,35 +66,27 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
           <LabeledValue
             label={t('profileForm.address')}
             value={address.streetAddress}
-            verifiedInfoText={verifiedInfoText}
           />
           {address.additionalAddress && (
             <LabeledValue
               label={t('profileForm.additionalInfo')}
               value={address.additionalAddress}
-              verifiedInfoText={verifiedInfoText}
             />
           )}
           {address.postalCode && (
             <LabeledValue
               label={t('profileForm.postalCode')}
               value={address.postalCode}
-              verifiedInfoText={verifiedInfoText}
             />
           )}
           {address.postOffice && (
             <LabeledValue
               label={t('profileForm.postOffice')}
               value={address.postOffice}
-              verifiedInfoText={verifiedInfoText}
             />
           )}
           {country && (
-            <LabeledValue
-              label={t('profileForm.country')}
-              value={country}
-              verifiedInfoText={verifiedInfoText}
-            />
+            <LabeledValue label={t('profileForm.country')} value={country} />
           )}
         </div>
       </React.Fragment>
@@ -123,7 +113,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
   );
 
   return (
-    <ProfileSection hasVerifiedUserData>
+    <ProfileSection>
       <div
         className={classNames(
           commonFormStyles['section-title-with-explanation'],
@@ -137,30 +127,16 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
       </div>
 
       <div className={commonFormStyles['multi-item-wrapper']}>
-        <LabeledValue
-          label={t('profileForm.firstName')}
-          value={firstName}
-          verifiedInfoText={verifiedInfoText}
-        />
-        <LabeledValue
-          label={t('profileForm.givenName')}
-          value={givenName}
-          verifiedInfoText={verifiedInfoText}
-        />
-        <LabeledValue
-          label={t('profileForm.lastName')}
-          value={lastName}
-          verifiedInfoText={verifiedInfoText}
-        />
+        <LabeledValue label={t('profileForm.firstName')} value={firstName} />
+        <LabeledValue label={t('profileForm.givenName')} value={givenName} />
+        <LabeledValue label={t('profileForm.lastName')} value={lastName} />
         <LabeledValue
           label={t('profileForm.nationalIdentificationNumber')}
           value={nationalIdentificationNumber}
-          verifiedInfoText={verifiedInfoText}
         />
         <LabeledValue
           label={t('profileForm.municipalityOfResidence')}
           value={municipalityOfResidence}
-          verifiedInfoText={verifiedInfoText}
         />
       </div>
       <AddressComponent

@@ -1,9 +1,16 @@
 import {
+  GdprServiceConnectionsQuery_myProfile_serviceConnections,
+  GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service,
+} from '../../graphql/generatedTypes';
+import {
+  Mutable,
   ServiceAllowedFieldsEdge,
   ServiceConnectionsRoot,
 } from '../../graphql/typings';
 
-export default function getMyProfileWithServiceConnections(): ServiceConnectionsRoot {
+export default function getMyProfileWithServiceConnections(
+  addGdprQueryServiceData = false
+): ServiceConnectionsRoot {
   const generateAllowedDataFieldEdge = (
     fieldName: string
   ): ServiceAllowedFieldsEdge => ({
@@ -15,7 +22,7 @@ export default function getMyProfileWithServiceConnections(): ServiceConnections
     __typename: 'AllowedDataFieldNodeEdge',
   });
 
-  return {
+  const data = {
     myProfile: {
       id: 'asd',
       serviceConnections: {
@@ -73,4 +80,19 @@ export default function getMyProfileWithServiceConnections(): ServiceConnections
       __typename: 'ProfileNode',
     },
   };
+  if (addGdprQueryServiceData) {
+    const connections = (data.myProfile
+      .serviceConnections as unknown) as GdprServiceConnectionsQuery_myProfile_serviceConnections;
+    connections.edges.forEach(edge => {
+      const service = edge?.node?.service as Mutable<
+        GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service
+      >;
+      if (service) {
+        service.gdprQueryScope = '';
+        service.gdprDeleteScope = '';
+      }
+    });
+  }
+
+  return data as ServiceConnectionsRoot;
 }

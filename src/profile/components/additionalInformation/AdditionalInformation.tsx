@@ -87,7 +87,8 @@ function AdditionalInformation(): React.ReactElement | null {
               <FormikDropdown
                 className={classNames(
                   commonFormStyles['form-field'],
-                  commonFormStyles['hidden-labels']
+                  commonFormStyles['hidden-labels'],
+                  commonFormStyles['responsive-button']
                 )}
                 id={`${additionalInformationType}-language`}
                 name={'language'}

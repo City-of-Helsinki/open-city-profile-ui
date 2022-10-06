@@ -1,6 +1,5 @@
 .container {
-  padding-bottom: var(--spacing-xl);
-  margin: 0 var(--content-horizontal-padding);
+  padding-bottom: 0;
 }
 .container h1 {
   font-size: var(--h2-size);
@@ -14,4 +13,10 @@
 .container p {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-bottom: var(--spacing-xl);
+  }
 }

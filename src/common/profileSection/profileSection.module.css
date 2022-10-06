@@ -1,10 +1,4 @@
 .profile-section {
-  background: var(--color-white);
-  border-radius: 2px;
-  padding: var(--spacing-l) var(--content-horizontal-padding);
+  padding: var(--spacing-l) 0;
   margin-bottom: var(--spacing-xl);
-}
-
-.verified-data {
-  background: none;
 }

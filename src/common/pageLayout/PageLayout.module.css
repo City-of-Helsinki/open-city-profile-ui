@@ -2,11 +2,13 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: var(--color-black-ultra-light);
+  background-color: var(--color-white);
 }
 
 .content {
   display: flex;
   flex-direction: column;
   flex: 1;
+  /* footer koros is 14px high and "bleeds" bg color. This shifts the koros up and hides the bleed */
+  margin-bottom: -14px;
 }
