@@ -77,7 +77,7 @@
     "test": "cross-env TEST=true npm run update-runtime-env && react-scripts test",
     "ci": "cross-env CI=true yarn test --coverage",
     "lint": "eslint --ext js,ts,tsx src",
-    "codegen": "apollo client:codegen ./src/graphql/generatedTypes.ts --outputFlat --includes=./src/**/*.graphql --target=typescript --endpoint=https://profiili-api.test.kuva.hel.ninja/graphql/ --useReadOnlyTypes --addTypename",
+    "codegen": "apollo client:codegen ./src/graphql/generatedTypes.ts --outputFlat --includes=./src/**/*.graphql --target=typescript --endpoint=https://profile-api.dev.hel.ninja/graphql/ --useReadOnlyTypes --addTypename",
     "update-translations": "ts-node -P ./scripts/tsconfig.json -r dotenv/config --files scripts/update-translations.ts",
     "update-runtime-env": "ts-node -P ./scripts/tsconfig.json --files scripts/update-runtime-env.ts",
     "update-country-calling-codes": "ts-node -P ./scripts/tsconfig.json --files scripts/update-country-calling-codes.ts"
