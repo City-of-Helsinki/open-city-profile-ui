@@ -399,9 +399,7 @@ export interface MyProfileQuery_myProfile {
    */
   readonly phones: MyProfileQuery_myProfile_phones | null;
   /**
-   * Personal information that has been verified to be true. Can result into
-   * `PERMISSION_DENIED_ERROR` if the requester has no required privileges to
-   * access this information.
+   * Personal information that has been verified to be true. Can result into `PERMISSION_DENIED_ERROR` if the requester has no required privileges to access this information.
    */
   readonly verifiedPersonalInformation: MyProfileQuery_myProfile_verifiedPersonalInformation | null;
 }
@@ -815,6 +813,7 @@ export interface CreatePhoneInput {
 
 export interface DeleteMyProfileMutationInput {
   readonly authorizationCode: string;
+  readonly dryRun?: boolean | null;
   readonly clientMutationId?: string | null;
 }
 
@@ -822,7 +821,6 @@ export interface DeleteMyProfileMutationInput {
  * The following fields are deprecated:
  * 
  * * `image`
- * * `subscriptions`
  * 
  * There's no replacement for these.
  */
@@ -836,7 +834,6 @@ export interface ProfileInput {
   readonly addEmails?: ReadonlyArray<(CreateEmailInput | null)> | null;
   readonly addPhones?: ReadonlyArray<(CreatePhoneInput | null)> | null;
   readonly addAddresses?: ReadonlyArray<(CreateAddressInput | null)> | null;
-  readonly subscriptions?: ReadonlyArray<(SubscriptionInputType | null)> | null;
   readonly sensitivedata?: SensitiveDataFields | null;
   readonly updateEmails?: ReadonlyArray<(UpdateEmailInput | null)> | null;
   readonly removeEmails?: ReadonlyArray<(string | null)> | null;
@@ -848,11 +845,6 @@ export interface ProfileInput {
 
 export interface SensitiveDataFields {
   readonly ssn?: string | null;
-}
-
-export interface SubscriptionInputType {
-  readonly subscriptionTypeId: string;
-  readonly enabled: boolean;
 }
 
 export interface UpdateAddressInput {
