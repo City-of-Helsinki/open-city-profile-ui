@@ -14,7 +14,7 @@ ENV NPM_CONFIG_PREFIX=/app/.npm-global
 ENV PATH=$PATH:/app/.npm-global/bin
 
 # Yarn
-ENV YARN_VERSION 1.19.1
+ENV YARN_VERSION 1.22.19
 RUN yarn policies set-version $YARN_VERSION
 
 # Use non-root user
@@ -58,7 +58,7 @@ COPY . /app
 RUN yarn build
 
 # =============================
-FROM registry.access.redhat.com/ubi8/nginx-118 as production
+FROM registry.access.redhat.com/ubi8/nginx-120 as production
 # =============================
 
 USER root
