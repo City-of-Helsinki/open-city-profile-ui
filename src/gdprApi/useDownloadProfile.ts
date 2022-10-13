@@ -8,8 +8,8 @@ import { DocumentNode } from 'graphql';
 import { loader } from 'graphql.macro';
 
 import { GdprServiceConnectionsRoot } from '../graphql/typings';
+import useAuthorizationCodeIFrame from './useAuthorizationCodeIFrame';
 import { getQueryScopes } from './utils';
-import useAuthorizationCode from './useAuthorizationCode';
 
 const SERVICE_CONNECTIONS = loader(
   './graphql/GdprServiceConnectionsQuery.graphql'
@@ -45,25 +45,19 @@ function useDownloadProfile<TQuery>(
     [downloadProfile]
   );
 
-  const [startFetchingAuthorizationCode, isAuthorizing] = useAuthorizationCode(
-    'useDownloadProfile',
-    handleAuthorizationCodeCallback
-  );
-
-  const handleDownloadActionInitialization = React.useCallback(
-    serviceConnectionsResult => {
-      const queryScopes = getQueryScopes(serviceConnectionsResult);
-
-      startFetchingAuthorizationCode(queryScopes);
-    },
-    [startFetchingAuthorizationCode]
-  );
+  const [
+    getAuthorizationCode,
+    isFetchingAuthorizationCode,
+  ] = useAuthorizationCodeIFrame(e => {
+    handleAuthorizationCodeCallback(e);
+  });
 
   const [getServiceConnections] = useLazyQuery<GdprServiceConnectionsRoot>(
     SERVICE_CONNECTIONS,
     {
       onCompleted: data => {
-        handleDownloadActionInitialization(data);
+        const queryScopes = getQueryScopes(data);
+        getAuthorizationCode(queryScopes);
       },
       onError: error => {
         if (options?.onError) {
@@ -76,7 +70,7 @@ function useDownloadProfile<TQuery>(
   return [
     getServiceConnections,
     queryResult,
-    isAuthorizing || queryResult.loading,
+    isFetchingAuthorizationCode || queryResult.loading,
   ];
 }
 
