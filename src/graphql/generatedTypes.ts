@@ -38,6 +38,41 @@ export interface GdprDeleteMyProfileMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: GdprDeleteMyServiceDataMutation
+// ====================================================
+
+export interface GdprDeleteMyServiceDataMutation_deleteMyServiceData {
+  readonly __typename: "DeleteMyServiceDataMutationPayload";
+  readonly clientMutationId: string | null;
+}
+
+export interface GdprDeleteMyServiceDataMutation {
+  /**
+   * Deletes the data of the profile which is linked to the currently authenticated user from one connected service.
+   * 
+   * Requires authentication.
+   * 
+   * Possible error codes:
+   * 
+   * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
+   * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing the service.
+   * * `SERVICE_CONNECTION_DOES_NOT_EXIST_ERROR`: The user is not connected to the service
+   * * `CONNECTED_SERVICE_DELETION_NOT_ALLOWED_ERROR`: The profile deletion is disallowed by the service
+   * * `CONNECTED_SERVICE_DELETION_FAILED_ERROR`: The profile deletion failed for the service.
+   */
+  readonly deleteMyServiceData: GdprDeleteMyServiceDataMutation_deleteMyServiceData | null;
+}
+
+export interface GdprDeleteMyServiceDataMutationVariables {
+  readonly input: DeleteMyServiceDataMutationInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GdprServiceConnectionsQuery
 // ====================================================
 
@@ -813,6 +848,13 @@ export interface CreatePhoneInput {
 
 export interface DeleteMyProfileMutationInput {
   readonly authorizationCode: string;
+  readonly dryRun?: boolean | null;
+  readonly clientMutationId?: string | null;
+}
+
+export interface DeleteMyServiceDataMutationInput {
+  readonly authorizationCode: string;
+  readonly serviceName: string;
   readonly dryRun?: boolean | null;
   readonly clientMutationId?: string | null;
 }
