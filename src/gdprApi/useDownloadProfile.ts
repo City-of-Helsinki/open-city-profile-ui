@@ -5,15 +5,8 @@ import {
   LazyQueryResult,
 } from '@apollo/client';
 import { DocumentNode } from 'graphql';
-import { loader } from 'graphql.macro';
 
-import { GdprServiceConnectionsRoot } from '../graphql/typings';
-import useAuthorizationCodeIFrame from './useAuthorizationCodeIFrame';
-import { getQueryScopes } from './utils';
-
-const SERVICE_CONNECTIONS = loader(
-  './graphql/GdprServiceConnectionsQuery.graphql'
-);
+import useServiceConnectionsAuthorizationCode from './useServiceConnectionsAuthorizationCode';
 
 type TVariables = Record<string, unknown>;
 
@@ -47,30 +40,18 @@ function useDownloadProfile<TQuery>(
 
   const [
     getAuthorizationCode,
-    isFetchingAuthorizationCode,
-  ] = useAuthorizationCodeIFrame(e => {
-    handleAuthorizationCodeCallback(e);
+    authorizationCodeStatus,
+  ] = useServiceConnectionsAuthorizationCode({
+    onCompleted: e => {
+      handleAuthorizationCodeCallback(e);
+    },
+    onError: options?.onError,
   });
 
-  const [getServiceConnections] = useLazyQuery<GdprServiceConnectionsRoot>(
-    SERVICE_CONNECTIONS,
-    {
-      onCompleted: data => {
-        const queryScopes = getQueryScopes(data);
-        getAuthorizationCode(queryScopes);
-      },
-      onError: error => {
-        if (options?.onError) {
-          options.onError(error);
-        }
-      },
-    }
-  );
-
   return [
-    getServiceConnections,
+    getAuthorizationCode,
     queryResult,
-    isFetchingAuthorizationCode || queryResult.loading,
+    authorizationCodeStatus.loading || queryResult.loading,
   ];
 }
 
