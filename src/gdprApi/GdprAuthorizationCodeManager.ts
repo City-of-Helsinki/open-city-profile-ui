@@ -122,6 +122,19 @@ class GdprAuthorizationCodeManager {
 
     this.code = code;
   }
+
+  createUrl(scopes: string[], state: string): string {
+    const authorizationCodeUrl = this.makeAuthorizationUrl(scopes, state);
+    return authorizationCodeUrl;
+  }
+
+  notifyParentWindow(): void {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const state = params.get('state');
+
+    window.parent.postMessage({ code, state });
+  }
 }
 
 export default GdprAuthorizationCodeManager;
