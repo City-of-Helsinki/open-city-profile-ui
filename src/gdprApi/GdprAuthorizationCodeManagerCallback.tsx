@@ -5,7 +5,7 @@ import styles from './gdprAuthorizationCodeManagerCallback.module.css';
 
 function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
   React.useEffect(() => {
-    gdprAuthCodeManager.authorizationCodeFetchCallback();
+    gdprAuthCodeManager.notifyParentWindow();
   }, []);
 
   return (
