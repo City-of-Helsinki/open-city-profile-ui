@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
@@ -16,7 +16,9 @@ import {
   ServiceConnectionsQueryVariables,
   ServiceConnectionsRoot,
 } from '../../../graphql/typings';
-import getServiceConnectionData from '../../helpers/getServiceConnectionData';
+import getServiceConnectionData, {
+  ServiceConnectionData,
+} from '../../helpers/getServiceConnectionData';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
@@ -38,6 +40,13 @@ function ServiceConnections(): React.ReactElement {
       Sentry.captureException(loadError);
     },
   });
+  const [deletedConnections, setDeletedConnections] = useState<
+    ServiceConnectionData[]
+  >([]);
+  const isServiceDeleted = (service: ServiceConnectionData) =>
+    deletedConnections.findIndex(
+      deletedConnection => deletedConnection.name === service.name
+    ) > -1;
 
   const getDateTime = (date: Date) => {
     const day = format(new Date(date), 'dd.MM.yyyy');
@@ -97,10 +106,11 @@ function ServiceConnections(): React.ReactElement {
 
   const services = getServiceConnectionData(data);
   const hasNoServices = !loading && services.length === 0;
-  const onServiceConnectionDeleted = () => {
-    if (!loading) {
-      refetch();
-    }
+  const onServiceConnectionDeleted = (
+    deletedConnection: ServiceConnectionData
+  ) => {
+    setDeletedConnections([...deletedConnections, { ...deletedConnection }]);
+    refetch();
   };
   return (
     <ContentWrapper>
@@ -115,36 +125,45 @@ function ServiceConnections(): React.ReactElement {
       />
       <ProfileSection>
         <div className={styles['panel-container']}>
-          {services.map((service, index) => (
-            <ExpandingPanel
-              key={index}
-              title={service.title || ''}
-              showInformationText
-              initiallyOpen={true}
-            >
-              <p>{service.description}</p>
-              <p className={styles['service-information']}>
-                {t('serviceConnections.servicePersonalData')}
-              </p>
-              {getAllowedDataFieldsFromService(service).map(node => (
-                <CheckedLabel
-                  key={node.fieldName}
-                  value={node.label || node.fieldName}
-                  className={styles['allowed-data-field']}
+          {services.map((service, index) =>
+            isServiceDeleted(service) ? (
+              <Notification
+                key={service.name}
+                type={'success'}
+                label={`NO TRANSLATION Palvelu poistettu:${service.title}`}
+                dataTestId={`service-connection-removed-${index}`}
+              ></Notification>
+            ) : (
+              <ExpandingPanel
+                key={service.name}
+                title={service.title || ''}
+                showInformationText
+                initiallyOpen={true}
+              >
+                <p>{service.description}</p>
+                <p className={styles['service-information']}>
+                  {t('serviceConnections.servicePersonalData')}
+                </p>
+                {getAllowedDataFieldsFromService(service).map(node => (
+                  <CheckedLabel
+                    key={node.fieldName}
+                    value={node.label || node.fieldName}
+                    className={styles['allowed-data-field']}
+                  />
+                ))}
+                <p className={styles['created-at']}>
+                  {t('serviceConnections.created')}
+                </p>
+                <p className={styles['date-and-time']}>
+                  {getDateTime(service.connectionCreatedAt)}
+                </p>
+                <DeleteServiceConnection
+                  service={service}
+                  onDeletion={onServiceConnectionDeleted}
                 />
-              ))}
-              <p className={styles['created-at']}>
-                {t('serviceConnections.created')}
-              </p>
-              <p className={styles['date-and-time']}>
-                {getDateTime(service.connectionCreatedAt)}
-              </p>
-              <DeleteServiceConnection
-                serviceName={service.name}
-                onDeletion={onServiceConnectionDeleted}
-              />
-            </ExpandingPanel>
-          ))}
+              </ExpandingPanel>
+            )
+          )}
         </div>
       </ProfileSection>
     </ContentWrapper>
