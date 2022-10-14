@@ -31,6 +31,7 @@ export default function getMyProfileWithServiceConnections(
             node: {
               createdAt: '2021-03-10T11:34:14.719531+00:00',
               service: {
+                name: 'Profile service name',
                 title: 'Profiili käyttöliittymä',
                 description:
                   'Henkilön omien profiilitietojen hallintakäyttöliittymä.',
@@ -55,6 +56,7 @@ export default function getMyProfileWithServiceConnections(
             node: {
               createdAt: '2020-03-10T11:34:14.719531+00:00',
               service: {
+                name: 'Example UI service name',
                 title: 'Example UI',
                 description: 'Esimerkkiapplikaatio.',
                 allowedDataFields: {

@@ -514,6 +514,7 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
   readonly __typename: "ServiceNode";
+  readonly name: string;
   readonly title: string | null;
   readonly description: string | null;
   readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;

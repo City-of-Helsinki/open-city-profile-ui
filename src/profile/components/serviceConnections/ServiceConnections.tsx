@@ -140,7 +140,7 @@ function ServiceConnections(): React.ReactElement {
                 {getDateTime(service.connectionCreatedAt)}
               </p>
               <DeleteServiceConnection
-                serviceId={service.title as string}
+                serviceName={service.name}
                 onDeletion={onServiceConnectionDeleted}
               />
             </ExpandingPanel>

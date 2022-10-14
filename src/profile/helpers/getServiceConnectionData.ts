@@ -2,15 +2,16 @@ import { ServiceConnectionsRoot, Service } from '../../graphql/typings';
 
 export type ServiceConnectionData = Pick<
   Service,
-  'title' | 'description' | 'allowedDataFields'
+  'title' | 'description' | 'allowedDataFields' | 'name'
 > & { connectionCreatedAt: Date };
 
 function createServiceConnectionData(
   service: Service,
   createdAt: Date
 ): ServiceConnectionData {
-  const { title, description, allowedDataFields } = service;
+  const { name, title, description, allowedDataFields } = service;
   return {
+    name,
     title,
     description,
     allowedDataFields,
