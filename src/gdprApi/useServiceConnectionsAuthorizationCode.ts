@@ -1,13 +1,15 @@
 import { useLazyQuery, ApolloError } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { GdprServiceConnectionsRoot } from '../graphql/typings';
+import { ServiceConnectionsRoot } from '../graphql/typings';
+import createServiceConnectionsQueryVariables from '../profile/helpers/createServiceConnectionsQueryVariables';
 import useAuthorizationCodeIFrame from './useAuthorizationCodeIFrame';
 import { getQueryScopes } from './utils';
 
 const SERVICE_CONNECTIONS = loader(
-  './graphql/GdprServiceConnectionsQuery.graphql'
+  '../profile/graphql/ServiceConnectionsQuery.graphql'
 );
 
 export type LoadStatus = {
@@ -32,7 +34,7 @@ function useServiceConnectionsAuthorizationCode(
   const updateStatus = (newProps: Partial<LoadStatus>) => {
     setStatus(current => ({ ...current, ...newProps }));
   };
-
+  const { i18n } = useTranslation();
   const [getAuthorizationCode] = useAuthorizationCodeIFrame(e => {
     if (!e) {
       const error = new ApolloError({
@@ -58,10 +60,11 @@ function useServiceConnectionsAuthorizationCode(
     }
   });
 
-  const [getServiceConnections] = useLazyQuery<GdprServiceConnectionsRoot>(
+  const [getServiceConnections] = useLazyQuery<ServiceConnectionsRoot>(
     SERVICE_CONNECTIONS,
     {
       fetchPolicy: 'no-cache',
+      variables: createServiceConnectionsQueryVariables(i18n.language, true),
       onCompleted: data => {
         const queryScopes = getQueryScopes(data);
         getAuthorizationCode(queryScopes);

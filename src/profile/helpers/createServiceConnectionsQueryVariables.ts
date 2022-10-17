@@ -5,11 +5,13 @@ import {
 } from '../../graphql/typings';
 
 export default function createServiceConnectionsQueryVariables(
-  langOrLangAndLocale: string
+  langOrLangAndLocale: string,
+  withGdprScopes = false
 ): ServiceConnectionsQueryVariables {
   return {
     language: getLanguageCode(
       langOrLangAndLocale
     ).toUpperCase() as TranslationLanguage,
+    withGdprScopes,
   };
 }

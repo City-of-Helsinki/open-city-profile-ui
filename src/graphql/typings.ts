@@ -20,7 +20,6 @@ import {
   ServiceConnectionsQuery_myProfile_serviceConnections_edges_node,
   ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service,
   ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node,
-  GdprServiceConnectionsQuery,
   MyProfileQuery_myProfile_primaryAddress,
   MyProfileQuery_myProfile_primaryEmail,
   MyProfileQuery_myProfile_primaryPhone,
@@ -82,7 +81,6 @@ export type ServiceConnectionsQueryVariables = ServiceConnectionsQueryVars;
 export type ServiceAllowedFieldsNode = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node;
 // eslint-disable-next-line max-len
 export type ServiceAllowedFieldsEdge = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges;
-export type GdprServiceConnectionsRoot = GdprServiceConnectionsQuery;
 
 export {
   PhoneType,

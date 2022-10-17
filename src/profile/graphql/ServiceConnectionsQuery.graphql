@@ -1,4 +1,7 @@
-query ServiceConnectionsQuery($language: TranslationLanguage!) {
+query ServiceConnectionsQuery(
+  $language: TranslationLanguage!
+  $withGdprScopes: Boolean!
+) {
   myProfile {
     id
     serviceConnections {
@@ -16,6 +19,8 @@ query ServiceConnectionsQuery($language: TranslationLanguage!) {
                 }
               }
             }
+            gdprQueryScope @include(if: $withGdprScopes)
+            gdprDeleteScope @include(if: $withGdprScopes)
           }
           createdAt
         }

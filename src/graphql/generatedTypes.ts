@@ -73,73 +73,6 @@ export interface GdprDeleteMyServiceDataMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GdprServiceConnectionsQuery
-// ====================================================
-
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
-  readonly __typename: "ServiceNode";
-  /**
-   * GDPR API query operation scope
-   */
-  readonly gdprQueryScope: string;
-  /**
-   * GDPR API delete operation scope
-   */
-  readonly gdprDeleteScope: string;
-}
-
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
-  readonly __typename: "ServiceConnectionType";
-  readonly service: GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
-}
-
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges {
-  readonly __typename: "ServiceConnectionTypeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node | null;
-}
-
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections {
-  readonly __typename: "ServiceConnectionTypeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(GdprServiceConnectionsQuery_myProfile_serviceConnections_edges | null)>;
-}
-
-export interface GdprServiceConnectionsQuery_myProfile {
-  readonly __typename: "ProfileNode";
-  /**
-   * The ID of the object.
-   */
-  readonly id: string;
-  /**
-   * List of the profile's connected services.
-   */
-  readonly serviceConnections: GdprServiceConnectionsQuery_myProfile_serviceConnections | null;
-}
-
-export interface GdprServiceConnectionsQuery {
-  /**
-   * Get the profile belonging to the currently authenticated user.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `TODO`
-   */
-  readonly myProfile: GdprServiceConnectionsQuery_myProfile | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: CreateMyProfile
 // ====================================================
 
@@ -518,6 +451,14 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node
   readonly title: string | null;
   readonly description: string | null;
   readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;
+  /**
+   * GDPR API query operation scope
+   */
+  readonly gdprQueryScope: string;
+  /**
+   * GDPR API delete operation scope
+   */
+  readonly gdprDeleteScope: string;
 }
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
@@ -569,6 +510,7 @@ export interface ServiceConnectionsQuery {
 
 export interface ServiceConnectionsQueryVariables {
   readonly language: TranslationLanguage;
+  readonly withGdprScopes: boolean;
 }
 
 /* tslint:disable */
