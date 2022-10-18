@@ -1,29 +1,54 @@
+import { Link } from 'hds-react';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
-import { ServiceConnectionsRoot } from '../../../../graphql/typings';
-import getServiceConnectionData from '../../../helpers/getServiceConnectionData';
+import { ServiceConnectionData } from '../../../helpers/getServiceConnectionData';
 
 export type Props = {
-  data?: ServiceConnectionsRoot;
+  data?: ServiceConnectionData[];
+  failedDryRunConnections?: string[];
 };
 
-function DeleteProfileContent({ data }: Props): React.ReactElement | null {
+function DeleteProfileContent({
+  data,
+  failedDryRunConnections,
+}: Props): React.ReactElement | null {
   const { t } = useTranslation();
-  const servicesArray = getServiceConnectionData(data);
-  const description =
-    data?.myProfile?.serviceConnections?.edges?.length !== 0
-      ? t('deleteProfileModal.explanation')
-      : t('deleteProfileModal.noServiceExplanation');
+  const servicesArray = data && data.length ? data : [];
+  const description = servicesArray.length
+    ? t('deleteProfileModal.explanation')
+    : t('deleteProfileModal.noServiceExplanation');
   return (
     <>
       <p>{description}</p>
+      <Trans
+        i18nKey="deleteProfileErrorModal.deleteServiceFromPage"
+        components={{
+          linkToServices: (
+            <Link href={'/connected-services'} size="M">
+              {''}
+            </Link>
+          ),
+          linkToServicesText: t('nav.services'),
+        }}
+      />
       {servicesArray.length ? (
         <ul>
           {servicesArray.map((service, index) => (
             <li key={index}>{service.title}</li>
           ))}
         </ul>
+      ) : null}
+      {failedDryRunConnections && failedDryRunConnections.length ? (
+        <>
+          <p>{t('deleteProfileErrorModal.unableToDeleteServices')}</p>
+          <ul>
+            {failedDryRunConnections.map((info, index) => (
+              <li key={index}>{info}</li>
+            ))}
+          </ul>
+          <p>{t('deleteProfileErrorModal.contactServiceToDelete')}</p>
+        </>
       ) : null}
     </>
   );
