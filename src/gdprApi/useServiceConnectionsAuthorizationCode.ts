@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next';
 
 import { ServiceConnectionsRoot } from '../graphql/typings';
 import createServiceConnectionsQueryVariables from '../profile/helpers/createServiceConnectionsQueryVariables';
+import getServiceConnectionData, {
+  ServiceConnectionData,
+} from '../profile/helpers/getServiceConnectionData';
 import useAuthorizationCodeIFrame from './useAuthorizationCodeIFrame';
 import { getQueryScopes } from './utils';
 
@@ -15,6 +18,7 @@ const SERVICE_CONNECTIONS = loader(
 export type LoadStatus = {
   loading: boolean;
   authorizationCode?: string | null | undefined;
+  serviceConnections?: ServiceConnectionData[];
   complete: boolean;
   error?: ApolloError;
 };
@@ -66,6 +70,7 @@ function useServiceConnectionsAuthorizationCode(
       fetchPolicy: 'no-cache',
       variables: createServiceConnectionsQueryVariables(i18n.language, true),
       onCompleted: data => {
+        updateStatus({ serviceConnections: getServiceConnectionData(data) });
         const queryScopes = getQueryScopes(data);
         getAuthorizationCode(queryScopes);
       },
