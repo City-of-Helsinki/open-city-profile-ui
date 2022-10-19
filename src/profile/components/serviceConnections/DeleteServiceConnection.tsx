@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
 import { Button, LoadingSpinner, Notification } from 'hds-react';
 
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import useDeleteServiceConnection from '../../../gdprApi/useDeleteServiceConnection';
 import { ServiceConnectionData } from '../../helpers/getServiceConnectionData';
+import commonStyles from '../../../common/cssHelpers/common.module.css';
 
 function DeleteServiceConnection(props: {
   service: ServiceConnectionData;
@@ -72,10 +73,22 @@ function DeleteServiceConnection(props: {
     setUserRequestedDeletion(false);
   };
   const onConfirmConfirmationModal = () => deleteConnection();
-  const ModalContent = () => <p>voidaan poistaa</p>;
+  const ModalContent = () => (
+    <p>{t('serviceConnections.connectionRemovalVerification')}</p>
+  );
   return (
     <>
-      <button onClick={onClick}>Remove</button>
+      <Trans
+        i18nKey="serviceConnections.deleteConnection"
+        components={{
+          buttonPlaceholder: (
+            <button onClick={onClick} className={commonStyles['text-button']}>
+              {''}
+            </button>
+          ),
+        }}
+      />
+
       <ConfirmationModal
         isOpen={userRequestedDeletion}
         onClose={onCloseConfirmationModal}
