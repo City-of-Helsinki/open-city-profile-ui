@@ -23,6 +23,7 @@ import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsF
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import DeleteServiceConnection from './DeleteServiceConnection';
+import { useScrollIntoView } from '../../hooks/useScrollIntoView';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -48,11 +49,21 @@ function ServiceConnections(): React.ReactElement {
       deletedConnection => deletedConnection.name === service.name
     ) > -1;
 
+  const isLastDeletedElement = (service: ServiceConnectionData) =>
+    deletedConnections.findIndex(
+      deletedConnection => deletedConnection.name === service.name
+    ) ===
+    deletedConnections.length - 1;
+
   const getDateTime = (date: Date) => {
     const day = format(new Date(date), 'dd.MM.yyyy');
     const time = format(new Date(date), 'HH:mm');
     return `${day}, ${t('serviceConnections.clock')} ${time}`;
   };
+
+  const [scrollIntoViewRef] = useScrollIntoView(!!deletedConnections.length, {
+    block: 'center',
+  });
 
   const ContentWrapper = ({
     children,
@@ -130,8 +141,13 @@ function ServiceConnections(): React.ReactElement {
               <Notification
                 key={service.name}
                 type={'success'}
-                label={`NO TRANSLATION Palvelu poistettu:${service.title}`}
+                label={t('serviceConnections.connectionRemovalSuccess', {
+                  serviceName: service.title,
+                })}
                 dataTestId={`service-connection-removed-${index}`}
+                {...(isLastDeletedElement(service) && {
+                  ref: scrollIntoViewRef,
+                })}
               ></Notification>
             ) : (
               <ExpandingPanel
