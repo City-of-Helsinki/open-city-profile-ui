@@ -42,6 +42,7 @@ function useDownloadProfile<TQuery>(
     getAuthorizationCode,
     authorizationCodeStatus,
   ] = useServiceConnectionsAuthorizationCode({
+    requiredGdprScope: 'query',
     onCompleted: e => {
       handleAuthorizationCodeCallback(e);
     },

@@ -36,7 +36,7 @@ function useDeleteServiceConnection(
     ...options,
   });
 
-  const handleAuthorizationCodeCallback = useCallback(
+  const executeDeletion = useCallback(
     (authorizationCode: string) => {
       const variablesWithAuthorizationCode = {
         input: {
@@ -57,8 +57,9 @@ function useDeleteServiceConnection(
     getAuthorizationCode,
     authorizationCodeStatus,
   ] = useServiceConnectionsAuthorizationCode({
+    requiredGdprScope: 'delete',
     onCompleted: e => {
-      handleAuthorizationCodeCallback(e);
+      executeDeletion(e);
     },
     onError: options?.onError,
   });

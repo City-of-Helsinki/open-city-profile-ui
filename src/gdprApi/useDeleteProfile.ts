@@ -82,6 +82,7 @@ function useDeleteProfile(options: Options): [() => void, () => void, Result] {
     getAuthorizationCode,
     authorizationCodeStatus,
   ] = useServiceConnectionsAuthorizationCode({
+    requiredGdprScope: 'delete',
     onCompleted: e => {
       handleAuthorizationCodeCallback(e);
     },
