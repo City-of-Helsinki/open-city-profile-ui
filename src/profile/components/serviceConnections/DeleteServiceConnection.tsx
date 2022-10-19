@@ -82,7 +82,7 @@ function DeleteServiceConnection(props: {
       <Trans
         i18nKey="serviceConnections.deleteConnection"
         components={{
-          buttonPlaceholder: (
+          deleteButton: (
             <button onClick={onClick} className={commonStyles['text-button']}>
               {''}
             </button>
