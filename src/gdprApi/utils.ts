@@ -45,7 +45,9 @@ export function getDeleteScopes(
 ): string[] {
   const services = servicesSelector(serviceConnectionsQuery);
 
-  return services.map(service => service.gdprDeleteScope);
+  return services
+    .filter(service => !!service.gdprDeleteScope)
+    .map(service => service.gdprDeleteScope);
 }
 
 export function getQueryScopes(
@@ -53,5 +55,7 @@ export function getQueryScopes(
 ): string[] {
   const services = servicesSelector(serviceConnectionsQuery);
 
-  return services.map(service => service.gdprQueryScope);
+  return services
+    .filter(service => !!service.gdprQueryScope)
+    .map(service => service.gdprQueryScope);
 }
