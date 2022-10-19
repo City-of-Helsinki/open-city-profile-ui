@@ -9,7 +9,7 @@ import getServiceConnectionData, {
   ServiceConnectionData,
 } from '../profile/helpers/getServiceConnectionData';
 import useAuthorizationCodeIFrame from './useAuthorizationCodeIFrame';
-import { getQueryScopes } from './utils';
+import { getDeleteScopes, getQueryScopes } from './utils';
 
 const SERVICE_CONNECTIONS = loader(
   '../profile/graphql/ServiceConnectionsQuery.graphql'
@@ -24,12 +24,13 @@ export type LoadStatus = {
 };
 
 type Options = {
+  requiredGdprScope: 'delete' | 'query';
   onError?: (e: ApolloError) => void;
   onCompleted?: (authorizationCode: string) => void;
 };
 
 function useServiceConnectionsAuthorizationCode(
-  options?: Options
+  options: Options
 ): [() => void, LoadStatus] {
   const [status, setStatus] = useState<LoadStatus>({
     loading: false,
@@ -71,8 +72,11 @@ function useServiceConnectionsAuthorizationCode(
       variables: createServiceConnectionsQueryVariables(i18n.language, true),
       onCompleted: data => {
         updateStatus({ serviceConnections: getServiceConnectionData(data) });
-        const queryScopes = getQueryScopes(data);
-        getAuthorizationCode(queryScopes);
+        const scopes =
+          options.requiredGdprScope === 'query'
+            ? getQueryScopes(data)
+            : getDeleteScopes(data);
+        getAuthorizationCode(scopes);
       },
       onError: error => {
         updateStatus({
