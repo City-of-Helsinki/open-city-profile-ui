@@ -44,8 +44,6 @@ function DeleteServiceConnection(props: {
   if (accessCodeStatus.loading || queryStatus.loading) {
     return <LoadingSpinner small />;
   }
-  console.log('accessCodeStatus', accessCodeStatus);
-  console.log('queryStatus', queryStatus);
   if (resultError) {
     return (
       <Notification
@@ -67,14 +65,17 @@ function DeleteServiceConnection(props: {
 
   const onClick = () => {
     setUserRequestedDeletion(true);
-    deleteConnection();
   };
   const onCloseConfirmationModal = () => {
     setUserRequestedDeletion(false);
   };
   const onConfirmConfirmationModal = () => deleteConnection();
   const ModalContent = () => (
-    <p>{t('serviceConnections.connectionRemovalVerification')}</p>
+    <p>
+      {t('serviceConnections.connectionRemovalVerification', {
+        serviceName: service.title,
+      })}
+    </p>
   );
   return (
     <>
