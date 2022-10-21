@@ -92,11 +92,15 @@ function useServiceConnectionsAuthorizationCode(
 
   return [
     () => {
-      if (status.loading || status.complete) {
+      if (status.loading) {
         return;
       }
       updateStatus({
         loading: true,
+        complete: false,
+        authorizationCode: undefined,
+        serviceConnections: undefined,
+        error: undefined,
       });
       getServiceConnections();
     },
