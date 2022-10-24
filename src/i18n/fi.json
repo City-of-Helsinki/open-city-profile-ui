@@ -37,18 +37,22 @@
     "delete": "Poista omat tiedot",
     "explanation": "Halutessasi voit poistaa Helsinki-profiilisi ja kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Helsinki-profiiliisi yhdistettyjä asiointipalveluja käyttääksesi on luotava uusi Helsinki-profiili.<br/><br/>Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta.<br/><br/>Jos olet käyttänyt kirjautumisessa ulkopuolisen palveluntarjoajan tiliä (esim. Google tai Facebook), kyseistä tiliä ei poisteta.",
     "title": "Haluatko poistaa omat tietosi?",
-    "loadingServices": "Haetaan profiiliin yhdistettyjä palveluita"
+    "loadingServices": "Haetaan profiiliin yhdistettyjä palveluita",
+    "deleteSuccessful": "Helsinki-profiili ja kaikki sinusta tallentamamme tiedot on poistettu onnistuneesti!",
+    "deleteFailed": "Jostain syystä poisto ei onnistunut. Kokeile hetken kuluttua uudelleen!"
   },
   "deleteProfileModal": {
     "delete": "Poista omat tiedot",
     "explanation": "Jatkamalla menetät kaikki tallennetut tietosi etkä voi enää käyttää seuraavia Helsingin kaupungin palveluita:",
     "noServiceExplanation": "Jatkamalla menetät kaikki tallennetut tietosi.",
-    "title": "Haluatko varmasti poistaa kaikki tietosi?"
-  },
-  "deleteProfileErrorModal": {
+    "title": "Haluatko varmasti poistaa kaikki tietosi?",
     "notAllowed": "Et voi poistaa profiiliasi, koska jokin sitä käyttävistä palveluista tarvitsee tietojasi esimerkiksi laskutukseen.",
-    "title": "Poisto epäonnistui!",
-    "genericError": "Profiilin poistaminen ei onnistunut. Yritä myöhemmin uudelleen."
+    "deletionErrorTitle": "Poisto epäonnistui!",
+    "genericError": "Profiilin poistaminen ei onnistunut. Yritä myöhemmin uudelleen.",
+    "deleteServiceFromPage": "Voit poistaa tiedot näistä palveluista <linkToServices>{{linkToServicesText}}</linkToServices> -sivulta.",
+    "unableToDeleteServices": "Emme voi poistaa tietoja näistä palveluista asioinnin tilan tai säilytysajan vuoksi.",
+    "contactServiceToDelete": "Jos haluat silti poistaa tiedot, ole suoraan yhteydessä <linkToExternalServiceList>kyseiseen palveluun</linkToExternalServiceList> ja yritä profiilin poistoa sen jälkeen uudestaan.",
+    "urlToServiceList": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/hallinto/palvelut"
   },
   "downloadData": {
     "button": "Lataa omat tiedot",
@@ -210,7 +214,10 @@
     "empty": "Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi.",
     "explanation": "Olet antanut seuraaville palveluille oikeuden käyttää Helsinki-profiiliin tallennettuja tietojasi.",
     "servicePersonalData": "Palvelu saa tietää sinusta:",
-    "title": "Palvelut, joilla on lupa käyttää tietojasi"
+    "title": "Palvelut, joilla on lupa käyttää tietojasi",
+    "deleteConnection": "Mikäli haluat poistaa tietosi tästä palvelusta <deleteButton>paina tästä</deleteButton>.",
+    "connectionRemovalVerification": "Jatkamalla menetät kaikki {{serviceName}} -palveluun tallennetut tiedot, etkä voi enää käyttää palvelua, ennen kuin rekisteröidyt palveluun uudelleen.",
+    "connectionRemovalSuccess": "Kaikki {{serviceName}} -palveluun tallentamamme tiedot on poistettu onnistuneesti!"
   },
   "skipToContent": "Siirry suoraan sisältöön",
   "validation": {

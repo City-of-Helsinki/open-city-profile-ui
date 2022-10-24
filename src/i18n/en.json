@@ -37,18 +37,22 @@
     "delete": "Delete my information",
     "explanation": "If you want to, you can delete your Helsinki profile and all the data we have stored. Once deleted, the data cannot be restored. A new Helsinki profile must be created to use the e-services associated with your Helsinki profile.<br/><br/>After the deletion, you will be automatically logged out of this service.<br/><br/>If you have logged in using a third-party service provider account (e.g. Google or Facebook), that account will not be deleted.",
     "title": "Do you want to delete your information?",
-    "loadingServices": "Searching for services connected to the profile"
+    "loadingServices": "Searching for services connected to the profile",
+    "deleteSuccessful": "The Helsinki profile and all the data we hold on you have been deleted successfully!",
+    "deleteFailed": "The deletion failed for some reason. Please try again after a while!"
   },
   "deleteProfileModal": {
     "delete": "Delete my information",
     "explanation": "By continuing you will lose all of your stored data and you can no longer use the following City of Helsinki services:",
     "noServiceExplanation": "By continuing you will lose all of your stored data.",
-    "title": "Are you sure you want to delete your information?"
-  },
-  "deleteProfileErrorModal": {
+    "title": "Are you sure you want to delete your information?",
     "notAllowed": "You cannot delete your profile because one of the services using it needs your information, for example, for invoicing.",
-    "title": "The deletion failed!",
-    "genericError": "The profile could not be deleted. Please try again later."
+    "deletionErrorTitle": "The deletion failed!",
+    "genericError": "The profile could not be deleted. Please try again later.",
+    "deleteServiceFromPage": "You can delete the data from these services via the <linkToServices>{{linkToServicesText}}</linkToServices> page.",
+    "unableToDeleteServices": "We are unable to delete the data from these services due to the service status or retention period.",
+    "contactServiceToDelete": "If you still want to delete the data, please contact <linkToExternalServiceList >the service</linkToExternalServiceList> directly and then retry deleting the profile.",
+    "urlToServiceList": "https://www.hel.fi/helsinki/en/administration/administration/services"
   },
   "downloadData": {
     "button": "Download my information",
@@ -210,7 +214,10 @@
     "empty": "You currently don't have any services connected to your profile.",
     "explanation": "You have granted the following services the right to use the data stored on your Helsinki profile.",
     "servicePersonalData": "Information which the service will know about you:",
-    "title": "Services with permission to use your data"
+    "title": "Services with permission to use your data",
+    "deleteConnection": "If you want to delete your data from this service, <deleteButton>click here</deleteButton>.",
+    "connectionRemovalVerification": "By continuing, you will lose all the data stored in the {{serviceName}} service and will no longer be able to use the service until you re-register to the service.",
+    "connectionRemovalSuccess": "All the data we had stored in the {{serviceName}} service has been deleted successfully!"
   },
   "skipToContent": "Skip to content",
   "validation": {
