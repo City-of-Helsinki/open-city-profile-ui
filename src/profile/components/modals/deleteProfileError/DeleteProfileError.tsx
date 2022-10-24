@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { ApolloError } from '@apollo/client';
 
 import { getModalProps } from '../getModalProps';
-import profileConstants from '../../../constants/profileConstants';
 
 export type Props = {
   error?: ApolloError | Error;
@@ -20,27 +19,9 @@ function DeleteProfileError({
   if (!error) {
     return null;
   }
-  const getErrorTranslationKey = (resultError: Props['error']): string => {
-    if (!resultError) {
-      return 'deleteProfileErrorModal.genericError';
-    }
-    const graphQlErrors = (resultError as ApolloError).graphQLErrors;
-    if (graphQlErrors) {
-      const errorCodes: string[] = graphQlErrors.map(
-        graphQlError => graphQlError?.extensions?.code as string
-      );
-      if (
-        errorCodes.includes(
-          profileConstants.CONNECTED_SERVICE_DELETION_NOT_ALLOWED_ERROR
-        )
-      ) {
-        return 'deleteProfileErrorModal.notAllowed';
-      }
-    }
-    return 'deleteProfileErrorModal.genericError';
-  };
+
   const id = 'delete-profile-error-modal';
-  const content = t(getErrorTranslationKey(error));
+  const content = t('deleteProfileErrorModal.genericError');
   const closeButtonText = t('notification.closeButtonText');
   const {
     titleId,
