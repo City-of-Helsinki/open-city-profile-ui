@@ -122,6 +122,14 @@ class GdprAuthorizationCodeManager {
 
     this.code = code;
   }
+
+  notifyParentWindow(): void {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const state = params.get('state');
+
+    window.parent.postMessage({ code, state });
+  }
 }
 
 export default GdprAuthorizationCodeManager;
