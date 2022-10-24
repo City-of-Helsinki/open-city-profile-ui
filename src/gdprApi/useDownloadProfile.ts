@@ -6,13 +6,15 @@ import {
 } from '@apollo/client';
 import { DocumentNode } from 'graphql';
 import { loader } from 'graphql.macro';
+import { useTranslation } from 'react-i18next';
 
-import { GdprServiceConnectionsRoot } from '../graphql/typings';
+import { ServiceConnectionsRoot } from '../graphql/typings';
 import { getQueryScopes } from './utils';
 import useAuthorizationCode from './useAuthorizationCode';
+import createServiceConnectionsQueryVariables from '../profile/helpers/createServiceConnectionsQueryVariables';
 
 const SERVICE_CONNECTIONS = loader(
-  './graphql/GdprServiceConnectionsQuery.graphql'
+  '../profile/graphql/ServiceConnectionsQuery.graphql'
 );
 
 type TVariables = Record<string, unknown>;
@@ -59,9 +61,12 @@ function useDownloadProfile<TQuery>(
     [startFetchingAuthorizationCode]
   );
 
-  const [getServiceConnections] = useLazyQuery<GdprServiceConnectionsRoot>(
+  const { i18n } = useTranslation();
+
+  const [getServiceConnections] = useLazyQuery<ServiceConnectionsRoot>(
     SERVICE_CONNECTIONS,
     {
+      variables: createServiceConnectionsQueryVariables(i18n.language, true),
       onCompleted: data => {
         handleDownloadActionInitialization(data);
       },

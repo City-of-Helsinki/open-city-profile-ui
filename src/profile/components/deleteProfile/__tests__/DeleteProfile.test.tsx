@@ -118,6 +118,7 @@ describe('<DeleteProfile /> ', () => {
       });
       expect(queryVariableTracker).toHaveBeenCalledWith({
         language: i18n.language.toUpperCase(),
+        withGdprScopes: true,
       });
       await waitFor(() => {
         expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);

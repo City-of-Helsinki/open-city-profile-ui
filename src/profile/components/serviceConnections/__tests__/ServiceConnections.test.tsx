@@ -74,7 +74,7 @@ describe('<ServiceConnections />', () => {
     });
   });
 
-  it('should send current language as a variable. Value must be in uppercase', async () => {
+  it('should send current language and withGdprScopes as a variables. Language must be in uppercase. ', async () => {
     const responses: MockedResponse[] = [
       { profileDataWithServiceConnections: queryResultWithServiceConnection },
     ];
@@ -85,6 +85,7 @@ describe('<ServiceConnections />', () => {
       await waitForElement({ text: serviceList[0].title as string });
       expect(queryVariableTracker).toHaveBeenCalledWith({
         language: lang.toUpperCase(),
+        withGdprScopes: false,
       });
     });
   });

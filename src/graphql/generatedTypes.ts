@@ -38,65 +38,44 @@ export interface GdprDeleteMyProfileMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GdprServiceConnectionsQuery
+// GraphQL mutation operation: GdprDeleteMyServiceDataMutation
 // ====================================================
 
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
-  readonly __typename: "ServiceNode";
-  /**
-   * GDPR API query operation scope
-   */
-  readonly gdprQueryScope: string;
-  /**
-   * GDPR API delete operation scope
-   */
-  readonly gdprDeleteScope: string;
+export interface GdprDeleteMyServiceDataMutation_deleteMyServiceData_result_errors {
+  readonly __typename: "ErrorNode";
+  readonly code: string | null;
 }
 
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
-  readonly __typename: "ServiceConnectionType";
-  readonly service: GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
+export interface GdprDeleteMyServiceDataMutation_deleteMyServiceData_result {
+  readonly __typename: "DeletionResultNode";
+  readonly success: boolean | null;
+  readonly errors: ReadonlyArray<(GdprDeleteMyServiceDataMutation_deleteMyServiceData_result_errors | null)> | null;
 }
 
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges {
-  readonly __typename: "ServiceConnectionTypeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node | null;
+export interface GdprDeleteMyServiceDataMutation_deleteMyServiceData {
+  readonly __typename: "DeleteMyServiceDataMutation";
+  readonly result: GdprDeleteMyServiceDataMutation_deleteMyServiceData_result | null;
 }
 
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections {
-  readonly __typename: "ServiceConnectionTypeConnection";
+export interface GdprDeleteMyServiceDataMutation {
   /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(GdprServiceConnectionsQuery_myProfile_serviceConnections_edges | null)>;
-}
-
-export interface GdprServiceConnectionsQuery_myProfile {
-  readonly __typename: "ProfileNode";
-  /**
-   * The ID of the object.
-   */
-  readonly id: string;
-  /**
-   * List of the profile's connected services.
-   */
-  readonly serviceConnections: GdprServiceConnectionsQuery_myProfile_serviceConnections | null;
-}
-
-export interface GdprServiceConnectionsQuery {
-  /**
-   * Get the profile belonging to the currently authenticated user.
+   * Deletes the data of the profile which is linked to the currently authenticated user from one connected service.
    * 
    * Requires authentication.
    * 
    * Possible error codes:
    * 
-   * * `TODO`
+   * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
+   * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing the service.
+   * * `SERVICE_CONNECTION_DOES_NOT_EXIST_ERROR`: The user is not connected to the service
+   * * `CONNECTED_SERVICE_DELETION_NOT_ALLOWED_ERROR`: The profile deletion is disallowed by the service
+   * * `CONNECTED_SERVICE_DELETION_FAILED_ERROR`: The profile deletion failed for the service.
    */
-  readonly myProfile: GdprServiceConnectionsQuery_myProfile | null;
+  readonly deleteMyServiceData: GdprDeleteMyServiceDataMutation_deleteMyServiceData | null;
+}
+
+export interface GdprDeleteMyServiceDataMutationVariables {
+  readonly input: DeleteMyServiceDataInput;
 }
 
 /* tslint:disable */
@@ -399,9 +378,7 @@ export interface MyProfileQuery_myProfile {
    */
   readonly phones: MyProfileQuery_myProfile_phones | null;
   /**
-   * Personal information that has been verified to be true. Can result into
-   * `PERMISSION_DENIED_ERROR` if the requester has no required privileges to
-   * access this information.
+   * Personal information that has been verified to be true. Can result into `PERMISSION_DENIED_ERROR` if the requester has no required privileges to access this information.
    */
   readonly verifiedPersonalInformation: MyProfileQuery_myProfile_verifiedPersonalInformation | null;
 }
@@ -481,9 +458,18 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
   readonly __typename: "ServiceNode";
+  readonly name: string;
   readonly title: string | null;
   readonly description: string | null;
   readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;
+  /**
+   * GDPR API query operation scope
+   */
+  readonly gdprQueryScope: string;
+  /**
+   * GDPR API delete operation scope
+   */
+  readonly gdprDeleteScope: string;
 }
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
@@ -535,6 +521,7 @@ export interface ServiceConnectionsQuery {
 
 export interface ServiceConnectionsQueryVariables {
   readonly language: TranslationLanguage;
+  readonly withGdprScopes: boolean;
 }
 
 /* tslint:disable */
@@ -815,14 +802,20 @@ export interface CreatePhoneInput {
 
 export interface DeleteMyProfileMutationInput {
   readonly authorizationCode: string;
+  readonly dryRun?: boolean | null;
   readonly clientMutationId?: string | null;
+}
+
+export interface DeleteMyServiceDataInput {
+  readonly authorizationCode: string;
+  readonly serviceName: string;
+  readonly dryRun?: boolean | null;
 }
 
 /**
  * The following fields are deprecated:
  * 
  * * `image`
- * * `subscriptions`
  * 
  * There's no replacement for these.
  */
@@ -836,7 +829,6 @@ export interface ProfileInput {
   readonly addEmails?: ReadonlyArray<(CreateEmailInput | null)> | null;
   readonly addPhones?: ReadonlyArray<(CreatePhoneInput | null)> | null;
   readonly addAddresses?: ReadonlyArray<(CreateAddressInput | null)> | null;
-  readonly subscriptions?: ReadonlyArray<(SubscriptionInputType | null)> | null;
   readonly sensitivedata?: SensitiveDataFields | null;
   readonly updateEmails?: ReadonlyArray<(UpdateEmailInput | null)> | null;
   readonly removeEmails?: ReadonlyArray<(string | null)> | null;
@@ -848,11 +840,6 @@ export interface ProfileInput {
 
 export interface SensitiveDataFields {
   readonly ssn?: string | null;
-}
-
-export interface SubscriptionInputType {
-  readonly subscriptionTypeId: string;
-  readonly enabled: boolean;
 }
 
 export interface UpdateAddressInput {

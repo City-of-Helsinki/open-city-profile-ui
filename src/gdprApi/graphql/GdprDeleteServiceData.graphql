@@ -1,0 +1,10 @@
+mutation GdprDeleteMyServiceDataMutation($input: DeleteMyServiceDataInput!) {
+  deleteMyServiceData {
+    result {
+      success
+      errors {
+        code
+      }
+    }
+  }
+}

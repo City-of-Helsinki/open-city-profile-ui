@@ -6,18 +6,20 @@ import {
   useLazyQuery,
 } from '@apollo/client';
 import { loader } from 'graphql.macro';
+import { useTranslation } from 'react-i18next';
 
 import {
   GdprDeleteMyProfileMutation,
   GdprDeleteMyProfileMutationVariables,
 } from '../graphql/generatedTypes';
-import { GdprServiceConnectionsRoot } from '../graphql/typings';
+import { ServiceConnectionsRoot } from '../graphql/typings';
 import { getDeleteScopes } from './utils';
 import useAuthorizationCode from './useAuthorizationCode';
+import createServiceConnectionsQueryVariables from '../profile/helpers/createServiceConnectionsQueryVariables';
 
 const DELETE_PROFILE = loader('./graphql/GdprDeleteMyProfileMutation.graphql');
 const SERVICE_CONNECTIONS = loader(
-  './graphql/GdprServiceConnectionsQuery.graphql'
+  '../profile/graphql/ServiceConnectionsQuery.graphql'
 );
 
 function useDeleteProfile(
@@ -62,9 +64,12 @@ function useDeleteProfile(
     [startFetchingAuthorizationCode]
   );
 
-  const [getServiceConnections] = useLazyQuery<GdprServiceConnectionsRoot>(
+  const { i18n } = useTranslation();
+
+  const [getServiceConnections] = useLazyQuery<ServiceConnectionsRoot>(
     SERVICE_CONNECTIONS,
     {
+      variables: createServiceConnectionsQueryVariables(i18n.language, true),
       fetchPolicy: 'no-cache',
       onCompleted: data => {
         handleDownloadActionInitialization(data);

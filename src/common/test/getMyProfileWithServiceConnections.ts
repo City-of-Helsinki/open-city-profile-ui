@@ -1,9 +1,4 @@
 import {
-  GdprServiceConnectionsQuery_myProfile_serviceConnections,
-  GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service,
-} from '../../graphql/generatedTypes';
-import {
-  Mutable,
   ServiceAllowedFieldsEdge,
   ServiceConnectionsRoot,
 } from '../../graphql/typings';
@@ -31,6 +26,7 @@ export default function getMyProfileWithServiceConnections(
             node: {
               createdAt: '2021-03-10T11:34:14.719531+00:00',
               service: {
+                name: 'Profile service name',
                 title: 'Profiili käyttöliittymä',
                 description:
                   'Henkilön omien profiilitietojen hallintakäyttöliittymä.',
@@ -45,6 +41,10 @@ export default function getMyProfileWithServiceConnections(
                   ],
                   __typename: 'AllowedDataFieldNodeConnection',
                 },
+                ...(addGdprQueryServiceData && {
+                  gdprQueryScope: 'profileQueryScope',
+                  gdprDeleteScope: 'profileDeleteScope',
+                }),
                 __typename: 'ServiceNode',
               },
               __typename: 'ServiceConnectionType',
@@ -55,6 +55,7 @@ export default function getMyProfileWithServiceConnections(
             node: {
               createdAt: '2020-03-10T11:34:14.719531+00:00',
               service: {
+                name: 'Example UI service name',
                 title: 'Example UI',
                 description: 'Esimerkkiapplikaatio.',
                 allowedDataFields: {
@@ -68,6 +69,10 @@ export default function getMyProfileWithServiceConnections(
                   ],
                   __typename: 'AllowedDataFieldNodeConnection',
                 },
+                ...(addGdprQueryServiceData && {
+                  gdprQueryScope: 'exampleQueryScope',
+                  gdprDeleteScope: 'exampleDeleteScope',
+                }),
                 __typename: 'ServiceNode',
               },
               __typename: 'ServiceConnectionType',
@@ -80,19 +85,6 @@ export default function getMyProfileWithServiceConnections(
       __typename: 'ProfileNode',
     },
   };
-  if (addGdprQueryServiceData) {
-    const connections = (data.myProfile
-      .serviceConnections as unknown) as GdprServiceConnectionsQuery_myProfile_serviceConnections;
-    connections.edges.forEach(edge => {
-      const service = edge?.node?.service as Mutable<
-        GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service
-      >;
-      if (service) {
-        service.gdprQueryScope = '';
-        service.gdprDeleteScope = '';
-      }
-    });
-  }
 
   return data as ServiceConnectionsRoot;
 }

@@ -1,10 +1,14 @@
-query ServiceConnectionsQuery($language: TranslationLanguage!) {
+query ServiceConnectionsQuery(
+  $language: TranslationLanguage!
+  $withGdprScopes: Boolean!
+) {
   myProfile {
     id
     serviceConnections {
       edges {
         node {
           service {
+            name
             title(language: $language)
             description(language: $language)
             allowedDataFields {
@@ -15,6 +19,8 @@ query ServiceConnectionsQuery($language: TranslationLanguage!) {
                 }
               }
             }
+            gdprQueryScope @include(if: $withGdprScopes)
+            gdprDeleteScope @include(if: $withGdprScopes)
           }
           createdAt
         }
