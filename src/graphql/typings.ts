@@ -25,6 +25,9 @@ import {
   MyProfileQuery_myProfile_primaryPhone,
   ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges,
   ServiceConnectionsQueryVariables as ServiceConnectionsQueryVars,
+  GdprDeleteMyProfileMutation_deleteMyProfile_results,
+  GdprDeleteMyProfileMutation_deleteMyProfile_results_service,
+  GdprDeleteMyProfileMutation_deleteMyProfile_results_errors,
 } from './generatedTypes';
 
 export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
@@ -91,3 +94,7 @@ export {
 } from './generatedTypes';
 
 export type AnyObject<T = unknown> = Record<string, T>;
+
+export type DeleteMyProfileResults = GdprDeleteMyProfileMutation_deleteMyProfile_results;
+export type DeleteMyProfileResultsService = GdprDeleteMyProfileMutation_deleteMyProfile_results_service;
+export type DeleteMyProfileResultsErrors = GdprDeleteMyProfileMutation_deleteMyProfile_results_errors;

@@ -7,9 +7,26 @@
 // GraphQL mutation operation: GdprDeleteMyProfileMutation
 // ====================================================
 
+export interface GdprDeleteMyProfileMutation_deleteMyProfile_results_errors {
+  readonly __typename: "ErrorNode";
+  readonly code: string | null;
+}
+
+export interface GdprDeleteMyProfileMutation_deleteMyProfile_results_service {
+  readonly __typename: "ServiceNode";
+  readonly name: string;
+}
+
+export interface GdprDeleteMyProfileMutation_deleteMyProfile_results {
+  readonly __typename: "DeletionResultNode";
+  readonly success: boolean | null;
+  readonly errors: ReadonlyArray<(GdprDeleteMyProfileMutation_deleteMyProfile_results_errors | null)> | null;
+  readonly service: GdprDeleteMyProfileMutation_deleteMyProfile_results_service | null;
+}
+
 export interface GdprDeleteMyProfileMutation_deleteMyProfile {
   readonly __typename: "DeleteMyProfileMutationPayload";
-  readonly clientMutationId: string | null;
+  readonly results: ReadonlyArray<(GdprDeleteMyProfileMutation_deleteMyProfile_results | null)> | null;
 }
 
 export interface GdprDeleteMyProfileMutation {

@@ -1,5 +1,13 @@
-mutation GdprDeleteMyProfileMutation($input:DeleteMyProfileMutationInput!) {
+mutation GdprDeleteMyProfileMutation($input: DeleteMyProfileMutationInput!) {
   deleteMyProfile(input: $input) {
-    clientMutationId
+    results {
+      success
+      errors {
+        code
+      }
+      service {
+        name
+      }
+    }
   }
 }
