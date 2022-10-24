@@ -16,10 +16,10 @@ import { DownloadMyProfileQueryVariables } from '../../../../graphql/generatedTy
 const mockSaveAsListener = jest.fn();
 
 jest.mock(
-  '../../../../gdprApi/useAuthorizationCode.ts',
-  () => (...args: [string, (code: string) => void]) => [
+  '../../../../gdprApi/useAuthorizationCodeIFrame.ts',
+  () => (...args: [(code: string) => void]) => [
     async () => {
-      const cb = args[1];
+      const cb = args[0];
       await new Promise(resolve => {
         setTimeout(resolve, 100);
       });
@@ -45,7 +45,7 @@ describe('<DownloadData /> ', () => {
   const renderTestSuite = (errorResponseIndex = -1) => {
     const responseProvider: ResponseProvider = payload => {
       responseCounter = responseCounter + 1;
-      queryVariableTracker(payload as DownloadMyProfileQueryVariables);
+      queryVariableTracker(payload);
       if (responseCounter === errorResponseIndex) {
         return { errorType: 'networkError' };
       }

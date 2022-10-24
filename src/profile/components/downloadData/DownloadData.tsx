@@ -9,7 +9,6 @@ import styles from './DownloadData.module.css';
 import { DownloadMyProfileQuery as DownloadMyProfileRoot } from '../../../graphql/generatedTypes';
 import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
-import { useScrollIntoView } from '../../hooks/useScrollIntoView';
 
 const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
@@ -36,11 +35,9 @@ function DownloadData(): React.ReactElement {
     setError(false);
     downloadProfileData();
   };
-  const [scrollIntoViewRef] = useScrollIntoView(loading);
-
   return (
     <ProfileSection>
-      <h2 ref={scrollIntoViewRef}>{t('downloadData.panelTitle')}</h2>
+      <h2>{t('downloadData.panelTitle')}</h2>
       <p>{t('downloadData.panelText')}</p>
       {hasError && (
         <Notification
