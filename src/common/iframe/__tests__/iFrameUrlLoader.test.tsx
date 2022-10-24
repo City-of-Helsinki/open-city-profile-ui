@@ -8,6 +8,11 @@ import {
 } from '@testing-library/react';
 
 import { cleanUpIFrame, iFrameUrlLoader } from '../iFrameUrlLoader';
+import {
+  verifyTrackerReceivedAnEvent,
+  didTrackerReceiveIFrameRemovedMessage,
+  didTrackerReceiveCleanUpMessage,
+} from '../../test/iFrameUrlLoaderMock.util';
 
 describe('iFrameUrlLoader', () => {
   const iFrameUrl = 'this-does-not-matter-in-jsdom.html';
@@ -267,41 +272,6 @@ describe('iFrameUrlLoader', () => {
     const frame1Name = 'frame1';
     const frame2Name = 'frame2';
     const frame3Name = 'frame3';
-
-    const verifyTrackerReceivedAnEvent = (
-      tracker: jest.Mock,
-      props: Record<string, unknown>
-    ) => {
-      const calls = tracker.mock.calls;
-      return (
-        calls.findIndex(args => {
-          try {
-            expect(args[0]).toMatchObject(props);
-            return true;
-          } catch (e) {
-            return false;
-          }
-        }) > -1
-      );
-    };
-
-    const didTrackerReceiveIFrameRemovedMessage = (
-      tracker: jest.Mock,
-      iframeName: string
-    ) =>
-      verifyTrackerReceivedAnEvent(tracker, {
-        iframeRemoved: true,
-        iframeName,
-      });
-
-    const didTrackerReceiveCleanUpMessage = (
-      tracker: jest.Mock,
-      iframeName: string
-    ) =>
-      verifyTrackerReceivedAnEvent(tracker, {
-        cleanUpIFrameLoader: true,
-        iframeName,
-      });
 
     const MultiIFrameComponent = ({
       name,
