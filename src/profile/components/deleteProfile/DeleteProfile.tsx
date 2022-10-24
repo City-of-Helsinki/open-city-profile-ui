@@ -1,128 +1,104 @@
-import React, { useCallback, useState } from 'react';
-import { ApolloError, useLazyQuery } from '@apollo/client';
-import { loader } from 'graphql.macro';
+import React, { useState } from 'react';
+import { ApolloError } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
-import { Button, LoadingSpinner, Notification } from 'hds-react';
+import { Button, LoadingSpinner } from 'hds-react';
 import { useHistory } from 'react-router';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
-import {
-  ServiceConnectionsQueryVariables,
-  ServiceConnectionsRoot,
-} from '../../../graphql/typings';
 import styles from './deleteProfile.module.css';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
-import DeleteProfileError from '../modals/deleteProfileError/DeleteProfileError';
-import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
-import { useScrollIntoView } from '../../hooks/useScrollIntoView';
-
-const SERVICE_CONNECTIONS = loader(
-  '../../graphql/ServiceConnectionsQuery.graphql'
-);
 
 function DeleteProfile(): React.ReactElement {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showServerErrorModal, setShowServerErrorModal] = useState(false);
   const notStartedLoadState = 'not-started';
-  const loadingLoadState = 'loading';
-  const loadedLoadState = 'loaded';
+  const deletedCompleteLoadState = 'delete-complete';
+  const dryRunningLoadState = 'dry-running';
+  const dryRunCompleteLoadState = 'dry-run-complete';
+  const deletingLoadState = 'deleting';
   const errorLoadState = 'error';
-  const [dataLoadState, setDataLoadState] = useState<
-    | typeof notStartedLoadState
-    | typeof loadingLoadState
-    | typeof loadedLoadState
-    | typeof errorLoadState
-  >(notStartedLoadState);
   const history = useHistory();
   const { trackEvent } = useMatomo();
-  const [resultError, setResultError] = useState<
-    ApolloError | Error | undefined
-  >(undefined);
-  const [deleteProfile, { loading: isDeletingProfile }] = useDeleteProfile({
-    onCompleted: returnedData => {
-      if (returnedData) {
-        trackEvent({ category: 'action', action: 'Delete profile' });
-        history.push('/profile-deleted');
-      }
-    },
-    onError: error => {
-      if (error.graphQLErrors) {
-        error.graphQLErrors.forEach(graphQlError => {
-          Sentry.captureException(new Error(graphQlError.message));
-        });
-      } else {
-        Sentry.captureException(error);
-      }
-      setResultError(error);
-    },
-  });
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const [removeButtonId, setFocusToRemoveButton] = useFocusSetter({
     targetId: `delete-profile-button`,
   });
 
-  const [scrollIntoViewRef] = useScrollIntoView(isDeletingProfile);
-
-  const handleConfirmationModal = () => {
-    setShowConfirmationModal(prevState => !prevState);
-    setFocusToRemoveButton();
+  const toggleConfirmationModal = (show: boolean) => {
+    setShowConfirmationModal(show);
+    if (!show) {
+      // test this...
+      setFocusToRemoveButton();
+    }
   };
 
-  const [getServiceConnections, { data: serviceConnections }] = useLazyQuery<
-    ServiceConnectionsRoot,
-    ServiceConnectionsQueryVariables
-  >(SERVICE_CONNECTIONS, {
-    variables: createServiceConnectionsQueryVariables(i18n.language),
-    fetchPolicy: 'no-cache',
-    onCompleted: () => {
-      if (dataLoadState === loadedLoadState) {
-        return;
-      }
-      setDataLoadState(loadedLoadState);
-      handleConfirmationModal();
+  const [
+    dryRunDeletion,
+    deleteProfile,
+    { serviceConnections, dryRunResult, deleteResult },
+    loading,
+  ] = useDeleteProfile({
+    onDeleteCompleted: () => {
+      trackEvent({ category: 'action', action: 'Delete profile' });
+      history.push('/profile-deleted');
     },
-    onError: (error: Error) => {
-      setDataLoadState(errorLoadState);
-      Sentry.captureException(error);
+    onDryRunCompleted: () => {
+      toggleConfirmationModal(true);
+    },
+    onError: error => {
+      if ((error as ApolloError).graphQLErrors) {
+        (error as ApolloError).graphQLErrors.forEach(graphQlError => {
+          Sentry.captureException(new Error(graphQlError.message));
+        });
+      } else {
+        Sentry.captureException(error);
+      }
+      setShowServerErrorModal(true);
+      setShowConfirmationModal(false);
     },
   });
 
-  const loadServiceConnections = useCallback(
-    (reloadAfterError = false) => {
-      if (dataLoadState !== loadedLoadState && serviceConnections) {
-        setDataLoadState(loadedLoadState);
-      } else if (dataLoadState === notStartedLoadState || reloadAfterError) {
-        getServiceConnections();
-        setDataLoadState(loadingLoadState);
-      }
-    },
-    [getServiceConnections, setDataLoadState, dataLoadState, serviceConnections]
-  );
+  const getLoadState = () => {
+    const dryRunComplete =
+      dryRunResult && (dryRunResult.results || dryRunResult.error);
+    const deleteComplete =
+      dryRunComplete && deleteResult && deleteResult.results;
+
+    if (dryRunResult?.error || deleteResult?.error || deleteResult?.error) {
+      return errorLoadState;
+    }
+    if (loading && dryRunComplete) {
+      return deletingLoadState;
+    }
+    if (!loading && dryRunComplete) {
+      return dryRunCompleteLoadState;
+    }
+    if (deleteComplete) {
+      return deletedCompleteLoadState;
+    }
+    if (loading) {
+      return dryRunningLoadState;
+    }
+    return notStartedLoadState;
+  };
+
+  const dataLoadState = getLoadState();
 
   const handleDeleteClick = () => {
-    if (dataLoadState === loadingLoadState) {
+    if (loading) {
       return;
     }
-    if (dataLoadState === loadedLoadState) {
-      handleConfirmationModal();
-    } else {
-      loadServiceConnections();
-    }
+    dryRunDeletion();
   };
 
   const handleProfileDelete = async () => {
-    setShowConfirmationModal(false);
-
-    if (serviceConnections === undefined) {
-      throw Error('Could not find services to delete');
-    }
-
     deleteProfile();
   };
 
@@ -137,45 +113,18 @@ function DeleteProfile(): React.ReactElement {
       <p>{text}</p>
     </div>
   );
-  const ServiceConnectionLoadError = () => (
-    <Notification label={t('notification.defaultErrorText')} type={'error'}>
-      <Button
-        type="button"
-        onClick={() => loadServiceConnections(true)}
-        className={styles.button}
-        data-testid="reload-service-connections"
-      >
-        {t('notification.tryAgain')}
-      </Button>
-    </Notification>
-  );
-  const LoadStateIndicator = () =>
-    dataLoadState === errorLoadState ? (
-      <ServiceConnectionLoadError />
-    ) : (
-      <LoadIndicator text={t('deleteProfile.loadingServices')} />
-    );
 
-  if (isDeletingProfile) {
-    return (
-      <div data-testid={'deleting-profile'}>
-        <h2 ref={scrollIntoViewRef}>{t('deleteProfile.title')}</h2>
-        <LoadIndicator text={`${t('notification.removing')}...`} />
-      </div>
-    );
-  }
   return (
     <ProfileSection data-test-id={'delete-profile'}>
       <h2>{t('deleteProfile.title')}</h2>
       <p dangerouslySetInnerHTML={{ __html: t('deleteProfile.explanation') }} />
-
-      {dataLoadState === loadingLoadState ||
-      dataLoadState === errorLoadState ? (
-        <LoadStateIndicator />
+      {dataLoadState === dryRunningLoadState ? (
+        <LoadIndicator text={t('deleteProfile.loadingServices')} />
       ) : (
         <Button
           type="button"
           onClick={handleDeleteClick}
+          disabled={showConfirmationModal}
           className={styles.button}
           id={removeButtonId}
         >
@@ -184,15 +133,33 @@ function DeleteProfile(): React.ReactElement {
       )}
       <ConfirmationModal
         isOpen={showConfirmationModal}
-        onClose={handleConfirmationModal}
+        onClose={() => toggleConfirmationModal(false)}
         onConfirm={handleProfileDelete}
-        content={() => <ModalServicesContent data={serviceConnections} />}
+        content={() => (
+          <ModalServicesContent
+            hasError={dataLoadState === errorLoadState}
+            isDeleting={
+              dataLoadState === deletingLoadState ||
+              dataLoadState === deletedCompleteLoadState
+            }
+            dryRunResult={dryRunResult}
+            serviceConnections={serviceConnections}
+          />
+        )}
         title={t('deleteProfileModal.title')}
         actionButtonText={t('deleteProfileModal.delete')}
       />
-      <DeleteProfileError
-        error={resultError}
-        onClose={() => setResultError(undefined)}
+      <ConfirmationModal
+        isOpen={showServerErrorModal}
+        onClose={() => setShowServerErrorModal(false)}
+        onConfirm={() => setShowServerErrorModal(false)}
+        content={() => (
+          <p data-testid={'server-error'}>
+            {t('deleteProfileModal.genericError')}
+          </p>
+        )}
+        title={t('deleteProfileModal.title')}
+        closeButtonText={t('notification.closeButtonText')}
       />
     </ProfileSection>
   );

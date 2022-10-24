@@ -1,29 +1,131 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Link, LoadingSpinner } from 'hds-react';
+import React, { useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
-import { ServiceConnectionsRoot } from '../../../../graphql/typings';
-import getServiceConnectionData from '../../../helpers/getServiceConnectionData';
+import { DeleteProfileResult } from '../../../../gdprApi/useDeleteProfile';
+import styles from '../../deleteProfile/deleteProfile.module.css';
 
-export type Props = {
-  data?: ServiceConnectionsRoot;
-};
+type Props = Pick<
+  DeleteProfileResult,
+  'dryRunResult' | 'serviceConnections'
+> & { isDeleting: boolean; hasError: boolean };
 
-function DeleteProfileContent({ data }: Props): React.ReactElement | null {
+function DeleteProfileContent(props: Props): React.ReactElement | null {
+  const { dryRunResult, serviceConnections, isDeleting, hasError } = props;
+  const [removables, failures] = useMemo(() => {
+    if (!serviceConnections) {
+      return [[], []];
+    }
+    const failedServices =
+      dryRunResult && dryRunResult.results
+        ? dryRunResult.results.reduce((currentList, currentResult) => {
+            if (
+              currentResult &&
+              !currentResult.success &&
+              currentResult.service
+            ) {
+              currentList.add(currentResult.service.name);
+            }
+            return currentList;
+          }, new Set<string>())
+        : new Set();
+
+    if (!failedServices.size) {
+      return [serviceConnections, []];
+    }
+
+    const didServiceDryRunFail = (name: string) => failedServices.has(name);
+
+    return [
+      serviceConnections.filter(service => !didServiceDryRunFail(service.name)),
+      serviceConnections.filter(service => didServiceDryRunFail(service.name)),
+    ];
+  }, [dryRunResult, serviceConnections]);
+
   const { t } = useTranslation();
-  const servicesArray = getServiceConnectionData(data);
-  const description =
-    data?.myProfile?.serviceConnections?.edges?.length !== 0
-      ? t('deleteProfileModal.explanation')
-      : t('deleteProfileModal.noServiceExplanation');
+  const hasServices = !!serviceConnections && !!serviceConnections.length;
+  const hasFailedServices = failures.length;
+
+  const description = hasServices
+    ? t('deleteProfileModal.explanation')
+    : t('deleteProfileModal.noServiceExplanation');
+  if (hasError) {
+    return <p>{t('deleteProfileModal.genericError')}</p>;
+  }
+  if (!isDeleting) {
+    return (
+      <div
+        aria-live="polite"
+        aria-busy="true"
+        data-testid="delete-profile-load-indicator"
+        className={styles['loading-info']}
+      >
+        <LoadingSpinner small />
+        <p>{t('notification.removing')}</p>
+      </div>
+    );
+  }
+
+  const SuccessListDescription = () => {
+    if (!removables.length) {
+      return null;
+    }
+    if (hasFailedServices) {
+      return (
+        <Trans
+          i18nKey="deleteProfileModal.deleteServiceFromPage"
+          components={{
+            linkToServices: (
+              <Link href={'/connected-services'} size="M">
+                {''}
+              </Link>
+            ),
+            linkToServicesText: t('nav.services'),
+          }}
+        />
+      );
+    }
+    return <p>{description}</p>;
+  };
+
+  const FailureListNote = () => (
+    <Trans
+      i18nKey="deleteProfileModal.contactServiceToDelete"
+      components={{
+        linkToExternalServiceList: (
+          <Link
+            href={t('deleteProfileModal.urlToServiceList')}
+            external
+            openInNewTab
+            size="M"
+          >
+            {''}
+          </Link>
+        ),
+      }}
+    />
+  );
+
   return (
     <>
-      <p>{description}</p>
-      {servicesArray.length ? (
+      <SuccessListDescription />
+      {removables.length ? (
         <ul>
-          {servicesArray.map((service, index) => (
+          {removables.map((service, index) => (
             <li key={index}>{service.title}</li>
           ))}
         </ul>
+      ) : null}
+      {hasFailedServices ? (
+        <>
+          <p>{t('deleteProfileModal.unableToDeleteServices')}</p>
+          <ul>
+            {failures.map((service, index) => (
+              <li key={index}>{service.title}</li>
+            ))}
+          </ul>
+          <FailureListNote />
+        </>
       ) : null}
     </>
   );
