@@ -28,6 +28,7 @@ import {
   GdprDeleteMyProfileMutation_deleteMyProfile_results,
   GdprDeleteMyProfileMutation_deleteMyProfile_results_service,
   GdprDeleteMyProfileMutation_deleteMyProfile_results_errors,
+  GdprDeleteMyProfileMutation_deleteMyProfile,
 } from './generatedTypes';
 
 export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
@@ -95,6 +96,6 @@ export {
 
 export type AnyObject<T = unknown> = Record<string, T>;
 
-export type DeleteMyProfileResults = GdprDeleteMyProfileMutation_deleteMyProfile_results;
+export type DeleteMyProfileResults = GdprDeleteMyProfileMutation_deleteMyProfile['results'];
 export type DeleteMyProfileResultsService = GdprDeleteMyProfileMutation_deleteMyProfile_results_service;
 export type DeleteMyProfileResultsErrors = GdprDeleteMyProfileMutation_deleteMyProfile_results_errors;

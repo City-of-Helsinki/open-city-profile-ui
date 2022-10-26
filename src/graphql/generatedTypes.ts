@@ -70,7 +70,7 @@ export interface GdprDeleteMyServiceDataMutation_deleteMyServiceData_result {
 }
 
 export interface GdprDeleteMyServiceDataMutation_deleteMyServiceData {
-  readonly __typename: "DeleteMyServiceDataMutation";
+  readonly __typename: "DeleteMyServiceDataMutationPayload";
   readonly result: GdprDeleteMyServiceDataMutation_deleteMyServiceData_result | null;
 }
 
@@ -92,7 +92,7 @@ export interface GdprDeleteMyServiceDataMutation {
 }
 
 export interface GdprDeleteMyServiceDataMutationVariables {
-  readonly input: DeleteMyServiceDataInput;
+  readonly input: DeleteMyServiceDataMutationInput;
 }
 
 /* tslint:disable */
@@ -823,7 +823,7 @@ export interface DeleteMyProfileMutationInput {
   readonly clientMutationId?: string | null;
 }
 
-export interface DeleteMyServiceDataInput {
+export interface DeleteMyServiceDataMutationInput {
   readonly authorizationCode: string;
   readonly serviceName: string;
   readonly dryRun?: boolean | null;
