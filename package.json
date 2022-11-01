@@ -73,6 +73,7 @@
   },
   "scripts": {
     "start": "npm run update-runtime-env && react-scripts start",
+    "start-https": "npm run update-runtime-env && HOST=profiili.localhost PORT=8088 HTTPS=true SSL_CRT_FILE=public/profiili.localhost.pem SSL_KEY_FILE=public/profiili.localhost-key.pem react-scripts start",
     "build": "react-scripts build",
     "test": "cross-env TEST=true npm run update-runtime-env && react-scripts test",
     "ci": "cross-env CI=true yarn test --coverage",

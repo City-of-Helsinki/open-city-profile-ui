@@ -26,6 +26,36 @@ Scripts generates first environment variables to `public/env-config.js` with `sc
 actual used variables when running the app. App is not using CRA's default `process.env` way to refer of variables but
 `window._env_` object.
 
+### `yarn start-https`
+
+Runs the server with https. Needed with Firefox and Safari when making [GDPR API](#gdpr-api) calls. The server is started with https, in port 8088 and the host is set as https://profiili.localhost.
+
+Add the url to etc/hosts
+
+```
+127.0.0.1       profiili.localhost
+:1              profiili.localhost
+```
+
+Https requires certificates
+
+Install [mkcert](https://github.com/FiloSottile/mkcert)
+
+Create a locally trusted CA with
+
+```
+mkcert -install
+
+```
+
+Generate an SSL certificate with
+
+```
+mkcert profiili.localhost
+```
+
+Copy files to `public` and start server with `yarn start-https`
+
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.<br />
@@ -165,6 +195,16 @@ OR
 Run `yarn` to install dependencies, start app with `yarn start`.
 
 The graphql-backend for development is located at https://profiili-api.test.kuva.hel.ninja/graphql/, it has graphiql installed so you can browse it in your browser!
+
+## GDPR API
+
+Delete profile, download profile and delete service connections use GDPR API to get an authorization code for the wanted action.
+
+The code is fetched in an iframe. Firefox and Safari have issues with this when running in _localhost_. They don't send third party cookies, so the authorization code cannot be fetched.
+
+You can disable this in the browser's security settings.
+
+Or better to use `yarn start-https`. There might still be problems with Safari. Then loosen the security settings with third party cookies and use https.
 
 ## Learn More
 
