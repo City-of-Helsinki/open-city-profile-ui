@@ -25,7 +25,6 @@ import {
   MyProfileQuery_myProfile_primaryPhone,
   ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges,
   ServiceConnectionsQueryVariables as ServiceConnectionsQueryVars,
-  GdprDeleteMyProfileMutation_deleteMyProfile_results,
   GdprDeleteMyProfileMutation_deleteMyProfile_results_service,
   GdprDeleteMyProfileMutation_deleteMyProfile_results_errors,
   GdprDeleteMyProfileMutation_deleteMyProfile,
