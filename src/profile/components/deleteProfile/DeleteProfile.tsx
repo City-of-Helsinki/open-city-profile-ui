@@ -9,7 +9,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import styles from './deleteProfile.module.css';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
-import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
+import DeleteProfileConfirmationModal from '../modals/deleteProfileConfirmationModal/DeleteProfileConfirmationModal';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 
@@ -131,23 +131,17 @@ function DeleteProfile(): React.ReactElement {
           {t('deleteProfile.delete')}
         </Button>
       )}
-      <ConfirmationModal
+      <DeleteProfileConfirmationModal
         isOpen={showConfirmationModal}
         onClose={() => toggleConfirmationModal(false)}
         onConfirm={handleProfileDelete}
-        content={() => (
-          <ModalServicesContent
-            hasError={dataLoadState === errorLoadState}
-            isDeleting={
-              dataLoadState === deletingLoadState ||
-              dataLoadState === deletedCompleteLoadState
-            }
-            dryRunResult={dryRunResult}
-            serviceConnections={serviceConnections}
-          />
-        )}
-        title={t('deleteProfileModal.title')}
-        actionButtonText={t('deleteProfileModal.delete')}
+        hasError={dataLoadState === errorLoadState}
+        isDeleting={
+          dataLoadState === deletingLoadState ||
+          dataLoadState === deletedCompleteLoadState
+        }
+        dryRunResult={dryRunResult}
+        serviceConnections={serviceConnections}
       />
       <ConfirmationModal
         isOpen={showServerErrorModal}
