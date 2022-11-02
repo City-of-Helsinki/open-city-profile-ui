@@ -1,7 +1,7 @@
 mutation GdprDeleteMyServiceDataMutation(
   $input: DeleteMyServiceDataMutationInput!
 ) {
-  deleteMyServiceData {
+  deleteMyServiceData(input: $input) {
     result {
       success
       errors {
