@@ -217,7 +217,10 @@
     "title": "Palvelut, joilla on lupa käyttää tietojasi",
     "deleteConnection": "Mikäli haluat poistaa tietosi tästä palvelusta <deleteButton>paina tästä</deleteButton>.",
     "connectionRemovalVerification": "Jatkamalla menetät kaikki {{serviceName}} -palveluun tallennetut tiedot, etkä voi enää käyttää palvelua, ennen kuin rekisteröidyt palveluun uudelleen.",
-    "connectionRemovalSuccess": "Kaikki {{serviceName}} -palveluun tallentamamme tiedot on poistettu onnistuneesti!"
+    "connectionRemovalSuccess": "Kaikki {{serviceName}} -palveluun tallentamamme tiedot on poistettu onnistuneesti!",
+    "connectionRemovalForbidden": "Emme voi poistaa tietoja tästä palvelusta asioinnin tilan tai säilytysajan vuoksi.",
+    "connectionRemovalVerificationTitle": "Haluatko varmasti poistaa tietosi?",
+    "connectionRemovalVerificationButtonText": "Poista tiedot"
   },
   "skipToContent": "Siirry suoraan sisältöön",
   "validation": {

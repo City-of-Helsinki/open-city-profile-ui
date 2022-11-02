@@ -217,7 +217,10 @@
     "title": "Tjänster som har tillstånd att använda dina uppgifter",
     "deleteConnection": "Om du vill ta bort dina uppgifter från denna tjänst, <deleteButton>tryck här</deleteButton>.",
     "connectionRemovalVerification": "Om du fortsätter, förlorar du alla uppgifter som du sparat i tjänsten {{serviceName}} och du kan inte längre använda tjänsten förrän du registrerar dig i tjänsten på nytt.",
-    "connectionRemovalSuccess": "Alla uppgifter som vi sparat i tjänsten {{serviceName}} har tagits bort på ett lyckat sätt!"
+    "connectionRemovalSuccess": "Alla uppgifter som vi sparat i tjänsten {{serviceName}} har tagits bort på ett lyckat sätt!",
+    "connectionRemovalForbidden": "SV: Emme voi poistaa tietoja tästä palvelusta asioinnin tilan tai säilytysajan vuoksi.",
+    "connectionRemovalVerificationTitle": "SV: Haluatko varmasti poistaa tietosi?",
+    "connectionRemovalVerificationButtonText": "SV: Poista tiedot"
   },
   "skipToContent": "Hoppa till innehåll",
   "validation": {

@@ -217,7 +217,10 @@
     "title": "Services with permission to use your data",
     "deleteConnection": "If you want to delete your data from this service, <deleteButton>click here</deleteButton>.",
     "connectionRemovalVerification": "By continuing, you will lose all the data stored in the {{serviceName}} service and will no longer be able to use the service until you re-register to the service.",
-    "connectionRemovalSuccess": "All the data we had stored in the {{serviceName}} service has been deleted successfully!"
+    "connectionRemovalSuccess": "All the data we had stored in the {{serviceName}} service has been deleted successfully!",
+    "connectionRemovalForbidden": "We are unable to delete the data from this service due to the service status or retention period.",
+    "connectionRemovalVerificationTitle": "Are you sure you want to delete your information?",
+    "connectionRemovalVerificationButtonText": "Delete information"
   },
   "skipToContent": "Skip to content",
   "validation": {
