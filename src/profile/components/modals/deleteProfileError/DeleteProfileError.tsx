@@ -21,7 +21,7 @@ function DeleteProfileError({
   }
 
   const id = 'delete-profile-error-modal';
-  const content = t('deleteProfileErrorModal.genericError');
+  const content = t('deleteProfileModal.genericError');
   const closeButtonText = t('notification.closeButtonText');
   const {
     titleId,
@@ -51,7 +51,7 @@ function DeleteProfileError({
     >
       <Dialog.Header
         id={titleId}
-        title={t('deleteProfileErrorModal.title')}
+        title={t('deleteProfileModal.title')}
         iconLeft={<IconAlertCircle aria-hidden="true" />}
       />
       <Dialog.Content>

@@ -44,10 +44,10 @@ describe('<DeleteProfileError /> ', () => {
     const title = (await findById(testIds.title)) as HTMLElement;
     const description = (await findById(testIds.description)) as HTMLElement;
     expect(
-      title.innerHTML.includes(t('deleteProfileErrorModal.title'))
+      title.innerHTML.includes(t('deleteProfileModal.title'))
     ).toBeTruthy();
     expect(
-      description.innerHTML.includes(t('deleteProfileErrorModal.genericError'))
+      description.innerHTML.includes(t('deleteProfileModal.genericError'))
     ).toBeTruthy();
     expect(onClose.mock.calls).toHaveLength(0);
   });
@@ -56,7 +56,7 @@ describe('<DeleteProfileError /> ', () => {
     const { findById } = renderAndReturnHelpers(notAllowedApolloError);
     const description = (await findById(testIds.description)) as HTMLElement;
     expect(
-      description.innerHTML.includes(t('deleteProfileErrorModal.notAllowed'))
+      description.innerHTML.includes(t('deleteProfileModal.notAllowed'))
     ).toBeTruthy();
   });
 
