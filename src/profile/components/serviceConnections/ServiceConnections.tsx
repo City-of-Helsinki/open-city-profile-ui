@@ -20,6 +20,7 @@ import getServiceConnectionData from '../../helpers/getServiceConnectionData';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
+import DeleteServiceConnection from './DeleteServiceConnection';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -96,6 +97,9 @@ function ServiceConnections(): React.ReactElement {
 
   const services = getServiceConnectionData(data);
   const hasNoServices = !loading && services.length === 0;
+  const onServiceConnectionDeleted = () => {
+    refetch();
+  };
   return (
     <ContentWrapper>
       <Explanation
@@ -133,6 +137,10 @@ function ServiceConnections(): React.ReactElement {
               <p className={styles['date-and-time']}>
                 {getDateTime(service.connectionCreatedAt)}
               </p>
+              <DeleteServiceConnection
+                service={service}
+                onDeletion={onServiceConnectionDeleted}
+              />
             </ExpandingPanel>
           ))}
         </div>
