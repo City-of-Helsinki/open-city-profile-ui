@@ -1,10 +1,10 @@
-import { Link, LoadingSpinner } from 'hds-react';
+import { Link } from 'hds-react';
 import React, { useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { DeleteProfileResult } from '../../../../gdprApi/useDeleteProfile';
-import styles from '../../deleteProfile/deleteProfile.module.css';
 import ConfirmationModal from '../confirmationModal/ConfirmationModal';
+import Loading from '../../../../common/loading/Loading';
 
 type Props = Pick<
   DeleteProfileResult,
@@ -79,15 +79,12 @@ function DeleteProfileConfirmationModal(
     }
     if (isDeleting) {
       return (
-        <div
-          aria-live="polite"
-          aria-busy="true"
-          data-testid="delete-profile-load-indicator"
-          className={styles['loading-info']}
-        >
-          <LoadingSpinner small />
-          <p>{t('notification.removing')}</p>
-        </div>
+        <Loading
+          isLoading
+          dataTestId="delete-profile-modal-load-indicator"
+          loadingText={t('notification.removing')}
+          alignLeft
+        />
       );
     }
 
@@ -165,6 +162,7 @@ function DeleteProfileConfirmationModal(
       title={title}
       actionButtonText={actionButtonText}
       closeButtonText={closeButtonText}
+      preventClosing={isDeleting}
     />
   );
 }

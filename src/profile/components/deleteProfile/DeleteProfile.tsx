@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ApolloError } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
-import { Button, LoadingSpinner } from 'hds-react';
+import { Button } from 'hds-react';
 import { useHistory } from 'react-router';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
@@ -12,6 +12,7 @@ import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import DeleteProfileConfirmationModal from '../modals/deleteProfileConfirmationModal/DeleteProfileConfirmationModal';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
+import Loading from '../../../common/loading/Loading';
 
 function DeleteProfile(): React.ReactElement {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -102,24 +103,17 @@ function DeleteProfile(): React.ReactElement {
     deleteProfile();
   };
 
-  const LoadIndicator = ({ text }: { text: string }) => (
-    <div
-      className={styles['loading-info']}
-      aria-live="polite"
-      aria-busy="true"
-      data-testid="delete-profile-load-indicator"
-    >
-      <LoadingSpinner small />
-      <p>{text}</p>
-    </div>
-  );
-
   return (
     <ProfileSection data-test-id={'delete-profile'}>
       <h2>{t('deleteProfile.title')}</h2>
       <p dangerouslySetInnerHTML={{ __html: t('deleteProfile.explanation') }} />
       {dataLoadState === dryRunningLoadState ? (
-        <LoadIndicator text={t('deleteProfile.loadingServices')} />
+        <Loading
+          isLoading
+          dataTestId="delete-profile-load-indicator"
+          loadingText={t('deleteProfile.loadingServices')}
+          alignLeft
+        />
       ) : (
         <Button
           type="button"
