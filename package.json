@@ -72,7 +72,7 @@
     "yup": "^0.32.5"
   },
   "scripts": {
-    "start": "npm run update-runtime-env && react-scripts start",
+    "start": "yarn clear-babel-cache && npm run update-runtime-env && react-scripts start",
     "build": "react-scripts build",
     "test": "cross-env TEST=true npm run update-runtime-env && react-scripts test",
     "ci": "cross-env CI=true yarn test --coverage",
@@ -80,7 +80,8 @@
     "codegen": "apollo client:codegen ./src/graphql/generatedTypes.ts --outputFlat --includes=./src/**/*.graphql --target=typescript --endpoint=https://profile-api.dev.hel.ninja/graphql/ --useReadOnlyTypes --addTypename",
     "update-translations": "ts-node -P ./scripts/tsconfig.json -r dotenv/config --files scripts/update-translations.ts",
     "update-runtime-env": "ts-node -P ./scripts/tsconfig.json --files scripts/update-runtime-env.ts",
-    "update-country-calling-codes": "ts-node -P ./scripts/tsconfig.json --files scripts/update-country-calling-codes.ts"
+    "update-country-calling-codes": "ts-node -P ./scripts/tsconfig.json --files scripts/update-country-calling-codes.ts",
+    "clear-babel-cache": "rm -rf ./node_modules/.cache/@babel"
   },
   "browserslist": {
     "production": [
