@@ -4,6 +4,7 @@ import {
 } from '../../graphql/generatedTypes';
 import {
   Mutable,
+  Service,
   ServiceAllowedFieldsEdge,
   ServiceConnectionsRoot,
 } from '../../graphql/typings';
@@ -31,6 +32,7 @@ export default function getMyProfileWithServiceConnections(
             node: {
               createdAt: '2021-03-10T11:34:14.719531+00:00',
               service: {
+                name: 'Profiili service name',
                 title: 'Profiili käyttöliittymä',
                 description:
                   'Henkilön omien profiilitietojen hallintakäyttöliittymä.',
@@ -55,6 +57,7 @@ export default function getMyProfileWithServiceConnections(
             node: {
               createdAt: '2020-03-10T11:34:14.719531+00:00',
               service: {
+                name: 'Example service name',
                 title: 'Example UI',
                 description: 'Esimerkkiapplikaatio.',
                 allowedDataFields: {
@@ -88,8 +91,9 @@ export default function getMyProfileWithServiceConnections(
         GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service
       >;
       if (service) {
-        service.gdprQueryScope = '';
-        service.gdprDeleteScope = '';
+        const serviceData = (service as unknown) as Service;
+        service.gdprQueryScope = `${serviceData.name} gdprQueryScope`;
+        service.gdprDeleteScope = `${serviceData.name} gdprDeleteScope`;
       }
     });
   }
