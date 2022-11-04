@@ -1,14 +1,8 @@
 import { useCallback } from 'react';
-import {
-  MutationHookOptions,
-  MutationResult,
-  useMutation,
-} from '@apollo/client';
+import { MutationHookOptions, useMutation } from '@apollo/client';
 import { loader } from 'graphql.macro';
 
-import useServiceConnectionsAuthorizationCode, {
-  LoadStatus,
-} from './useServiceConnectionsAuthorizationCode';
+import useServiceConnectionsAuthorizationCode from './useServiceConnectionsAuthorizationCode';
 import {
   GdprDeleteMyServiceDataMutationVariables,
   GdprDeleteMyServiceDataMutation,
@@ -18,8 +12,7 @@ const DELETE_SERVICE_DATA = loader('./graphql/GdprDeleteServiceData.graphql');
 
 type ReturnTuple = [
   () => void,
-  MutationResult<GdprDeleteMyServiceDataMutation>,
-  LoadStatus
+  { hasCode: boolean; isDeleting: boolean; isLoading: boolean }
 ];
 
 function useDeleteServiceConnection(
@@ -58,14 +51,21 @@ function useDeleteServiceConnection(
     authorizationCodeStatus,
   ] = useServiceConnectionsAuthorizationCode({
     requiredGdprScope: 'delete',
-    deferredAction: 'useDeleteServiceConnection',
+    deferredAction: `useDeleteServiceConnection-${serviceName}`,
     onCompleted: e => {
       executeDeletion(e);
     },
     onError: options?.onError,
   });
 
-  return [getAuthorizationCode, queryResult, authorizationCodeStatus];
+  return [
+    getAuthorizationCode,
+    {
+      hasCode: !!authorizationCodeStatus.authorizationCode,
+      isLoading: queryResult.loading || authorizationCodeStatus.loading,
+      isDeleting: queryResult.loading,
+    },
+  ];
 }
 
 export default useDeleteServiceConnection;
