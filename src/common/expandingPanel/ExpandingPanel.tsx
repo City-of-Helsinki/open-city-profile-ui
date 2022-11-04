@@ -1,4 +1,9 @@
-import React, { PropsWithChildren, useEffect, useRef } from 'react';
+import React, {
+  PropsWithChildren,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 import {
   Button,
   Card,
@@ -41,9 +46,16 @@ function ExpandingPanel({
     container.current = ref;
   };
 
-  const { isOpen, buttonProps, contentProps } = useAccordion({
+  const { isOpen, buttonProps, contentProps, openAccordion } = useAccordion({
     initiallyOpen,
   });
+
+  useLayoutEffect(() => {
+    if (initiallyOpen && isOpen !== initiallyOpen) {
+      openAccordion();
+    }
+  }, [initiallyOpen, openAccordion, isOpen]);
+
   useEffect(() => {
     if (onChange) {
       onChange(isOpen);
