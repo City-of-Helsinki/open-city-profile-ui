@@ -43,7 +43,9 @@
     "delete": "Poista omat tiedot",
     "explanation": "Jatkamalla menetät kaikki tallennetut tietosi etkä voi enää käyttää seuraavia Helsingin kaupungin palveluita:",
     "noServiceExplanation": "Jatkamalla menetät kaikki tallennetut tietosi.",
-    "title": "Haluatko varmasti poistaa kaikki tietosi?"
+    "title": "Haluatko varmasti poistaa kaikki tietosi?",
+    "contactServiceToDelete": "Jos haluat silti poistaa tiedot, ole suoraan yhteydessä <linkToExternalServiceList>kyseiseen palveluun</linkToExternalServiceList> ja yritä profiilin poistoa sen jälkeen uudestaan.",
+    "urlToServiceList": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/hallinto/palvelut"
   },
   "deleteProfileErrorModal": {
     "notAllowed": "Et voi poistaa profiiliasi, koska jokin sitä käyttävistä palveluista tarvitsee tietojasi esimerkiksi laskutukseen.",
@@ -210,7 +212,15 @@
     "empty": "Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi.",
     "explanation": "Olet antanut seuraaville palveluille oikeuden käyttää Helsinki-profiiliin tallennettuja tietojasi.",
     "servicePersonalData": "Palvelu saa tietää sinusta:",
-    "title": "Palvelut, joilla on lupa käyttää tietojasi"
+    "title": "Palvelut, joilla on lupa käyttää tietojasi",
+    "deleteConnection": "Mikäli haluat poistaa tietosi tästä palvelusta <deleteButton>paina tästä</deleteButton>.",
+    "connectionRemovalVerification": "Jatkamalla menetät kaikki {{serviceName}} -palveluun tallennetut tiedot, etkä voi enää käyttää palvelua, ennen kuin rekisteröidyt palveluun uudelleen.",
+    "connectionRemovalSuccess": "Kaikki {{serviceName}} -palveluun tallentamamme tiedot on poistettu onnistuneesti!",
+    "connectionRemovalForbidden": "Emme voi poistaa tietoja tästä palvelusta esimerkiksi asioinnin tilan tai säilytysajan vuoksi.",
+    "connectionRemovalVerificationTitle": "Haluatko varmasti poistaa tietosi?",
+    "connectionRemovalVerificationButtonText": "Poista tiedot",
+    "connectionRemovalError": "Jostain syystä poisto ei onnistunut. Yritä hetken kuluttua uudelleen!",
+    "contactServiceToDelete": "Jos haluat silti poistaa tiedot, ole suoraan yhteydessä <linkToExternalServiceList>kyseiseen palveluun</linkToExternalServiceList> ja yritä tietojen poistoa sen jälkeen uudestaan."
   },
   "skipToContent": "Siirry suoraan sisältöön",
   "validation": {
