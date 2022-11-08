@@ -11,6 +11,7 @@ import {
 import { ResponseProvider } from '../../common/test/MockApolloClientProvider';
 import useServiceConnectionsAuthorizationCode from '../useServiceConnectionsAuthorizationCode';
 import useDeleteServiceConnection from '../useDeleteServiceConnection';
+import { getServiceConnectionDeleteResult } from '../../common/test/serviceConnectionDeleteMocking';
 
 type UseServiceConnectionsHookOptions = Partial<
   Parameters<typeof useServiceConnectionsAuthorizationCode>[0]
@@ -182,16 +183,7 @@ describe('<useDeleteServiceConnection /> ', () => {
       if (responseCounter === errorResponseIndex) {
         return { errorType: 'networkError' };
       }
-      return {
-        deleteMyServiceData: {
-          __typename: 'DeleteMyServiceDataMutationPayload',
-          result: {
-            __typename: 'DeletionResultNode',
-            success: true,
-            errors: null,
-          },
-        },
-      };
+      return getServiceConnectionDeleteResult();
     };
 
     return renderComponentWithMocksAndContexts(
