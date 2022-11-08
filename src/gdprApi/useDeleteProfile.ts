@@ -5,12 +5,14 @@ import {
   MutationResult,
 } from '@apollo/client';
 import { loader } from 'graphql.macro';
+import { useTranslation } from 'react-i18next';
 
 import {
   GdprDeleteMyProfileMutation,
   GdprDeleteMyProfileMutationVariables,
 } from '../graphql/generatedTypes';
 import useServiceConnectionsAuthorizationCode from './useServiceConnectionsAuthorizationCode';
+import createServiceConnectionsQueryVariables from '../profile/helpers/createServiceConnectionsQueryVariables';
 
 const DELETE_PROFILE = loader('./graphql/GdprDeleteMyProfileMutation.graphql');
 
@@ -25,6 +27,8 @@ function useDeleteProfile(
     GdprDeleteMyProfileMutationVariables
   >(DELETE_PROFILE, options);
 
+  const { i18n } = useTranslation();
+
   const handleAuthorizationCodeCallback = React.useCallback(
     (authorizationCode: string | null) => {
       if (authorizationCode) {
@@ -32,13 +36,14 @@ function useDeleteProfile(
           input: {
             authorizationCode,
           },
+          ...createServiceConnectionsQueryVariables(i18n.language),
         };
         deleteProfile({
           variables: variablesWithAuthorizationCode,
         });
       }
     },
-    [deleteProfile]
+    [deleteProfile, i18n.language]
   );
 
   const [
