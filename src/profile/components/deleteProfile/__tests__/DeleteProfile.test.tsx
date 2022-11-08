@@ -13,6 +13,7 @@ import getMyProfileWithServiceConnections from '../../../../common/test/getMyPro
 import i18n from '../../../../common/test/testi18nInit';
 import { ServiceConnectionsQueryVariables } from '../../../../graphql/typings';
 import { GdprDeleteMyProfileMutationVariables } from '../../../../graphql/generatedTypes';
+import { getDeleteMyProfileMutationResult } from '../../../../common/test/getDeleteMyProfileMutationResult';
 
 const mockStartFetchingAuthorizationCode = jest.fn();
 const mockHistoryPushListener = jest.fn();
@@ -51,7 +52,10 @@ describe('<DeleteProfile /> ', () => {
     return <div>{isOpen ? <DeleteProfile /> : <span>closed</span>}</div>;
   };
 
-  const renderTestSuite = (errorResponseIndex = -1) => {
+  const renderTestSuite = (
+    errorResponseIndex = -1,
+    serviceDeletetionErrorCodes?: string[]
+  ) => {
     const responseProvider: ResponseProvider = payload => {
       responseCounter = responseCounter + 1;
       queryVariableTracker(payload as ServiceConnectionsQueryVariables);
@@ -61,7 +65,9 @@ describe('<DeleteProfile /> ', () => {
         (payload as GdprDeleteMyProfileMutationVariables).input
           .authorizationCode
       ) {
-        return { deleteMyProfile: { clientMutationId: '' } };
+        return responseCounter === errorResponseIndex
+          ? { errorType: 'networkError' }
+          : getDeleteMyProfileMutationResult(serviceDeletetionErrorCodes);
       }
       return responseCounter === errorResponseIndex
         ? { errorType: 'networkError' }
@@ -83,11 +89,20 @@ describe('<DeleteProfile /> ', () => {
   const confirmButtonSelector: ElementSelector = {
     testId: 'confirmation-modal-confirm-button',
   };
-  const errorModalButtonSelector: ElementSelector = {
-    testId: 'delete-profile-error-modal-close-button',
-  };
   const deletingProfileSelector: ElementSelector = {
     testId: 'deleting-profile',
+  };
+  const failedServicesListSelector: ElementSelector = {
+    testId: 'delete-profile-failure-list',
+  };
+  const reloadServiceConnectionsButtonSelector: ElementSelector = {
+    testId: 'reload-service-connections',
+  };
+  const errorDescriptionSelector: ElementSelector = {
+    testId: 'delete-profile-generic-error',
+  };
+  const serviceConnectionsPageLinkSelector: ElementSelector = {
+    testId: 'delete-profile-service-connections-page-link',
   };
 
   beforeEach(() => {
@@ -98,21 +113,33 @@ describe('<DeleteProfile /> ', () => {
     jest.clearAllMocks();
   });
 
-  const initTests = async (errorResponseIndex = -1): Promise<TestTools> => {
-    const testTools = await renderTestSuite(errorResponseIndex);
+  const initTests = async (
+    errorResponseIndex = -1,
+    serviceDeletetionErrorCodes?: string[]
+  ): Promise<TestTools> => {
+    const testTools = await renderTestSuite(
+      errorResponseIndex,
+      serviceDeletetionErrorCodes
+    );
     return Promise.resolve(testTools);
+  };
+
+  const proceedUIToDeletionConfimed = async (testTools: TestTools) => {
+    const { clickElement, waitForElement } = testTools;
+    await clickElement(submitButton);
+    await waitForElement(loadIndicator);
+    await waitForElement(confirmButtonSelector);
+    await clickElement(confirmButtonSelector);
   };
 
   it(`Submitting starts to load serviceConnections.
       When loaded, a confirmation dialog is shown and after confirmation
       authorisation code is fetched.
+      Window.history is called and redirects user.
       `, async () => {
     await act(async () => {
-      const { clickElement, waitForElement } = await initTests();
-      await clickElement(submitButton);
-      await waitForElement(loadIndicator);
-      await waitForElement(confirmButtonSelector);
-      await clickElement(confirmButtonSelector);
+      const testTools = await initTests();
+      await proceedUIToDeletionConfimed(testTools);
       await waitFor(() => {
         expect(mockStartFetchingAuthorizationCode).toHaveBeenCalledTimes(1);
       });
@@ -140,17 +167,14 @@ describe('<DeleteProfile /> ', () => {
     });
   });
 
-  it(`When service connection load fails, an error is shown.
-    Modal can be closed and delete started again`, async () => {
+  it(`When service connection load fails, an error notification is shown.`, async () => {
     await act(async () => {
-      const { clickElement, waitForElement } = await initTests(1);
+      const { clickElement, waitForElement } = await initTests(0);
       await clickElement(submitButton);
       await waitForElement(loadIndicator);
+      await waitForElement(reloadServiceConnectionsButtonSelector);
+      await clickElement(reloadServiceConnectionsButtonSelector);
       await waitForElement(confirmButtonSelector);
-      await clickElement(confirmButtonSelector);
-      await waitForElement(errorModalButtonSelector);
-      await clickElement(errorModalButtonSelector);
-      await clickElement(submitButton);
       await clickElement(confirmButtonSelector);
       await waitFor(() => {
         expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);
@@ -159,11 +183,9 @@ describe('<DeleteProfile /> ', () => {
   });
   it(`When deleting starts, an indicator is shown`, async () => {
     await act(async () => {
-      const { clickElement, waitForElement } = await initTests();
-      await clickElement(submitButton);
-      await waitForElement(loadIndicator);
-      await waitForElement(confirmButtonSelector);
-      await clickElement(confirmButtonSelector);
+      const testTools = await initTests();
+      const { waitForElement } = testTools;
+      await proceedUIToDeletionConfimed(testTools);
 
       await waitFor(() => {
         expect(mockStartFetchingAuthorizationCode).toHaveBeenCalledTimes(1);
@@ -172,6 +194,29 @@ describe('<DeleteProfile /> ', () => {
       await waitFor(() => {
         expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);
       });
+    });
+  });
+  it(`When deletion fails with unsuccessful service deletions, 
+      a list of successful and failed services is shown.
+      `, async () => {
+    await act(async () => {
+      const testTools = await initTests(-1, ['errorCode']);
+      const { waitForElement } = testTools;
+      await proceedUIToDeletionConfimed(testTools);
+      await waitForElement(failedServicesListSelector);
+      await waitForElement(serviceConnectionsPageLinkSelector);
+      await waitFor(() => {
+        expect(mockHistoryPushListener).toHaveBeenCalledTimes(0);
+      });
+    });
+  });
+  it(`When deletion returns a generic error, an error message is shown`, async () => {
+    await act(async () => {
+      const testTools = await initTests(1);
+      const { waitForElement } = testTools;
+      await proceedUIToDeletionConfimed(testTools);
+      await waitForElement(errorDescriptionSelector);
+      expect(mockHistoryPushListener).toHaveBeenCalledTimes(0);
     });
   });
 });

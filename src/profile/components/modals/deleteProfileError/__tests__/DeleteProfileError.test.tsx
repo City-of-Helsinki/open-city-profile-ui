@@ -1,10 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { ApolloError } from '@apollo/client';
 
 import DeleteProfileError, { Props } from '../DeleteProfileError';
 import { createDomHelpersWithTesting } from '../../../../../common/test/testingLibraryTools';
 import i18n from '../../../../../common/test/testi18nInit';
+import { getDeleteMyProfileMutationResult } from '../../../../../common/test/getDeleteMyProfileMutationResult';
+import parseDeleteProfileResult from '../../../../helpers/parseDeleteProfileResult';
 
 describe('<DeleteProfileError /> ', () => {
   const modalId = 'delete-profile-error-modal';
@@ -12,20 +13,14 @@ describe('<DeleteProfileError /> ', () => {
     title: `${modalId}-title`,
     description: `${modalId}-description`,
     close: `${modalId}-close-button`,
+    successList: `delete-profile-success-list`,
+    failureList: `delete-profile-failure-list`,
   };
   const basicError = new Error('Error');
-  const notAllowedApolloError = ({
-    graphQLErrors: [
-      {
-        message: '',
-        extensions: { code: '' },
-      },
-      {
-        message: '',
-        extensions: { code: 'CONNECTED_SERVICE_DELETION_NOT_ALLOWED_ERROR' },
-      },
-    ],
-  } as unknown) as ApolloError;
+
+  const resultsWithUnsuccessfulDeletions = parseDeleteProfileResult(
+    getDeleteMyProfileMutationResult(['', 'errorCode'])
+  );
 
   const onClose = jest.fn();
   const t = i18n.getFixedT('fi');
@@ -44,20 +39,42 @@ describe('<DeleteProfileError /> ', () => {
     const title = (await findById(testIds.title)) as HTMLElement;
     const description = (await findById(testIds.description)) as HTMLElement;
     expect(
-      title.innerHTML.includes(t('deleteProfileErrorModal.title'))
+      title.innerHTML.includes(t('deleteProfileModal.deletionErrorTitle'))
     ).toBeTruthy();
     expect(
-      description.innerHTML.includes(t('deleteProfileErrorModal.genericError'))
+      description.innerHTML.includes(t('deleteProfile.deleteFailed'))
     ).toBeTruthy();
     expect(onClose.mock.calls).toHaveLength(0);
   });
 
-  it('Renders different description when error is a "CONNECTED_SERVICE_DELETION_NOT_ALLOWED_ERROR"', async () => {
-    const { findById } = renderAndReturnHelpers(notAllowedApolloError);
+  it('When results include failed services, a list is displayed', async () => {
+    const { findById, findByTestId } = renderAndReturnHelpers(
+      resultsWithUnsuccessfulDeletions
+    );
     const description = (await findById(testIds.description)) as HTMLElement;
-    expect(
-      description.innerHTML.includes(t('deleteProfileErrorModal.notAllowed'))
-    ).toBeTruthy();
+    expect(description).toBeNull();
+    const successList = await findByTestId(testIds.successList);
+    const failureList = await findByTestId(testIds.failureList);
+    expect(successList).not.toBeNull();
+    expect(failureList).not.toBeNull();
+    expect(failureList?.childNodes).toHaveLength(
+      resultsWithUnsuccessfulDeletions.failures.length
+    );
+    expect(successList?.childNodes).toHaveLength(
+      resultsWithUnsuccessfulDeletions.successful.length
+    );
+  });
+  it('When results does not include failed services, a list is not displayed', async () => {
+    const { findById, findByTestId } = renderAndReturnHelpers({
+      ...resultsWithUnsuccessfulDeletions,
+      failures: [],
+    });
+    const description = (await findById(testIds.description)) as HTMLElement;
+    expect(description).not.toBeNull();
+    const successList = await findByTestId(testIds.successList);
+    const failureList = await findByTestId(testIds.failureList);
+    expect(successList).toBeNull();
+    expect(failureList).toBeNull();
   });
 
   it('Does not render modal when error is not defined', async () => {

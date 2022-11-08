@@ -17,9 +17,12 @@ import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
 import DeleteProfileError from '../modals/deleteProfileError/DeleteProfileError';
-import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { useScrollIntoView } from '../../hooks/useScrollIntoView';
+import parseDeleteProfileResult, {
+  DeleteResultLists,
+} from '../../helpers/parseDeleteProfileResult';
+import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import Loading from '../../../common/loading/Loading';
 
 const SERVICE_CONNECTIONS = loader(
@@ -41,13 +44,16 @@ function DeleteProfile(): React.ReactElement {
   const history = useHistory();
   const { trackEvent } = useMatomo();
   const [resultError, setResultError] = useState<
-    ApolloError | Error | undefined
+    ApolloError | Error | undefined | DeleteResultLists
   >(undefined);
   const [deleteProfile, { loading: isDeletingProfile }] = useDeleteProfile({
     onCompleted: returnedData => {
-      if (returnedData) {
+      const { failures, successful } = parseDeleteProfileResult(returnedData);
+      if (!failures.length) {
         trackEvent({ category: 'action', action: 'Delete profile' });
         history.push('/profile-deleted');
+      } else {
+        setResultError({ failures, successful });
       }
     },
     onError: error => {

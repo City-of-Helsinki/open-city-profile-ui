@@ -37,20 +37,21 @@
     "delete": "Delete my information",
     "explanation": "If you want to, you can delete your Helsinki profile and all the data we have stored. Once deleted, the data cannot be restored. A new Helsinki profile must be created to use the e-services associated with your Helsinki profile.<br/><br/>After the deletion, you will be automatically logged out of this service.<br/><br/>If you have logged in using a third-party service provider account (e.g. Google or Facebook), that account will not be deleted.",
     "title": "Do you want to delete your information?",
-    "loadingServices": "Searching for services connected to the profile"
+    "loadingServices": "Searching for services connected to the profile",
+    "deleteSuccessful": "The Helsinki profile and all the data we hold on you have been deleted successfully!",
+    "deleteFailed": "The deletion failed for some reason. Please try again after a while!"
   },
   "deleteProfileModal": {
     "delete": "Delete my information",
     "explanation": "By continuing you will lose all of your stored data and you can no longer use the following City of Helsinki services:",
     "noServiceExplanation": "By continuing you will lose all of your stored data.",
     "title": "Are you sure you want to delete your information?",
+    "notAllowed": "You cannot delete your profile because one of the services using it needs your information, for example, for invoicing.",
+    "deletionErrorTitle": "The deletion failed!",
+    "deleteServiceFromPage": "You can delete the data from these services via the <linkToServices>{{linkToServicesText}}</linkToServices> page.",
+    "unableToDeleteServices": "We cannot delete data from these services, for example due to the transaction status or storage time.",
     "contactServiceToDelete": "If you still want to delete the data, please contact <linkToExternalServiceList >the service</linkToExternalServiceList> directly and then retry deleting the profile.",
     "urlToServiceList": "https://www.hel.fi/helsinki/en/administration/administration/services"
-  },
-  "deleteProfileErrorModal": {
-    "notAllowed": "You cannot delete your profile because one of the services using it needs your information, for example, for invoicing.",
-    "title": "The deletion failed!",
-    "genericError": "The profile could not be deleted. Please try again later."
   },
   "downloadData": {
     "button": "Download my information",
