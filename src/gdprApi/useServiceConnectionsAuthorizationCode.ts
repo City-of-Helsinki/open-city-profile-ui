@@ -2,7 +2,7 @@ import { useLazyQuery, ApolloError } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useRef } from 'react';
 
-import { GdprServiceConnectionsRoot } from '../graphql/typings';
+import { GdprServiceConnectionsRoot, Service } from '../graphql/typings';
 import useAuthorizationCode from './useAuthorizationCode';
 import { getDeleteScopes, getQueryScopes } from './utils';
 
@@ -20,6 +20,7 @@ export type LoadStatus = {
 type Options = {
   requiredGdprScope: 'delete' | 'query';
   deferredAction: string;
+  serviceName?: Service['name'];
   onError?: (e: ApolloError, status: LoadStatus) => void;
   onCompleted?: (authorizationCode: string, status: LoadStatus) => void;
 };
@@ -71,8 +72,8 @@ function useServiceConnectionsAuthorizationCode(
       onCompleted: data => {
         const scopes =
           options.requiredGdprScope === 'query'
-            ? getQueryScopes(data)
-            : getDeleteScopes(data);
+            ? getQueryScopes(data, options.serviceName)
+            : getDeleteScopes(data, options.serviceName);
         getAuthorizationCode(scopes);
       },
       onError: error => {

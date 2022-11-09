@@ -50,6 +50,7 @@ function useDeleteServiceConnection(
     getAuthorizationCode,
     authorizationCodeStatus,
   ] = useServiceConnectionsAuthorizationCode({
+    serviceName,
     requiredGdprScope: 'delete',
     deferredAction: `useDeleteServiceConnection-${serviceName}`,
     onCompleted: e => {

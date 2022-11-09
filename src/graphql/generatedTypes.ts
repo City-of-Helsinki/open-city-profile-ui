@@ -95,6 +95,7 @@ export interface GdprDeleteMyServiceDataMutationVariables {
 
 export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
   readonly __typename: "ServiceNode";
+  readonly name: string;
   /**
    * GDPR API query operation scope
    */
