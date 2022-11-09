@@ -1,14 +1,32 @@
-import { GdprServiceConnectionsRoot, Service } from '../graphql/typings';
+import {
+  GdprServiceConnectionService,
+  GdprServiceConnectionsRoot,
+  Service,
+  ServiceConnectionsRoot,
+} from '../graphql/typings';
 
 interface GdprServiceConnectionFields {
   gdprQueryScope: string;
   gdprDeleteScope: string;
 }
 
-const servicesSelector = (
-  serviceConnectionsQuery: GdprServiceConnectionsRoot | undefined | null,
+function pickServiceGdprScopes(
+  service: GdprServiceConnectionService
+): GdprServiceConnectionFields {
+  return {
+    gdprQueryScope: service.gdprQueryScope,
+    gdprDeleteScope: service.gdprDeleteScope,
+  };
+}
+
+function servicesSelector(
+  serviceConnectionsQuery:
+    | GdprServiceConnectionsRoot
+    | ServiceConnectionsRoot
+    | undefined
+    | null,
   serviceName?: Service['name']
-): GdprServiceConnectionFields[] => {
+): GdprServiceConnectionService[] {
   if (
     serviceConnectionsQuery === null ||
     serviceConnectionsQuery === undefined
@@ -23,33 +41,27 @@ const servicesSelector = (
     return [];
   }
 
-  const services = serviceConnections.map(serviceConnection => {
-    const service = serviceConnection?.node?.service;
-
-    if (service === undefined || service === null) {
-      return undefined;
-    }
-
-    if (serviceName && service.name !== serviceName) {
-      return undefined;
-    }
-
-    return {
-      gdprQueryScope: service.gdprQueryScope,
-      gdprDeleteScope: service.gdprDeleteScope,
-    };
-  });
-
-  return services.filter(
-    (service): service is GdprServiceConnectionFields => service !== undefined
-  );
-};
+  return serviceConnections
+    .map(
+      serviceConnection =>
+        (serviceConnection?.node?.service as GdprServiceConnectionService) ||
+        undefined
+    )
+    .filter(service => {
+      if (serviceName && service && service.name !== serviceName) {
+        return undefined;
+      }
+      return service !== undefined;
+    });
+}
 
 export function getDeleteScopes(
   serviceConnectionsQuery: GdprServiceConnectionsRoot | undefined,
   serviceName?: Service['name']
 ): string[] {
-  const services = servicesSelector(serviceConnectionsQuery, serviceName);
+  const services = servicesSelector(serviceConnectionsQuery, serviceName).map(
+    pickServiceGdprScopes
+  );
 
   return services.map(service => service.gdprDeleteScope);
 }
@@ -58,7 +70,18 @@ export function getQueryScopes(
   serviceConnectionsQuery: GdprServiceConnectionsRoot | undefined,
   serviceName?: Service['name']
 ): string[] {
-  const services = servicesSelector(serviceConnectionsQuery, serviceName);
+  const services = servicesSelector(serviceConnectionsQuery, serviceName).map(
+    pickServiceGdprScopes
+  );
 
   return services.map(service => service.gdprQueryScope);
+}
+
+export function getServiceConnectionsServices<T = GdprServiceConnectionService>(
+  serviceConnectionsQuery:
+    | GdprServiceConnectionsRoot
+    | ServiceConnectionsRoot
+    | undefined
+): T[] {
+  return (servicesSelector(serviceConnectionsQuery) as unknown) as T[];
 }

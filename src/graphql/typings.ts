@@ -26,6 +26,7 @@ import {
   MyProfileQuery_myProfile_primaryPhone,
   ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges,
   ServiceConnectionsQueryVariables as ServiceConnectionsQueryVars,
+  GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service,
 } from './generatedTypes';
 
 export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
@@ -83,6 +84,7 @@ export type ServiceAllowedFieldsNode = ServiceConnectionsQuery_myProfile_service
 // eslint-disable-next-line max-len
 export type ServiceAllowedFieldsEdge = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges;
 export type GdprServiceConnectionsRoot = GdprServiceConnectionsQuery;
+export type GdprServiceConnectionService = GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
 
 export {
   PhoneType,
