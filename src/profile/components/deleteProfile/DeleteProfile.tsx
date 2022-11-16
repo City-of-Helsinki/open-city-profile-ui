@@ -142,7 +142,7 @@ function DeleteProfile(): React.ReactElement {
     />
   );
   const ServiceConnectionLoadError = () => (
-    <Notification label={t('notification.defaultErrorText')} type={'error'}>
+    <Notification label={t('deleteProfile.deleteFailed')} type={'error'}>
       <Button
         type="button"
         onClick={() => loadServiceConnections(true)}

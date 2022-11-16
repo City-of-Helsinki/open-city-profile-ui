@@ -24,7 +24,7 @@ function ProfileDeleted(): React.ReactElement {
     }
   }, [timeUntilLogout]);
 
-  const title = t('profileDeleted.title');
+  const title = t('deleteProfile.deleteSuccessful');
   return (
     <PageLayout title={title}>
       <div className={styles['wrapper']}>
