@@ -43,7 +43,9 @@
     "delete": "Delete my information",
     "explanation": "By continuing you will lose all of your stored data and you can no longer use the following City of Helsinki services:",
     "noServiceExplanation": "By continuing you will lose all of your stored data.",
-    "title": "Are you sure you want to delete your information?"
+    "title": "Are you sure you want to delete your information?",
+    "contactServiceToDelete": "If you still want to delete the data, please contact <linkToExternalServiceList >the service</linkToExternalServiceList> directly and then retry deleting the profile.",
+    "urlToServiceList": "https://www.hel.fi/helsinki/en/administration/administration/services"
   },
   "deleteProfileErrorModal": {
     "notAllowed": "You cannot delete your profile because one of the services using it needs your information, for example, for invoicing.",
@@ -210,7 +212,15 @@
     "empty": "You currently don't have any services connected to your profile.",
     "explanation": "You have granted the following services the right to use the data stored on your Helsinki profile.",
     "servicePersonalData": "Information which the service will know about you:",
-    "title": "Services with permission to use your data"
+    "title": "Services with permission to use your data",
+    "deleteConnection": "If you want to delete your data from this service, <deleteButton>click here</deleteButton>.",
+    "connectionRemovalVerification": "By continuing, you will lose all the data stored in the {{serviceName}} service and will no longer be able to use the service until you re-register to the service.",
+    "connectionRemovalSuccess": "All the data we had stored in the {{serviceName}} service has been deleted successfully!",
+    "connectionRemovalForbidden": "We cannot delete data from this service, for example due to the transaction status or storage time.",
+    "connectionRemovalVerificationTitle": "Are you sure you want to delete your data?",
+    "connectionRemovalVerificationButtonText": "Delete data",
+    "connectionRemovalError": "For some reason, the deletion was not successful. Please, try again later!",
+    "contactServiceToDelete": "If you still want to delete the data, please contact <linkToExternalServiceList >the service</linkToExternalServiceList> directly and then retry deleting the data."
   },
   "skipToContent": "Skip to content",
   "validation": {

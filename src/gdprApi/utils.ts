@@ -1,4 +1,4 @@
-import { GdprServiceConnectionsRoot } from '../graphql/typings';
+import { GdprServiceConnectionsRoot, Service } from '../graphql/typings';
 
 interface GdprServiceConnectionFields {
   gdprQueryScope: string;
@@ -6,7 +6,8 @@ interface GdprServiceConnectionFields {
 }
 
 const servicesSelector = (
-  serviceConnectionsQuery: GdprServiceConnectionsRoot | undefined | null
+  serviceConnectionsQuery: GdprServiceConnectionsRoot | undefined | null,
+  serviceName?: Service['name']
 ): GdprServiceConnectionFields[] => {
   if (
     serviceConnectionsQuery === null ||
@@ -29,6 +30,10 @@ const servicesSelector = (
       return undefined;
     }
 
+    if (serviceName && service.name !== serviceName) {
+      return undefined;
+    }
+
     return {
       gdprQueryScope: service.gdprQueryScope,
       gdprDeleteScope: service.gdprDeleteScope,
@@ -41,17 +46,19 @@ const servicesSelector = (
 };
 
 export function getDeleteScopes(
-  serviceConnectionsQuery: GdprServiceConnectionsRoot | undefined
+  serviceConnectionsQuery: GdprServiceConnectionsRoot | undefined,
+  serviceName?: Service['name']
 ): string[] {
-  const services = servicesSelector(serviceConnectionsQuery);
+  const services = servicesSelector(serviceConnectionsQuery, serviceName);
 
   return services.map(service => service.gdprDeleteScope);
 }
 
 export function getQueryScopes(
-  serviceConnectionsQuery: GdprServiceConnectionsRoot | undefined
+  serviceConnectionsQuery: GdprServiceConnectionsRoot | undefined,
+  serviceName?: Service['name']
 ): string[] {
-  const services = servicesSelector(serviceConnectionsQuery);
+  const services = servicesSelector(serviceConnectionsQuery, serviceName);
 
   return services.map(service => service.gdprQueryScope);
 }

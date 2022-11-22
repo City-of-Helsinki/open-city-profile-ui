@@ -46,6 +46,7 @@ export type TestTools = RenderResult & {
   waitForIsComplete: () => Promise<void>;
   waitForDataChange: (previousChangeTime?: number) => Promise<void>;
   waitForElement: (selector: ElementSelector) => Promise<void>;
+  waitForElementNotToExist: (selector: ElementSelector) => Promise<void>;
   getTextOrInputValue: (
     selector: ElementSelector
   ) => Promise<string | undefined>;
@@ -208,6 +209,12 @@ export const renderComponentWithMocksAndContexts = async (
     });
   };
 
+  const waitForElementNotToExist: TestTools['waitForElementNotToExist'] = async selector => {
+    await waitFor(() => {
+      expect(() => getElement(selector)).toThrow();
+    });
+  };
+
   const getTextOrInputValue: TestTools['getTextOrInputValue'] = async selector => {
     let value: string | undefined;
     await waitFor(
@@ -347,6 +354,7 @@ export const renderComponentWithMocksAndContexts = async (
     setInputValue,
     waitForElementAndValue,
     comboBoxSelector,
+    waitForElementNotToExist,
   });
 };
 

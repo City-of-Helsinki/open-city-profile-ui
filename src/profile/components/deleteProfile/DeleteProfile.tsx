@@ -3,7 +3,7 @@ import { ApolloError, useLazyQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
-import { Button, LoadingSpinner, Notification } from 'hds-react';
+import { Button, Notification } from 'hds-react';
 import { useHistory } from 'react-router';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
@@ -20,6 +20,7 @@ import DeleteProfileError from '../modals/deleteProfileError/DeleteProfileError'
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { useScrollIntoView } from '../../hooks/useScrollIntoView';
+import Loading from '../../../common/loading/Loading';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -127,15 +128,12 @@ function DeleteProfile(): React.ReactElement {
   };
 
   const LoadIndicator = ({ text }: { text: string }) => (
-    <div
-      className={styles['loading-info']}
-      aria-live="polite"
-      aria-busy="true"
-      data-testid="delete-profile-load-indicator"
-    >
-      <LoadingSpinner small />
-      <p>{text}</p>
-    </div>
+    <Loading
+      isLoading
+      loadingText={text}
+      dataTestId="delete-profile-load-indicator"
+      alignLeft
+    />
   );
   const ServiceConnectionLoadError = () => (
     <Notification label={t('notification.defaultErrorText')} type={'error'}>

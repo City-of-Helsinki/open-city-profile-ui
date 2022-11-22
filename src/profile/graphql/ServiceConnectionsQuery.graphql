@@ -5,6 +5,7 @@ query ServiceConnectionsQuery($language: TranslationLanguage!) {
       edges {
         node {
           service {
+            name
             title(language: $language)
             description(language: $language)
             allowedDataFields {

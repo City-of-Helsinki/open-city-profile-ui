@@ -2,14 +2,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
-import { format } from 'date-fns';
 import * as Sentry from '@sentry/browser';
 import { Button, LoadingSpinner, Notification } from 'hds-react';
 import classNames from 'classnames';
 
 import Explanation from '../../../common/explanation/Explanation';
-import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
-import CheckedLabel from '../../../common/checkedLabel/CheckedLabel';
 import styles from './ServiceConnections.module.css';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 import {
@@ -17,9 +14,9 @@ import {
   ServiceConnectionsRoot,
 } from '../../../graphql/typings';
 import getServiceConnectionData from '../../helpers/getServiceConnectionData';
-import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
+import ServiceConnection from './ServiceConnection';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -37,12 +34,6 @@ function ServiceConnections(): React.ReactElement {
       Sentry.captureException(loadError);
     },
   });
-
-  const getDateTime = (date: Date) => {
-    const day = format(new Date(date), 'dd.MM.yyyy');
-    const time = format(new Date(date), 'HH:mm');
-    return `${day}, ${t('serviceConnections.clock')} ${time}`;
-  };
 
   const ContentWrapper = ({
     children,
@@ -96,6 +87,9 @@ function ServiceConnections(): React.ReactElement {
 
   const services = getServiceConnectionData(data);
   const hasNoServices = !loading && services.length === 0;
+  const onServiceConnectionDeleted = () => {
+    refetch();
+  };
   return (
     <ContentWrapper>
       <Explanation
@@ -109,31 +103,12 @@ function ServiceConnections(): React.ReactElement {
       />
       <ProfileSection>
         <div className={styles['panel-container']}>
-          {services.map((service, index) => (
-            <ExpandingPanel
-              key={index}
-              title={service.title || ''}
-              showInformationText
-              initiallyOpen={false}
-            >
-              <p>{service.description}</p>
-              <p className={styles['service-information']}>
-                {t('serviceConnections.servicePersonalData')}
-              </p>
-              {getAllowedDataFieldsFromService(service).map(node => (
-                <CheckedLabel
-                  key={node.fieldName}
-                  value={node.label || node.fieldName}
-                  className={styles['allowed-data-field']}
-                />
-              ))}
-              <p className={styles['created-at']}>
-                {t('serviceConnections.created')}
-              </p>
-              <p className={styles['date-and-time']}>
-                {getDateTime(service.connectionCreatedAt)}
-              </p>
-            </ExpandingPanel>
+          {services.map(service => (
+            <ServiceConnection
+              key={service.name}
+              service={service}
+              onDeletion={onServiceConnectionDeleted}
+            />
           ))}
         </div>
       </ProfileSection>

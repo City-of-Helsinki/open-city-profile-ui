@@ -10,7 +10,9 @@ export type Props = {
   onConfirm: () => void;
   title?: string;
   content?: React.FC<unknown> | string;
-  actionButtonText: string;
+  actionButtonText?: string;
+  closeButtonText?: string;
+  preventClosing?: boolean;
 };
 
 function ConfirmationModal({
@@ -20,10 +22,11 @@ function ConfirmationModal({
   title,
   content,
   actionButtonText,
+  closeButtonText,
+  preventClosing,
 }: Props): React.ReactElement {
   const { t } = useTranslation();
   const id = 'confirmation-modal';
-  const closeButtonText = t('confirmationModal.cancel');
   const {
     titleId,
     descriptionId,
@@ -33,7 +36,7 @@ function ConfirmationModal({
   } = getModalProps({
     id,
     onClose,
-    closeButtonText,
+    closeButtonText: closeButtonText || t('confirmationModal.cancel'),
   });
   const ContentComponent: React.FC<unknown> =
     typeof content === 'string' || typeof content === 'undefined'
@@ -53,6 +56,7 @@ function ConfirmationModal({
       isOpen={isOpen}
       targetElement={dialogTargetElement}
       {...dialogCloseProps}
+      {...(preventClosing && { close: undefined })}
     >
       {title && (
         <Dialog.Header
@@ -68,21 +72,27 @@ function ConfirmationModal({
           </div>
         </Dialog.Content>
       )}
-      <Dialog.ActionButtons>
-        <Button
-          onClick={onConfirm}
-          data-testid="confirmation-modal-confirm-button"
-        >
-          {actionButtonText}
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={onClose}
-          data-testid="confirmation-modal-cancel-button"
-        >
-          {closeButtonText}
-        </Button>
-      </Dialog.ActionButtons>
+      {!preventClosing && (actionButtonText || closeButtonText) && (
+        <Dialog.ActionButtons>
+          {actionButtonText && (
+            <Button
+              onClick={onConfirm}
+              data-testid="confirmation-modal-confirm-button"
+            >
+              {actionButtonText}
+            </Button>
+          )}
+          {closeButtonText !== '' && closeButtonLabelText && (
+            <Button
+              variant="secondary"
+              onClick={onClose}
+              data-testid="confirmation-modal-cancel-button"
+            >
+              {closeButtonLabelText}
+            </Button>
+          )}
+        </Dialog.ActionButtons>
+      )}
     </Dialog>
   );
 }
