@@ -1,5 +1,4 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import { ApolloProvider } from '@apollo/client';
 import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
@@ -18,12 +17,12 @@ import ErrorPage from './profile/components/errorPage/ErrorPage';
 import AccessibilityStatement from './accessibilityStatement/AccessibilityStatement';
 import GdprAuthorizationCodeManagerCallback from './gdprApi/GdprAuthorizationCodeManagerCallback';
 import ToastProvider from './toast/ToastProvider';
-import authService from './auth/authService';
 import config from './config';
 import PageNotFound from './common/pageNotFound/PageNotFound';
 import { useHistoryListener } from './profile/hooks/useHistoryListener';
 import WithAuthCheck from './profile/components/withAuthCheck/WithAuthCheck';
 import CookieConsentPage from './cookieConsents/CookieConsentPage';
+import LoginSSO from './auth/components/loginsso/LoginSSO';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -35,14 +34,7 @@ const instance = createInstance({
 });
 
 function App(): React.ReactElement {
-  const location = useLocation();
-
-  if (location.pathname === '/loginsso') {
-    authService.login();
-  }
-
   useHistoryListener();
-
   return (
     <ApolloProvider client={graphqlClient}>
       <ToastProvider>
@@ -68,7 +60,9 @@ function App(): React.ReactElement {
               <Route path={config.errorPagePath} exact>
                 <ErrorPage />
               </Route>
-              <Route path="/loginsso" exact />
+              <Route path={config.autoSSOLoginPath} exact>
+                <LoginSSO />
+              </Route>
               <Route path={config.cookiePagePath} exact>
                 <CookieConsentPage />
               </Route>
