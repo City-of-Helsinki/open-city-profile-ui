@@ -248,5 +248,18 @@
   "accessibilityStatement": "Tillgänglighetsutlåtande",
   "cityOfHelsinki": "Helsingfors stad",
   "pageNotFoundTitle": "Vi kunde inte hitta webbplatsen.",
-  "pageNotFoundText": "Kontrollera att URL-adressen är rätt skriven (kontrollera stora och små bokstäver och skiljetecken). Eller gå tillbaka till föregående sida genom att klicka på tangenten Föregående i webbläsaren. Du kan också gå tillbaka till första sidan via länken här nedan."
+  "pageNotFoundText": "Kontrollera att URL-adressen är rätt skriven (kontrollera stora och små bokstäver och skiljetecken). Eller gå tillbaka till föregående sida genom att klicka på tangenten Föregående i webbläsaren. Du kan också gå tillbaka till första sidan via länken här nedan.",
+  "cookies": {
+    "pageName": "Kakinställningar",
+    "securityCookieDescription": "Datasäkerhetskontroll",
+    "loadBalancerCookieName": "En slumpmässig teckensträng med 32 tecken",
+    "loadBalancerCookieDescription": "Teknisk routning av webbtrafiken.",
+    "languageCookieDescription": "Kakan krävs för att spara användarens språkval.",
+    "sessionExpiration": "Session",
+    "daysPlural": "dagar",
+    "minutesPlural": "minuter",
+    "mainText": "Denna webbplats använder nödvändiga kakor för att säkerställa basfunktionerna och prestandan. Dessutom använder vi inriktningskakor för analys.",
+    "trackingCookieDescription": "Statistiksystemets kaka samlar information om hur webbplatsen används.",
+    "consentStorageDescription": "Kakan lagrar samtycke för användning av statistikkakorna."
+  }
 }

@@ -248,5 +248,18 @@
   "accessibilityStatement": "Accessibility Statement",
   "cityOfHelsinki": "City of Helsinki",
   "pageNotFoundTitle": "Page not found",
-  "pageNotFoundText": "Check the spelling of the URL (upper and lower case letters and punctuation marks). Or click the Back button on your browser to return to the previous page. You can also go to the front page via the link below."
+  "pageNotFoundText": "Check the spelling of the URL (upper and lower case letters and punctuation marks). Or click the Back button on your browser to return to the previous page. You can also go to the front page via the link below.",
+  "cookies": {
+    "pageName": "Cookie settings",
+    "securityCookieDescription": "A security control",
+    "loadBalancerCookieName": "A random 32-character long string",
+    "loadBalancerCookieDescription": "Technical routing of requests.",
+    "languageCookieDescription": "Required to persist the user's chosen language.",
+    "sessionExpiration": "Session",
+    "daysPlural": "days",
+    "minutesPlural": "minutes",
+    "mainText": "This website uses required cookies to ensure the basic functionality and performance. In addition, we use targeting cookies to perform analytics.",
+    "trackingCookieDescription": "This cookie is used to store a few details about the user such as the unique visitor ID.",
+    "consentStorageDescription": "Cookie stores consent for using analytics cookies."
+  }
 }
