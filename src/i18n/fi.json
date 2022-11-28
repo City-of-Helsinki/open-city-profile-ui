@@ -37,20 +37,21 @@
     "delete": "Poista omat tiedot",
     "explanation": "Halutessasi voit poistaa Helsinki-profiilisi ja kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Helsinki-profiiliisi yhdistettyjä asiointipalveluja käyttääksesi on luotava uusi Helsinki-profiili.<br/><br/>Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta.<br/><br/>Jos olet käyttänyt kirjautumisessa ulkopuolisen palveluntarjoajan tiliä (esim. Google tai Facebook), kyseistä tiliä ei poisteta.",
     "title": "Haluatko poistaa omat tietosi?",
-    "loadingServices": "Haetaan profiiliin yhdistettyjä palveluita"
+    "loadingServices": "Haetaan profiiliin yhdistettyjä palveluita",
+    "deleteSuccessful": "Helsinki-profiili ja kaikki sinusta tallentamamme tiedot on poistettu onnistuneesti!",
+    "deleteFailed": "Jostain syystä poisto ei onnistunut. Kokeile hetken kuluttua uudelleen!"
   },
   "deleteProfileModal": {
     "delete": "Poista omat tiedot",
     "explanation": "Jatkamalla menetät kaikki tallennetut tietosi etkä voi enää käyttää seuraavia Helsingin kaupungin palveluita:",
     "noServiceExplanation": "Jatkamalla menetät kaikki tallennetut tietosi.",
     "title": "Haluatko varmasti poistaa kaikki tietosi?",
+    "notAllowed": "Et voi poistaa profiiliasi, koska jokin sitä käyttävistä palveluista tarvitsee tietojasi esimerkiksi laskutukseen.",
+    "deletionErrorTitle": "Poisto epäonnistui!",
+    "deleteServiceFromPage": "Voit poistaa tiedot näistä palveluista <linkToServices>{{linkToServicesText}}</linkToServices> -sivulta.",
+    "unableToDeleteServices": "Emme voi poistaa tietoja näistä palveluista esimerkiksi asioinnin tilan tai säilytysajan vuoksi.",
     "contactServiceToDelete": "Jos haluat silti poistaa tiedot, ole suoraan yhteydessä <linkToExternalServiceList>kyseiseen palveluun</linkToExternalServiceList> ja yritä profiilin poistoa sen jälkeen uudestaan.",
     "urlToServiceList": "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/hallinto/palvelut"
-  },
-  "deleteProfileErrorModal": {
-    "notAllowed": "Et voi poistaa profiiliasi, koska jokin sitä käyttävistä palveluista tarvitsee tietojasi esimerkiksi laskutukseen.",
-    "title": "Poisto epäonnistui!",
-    "genericError": "Profiilin poistaminen ei onnistunut. Yritä myöhemmin uudelleen."
   },
   "downloadData": {
     "button": "Lataa omat tiedot",

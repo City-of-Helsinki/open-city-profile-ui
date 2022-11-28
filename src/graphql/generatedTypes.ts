@@ -7,9 +7,36 @@
 // GraphQL mutation operation: GdprDeleteMyProfileMutation
 // ====================================================
 
+export interface GdprDeleteMyProfileMutation_deleteMyProfile_results_errors {
+  readonly __typename: "ServiceConnectionDeletionError";
+  readonly code: string;
+}
+
+export interface GdprDeleteMyProfileMutation_deleteMyProfile_results_service {
+  readonly __typename: "ServiceNode";
+  readonly name: string;
+  readonly title: string | null;
+}
+
+export interface GdprDeleteMyProfileMutation_deleteMyProfile_results {
+  readonly __typename: "ServiceConnectionDeletionResult";
+  /**
+   * Was the data removed or not. Or can the data be removed if the request was a dry-run request
+   */
+  readonly success: boolean;
+  /**
+   * Errors if the deletion was not successful or the deletion is not possible
+   */
+  readonly errors: ReadonlyArray<GdprDeleteMyProfileMutation_deleteMyProfile_results_errors>;
+  /**
+   * The service from where this result is from
+   */
+  readonly service: GdprDeleteMyProfileMutation_deleteMyProfile_results_service;
+}
+
 export interface GdprDeleteMyProfileMutation_deleteMyProfile {
   readonly __typename: "DeleteMyProfileMutationPayload";
-  readonly clientMutationId: string | null;
+  readonly results: ReadonlyArray<GdprDeleteMyProfileMutation_deleteMyProfile_results>;
 }
 
 export interface GdprDeleteMyProfileMutation {
@@ -30,6 +57,7 @@ export interface GdprDeleteMyProfileMutation {
 
 export interface GdprDeleteMyProfileMutationVariables {
   readonly input: DeleteMyProfileMutationInput;
+  readonly language: TranslationLanguage;
 }
 
 /* tslint:disable */
@@ -73,9 +101,7 @@ export interface GdprDeleteMyServiceDataMutation {
    * 
    * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
    * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing the service.
-   * * `SERVICE_CONNECTION_DOES_NOT_EXIST_ERROR`: The user is not connected to the service
-   * * `CONNECTED_SERVICE_DELETION_NOT_ALLOWED_ERROR`: The profile deletion is disallowed by the service
-   * * `CONNECTED_SERVICE_DELETION_FAILED_ERROR`: The profile deletion failed for the service.
+   * * `SERVICE_CONNECTION_DOES_NOT_EXIST_ERROR`: The user is not connected to the service.
    */
   readonly deleteMyServiceData: GdprDeleteMyServiceDataMutation_deleteMyServiceData | null;
 }
@@ -875,7 +901,6 @@ export interface DeleteMyServiceDataMutationInput {
   readonly authorizationCode: string;
   readonly serviceName: string;
   readonly dryRun?: boolean | null;
-  readonly clientMutationId?: string | null;
 }
 
 /**

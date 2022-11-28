@@ -37,20 +37,21 @@
     "delete": "Radera min information",
     "explanation": "Om du vill, kan du ta bort din Helsingforsprofil och alla uppgifter som vi har sparat om dig. Uppgifterna kan inte återställas efter att de har tagits bort. För att använda de e-tjänster som är anslutna till din Helsingforsprofil måste du skapa en ny Helsingforsprofil.<br/><br/>Efter borttagningen av profilen blir du automatiskt utloggad från denna tjänst.<br/><br/>Om du har loggat in med ett konto hos en utomstående tjänsteleverantör (t.ex. Google eller Facebook), raderas inte kontot i fråga.",
     "title": "Vill du radera din information?",
-    "loadingServices": "Söker efter tjänster som är kopplade till profilen"
+    "loadingServices": "Söker efter tjänster som är kopplade till profilen",
+    "deleteSuccessful": "Helsingforsprofilen och alla uppgifter som vi har sparat om dig har tagits bort på ett lyckat sätt.",
+    "deleteFailed": "Av någon anledning lyckades borttagningen inte. Försök på nytt om en stund!"
   },
   "deleteProfileModal": {
     "delete": "Radera min information",
     "explanation": "Genom att fortsätta kommer du att förlora alla dina lagrade information och du kan inte längre använda följande Helsingfors stads tjänster:",
     "noServiceExplanation": "Genom att fortsätta kommer du att förlora alla dina lagrade information.",
     "title": "Är du säker på att du vill radera din information?",
+    "notAllowed": "Du kan inte ta bort din profil eftersom någon av tjänsterna som används behöver dina uppgifter till exempel för fakturering.",
+    "deletionErrorTitle": "Profilen kunde inte avlägsnas!",
+    "deleteServiceFromPage": "Du kan ta bort uppgifterna från dessa tjänster på sidan <linkToServices>{{linkToServicesText}}</linkToServices>.",
+    "unableToDeleteServices": "Vi kan inte radera data från dessa tjänster, till exempel på grund av transaktionsstatus eller lagringstid.",
     "contactServiceToDelete": "Om du ändå vill ta bort uppgifterna, kontakta <linkToExternalServiceList>tjänsten</linkToExternalServiceList> i fråga direkt och försök därefter att ta bort profilen på nytt.",
     "urlToServiceList": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/forvaltning/tjanster"
-  },
-  "deleteProfileErrorModal": {
-    "notAllowed": "Du kan inte ta bort din profil eftersom någon av tjänsterna som används behöver dina uppgifter till exempel för fakturering.",
-    "title": "Profilen kunde inte avlägsnas!",
-    "genericError": "Profilen kunde inte avlägsnas. Försök senare på nytt."
   },
   "downloadData": {
     "button": "Ladda ner min information",

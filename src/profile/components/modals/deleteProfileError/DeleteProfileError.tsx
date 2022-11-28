@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { ApolloError } from '@apollo/client';
 
 import { getModalProps } from '../getModalProps';
-import profileConstants from '../../../constants/profileConstants';
+import { DeleteResultLists } from '../../../helpers/parseDeleteProfileResult';
+import DeleteFailureList from '../../deleteProfile/DeleteFailureList';
 
 export type Props = {
-  error?: ApolloError | Error;
+  error?: ApolloError | Error | DeleteResultLists;
   onClose: () => void;
 };
 
@@ -20,27 +21,10 @@ function DeleteProfileError({
   if (!error) {
     return null;
   }
-  const getErrorTranslationKey = (resultError: Props['error']): string => {
-    if (!resultError) {
-      return 'deleteProfileErrorModal.genericError';
-    }
-    const graphQlErrors = (resultError as ApolloError).graphQLErrors;
-    if (graphQlErrors) {
-      const errorCodes: string[] = graphQlErrors.map(
-        graphQlError => graphQlError?.extensions?.code as string
-      );
-      if (
-        errorCodes.includes(
-          profileConstants.CONNECTED_SERVICE_DELETION_NOT_ALLOWED_ERROR
-        )
-      ) {
-        return 'deleteProfileErrorModal.notAllowed';
-      }
-    }
-    return 'deleteProfileErrorModal.genericError';
-  };
+
+  const failureList = (error as DeleteResultLists).failures || [];
+  const errorIsListOfServices = failureList.length;
   const id = 'delete-profile-error-modal';
-  const content = t(getErrorTranslationKey(error));
   const closeButtonText = t('notification.closeButtonText');
   const {
     titleId,
@@ -70,11 +54,17 @@ function DeleteProfileError({
     >
       <Dialog.Header
         id={titleId}
-        title={t('deleteProfileErrorModal.title')}
+        title={t('deleteProfileModal.deletionErrorTitle')}
         iconLeft={<IconAlertCircle aria-hidden="true" />}
       />
       <Dialog.Content>
-        <p id={descriptionId}>{content}</p>
+        {errorIsListOfServices ? (
+          <DeleteFailureList {...(error as DeleteResultLists)} />
+        ) : (
+          <p id={descriptionId} data-testid={'delete-profile-generic-error'}>
+            {t('deleteProfile.deleteFailed')}
+          </p>
+        )}
       </Dialog.Content>
       <Dialog.ActionButtons>
         <Button
