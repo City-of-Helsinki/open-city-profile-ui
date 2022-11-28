@@ -34,13 +34,6 @@ const instance = createInstance({
   siteId: 60,
 });
 
-// Prevent non-production data from being submitted to Matomo
-// by pretending to require consent to process analytics data and never ask for it.
-// https://developer.matomo.org/guides/tracking-javascript-guide#step-1-require-consent
-if (window._env_.REACT_APP_ENVIRONMENT !== 'production') {
-  window._paq.push(['requireConsent']);
-}
-
 function App(): React.ReactElement {
   const location = useLocation();
 
