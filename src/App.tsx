@@ -23,6 +23,7 @@ import config from './config';
 import PageNotFound from './common/pageNotFound/PageNotFound';
 import { useHistoryListener } from './profile/hooks/useHistoryListener';
 import WithAuthCheck from './profile/components/withAuthCheck/WithAuthCheck';
+import CookieConsentPage from './cookieConsents/CookieConsentPage';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -75,6 +76,9 @@ function App(): React.ReactElement {
                 <ErrorPage />
               </Route>
               <Route path="/loginsso" exact />
+              <Route path={config.cookiePagePath} exact>
+                <CookieConsentPage />
+              </Route>
               <Route path="*">
                 <PageNotFound />
               </Route>

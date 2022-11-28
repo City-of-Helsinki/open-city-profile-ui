@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import styles from './Footer.module.css';
 import getLanguageCode from '../helpers/getLanguageCode';
+import config from '../../config';
 
 function Footer(): React.ReactElement {
   const { t, i18n } = useTranslation();
@@ -56,6 +57,9 @@ function Footer(): React.ReactElement {
         </HDSFooter.Item>
         <HDSFooter.Item as={Link} to="/accessibility">
           {t('footer.accessibility')}
+        </HDSFooter.Item>
+        <HDSFooter.Item as={Link} to={config.cookiePagePath}>
+          {t('cookies.pageName')}
         </HDSFooter.Item>
       </HDSFooter.Base>
     </HDSFooter>
