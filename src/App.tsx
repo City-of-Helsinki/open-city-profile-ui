@@ -24,6 +24,7 @@ import WithAuthCheck from './profile/components/withAuthCheck/WithAuthCheck';
 import CookieConsentPage from './cookieConsents/CookieConsentPage';
 import LoginSSO from './auth/components/loginsso/LoginSSO';
 import { useTrackingInstance } from './common/helpers/tracking/matomoTracking';
+import ActivityTracker from './auth/components/activityTracker/ActivityTracker';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -67,6 +68,7 @@ function App(): React.ReactElement {
                 <PageNotFound />
               </Route>
             </Switch>
+            <ActivityTracker />
           </ProfileProvider>
         </MatomoProvider>
       </ToastProvider>
