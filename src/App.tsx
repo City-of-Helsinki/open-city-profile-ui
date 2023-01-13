@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import { ApolloProvider } from '@apollo/client';
-import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
+import { MatomoProvider } from '@datapunt/matomo-tracker-react';
 import countries from 'i18n-iso-countries';
 import fi from 'i18n-iso-countries/langs/fi.json';
 import en from 'i18n-iso-countries/langs/en.json';
@@ -23,18 +23,15 @@ import { useHistoryListener } from './profile/hooks/useHistoryListener';
 import WithAuthCheck from './profile/components/withAuthCheck/WithAuthCheck';
 import CookieConsentPage from './cookieConsents/CookieConsentPage';
 import LoginSSO from './auth/components/loginsso/LoginSSO';
+import { useTrackingInstance } from './common/helpers/tracking/matomoTracking';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
 countries.registerLocale(sv);
 
-const instance = createInstance({
-  urlBase: 'https://analytics.hel.ninja/',
-  siteId: 60,
-});
-
 function App(): React.ReactElement {
   useHistoryListener();
+  const instance = useTrackingInstance();
   return (
     <ApolloProvider client={graphqlClient}>
       <ToastProvider>
