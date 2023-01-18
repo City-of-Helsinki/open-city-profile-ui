@@ -38,7 +38,7 @@ export class AuthService {
   private _isProcessingLogin = false;
   constructor() {
     const settings: UserManagerSettings = {
-      automaticSilentRenew: true,
+      automaticSilentRenew: false,
       userStore: new WebStorageStateStore({ store: window.sessionStorage }),
       authority: window._env_.REACT_APP_OIDC_AUTHORITY,
       client_id: window._env_.REACT_APP_OIDC_CLIENT_ID,
@@ -47,10 +47,9 @@ export class AuthService {
       response_type: window._env_.REACT_APP_OIDC_RESPONSE_TYPE,
       scope: window._env_.REACT_APP_OIDC_SCOPE,
       post_logout_redirect_uri: `${origin}/`,
-      // This calculates to 1 minute, good for debugging:
-      // eslint-disable-next-line max-len
-      // https://github.com/City-of-Helsinki/kukkuu-ui/blob/8029ed64c3d0496fa87fa57837c73520e8cbe37f/src/domain/auth/userManager.ts#L18
-      // accessTokenExpiringNotificationTime: 59.65 * 60,
+      // Currently expiration time is 1 hour, 3600 seconds
+      // set following value to 3600 - <seconds until renewal starts>, to debug the renewal process
+      //accessTokenExpiringNotificationTime: 3600 - 10,
     };
 
     // Show oidc debugging info in the console only while developing
