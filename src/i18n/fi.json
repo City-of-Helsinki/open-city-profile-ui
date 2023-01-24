@@ -25,7 +25,10 @@
     "removePhone": "Poistetaanko puhelinnumero?",
     "removeAddress": "Poistetaanko osoite?",
     "saveMessage": "Muuttamasi tiedot ovat heti käytössä seuraavissa Helsingin kaupungin palveluissa:",
-    "saveTitle": "Haluatko tallentaa tekemäsi muutokset?"
+    "saveTitle": "Haluatko tallentaa tekemäsi muutokset?",
+    "idleWarning": "Sessio on vanhentumassa, jos haluat jatkaa niin klikkaa jatka, muuten sinut kirjataan ulos",
+    "idleWarningTitle": "Sinut kirjataan pian ulos",
+    "continue": "Jatka"
   },
   "createProfile": {
     "heading": "Täydennä tietosi luodaksesi profiili",

@@ -25,7 +25,10 @@
     "removePhone": "Remove phone number?",
     "removeAddress": "Remove address?",
     "saveMessage": "The information you have changed is immediately available to the following City of Helsinki services:",
-    "saveTitle": "Do you want to save your changes?"
+    "saveTitle": "Do you want to save your changes?",
+    "idleWarning": "The session is about to expire. To prevent an automatic logout, select Continue",
+    "idleWarningTitle": "You will be logged out soon",
+    "continue": "Continue"
   },
   "createProfile": {
     "heading": "Fill in your details to create a profile",
