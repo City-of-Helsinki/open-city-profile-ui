@@ -9,6 +9,8 @@ const config = {
   ),
   oidcAuthority: window._env_.REACT_APP_OIDC_AUTHORITY,
   errorPagePath: '/error',
+  cookiePagePath: '/cookies',
+  autoSSOLoginPath: '/loginsso',
 };
 
 export default config;

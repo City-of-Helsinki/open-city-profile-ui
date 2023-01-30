@@ -248,5 +248,18 @@
   "accessibilityStatement": "Saavutettavuusseloste",
   "cityOfHelsinki": "Helsingin kaupunki",
   "pageNotFoundTitle": "Sivua ei löytynyt",
-  "pageNotFoundText": "Tarkista URL-osoitteen oikeinkirjoitus (tarkista isot ja pienet kirjaimet sekä välimerkit). Tai palaa edelliselle sivulle napsauttamalla selaimen Edellinen-painiketta. Voit mennä myös etusivulle alla olevasta linkistä."
+  "pageNotFoundText": "Tarkista URL-osoitteen oikeinkirjoitus (tarkista isot ja pienet kirjaimet sekä välimerkit). Tai palaa edelliselle sivulle napsauttamalla selaimen Edellinen-painiketta. Voit mennä myös etusivulle alla olevasta linkistä.",
+  "cookies": {
+    "pageName": "Evästeasetukset",
+    "securityCookieDescription": "Tietoturvakontrolli",
+    "loadBalancerCookieName": "Satunnainen 32 merkin pituinen merkkijono",
+    "loadBalancerCookieDescription": "Verkkoliikenteen tekninen reititys.",
+    "languageCookieDescription": "Eväste vaaditaan jotta käyttäjän kielivalinta säilyisi.",
+    "sessionExpiration": "Istunto",
+    "daysPlural": "päivää",
+    "minutesPlural": "minuuttia",
+    "mainText": "Tämä sivusto käyttää välttämättömiä evästeitä sivun perustoimintojen ja suorituskyvyn varmistamiseksi. Lisäksi käytämme kohdennusevästeitä analytiikkaa varten.",
+    "trackingCookieDescription": "Eväste kerää tietoa kävijän liikkeistä sivustolla.",
+    "consentStorageDescription": "Evästeeseen tallennetaan suostumus tilastointievästeisiin."
+  }
 }

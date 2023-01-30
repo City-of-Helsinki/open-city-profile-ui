@@ -45,9 +45,9 @@
     "formik": "^2.0.4",
     "graphql": "^15.2.0",
     "graphql.macro": "^1.4.2",
-    "hds-core": "1.13.0",
-    "hds-design-tokens": "1.13.0",
-    "hds-react": "1.13.0",
+    "hds-core": "2.10.0",
+    "hds-design-tokens": "2.10.0",
+    "hds-react": "2.10.0",
     "history": "^4.9.0",
     "http-status-typed": "^1.0.0",
     "i18n-iso-countries": "^7.0.0",
@@ -81,7 +81,8 @@
     "update-translations": "ts-node -P ./scripts/tsconfig.json -r dotenv/config --files scripts/update-translations.ts",
     "update-runtime-env": "ts-node -P ./scripts/tsconfig.json --files scripts/update-runtime-env.ts",
     "update-country-calling-codes": "ts-node -P ./scripts/tsconfig.json --files scripts/update-country-calling-codes.ts",
-    "clear-babel-cache": "rm -rf ./node_modules/.cache/@babel"
+    "clear-babel-cache": "rm -rf ./node_modules/.cache/@babel",
+    "typecheck": "tsc --skipLibCheck --noEmit --project tsconfig.json"
   },
   "browserslist": {
     "production": [

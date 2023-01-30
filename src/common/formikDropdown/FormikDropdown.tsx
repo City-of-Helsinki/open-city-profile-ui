@@ -11,7 +11,7 @@ type Props = {
   toggleButtonAriaLabel?: string;
   allowSearch?: boolean;
   virtualized?: boolean;
-} & Omit<SingleSelectProps<OptionType>, 'defaultOption' | 'value'>;
+} & Exclude<SingleSelectProps<OptionType>, 'defaultOption' | 'value'>;
 
 export type OptionType = {
   value: string;
