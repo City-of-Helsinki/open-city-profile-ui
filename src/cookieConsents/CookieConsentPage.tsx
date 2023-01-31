@@ -7,10 +7,13 @@ import PageLayout from '../common/pageLayout/PageLayout';
 import { getCookieContent } from './cookieContentSource';
 import commonContentStyles from '../common/cssHelpers/content.module.css';
 import { handleCookieConsentChange } from '../common/helpers/tracking/matomoTracking';
+import getLanguageCode from '../common/helpers/getLanguageCode';
 
 function CookieConsentPage(): React.ReactElement | null {
   const { i18n } = useTranslation();
-  const currentLanguage = i18n.language as ContentSource['currentLanguage'];
+  const currentLanguage = getLanguageCode(
+    i18n.language
+  ) as ContentSource['currentLanguage'];
   const { t } = i18n;
   const contentSource: ContentSource = useMemo(
     () => ({
