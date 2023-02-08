@@ -251,6 +251,24 @@ export class AuthService {
     sessionStorage.removeItem(API_TOKEN);
     this.userSessionValidityPoller.stop();
   }
+
+  async waitForAuthentication(): Promise<void> {
+    return new Promise(resolve => {
+      if (this.isAuthenticated()) {
+        resolve();
+        return;
+      }
+      let isResolved = false;
+      // addUserLoaded can be called multiple times - for example when token is renewed
+      // isResolved prevents calling resolve() twice
+      this.userManager.events.addUserLoaded(() => {
+        if (!isResolved) {
+          isResolved = true;
+          resolve();
+        }
+      });
+    });
+  }
 }
 
 export default new AuthService();

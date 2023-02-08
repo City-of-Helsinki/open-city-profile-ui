@@ -447,6 +447,35 @@ describe('authService', () => {
     });
   });
 
+  describe('waitForAuthentication ', () => {
+    it('should resolve when user is already authenticated', async () => {
+      setSession({
+        validUser: true,
+        validApiToken: true,
+      });
+      await authService.waitForAuthentication();
+
+      expect(authService.isAuthenticated()).toBeTruthy();
+    });
+    it('should resolve after userLoaded event is raised', async () => {
+      setSession({
+        validUser: false,
+        validApiToken: false,
+      });
+      const tracker = jest.fn();
+      authService.waitForAuthentication().then(tracker);
+
+      await userManager.events._userLoaded.raise({});
+      // triggering twice as event can be triggered multiple times
+      // and errors should not occur
+      await userManager.events._userLoaded.raise({});
+
+      await waitFor(() => {
+        expect(tracker).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
+
   describe('Session polling ', () => {
     const mockHttpPoller = getHttpPollerMockData();
     afterEach(() => {
