@@ -96,6 +96,18 @@ function ExpandingPanel({
       <Card aria-label={title} className={styles['card']} {...contentProps}>
         {children}
       </Card>
+      {isOpen && (
+        <div className={styles['close-button-container']}>
+          <Button
+            title={title}
+            variant={'supplementary'}
+            iconRight={<Icon aria-hidden />}
+            {...buttonProps}
+          >
+            {t('expandingPanel.closeButtonText')}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

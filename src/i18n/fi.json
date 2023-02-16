@@ -59,6 +59,7 @@
     "panelTitle": "Haluatko ladata omat tietosi?"
   },
   "expandingPanel": {
+    "closeButtonText": "Sulje",
     "hideInformation": "Piilota tiedot",
     "showInformation": "Näytä tiedot"
   },

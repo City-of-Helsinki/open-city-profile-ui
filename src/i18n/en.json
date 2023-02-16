@@ -59,6 +59,7 @@
     "panelTitle": "Do you want to download your information?"
   },
   "expandingPanel": {
+    "closeButtonText": "Close",
     "hideInformation": "Hide information",
     "showInformation": "Show information"
   },

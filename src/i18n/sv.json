@@ -59,6 +59,7 @@
     "panelTitle": "Vill du ladda ner din information?"
   },
   "expandingPanel": {
+    "closeButtonText": "Stäng",
     "hideInformation": "Göm information",
     "showInformation": "Visa information"
   },
