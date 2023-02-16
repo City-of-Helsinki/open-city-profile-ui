@@ -1,9 +1,6 @@
 .container {
   padding-bottom: 0;
 }
-.container h1 {
-  font-size: var(--h2-size);
-}
 .container h1,
 .container h2,
 .container h3 {

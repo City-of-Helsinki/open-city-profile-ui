@@ -73,15 +73,19 @@
 
 main h1 {
   font-size: var(--h1-size);
+  font-weight: 400;
 }
 main h2 {
   font-size: var(--h2-size);
+  font-weight: 400;
 }
 main h3 {
   font-size: var(--h3-size);
+  font-weight: 400;
 }
 main h4 {
   font-size: var(--h4-size);
+  font-weight: 400;
 }
 
 :root {
@@ -95,19 +99,19 @@ main h4 {
   --color-black-ultra-light: #fafafb;
   --common-top-spacing: var(--spacing-layout-s);
   --common-bottom-spacing: var(--spacing-layout-l);
-  --h1-size: var(--fontsize-heading-l);
-  --h2-size: var(--fontsize-heading-m);
-  --h3-size: var(--fontsize-heading-s);
-  --h4-size: var(--fontsize-heading-xs);
+  --h1-size: var(--fontsize-heading-xl-mobile);
+  --h2-size: var(--fontsize-heading-l);
+  --h3-size: var(--fontsize-heading-m);
+  --h4-size: var(--fontsize-heading-s);
 }
 
 @media (min-width: 768px) {
   :root {
     --common-top-spacing: var(--spacing-layout-l);
     --common-bottom-spacing: var(--spacing-layout-xl);
-    --h1-size: var(--fontsize-heading-xl);
-    --h2-size: var(--fontsize-heading-l);
-    --h3-size: var(--fontsize-heading-m);
-    --h4-size: var(--fontsize-heading-s);
+    --h1-size: var(--fontsize-heading-xxl);
+    --h2-size: var(--fontsize-heading-xl);
+    --h3-size: var(--fontsize-heading-l);
+    --h4-size: var(--fontsize-heading-m);
   }
 }

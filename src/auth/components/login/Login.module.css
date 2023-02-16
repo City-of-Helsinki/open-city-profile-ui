@@ -11,7 +11,7 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  max-width: 600px;
+  max-width: var(--breakpoint-m);
   padding-top: var(--common-top-spacing);
   padding-bottom: var(--spacing-layout-l);
 }
