@@ -12,3 +12,16 @@
   background: none;
   cursor: pointer;
 }
+
+.content-box {
+  padding: var(--spacing-m) var(--spacing-s);
+  border: 1px solid var(--color-black-40);
+  border-left: 8px solid var(--color-gold);
+  border-radius: 5px;
+}
+
+@media (min-width: 768px) {
+  .content-box {
+    padding: var(--spacing-l) var(--spacing-m);
+  }
+}

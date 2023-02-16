@@ -12,8 +12,10 @@ import {
   useAccordion,
 } from 'hds-react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import styles from './ExpandingPanel.module.css';
+import commonStyles from '../cssHelpers/common.module.css';
 
 type Props = PropsWithChildren<{
   title?: string;
@@ -69,7 +71,10 @@ function ExpandingPanel({
     ? { 'data-testid': `${dataTestId}-toggle-button` }
     : null;
   return (
-    <div className={styles['container']} ref={handleContainerRef}>
+    <div
+      className={classNames(commonStyles['content-box'], styles['container'])}
+      ref={handleContainerRef}
+    >
       <div className={styles['title']}>
         <h2>{title}</h2>
         <div className={styles['right-side-information']}>

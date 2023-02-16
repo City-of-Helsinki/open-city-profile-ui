@@ -4,7 +4,7 @@ exports[`<AuthenticationProviderInformation />  renders correctly when AMR is he
 <AuthenticationProviderInformation>
   <ProfileSection>
     <section
-      className="profile-section"
+      className="content-box profile-section"
     >
       <div
         className="content-wrapper"
@@ -33,7 +33,7 @@ exports[`<AuthenticationProviderInformation />  renders correctly when AMR is tu
 <AuthenticationProviderInformation>
   <ProfileSection>
     <section
-      className="profile-section"
+      className="content-box profile-section"
     >
       <div
         className="content-wrapper"

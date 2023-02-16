@@ -15,7 +15,6 @@ import {
 } from '../../../graphql/typings';
 import getServiceConnectionData from '../../helpers/getServiceConnectionData';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
-import ProfileSection from '../../../common/profileSection/ProfileSection';
 import ServiceConnection from './ServiceConnection';
 
 const SERVICE_CONNECTIONS = loader(
@@ -102,17 +101,15 @@ function ServiceConnections(): React.ReactElement {
         dataTestId="service-connections-explanation"
         useHeadingHeroStyle
       />
-      <ProfileSection>
-        <div className={styles['panel-container']}>
-          {services.map(service => (
-            <ServiceConnection
-              key={service.name}
-              service={service}
-              onDeletion={onServiceConnectionDeleted}
-            />
-          ))}
-        </div>
-      </ProfileSection>
+      <div className={styles['panel-container']}>
+        {services.map(service => (
+          <ServiceConnection
+            key={service.name}
+            service={service}
+            onDeletion={onServiceConnectionDeleted}
+          />
+        ))}
+      </div>
     </ContentWrapper>
   );
 }

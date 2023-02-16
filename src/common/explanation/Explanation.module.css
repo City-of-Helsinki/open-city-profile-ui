@@ -1,5 +1,5 @@
 .container {
-  padding-bottom: 0;
+  padding-bottom: var(--spacing-m);
 }
 .container h1,
 .container h2,
@@ -14,6 +14,6 @@
 
 @media (min-width: 768px) {
   .container {
-    padding-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-l);
   }
 }
