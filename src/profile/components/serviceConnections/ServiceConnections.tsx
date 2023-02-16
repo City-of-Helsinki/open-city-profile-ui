@@ -100,6 +100,7 @@ function ServiceConnections(): React.ReactElement {
             : t('serviceConnections.explanation')
         }
         dataTestId="service-connections-explanation"
+        useHeadingHeroStyle
       />
       <ProfileSection>
         <div className={styles['panel-container']}>

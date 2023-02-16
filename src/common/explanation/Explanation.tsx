@@ -10,6 +10,7 @@ type Props = {
   text: string | React.ReactNode;
   className?: string;
   dataTestId?: string;
+  useHeadingHeroStyle?: boolean;
 };
 
 function Explanation({
@@ -17,6 +18,7 @@ function Explanation({
   heading,
   text,
   dataTestId,
+  useHeadingHeroStyle,
 }: Props): React.ReactElement {
   usePageLoadFocusSetter();
   return (
@@ -24,7 +26,7 @@ function Explanation({
       className={classNames(styles.container, className)}
       {...(dataTestId ? { 'data-testid': dataTestId } : undefined)}
     >
-      <FocusableH1>{heading}</FocusableH1>
+      <FocusableH1 useHeroStyle={useHeadingHeroStyle}>{heading}</FocusableH1>
       <p>{text}</p>
     </div>
   );

@@ -1,0 +1,22 @@
+h1.hero-style {
+  padding: var(--spacing-layout-xs) 0;
+  position: relative;
+  z-index: 1;
+}
+h1.hero-style:before {
+  content: '';
+  background-color: var(--color-silver);
+  padding: var(--spacing-layout-s);
+  position: absolute;
+  top: 0;
+  left: calc(-1 * var(--spacing-xl));
+  bottom: 0;
+  width: 150%;
+  z-index: -1;
+}
+
+@media (min-width: 768px) {
+  h1.hero-style {
+    padding: var(--spacing-layout-s) 0;
+  }
+}

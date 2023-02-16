@@ -42,6 +42,7 @@ function ProfileInformation(): React.ReactElement {
             />
           }
           dataTestId="profile-information-explanation"
+          useHeadingHeroStyle
         />
         {data && (
           <Fragment>
