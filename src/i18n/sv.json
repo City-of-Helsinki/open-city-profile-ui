@@ -215,7 +215,7 @@
     "explanation": "Du har gett följande tjänster rätt att använda uppgifterna som sparats i Helsingforsprofilen.",
     "servicePersonalData": "Information som tjänsten vet om dig:",
     "title": "Tjänster som har tillstånd att använda dina uppgifter",
-    "deleteConnection": "Om du vill ta bort dina uppgifter från denna tjänst, <deleteButton>tryck här</deleteButton>.",
+    "deleteConnection": "Ta bort dina uppgifter från denna tjänst",
     "connectionRemovalVerification": "Om du fortsätter, förlorar du alla uppgifter som du sparat i tjänsten {{serviceName}} och du kan inte längre använda tjänsten förrän du registrerar dig i tjänsten på nytt.",
     "connectionRemovalSuccess": "Alla uppgifter som vi sparat i tjänsten {{serviceName}} har tagits bort på ett lyckat sätt!",
     "connectionRemovalForbidden": "Vi kan inte radera data från denna tjänst, till exempel på grund av transaktionsstatus eller lagringstid.",
