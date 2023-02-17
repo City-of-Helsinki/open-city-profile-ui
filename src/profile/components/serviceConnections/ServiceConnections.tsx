@@ -68,20 +68,22 @@ function ServiceConnections(): React.ReactElement {
 
   if (error) {
     return (
-      <Notification
-        type={'error'}
-        label={t('notification.genericError')}
-        dataTestId={'service-connections-load-error'}
-      >
-        <p>{t('notification.defaultErrorText')}</p>
-        <StyledButton
-          onClick={() => {
-            refetch();
-          }}
+      <ContentWrapper>
+        <Notification
+          type={'error'}
+          label={t('notification.genericError')}
+          dataTestId={'service-connections-load-error'}
         >
-          {t('notification.tryAgain')}
-        </StyledButton>
-      </Notification>
+          <p>{t('notification.defaultErrorText')}</p>
+          <StyledButton
+            onClick={() => {
+              refetch();
+            }}
+          >
+            {t('notification.tryAgain')}
+          </StyledButton>
+        </Notification>
+      </ContentWrapper>
     );
   }
 
