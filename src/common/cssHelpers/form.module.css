@@ -82,8 +82,17 @@ section > .section-title:first-of-type,
 }
 
 .actions-wrapper .actions-wrapper-button {
-  border: 2px solid var(--color-bus);
+  border-color: var(--color-black);
+  color: var(--color-white);
+  background-color: var(--color-black);
   margin-bottom: var(--spacing-xs);
+}
+.actions-wrapper .actions-wrapper-button:focus,
+.actions-wrapper .actions-wrapper-button:hover,
+.actions-wrapper .actions-wrapper-button:hover:focus {
+  color: var(--color-black);
+  background-color: transparent;
+  border-color: var(--color-black);
 }
 
 .actions {
@@ -181,12 +190,7 @@ section > .section-title:first-of-type,
   }
 
   .actions-wrapper .actions-wrapper-button {
-    border-color: var(--color-white);
-    margin-bottom: 0;
-  }
-  .actions-wrapper .actions-wrapper-button:focus,
-  .actions-wrapper .actions-wrapper-button:hover:focus {
-    border-color: var(--color-bus);
+    margin: 0 0 0 var(--spacing-l);
   }
 
   .primary-container {

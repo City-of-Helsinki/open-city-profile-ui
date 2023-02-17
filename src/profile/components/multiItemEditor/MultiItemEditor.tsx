@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import to from 'await-to-js';
-import { Button, IconPlusCircle } from 'hds-react';
+import { IconPlusCircle } from 'hds-react';
 
 import MultiItemPhoneRow from '../multiItemPhoneRow/MultiItemPhoneRow';
 import MultiItemAddressRow from '../multiItemAddressRow/MultiItemAddressRow';
@@ -25,6 +25,7 @@ import { useFocusSetter } from '../../hooks/useFocusSetter';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
 import { ActionRejection } from '../../hooks/useCommonEditHandling';
 import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
+import StyledButton from '../../../common/styledButton/StyledButton';
 
 type Props = {
   dataType: Extract<EditDataType, 'addresses' | 'phones'>;
@@ -184,7 +185,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
       <AccessibilityFieldHelpers dataType={dataType} />
       <EditingNotifications content={content} dataType={dataType} />
       {!hideAddButton && (
-        <Button
+        <StyledButton
           iconLeft={<IconPlusCircle />}
           onClick={async () => {
             clearMessage();
@@ -196,7 +197,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
           id={addButtonId}
         >
           {texts.addNew}
-        </Button>
+        </StyledButton>
       )}
       <ConfirmationModal {...modalProps} />
     </>

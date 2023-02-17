@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import * as Sentry from '@sentry/browser';
-import { Button } from 'hds-react';
 
 import { ServiceConnectionData } from '../../helpers/getServiceConnectionData';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
@@ -12,6 +11,7 @@ import styles from './ServiceConnections.module.css';
 import useDeleteServiceConnection from '../../../gdprApi/useDeleteServiceConnection';
 import DeleteServiceConnectionModal from './DeleteServiceConnectionModal';
 import encodeServiceName from '../../helpers/encodeServiceName';
+import StyledButton from '../../../common/styledButton/StyledButton';
 
 export const STATUS_NONE = 0;
 export const STATUS_PENDING_CONFIRMATION = 1;
@@ -148,12 +148,12 @@ function ServiceConnection(props: {
             {getDateTime(service.connectionCreatedAt)}
           </p>
         </div>
-        <Button
+        <StyledButton
           onClick={onDeleteClick}
           data-testid={`delete-service-connection-${encodedServiceName}-button`}
         >
           {t('serviceConnections.deleteConnection')}
-        </Button>
+        </StyledButton>
       </ExpandingPanel>
       <DeleteServiceConnectionModal
         status={modalStatus}

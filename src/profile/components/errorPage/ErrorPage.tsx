@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
-import { Button, Notification } from 'hds-react';
+import { Notification } from 'hds-react';
 import classNames from 'classnames';
 
 import PageLayout from '../../../common/pageLayout/PageLayout';
@@ -9,6 +9,7 @@ import queryParamsToObject from '../../../common/helpers/queryParamsToObject';
 import styles from './ErrorPage.module.css';
 import authService from '../../../auth/authService';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
+import StyledButton from '../../../common/styledButton/StyledButton';
 
 export type ErrorPageQueryParams = {
   message?: string;
@@ -91,12 +92,12 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
         </Notification>
         <div className={styles.buttons}>
           {hideLoginButton !== true && !isAuthenticated && (
-            <Button
+            <StyledButton
               onClick={() => authService.login()}
               data-testid={'error-page-login-button'}
             >
               {t('login.login')}
-            </Button>
+            </StyledButton>
           )}
         </div>
       </div>

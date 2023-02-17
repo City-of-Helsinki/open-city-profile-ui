@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
-import { Button, IconPlusCircle, TextInput, Notification } from 'hds-react';
+import { IconPlusCircle, TextInput, Notification } from 'hds-react';
 import to from 'await-to-js';
 import _ from 'lodash';
 
@@ -34,6 +34,7 @@ import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers
 import { AnyObject } from '../../../graphql/typings';
 import useProfile from '../../../auth/useProfile';
 import { hasTunnistusSuomiFiAmr } from '../profileInformation/authenticationProviderUtil';
+import StyledButton from '../../../common/styledButton/StyledButton';
 
 function EmailEditor(): React.ReactElement | null {
   const dataType: EditDataType = 'emails';
@@ -197,7 +198,7 @@ function EmailEditor(): React.ReactElement | null {
         </div>
       )}
       {!email && (
-        <Button
+        <StyledButton
           iconLeft={<IconPlusCircle />}
           onClick={async () => {
             clearMessage();
@@ -209,7 +210,7 @@ function EmailEditor(): React.ReactElement | null {
           className={commonFormStyles['responsive-button']}
         >
           {t('profileForm.addEmail')}
-        </Button>
+        </StyledButton>
       )}
       {!willSendEmailVerificationCode && (
         <EditingNotifications content={content} dataType={dataType} />

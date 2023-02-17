@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import { Button, Notification } from 'hds-react';
+import { Notification } from 'hds-react';
 
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import CreateProfile from '../createProfile/CreateProfile';
@@ -12,6 +12,7 @@ import authService from '../../../auth/authService';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import { useProfileLoadTracker } from '../../hooks/useProfileLoadTracker';
 import { WithAuthCheckChildProps } from '../withAuthCheck/WithAuthCheck';
+import StyledButton from '../../../common/styledButton/StyledButton';
 
 function Profile(props: WithAuthCheckChildProps): React.ReactElement {
   const { t } = useTranslation();
@@ -56,19 +57,19 @@ function Profile(props: WithAuthCheckChildProps): React.ReactElement {
                 {t('profile.loadErrorText')}
               </Notification>
               <div className={styles['error-button-wrapper']}>
-                <Button
+                <StyledButton
                   onClick={() => reloadProfile()}
                   data-testid={'profile-check-error-reload-button'}
                 >
                   {t('profile.reload')}
-                </Button>
-                <Button
+                </StyledButton>
+                <StyledButton
                   onClick={() => authService.logout()}
                   data-testid={'profile-check-error-logout-button'}
                   variant={'secondary'}
                 >
                   {t('nav.signout')}
-                </Button>
+                </StyledButton>
               </div>
             </div>
           </div>
