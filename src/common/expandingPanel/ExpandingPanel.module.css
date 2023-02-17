@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .title {
@@ -38,12 +39,7 @@
 }
 
 .close-button-container {
-  display: flex;
-  justify-content: end;
-}
-
-@media (min-width: 600px) {
-  .card {
-    max-width: 600px;
-  }
+  position: absolute;
+  bottom: var(--spacing-xs);
+  right: var(--spacing-m);
 }
