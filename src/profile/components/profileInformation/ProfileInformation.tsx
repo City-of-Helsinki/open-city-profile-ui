@@ -9,12 +9,15 @@ import AuthenticationProviderInformation from './AuthenticationProviderInformati
 import { ProfileContext } from '../../context/ProfileContext';
 import BasicData from '../basicData/BasicData';
 import EmailEditor from '../emailEditor/EmailEditor';
-import MultiItemEditor from '../multiItemEditor/MultiItemEditor';
 import AdditionalInformation from '../additionalInformation/AdditionalInformation';
 import VerifiedPersonalInformation from '../verifiedPersonalInformation/VerifiedPersonalInformation';
 import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
 import Explanation from '../../../common/explanation/Explanation';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
+import AddressEditor from '../addressEditor/AddressEditor';
+import ProfileSection from '../../../common/profileSection/ProfileSection';
+import commonFormStyles from '../../../common/cssHelpers/form.module.css';
+import MultiItemEditor from '../multiItemEditor/MultiItemEditor';
 
 function ProfileInformation(): React.ReactElement {
   const { data } = useContext(ProfileContext);
@@ -47,9 +50,17 @@ function ProfileInformation(): React.ReactElement {
         {data && (
           <Fragment>
             <UserDataComponent />
-            <MultiItemEditor dataType="addresses" />
-            <MultiItemEditor dataType="phones" />
-            <EmailEditor />
+            <AddressEditor />
+            <ProfileSection>
+              <h2
+                className={commonFormStyles['section-title-with-subsections']}
+              >
+                {t('profileInformation.contact')}
+              </h2>
+              <MultiItemEditor dataType="phones" />
+              <hr />
+              <EmailEditor />
+            </ProfileSection>
             <AdditionalInformation />
           </Fragment>
         )}

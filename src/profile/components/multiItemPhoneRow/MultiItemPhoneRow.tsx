@@ -86,10 +86,10 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
       >
         {(formikProps: FormikProps<PhoneFormikValue>) => (
           <Form className={commonFormStyles['multi-item-form']}>
-            <div className={commonFormStyles['section-title-with-explanation']}>
-              <h2 className={commonFormStyles['section-title']}>
+            <div>
+              <h3 className={commonFormStyles['label-size']}>
                 {t('profileInformation.phone')}
-              </h2>
+              </h3>
               {isNew && <p>{t('profileInformation.noPhone')}</p>}
             </div>
             <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
@@ -171,9 +171,9 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
         commonFormStyles['multi-item-content-wrapper'],
       ])}
     >
-      <h2 className={commonFormStyles['section-title']}>
+      <h3 className={commonFormStyles['label-size']}>
         {t('profileInformation.phone')}
-      </h2>
+      </h3>
       <div
         className={classNames(
           commonFormStyles['multi-item-wrapper'],

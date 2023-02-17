@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import to from 'await-to-js';
 import { Button, IconPlusCircle } from 'hds-react';
 
-import ProfileSection from '../../../common/profileSection/ProfileSection';
 import MultiItemPhoneRow from '../multiItemPhoneRow/MultiItemPhoneRow';
 import MultiItemAddressRow from '../multiItemAddressRow/MultiItemAddressRow';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
@@ -66,10 +65,10 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   const hideAddButton = editDataList.length > 0;
   const setPrimaryInProgress = isSettingPrimary(editDataList);
   const userIsVerified = !!useVerifiedPersonalInformation();
-  const RowComponent =
-    dataType === 'addresses' ? MultiItemAddressRow : MultiItemPhoneRow;
+  const isAddressType = dataType === 'addresses';
+  const RowComponent = isAddressType ? MultiItemAddressRow : MultiItemPhoneRow;
   const texts = (function() {
-    if (dataType === 'phones') {
+    if (!isAddressType) {
       return {
         modalTitle: t('confirmationModal.removePhone'),
         title: t('profileInformation.phone'),
@@ -145,14 +144,26 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   };
 
   const NoItemsMessage = () => (
-    <div className={commonFormStyles['section-title-with-explanation']}>
-      <h2 className={commonFormStyles['section-title']}>{texts.title}</h2>
+    <div
+      className={
+        isAddressType ? commonFormStyles['section-title-with-explanation'] : ''
+      }
+    >
+      <h3
+        className={
+          isAddressType
+            ? commonFormStyles['section-title']
+            : commonFormStyles['label-size']
+        }
+      >
+        {texts.title}
+      </h3>
       <p data-testid={`${dataType}-no-data`}>{texts.noContent}</p>
     </div>
   );
 
   return (
-    <ProfileSection>
+    <>
       {!editDataList || (!editDataList.length && <NoItemsMessage />)}
       <ul aria-label={texts.listAriaLabel} className={commonFormStyles['list']}>
         {editDataList.map((item, index) => (
@@ -188,7 +199,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
         </Button>
       )}
       <ConfirmationModal {...modalProps} />
-    </ProfileSection>
+    </>
   );
 }
 

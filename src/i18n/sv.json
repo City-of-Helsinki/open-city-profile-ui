@@ -175,6 +175,7 @@
     "ariaShowOptions": "Visa alternativ",
     "ariaSelectedOption": "{{value}} har valts",
     "ariaNoSelectedItemForLabel": "{{label}} har inte valts",
+    "contact": "Kontaktinformation",
     "deleteProfile": "Radera profil",
     "description": "Uppgifterna som sparats i Helsingforsprofilen används i Helsingfors stads e-tjänster. Närmare information hittar du på <linkToServices>{{linkToServicesText}} sidan</linkToServices>.",
     "downloadData": "Ladda ner min information",

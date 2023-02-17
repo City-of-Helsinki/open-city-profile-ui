@@ -1,3 +1,7 @@
 .profile-section {
   margin-bottom: var(--spacing-xl);
 }
+
+.profile-section hr {
+  margin: var(--spacing-l) 0 var(--spacing-s);
+}

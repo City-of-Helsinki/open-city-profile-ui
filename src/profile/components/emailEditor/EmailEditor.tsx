@@ -7,7 +7,6 @@ import _ from 'lodash';
 
 import styles from './emailEditor.module.css';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
-import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { getFormFields } from '../../helpers/formProperties';
 import {
   EditDataType,
@@ -108,10 +107,10 @@ function EmailEditor(): React.ReactElement | null {
         validationSchema={emailSchema}
       >
         {(formikProps: FormikProps<EmailValue>) => (
-          <ProfileSection>
-            <h2 className={commonFormStyles['section-title']}>
+          <div>
+            <h3 className={commonFormStyles['label-size']}>
               {t('profileForm.email')}
-            </h2>
+            </h3>
             <div className={commonFormStyles['content-wrapper']}>
               <Form>
                 <FocusKeeper targetId={`${dataType}-email`}>
@@ -150,18 +149,18 @@ function EmailEditor(): React.ReactElement | null {
                 </FocusKeeper>
               </Form>
             </div>
-          </ProfileSection>
+          </div>
         )}
       </Formik>
     );
   }
 
   return (
-    <ProfileSection>
+    <div>
       <div className={commonFormStyles['content-wrapper']}>
-        <h2 className={commonFormStyles['section-title']}>
+        <h3 className={commonFormStyles['label-size']}>
           {t('profileForm.email')}
-        </h2>
+        </h3>
         <div className={commonFormStyles['text-content-wrapper']}>
           <span
             className={commonFormStyles['value']}
@@ -178,7 +177,7 @@ function EmailEditor(): React.ReactElement | null {
                 removable: false,
                 setPrimary: false,
               }}
-              buttonClassNames={commonFormStyles['actions-wrapper-button']}
+              buttonClassNames={commonFormStyles['profile-button']}
               editButtonId={editButtonId}
               testId={dataType}
               ariaLabels={ariaLabels}
@@ -215,7 +214,7 @@ function EmailEditor(): React.ReactElement | null {
       {!willSendEmailVerificationCode && (
         <EditingNotifications content={content} dataType={dataType} />
       )}
-    </ProfileSection>
+    </div>
   );
 }
 
