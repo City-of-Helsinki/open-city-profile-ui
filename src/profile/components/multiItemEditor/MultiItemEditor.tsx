@@ -1,31 +1,20 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import to from 'await-to-js';
 import { IconPlusCircle } from 'hds-react';
 
 import MultiItemPhoneRow from '../multiItemPhoneRow/MultiItemPhoneRow';
 import MultiItemAddressRow from '../multiItemAddressRow/MultiItemAddressRow';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
-import useNotificationContent from '../editingNotifications/useNotificationContent';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
-import {
-  useProfileDataEditor,
-  ActionListener,
-} from '../../hooks/useProfileDataEditor';
-import {
-  EditData,
-  EditDataType,
-  EditDataValue,
-  isNewItem,
-  isSettingPrimary,
-} from '../../helpers/editData';
+import { ActionListener } from '../../hooks/useProfileDataEditor';
+import { EditData, EditDataType } from '../../helpers/editData';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
-import { useConfirmationModal } from '../../hooks/useConfirmationModal';
-import { useFocusSetter } from '../../hooks/useFocusSetter';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
-import { ActionRejection } from '../../hooks/useCommonEditHandling';
-import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
 import StyledButton from '../../../common/styledButton/StyledButton';
+import {
+  useEditorTools,
+  UseEditorToolsProps,
+} from '../../hooks/useEditorTools';
 
 type Props = {
   dataType: Extract<EditDataType, 'addresses' | 'phones'>;
@@ -38,34 +27,31 @@ export type RowItemProps = {
   disableEditButtons: boolean;
 };
 
+const translationKeys: Record<
+  Props['dataType'],
+  UseEditorToolsProps['translationKeys']
+> = {
+  addresses: {
+    modalTitle: 'confirmationModal.removeAddress',
+  },
+  phones: {
+    modalTitle: 'confirmationModal.removePhone',
+  },
+};
+
 function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   const {
+    userIsVerified,
     editDataList,
-    save,
-    reset,
-    add,
-    hasNew,
-    remove,
-    setNewPrimary,
-  } = useProfileDataEditor({
-    dataType,
-  });
+    setPrimaryInProgress,
+    addFuncs,
+    noticationContent,
+    onAction,
+    confirmationModalProps,
+  } = useEditorTools({ dataType, translationKeys: translationKeys[dataType] });
+  const { hideAddButton, isAddButtonDisabled, addButtonId, add } = addFuncs;
   const { t } = useTranslation();
-  const {
-    content,
-    setErrorMessage,
-    setSuccessMessage,
-    clearMessage,
-  } = useNotificationContent();
 
-  const { showModal, modalProps } = useConfirmationModal();
-  const [addButtonId, setFocusToAddButton] = useFocusSetter({
-    targetId: `${dataType}-add-button`,
-  });
-  const isAddButtonDisabled = hasNew();
-  const hideAddButton = editDataList.length > 0;
-  const setPrimaryInProgress = isSettingPrimary(editDataList);
-  const userIsVerified = !!useVerifiedPersonalInformation();
   const isAddressType = dataType === 'addresses';
   const RowComponent = isAddressType ? MultiItemAddressRow : MultiItemPhoneRow;
   const texts = (function() {
@@ -90,59 +76,6 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
         : t('profileInformation.addressDescriptionNoAddress'),
     };
   })();
-
-  const executeActionAndNotifyUser: ActionListener = async (
-    action,
-    item,
-    newValue
-  ) => {
-    const func = action === 'save' ? save : remove;
-    const [err] = await to(func(item, newValue as EditDataValue));
-    if (err) {
-      setErrorMessage(action);
-      return Promise.reject(err);
-    }
-    if (isNewItem(item)) {
-      setFocusToAddButton();
-    }
-    setSuccessMessage(action);
-    return Promise.resolve();
-  };
-
-  const onAction: ActionListener = async (action, item, newValue) => {
-    clearMessage();
-    if (action === 'cancel') {
-      if (isNewItem(item)) {
-        setFocusToAddButton();
-        await remove(item);
-      } else {
-        reset(item);
-      }
-    } else if (action === 'remove' || action === 'save') {
-      if (action === 'remove') {
-        const [rejected] = await to(
-          showModal({
-            actionButtonText: t('confirmationModal.remove'),
-            title: texts.modalTitle,
-          })
-        );
-        if (rejected) {
-          return Promise.reject({
-            removeCancelled: true,
-          } as ActionRejection);
-        }
-      }
-      return executeActionAndNotifyUser(action, item, newValue);
-    } else if (action === 'set-primary') {
-      const [err] = await to(setNewPrimary(item));
-      if (err) {
-        setErrorMessage(action);
-      } else {
-        setSuccessMessage(action);
-      }
-    }
-    return Promise.resolve();
-  };
 
   const NoItemsMessage = () => (
     <div
@@ -183,12 +116,14 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
         ))}
       </ul>
       <AccessibilityFieldHelpers dataType={dataType} />
-      <EditingNotifications content={content} dataType={dataType} />
+      <EditingNotifications
+        content={noticationContent.content}
+        dataType={dataType}
+      />
       {!hideAddButton && (
         <StyledButton
           iconLeft={<IconPlusCircle />}
           onClick={async () => {
-            clearMessage();
             add();
           }}
           variant="secondary"
@@ -199,7 +134,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
           {texts.addNew}
         </StyledButton>
       )}
-      <ConfirmationModal {...modalProps} />
+      <ConfirmationModal {...confirmationModalProps} />
     </>
   );
 }
