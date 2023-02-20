@@ -19,8 +19,7 @@ import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import getCountry from '../../helpers/getCountry';
 import { getFormFields } from '../../helpers/formProperties';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
-import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
-import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
+import { EditHandling } from '../../hooks/useCommonEditHandling';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
@@ -29,9 +28,24 @@ import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
 
 type FormikValues = AddressValue;
 
-function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
+function MultiItemAddressRow({
+  editHandler,
+}: {
+  editHandler: EditHandling;
+}): React.ReactElement {
+  const {
+    getData,
+    testId,
+    isEditing,
+    currentAction,
+    actionHandler,
+    isNew,
+    editButtonId,
+    removeButtonId,
+  } = editHandler;
+
+  const data = getData();
   const dataType: EditDataType = 'addresses';
-  const { data, testId, disableEditButtons } = props;
   const value = data.value as AddressValue;
   const { address, city, postalCode, countryCode } = value;
   const { t, i18n } = useTranslation();
@@ -57,14 +71,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
     option => option.value === countryCode
   ) as OptionType;
   const formFields = getFormFields(dataType);
-  const {
-    isNew,
-    isEditing,
-    actionHandler,
-    currentAction,
-    editButtonId,
-    removeButtonId,
-  } = useCommonEditHandling(props);
+
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     FormikValues
   >(t, isNew);
@@ -237,7 +244,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
           buttonClassNames={commonFormStyles['actions-wrapper-button']}
           editButtonId={editButtonId}
           removeButtonId={removeButtonId}
-          disabled={disableButtons || disableEditButtons}
+          disabled={disableButtons}
           testId={testId}
           ariaLabels={ariaLabels}
         />

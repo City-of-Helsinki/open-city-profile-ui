@@ -15,15 +15,16 @@ import {
   useEditorTools,
   UseEditorToolsProps,
 } from '../../hooks/useEditorTools';
+import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 
 type Props = {
   dataType: Extract<EditDataType, 'addresses' | 'phones'>;
 };
 
 export type RowItemProps = {
-  data: EditData;
+  data?: EditData;
   onAction: ActionListener;
-  testId: string;
+  dataType: Props['dataType'];
   disableEditButtons: boolean;
 };
 
@@ -43,7 +44,6 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
   const {
     userIsVerified,
     editDataList,
-    setPrimaryInProgress,
     addFuncs,
     noticationContent,
     onAction,
@@ -96,25 +96,24 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
     </div>
   );
 
+  const data =
+    editDataList && editDataList.length ? editDataList[0] : undefined;
+
+  const editHandler = useCommonEditHandling({
+    dataType,
+    onAction,
+    disableEditButtons: false,
+    data,
+  });
+
   return (
     <>
-      {!editDataList || (!editDataList.length && <NoItemsMessage />)}
-      <ul aria-label={texts.listAriaLabel} className={commonFormStyles['list']}>
-        {editDataList.map((item, index) => (
-          <li
-            className={commonFormStyles['list-item']}
-            aria-label={`${texts.title} ${index + 1}`}
-            key={item.id || 'new'}
-          >
-            <RowComponent
-              data={item}
-              onAction={onAction}
-              testId={`${dataType}-${index}`}
-              disableEditButtons={setPrimaryInProgress}
-            />
-          </li>
-        ))}
-      </ul>
+      {!data && <NoItemsMessage />}
+      {data && (
+        <div className={commonFormStyles['list']}>
+          <RowComponent editHandler={editHandler} />
+        </div>
+      )}
       <AccessibilityFieldHelpers dataType={dataType} />
       <EditingNotifications
         content={noticationContent.content}

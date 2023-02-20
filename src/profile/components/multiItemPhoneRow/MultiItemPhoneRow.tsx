@@ -12,8 +12,7 @@ import FormButtons from '../formButtons/FormButtons';
 import EditButtons from '../editButtons/EditButtons';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
-import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
-import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
+import { EditHandling } from '../../hooks/useCommonEditHandling';
 import { getFormFields } from '../../helpers/formProperties';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
@@ -30,22 +29,26 @@ import {
 
 type PhoneFormikValue = { number: string; countryCallingCode: string };
 
-function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
+function MultiItemPhoneRow({
+  editHandler,
+}: {
+  editHandler: EditHandling;
+}): React.ReactElement {
   const {
-    data: { value, primary, saving },
+    getData,
     testId,
-    disableEditButtons,
-  } = props;
-  const dataType: EditDataType = 'phones';
-  const { t, i18n } = useTranslation();
-  const {
     isEditing,
     currentAction,
     actionHandler,
     isNew,
     editButtonId,
     removeButtonId,
-  } = useCommonEditHandling(props);
+  } = editHandler;
+
+  const data = getData();
+  const { value, primary, saving } = data;
+  const dataType: EditDataType = 'phones';
+  const { t, i18n } = useTranslation();
   const inputValue: string = (value as PhoneValue).phone || '';
   const inputId = `${testId}-number`;
   const dropdownId = `${testId}-countryCallingCode`;
@@ -195,7 +198,7 @@ function MultiItemPhoneRow(props: RowItemProps): React.ReactElement {
           buttonClassNames={commonFormStyles['actions-wrapper-button']}
           editButtonId={editButtonId}
           removeButtonId={removeButtonId}
-          disabled={disableButtons || disableEditButtons}
+          disabled={disableButtons}
           testId={testId}
           ariaLabels={ariaLabels}
         />

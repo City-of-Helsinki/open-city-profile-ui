@@ -1,30 +1,32 @@
 import { useState } from 'react';
 import to from 'await-to-js';
 
-import { EditDataValue, isNewItem } from '../helpers/editData';
+import { EditData, EditDataValue, isNewItem } from '../helpers/editData';
 import { Action } from './useProfileDataEditor';
 import { ActionHandler } from '../components/editButtons/EditButtons';
 import { RowItemProps } from '../components/multiItemEditor/MultiItemEditor';
 import { useFocusSetter } from './useFocusSetter';
 
-type UseActionHandlingReturnType = {
+export type EditHandling = {
   currentAction: Action;
   isEditing: boolean;
   isNew: boolean;
   actionHandler: ActionHandler;
   editButtonId: string;
   removeButtonId: string;
+  testId: string;
+  getData: () => EditData;
 };
 
 export interface ActionRejection {
   removeCancelled: boolean;
 }
 
-export const useCommonEditHandling = (
-  props: RowItemProps
-): UseActionHandlingReturnType => {
-  const { data, onAction, testId } = props;
-  const isNew = isNewItem(data);
+export const useCommonEditHandling = (props: RowItemProps): EditHandling => {
+  const { data, onAction, dataType } = props;
+
+  const isNew = data ? isNewItem(data) : false;
+  const testId = `${dataType}-item-0`;
   const [isEditing, setEditing] = useState(isNew);
   const [currentAction, setCurrentAction] = useState<Action>(undefined);
   const [editButtonId, setFocusToEditButton] = useFocusSetter({
@@ -34,6 +36,9 @@ export const useCommonEditHandling = (
     targetId: `${testId}-remove-button`,
   });
   const actionHandler: ActionHandler = async (action, newValue) => {
+    if (!data) {
+      return Promise.reject();
+    }
     if (action === 'set-primary' || action === 'remove' || action === 'save') {
       setCurrentAction(action);
     }
@@ -66,5 +71,12 @@ export const useCommonEditHandling = (
     isNew,
     editButtonId,
     removeButtonId,
+    testId,
+    getData: () => {
+      if (!data) {
+        throw new Error('Editable data does not exist');
+      }
+      return data;
+    },
   };
 };
