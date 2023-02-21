@@ -23,7 +23,9 @@ export type ProfileDataEditorReturnType = {
 
 export type Action = SaveType | 'edit' | 'cancel' | 'save' | 'add';
 
-export type ActionListenerReturnType = Promise<void | UpdateResult>;
+export type ActionListenerReturnType = Promise<
+  void | UpdateResult | { success: boolean }
+>;
 export type ActionListener = (
   action: Action,
   data: EditData,

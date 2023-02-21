@@ -20,7 +20,7 @@ import { useConfirmationModal } from './useConfirmationModal';
 
 type EditHandlingProps = {
   data?: EditData;
-  dataType: Extract<EditDataType, 'addresses' | 'phones'>;
+  dataType: Extract<EditDataType, 'addresses' | 'phones' | 'emails'>;
   disableEditButtons: boolean;
 };
 
@@ -63,7 +63,7 @@ export const useCommonEditHandling = (
   const data = editDataList[0];
 
   const isNew = data ? isNewItem(data) : false;
-  const testId = `${dataType}-0`;
+  const testId = dataType === 'emails' ? dataType : `${dataType}-0`;
   const [isEditing, setEditing] = useState(isNew);
   const [currentAction, setCurrentAction] = useState<Action>(undefined);
   const [editButtonId, setFocusToEditButton] = useFocusSetter({
@@ -149,7 +149,7 @@ export const useCommonEditHandling = (
       toggleEditMode(false);
       setFocusToEditButton();
     }
-    return Promise.resolve();
+    return Promise.resolve({ success: !!err });
   };
 
   const cancelItem = async (item: EditData) => {

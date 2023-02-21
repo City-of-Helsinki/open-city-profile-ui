@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
-import { IconPlusCircle, TextInput, Notification } from 'hds-react';
-import to from 'await-to-js';
+import { TextInput, Notification } from 'hds-react';
 import _ from 'lodash';
 
 import styles from './emailEditor.module.css';
@@ -10,23 +9,16 @@ import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import { getFormFields } from '../../helpers/formProperties';
 import {
   EditDataType,
-  EditDataValue,
   EmailValue,
   getEmailEditDataForUI,
-  isNewItem,
 } from '../../helpers/editData';
-import {
-  saveTypeToAction,
-  useProfileDataEditor,
-} from '../../hooks/useProfileDataEditor';
+import { saveTypeToAction } from '../../hooks/useProfileDataEditor';
 import { emailSchema } from '../../../common/schemas/schemas';
 import { createFormFieldHelpers } from '../../helpers/formik';
-import useNotificationContent from '../editingNotifications/useNotificationContent';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
 import EditButtons, { ActionHandler } from '../editButtons/EditButtons';
 import FormButtons from '../formButtons/FormButtons';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
-import { useFocusSetter } from '../../hooks/useFocusSetter';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
@@ -34,68 +26,55 @@ import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers
 import { AnyObject } from '../../../graphql/typings';
 import useProfile from '../../../auth/useProfile';
 import { hasTunnistusSuomiFiAmr } from '../profileInformation/authenticationProviderUtil';
-import StyledButton from '../../../common/styledButton/StyledButton';
+import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
+import AddButton from '../multiItemEditor/AddButton';
 
 function EmailEditor(): React.ReactElement | null {
   const dataType: EditDataType = 'emails';
-  const [isEditing, setEditing] = useState(false);
   const [showVerifyEmailInfo, setShowVerifyEmailInfo] = useState(false);
   const { t } = useTranslation();
-  const {
-    content,
-    setErrorMessage,
-    setSuccessMessage,
-    clearMessage,
-  } = useNotificationContent();
-  const { editDataList, save, reset, add, remove } = useProfileDataEditor({
+
+  const editHandler = useCommonEditHandling({
     dataType,
+    disableEditButtons: false,
   });
-  const [editButtonId, setFocusToEditButton] = useFocusSetter({
-    targetId: `${dataType}-edit-button`,
-  });
-  const editData = getEmailEditDataForUI(editDataList);
+
+  const {
+    notificationContent,
+    actionHandler,
+    getData,
+    hasData,
+    editButtonId,
+    isEditing,
+  } = editHandler;
+
+  const { content } = notificationContent;
+
+  const editData = getEmailEditDataForUI(hasData() ? [getData()] : []);
   const { value, saving } = editData;
   const { email } = value as EmailValue;
   const formFields = getFormFields(dataType);
   const ariaLabels = createActionAriaLabels(dataType, email, t);
   const { profile } = useProfile();
   const willSendEmailVerificationCode = hasTunnistusSuomiFiAmr(profile);
-
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     EmailValue
   >(t, true);
-
-  const actionHandler: ActionHandler = async (action, newValue) => {
-    clearMessage();
+  const actionChecker: ActionHandler = async (action, newValue) => {
     if (action === 'save') {
       if (_.isMatch(newValue as AnyObject, editData.value)) {
-        setFocusToEditButton();
-        setEditing(false);
-        return Promise.resolve();
+        return actionHandler('cancel');
       }
-      const [error] = await to(save(editData, newValue as EditDataValue));
-      if (error) {
-        setErrorMessage('save');
-      } else {
-        setFocusToEditButton();
-        setSuccessMessage('save');
-        setEditing(false);
-        if (willSendEmailVerificationCode) {
-          setShowVerifyEmailInfo(true);
-        }
+      const success = await actionHandler('save', newValue);
+      if (success && willSendEmailVerificationCode) {
+        setShowVerifyEmailInfo(true);
       }
     }
     if (action === 'cancel') {
-      if (isNewItem(editData)) {
-        await remove(editData);
-      } else {
-        reset(editData);
-      }
-      setFocusToEditButton();
-      setEditing(false);
+      return actionHandler('cancel');
     }
     if (action === 'edit') {
-      setEditing(true);
+      return actionHandler('edit');
     }
     return Promise.resolve();
   };
@@ -104,7 +83,7 @@ function EmailEditor(): React.ReactElement | null {
     return (
       <Formik
         initialValues={{ email }}
-        onSubmit={async values => actionHandler('save', values)}
+        onSubmit={async values => actionChecker('save', values)}
         validationSchema={emailSchema}
       >
         {(formikProps: FormikProps<EmailValue>) => (
@@ -138,7 +117,7 @@ function EmailEditor(): React.ReactElement | null {
                       dataType={dataType}
                     />
                     <FormButtons
-                      handler={actionHandler}
+                      handler={actionChecker}
                       disabled={!!saving}
                       testId={dataType}
                     />
@@ -173,7 +152,7 @@ function EmailEditor(): React.ReactElement | null {
         {email && (
           <div className={commonFormStyles['actions-wrapper']}>
             <EditButtons
-              handler={actionHandler}
+              handler={actionChecker}
               actions={{
                 removable: false,
                 setPrimary: false,
@@ -197,21 +176,7 @@ function EmailEditor(): React.ReactElement | null {
           </Notification>
         </div>
       )}
-      {!email && (
-        <StyledButton
-          iconLeft={<IconPlusCircle />}
-          onClick={async () => {
-            clearMessage();
-            add();
-            setEditing(true);
-          }}
-          data-testid={`${dataType}-add-button`}
-          variant="secondary"
-          className={commonFormStyles['responsive-button']}
-        >
-          {t('profileForm.addEmail')}
-        </StyledButton>
-      )}
+      {!email && <AddButton editHandler={editHandler} />}
       {!willSendEmailVerificationCode && (
         <EditingNotifications content={content} dataType={dataType} />
       )}

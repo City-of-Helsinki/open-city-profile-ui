@@ -57,7 +57,7 @@ describe('<EmailEditor /> ', () => {
   const fieldSelectorValue = `${dataType}-email`;
   const editButtonSelector: ElementSelector = { id: `${dataType}-edit-button` };
   const addButtonSelector: ElementSelector = {
-    testId: `${dataType}-add-button`,
+    id: `${dataType}-add-button`,
   };
   const inputSelector: ElementSelector = { id: fieldSelectorValue };
   const valueSelector: ElementSelector = { testId: fieldSelectorValue };
