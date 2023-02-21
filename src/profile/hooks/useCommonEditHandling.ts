@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import to from 'await-to-js';
 import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
 
 import {
+  basicDataType,
   EditData,
   EditDataType,
   EditDataValue,
@@ -17,10 +19,14 @@ import { ActionHandler } from '../components/editButtons/EditButtons';
 import { useFocusSetter } from './useFocusSetter';
 import useNotificationContent from '../components/editingNotifications/useNotificationContent';
 import { useConfirmationModal } from './useConfirmationModal';
+import { AnyObject } from '../../graphql/typings';
 
 type EditHandlingProps = {
   data?: EditData;
-  dataType: Extract<EditDataType, 'addresses' | 'phones' | 'emails'>;
+  dataType: Extract<
+    EditDataType,
+    'addresses' | 'phones' | 'emails' | 'basic-data'
+  >;
   disableEditButtons: boolean;
 };
 
@@ -63,7 +69,10 @@ export const useCommonEditHandling = (
   const data = editDataList[0];
 
   const isNew = data ? isNewItem(data) : false;
-  const testId = dataType === 'emails' ? dataType : `${dataType}-0`;
+  const testId =
+    dataType === 'emails' || dataType === basicDataType
+      ? dataType
+      : `${dataType}-0`;
   const [isEditing, setEditing] = useState(isNew);
   const [currentAction, setCurrentAction] = useState<Action>(undefined);
   const [editButtonId, setFocusToEditButton] = useFocusSetter({
@@ -140,18 +149,6 @@ export const useCommonEditHandling = (
     return Promise.resolve();
   };
 
-  const saveItem = async (item: EditData, newValue: Partial<EditDataValue>) => {
-    clearMessage();
-    setCurrentAction('save');
-    const [err] = await to(executeActionAndNotifyUser('save', item, newValue));
-    setCurrentAction(undefined);
-    if (!err) {
-      toggleEditMode(false);
-      setFocusToEditButton();
-    }
-    return Promise.resolve({ success: !!err });
-  };
-
   const cancelItem = async (item: EditData) => {
     toggleEditMode(false);
     if (isNewItem(item)) {
@@ -162,6 +159,27 @@ export const useCommonEditHandling = (
       setFocusToEditButton();
     }
     return Promise.resolve();
+  };
+
+  const saveItem = async (item: EditData, newValue: Partial<EditDataValue>) => {
+    clearMessage();
+    if (_.isMatch(newValue as AnyObject, item.value)) {
+      setSuccessMessage('save');
+      return cancelItem(item);
+    }
+    setCurrentAction('save');
+    const [err] = await to(executeActionAndNotifyUser('save', item, newValue));
+    setCurrentAction(undefined);
+    if (!err) {
+      toggleEditMode(false);
+      setFocusToEditButton();
+    } else {
+      // this does not alter inputs
+      // the editData object must be reset to previous value
+      // or isMatch would match it and show incorrect save success
+      reset(item);
+    }
+    return Promise.resolve({ success: !!err });
   };
 
   const actionHandler: ActionHandler = async (action, newValue) => {
@@ -178,6 +196,7 @@ export const useCommonEditHandling = (
     } else if (action === 'save') {
       return saveItem(data, newValue as EditDataValue);
     } else if (action === 'edit') {
+      clearMessage();
       toggleEditMode(true);
       return Promise.resolve();
     }

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { TextInput, Notification } from 'hds-react';
-import _ from 'lodash';
 
 import styles from './emailEditor.module.css';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
@@ -23,7 +22,6 @@ import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
-import { AnyObject } from '../../../graphql/typings';
 import useProfile from '../../../auth/useProfile';
 import { hasTunnistusSuomiFiAmr } from '../profileInformation/authenticationProviderUtil';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
@@ -62,9 +60,6 @@ function EmailEditor(): React.ReactElement | null {
   >(t, true);
   const actionChecker: ActionHandler = async (action, newValue) => {
     if (action === 'save') {
-      if (_.isMatch(newValue as AnyObject, editData.value)) {
-        return actionHandler('cancel');
-      }
       const success = await actionHandler('save', newValue);
       if (success && willSendEmailVerificationCode) {
         setShowVerifyEmailInfo(true);
