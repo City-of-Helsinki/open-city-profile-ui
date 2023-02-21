@@ -244,25 +244,23 @@ describe('<MultiItemPhoneRow /> ', () => {
   )[0];
 
   const phoneNodes = getPhonesFromNode({ myProfile: initialProfile }, true);
+  const usedPhoneNode = phoneNodes[0];
 
-  it("renders all user's phone numbers - also in edit mode. Add button is not shown.", async () => {
+  it("renders user's phone number (only one) - also in edit mode. Add button is not shown.", async () => {
     await act(async () => {
       const testTools = await initTests();
       const { clickElement, getElement } = testTools;
       expect(phoneNodes).toHaveLength(2);
-      let index = 0;
-      for (const node of phoneNodes) {
-        await verifyValuesFromElements(testTools, node, false, index);
-        // goto edit mode
-        await clickElement(getSelector('editButton', index));
-        await verifyValuesFromElements(
-          testTools,
-          dataSourceToInputDataSource(node),
-          true,
-          index
-        );
-        index += 1;
-      }
+      await verifyValuesFromElements(testTools, usedPhoneNode, false, 0);
+      // goto edit mode
+      await clickElement(getSelector('editButton', 0));
+      await verifyValuesFromElements(
+        testTools,
+        dataSourceToInputDataSource(usedPhoneNode),
+        true,
+        0
+      );
+
       expect(() => getElement(getSelector('addButton'))).toThrow();
     });
   });

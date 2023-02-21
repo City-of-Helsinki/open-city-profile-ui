@@ -1,57 +1,24 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconPlusCircle } from 'hds-react';
 
 import MultiItemPhoneRow from '../multiItemPhoneRow/MultiItemPhoneRow';
 import MultiItemAddressRow from '../multiItemAddressRow/MultiItemAddressRow';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
-import { ActionListener } from '../../hooks/useProfileDataEditor';
-import { EditData, EditDataType } from '../../helpers/editData';
+import { EditDataType } from '../../helpers/editData';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
-import StyledButton from '../../../common/styledButton/StyledButton';
-import {
-  useEditorTools,
-  UseEditorToolsProps,
-} from '../../hooks/useEditorTools';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
+import AddButton from './AddButton';
+import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
 
 type Props = {
   dataType: Extract<EditDataType, 'addresses' | 'phones'>;
 };
 
-export type RowItemProps = {
-  data?: EditData;
-  onAction: ActionListener;
-  dataType: Props['dataType'];
-  disableEditButtons: boolean;
-};
-
-const translationKeys: Record<
-  Props['dataType'],
-  UseEditorToolsProps['translationKeys']
-> = {
-  addresses: {
-    modalTitle: 'confirmationModal.removeAddress',
-  },
-  phones: {
-    modalTitle: 'confirmationModal.removePhone',
-  },
-};
-
 function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
-  const {
-    userIsVerified,
-    editDataList,
-    addFuncs,
-    noticationContent,
-    onAction,
-    confirmationModalProps,
-  } = useEditorTools({ dataType, translationKeys: translationKeys[dataType] });
-  const { hideAddButton, isAddButtonDisabled, addButtonId, add } = addFuncs;
   const { t } = useTranslation();
-
+  const userIsVerified = !!useVerifiedPersonalInformation();
   const isAddressType = dataType === 'addresses';
   const RowComponent = isAddressType ? MultiItemAddressRow : MultiItemPhoneRow;
   const texts = (function() {
@@ -96,20 +63,17 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
     </div>
   );
 
-  const data =
-    editDataList && editDataList.length ? editDataList[0] : undefined;
-
   const editHandler = useCommonEditHandling({
     dataType,
-    onAction,
     disableEditButtons: false,
-    data,
   });
 
+  const { noticationContent, confirmationModalProps, hasData } = editHandler;
+  const dataExists = hasData();
   return (
     <>
-      {!data && <NoItemsMessage />}
-      {data && (
+      {!dataExists && <NoItemsMessage />}
+      {dataExists && (
         <div className={commonFormStyles['list']}>
           <RowComponent editHandler={editHandler} />
         </div>
@@ -119,20 +83,7 @@ function MultiItemEditor({ dataType }: Props): React.ReactElement | null {
         content={noticationContent.content}
         dataType={dataType}
       />
-      {!hideAddButton && (
-        <StyledButton
-          iconLeft={<IconPlusCircle />}
-          onClick={async () => {
-            add();
-          }}
-          variant="secondary"
-          disabled={isAddButtonDisabled}
-          className={commonFormStyles['responsive-button']}
-          id={addButtonId}
-        >
-          {texts.addNew}
-        </StyledButton>
-      )}
+      <AddButton editHandler={editHandler} />
       <ConfirmationModal {...confirmationModalProps} />
     </>
   );

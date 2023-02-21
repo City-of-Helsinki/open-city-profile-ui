@@ -193,7 +193,6 @@ describe('<MultiItemAddressRow /> ', () => {
       | 'verifiedUserWithAddress'
       | 'unverifiedUserWithNoAddress'
       | 'unverifiedUserWithOneAddress'
-      | 'unverifiedUserWithTwoAddresses'
   ) => {
     const noAddressText = 'profileInformation.addressDescriptionNoAddress';
     const unverifiedUserTitle = 'profileInformation.address';
@@ -211,14 +210,6 @@ describe('<MultiItemAddressRow /> ', () => {
       testTools.getByText(String(t(translationKey)));
     };
 
-    const verifyTwoTextInstanceExists = (translationKey: string) => {
-      if (testTools.getAllByText(String(t(translationKey))).length !== 2) {
-        throw new Error(
-          `Expected to find exactly 2 ${translationKey} text instances`
-        );
-      }
-    };
-
     if (scenario === 'verifiedUserWithoutAddress') {
       verifyOneTextInstanceExists(verifiedUserTitle);
       verifyOneTextInstanceExists(
@@ -232,9 +223,6 @@ describe('<MultiItemAddressRow /> ', () => {
       verifyOneTextInstanceExists(noAddressText);
     } else if (scenario === 'unverifiedUserWithOneAddress') {
       verifyOneTextInstanceExists(unverifiedUserTitle);
-      verifyZeroTextInstanceExists(noAddressText);
-    } else if (scenario === 'unverifiedUserWithTwoAddresses') {
-      verifyTwoTextInstanceExists(unverifiedUserTitle);
       verifyZeroTextInstanceExists(noAddressText);
     }
   };
@@ -266,21 +254,19 @@ describe('<MultiItemAddressRow /> ', () => {
     true
   );
 
+  const usedAddressNode = addressNodes[0];
+
   it("renders all user's addresses - also in edit mode. Add button is not shown.", async () => {
     await act(async () => {
       const testTools = await initTests();
       const { clickElement, getElement } = testTools;
       expect(addressNodes).toHaveLength(2);
-      let index = 0;
-      for (const node of addressNodes) {
-        await verifyValuesFromElements(testTools, node, false, index);
-        // goto edit mode
-        await clickElement(getSelector('editButton', index));
-        await verifyValuesFromElements(testTools, node, true, index);
-        index += 1;
-      }
+      await verifyValuesFromElements(testTools, usedAddressNode, false, 0);
+      // goto edit mode
+      await clickElement(getSelector('editButton', 0));
+      await verifyValuesFromElements(testTools, usedAddressNode, true, 0);
       expect(() => getElement(getSelector('addButton'))).toThrow();
-      verifyTitleAndDescription(testTools, 'unverifiedUserWithTwoAddresses');
+      verifyTitleAndDescription(testTools, 'unverifiedUserWithOneAddress');
     });
   });
 
