@@ -6,7 +6,7 @@ import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
-import { AddressValue, EditDataType } from '../../helpers/editData';
+import { AddressValue } from '../../helpers/editData';
 import { createFormFieldHelpers } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
 import FormButtons from '../formButtons/FormButtons';
@@ -35,6 +35,7 @@ function MultiItemAddressRow({
 }): React.ReactElement {
   const {
     getData,
+    hasData,
     testId,
     isEditing,
     currentAction,
@@ -42,13 +43,40 @@ function MultiItemAddressRow({
     isNew,
     editButtonId,
     removeButtonId,
+    dataType,
   } = editHandler;
+  const { t, i18n } = useTranslation();
+  const userIsVerified = !!useVerifiedPersonalInformation();
+  const title = userIsVerified
+    ? t('profileInformation.addressTitleWhenHasVerifiedData')
+    : t('profileInformation.address');
+
+  const description = userIsVerified
+    ? t('profileInformation.addressDescriptionNoWeakAddress')
+    : t('profileInformation.addressDescriptionNoAddress');
+
+  const Explanation = () => {
+    const DescriptionElement = (): React.ReactElement | null => {
+      if (hasData() && !isNew) {
+        return <p>{t('profileInformation.addressDescription')}</p>;
+      }
+      return <p>{description}</p>;
+    };
+    return (
+      <div className={commonFormStyles['section-title-with-explanation']}>
+        <h2 className={commonFormStyles['section-title']}>{title}</h2>
+        <DescriptionElement />
+      </div>
+    );
+  };
+
+  if (!hasData()) {
+    return <Explanation />;
+  }
 
   const data = getData();
-  const dataType: EditDataType = 'addresses';
   const value = data.value as AddressValue;
   const { address, city, postalCode, countryCode } = value;
-  const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];
   const applicationLanguage = getLanguageCode(i18n.languages[0]);
   const countryList = countries.getNames(applicationLanguage);
@@ -80,32 +108,7 @@ function MultiItemAddressRow({
   const disableButtons = !!currentAction || !!saving;
   const ariaLabels = createActionAriaLabels(dataType, value.address, t);
   const formFieldStyle = commonFormStyles['form-field'];
-  const userIsVerified = !!useVerifiedPersonalInformation();
 
-  const Explanation = () => {
-    const title = userIsVerified
-      ? t('profileInformation.addressTitleWhenHasVerifiedData')
-      : t('profileInformation.address');
-
-    const DescriptionElement = (): React.ReactElement | null => {
-      if (!isNew) {
-        return <p>{t('profileInformation.addressDescription')}</p>;
-      }
-      return (
-        <p>
-          {userIsVerified
-            ? t('profileInformation.addressDescriptionNoWeakAddress')
-            : t('profileInformation.addressDescriptionNoAddress')}
-        </p>
-      );
-    };
-    return (
-      <div className={commonFormStyles['section-title-with-explanation']}>
-        <h2 className={commonFormStyles['section-title']}>{title}</h2>
-        <DescriptionElement />
-      </div>
-    );
-  };
   if (isEditing) {
     return (
       <Formik

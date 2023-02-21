@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import styles from './multiItemPhoneRow.module.css';
-import { EditDataType, PhoneValue } from '../../helpers/editData';
+import { PhoneValue } from '../../helpers/editData';
 import { createFormFieldHelpers } from '../../helpers/formik';
 import { phoneSchema } from '../../../common/schemas/schemas';
 import FormButtons from '../formButtons/FormButtons';
@@ -36,6 +36,7 @@ function MultiItemPhoneRow({
 }): React.ReactElement {
   const {
     getData,
+    hasData,
     testId,
     isEditing,
     currentAction,
@@ -43,12 +44,24 @@ function MultiItemPhoneRow({
     isNew,
     editButtonId,
     removeButtonId,
+    dataType,
   } = editHandler;
+  const { t, i18n } = useTranslation();
+  const title = t('profileInformation.phone');
+  const headingStyle = commonFormStyles['label-size'];
+  if (!hasData()) {
+    return (
+      <div className={commonFormStyles['section-title-with-explanation']}>
+        <h3 className={headingStyle}>{title}</h3>
+        <p data-testid={`${dataType}-no-data`}>
+          {t('profileInformation.noPhone')}
+        </p>
+      </div>
+    );
+  }
 
   const data = getData();
   const { value, primary, saving } = data;
-  const dataType: EditDataType = 'phones';
-  const { t, i18n } = useTranslation();
   const inputValue: string = (value as PhoneValue).phone || '';
   const inputId = `${testId}-number`;
   const dropdownId = `${testId}-countryCallingCode`;
@@ -90,9 +103,7 @@ function MultiItemPhoneRow({
         {(formikProps: FormikProps<PhoneFormikValue>) => (
           <Form className={commonFormStyles['multi-item-form']}>
             <div>
-              <h3 className={commonFormStyles['label-size']}>
-                {t('profileInformation.phone')}
-              </h3>
+              <h3 className={headingStyle}>{title}</h3>
               {isNew && <p>{t('profileInformation.noPhone')}</p>}
             </div>
             <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
@@ -174,9 +185,7 @@ function MultiItemPhoneRow({
         commonFormStyles['multi-item-content-wrapper'],
       ])}
     >
-      <h3 className={commonFormStyles['label-size']}>
-        {t('profileInformation.phone')}
-      </h3>
+      <h3 className={headingStyle}>{title}</h3>
       <div
         className={classNames(
           commonFormStyles['multi-item-wrapper'],
