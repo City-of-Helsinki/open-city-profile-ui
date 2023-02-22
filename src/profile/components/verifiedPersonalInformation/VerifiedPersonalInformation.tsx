@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import classNames from 'classnames';
 
-import styles from './VerifiedPersonalInformation.module.css';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
@@ -48,7 +47,10 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     municipalityOfResidence,
   } = verifiedPersonalInformation;
 
-  const titleStyle = commonFormStyles['section-title'];
+  const containerStyles = classNames(
+    commonFormStyles['responsive-flex-box-columns-rows'],
+    commonFormStyles['responsive-width-text-fields']
+  );
 
   const AddressComponent = (props: AddressProps): React.ReactElement | null => {
     const { type } = props;
@@ -59,10 +61,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     const country = getCountry(address.countryCode, lang);
     return (
       <React.Fragment key={type}>
-        <div
-          className={commonFormStyles['multi-item-wrapper']}
-          data-testid={`vpi-address-${type}`}
-        >
+        <div className={containerStyles} data-testid={`vpi-address-${type}`}>
           <LabeledValue
             label={t('profileForm.address')}
             value={address.streetAddress}
@@ -115,38 +114,36 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
   return (
     <ProfileSection>
       <div
-        className={classNames(
-          commonFormStyles['section-title-with-explanation'],
-          styles['verified-data-explanation']
-        )}
+        className={classNames(commonFormStyles['editor-description-container'])}
       >
-        <h2 className={titleStyle}>
-          {t('profileInformation.verifiedBasicData')}
-        </h2>
+        <h2>{t('profileInformation.verifiedBasicData')}</h2>
         <LongDescription />
       </div>
-
-      <div className={commonFormStyles['multi-item-wrapper']}>
-        <LabeledValue label={t('profileForm.firstName')} value={firstName} />
-        <LabeledValue label={t('profileForm.givenName')} value={givenName} />
-        <LabeledValue label={t('profileForm.lastName')} value={lastName} />
-        <LabeledValue
-          label={t('profileForm.nationalIdentificationNumber')}
-          value={nationalIdentificationNumber}
+      <div className={commonFormStyles['flex-box-columns']}>
+        <div className={containerStyles}>
+          <LabeledValue label={t('profileForm.firstName')} value={firstName} />
+          <LabeledValue label={t('profileForm.givenName')} value={givenName} />
+          <LabeledValue label={t('profileForm.lastName')} value={lastName} />
+        </div>
+        <div className={containerStyles}>
+          <LabeledValue
+            label={t('profileForm.nationalIdentificationNumber')}
+            value={nationalIdentificationNumber}
+          />
+          <LabeledValue
+            label={t('profileForm.municipalityOfResidence')}
+            value={municipalityOfResidence}
+          />
+        </div>
+        <AddressComponent
+          type="permanent"
+          address={permanentAddress as CommonAddress}
         />
-        <LabeledValue
-          label={t('profileForm.municipalityOfResidence')}
-          value={municipalityOfResidence}
+        <AddressComponent
+          type="foreign"
+          address={permanentForeignAddress as CommonAddress}
         />
       </div>
-      <AddressComponent
-        type="permanent"
-        address={permanentAddress as CommonAddress}
-      />
-      <AddressComponent
-        type="foreign"
-        address={permanentForeignAddress as CommonAddress}
-      />
     </ProfileSection>
   );
 }

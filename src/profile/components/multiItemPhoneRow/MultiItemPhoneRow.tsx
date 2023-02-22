@@ -4,7 +4,6 @@ import { Field, Formik, FormikProps, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import styles from './multiItemPhoneRow.module.css';
 import { PhoneValue } from '../../helpers/editData';
 import { createFormFieldHelpers } from '../../helpers/formik';
 import { phoneSchema } from '../../../common/schemas/schemas';
@@ -26,6 +25,7 @@ import {
   getMemoizedCountryCallingCodes,
   splitNumberAndCountryCallingCode,
 } from '../../../i18n/countryCallingCodes.utils';
+import AddButton from '../multiItemEditor/AddButton';
 
 type PhoneFormikValue = { number: string; countryCallingCode: string };
 
@@ -48,14 +48,30 @@ function MultiItemPhoneRow({
   } = editHandler;
   const { t, i18n } = useTranslation();
   const title = t('profileInformation.phone');
+
   const headingStyle = commonFormStyles['label-size'];
+  const containerStyle = commonFormStyles['responsive-flex-box-columns-rows'];
+  const flexBoxColumnsStyle = commonFormStyles['flex-box-columns'];
+
   if (!hasData()) {
     return (
-      <div className={commonFormStyles['section-title-with-explanation']}>
-        <h3 className={headingStyle}>{title}</h3>
-        <p data-testid={`${dataType}-no-data`}>
-          {t('profileInformation.noPhone')}
-        </p>
+      <div className={containerStyle}>
+        <div
+          className={classNames(
+            flexBoxColumnsStyle,
+            commonFormStyles['editor-title-and-value']
+          )}
+        >
+          <h3 className={headingStyle}>{title}</h3>
+          <span data-testid={`${dataType}-no-data`}>
+            {t('profileInformation.noPhone')}
+          </span>
+        </div>
+        <div className={commonFormStyles['edit-buttons']}>
+          <div className={commonFormStyles['edit-buttons-container']}>
+            <AddButton editHandler={editHandler} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -101,102 +117,109 @@ function MultiItemPhoneRow({
         validationSchema={phoneSchema}
       >
         {(formikProps: FormikProps<PhoneFormikValue>) => (
-          <Form className={commonFormStyles['multi-item-form']}>
-            <div>
-              <h3 className={headingStyle}>{title}</h3>
-              {isNew && <p>{t('profileInformation.noPhone')}</p>}
-            </div>
-            <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
-              <div className={styles['editable-row']}>
-                <div
-                  className={classNames(
-                    commonFormStyles['multi-item-wrapper'],
-                    styles['input-wrapper']
-                  )}
-                >
-                  <FormikDropdown
-                    className={classNames(commonFormStyles['form-field'])}
-                    name={'countryCallingCode'}
-                    id={dropdownId}
-                    label={t('profileForm.countryCallingCode')}
-                    options={countryCallingCodes}
-                    defaultOption={defaultCountryCallingCodeOption}
-                    disabled={!!saving}
-                    invalid={hasFieldError(formikProps, 'countryCallingCode')}
-                    error={getFieldErrorMessage(
-                      formikProps,
-                      'countryCallingCode'
+          <div
+            className={classNames(
+              flexBoxColumnsStyle,
+              commonFormStyles['common-editor-bottom-padding']
+            )}
+          >
+            <Form>
+              <div>
+                <h3 className={headingStyle}>{title}</h3>
+                {isNew && <p>{t('profileInformation.noPhone')}</p>}
+              </div>
+              <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
+                <div className={flexBoxColumnsStyle}>
+                  <div
+                    className={classNames(
+                      containerStyle,
+                      commonFormStyles['editor-form-fields']
                     )}
-                    aria-describedby={`${dataType}-countryCallingCode-helper`}
-                    toggleButtonAriaLabel={t(
-                      'profileInformation.ariaShowOptions'
-                    )}
-                    onChange={option => {
-                      formikProps.setFieldValue(
-                        'countryCallingCode',
-                        option ? option.value : ''
-                      );
-                    }}
-                    allowSearch
-                    virtualized
-                    initialOption={initialCountryCallingCodeOption}
+                  >
+                    <FormikDropdown
+                      className={classNames(commonFormStyles['form-field'])}
+                      name={'countryCallingCode'}
+                      id={dropdownId}
+                      label={t('profileForm.countryCallingCode')}
+                      options={countryCallingCodes}
+                      defaultOption={defaultCountryCallingCodeOption}
+                      disabled={!!saving}
+                      invalid={hasFieldError(formikProps, 'countryCallingCode')}
+                      error={getFieldErrorMessage(
+                        formikProps,
+                        'countryCallingCode'
+                      )}
+                      aria-describedby={`${dataType}-countryCallingCode-helper`}
+                      toggleButtonAriaLabel={t(
+                        'profileInformation.ariaShowOptions'
+                      )}
+                      onChange={option => {
+                        formikProps.setFieldValue(
+                          'countryCallingCode',
+                          option ? option.value : ''
+                        );
+                      }}
+                      allowSearch
+                      virtualized
+                      initialOption={initialCountryCallingCodeOption}
+                    />
+                    <Field
+                      className={commonFormStyles['form-field']}
+                      name="number"
+                      id={inputId}
+                      maxLength={formFields.number.max as number}
+                      as={PhoneInput}
+                      invalid={hasFieldError(formikProps, 'number')}
+                      aria-invalid={hasFieldError(formikProps, 'number')}
+                      errorText={getFieldErrorMessage(formikProps, 'number')}
+                      aria-labelledby={`${dataType}-number-helper`}
+                      disabled={!!saving}
+                      label={t('profileForm.phone')}
+                      onChange={(
+                        event: React.ChangeEvent<HTMLInputElement>
+                      ) => {
+                        formikProps.setFieldValue(
+                          'number',
+                          event.target.value.replace(/\D/g, '')
+                        );
+                      }}
+                    />
+                  </div>
+                  <AccessibleFormikErrors
+                    formikProps={formikProps}
+                    dataType={dataType}
                   />
-                  <Field
-                    className={commonFormStyles['form-field']}
-                    name="number"
-                    id={inputId}
-                    maxLength={formFields.number.max as number}
-                    as={PhoneInput}
-                    invalid={hasFieldError(formikProps, 'number')}
-                    aria-invalid={hasFieldError(formikProps, 'number')}
-                    errorText={getFieldErrorMessage(formikProps, 'number')}
-                    aria-labelledby={`${dataType}-number-helper`}
-                    disabled={!!saving}
-                    label={t('profileForm.phone')}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                      formikProps.setFieldValue(
-                        'number',
-                        event.target.value.replace(/\D/g, '')
-                      );
-                    }}
+                  <FormButtons
+                    handler={actionHandler}
+                    disabled={disableButtons}
+                    testId={testId}
                   />
                 </div>
-                <AccessibleFormikErrors
-                  formikProps={formikProps}
-                  dataType={dataType}
-                />
-                <FormButtons
-                  handler={actionHandler}
-                  disabled={disableButtons}
-                  testId={testId}
-                />
-              </div>
-              <SaveIndicator action={currentAction} testId={testId} />
-            </FocusKeeper>
-          </Form>
+                <SaveIndicator action={currentAction} testId={testId} />
+              </FocusKeeper>
+            </Form>
+          </div>
         )}
       </Formik>
     );
   }
   return (
-    <div
-      className={classNames([
-        commonFormStyles['content-wrapper'],
-        commonFormStyles['multi-item-content-wrapper'],
-      ])}
-    >
-      <h3 className={headingStyle}>{title}</h3>
+    <div className={classNames(containerStyle)}>
       <div
         className={classNames(
-          commonFormStyles['multi-item-wrapper'],
-          styles['input-wrapper']
+          flexBoxColumnsStyle,
+          commonFormStyles['editor-title-and-value']
         )}
       >
-        <span className={styles['value']} data-testid={`${testId}-value`}>
+        <h3 className={headingStyle}>{title}</h3>
+        <span
+          className={commonFormStyles['text-value']}
+          data-testid={`${testId}-value`}
+        >
           {inputValue || '–'}
         </span>
       </div>
-      <div className={commonFormStyles['actions-wrapper']}>
+      <div className={commonFormStyles['edit-buttons']}>
         <EditButtons
           handler={actionHandler}
           actions={{
@@ -204,7 +227,6 @@ function MultiItemPhoneRow({
             primary,
             setPrimary: false,
           }}
-          buttonClassNames={commonFormStyles['actions-wrapper-button']}
           editButtonId={editButtonId}
           removeButtonId={removeButtonId}
           disabled={disableButtons}

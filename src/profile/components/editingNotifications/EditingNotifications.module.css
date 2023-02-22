@@ -1,5 +1,5 @@
 .wrapper {
-  padding-bottom: var(--spacing-m);
+  padding: var(--spacing-m) 0 0;
   /*Fixes notification rendering above language selection*/
   z-index: 1;
   position: relative;

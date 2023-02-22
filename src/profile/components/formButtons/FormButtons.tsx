@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +16,12 @@ function FormButtons(props: Props): React.ReactElement {
   const { t } = useTranslation();
   const { handler, disabled, testId } = props;
   return (
-    <div className={commonFormStyles['edit-buttons']}>
+    <div
+      className={classNames(
+        commonFormStyles['responsive-flex-box-columns-rows'],
+        commonFormStyles['edit-buttons']
+      )}
+    >
       <StyledButton
         type="submit"
         disabled={disabled}

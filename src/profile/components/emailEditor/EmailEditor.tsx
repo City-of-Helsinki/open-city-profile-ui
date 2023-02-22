@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { TextInput, Notification } from 'hds-react';
+import classNames from 'classnames';
 
 import styles from './emailEditor.module.css';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
@@ -58,6 +59,10 @@ function EmailEditor(): React.ReactElement | null {
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     EmailValue
   >(t, true);
+  const containerStyle = commonFormStyles['responsive-flex-box-columns-rows'];
+  const headingStyle = commonFormStyles['label-size'];
+  const boxStyle = commonFormStyles['flex-box-columns'];
+
   const actionChecker: ActionHandler = async (action, newValue) => {
     if (action === 'save') {
       const success = await actionHandler('save', newValue);
@@ -82,48 +87,47 @@ function EmailEditor(): React.ReactElement | null {
         validationSchema={emailSchema}
       >
         {(formikProps: FormikProps<EmailValue>) => (
-          <div>
+          <div className={boxStyle}>
             <h3 className={commonFormStyles['label-size']}>
               {t('profileForm.email')}
             </h3>
-            <div className={commonFormStyles['content-wrapper']}>
-              <Form>
-                <FocusKeeper targetId={`${dataType}-email`}>
-                  <div className={styles['form-content-wrapper']}>
-                    <Field
-                      name="email"
-                      id={`${dataType}-email`}
-                      maxLength={formFields.email.max as number}
-                      as={TextInput}
-                      invalid={hasFieldError(formikProps, 'email')}
-                      aria-invalid={hasFieldError(formikProps, 'email')}
-                      errorText={getFieldErrorMessage(formikProps, 'email')}
-                      aria-labelledby={`${dataType}-email-helper`}
-                      autoFocus
-                      className={styles['form-field']}
-                    />
-                    <AccessibilityFieldHelpers dataType={dataType} />
-                    <AccessibleFormikErrors
-                      formikProps={formikProps}
-                      dataType={dataType}
-                    />
-                    <EditingNotifications
-                      content={content}
-                      dataType={dataType}
-                    />
-                    <FormButtons
-                      handler={actionChecker}
-                      disabled={!!saving}
-                      testId={dataType}
-                    />
-                  </div>
-                  <SaveIndicator
-                    action={saveTypeToAction(saving)}
-                    testId={dataType}
+            <Form>
+              <FocusKeeper targetId={`${dataType}-email`}>
+                <div
+                  className={classNames(
+                    containerStyle,
+                    commonFormStyles['editor-form-fields']
+                  )}
+                >
+                  <Field
+                    name="email"
+                    id={`${dataType}-email`}
+                    maxLength={formFields.email.max as number}
+                    as={TextInput}
+                    invalid={hasFieldError(formikProps, 'email')}
+                    aria-invalid={hasFieldError(formikProps, 'email')}
+                    errorText={getFieldErrorMessage(formikProps, 'email')}
+                    aria-labelledby={`${dataType}-email-helper`}
+                    autoFocus
                   />
-                </FocusKeeper>
-              </Form>
-            </div>
+                  <AccessibilityFieldHelpers dataType={dataType} />
+                  <AccessibleFormikErrors
+                    formikProps={formikProps}
+                    dataType={dataType}
+                  />
+                  <EditingNotifications content={content} dataType={dataType} />
+                </div>
+                <FormButtons
+                  handler={actionChecker}
+                  disabled={!!saving}
+                  testId={dataType}
+                />
+                <SaveIndicator
+                  action={saveTypeToAction(saving)}
+                  testId={dataType}
+                />
+              </FocusKeeper>
+            </Form>
           </div>
         )}
       </Formik>
@@ -131,35 +135,40 @@ function EmailEditor(): React.ReactElement | null {
   }
 
   return (
-    <div>
-      <div className={commonFormStyles['content-wrapper']}>
-        <h3 className={commonFormStyles['label-size']}>
-          {t('profileForm.email')}
-        </h3>
-        <div className={commonFormStyles['text-content-wrapper']}>
+    <div className={boxStyle}>
+      <div className={classNames(containerStyle)}>
+        <div
+          className={classNames(
+            boxStyle,
+            commonFormStyles['editor-title-and-value']
+          )}
+        >
+          <h3 className={headingStyle}>{t('profileForm.email')}</h3>
           <span
-            className={commonFormStyles['value']}
+            className={commonFormStyles['text-value']}
             data-testid={`${dataType}-email`}
           >
             {email || t('profileInformation.noEmail')}
           </span>
         </div>
-        {email && (
-          <div className={commonFormStyles['actions-wrapper']}>
+        <div className={commonFormStyles['edit-buttons']}>
+          {email ? (
             <EditButtons
               handler={actionChecker}
               actions={{
                 removable: false,
                 setPrimary: false,
               }}
-              buttonClassNames={commonFormStyles['profile-button']}
               editButtonId={editButtonId}
               testId={dataType}
               ariaLabels={ariaLabels}
             />
-          </div>
-        )}
+          ) : (
+            <AddButton editHandler={editHandler} />
+          )}
+        </div>
       </div>
+
       {showVerifyEmailInfo && (
         <div className={styles['notification-wrapper']}>
           <Notification
@@ -171,7 +180,6 @@ function EmailEditor(): React.ReactElement | null {
           </Notification>
         </div>
       )}
-      {!email && <AddButton editHandler={editHandler} />}
       {!willSendEmailVerificationCode && (
         <EditingNotifications content={content} dataType={dataType} />
       )}

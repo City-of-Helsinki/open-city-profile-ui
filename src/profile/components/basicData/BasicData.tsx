@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { TextInput } from 'hds-react';
+import classNames from 'classnames';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -58,6 +59,7 @@ function BasicData(): React.ReactElement | null {
   const ariaLabels = createActionAriaLabels(basicDataType, '', t);
 
   const formFieldStyle = commonFormStyles['form-field'];
+  const containerStyle = commonFormStyles['responsive-flex-box-columns-rows'];
   if (isEditing) {
     return (
       <Formik
@@ -67,13 +69,18 @@ function BasicData(): React.ReactElement | null {
       >
         {(formikProps: FormikProps<FormikValues>) => (
           <ProfileSection>
-            <h2 className={commonFormStyles['section-title']}>
-              {t('profileForm.basicData')}
-            </h2>
+            <div className={commonFormStyles['editor-description-container']}>
+              <h2>{t('profileForm.basicData')}</h2>
+            </div>
             <RequiredFieldsNote />
             <Form>
               <FocusKeeper targetId={`${basicDataType}-firstName`}>
-                <div className={commonFormStyles['multi-item-wrapper']}>
+                <div
+                  className={classNames(
+                    containerStyle,
+                    commonFormStyles['editor-form-fields']
+                  )}
+                >
                   <Field
                     className={formFieldStyle}
                     name="firstName"
@@ -140,11 +147,16 @@ function BasicData(): React.ReactElement | null {
 
   return (
     <ProfileSection>
-      <div className={commonFormStyles['content-wrapper']}>
-        <h2 className={commonFormStyles['section-title']}>
-          {t('profileForm.basicData')}
-        </h2>
-        <div className={commonFormStyles['multi-item-wrapper']}>
+      <div className={commonFormStyles['editor-description-container']}>
+        <h2>{t('profileForm.basicData')}</h2>
+      </div>
+      <div className={classNames(containerStyle)}>
+        <div
+          className={classNames(
+            containerStyle,
+            commonFormStyles['editor-text-fields']
+          )}
+        >
           <LabeledValue
             label={t(formFields.firstName.translationKey)}
             value={firstName}

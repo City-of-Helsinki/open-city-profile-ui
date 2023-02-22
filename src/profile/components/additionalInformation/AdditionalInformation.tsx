@@ -65,52 +65,48 @@ function AdditionalInformation(): React.ReactElement | null {
 
   return (
     <ProfileSection>
-      <div
-        className={classNames(
-          commonFormStyles['section-title-with-explanation']
-        )}
-      >
-        <h2 className={commonFormStyles['section-title']}>
-          {t('profileForm.language')}
-        </h2>
-        <p>{t('profileForm.languageDescription')}</p>
+      <div className={commonFormStyles['flex-box-columns']}>
+        <div className={commonFormStyles['editor-description-container']}>
+          <h2>{t('profileForm.language')}</h2>
+          <p>{t('profileForm.languageDescription')}</p>
+        </div>
+        <div className={commonFormStyles['editor-form-fields']}>
+          <Formik
+            initialValues={{ language }}
+            onSubmit={() => {
+              /* onChange does this. This comment is here because onSubmit is mandatory and function cannot be empty */
+            }}
+          >
+            {(formikProps: FormikProps<FormValues>) => (
+              <Form>
+                <FormikDropdown
+                  className={classNames(
+                    commonFormStyles['form-field'],
+                    commonFormStyles['hidden-labels'],
+                    commonFormStyles['responsive-button']
+                  )}
+                  id={`${additionalInformationType}-language`}
+                  name={'language'}
+                  label={t('profileForm.language')}
+                  options={languageOptions}
+                  defaultOption={defaultOption}
+                  currentOption={currentOption}
+                  disabled={!!saving}
+                  onChange={option => {
+                    const languageValue = option.value as FormValues['language'];
+                    formikProps.setFieldValue('language', languageValue);
+                    updateLanguage(languageValue);
+                  }}
+                />
+              </Form>
+            )}
+          </Formik>
+        </div>
+        <EditingNotifications
+          content={content}
+          dataType={additionalInformationType}
+        />
       </div>
-      <div className={commonFormStyles['multi-item-wrapper']}>
-        <Formik
-          initialValues={{ language }}
-          onSubmit={() => {
-            /* onChange does this. This comment is here because onSubmit is mandatory and function cannot be empty */
-          }}
-        >
-          {(formikProps: FormikProps<FormValues>) => (
-            <Form>
-              <FormikDropdown
-                className={classNames(
-                  commonFormStyles['form-field'],
-                  commonFormStyles['hidden-labels'],
-                  commonFormStyles['responsive-button']
-                )}
-                id={`${additionalInformationType}-language`}
-                name={'language'}
-                label={t('profileForm.language')}
-                options={languageOptions}
-                defaultOption={defaultOption}
-                currentOption={currentOption}
-                disabled={!!saving}
-                onChange={option => {
-                  const languageValue = option.value as FormValues['language'];
-                  formikProps.setFieldValue('language', languageValue);
-                  updateLanguage(languageValue);
-                }}
-              />
-            </Form>
-          )}
-        </Formik>
-      </div>
-      <EditingNotifications
-        content={content}
-        dataType={additionalInformationType}
-      />
     </ProfileSection>
   );
 }

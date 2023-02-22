@@ -52,11 +52,9 @@ function ProfileInformation(): React.ReactElement {
             <UserDataComponent />
             <AddressEditor />
             <ProfileSection>
-              <h2
-                className={commonFormStyles['section-title-with-subsections']}
-              >
-                {t('profileInformation.contact')}
-              </h2>
+              <div className={commonFormStyles['editor-description-container']}>
+                <h2>{t('profileInformation.contact')}</h2>
+              </div>
               <MultiItemEditor dataType="phones" />
               <hr />
               <EmailEditor />

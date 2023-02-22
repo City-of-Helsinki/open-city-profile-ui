@@ -14,5 +14,5 @@
 
 .value {
   font-size: var(--fontsize-body-l);
-  white-space: pre-line;
+  white-space: nowrap;
 }

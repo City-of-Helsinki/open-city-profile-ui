@@ -25,6 +25,7 @@ import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import { RequiredFieldsNote } from '../../../common/requiredFieldsNote/RequiredFieldsNote';
 import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
+import AddButton from '../multiItemEditor/AddButton';
 
 type FormikValues = AddressValue;
 
@@ -54,24 +55,40 @@ function MultiItemAddressRow({
   const description = userIsVerified
     ? t('profileInformation.addressDescriptionNoWeakAddress')
     : t('profileInformation.addressDescriptionNoAddress');
-
-  const Explanation = () => {
-    const DescriptionElement = (): React.ReactElement | null => {
-      if (hasData() && !isNew) {
-        return <p>{t('profileInformation.addressDescription')}</p>;
-      }
-      return <p>{description}</p>;
-    };
-    return (
-      <div className={commonFormStyles['section-title-with-explanation']}>
-        <h2 className={commonFormStyles['section-title']}>{title}</h2>
-        <DescriptionElement />
-      </div>
-    );
+  const containerStyle = commonFormStyles['responsive-flex-box-columns-rows'];
+  const DescriptionElement = (): React.ReactElement | null => {
+    if (hasData() && !isNew) {
+      return <p>{t('profileInformation.addressDescription')}</p>;
+    }
+    return <p data-testid={`${dataType}-no-data`}>{description}</p>;
   };
 
+  const Explanation = () => (
+    <div
+      className={classNames(
+        commonFormStyles['editor-description-container'],
+        commonFormStyles['bottom-border']
+      )}
+    >
+      <h2>{title}</h2>
+      <DescriptionElement />
+    </div>
+  );
+
   if (!hasData()) {
-    return <Explanation />;
+    return (
+      <div className={classNames(commonFormStyles['flex-box-columns'])}>
+        <Explanation />
+        <div
+          className={classNames(
+            commonFormStyles['edit-buttons'],
+            commonFormStyles['form-buttons']
+          )}
+        >
+          <AddButton editHandler={editHandler} />
+        </div>
+      </div>
+    );
   }
 
   const data = getData();
@@ -124,11 +141,16 @@ function MultiItemAddressRow({
         validationSchema={addressSchema}
       >
         {(formikProps: FormikProps<FormikValues>) => (
-          <Form className={commonFormStyles['multi-item-form']}>
+          <Form>
             <Explanation />
             <RequiredFieldsNote />
             <FocusKeeper targetId={`${testId}-address`}>
-              <div className={commonFormStyles['multi-item-wrapper']}>
+              <div
+                className={classNames(
+                  containerStyle,
+                  commonFormStyles['editor-form-fields']
+                )}
+              >
                 <Field
                   name="address"
                   id={`${testId}-address`}
@@ -207,51 +229,55 @@ function MultiItemAddressRow({
     );
   }
   return (
-    <div
-      className={classNames([
-        commonFormStyles['content-wrapper'],
-        commonFormStyles['multi-item-content-wrapper'],
-      ])}
-    >
-      <Explanation />
-      <div className={commonFormStyles['multi-item-wrapper']}>
-        <LabeledValue
-          label={t(formFields.address.translationKey)}
-          value={value.address}
-          testId={`${testId}-address`}
-        />
-        <LabeledValue
-          label={t(formFields.postalCode.translationKey)}
-          value={value.postalCode}
-          testId={`${testId}-postalCode`}
-        />
-        <LabeledValue
-          label={t(formFields.city.translationKey)}
-          value={value.city}
-          testId={`${testId}-city`}
-        />
-        <LabeledValue
-          label={t(formFields.countryCode.translationKey)}
-          value={getCountry(value.countryCode, lang)}
-          testId={`${testId}-countryCode`}
-        />
+    <div className={classNames(commonFormStyles['flex-box-columns'])}>
+      <div className={commonFormStyles['editor-description-container']}>
+        <h2>{title}</h2>
+        <DescriptionElement />
       </div>
-      <div className={commonFormStyles['actions-wrapper']}>
-        <EditButtons
-          handler={actionHandler}
-          actions={{
-            removable: true,
-            primary,
-            setPrimary: false,
-          }}
-          buttonClassNames={commonFormStyles['actions-wrapper-button']}
-          editButtonId={editButtonId}
-          removeButtonId={removeButtonId}
-          disabled={disableButtons}
-          testId={testId}
-          ariaLabels={ariaLabels}
-        />
-        <SaveIndicator action={currentAction} testId={testId} />
+      <div className={classNames(containerStyle)}>
+        <div
+          className={classNames(
+            containerStyle,
+            commonFormStyles['editor-text-fields']
+          )}
+        >
+          <LabeledValue
+            label={t(formFields.address.translationKey)}
+            value={value.address}
+            testId={`${testId}-address`}
+          />
+          <LabeledValue
+            label={t(formFields.postalCode.translationKey)}
+            value={value.postalCode}
+            testId={`${testId}-postalCode`}
+          />
+          <LabeledValue
+            label={t(formFields.city.translationKey)}
+            value={value.city}
+            testId={`${testId}-city`}
+          />
+          <LabeledValue
+            label={t(formFields.countryCode.translationKey)}
+            value={getCountry(value.countryCode, lang)}
+            testId={`${testId}-countryCode`}
+          />
+        </div>
+        <div className={commonFormStyles['edit-buttons']}>
+          <EditButtons
+            handler={actionHandler}
+            actions={{
+              removable: true,
+              primary,
+              setPrimary: false,
+            }}
+            editButtonId={editButtonId}
+            removeButtonId={removeButtonId}
+            disabled={disableButtons}
+            testId={testId}
+            ariaLabels={ariaLabels}
+          />
+          <SaveIndicator action={currentAction} testId={testId} />
+        </div>
       </div>
     </div>
   );
