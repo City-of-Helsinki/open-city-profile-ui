@@ -5,7 +5,7 @@ import * as Sentry from '@sentry/browser';
 import { loader } from 'graphql.macro';
 import { Notification } from 'hds-react';
 
-import styles from './DownloadData.module.css';
+import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import { DownloadMyProfileQuery as DownloadMyProfileRoot } from '../../../graphql/generatedTypes';
 import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
@@ -41,23 +41,26 @@ function DownloadData(): React.ReactElement {
 
   return (
     <ProfileSection>
-      <h2 ref={scrollIntoViewRef}>{t('downloadData.panelTitle')}</h2>
-      <p>{t('downloadData.panelText')}</p>
-      {hasError && (
-        <Notification
-          label={t('notification.defaultErrorText')}
-          type={'error'}
-          dataTestId="download-profile-error"
-        ></Notification>
-      )}
-      <StyledButton
-        onClick={onDownloadClick}
-        className={styles.button}
-        disabled={isDownloadingData}
-        id="download-profile-button"
-      >
-        {isDownloadingData ? t('loading') : t('downloadData.button')}
-      </StyledButton>
+      <div className={commonFormStyles['editor-description-container']}>
+        <h2 ref={scrollIntoViewRef}>{t('downloadData.panelTitle')}</h2>
+        <p>{t('downloadData.panelText')}</p>
+      </div>
+      <div className={commonFormStyles['uneditable-box-content']}>
+        {hasError && (
+          <Notification
+            label={t('notification.defaultErrorText')}
+            type={'error'}
+            dataTestId="download-profile-error"
+          ></Notification>
+        )}
+        <StyledButton
+          onClick={onDownloadClick}
+          disabled={isDownloadingData}
+          id="download-profile-button"
+        >
+          {isDownloadingData ? t('loading') : t('downloadData.button')}
+        </StyledButton>
+      </div>
     </ProfileSection>
   );
 }
