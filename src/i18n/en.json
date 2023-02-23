@@ -215,7 +215,7 @@
     "empty": "You currently don't have any services connected to your profile.",
     "explanation": "You have granted the following services the right to use the data stored on your Helsinki profile.",
     "servicePersonalData": "Information which the service will know about you:",
-    "title": "Services with permission to use your data",
+    "title": "Your services",
     "deleteConnection": "Delete your data from this service",
     "connectionRemovalVerification": "By continuing, you will lose all the data stored in the {{serviceName}} service and will no longer be able to use the service until you re-register to the service.",
     "connectionRemovalSuccess": "All the data we had stored in the {{serviceName}} service has been deleted successfully!",

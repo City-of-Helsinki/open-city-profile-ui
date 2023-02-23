@@ -215,7 +215,7 @@
     "empty": "Du har för närvarande inga tjänster anslutna till din profil.",
     "explanation": "Du har gett följande tjänster rätt att använda uppgifterna som sparats i Helsingforsprofilen.",
     "servicePersonalData": "Information som tjänsten vet om dig:",
-    "title": "Tjänster som har tillstånd att använda dina uppgifter",
+    "title": "Dina tjänster",
     "deleteConnection": "Ta bort dina uppgifter från denna tjänst",
     "connectionRemovalVerification": "Om du fortsätter, förlorar du alla uppgifter som du sparat i tjänsten {{serviceName}} och du kan inte längre använda tjänsten förrän du registrerar dig i tjänsten på nytt.",
     "connectionRemovalSuccess": "Alla uppgifter som vi sparat i tjänsten {{serviceName}} har tagits bort på ett lyckat sätt!",

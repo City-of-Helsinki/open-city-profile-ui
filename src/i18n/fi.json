@@ -215,7 +215,7 @@
     "empty": "Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi.",
     "explanation": "Olet antanut seuraaville palveluille oikeuden käyttää Helsinki-profiiliin tallennettuja tietojasi.",
     "servicePersonalData": "Palvelu saa tietää sinusta:",
-    "title": "Palvelut, joilla on lupa käyttää tietojasi",
+    "title": "Käyttämäsi palvelut",
     "deleteConnection": "Poista tietosi tästä palvelusta",
     "connectionRemovalVerification": "Jatkamalla menetät kaikki {{serviceName}} -palveluun tallennetut tiedot, etkä voi enää käyttää palvelua, ennen kuin rekisteröidyt palveluun uudelleen.",
     "connectionRemovalSuccess": "Kaikki {{serviceName}} -palveluun tallentamamme tiedot on poistettu onnistuneesti!",
