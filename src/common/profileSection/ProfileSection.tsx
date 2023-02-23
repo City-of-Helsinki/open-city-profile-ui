@@ -6,14 +6,16 @@ import commonStyles from '../cssHelpers/common.module.css';
 
 type Props = {
   children?: React.ReactNode;
+  bottomBorder?: boolean;
 };
 
-function ProfileSection({ children }: Props): React.ReactElement {
+function ProfileSection({ children, bottomBorder }: Props): React.ReactElement {
   return (
     <section
       className={classNames(
         commonStyles['content-box'],
-        styles['profile-section']
+        styles['profile-section'],
+        bottomBorder && commonStyles['bottom-border']
       )}
     >
       {children}
