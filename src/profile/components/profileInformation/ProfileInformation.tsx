@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Link } from 'hds-react';
+import { Link } from 'react-router-dom';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import DownloadData from '../downloadData/DownloadData';
@@ -35,11 +35,7 @@ function ProfileInformation(): React.ReactElement {
             <Trans
               i18nKey="profileInformation.description"
               components={{
-                linkToServices: (
-                  <Link href={'/connected-services'} size="M">
-                    {''}
-                  </Link>
-                ),
+                linkToServices: <Link to={'/connected-services'}>{''}</Link>,
                 linkToServicesText: t('nav.services'),
               }}
             />
