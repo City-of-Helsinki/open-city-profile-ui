@@ -1,4 +1,6 @@
-.hel-fi-styled-button-primary {
+button.hel-fi-styled-button-primary,
+button.hel-fi-styled-button-transparent,
+button.hel-fi-styled-button-secondary {
   --background-color: var(--color-black);
   --background-color-hover: transparent;
   --background-color-focus: transparent;
@@ -17,7 +19,8 @@
   --focus-outline-color: var(--color-black);
   --border-color-focus: var(--color-black);
 }
-.hel-fi-styled-button-secondary {
+button.hel-fi-styled-button-secondary,
+button.hel-fi-styled-button-transparent {
   --background-color: var(--color-white);
   --background-color-hover: var(--color-black);
   --background-color-focus: var(--color-black);
@@ -35,4 +38,10 @@
 
   --focus-outline-color: var(--color-black);
   --border-color-focus: var(--color-black);
+}
+button.hel-fi-styled-button-transparent {
+  position: relative;
+  --background-color: transparent;
+
+  --border-color: transparent;
 }

@@ -20,17 +20,10 @@
   align-items: center;
 }
 
-.close-button-container button,
-.right-side-information button {
-  padding-right: 0;
-  margin-right: calc(-1 * (var(--spacing-s)));
-}
-
 .show-information {
   margin-right: var(--spacing-s);
   font-size: var(--fontsize-body-s);
   font-weight: bold;
-  color: var(--color-bus);
   text-transform: uppercase;
 }
 
