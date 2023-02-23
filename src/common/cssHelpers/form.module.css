@@ -66,10 +66,6 @@
   margin-bottom: var(--spacing-s);
 }
 
-.editor-form-fields > * {
-  padding: var(--spacing-xs) var(--spacing-m) var(--spacing-xs) 0;
-}
-
 h3.label-size {
   font-size: var(--fontsize-body-m);
   font-weight: 500;
@@ -178,13 +174,12 @@ h3.label-size {
   }
   .responsive-flex-box-columns-rows {
     flex-direction: row;
-    align-items: flex-end;
   }
 
   .edit-buttons {
     width: 40%;
     margin: 0;
-    justify-content: flex-start;
+    align-self: flex-end;
   }
 
   .edit-buttons button {
@@ -215,6 +210,7 @@ h3.label-size {
 
   .form-buttons {
     padding-top: var(--spacing-s);
+    align-self: flex-start;
   }
 }
 
