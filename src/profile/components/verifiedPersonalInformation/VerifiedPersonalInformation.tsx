@@ -113,7 +113,12 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
 
   return (
     <ProfileSection bottomBorder>
-      <div className={commonFormStyles['editor-description-container']}>
+      <div
+        className={classNames(
+          commonFormStyles['editor-description-container'],
+          commonFormStyles['bottom-border']
+        )}
+      >
         <h2>{t('profileInformation.verifiedBasicData')}</h2>
         <LongDescription />
       </div>

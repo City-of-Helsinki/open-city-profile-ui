@@ -230,7 +230,12 @@ function MultiItemAddressRow({
   }
   return (
     <div className={classNames(commonFormStyles['flex-box-columns'])}>
-      <div className={commonFormStyles['editor-description-container']}>
+      <div
+        className={classNames(
+          commonFormStyles['editor-description-container'],
+          commonFormStyles['bottom-border']
+        )}
+      >
         <h2>{title}</h2>
         <DescriptionElement />
       </div>
