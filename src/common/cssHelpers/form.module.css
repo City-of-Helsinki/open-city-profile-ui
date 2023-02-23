@@ -38,19 +38,19 @@
 }
 
 .edit-buttons {
-  margin: var(--spacing-m) 0;
+  margin: var(--spacing-m) 0 0;
   align-items: center;
 }
 
-.edit-buttons button {
+.edit-buttons button:not(:first-child) {
   margin: var(--spacing-xs) 0 0;
 }
 
-.edit-buttons.edit-buttons button > div {
+.edit-buttons.edit-buttons .edit-buttons-container button > div {
   margin-left: 0;
 }
 
-.edit-buttons.edit-buttons button > span {
+.edit-buttons.edit-buttons .edit-buttons-container button > span {
   padding-right: 0;
 }
 
@@ -80,7 +80,6 @@ h3.label-size {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: var(--spacing-xs);
   flex: 1 0;
 }
 
@@ -103,6 +102,13 @@ h3.label-size {
   display: inline-block;
   font-size: var(--fontsize-body-s);
   padding-bottom: var(--spacing-xs);
+}
+
+@media (max-width: 765.9px) {
+  .editor-form-fields > *:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 }
 
 @media (min-width: 640px) {
@@ -155,6 +161,9 @@ h3.label-size {
     margin-bottom: 0;
     padding-bottom: 0;
   }
+  .editor-title-and-value > *:last-child {
+    margin-bottom: var(--spacing-s);
+  }
   .editor-text-fields {
     width: 60%;
   }
@@ -176,8 +185,7 @@ h3.label-size {
   }
 
   .edit-buttons button {
-    margin-left: var(--spacing-m);
-    margin: 0 var(--spacing-xs) 0 0;
+    margin: 0;
   }
 
   .edit-buttons button:not(:first-child) {
@@ -200,6 +208,10 @@ h3.label-size {
   .responsive-button {
     width: auto;
     align-self: flex-start;
+  }
+
+  .form-buttons {
+    padding-top: var(--spacing-s);
   }
 }
 

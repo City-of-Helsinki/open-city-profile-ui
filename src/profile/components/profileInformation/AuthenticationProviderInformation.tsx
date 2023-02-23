@@ -23,8 +23,6 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
       <div className={commonFormStyles['flex-box-columns']}>
         <div className={commonFormStyles['editor-description-container']}>
           <h2>{t('profileInformation.authenticationMethod')}</h2>
-        </div>
-        <div className={commonFormStyles['editor-form-fields']}>
           <span className={commonFormStyles['text-value']}>
             {authenticationMethodReferenceName}
           </span>

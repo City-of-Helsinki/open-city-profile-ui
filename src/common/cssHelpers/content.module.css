@@ -27,6 +27,14 @@
 @media (min-width: 600px) {
   .common-content-area {
     --content-horizontal-padding: var(--spacing-xl);
+    padding-left: var(--spacing-l);
+    padding-right: var(--spacing-l);
+  }
+}
+@media (min-width: 768px) {
+  .common-content-area {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
   }
 }
 

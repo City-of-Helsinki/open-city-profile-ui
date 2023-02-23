@@ -19,7 +19,8 @@ function FormButtons(props: Props): React.ReactElement {
     <div
       className={classNames(
         commonFormStyles['responsive-flex-box-columns-rows'],
-        commonFormStyles['edit-buttons']
+        commonFormStyles['edit-buttons'],
+        commonFormStyles['form-buttons']
       )}
     >
       <StyledButton

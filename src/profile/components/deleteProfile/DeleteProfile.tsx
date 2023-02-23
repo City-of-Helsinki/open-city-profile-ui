@@ -12,7 +12,6 @@ import {
   ServiceConnectionsQueryVariables,
   ServiceConnectionsRoot,
 } from '../../../graphql/typings';
-import styles from './deleteProfile.module.css';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
@@ -148,7 +147,6 @@ function DeleteProfile(): React.ReactElement {
       <StyledButton
         type="button"
         onClick={() => loadServiceConnections(true)}
-        className={styles.button}
         data-testid="reload-service-connections"
       >
         {t('notification.tryAgain')}
@@ -186,7 +184,6 @@ function DeleteProfile(): React.ReactElement {
           <StyledButton
             type="button"
             onClick={handleDeleteClick}
-            className={styles.button}
             id={removeButtonId}
           >
             {t('deleteProfile.delete')}

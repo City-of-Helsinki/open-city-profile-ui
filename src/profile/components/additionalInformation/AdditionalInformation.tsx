@@ -81,7 +81,6 @@ function AdditionalInformation(): React.ReactElement | null {
               <Form>
                 <FormikDropdown
                   className={classNames(
-                    commonFormStyles['form-field'],
                     commonFormStyles['hidden-labels'],
                     commonFormStyles['responsive-button']
                   )}
