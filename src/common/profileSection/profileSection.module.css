@@ -3,7 +3,7 @@
 }
 
 .profile-section hr {
-  margin: var(--spacing-l) 0 var(--spacing-s);
+  margin: var(--spacing-l) 0 var(--spacing-l);
 }
 
 @media (min-width: 768px) {

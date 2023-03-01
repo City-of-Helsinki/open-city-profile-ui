@@ -140,7 +140,8 @@ function EmailEditor(): React.ReactElement | null {
         <div
           className={classNames(
             boxStyle,
-            commonFormStyles['editor-title-and-value']
+            commonFormStyles['editor-title-and-value'],
+            commonFormStyles['last-item']
           )}
         >
           <h3 className={headingStyle}>{t('profileForm.email')}</h3>
@@ -151,7 +152,12 @@ function EmailEditor(): React.ReactElement | null {
             {email || t('profileInformation.noEmail')}
           </span>
         </div>
-        <div className={commonFormStyles['edit-buttons']}>
+        <div
+          className={classNames(
+            commonFormStyles['edit-buttons'],
+            commonFormStyles['last-item']
+          )}
+        >
           {email ? (
             <EditButtons
               handler={actionChecker}

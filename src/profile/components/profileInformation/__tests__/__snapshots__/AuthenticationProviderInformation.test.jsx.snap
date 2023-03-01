@@ -15,9 +15,7 @@ exports[`<AuthenticationProviderInformation />  renders correctly when AMR is he
           <h2>
             profileInformation.authenticationMethod
           </h2>
-          <span
-            className="text-value"
-          >
+          <span>
             identityProvider.helsinkiAccount
           </span>
         </div>
@@ -42,9 +40,7 @@ exports[`<AuthenticationProviderInformation />  renders correctly when AMR is tu
           <h2>
             profileInformation.authenticationMethod
           </h2>
-          <span
-            className="text-value"
-          >
+          <span>
             identityProvider.tunnistusSuomifi
           </span>
         </div>

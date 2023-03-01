@@ -1,5 +1,4 @@
-.editor-description-container {
-  width: 100%;
+.editor-description-container:not(:last-child) {
   padding-bottom: var(--spacing-layout-2-xs);
   margin-bottom: var(--spacing-layout-2-xs);
 }
@@ -55,7 +54,7 @@ span.visually-h2 {
 }
 
 .edit-buttons {
-  margin: var(--spacing-m) 0 0;
+  margin: var(--spacing-3-xs) 0 0;
   align-items: center;
 }
 
@@ -117,9 +116,32 @@ h3.label-size {
   padding-bottom: var(--spacing-xs);
 }
 
+.uneditable-box-content,
+.editor-title-and-value,
+.responsive-width-text-fields > *,
+.editor-text-fields > *,
+.editor-form-fields > * {
+  padding-bottom: var(--spacing-m);
+}
+
+.last-item.last-item {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.form-buttons {
+  padding-top: var(--spacing-m);
+}
+
 @media (max-width: 765.9px) {
   .editor-form-fields > *:last-child {
     margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .mobile-xs-top-padding {
+    padding-top: var(--spacing-m);
+  }
+  .mobile-no-bottom-padding {
     padding-bottom: 0;
   }
 }
@@ -135,6 +157,11 @@ h3.label-size {
 }
 
 @media (min-width: 768px) {
+  .editor-description-container:not(:last-child) {
+    padding-bottom: var(--spacing-layout-xs);
+    margin-bottom: var(--spacing-layout-xs);
+  }
+
   .editor-text-fields,
   .editor-form-fields {
     flex-wrap: wrap;
@@ -150,16 +177,14 @@ h3.label-size {
   .responsive-width-text-fields > *,
   .editor-text-fields > *,
   .editor-form-fields > * {
-    padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-xs) 0;
+    padding: 0 var(--spacing-xl) var(--spacing-m) 0;
   }
   .common-editor-bottom-padding {
     padding-bottom: var(--spacing-xs);
   }
   .edit-buttons .edit-buttons-container {
     /* match the vertical padding of form/text elements */
-    padding-bottom: var(--spacing-xs);
-    /* match the vertical margin of form/text elements */
-    margin-bottom: var(--spacing-s);
+    padding-bottom: var(--spacing-m);
   }
   .editor-title-and-value {
     width: 60%;
@@ -223,7 +248,11 @@ h3.label-size {
   }
 
   .form-buttons {
-    padding-top: var(--spacing-s);
     align-self: flex-start;
+  }
+  .last-item.last-item .edit-buttons .edit-buttons-container,
+  .last-item.last-item > * {
+    padding-bottom: 0;
+    margin-bottom: 0;
   }
 }

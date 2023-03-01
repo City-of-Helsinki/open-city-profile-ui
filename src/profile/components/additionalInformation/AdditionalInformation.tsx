@@ -70,7 +70,12 @@ function AdditionalInformation(): React.ReactElement | null {
           <h2>{t('profileForm.language')}</h2>
           <p>{t('profileForm.languageDescription')}</p>
         </div>
-        <div className={commonFormStyles['editor-form-fields']}>
+        <div
+          className={classNames(
+            commonFormStyles['editor-form-fields'],
+            commonFormStyles['last-item']
+          )}
+        >
           <Formik
             initialValues={{ language }}
             onSubmit={() => {

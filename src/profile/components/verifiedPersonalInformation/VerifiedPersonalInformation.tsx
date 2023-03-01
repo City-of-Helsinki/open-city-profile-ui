@@ -119,7 +119,8 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
       className={classNames(
         commonStyles['content-box'],
         profileSectionStyles['profile-section'],
-        commonStyles['bottom-border']
+        commonStyles['bottom-border'],
+        commonFormStyles['mobile-no-bottom-padding']
       )}
     >
       <div
@@ -137,7 +138,12 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
         <LongDescription />
       </div>
       <div className={commonFormStyles['flex-box-columns']}>
-        <div className={containerStyles}>
+        <div
+          className={classNames(
+            containerStyles,
+            commonFormStyles['mobile-xs-top-padding']
+          )}
+        >
           <LabeledValue label={t('profileForm.firstName')} value={firstName} />
           <LabeledValue label={t('profileForm.givenName')} value={givenName} />
           <LabeledValue label={t('profileForm.lastName')} value={lastName} />

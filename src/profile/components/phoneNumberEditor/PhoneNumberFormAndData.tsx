@@ -63,7 +63,10 @@ function PhoneNumberFormAndData({
           )}
         >
           <h3 className={headingStyle}>{title}</h3>
-          <span data-testid={`${dataType}-no-data`}>
+          <span
+            data-testid={`${dataType}-no-data`}
+            className={commonFormStyles['text-value']}
+          >
             {t('profileInformation.noPhone')}
           </span>
         </div>
