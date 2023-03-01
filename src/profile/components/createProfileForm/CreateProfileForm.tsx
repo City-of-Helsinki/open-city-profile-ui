@@ -96,7 +96,8 @@ function CreateProfileForm(props: Props): React.ReactElement {
   ]);
   const containerStyle = classNames([
     styles['form-fields'],
-    commonFormStyles['multi-item-wrapper'],
+    commonFormStyles['responsive-flex-box-columns-rows'],
+    commonFormStyles['editor-form-fields'],
   ]);
   return (
     <Formik

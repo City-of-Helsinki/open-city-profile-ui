@@ -227,18 +227,3 @@ h3.label-size {
     align-self: flex-start;
   }
 }
-
-@media (min-width: 768px) {
-  .multi-item-wrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .multi-item-wrapper > * {
-    flex-basis: 33.333%;
-    max-width: 350px;
-    padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-xs) 0;
-    box-sizing: border-box;
-  }
-}
