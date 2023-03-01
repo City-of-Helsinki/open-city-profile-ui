@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import React from 'react';
+import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
@@ -9,7 +9,7 @@ import AdditionalInformation from '../additionalInformation/AdditionalInformatio
 import AddressEditor from '../addressEditor/AddressEditor';
 import BasicData from '../basicData/BasicData';
 import EmailEditor from '../emailEditor/EmailEditor';
-import MultiItemEditor from '../multiItemEditor/MultiItemEditor';
+import PhoneNumberEditor from '../phoneNumberEditor/PhoneNumberEditor';
 /**
  * If user has verified personal information, editable data is grouped under "My contact information"
  * Otherwise region is not added, because this is the only data set.
@@ -37,10 +37,7 @@ function EditableProfileData() {
       {!userIsVerified && <BasicData />}
       <AddressEditor />
       <ProfileSection>
-        <div className={commonFormStyles['editor-description-container']}>
-          <h2>{t('profileInformation.contact')}</h2>
-        </div>
-        <MultiItemEditor dataType="phones" />
+        <PhoneNumberEditor />
         <hr />
         <EmailEditor />
       </ProfileSection>
