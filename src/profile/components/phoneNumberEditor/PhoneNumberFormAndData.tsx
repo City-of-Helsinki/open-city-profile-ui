@@ -126,11 +126,8 @@ function PhoneNumberFormAndData({
               commonFormStyles['common-editor-bottom-padding']
             )}
           >
+            <h3 className={headingStyle}>{title}</h3>
             <Form>
-              <div>
-                <h3 className={headingStyle}>{title}</h3>
-                {isNew && <p>{t('profileInformation.noPhone')}</p>}
-              </div>
               <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
                 <div className={flexBoxColumnsStyle}>
                   <div

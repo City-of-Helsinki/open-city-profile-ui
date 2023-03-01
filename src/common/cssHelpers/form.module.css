@@ -82,6 +82,7 @@ span.visually-h2 {
 h3.label-size {
   font-size: var(--fontsize-body-m);
   font-weight: 500;
+  margin-top: 0;
 }
 
 .form-field {
@@ -173,7 +174,6 @@ h3.label-size {
     flex-grow: 1;
   }
   .uneditable-box-content,
-  .editor-title-and-value,
   .responsive-width-text-fields > *,
   .editor-text-fields > *,
   .editor-form-fields > * {
@@ -198,9 +198,6 @@ h3.label-size {
   .editor-title-and-value > *:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
-  }
-  .editor-title-and-value > *:last-child {
-    margin-bottom: var(--spacing-s);
   }
   .editor-text-fields {
     width: 60%;
