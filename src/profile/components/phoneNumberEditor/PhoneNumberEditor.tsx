@@ -7,7 +7,7 @@ import { EditDataType } from '../../helpers/editData';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
-import MultiItemPhoneRow from '../multiItemPhoneRow/MultiItemPhoneRow';
+import PhoneNumberFormAndData from './PhoneNumberFormAndData';
 
 const PhoneNumberEditor = (): React.ReactElement | null => {
   const dataType: EditDataType = 'phones';
@@ -23,7 +23,7 @@ const PhoneNumberEditor = (): React.ReactElement | null => {
       <div className={commonFormStyles['editor-description-container']}>
         <h2>{t('profileInformation.contact')}</h2>
       </div>
-      <MultiItemPhoneRow editHandler={editHandler} />
+      <PhoneNumberFormAndData editHandler={editHandler} />
       <AccessibilityFieldHelpers dataType={dataType} />
       <EditingNotifications
         content={noticationContent.content}

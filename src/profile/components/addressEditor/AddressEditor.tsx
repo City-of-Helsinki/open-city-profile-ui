@@ -6,7 +6,7 @@ import { EditDataType } from '../../helpers/editData';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
-import MultiItemAddressRow from '../multiItemAddressRow/MultiItemAddressRow';
+import AddressFormAndData from './AddressFormAndData';
 
 const AddressEditor = (): React.ReactElement | null => {
   const dataType: EditDataType = 'addresses';
@@ -19,7 +19,7 @@ const AddressEditor = (): React.ReactElement | null => {
   const { noticationContent, confirmationModalProps } = editHandler;
   return (
     <ProfileSection>
-      <MultiItemAddressRow editHandler={editHandler} />
+      <AddressFormAndData editHandler={editHandler} />
       <AccessibilityFieldHelpers dataType={dataType} />
       <EditingNotifications
         content={noticationContent.content}

@@ -19,7 +19,6 @@ import {
   waitForElementFocus,
 } from '../../../../common/test/testingLibraryTools';
 import { AddressNode, ProfileData } from '../../../../graphql/typings';
-import MultiItemEditor from '../../multiItemEditor/MultiItemEditor';
 import {
   MockedResponse,
   ResponseProvider,
@@ -28,6 +27,7 @@ import { AddressValue, EditDataType } from '../../../helpers/editData';
 import i18n from '../../../../common/test/testi18nInit';
 import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
 import getAddressesFromNode from '../../../helpers/getAddressesFromNode';
+import AddressEditor from '../AddressEditor';
 
 describe('<MultiItemAddressRow /> ', () => {
   type AddressValueKey = keyof AddressValue;
@@ -41,7 +41,7 @@ describe('<MultiItemAddressRow /> ', () => {
     return renderComponentWithMocksAndContexts(
       responseProvider,
       <RenderChildrenWhenDataIsComplete>
-        <MultiItemEditor dataType={dataType} />
+        <AddressEditor />
       </RenderChildrenWhenDataIsComplete>
     );
   };

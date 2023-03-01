@@ -17,7 +17,6 @@ import {
   waitForElementFocus,
 } from '../../../../common/test/testingLibraryTools';
 import { PhoneNode, ProfileData } from '../../../../graphql/typings';
-import MultiItemEditor from '../../multiItemEditor/MultiItemEditor';
 import {
   MockedResponse,
   ResponseProvider,
@@ -30,6 +29,7 @@ import {
   getCountryCallingCodes,
   splitNumberAndCountryCallingCode,
 } from '../../../../i18n/countryCallingCodes.utils';
+import PhoneNumberEditor from '../PhoneNumberEditor';
 
 describe('<MultiItemPhoneRow /> ', () => {
   type PhoneValueKey = keyof PhoneValue;
@@ -46,7 +46,7 @@ describe('<MultiItemPhoneRow /> ', () => {
     return renderComponentWithMocksAndContexts(
       responseProvider,
       <RenderChildrenWhenDataIsComplete>
-        <MultiItemEditor dataType={dataType} />
+        <PhoneNumberEditor />
       </RenderChildrenWhenDataIsComplete>
     );
   };

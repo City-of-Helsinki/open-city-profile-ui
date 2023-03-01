@@ -29,7 +29,7 @@ import AddButton from '../addButton/AddButton';
 
 type PhoneFormikValue = { number: string; countryCallingCode: string };
 
-function MultiItemPhoneRow({
+function PhoneNumberFormAndData({
   editHandler,
 }: {
   editHandler: EditHandling;
@@ -239,4 +239,4 @@ function MultiItemPhoneRow({
   );
 }
 
-export default MultiItemPhoneRow;
+export default PhoneNumberFormAndData;

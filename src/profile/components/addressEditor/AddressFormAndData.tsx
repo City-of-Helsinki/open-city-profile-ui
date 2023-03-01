@@ -29,7 +29,7 @@ import AddButton from '../addButton/AddButton';
 
 type FormikValues = AddressValue;
 
-function MultiItemAddressRow({
+function AddressFormAndData({
   editHandler,
 }: {
   editHandler: EditHandling;
@@ -288,4 +288,4 @@ function MultiItemAddressRow({
   );
 }
 
-export default MultiItemAddressRow;
+export default AddressFormAndData;
