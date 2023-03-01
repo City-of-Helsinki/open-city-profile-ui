@@ -6,13 +6,16 @@ import commonStyles from '../cssHelpers/common.module.css';
 
 type Props = {
   children?: React.ReactNode;
+  borderless?: boolean;
 };
 
-function ProfileSection({ children }: Props): React.ReactElement {
+function ProfileSection({ children, borderless }: Props): React.ReactElement {
   return (
     <section
       className={classNames(
-        commonStyles['content-box'],
+        borderless
+          ? commonStyles['borderless-content-box']
+          : commonStyles['content-box'],
         styles['profile-section']
       )}
     >

@@ -169,7 +169,7 @@ function DeleteProfile(): React.ReactElement {
     );
   }
   return (
-    <ProfileSection data-test-id={'delete-profile'}>
+    <ProfileSection data-test-id={'delete-profile'} borderless>
       <div className={commonFormStyles['editor-description-container']}>
         <h2>{t('deleteProfile.title')}</h2>
         <p

@@ -20,6 +20,10 @@
   border-radius: 5px;
 }
 
+.borderless-content-box {
+  padding: var(--spacing-m) 0;
+}
+
 .bottom-border {
   border: 0;
   border-bottom: 8px solid var(--color-gold);

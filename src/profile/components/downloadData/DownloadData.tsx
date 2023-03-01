@@ -40,7 +40,7 @@ function DownloadData(): React.ReactElement {
   const [scrollIntoViewRef] = useScrollIntoView(loading);
 
   return (
-    <ProfileSection>
+    <ProfileSection borderless>
       <div className={commonFormStyles['editor-description-container']}>
         <h2 ref={scrollIntoViewRef}>{t('downloadData.panelTitle')}</h2>
         <p>{t('downloadData.panelText')}</p>
