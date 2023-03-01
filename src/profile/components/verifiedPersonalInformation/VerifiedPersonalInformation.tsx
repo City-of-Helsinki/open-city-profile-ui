@@ -4,7 +4,8 @@ import classNames from 'classnames';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
-import ProfileSection from '../../../common/profileSection/ProfileSection';
+import profileSectionStyles from '../../../common/profileSection/profileSection.module.css';
+import commonStyles from '../../../common/cssHelpers/common.module.css';
 import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
 import getCountry from '../../helpers/getCountry';
 import {
@@ -112,14 +113,27 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
   );
 
   return (
-    <ProfileSection bottomBorder>
+    <div
+      role="region"
+      aria-labelledby="verified-personal-information-heading"
+      className={classNames(
+        commonStyles['content-box'],
+        profileSectionStyles['profile-section'],
+        commonStyles['bottom-border']
+      )}
+    >
       <div
         className={classNames(
           commonFormStyles['editor-description-container'],
           commonFormStyles['bottom-border']
         )}
       >
-        <h2>{t('profileInformation.verifiedBasicData')}</h2>
+        <h2
+          id="verified-personal-information-heading"
+          className={commonFormStyles['normal-size']}
+        >
+          {t('profileInformation.verifiedBasicData')}
+        </h2>
         <LongDescription />
       </div>
       <div className={commonFormStyles['flex-box-columns']}>
@@ -147,7 +161,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
           address={permanentForeignAddress as CommonAddress}
         />
       </div>
-    </ProfileSection>
+    </div>
   );
 }
 

@@ -16,6 +16,20 @@
   margin-bottom: 0.33em;
 }
 
+span.visually-h2 {
+  font-size: var(--h2-size);
+  font-weight: 400;
+  display: inline-block;
+  width: 100%;
+  padding-bottom: var(--spacing-layout-s);
+  margin-top: var(--spacing-layout-2-xs);
+  margin-bottom: var(--spacing-layout-l);
+}
+
+.editor-description-container h2:not(.normal-size) {
+  font-size: var(--h3-size);
+}
+
 .editor-description-container > *:last-child {
   margin-bottom: 0;
 }

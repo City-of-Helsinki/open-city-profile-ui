@@ -7,25 +7,16 @@ import DeleteProfile from '../deleteProfile/DeleteProfile';
 import DownloadData from '../downloadData/DownloadData';
 import AuthenticationProviderInformation from './AuthenticationProviderInformation';
 import { ProfileContext } from '../../context/ProfileContext';
-import BasicData from '../basicData/BasicData';
-import EmailEditor from '../emailEditor/EmailEditor';
-import AdditionalInformation from '../additionalInformation/AdditionalInformation';
 import VerifiedPersonalInformation from '../verifiedPersonalInformation/VerifiedPersonalInformation';
 import getVerifiedPersonalInformation from '../../helpers/getVerifiedPersonalInformation';
 import Explanation from '../../../common/explanation/Explanation';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
-import AddressEditor from '../addressEditor/AddressEditor';
-import ProfileSection from '../../../common/profileSection/ProfileSection';
-import commonFormStyles from '../../../common/cssHelpers/form.module.css';
-import MultiItemEditor from '../multiItemEditor/MultiItemEditor';
+import EditableProfileData from '../editableProfileData/EditableProfileData';
 
 function ProfileInformation(): React.ReactElement {
   const { data } = useContext(ProfileContext);
   const { t } = useTranslation();
   const hasVerifiedData = !!getVerifiedPersonalInformation(data);
-  const UserDataComponent = hasVerifiedData
-    ? VerifiedPersonalInformation
-    : BasicData;
   return (
     <div className={classNames([commonContentStyles['content']])}>
       <div className={classNames([commonContentStyles['common-content-area']])}>
@@ -45,17 +36,8 @@ function ProfileInformation(): React.ReactElement {
         />
         {data && (
           <Fragment>
-            <UserDataComponent />
-            <AddressEditor />
-            <ProfileSection>
-              <div className={commonFormStyles['editor-description-container']}>
-                <h2>{t('profileInformation.contact')}</h2>
-              </div>
-              <MultiItemEditor dataType="phones" />
-              <hr />
-              <EmailEditor />
-            </ProfileSection>
-            <AdditionalInformation />
+            {hasVerifiedData && <VerifiedPersonalInformation />}
+            <EditableProfileData />
           </Fragment>
         )}
         <AuthenticationProviderInformation />

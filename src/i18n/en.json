@@ -176,6 +176,7 @@
     "ariaSelectedOption": "{{value}} is selected",
     "ariaNoSelectedItemForLabel": "{{label}} is not selected",
     "contact": "Contact",
+    "contactInformation": "My contact information",
     "deleteProfile": "Delete your profile",
     "description": "The data stored in the Helsinki profile is used in the City of Helsinki’s e-services. You can find more detailed information on the <linkToServices>{{linkToServicesText}} page</linkToServices>.",
     "downloadData": "Download your data",

@@ -176,6 +176,7 @@
     "ariaSelectedOption": "{{value}} har valts",
     "ariaNoSelectedItemForLabel": "{{label}} har inte valts",
     "contact": "Kontaktinformation",
+    "contactInformation": "Min kontaktinformation",
     "deleteProfile": "Radera profil",
     "description": "Uppgifterna som sparats i Helsingforsprofilen används i Helsingfors stads e-tjänster. Närmare information hittar du på <linkToServices>{{linkToServicesText}} sidan</linkToServices>.",
     "downloadData": "Ladda ner min information",
@@ -204,7 +205,7 @@
     "ariaRemovePhoneWithValue": "Ta bort telefonnummer {{value}}",
     "noPhone": "Du har inte uppgett ett telefonnummer",
     "noAddress": "Du har inte uppgett en adress",
-    "noEmail": "Du har inte angett en e-postadress",
+    "noEmail": "Du har inte upgett en e-postadress",
     "verifyEmailText": "Vi har skickat en bekräftelse till e-postadressen som du angett. Om du inte har fått meddelandet, vänligen kontrollera skräpkorgen för e-post.",
     "verifyEmailTitle": "Bekräfta e-postadressen"
   },
