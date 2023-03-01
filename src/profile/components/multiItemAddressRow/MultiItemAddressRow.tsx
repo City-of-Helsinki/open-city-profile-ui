@@ -25,7 +25,7 @@ import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import { RequiredFieldsNote } from '../../../common/requiredFieldsNote/RequiredFieldsNote';
 import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
-import AddButton from '../multiItemEditor/AddButton';
+import AddButton from '../addButton/AddButton';
 
 type FormikValues = AddressValue;
 

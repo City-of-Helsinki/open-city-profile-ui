@@ -25,7 +25,7 @@ import {
   getMemoizedCountryCallingCodes,
   splitNumberAndCountryCallingCode,
 } from '../../../i18n/countryCallingCodes.utils';
-import AddButton from '../multiItemEditor/AddButton';
+import AddButton from '../addButton/AddButton';
 
 type PhoneFormikValue = { number: string; countryCallingCode: string };
 

@@ -26,7 +26,7 @@ import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers
 import useProfile from '../../../auth/useProfile';
 import { hasTunnistusSuomiFiAmr } from '../profileInformation/authenticationProviderUtil';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
-import AddButton from '../multiItemEditor/AddButton';
+import AddButton from '../addButton/AddButton';
 
 function EmailEditor(): React.ReactElement | null {
   const dataType: EditDataType = 'emails';
