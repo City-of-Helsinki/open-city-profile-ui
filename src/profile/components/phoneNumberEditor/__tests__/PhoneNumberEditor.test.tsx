@@ -30,8 +30,12 @@ import {
   splitNumberAndCountryCallingCode,
 } from '../../../../i18n/countryCallingCodes.utils';
 import PhoneNumberEditor from '../PhoneNumberEditor';
+import {
+  getCommonElementSelector,
+  testAddWithCancel,
+} from '../../../../common/test/commonTestRuns';
 
-describe('<MultiItemPhoneRow /> ', () => {
+describe('<PhoneNumberEditor /> ', () => {
   type PhoneValueKey = keyof PhoneValue;
   type PhoneInputKey = 'number' | 'countryCallingCode';
   type PhoneFieldKey = PhoneValueKey | PhoneInputKey;
@@ -53,30 +57,6 @@ describe('<MultiItemPhoneRow /> ', () => {
 
   // test only node at index 0;
   const testIndex = 0;
-  const selectors: Record<string, ElementSelector> = {
-    editButton: { id: `${dataType}-#index#-edit-button` },
-    addButton: { id: `${dataType}-add-button` },
-    removeButton: { id: `${dataType}-#index#-remove-button` },
-    confirmRemovalButton: {
-      testId: 'confirmation-modal-confirm-button',
-    },
-    noDataText: {
-      testId: `${dataType}-no-data`,
-    },
-    cancelButton: {
-      testId: `${dataType}-#index#-cancel-button`,
-    },
-    editNotifications: {
-      id: `${dataType}-edit-notifications`,
-    },
-  };
-
-  const getSelector = (type: string, index = 0): ElementSelector => {
-    const selector = selectors[type];
-    const selectorAttribute = selector.id ? 'id' : 'testId';
-    const value = String(selector[selectorAttribute]);
-    return { [selectorAttribute]: value.replace('#index#', String(index)) };
-  };
 
   const validFormValues = {
     countryCallingCode: '+358',
@@ -253,7 +233,7 @@ describe('<MultiItemPhoneRow /> ', () => {
       expect(phoneNodes).toHaveLength(2);
       await verifyValuesFromElements(testTools, usedPhoneNode, false, 0);
       // goto edit mode
-      await clickElement(getSelector('editButton', 0));
+      await clickElement(getCommonElementSelector(dataType, 'editButton', 0));
       await verifyValuesFromElements(
         testTools,
         dataSourceToInputDataSource(usedPhoneNode),
@@ -261,7 +241,9 @@ describe('<MultiItemPhoneRow /> ', () => {
         0
       );
 
-      expect(() => getElement(getSelector('addButton'))).toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'addButton'))
+      ).toThrow();
     });
   });
 
@@ -271,7 +253,7 @@ describe('<MultiItemPhoneRow /> ', () => {
     await act(async () => {
       const testTools = await initTests();
       const { clickElement, submit, getElement } = testTools;
-      await clickElement(getSelector('editButton'));
+      await clickElement(getCommonElementSelector(dataType, 'editButton'));
       await setValuesToInputs(testTools, newFormValues);
 
       // create graphQL response for the update
@@ -295,7 +277,7 @@ describe('<MultiItemPhoneRow /> ', () => {
       };
 
       const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getSelector('editNotifications'),
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
         value: t('notification.saveSuccess'),
       };
       // submit and wait for "saving" and "saveSuccess" notifications
@@ -309,7 +291,9 @@ describe('<MultiItemPhoneRow /> ', () => {
         inputDataSourceToDataSource(newFormValues)
       );
       // focus is set to edit button
-      await waitForElementFocus(() => getElement(getSelector('editButton')));
+      await waitForElementFocus(() =>
+        getElement(getCommonElementSelector(dataType, 'editButton'))
+      );
     });
   });
 
@@ -317,7 +301,7 @@ describe('<MultiItemPhoneRow /> ', () => {
     await act(async () => {
       const testTools = await initTests();
       const { clickElement, submit } = testTools;
-      await clickElement(getSelector('editButton'));
+      await clickElement(getCommonElementSelector(dataType, 'editButton'));
       await setValuesToInputs(testTools, newFormValues);
 
       // add the graphQL response
@@ -326,7 +310,7 @@ describe('<MultiItemPhoneRow /> ', () => {
       });
 
       const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getSelector('editNotifications'),
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
         value: t('notification.saveError'),
       };
 
@@ -352,7 +336,7 @@ describe('<MultiItemPhoneRow /> ', () => {
       const { clickElement, getElement } = testTools;
       await act(async () => {
         const fieldValueSelector = getFieldValueSelector(field, true);
-        await clickElement(getSelector('editButton'));
+        await clickElement(getCommonElementSelector(dataType, 'editButton'));
         const elementGetter = () => getElement(fieldValueSelector);
         const errorElementGetter = () =>
           getElement({ id: `${dataType}-${testIndex}-${field}-error` });
@@ -397,15 +381,19 @@ describe('<MultiItemPhoneRow /> ', () => {
       } = testTools;
 
       // edit button is not rendered
-      expect(() => getElement(getSelector('editButton'))).toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'editButton'))
+      ).toThrow();
 
       // info text is shown instead of an number
       await expect(
-        getTextOrInputValue(getSelector('noDataText'))
+        getTextOrInputValue(getCommonElementSelector(dataType, 'noDataText'))
       ).resolves.toBe(t('profileInformation.noPhone'));
       // click add button to create an number
-      await clickElement(getSelector('addButton'));
-      expect(() => getElement(getSelector('addButton'))).toThrow();
+      await clickElement(getCommonElementSelector(dataType, 'addButton'));
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'addButton'))
+      ).toThrow();
       await setValuesToInputs(testTools, validFormValues);
 
       // create the graphQL response
@@ -417,7 +405,7 @@ describe('<MultiItemPhoneRow /> ', () => {
       responses.push({ updatedProfileData: profileWithPhone });
 
       const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getSelector('editNotifications'),
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
         value: t('notification.saveSuccess'),
       };
 
@@ -430,7 +418,9 @@ describe('<MultiItemPhoneRow /> ', () => {
         testTools,
         inputDataSourceToDataSource(validFormValues)
       );
-      expect(() => getElement(getSelector('addButton'))).toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'addButton'))
+      ).toThrow();
     });
   });
   it(`When removing a phone number, a confirmation modal is shown. 
@@ -458,58 +448,58 @@ describe('<MultiItemPhoneRow /> ', () => {
         updatedProfileData: profileWithoutPhones,
       });
 
-      expect(() => getElement(getSelector('addButton'))).toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'addButton'))
+      ).toThrow();
       // click remove button, confirm removal and handle error
-      await clickElement(getSelector('removeButton'));
-      await waitForElement(getSelector('confirmRemovalButton'));
-      await clickElement(getSelector('confirmRemovalButton'));
+      await clickElement(getCommonElementSelector(dataType, 'removeButton'));
+      await waitForElement(
+        getCommonElementSelector(dataType, 'confirmRemovalButton')
+      );
+      await clickElement(
+        getCommonElementSelector(dataType, 'confirmRemovalButton')
+      );
 
       await waitForElementAndValue({
-        selector: getSelector('editNotifications'),
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
         value: t('notification.removeError'),
       });
 
       // start removal again
-      await clickElement(getSelector('removeButton'));
-      await waitForElement(getSelector('confirmRemovalButton'));
-      await clickElement(getSelector('confirmRemovalButton'));
+      await clickElement(getCommonElementSelector(dataType, 'removeButton'));
+      await waitForElement(
+        getCommonElementSelector(dataType, 'confirmRemovalButton')
+      );
+      await clickElement(
+        getCommonElementSelector(dataType, 'confirmRemovalButton')
+      );
 
       await waitForElementAndValue({
-        selector: getSelector('editNotifications'),
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
         value: t('notification.removeSuccess'),
       });
       // item is removed and also remove button
-      expect(() => getElement(getSelector('removeButton'))).toThrow();
-      expect(() => getElement(getSelector('addButton'))).not.toThrow();
-      expect(() => getElement(getSelector('noDataText'))).not.toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'removeButton'))
+      ).toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'addButton'))
+      ).not.toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'noDataText'))
+      ).not.toThrow();
     });
   });
   it(`When a new phone number is cancelled, nothing is saved and
       add button is shown and a text about no phone numbers.
       Focus is returned to add button`, async () => {
     await act(async () => {
-      const profileWithoutPhones = getProfileWithoutNodes();
-      const {
-        clickElement,
-        getElement,
-        getTextOrInputValue,
-        waitForElement,
-      } = await initTests(profileWithoutPhones);
-
-      await clickElement(getSelector('addButton'));
-      await waitForElement(getSelector('cancelButton'));
-      await expect(
-        getTextOrInputValue(getFieldValueSelector('number', true))
-      ).resolves.toBe('');
-      expect(() => getElement(getSelector('removeButton'))).toThrow();
-      expect(() => getElement(getSelector('addButton'))).toThrow();
-
-      await clickElement(getSelector('cancelButton'));
-
-      expect(() => getElement(getSelector('addButton'))).not.toThrow();
-      expect(() => getElement(getSelector('noDataText'))).not.toThrow();
-      // focus is set to add button
-      await waitForElementFocus(() => getElement(getSelector('addButton')));
+      const testTools = await initTests(getProfileWithoutNodes());
+      await testAddWithCancel(
+        dataType,
+        getFieldValueSelector('number', true),
+        testTools
+      );
     });
   });
 });

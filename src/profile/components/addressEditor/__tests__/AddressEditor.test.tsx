@@ -28,8 +28,12 @@ import i18n from '../../../../common/test/testi18nInit';
 import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
 import getAddressesFromNode from '../../../helpers/getAddressesFromNode';
 import AddressEditor from '../AddressEditor';
+import {
+  getCommonElementSelector,
+  testAddWithCancel,
+} from '../../../../common/test/commonTestRuns';
 
-describe('<MultiItemAddressRow /> ', () => {
+describe('<AddressEditor /> ', () => {
   type AddressValueKey = keyof AddressValue;
   type DataSource = Partial<AddressValue | AddressNode>;
   const responses: MockedResponse[] = [];
@@ -48,30 +52,6 @@ describe('<MultiItemAddressRow /> ', () => {
 
   // test only node at index 0;
   const testIndex = 0;
-  const selectors: Record<string, ElementSelector> = {
-    editButton: { id: `${dataType}-#index#-edit-button` },
-    addButton: { id: `${dataType}-add-button` },
-    removeButton: { id: `${dataType}-#index#-remove-button` },
-    confirmRemovalButton: {
-      testId: 'confirmation-modal-confirm-button',
-    },
-    noDataText: {
-      testId: `${dataType}-no-data`,
-    },
-    cancelButton: {
-      testId: `${dataType}-#index#-cancel-button`,
-    },
-    editNotifications: {
-      id: `${dataType}-edit-notifications`,
-    },
-  };
-
-  const getSelector = (type: string, index = 0): ElementSelector => {
-    const selector = selectors[type];
-    const selectorAttribute = selector.id ? 'id' : 'testId';
-    const value = String(selector[selectorAttribute]);
-    return { [selectorAttribute]: value.replace('#index#', String(index)) };
-  };
 
   const validAddressValues: AddressValue = {
     address: 'test-address',
@@ -263,9 +243,11 @@ describe('<MultiItemAddressRow /> ', () => {
       expect(addressNodes).toHaveLength(2);
       await verifyValuesFromElements(testTools, usedAddressNode, false, 0);
       // goto edit mode
-      await clickElement(getSelector('editButton', 0));
+      await clickElement(getCommonElementSelector(dataType, 'editButton', 0));
       await verifyValuesFromElements(testTools, usedAddressNode, true, 0);
-      expect(() => getElement(getSelector('addButton'))).toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'addButton'))
+      ).toThrow();
       verifyTitleAndDescription(testTools, 'unverifiedUserWithOneAddress');
     });
   });
@@ -276,7 +258,7 @@ describe('<MultiItemAddressRow /> ', () => {
     await act(async () => {
       const testTools = await initTests();
       const { clickElement, submit, getElement } = testTools;
-      await clickElement(getSelector('editButton'));
+      await clickElement(getCommonElementSelector(dataType, 'editButton'));
       await setValuesToInputs(testTools, newAddressValues);
 
       // create graphQL response for the update
@@ -297,7 +279,7 @@ describe('<MultiItemAddressRow /> ', () => {
       };
 
       const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getSelector('editNotifications'),
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
         value: t('notification.saveSuccess'),
       };
       // submit and wait for "saving" and 'saveSuccess' notifications
@@ -308,7 +290,9 @@ describe('<MultiItemAddressRow /> ', () => {
       // verify new values are visible
       await verifyValuesFromElements(testTools, newAddressValues);
       // focus is set to edit button
-      await waitForElementFocus(() => getElement(getSelector('editButton')));
+      await waitForElementFocus(() =>
+        getElement(getCommonElementSelector(dataType, 'editButton'))
+      );
     });
   });
 
@@ -316,7 +300,7 @@ describe('<MultiItemAddressRow /> ', () => {
     await act(async () => {
       const testTools = await initTests();
       const { clickElement, submit } = testTools;
-      await clickElement(getSelector('editButton'));
+      await clickElement(getCommonElementSelector(dataType, 'editButton'));
       await setValuesToInputs(testTools, newAddressValues);
 
       // add the graphQL response
@@ -325,7 +309,7 @@ describe('<MultiItemAddressRow /> ', () => {
       });
 
       const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getSelector('editNotifications'),
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
         value: t('notification.saveError'),
       };
 
@@ -356,7 +340,7 @@ describe('<MultiItemAddressRow /> ', () => {
       } = testTools;
       await act(async () => {
         const fieldValueSelector = getFieldValueSelector(field, true);
-        await clickElement(getSelector('editButton'));
+        await clickElement(getCommonElementSelector(dataType, 'editButton'));
         const elementGetter = () => getElement(fieldValueSelector);
         const errorElementGetter = () =>
           getElement({ id: `${dataType}-${testIndex}-${field}-error` });
@@ -424,15 +408,19 @@ describe('<MultiItemAddressRow /> ', () => {
 
       verifyTitleAndDescription(testTools, 'unverifiedUserWithNoAddress');
       // edit button is not rendered
-      expect(() => getElement(getSelector('editButton'))).toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'editButton'))
+      ).toThrow();
 
       // info text is shown instead of an address
       await expect(
-        getTextOrInputValue(getSelector('noDataText'))
+        getTextOrInputValue(getCommonElementSelector(dataType, 'noDataText'))
       ).resolves.toBe(t('profileInformation.addressDescriptionNoAddress'));
       // click add button to create an address
-      await clickElement(getSelector('addButton'));
-      expect(() => getElement(getSelector('addButton'))).toThrow();
+      await clickElement(getCommonElementSelector(dataType, 'addButton'));
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'addButton'))
+      ).toThrow();
       await setValuesToInputs(testTools, validAddressValues);
 
       // create the graphQL response
@@ -442,7 +430,7 @@ describe('<MultiItemAddressRow /> ', () => {
       responses.push({ updatedProfileData: profileWithAddress });
 
       const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getSelector('editNotifications'),
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
         value: t('notification.saveSuccess'),
       };
 
@@ -452,7 +440,9 @@ describe('<MultiItemAddressRow /> ', () => {
       });
 
       await verifyValuesFromElements(testTools, validAddressValues);
-      expect(() => getElement(getSelector('addButton'))).toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'addButton'))
+      ).toThrow();
       verifyTitleAndDescription(testTools, 'unverifiedUserWithOneAddress');
     });
   });
@@ -479,58 +469,58 @@ describe('<MultiItemAddressRow /> ', () => {
         updatedProfileData: profileWithoutAddresses,
       });
 
-      expect(() => getElement(getSelector('addButton'))).toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'addButton'))
+      ).toThrow();
       // click remove button, confirm removal and handle error
-      await clickElement(getSelector('removeButton'));
-      await waitForElement(getSelector('confirmRemovalButton'));
-      await clickElement(getSelector('confirmRemovalButton'));
+      await clickElement(getCommonElementSelector(dataType, 'removeButton'));
+      await waitForElement(
+        getCommonElementSelector(dataType, 'confirmRemovalButton')
+      );
+      await clickElement(
+        getCommonElementSelector(dataType, 'confirmRemovalButton')
+      );
 
       await waitForElementAndValue({
-        selector: getSelector('editNotifications'),
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
         value: t('notification.removeError'),
       });
 
       // start removal again
-      await clickElement(getSelector('removeButton'));
-      await waitForElement(getSelector('confirmRemovalButton'));
-      await clickElement(getSelector('confirmRemovalButton'));
+      await clickElement(getCommonElementSelector(dataType, 'removeButton'));
+      await waitForElement(
+        getCommonElementSelector(dataType, 'confirmRemovalButton')
+      );
+      await clickElement(
+        getCommonElementSelector(dataType, 'confirmRemovalButton')
+      );
 
       await waitForElementAndValue({
-        selector: getSelector('editNotifications'),
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
         value: t('notification.removeSuccess'),
       });
       // item is removed and also remove button
-      expect(() => getElement(getSelector('removeButton'))).toThrow();
-      expect(() => getElement(getSelector('addButton'))).not.toThrow();
-      expect(() => getElement(getSelector('noDataText'))).not.toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'removeButton'))
+      ).toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'addButton'))
+      ).not.toThrow();
+      expect(() =>
+        getElement(getCommonElementSelector(dataType, 'noDataText'))
+      ).not.toThrow();
     });
   });
   it(`When a new address is cancelled, nothing is saved and
       add button is shown and a text about no addresses.
       Focus is returned to add button`, async () => {
     await act(async () => {
-      const profileWithoutAddresses = getProfileWithoutAddresses();
-      const {
-        clickElement,
-        getElement,
-        getTextOrInputValue,
-        waitForElement,
-      } = await initTests(profileWithoutAddresses);
-
-      await clickElement(getSelector('addButton'));
-      await waitForElement(getSelector('cancelButton'));
-      await expect(
-        getTextOrInputValue(getFieldValueSelector('address', true))
-      ).resolves.toBe('');
-      expect(() => getElement(getSelector('removeButton'))).toThrow();
-      expect(() => getElement(getSelector('addButton'))).toThrow();
-
-      await clickElement(getSelector('cancelButton'));
-
-      expect(() => getElement(getSelector('addButton'))).not.toThrow();
-      expect(() => getElement(getSelector('noDataText'))).not.toThrow();
-      // focus is set to add button
-      await waitForElementFocus(() => getElement(getSelector('addButton')));
+      const testTools = await initTests(getProfileWithoutAddresses());
+      await testAddWithCancel(
+        dataType,
+        getFieldValueSelector('address', true),
+        testTools
+      );
     });
   });
   it('When user is logged in with suomi.fi, there is one additional description and different title.', async () => {
@@ -541,7 +531,7 @@ describe('<MultiItemAddressRow /> ', () => {
       );
       const { clickElement } = testTools;
       verifyTitleAndDescription(testTools, 'verifiedUserWithoutAddress');
-      await clickElement(getSelector('addButton'));
+      await clickElement(getCommonElementSelector(dataType, 'addButton'));
       // same title + text in edit mode
       verifyTitleAndDescription(testTools, 'verifiedUserWithoutAddress');
     });
