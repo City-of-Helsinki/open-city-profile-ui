@@ -13,6 +13,7 @@ import {
   ServiceConnectionsRoot,
 } from '../../../graphql/typings';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
+import contentStyles from '../../../common/cssHelpers/content.module.css';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
@@ -177,30 +178,32 @@ function DeleteProfile(): React.ReactElement {
         />
       </div>
       <div className={commonFormStyles['uneditable-box-content']}>
-        {dataLoadState === loadingLoadState ||
-        dataLoadState === errorLoadState ? (
-          <LoadStateIndicator />
-        ) : (
-          <StyledButton
-            type="button"
-            onClick={handleDeleteClick}
-            id={removeButtonId}
-          >
-            {t('deleteProfile.delete')}
-          </StyledButton>
-        )}
-        <ConfirmationModal
-          isOpen={showConfirmationModal}
-          onClose={handleConfirmationModal}
-          onConfirm={handleProfileDelete}
-          content={() => <ModalServicesContent data={serviceConnections} />}
-          title={t('deleteProfileModal.title')}
-          actionButtonText={t('deleteProfileModal.delete')}
-        />
-        <DeleteProfileError
-          error={resultError}
-          onClose={() => setResultError(undefined)}
-        />
+        <div className={contentStyles['common-child-vertical-spacing']}>
+          {dataLoadState === loadingLoadState ||
+          dataLoadState === errorLoadState ? (
+            <LoadStateIndicator />
+          ) : (
+            <StyledButton
+              type="button"
+              onClick={handleDeleteClick}
+              id={removeButtonId}
+            >
+              {t('deleteProfile.delete')}
+            </StyledButton>
+          )}
+          <ConfirmationModal
+            isOpen={showConfirmationModal}
+            onClose={handleConfirmationModal}
+            onConfirm={handleProfileDelete}
+            content={() => <ModalServicesContent data={serviceConnections} />}
+            title={t('deleteProfileModal.title')}
+            actionButtonText={t('deleteProfileModal.delete')}
+          />
+          <DeleteProfileError
+            error={resultError}
+            onClose={() => setResultError(undefined)}
+          />
+        </div>
       </div>
     </ProfileSection>
   );

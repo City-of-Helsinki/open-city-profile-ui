@@ -24,6 +24,10 @@
   background: var(--color-black-ultra-light);
 }
 
+.common-child-vertical-spacing > *:not(:first-child) {
+  margin-top: var(--spacing-m);
+}
+
 @media (min-width: 600px) {
   .common-content-area {
     --content-horizontal-padding: var(--spacing-xl);
