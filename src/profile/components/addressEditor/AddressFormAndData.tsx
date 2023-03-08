@@ -26,6 +26,7 @@ import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikEr
 import { RequiredFieldsNote } from '../../../common/requiredFieldsNote/RequiredFieldsNote';
 import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
 import AddButton from '../addButton/AddButton';
+import EditingNotifications from '../editingNotifications/EditingNotifications';
 
 type FormikValues = AddressValue;
 
@@ -45,6 +46,7 @@ function AddressFormAndData({
     editButtonId,
     removeButtonId,
     dataType,
+    notificationContent,
   } = editHandler;
   const { t, i18n } = useTranslation();
   const userIsVerified = !!useVerifiedPersonalInformation();
@@ -87,6 +89,10 @@ function AddressFormAndData({
         >
           <AddButton editHandler={editHandler} />
         </div>
+        <EditingNotifications
+          content={notificationContent.content}
+          dataType={dataType}
+        />
       </div>
     );
   }
@@ -216,6 +222,12 @@ function AddressFormAndData({
                 formikProps={formikProps}
                 dataType={dataType}
               />
+              <EditingNotifications
+                content={notificationContent.content}
+                dataType={dataType}
+                noSpacing
+                topSpacingMobile
+              />
               <FormButtons
                 handler={actionHandler}
                 disabled={disableButtons}
@@ -284,6 +296,10 @@ function AddressFormAndData({
           <SaveIndicator action={currentAction} testId={testId} />
         </div>
       </div>
+      <EditingNotifications
+        content={notificationContent.content}
+        dataType={dataType}
+      />
     </div>
   );
 }

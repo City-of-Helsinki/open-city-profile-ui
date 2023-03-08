@@ -26,6 +26,7 @@ import {
   splitNumberAndCountryCallingCode,
 } from '../../../i18n/countryCallingCodes.utils';
 import AddButton from '../addButton/AddButton';
+import EditingNotifications from '../editingNotifications/EditingNotifications';
 
 type PhoneFormikValue = { number: string; countryCallingCode: string };
 
@@ -45,6 +46,7 @@ function PhoneNumberFormAndData({
     editButtonId,
     removeButtonId,
     dataType,
+    notificationContent,
   } = editHandler;
   const { t, i18n } = useTranslation();
   const title = t('profileInformation.phone');
@@ -55,26 +57,33 @@ function PhoneNumberFormAndData({
 
   if (!hasData()) {
     return (
-      <div className={containerStyle}>
-        <div
-          className={classNames(
-            flexBoxColumnsStyle,
-            commonFormStyles['editor-title-and-value']
-          )}
-        >
-          <h3 className={headingStyle}>{title}</h3>
-          <span
-            data-testid={`${dataType}-no-data`}
-            className={commonFormStyles['text-value']}
+      <div className={flexBoxColumnsStyle}>
+        <div className={containerStyle}>
+          <div
+            className={classNames(
+              flexBoxColumnsStyle,
+              commonFormStyles['editor-title-and-value']
+            )}
           >
-            {t('profileInformation.noPhone')}
-          </span>
-        </div>
-        <div className={commonFormStyles['edit-buttons']}>
-          <div className={commonFormStyles['edit-buttons-container']}>
-            <AddButton editHandler={editHandler} />
+            <h3 className={headingStyle}>{title}</h3>
+            <span
+              data-testid={`${dataType}-no-data`}
+              className={commonFormStyles['text-value']}
+            >
+              {t('profileInformation.noPhone')}
+            </span>
+          </div>
+          <div className={commonFormStyles['edit-buttons']}>
+            <div className={commonFormStyles['edit-buttons-container']}>
+              <AddButton editHandler={editHandler} />
+            </div>
           </div>
         </div>
+        <EditingNotifications
+          content={notificationContent.content}
+          dataType={dataType}
+          bottomSpacingDesktop
+        />
       </div>
     );
   }
@@ -189,6 +198,12 @@ function PhoneNumberFormAndData({
                     formikProps={formikProps}
                     dataType={dataType}
                   />
+                  <EditingNotifications
+                    content={notificationContent.content}
+                    dataType={dataType}
+                    noSpacing
+                    topSpacingMobile
+                  />
                   <FormButtons
                     handler={actionHandler}
                     disabled={disableButtons}
@@ -204,37 +219,44 @@ function PhoneNumberFormAndData({
     );
   }
   return (
-    <div className={classNames(containerStyle)}>
-      <div
-        className={classNames(
-          flexBoxColumnsStyle,
-          commonFormStyles['editor-title-and-value']
-        )}
-      >
-        <h3 className={headingStyle}>{title}</h3>
-        <span
-          className={commonFormStyles['text-value']}
-          data-testid={`${testId}-value`}
+    <div className={flexBoxColumnsStyle}>
+      <div className={classNames(containerStyle)}>
+        <div
+          className={classNames(
+            flexBoxColumnsStyle,
+            commonFormStyles['editor-title-and-value']
+          )}
         >
-          {inputValue || '–'}
-        </span>
+          <h3 className={headingStyle}>{title}</h3>
+          <span
+            className={commonFormStyles['text-value']}
+            data-testid={`${testId}-value`}
+          >
+            {inputValue || '–'}
+          </span>
+        </div>
+        <div className={commonFormStyles['edit-buttons']}>
+          <EditButtons
+            handler={actionHandler}
+            actions={{
+              removable: true,
+              primary,
+              setPrimary: false,
+            }}
+            editButtonId={editButtonId}
+            removeButtonId={removeButtonId}
+            disabled={disableButtons}
+            testId={testId}
+            ariaLabels={ariaLabels}
+          />
+        </div>
+        <SaveIndicator action={currentAction} testId={testId} />
       </div>
-      <div className={commonFormStyles['edit-buttons']}>
-        <EditButtons
-          handler={actionHandler}
-          actions={{
-            removable: true,
-            primary,
-            setPrimary: false,
-          }}
-          editButtonId={editButtonId}
-          removeButtonId={removeButtonId}
-          disabled={disableButtons}
-          testId={testId}
-          ariaLabels={ariaLabels}
-        />
-      </div>
-      <SaveIndicator action={currentAction} testId={testId} />
+      <EditingNotifications
+        content={notificationContent.content}
+        dataType={dataType}
+        bottomSpacingDesktop
+      />
     </div>
   );
 }

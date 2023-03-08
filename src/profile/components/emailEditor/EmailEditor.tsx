@@ -115,8 +115,12 @@ function EmailEditor(): React.ReactElement | null {
                     formikProps={formikProps}
                     dataType={dataType}
                   />
-                  <EditingNotifications content={content} dataType={dataType} />
                 </div>
+                <EditingNotifications
+                  content={content}
+                  dataType={dataType}
+                  noSpacing
+                />
                 <FormButtons
                   handler={actionChecker}
                   disabled={!!saving}
@@ -174,7 +178,9 @@ function EmailEditor(): React.ReactElement | null {
           )}
         </div>
       </div>
-
+      {!showVerifyEmailInfo && (
+        <EditingNotifications content={content} dataType={dataType} />
+      )}
       {showVerifyEmailInfo && (
         <div className={styles['notification-wrapper']}>
           <Notification
@@ -185,9 +191,6 @@ function EmailEditor(): React.ReactElement | null {
             {t('profileInformation.verifyEmailText')}
           </Notification>
         </div>
-      )}
-      {!willSendEmailVerificationCode && (
-        <EditingNotifications content={content} dataType={dataType} />
       )}
     </div>
   );

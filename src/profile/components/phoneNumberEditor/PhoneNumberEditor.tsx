@@ -5,7 +5,6 @@ import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import { EditDataType } from '../../helpers/editData';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
-import EditingNotifications from '../editingNotifications/EditingNotifications';
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import PhoneNumberFormAndData from './PhoneNumberFormAndData';
 
@@ -17,7 +16,7 @@ const PhoneNumberEditor = (): React.ReactElement | null => {
     disableEditButtons: false,
   });
 
-  const { noticationContent, confirmationModalProps } = editHandler;
+  const { confirmationModalProps } = editHandler;
   return (
     <>
       <div className={commonFormStyles['editor-description-container']}>
@@ -25,10 +24,6 @@ const PhoneNumberEditor = (): React.ReactElement | null => {
       </div>
       <PhoneNumberFormAndData editHandler={editHandler} />
       <AccessibilityFieldHelpers dataType={dataType} />
-      <EditingNotifications
-        content={noticationContent.content}
-        dataType={dataType}
-      />
       <ConfirmationModal {...confirmationModalProps} />
     </>
   );

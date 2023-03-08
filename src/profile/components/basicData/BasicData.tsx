@@ -127,6 +127,8 @@ function BasicData(): React.ReactElement | null {
                 <EditingNotifications
                   content={content}
                   dataType={basicDataType}
+                  noSpacing
+                  topSpacingMobile
                 />
                 <FormButtons
                   handler={actionHandler}

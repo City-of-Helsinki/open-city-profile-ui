@@ -144,7 +144,11 @@ function DeleteProfile(): React.ReactElement {
     />
   );
   const ServiceConnectionLoadError = () => (
-    <Notification label={t('deleteProfile.deleteFailed')} type={'error'}>
+    <>
+      <Notification
+        label={t('deleteProfile.deleteFailed')}
+        type={'error'}
+      ></Notification>
       <StyledButton
         type="button"
         onClick={() => loadServiceConnections(true)}
@@ -152,7 +156,7 @@ function DeleteProfile(): React.ReactElement {
       >
         {t('notification.tryAgain')}
       </StyledButton>
-    </Notification>
+    </>
   );
   const LoadStateIndicator = () =>
     dataLoadState === errorLoadState ? (

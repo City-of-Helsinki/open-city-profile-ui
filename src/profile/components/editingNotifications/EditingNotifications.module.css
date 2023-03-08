@@ -7,3 +7,21 @@
 .wrapper:focus {
   outline: none;
 }
+.bottom-padding {
+  padding: 0 0 var(--spacing-m);
+}
+.no-padding {
+  padding: 0;
+}
+
+@media (max-width: 767.98px) {
+  .top-padding-mobile {
+    padding: var(--spacing-m) 0 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .bottom-padding-desktop {
+    padding: 0 0 var(--spacing-m);
+  }
+}
