@@ -1,6 +1,7 @@
 import React from 'react';
 import { act } from '@testing-library/react';
 import countries from 'i18n-iso-countries';
+import fetchMock from 'jest-fetch-mock';
 
 import {
   cloneProfileAndProvideManipulationFunctions,
@@ -235,6 +236,7 @@ describe('<AddressEditor /> ', () => {
   );
 
   const usedAddressNode = addressNodes[0];
+  const saveSuccessMessage = t('notification.saveSuccess');
 
   it("renders all user's addresses - also in edit mode. Add button is not shown.", async () => {
     await act(async () => {
@@ -280,7 +282,7 @@ describe('<AddressEditor /> ', () => {
 
       const waitForAfterSaveNotification: WaitForElementAndValueProps = {
         selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: t('notification.saveSuccess'),
+        value: saveSuccessMessage,
       };
       // submit and wait for "saving" and 'saveSuccess' notifications
       await submit({
@@ -327,6 +329,77 @@ describe('<AddressEditor /> ', () => {
       });
       // values are reset to previous values
       await verifyValuesFromElements(testTools, initialAddressInProfile);
+    });
+  });
+  it('When user saves without making changes, data is not sent, but save success is shown.', async () => {
+    await act(async () => {
+      const testTools = await initTests();
+      // initial profile has been fetched
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      const { clickElement, getElement, waitForElementAndValue } = testTools;
+      await clickElement(getCommonElementSelector(dataType, 'editButton'));
+      await setValuesToInputs(testTools, usedAddressNode);
+
+      await clickElement(submitButtonSelector);
+
+      await waitForElementAndValue({
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
+        value: saveSuccessMessage,
+      });
+
+      // focus is set to edit button
+      await waitForElementFocus(() =>
+        getElement(getCommonElementSelector(dataType, 'editButton'))
+      );
+      // same value is still shown
+      await verifyValuesFromElements(testTools, usedAddressNode);
+      // no new fetches have been made
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+    });
+  });
+  it('When saving fails twice, the second one does result in save success, because data did not change.', async () => {
+    await act(async () => {
+      const testTools = await initTests();
+      const { clickElement, submit } = testTools;
+      await clickElement(getCommonElementSelector(dataType, 'editButton'));
+      await setValuesToInputs(testTools, newAddressValues);
+
+      // add the graphQL response
+      responses.push(
+        {
+          errorType: 'networkError',
+        },
+        {
+          errorType: 'networkError',
+        },
+        { updatedProfileData: getProfileWithAddress(validAddressValues) }
+      );
+
+      const waitForAfterSaveErrorNotification: WaitForElementAndValueProps = {
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
+        value: t('notification.saveError'),
+      };
+
+      // submit and wait for saving and error notifications
+      await submit({
+        waitForAfterSaveNotification: waitForAfterSaveErrorNotification,
+        skipDataCheck: true,
+      });
+      await submit({
+        waitForAfterSaveNotification: waitForAfterSaveErrorNotification,
+        skipDataCheck: true,
+      });
+
+      const waitForAfterSaveNotification: WaitForElementAndValueProps = {
+        selector: getCommonElementSelector(dataType, 'editNotifications'),
+        value: saveSuccessMessage,
+      };
+      // submit and wait for "saving" and 'saveSuccess' notifications
+      await submit({
+        waitForAfterSaveNotification,
+      });
+      // new values are shown
+      await verifyValuesFromElements(testTools, validAddressValues);
     });
   });
   fields.forEach(async field => {
@@ -431,7 +504,7 @@ describe('<AddressEditor /> ', () => {
 
       const waitForAfterSaveNotification: WaitForElementAndValueProps = {
         selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: t('notification.saveSuccess'),
+        value: saveSuccessMessage,
       };
 
       await submit({
