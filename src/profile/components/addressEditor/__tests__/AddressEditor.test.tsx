@@ -1,7 +1,6 @@
 import React from 'react';
 import { act } from '@testing-library/react';
 import countries from 'i18n-iso-countries';
-import fetchMock from 'jest-fetch-mock';
 
 import {
   cloneProfileAndProvideManipulationFunctions,
@@ -13,11 +12,7 @@ import {
   renderComponentWithMocksAndContexts,
   TestTools,
   cleanComponentMocks,
-  WaitForElementAndValueProps,
   ElementSelector,
-  submitButtonSelector,
-  waitForElementAttributeValue,
-  waitForElementFocus,
 } from '../../../../common/test/testingLibraryTools';
 import { AddressNode, ProfileData } from '../../../../graphql/typings';
 import {
@@ -30,13 +25,26 @@ import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChil
 import getAddressesFromNode from '../../../helpers/getAddressesFromNode';
 import AddressEditor from '../AddressEditor';
 import {
-  getCommonElementSelector,
-  testAddWithCancel,
+  DataSource,
+  getElementSelectors,
+  getNotificationMessages,
+  testDataIsRendered,
+  checkAddButton,
+  testEditingItem,
+  testAddingItem,
+  testEditingItemFailsAndCancelResets,
+  testInvalidValues,
+  testDoubleFailing,
+  testUnchangedDataIsNotSent,
+  testRemovingItem,
+  testAddingItemWithCancel,
+  CommonTestSuite,
+  ValidationTest,
 } from '../../../../common/test/commonTestRuns';
 
 describe('<AddressEditor /> ', () => {
   type AddressValueKey = keyof AddressValue;
-  type DataSource = Partial<AddressValue | AddressNode>;
+  type AddressDataSource = Partial<AddressValue | AddressNode>;
   const responses: MockedResponse[] = [];
   const initialProfile = getMyProfile().myProfile as ProfileData;
   const dataType: EditDataType = 'addresses';
@@ -50,9 +58,6 @@ describe('<AddressEditor /> ', () => {
       </RenderChildrenWhenDataIsComplete>
     );
   };
-
-  // test only node at index 0;
-  const testIndex = 0;
 
   const validAddressValues: AddressValue = {
     address: 'test-address',
@@ -115,7 +120,7 @@ describe('<AddressEditor /> ', () => {
   };
 
   const convertFieldValue = (
-    source: DataSource,
+    source: AddressDataSource,
     field: AddressValueKey
   ): string => {
     const value = source[field];
@@ -131,14 +136,16 @@ describe('<AddressEditor /> ', () => {
   const verifyValuesFromElements = async (
     testTools: TestTools,
     source: DataSource,
-    targetIsInput = false,
-    index = 0
+    targetIsInput = false
   ) => {
     const { getTextOrInputValue } = testTools;
     for (const field of fields) {
-      const expectedValue = convertFieldValue(source, field);
+      const expectedValue = convertFieldValue(
+        source as AddressDataSource,
+        field
+      );
       await expect(
-        getTextOrInputValue(getFieldValueSelector(field, targetIsInput, index))
+        getTextOrInputValue(getFieldValueSelector(field, targetIsInput, 0))
       ).resolves.toBe(expectedValue);
     }
   };
@@ -149,14 +156,14 @@ describe('<AddressEditor /> ', () => {
   ) => {
     const { setInputValue, comboBoxSelector, getTextOrInputValue } = testTools;
     for (const field of fields) {
-      const newValue = convertFieldValue(source, field);
+      const newValue = convertFieldValue(source as AddressDataSource, field);
       if (field === 'countryCode') {
         // comboBoxSelector will throw an error if attempting to set a value which is already set
         const currentValue = await getTextOrInputValue(
           getFieldValueSelector(field, true)
         );
         if (currentValue !== newValue) {
-          await comboBoxSelector(`${dataType}-${testIndex}-${field}`, newValue);
+          await comboBoxSelector(`${dataType}-0-${field}`, newValue);
         }
       } else {
         await setInputValue({
@@ -236,382 +243,169 @@ describe('<AddressEditor /> ', () => {
   );
 
   const usedAddressNode = addressNodes[0];
-  const saveSuccessMessage = t('notification.saveSuccess');
 
-  it("renders all user's addresses - also in edit mode. Add button is not shown.", async () => {
+  const getUpdatedProfile = (newValues: AddressValue, profile?: ProfileData) =>
+    cloneProfileAndProvideManipulationFunctions(profile || initialProfile)
+      .edit(dataType, { ...initialAddressInProfile, ...newValues })
+      .getProfile();
+
+  const commonTestProps: Exclude<CommonTestSuite, 'sentDataPicker'> = {
+    selectors: getElementSelectors(dataType),
+    valueSetter: setValuesToInputs,
+    valueVerifier: verifyValuesFromElements,
+    responses,
+    notificationMessages: getNotificationMessages(t),
+  };
+
+  const profileWithoutAddresses = getProfileWithoutAddresses();
+  const profileWithAddress = getProfileWithAddress(validAddressValues);
+
+  it("renders user's addresses - also in edit mode. Add button is not shown when address exists.", async () => {
     await act(async () => {
       const testTools = await initTests();
-      const { clickElement, getElement } = testTools;
-      expect(addressNodes).toHaveLength(2);
-      await verifyValuesFromElements(testTools, usedAddressNode, false, 0);
-      // goto edit mode
-      await clickElement(getCommonElementSelector(dataType, 'editButton', 0));
-      await verifyValuesFromElements(testTools, usedAddressNode, true, 0);
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'addButton'))
-      ).toThrow();
+      const testSuite = {
+        testTools,
+        formData: usedAddressNode,
+        ...commonTestProps,
+      };
+      await testDataIsRendered(testSuite);
+      checkAddButton(testSuite, false);
       verifyTitleAndDescription(testTools, 'unverifiedUserWithOneAddress');
     });
   });
 
-  it(`sends updated data and returns to view mode when saved. 
-      Shows save notifications. 
-      Focus is returned to edit button`, async () => {
+  it('sends new data and returns to view mode when saved', async () => {
     await act(async () => {
       const testTools = await initTests();
-      const { clickElement, submit, getElement } = testTools;
-      await clickElement(getCommonElementSelector(dataType, 'editButton'));
-      await setValuesToInputs(testTools, newAddressValues);
-
-      // create graphQL response for the update
-      const updatedProfileData = cloneProfileAndProvideManipulationFunctions(
-        initialProfile
-      )
-        .edit(dataType, { ...initialAddressInProfile, ...newAddressValues })
-        .getProfile();
-
-      // add the graphQL response
-      responses.push({
-        updatedProfileData,
+      await testEditingItem({
+        testTools,
+        formData: newAddressValues,
+        assumedResponse: getUpdatedProfile(newAddressValues),
+        sentDataPicker: variables =>
+          (variables.input.profile.updateAddresses as DataSource[])[0],
+        ...commonTestProps,
       });
-
-      const waitForOnSaveNotification: WaitForElementAndValueProps = {
-        selector: { testId: `${dataType}-${testIndex}-save-indicator` },
-        value: t('notification.saving'),
-      };
-
-      const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: saveSuccessMessage,
-      };
-      // submit and wait for "saving" and 'saveSuccess' notifications
-      await submit({
-        waitForOnSaveNotification,
-        waitForAfterSaveNotification,
-      });
-      // verify new values are visible
-      await verifyValuesFromElements(testTools, newAddressValues);
-      // focus is set to edit button
-      await waitForElementFocus(() =>
-        getElement(getCommonElementSelector(dataType, 'editButton'))
-      );
     });
   });
 
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {
     await act(async () => {
       const testTools = await initTests();
-      const { clickElement, submit } = testTools;
-      await clickElement(getCommonElementSelector(dataType, 'editButton'));
-      await setValuesToInputs(testTools, newAddressValues);
-
-      // add the graphQL response
-      responses.push({
-        errorType: 'networkError',
+      await testEditingItemFailsAndCancelResets({
+        testTools,
+        formData: newAddressValues,
+        initialValues: usedAddressNode,
+        ...commonTestProps,
       });
+    });
+  });
 
-      const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: t('notification.saveError'),
-      };
-
-      // submit and wait for saving and error notifications
-      await submit({
-        waitForAfterSaveNotification,
-        skipDataCheck: true,
+  it('When saving fails twice, the second one does result in save success, because data did not change.', async () => {
+    await act(async () => {
+      const testTools = await initTests();
+      await testDoubleFailing({
+        testTools,
+        formData: newAddressValues,
+        initialValues: usedAddressNode,
+        assumedResponse: getUpdatedProfile(newAddressValues),
+        ...commonTestProps,
       });
-
-      // input fields are still rendered
-      await verifyValuesFromElements(testTools, newAddressValues, true);
-      // cancel edits
-      await clickElement({
-        testId: `${dataType}-${testIndex}-cancel-button`,
-      });
-      // values are reset to previous values
-      await verifyValuesFromElements(testTools, initialAddressInProfile);
     });
   });
   it('When user saves without making changes, data is not sent, but save success is shown.', async () => {
     await act(async () => {
       const testTools = await initTests();
-      // initial profile has been fetched
-      expect(fetchMock).toHaveBeenCalledTimes(1);
-      const { clickElement, getElement, waitForElementAndValue } = testTools;
-      await clickElement(getCommonElementSelector(dataType, 'editButton'));
-      await setValuesToInputs(testTools, usedAddressNode);
-
-      await clickElement(submitButtonSelector);
-
-      await waitForElementAndValue({
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: saveSuccessMessage,
+      await testUnchangedDataIsNotSent({
+        testTools,
+        formData: usedAddressNode,
+        initialValues: usedAddressNode,
+        ...commonTestProps,
       });
-
-      // focus is set to edit button
-      await waitForElementFocus(() =>
-        getElement(getCommonElementSelector(dataType, 'editButton'))
-      );
-      // same value is still shown
-      await verifyValuesFromElements(testTools, usedAddressNode);
-      // no new fetches have been made
-      expect(fetchMock).toHaveBeenCalledTimes(1);
     });
   });
-  it('When saving fails twice, the second one does result in save success, because data did not change.', async () => {
+
+  it('invalid values are indicated and setting a valid value removes error', async () => {
     await act(async () => {
       const testTools = await initTests();
-      const { clickElement, submit } = testTools;
-      await clickElement(getCommonElementSelector(dataType, 'editButton'));
-      await setValuesToInputs(testTools, newAddressValues);
 
-      // add the graphQL response
-      responses.push(
+      const testRuns: ValidationTest[] = fields.map(prop => ({
+        prop,
+        value: invalidAddressValues[prop],
+        inputSelector: getFieldValueSelector(prop, true),
+        errorSelector: { id: `${dataType}-0-${prop}-error` },
+      }));
+
+      await testInvalidValues(
         {
-          errorType: 'networkError',
+          testTools,
+          formData: usedAddressNode,
+          initialValues: initialProfile,
+          ...commonTestProps,
         },
-        {
-          errorType: 'networkError',
-        },
-        { updatedProfileData: getProfileWithAddress(validAddressValues) }
+        testRuns
       );
-
-      const waitForAfterSaveErrorNotification: WaitForElementAndValueProps = {
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: t('notification.saveError'),
-      };
-
-      // submit and wait for saving and error notifications
-      await submit({
-        waitForAfterSaveNotification: waitForAfterSaveErrorNotification,
-        skipDataCheck: true,
-      });
-      await submit({
-        waitForAfterSaveNotification: waitForAfterSaveErrorNotification,
-        skipDataCheck: true,
-      });
-
-      const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: saveSuccessMessage,
-      };
-      // submit and wait for "saving" and 'saveSuccess' notifications
-      await submit({
-        waitForAfterSaveNotification,
-      });
-      // new values are shown
-      await verifyValuesFromElements(testTools, validAddressValues);
     });
   });
-  fields.forEach(async field => {
-    it(`invalid value for ${field} is indicated and setting a valid value removes the error`, async () => {
-      const testTools = await initTests();
-      const {
-        clickElement,
-        setInputValue,
-        getElement,
-        comboBoxSelector,
-      } = testTools;
-      await act(async () => {
-        const fieldValueSelector = getFieldValueSelector(field, true);
-        await clickElement(getCommonElementSelector(dataType, 'editButton'));
-        const elementGetter = () => getElement(fieldValueSelector);
-        const errorElementGetter = () =>
-          getElement({ id: `${dataType}-${testIndex}-${field}-error` });
-        const errorListElementGetter = () =>
-          getElement({ testId: `${dataType}-error-list` });
 
-        const invalidValues = {
-          ...validAddressValues,
-          ...{ [field]: invalidAddressValues[field] },
-        };
-        // set invalid values
-        if (field === 'countryCode') {
-          await comboBoxSelector(
-            `addresses-${testIndex}-countryCode`,
-            invalidValues.countryCode
-              ? countryList[invalidValues.countryCode]
-              : ''
-          );
-        } else {
-          await setInputValue({
-            selector: getFieldValueSelector(field, true),
-            newValue: invalidValues[field],
-          });
-        }
-        // submit also validates the form
-        await clickElement(submitButtonSelector);
-        await waitForElementAttributeValue(elementGetter, 'aria-invalid', true);
-        // error element and list are found
-        expect(errorElementGetter).not.toThrow();
-        expect(errorListElementGetter).not.toThrow();
-        // set valid value
-        if (field === 'countryCode') {
-          await comboBoxSelector(
-            `addresses-${testIndex}-countryCode`,
-            countryList[validAddressValues.countryCode]
-          );
-        } else {
-          await setInputValue({
-            selector: getFieldValueSelector(field, true),
-            newValue: validAddressValues[field],
-          });
-        }
-        await waitForElementAttributeValue(
-          elementGetter,
-          'aria-invalid',
-          false
-        );
-        // error element and list are not found
-        expect(errorElementGetter).toThrow();
-        expect(errorListElementGetter).toThrow();
-      });
-    });
-  });
   it(`When there is no address, the add button is rendered and an address can be added. 
       Add button is not shown after it has been clicked and address is saved.`, async () => {
     await act(async () => {
-      const profileWithoutAddresses = getProfileWithoutAddresses();
       const testTools = await initTests(profileWithoutAddresses);
-      const {
-        clickElement,
-        getElement,
-        submit,
-        getTextOrInputValue,
-      } = testTools;
-
       verifyTitleAndDescription(testTools, 'unverifiedUserWithNoAddress');
-      // edit button is not rendered
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'editButton'))
-      ).toThrow();
-
-      // info text is shown instead of an address
-      await expect(
-        getTextOrInputValue(getCommonElementSelector(dataType, 'noDataText'))
-      ).resolves.toBe(t('profileInformation.addressDescriptionNoAddress'));
-      // click add button to create an address
-      await clickElement(getCommonElementSelector(dataType, 'addButton'));
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'addButton'))
-      ).toThrow();
-      await setValuesToInputs(testTools, validAddressValues);
-
-      // create the graphQL response
-      const profileWithAddress = getProfileWithAddress(validAddressValues);
-
-      // add the graphQL response
-      responses.push({ updatedProfileData: profileWithAddress });
-
-      const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: saveSuccessMessage,
-      };
-
-      await submit({
-        skipDataCheck: true,
-        waitForAfterSaveNotification,
+      await testAddingItem({
+        testTools,
+        formData: validAddressValues,
+        assumedResponse: profileWithAddress,
+        sentDataPicker: variables =>
+          ((variables.input.profile
+            .addAddresses as unknown) as DataSource[])[0],
+        ...commonTestProps,
       });
-
-      await verifyValuesFromElements(testTools, validAddressValues);
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'addButton'))
-      ).toThrow();
       verifyTitleAndDescription(testTools, 'unverifiedUserWithOneAddress');
     });
   });
+
   it(`When removing an address, a confirmation modal is shown. 
       Remove error is handled and shown.
       When removal is complete, add button is shown and a text about no addresses.`, async () => {
     await act(async () => {
-      const profileWithoutAddresses = getProfileWithoutAddresses();
-      const profileWithAddress = getProfileWithAddress(validAddressValues);
-
-      const {
-        clickElement,
-        getElement,
-        waitForElementAndValue,
-        waitForElement,
-      } = await initTests(profileWithAddress);
-
-      // add error response
-      responses.push({
-        errorType: 'networkError',
+      const testTools = await initTests(profileWithAddress);
+      await testRemovingItem({
+        testTools,
+        assumedResponse: profileWithoutAddresses,
+        ...commonTestProps,
       });
-      // add the graphQL response
-      responses.push({
-        updatedProfileData: profileWithoutAddresses,
-      });
-
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'addButton'))
-      ).toThrow();
-      // click remove button, confirm removal and handle error
-      await clickElement(getCommonElementSelector(dataType, 'removeButton'));
-      await waitForElement(
-        getCommonElementSelector(dataType, 'confirmRemovalButton')
-      );
-      await clickElement(
-        getCommonElementSelector(dataType, 'confirmRemovalButton')
-      );
-
-      await waitForElementAndValue({
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: t('notification.removeError'),
-      });
-
-      // start removal again
-      await clickElement(getCommonElementSelector(dataType, 'removeButton'));
-      await waitForElement(
-        getCommonElementSelector(dataType, 'confirmRemovalButton')
-      );
-      await clickElement(
-        getCommonElementSelector(dataType, 'confirmRemovalButton')
-      );
-
-      await waitForElementAndValue({
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: t('notification.removeSuccess'),
-      });
-      // item is removed and also remove button
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'removeButton'))
-      ).toThrow();
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'addButton'))
-      ).not.toThrow();
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'noDataText'))
-      ).not.toThrow();
     });
   });
   it(`When a new address is cancelled, nothing is saved and
       add button is shown and a text about no addresses.
       Focus is returned to add button`, async () => {
     await act(async () => {
-      const testTools = await initTests(getProfileWithoutAddresses());
-      await testAddWithCancel(
-        dataType,
-        getFieldValueSelector('address', true),
-        testTools
+      const testTools = await initTests(profileWithoutAddresses);
+      await testAddingItemWithCancel(
+        {
+          testTools,
+          formData: validAddressValues,
+          ...commonTestProps,
+        },
+        false
       );
     });
   });
   it('When user is logged in with suomi.fi, there is one additional description and different title.', async () => {
     await act(async () => {
-      const profileWithoutAddresses = getProfileWithoutAddresses();
       const testTools = await initTestsWithVerifiedUser(
         profileWithoutAddresses
       );
       const { clickElement } = testTools;
       verifyTitleAndDescription(testTools, 'verifiedUserWithoutAddress');
-      await clickElement(getCommonElementSelector(dataType, 'addButton'));
+      await clickElement(commonTestProps.selectors.addButton);
       // same title + text in edit mode
       verifyTitleAndDescription(testTools, 'verifiedUserWithoutAddress');
     });
   });
   it('If verified user has an addresses, title and description are different than without addresses.', async () => {
     await act(async () => {
-      const profileWithAddress = getProfileWithAddress(validAddressValues);
       const testTools = await initTestsWithVerifiedUser(profileWithAddress);
       verifyTitleAndDescription(testTools, 'verifiedUserWithAddress');
     });
