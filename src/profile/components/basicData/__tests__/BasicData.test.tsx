@@ -9,11 +9,6 @@ import {
   renderComponentWithMocksAndContexts,
   TestTools,
   cleanComponentMocks,
-  WaitForElementAndValueProps,
-  ElementSelector,
-  submitButtonSelector,
-  waitForElementAttributeValue,
-  waitForElementFocus,
 } from '../../../../common/test/testingLibraryTools';
 import { ProfileData } from '../../../../graphql/typings';
 import BasicData from '../BasicData';
@@ -25,6 +20,17 @@ import { basicDataType, BasicDataValue } from '../../../helpers/editData';
 import i18n from '../../../../common/test/testi18nInit';
 import { getFormFields } from '../../../helpers/formProperties';
 import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
+import {
+  testDataIsRendered,
+  testEditingItemFailsAndCancelResets,
+  testEditingItem,
+  testInvalidValues,
+  DataSource,
+  ValidationTest,
+  getElementSelectors,
+  getNotificationMessages,
+  CommonTestSuite,
+} from '../../../../common/test/commonTestRuns';
 
 describe('<BasicData /> ', () => {
   const responses: MockedResponse[] = [];
@@ -40,7 +46,6 @@ describe('<BasicData /> ', () => {
     );
   };
   const t = i18n.getFixedT('fi');
-  const editButtonSelector: ElementSelector = { id: 'basic-data-edit-button' };
   let basicData: BasicDataValue;
 
   beforeEach(() => {
@@ -57,11 +62,14 @@ describe('<BasicData /> ', () => {
 
   // verify rendered data
   const verifyValues = async (
-    getTextOrInputValue: TestTools['getTextOrInputValue'],
-    source: Partial<BasicDataValue | ProfileData>,
+    testTools: TestTools,
+    source: DataSource,
     targetIsInput = false
   ) => {
-    const { firstName, nickname, lastName } = source;
+    const { getTextOrInputValue } = testTools;
+    const { firstName, nickname, lastName } = source as Partial<
+      BasicDataValue | ProfileData
+    >;
     const getSelector = (name: string): Record<string, string> =>
       targetIsInput
         ? { id: `${basicDataType}-${name}` }
@@ -78,22 +86,20 @@ describe('<BasicData /> ', () => {
   };
 
   // set new data to input fields
-  const setValues = async (
-    setInputValue: TestTools['setInputValue'],
-    source: Partial<BasicDataValue | ProfileData>
-  ) => {
-    const { firstName, nickname, lastName } = source;
+  const setValues = async (testTools: TestTools, source: DataSource) => {
+    const { setInputValue } = testTools;
+    const { firstName, nickname, lastName } = source as BasicDataValue;
     await setInputValue({
       selector: { id: 'basic-data-firstName' },
-      newValue: firstName as string,
+      newValue: firstName,
     });
     await setInputValue({
       selector: { id: 'basic-data-nickname' },
-      newValue: nickname as string,
+      newValue: nickname,
     });
     await setInputValue({
       selector: { id: 'basic-data-lastName' },
-      newValue: lastName as string,
+      newValue: lastName,
     });
   };
 
@@ -104,162 +110,100 @@ describe('<BasicData /> ', () => {
     return Promise.resolve(testTools);
   };
 
-  it("renders user's names - also in edit mode", async () => {
-    await act(async () => {
-      const { getTextOrInputValue, clickElement } = await initTests();
-      await verifyValues(getTextOrInputValue, initialProfile);
-      // goto edit mode
-      await clickElement(editButtonSelector);
-      await verifyValues(getTextOrInputValue, initialProfile, true);
-    });
-  });
-  it('sends new data and returns to view mode when saved', async () => {
-    // create graphQL response for the update
-    const updatedProfileData = cloneProfileAndProvideManipulationFunctions(
-      initialProfile
-    )
-      .setBasicData(basicData)
+  const getUpdatedProfile = (update: BasicDataValue) =>
+    cloneProfileAndProvideManipulationFunctions(initialProfile)
+      .setBasicData(update)
       .getProfile();
 
-    await act(async () => {
-      const {
-        clickElement,
-        setInputValue,
-        submit,
-        getTextOrInputValue,
-        getElement,
-      } = await initTests();
-      await clickElement(editButtonSelector);
-      await setValues(setInputValue, basicData);
-      // add the graphQL response
-      responses.push({
-        updatedProfileData,
-      });
+  const commonTestProps: CommonTestSuite = {
+    selectors: getElementSelectors(basicDataType),
+    valueSetter: setValues,
+    valueVerifier: verifyValues,
+    responses,
+    notificationMessages: getNotificationMessages(t),
+    sentDataPicker: variables => variables.input.profile as DataSource,
+  };
 
-      // when submitting, find these 2 notifications
-      const waitForOnSaveNotification: WaitForElementAndValueProps = {
-        selector: { testId: `basic-data-save-indicator` },
-        value: t('notification.saving'),
-      };
-      const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: { id: `basic-data-edit-notifications` },
-        value: t('notification.saveSuccess'),
-      };
-      // submit and wait for saving and success notifications
-      await submit({
-        waitForOnSaveNotification,
-        waitForAfterSaveNotification,
+  const originalData = {
+    firstName: initialProfile.firstName,
+    nickname: initialProfile.nickname,
+    lastName: initialProfile.lastName,
+  };
+
+  it("renders user's names - also in edit mode", async () => {
+    await act(async () => {
+      const testTools = await initTests();
+      await testDataIsRendered({
+        testTools,
+        formData: originalData,
+        ...commonTestProps,
       });
-      await verifyValues(getTextOrInputValue, basicData);
-      // focus is set to edit button
-      await waitForElementFocus(() => getElement(editButtonSelector));
     });
   });
+
+  it('sends new data and returns to view mode when saved', async () => {
+    await act(async () => {
+      const testTools = await initTests();
+      await testEditingItem({
+        testTools,
+        formData: basicData,
+        assumedResponse: getUpdatedProfile(basicData),
+        ...commonTestProps,
+      });
+    });
+  });
+
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {
     await act(async () => {
-      const {
-        clickElement,
-        setInputValue,
-        submit,
-        getTextOrInputValue,
-      } = await initTests();
-      await clickElement(editButtonSelector);
-      await setValues(setInputValue, basicData);
-      // add the graphQL response
-      responses.push({
-        errorType: 'networkError',
+      const testTools = await initTests();
+      await testEditingItemFailsAndCancelResets({
+        testTools,
+        formData: basicData,
+        initialValues: initialProfile,
+        ...commonTestProps,
       });
-
-      const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: { id: `basic-data-edit-notifications` },
-        value: t('notification.saveError'),
-      };
-      // submit and wait for saving and error notifications
-      await submit({
-        waitForAfterSaveNotification,
-        skipDataCheck: true,
-      });
-      // input fields are still rendered
-      await verifyValues(getTextOrInputValue, basicData, true);
-      await clickElement({
-        testId: 'basic-data-cancel-button',
-      });
-      // values are reset to previous values
-      await verifyValues(getTextOrInputValue, initialProfile);
     });
   });
+
   it('invalid values are indicated and setting a valid value removes error', async () => {
     await act(async () => {
-      const { clickElement, setInputValue, getElement } = await initTests();
+      const testTools = await initTests();
       const formFields = getFormFields(basicDataType);
-      await clickElement(editButtonSelector);
-      const testRuns = [
+      const testRuns: ValidationTest[] = [
         {
-          validData: basicData,
-          invalidData: { ...basicData, firstName: '' },
-          elementSelector: { id: 'basic-data-firstName' },
+          prop: 'firstName',
+          value: '',
+          inputSelector: { id: 'basic-data-firstName' },
           errorSelector: {
             id: 'basic-data-firstName-error',
           },
         },
         {
-          validData: basicData,
-          invalidData: { ...basicData, lastName: '' },
-          elementSelector: { id: 'basic-data-lastName' },
+          prop: 'lastName',
+          value: '',
+          inputSelector: { id: 'basic-data-lastName' },
           errorSelector: {
             id: 'basic-data-lastName-error',
           },
         },
         {
-          validData: basicData,
-          invalidData: {
-            ...basicData,
-            nickname: String('a').repeat(
-              (formFields.nickname.max as number) + 1
-            ),
-          },
-          elementSelector: { id: 'basic-data-nickname' },
+          prop: 'nickname',
+          value: String('a').repeat((formFields.nickname.max as number) + 1),
+          inputSelector: { id: 'basic-data-nickname' },
           errorSelector: {
             id: 'basic-data-nickname-error',
           },
         },
       ];
-
-      // cannot use forEach with async/await
-      for (const runProps of testRuns) {
-        const {
-          validData,
-          invalidData,
-          elementSelector,
-          errorSelector,
-        } = runProps;
-        const elementGetter = () => getElement(elementSelector);
-        const errorElementGetter = () => getElement(errorSelector);
-        const errorListElementGetter = () =>
-          getElement({ testId: `${basicDataType}-error-list` });
-
-        // set invalid values
-        await setValues(setInputValue, invalidData);
-        // submit also validates the form
-        await clickElement(submitButtonSelector);
-        await waitForElementAttributeValue(
-          elementGetter,
-          'aria-invalid',
-          'true'
-        );
-        // getElement throws if element is not found
-        expect(errorElementGetter).not.toThrow();
-        expect(errorListElementGetter).not.toThrow();
-        // set valid value
-        await setValues(setInputValue, validData);
-        await waitForElementAttributeValue(
-          elementGetter,
-          'aria-invalid',
-          'false'
-        );
-        expect(errorElementGetter).toThrow();
-        expect(errorListElementGetter).toThrow();
-      }
+      await testInvalidValues(
+        {
+          testTools,
+          formData: basicData,
+          initialValues: initialProfile,
+          ...commonTestProps,
+        },
+        testRuns
+      );
     });
   });
 });
