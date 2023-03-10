@@ -10,11 +10,7 @@ import {
   renderComponentWithMocksAndContexts,
   TestTools,
   cleanComponentMocks,
-  WaitForElementAndValueProps,
   ElementSelector,
-  submitButtonSelector,
-  waitForElementAttributeValue,
-  waitForElementFocus,
 } from '../../../../common/test/testingLibraryTools';
 import { PhoneNode, ProfileData } from '../../../../graphql/typings';
 import {
@@ -31,16 +27,29 @@ import {
 } from '../../../../i18n/countryCallingCodes.utils';
 import PhoneNumberEditor from '../PhoneNumberEditor';
 import {
-  getCommonElementSelector,
-  testAddWithCancel,
+  DataSource,
+  getElementSelectors,
+  getNotificationMessages,
+  testDataIsRendered,
+  checkAddButton,
+  testEditingItem,
+  testAddingItem,
+  testEditingItemFailsAndCancelResets,
+  testInvalidValues,
+  testDoubleFailing,
+  testUnchangedDataIsNotSent,
+  testRemovingItem,
+  testAddingItemWithCancel,
+  CommonTestSuite,
+  ValidationTest,
 } from '../../../../common/test/commonTestRuns';
 
 describe('<PhoneNumberEditor /> ', () => {
   type PhoneValueKey = keyof PhoneValue;
   type PhoneInputKey = 'number' | 'countryCallingCode';
   type PhoneFieldKey = PhoneValueKey | PhoneInputKey;
-  type DataSource = Partial<PhoneValue | PhoneNode>;
-  type InputDataSource = Record<PhoneInputKey, string>;
+  type PhoneNumberDataSource = Partial<PhoneValue | PhoneNode>;
+  type PhoneNumberInputDataSource = Record<PhoneInputKey, string>;
   const responses: MockedResponse[] = [];
   const initialProfile = getMyProfile().myProfile as ProfileData;
   const dataType: EditDataType = 'phones';
@@ -54,9 +63,6 @@ describe('<PhoneNumberEditor /> ', () => {
       </RenderChildrenWhenDataIsComplete>
     );
   };
-
-  // test only node at index 0;
-  const testIndex = 0;
 
   const validFormValues = {
     countryCallingCode: '+358',
@@ -127,18 +133,37 @@ describe('<PhoneNumberEditor /> ', () => {
   };
 
   const dataSourceToInputDataSource = (
-    dataSource: DataSource
-  ): InputDataSource =>
+    dataSource: PhoneNumberDataSource
+  ): PhoneNumberInputDataSource =>
     splitNumberAndCountryCallingCode(dataSource.phone as string);
 
   const inputDataSourceToDataSource = (
-    formValues: InputDataSource
-  ): DataSource => ({
+    formValues: PhoneNumberInputDataSource
+  ): PhoneValue => ({
     phone: `${formValues.countryCallingCode}${formValues.number}`,
   });
 
+  // phonenumber tests differ from others, because the data structure changes
+  // between {phone} and {number,countryCallingConde}
+  // this function parses their combinations to {number,countryCallingConde}
+  // combinations are possible in test runs
+  const multipleValuesToInputDataSource = (
+    dataSource: Partial<PhoneNumberInputDataSource & PhoneValue>
+  ): PhoneNumberInputDataSource => {
+    if (!dataSource.phone) {
+      return dataSource as PhoneNumberInputDataSource;
+    }
+
+    const { phone, ...rest } = dataSource;
+    const phoneAsInputDataSource = dataSourceToInputDataSource({ phone });
+    return {
+      ...phoneAsInputDataSource,
+      ...rest,
+    };
+  };
+
   const convertInputFieldValue = (
-    source: InputDataSource,
+    source: PhoneNumberInputDataSource,
     field: PhoneInputKey
   ): string => {
     const value = source[field];
@@ -154,7 +179,7 @@ describe('<PhoneNumberEditor /> ', () => {
   };
 
   const convertFieldValue = (
-    source: DataSource,
+    source: PhoneNumberDataSource,
     field: PhoneValueKey
   ): string => {
     const value = source[field];
@@ -163,34 +188,42 @@ describe('<PhoneNumberEditor /> ', () => {
 
   const verifyValuesFromElements = async (
     testTools: TestTools,
-    source: DataSource | InputDataSource,
-    targetIsInput = false,
-    index = 0
+    source: DataSource,
+    targetIsInput = false
   ) => {
     const { getTextOrInputValue } = testTools;
     const fieldList = targetIsInput ? inputFields : textFields;
+    const usedSource = targetIsInput
+      ? dataSourceToInputDataSource(source as PhoneNumberDataSource)
+      : source;
     for (const field of fieldList) {
       const expectedValue = targetIsInput
         ? convertInputFieldValue(
-            source as InputDataSource,
+            usedSource as PhoneNumberInputDataSource,
             field as PhoneInputKey
           )
-        : convertFieldValue(source as DataSource, field as PhoneValueKey);
+        : convertFieldValue(
+            usedSource as PhoneNumberDataSource,
+            field as PhoneValueKey
+          );
 
       await expect(
-        getTextOrInputValue(getFieldValueSelector(field, targetIsInput, index))
+        getTextOrInputValue(getFieldValueSelector(field, targetIsInput, 0))
       ).resolves.toBe(expectedValue);
     }
   };
 
   const setValuesToInputs = async (
     testTools: TestTools,
-    source: InputDataSource,
+    source: DataSource,
     selectedFields: PhoneInputKey[] = inputFields
   ) => {
     const { setInputValue, comboBoxSelector, getTextOrInputValue } = testTools;
     for (const field of selectedFields) {
-      const newValue = source[field];
+      const usedSource = multipleValuesToInputDataSource(
+        source as PhoneNumberInputDataSource
+      );
+      const newValue = usedSource[field];
       if (field === 'countryCallingCode') {
         // comboBoxSelector will throw an error if attempting to set a value which is already set
         const label = getCountryCallingCodeLabel(newValue);
@@ -198,7 +231,7 @@ describe('<PhoneNumberEditor /> ', () => {
           getFieldValueSelector(field, true)
         );
         if (currentValue !== label) {
-          await comboBoxSelector(`${dataType}-${testIndex}-${field}`, label);
+          await comboBoxSelector(`${dataType}-0-${field}`, label);
         }
       } else {
         await setInputValue({
@@ -207,6 +240,14 @@ describe('<PhoneNumberEditor /> ', () => {
         });
       }
     }
+  };
+
+  const commonTestProps: Exclude<CommonTestSuite, 'sentDataPicker'> = {
+    selectors: getElementSelectors(dataType),
+    valueSetter: setValuesToInputs,
+    valueVerifier: verifyValuesFromElements,
+    responses,
+    notificationMessages: getNotificationMessages(t),
   };
 
   const initTests = async (
@@ -225,281 +266,153 @@ describe('<PhoneNumberEditor /> ', () => {
 
   const phoneNodes = getPhonesFromNode({ myProfile: initialProfile }, true);
   const usedPhoneNode = phoneNodes[0];
+  const newNumberAsPhoneValue = inputDataSourceToDataSource(newFormValues);
+  const validNumberAsPhoneValue = inputDataSourceToDataSource(validFormValues);
 
-  it("renders user's phone number (only one) - also in edit mode. Add button is not shown.", async () => {
+  const profileWithoutPhones = getProfileWithoutNodes();
+
+  const getUpdatedProfile = (newPhoneValue: PhoneValue) =>
+    cloneProfileAndProvideManipulationFunctions(initialProfile)
+      .edit(dataType, {
+        ...initialPhoneInProfile,
+        ...newPhoneValue,
+      })
+      .getProfile();
+
+  it("renders user's phone number - also in edit mode. Add button is not shown when phone number exists.", async () => {
     await act(async () => {
       const testTools = await initTests();
-      const { clickElement, getElement } = testTools;
       expect(phoneNodes).toHaveLength(2);
-      await verifyValuesFromElements(testTools, usedPhoneNode, false, 0);
-      // goto edit mode
-      await clickElement(getCommonElementSelector(dataType, 'editButton', 0));
-      await verifyValuesFromElements(
+      const testSuite = {
         testTools,
-        dataSourceToInputDataSource(usedPhoneNode),
-        true,
-        0
-      );
-
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'addButton'))
-      ).toThrow();
+        formData: usedPhoneNode,
+        ...commonTestProps,
+      };
+      await testDataIsRendered(testSuite);
+      checkAddButton(testSuite, false);
     });
   });
 
   it(`sends updated data and returns to view mode when saved. 
-      Shows save notifications. 
-      Focus is returned to edit button`, async () => {
+    Shows save notifications. 
+    Focus is returned to edit button`, async () => {
     await act(async () => {
       const testTools = await initTests();
-      const { clickElement, submit, getElement } = testTools;
-      await clickElement(getCommonElementSelector(dataType, 'editButton'));
-      await setValuesToInputs(testTools, newFormValues);
 
-      // create graphQL response for the update
-      const updatedProfileData = cloneProfileAndProvideManipulationFunctions(
-        initialProfile
-      )
-        .edit(dataType, {
-          ...initialPhoneInProfile,
-          ...inputDataSourceToDataSource(newFormValues),
-        })
-        .getProfile();
-
-      // add the graphQL response
-      responses.push({
-        updatedProfileData,
-      });
-
-      const waitForOnSaveNotification: WaitForElementAndValueProps = {
-        selector: { testId: `${dataType}-${testIndex}-save-indicator` },
-        value: t('notification.saving'),
-      };
-
-      const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: t('notification.saveSuccess'),
-      };
-      // submit and wait for "saving" and "saveSuccess" notifications
-      await submit({
-        waitForOnSaveNotification,
-        waitForAfterSaveNotification,
-      });
-      // verify new values are visible
-      await verifyValuesFromElements(
+      await testEditingItem({
         testTools,
-        inputDataSourceToDataSource(newFormValues)
-      );
-      // focus is set to edit button
-      await waitForElementFocus(() =>
-        getElement(getCommonElementSelector(dataType, 'editButton'))
-      );
+        formData: newNumberAsPhoneValue,
+        assumedResponse: getUpdatedProfile(newNumberAsPhoneValue),
+        sentDataPicker: variables =>
+          (variables.input.profile.updatePhones as DataSource[])[0],
+        ...commonTestProps,
+      });
     });
   });
 
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {
     await act(async () => {
       const testTools = await initTests();
-      const { clickElement, submit } = testTools;
-      await clickElement(getCommonElementSelector(dataType, 'editButton'));
-      await setValuesToInputs(testTools, newFormValues);
-
-      // add the graphQL response
-      responses.push({
-        errorType: 'networkError',
+      await testEditingItemFailsAndCancelResets({
+        testTools,
+        formData: newNumberAsPhoneValue,
+        initialValues: usedPhoneNode,
+        ...commonTestProps,
       });
-
-      const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: t('notification.saveError'),
-      };
-
-      // submit and wait for saving and error notifications
-      await submit({
-        waitForAfterSaveNotification,
-        skipDataCheck: true,
-      });
-
-      // input fields are still rendered
-      await verifyValuesFromElements(testTools, newFormValues, true);
-      // cancel edits
-      await clickElement({
-        testId: `${dataType}-${testIndex}-cancel-button`,
-      });
-      // values are reset to previous values
-      await verifyValuesFromElements(testTools, initialPhoneInProfile);
     });
   });
-  inputFields.forEach(async field => {
-    it(`invalid value for ${field} is indicated and setting a valid value removes the error`, async () => {
+
+  it('invalid values are indicated and setting a valid value removes error', async () => {
+    await act(async () => {
       const testTools = await initTests();
-      const { clickElement, getElement } = testTools;
-      await act(async () => {
-        const fieldValueSelector = getFieldValueSelector(field, true);
-        await clickElement(getCommonElementSelector(dataType, 'editButton'));
-        const elementGetter = () => getElement(fieldValueSelector);
-        const errorElementGetter = () =>
-          getElement({ id: `${dataType}-${testIndex}-${field}-error` });
-        const errorListElementGetter = () =>
-          getElement({ testId: `${dataType}-error-list` });
 
-        const invalidValues = {
-          ...validFormValues,
-          ...{ [field]: invalidFormValues[field] },
-        };
-        // set invalid value to the field
-        await setValuesToInputs(testTools, invalidValues, [field]);
-        // submit also validates the form
-        await clickElement(submitButtonSelector);
-        await waitForElementAttributeValue(elementGetter, 'aria-invalid', true);
-        // error element and list are found
-        expect(errorElementGetter).not.toThrow();
-        expect(errorListElementGetter).not.toThrow();
-        // set valid value to the field
-        await setValuesToInputs(testTools, validFormValues, [field]);
-        await waitForElementAttributeValue(
-          elementGetter,
-          'aria-invalid',
-          false
-        );
-        // error element and list are not found
-        expect(errorElementGetter).toThrow();
-        expect(errorListElementGetter).toThrow();
-      });
+      const testRuns: ValidationTest[] = inputFields.map(prop => ({
+        prop,
+        value: invalidFormValues[prop],
+        inputSelector: getFieldValueSelector(prop, true),
+        errorSelector: { id: `${dataType}-0-${prop}-error` },
+      }));
+
+      await testInvalidValues(
+        {
+          testTools,
+          formData: validNumberAsPhoneValue,
+          initialValues: initialProfile,
+          ...commonTestProps,
+        },
+        testRuns
+      );
     });
   });
-  it(`When there is no phone number, the add button is rendered and a number can be added. 
+
+  it(`When there is no phonenumber, the add button is rendered and an number can be added. 
       Add button is not shown after it has been clicked and number is saved.`, async () => {
     await act(async () => {
-      const profileWithoutPhones = getProfileWithoutNodes();
       const testTools = await initTests(profileWithoutPhones);
-      const {
-        clickElement,
-        getElement,
-        submit,
-        getTextOrInputValue,
-      } = testTools;
-
-      // edit button is not rendered
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'editButton'))
-      ).toThrow();
-
-      // info text is shown instead of an number
-      await expect(
-        getTextOrInputValue(getCommonElementSelector(dataType, 'noDataText'))
-      ).resolves.toBe(t('profileInformation.noPhone'));
-      // click add button to create an number
-      await clickElement(getCommonElementSelector(dataType, 'addButton'));
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'addButton'))
-      ).toThrow();
-      await setValuesToInputs(testTools, validFormValues);
-
-      // create the graphQL response
-      const profileWithPhone = getProfileWithPhone(
-        inputDataSourceToDataSource(validFormValues) as PhoneValue
-      );
-
-      // add the graphQL response
-      responses.push({ updatedProfileData: profileWithPhone });
-
-      const waitForAfterSaveNotification: WaitForElementAndValueProps = {
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: t('notification.saveSuccess'),
-      };
-
-      await submit({
-        skipDataCheck: true,
-        waitForAfterSaveNotification,
-      });
-
-      await verifyValuesFromElements(
+      await testAddingItem({
         testTools,
-        inputDataSourceToDataSource(validFormValues)
-      );
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'addButton'))
-      ).toThrow();
+        formData: validNumberAsPhoneValue,
+        assumedResponse: getProfileWithPhone(validNumberAsPhoneValue),
+        sentDataPicker: variables =>
+          ((variables.input.profile.addPhones as unknown) as DataSource[])[0],
+        ...commonTestProps,
+      });
     });
   });
-  it(`When removing a phone number, a confirmation modal is shown. 
+
+  it(`When removing an phonenumber, a confirmation modal is shown. 
       Remove error is handled and shown.
-      When removal is complete, add button is shown and a text about no phone numbers.`, async () => {
+      When removal is complete, add button is shown and a text about no phones.`, async () => {
     await act(async () => {
-      const profileWithoutPhones = getProfileWithoutNodes();
-      const profileWithPhone = getProfileWithPhone(
-        inputDataSourceToDataSource(validFormValues) as PhoneValue
+      const testTools = await initTests(
+        getProfileWithPhone(validNumberAsPhoneValue)
       );
-
-      const {
-        clickElement,
-        getElement,
-        waitForElementAndValue,
-        waitForElement,
-      } = await initTests(profileWithPhone);
-
-      // add error response
-      responses.push({
-        errorType: 'networkError',
+      await testRemovingItem({
+        testTools,
+        assumedResponse: profileWithoutPhones,
+        ...commonTestProps,
       });
-      // add the graphQL response
-      responses.push({
-        updatedProfileData: profileWithoutPhones,
-      });
-
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'addButton'))
-      ).toThrow();
-      // click remove button, confirm removal and handle error
-      await clickElement(getCommonElementSelector(dataType, 'removeButton'));
-      await waitForElement(
-        getCommonElementSelector(dataType, 'confirmRemovalButton')
-      );
-      await clickElement(
-        getCommonElementSelector(dataType, 'confirmRemovalButton')
-      );
-
-      await waitForElementAndValue({
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: t('notification.removeError'),
-      });
-
-      // start removal again
-      await clickElement(getCommonElementSelector(dataType, 'removeButton'));
-      await waitForElement(
-        getCommonElementSelector(dataType, 'confirmRemovalButton')
-      );
-      await clickElement(
-        getCommonElementSelector(dataType, 'confirmRemovalButton')
-      );
-
-      await waitForElementAndValue({
-        selector: getCommonElementSelector(dataType, 'editNotifications'),
-        value: t('notification.removeSuccess'),
-      });
-      // item is removed and also remove button
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'removeButton'))
-      ).toThrow();
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'addButton'))
-      ).not.toThrow();
-      expect(() =>
-        getElement(getCommonElementSelector(dataType, 'noDataText'))
-      ).not.toThrow();
     });
   });
-  it(`When a new phone number is cancelled, nothing is saved and
+
+  it(`When a new number is cancelled, nothing is saved and
       add button is shown and a text about no phone numbers.
       Focus is returned to add button`, async () => {
     await act(async () => {
-      const testTools = await initTests(getProfileWithoutNodes());
-      await testAddWithCancel(
-        dataType,
-        getFieldValueSelector('number', true),
-        testTools
+      const testTools = await initTests(profileWithoutPhones);
+      await testAddingItemWithCancel(
+        {
+          testTools,
+          formData: validNumberAsPhoneValue,
+          ...commonTestProps,
+        },
+        true
       );
+    });
+  });
+
+  it('When user saves without making changes, data is not sent, but save success is shown.', async () => {
+    await act(async () => {
+      const testTools = await initTests();
+      await testUnchangedDataIsNotSent({
+        testTools,
+        formData: usedPhoneNode,
+        initialValues: usedPhoneNode,
+        ...commonTestProps,
+      });
+    });
+  });
+
+  it('When saving fails twice, the second one does result in save success, because data did not change.', async () => {
+    await act(async () => {
+      const testTools = await initTests();
+      await testDoubleFailing({
+        testTools,
+        formData: newNumberAsPhoneValue,
+        initialValues: usedPhoneNode,
+        assumedResponse: getUpdatedProfile(newNumberAsPhoneValue),
+        ...commonTestProps,
+      });
     });
   });
 });
