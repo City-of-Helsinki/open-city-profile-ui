@@ -1,0 +1,120 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--spacing-l) 0;
+}
+
+.group-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-m);
+  border-bottom: 1px solid var(--color-black);
+}
+
+.transaction {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--color-white);
+  padding: var(--spacing-xs) var(--spacing-m);
+}
+
+.transaction-grid {
+  display: grid;
+  grid-template-columns: 50px 100px 3fr 2fr 1fr 80px;
+  grid-template-areas: 'indicator date content content status button';
+  grid-template-rows: auto;
+  grid-auto-flow: row;
+  grid-gap: 10px;
+  width: 100%;
+  align-items: center;
+  justify-items: start;
+}
+
+.transaction-content {
+  grid-column: 3 / 5;
+}
+
+.grid-column-status .tag-content {
+  display: flex;
+  align-items: center;
+}
+
+.grid-column-status .tag-text {
+  padding: 0 var(--spacing-xs);
+}
+
+.grid-column-title,
+.grid-column-service {
+  opacity: 1;
+}
+
+.grid-column-indicator {
+  display: block;
+  position: relative;
+  height: 100%;
+}
+.grid-column-button {
+  display: block;
+}
+
+.indicator-dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-black);
+  border: 1px solid var(--color-black);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -5px -5px 0 0;
+  z-index: 2;
+}
+
+.important-dot {
+  background-color: var(--color-brick);
+  border-color: var(--color-brick);
+}
+
+.unimportant-dot {
+  background-color: var(--color-black-20);
+  border-color: var(--color-black-20);
+}
+
+.indicator-line {
+  position: absolute;
+  top: -10px;
+  bottom: -40px;
+  left: 50%;
+  width: 1px;
+  background-color: var(--color-black-20);
+  margin-left: 5px;
+  z-index: 1;
+}
+.indicator-line-with-dot {
+  position: absolute;
+  top: unset;
+  bottom: -20px;
+  height: 40px;
+}
+
+.transaction:last-of-type .indicator-line {
+  display: none;
+}
+
+.transaction:not(:first-of-type) .grid-column-title,
+.transaction:not(:first-of-type) .grid-column-service {
+  opacity: 0;
+}
+
+.transaction:not(:last-of-type)::after {
+  content: '';
+  position: absolute;
+  border-bottom: 1px solid var(--color-black-10);
+  height: 1px;
+  bottom: 1px;
+  left: 50px;
+  right: 80px;
+}

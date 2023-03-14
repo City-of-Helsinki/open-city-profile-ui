@@ -24,6 +24,7 @@ import WithAuthCheck from './profile/components/withAuthCheck/WithAuthCheck';
 import CookieConsentPage from './cookieConsents/CookieConsentPage';
 import LoginSSO from './auth/components/loginsso/LoginSSO';
 import { useTrackingInstance } from './common/helpers/tracking/matomoTracking';
+import Transactions from './profile/components/transactions/Transactions';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -62,6 +63,9 @@ function App(): React.ReactElement {
               </Route>
               <Route path={config.cookiePagePath} exact>
                 <CookieConsentPage />
+              </Route>
+              <Route path={'/transactions'} exact>
+                <Transactions />
               </Route>
               <Route path="*">
                 <PageNotFound />

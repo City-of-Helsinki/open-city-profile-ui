@@ -20,10 +20,13 @@ function Header(): React.ReactElement {
   const { trackEvent } = useMatomo();
 
   const { getProfile } = useContext(ProfileContext);
-  const profilePagePaths = ['/', '/connected-services'];
-  const [myProfilePath, connectedServicesPath] = profilePagePaths;
+  const profilePagePaths = ['/', '/connected-services', '/transactions'];
+  const [
+    myProfilePath,
+    connectedServicesPath,
+    transactionsPath,
+  ] = profilePagePaths;
   const isProfilePagePath = profilePagePaths.includes(currentPath);
-
   const onClick = (path: string, e?: MouseEvent) => {
     e && e.preventDefault();
     history.push(path);
@@ -59,6 +62,13 @@ function Header(): React.ReactElement {
             variant="secondary"
             onClick={(e: MouseEvent) => onClick(connectedServicesPath, e)}
             active={currentPath === connectedServicesPath}
+          />
+          <Navigation.Item
+            label={t('Asiointi')}
+            href={transactionsPath}
+            variant="secondary"
+            onClick={(e: MouseEvent) => onClick(transactionsPath, e)}
+            active={currentPath === transactionsPath}
           />
         </Navigation.Row>
       )}
