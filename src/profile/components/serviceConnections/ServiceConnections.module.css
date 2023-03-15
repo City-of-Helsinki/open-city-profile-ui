@@ -5,8 +5,10 @@
 }
 
 .service-information {
-  margin-top: var(--spacing-m);
-  font-weight: bold;
+  margin: var(--spacing-m) 0;
+  padding: var(--spacing-xs) 0;
+  border-top: 1px solid var(--color-black-20);
+  border-bottom: 1px solid var(--color-black-20);
 }
 
 .allowed-data-field {
@@ -31,4 +33,11 @@
 }
 .load-indicator span {
   padding-left: var(--spacing-s);
+}
+
+@media (min-width: 768px) {
+  .service-information {
+    margin: var(--spacing-l);
+    padding: var(--spacing-xs) 0;
+  }
 }

@@ -59,6 +59,7 @@
     "panelTitle": "Vill du ladda ner din information?"
   },
   "expandingPanel": {
+    "closeButtonText": "Stäng",
     "hideInformation": "Göm information",
     "showInformation": "Visa information"
   },
@@ -174,6 +175,8 @@
     "ariaShowOptions": "Visa alternativ",
     "ariaSelectedOption": "{{value}} har valts",
     "ariaNoSelectedItemForLabel": "{{label}} har inte valts",
+    "contact": "Kontaktinformation",
+    "contactInformation": "Min kontaktinformation",
     "deleteProfile": "Radera profil",
     "description": "Uppgifterna som sparats i Helsingforsprofilen används i Helsingfors stads e-tjänster. Närmare information hittar du på <linkToServices>{{linkToServicesText}} sidan</linkToServices>.",
     "downloadData": "Ladda ner min information",
@@ -202,7 +205,7 @@
     "ariaRemovePhoneWithValue": "Ta bort telefonnummer {{value}}",
     "noPhone": "Du har inte uppgett ett telefonnummer",
     "noAddress": "Du har inte uppgett en adress",
-    "noEmail": "Du har inte angett en e-postadress",
+    "noEmail": "Du har inte upgett en e-postadress",
     "verifyEmailText": "Vi har skickat en bekräftelse till e-postadressen som du angett. Om du inte har fått meddelandet, vänligen kontrollera skräpkorgen för e-post.",
     "verifyEmailTitle": "Bekräfta e-postadressen"
   },
@@ -213,8 +216,8 @@
     "empty": "Du har för närvarande inga tjänster anslutna till din profil.",
     "explanation": "Du har gett följande tjänster rätt att använda uppgifterna som sparats i Helsingforsprofilen.",
     "servicePersonalData": "Information som tjänsten vet om dig:",
-    "title": "Tjänster som har tillstånd att använda dina uppgifter",
-    "deleteConnection": "Om du vill ta bort dina uppgifter från denna tjänst, <deleteButton>tryck här</deleteButton>.",
+    "title": "Dina tjänster",
+    "deleteConnection": "Ta bort dina uppgifter från denna tjänst",
     "connectionRemovalVerification": "Om du fortsätter, förlorar du alla uppgifter som du sparat i tjänsten {{serviceName}} och du kan inte längre använda tjänsten förrän du registrerar dig i tjänsten på nytt.",
     "connectionRemovalSuccess": "Alla uppgifter som vi sparat i tjänsten {{serviceName}} har tagits bort på ett lyckat sätt!",
     "connectionRemovalForbidden": "Vi kan inte radera data från denna tjänst, till exempel på grund av transaktionsstatus eller lagringstid.",

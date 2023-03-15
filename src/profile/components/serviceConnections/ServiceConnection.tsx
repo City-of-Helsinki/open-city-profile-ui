@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import * as Sentry from '@sentry/browser';
 
@@ -10,8 +10,8 @@ import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsF
 import styles from './ServiceConnections.module.css';
 import useDeleteServiceConnection from '../../../gdprApi/useDeleteServiceConnection';
 import DeleteServiceConnectionModal from './DeleteServiceConnectionModal';
-import commonStyles from '../../../common/cssHelpers/common.module.css';
 import encodeServiceName from '../../helpers/encodeServiceName';
+import StyledButton from '../../../common/styledButton/StyledButton';
 
 export const STATUS_NONE = 0;
 export const STATUS_PENDING_CONFIRMATION = 1;
@@ -127,39 +127,33 @@ function ServiceConnection(props: {
         }
       >
         <p>{service.description}</p>
-        <p
+        <div
           className={styles['service-information']}
           data-testid={`service-connection-${encodedServiceName}-information`}
         >
-          {t('serviceConnections.servicePersonalData')}
-        </p>
-        {getAllowedDataFieldsFromService(service).map(node => (
-          <CheckedLabel
-            key={node.fieldName}
-            value={node.label || node.fieldName}
-            className={styles['allowed-data-field']}
-          />
-        ))}
-        <p className={styles['created-at']}>
-          {t('serviceConnections.created')}
-        </p>
-        <p className={styles['date-and-time']}>
-          {getDateTime(service.connectionCreatedAt)}
-        </p>
-        <Trans
-          i18nKey="serviceConnections.deleteConnection"
-          components={{
-            deleteButton: (
-              <button
-                onClick={onDeleteClick}
-                className={commonStyles['text-button']}
-                data-testid={`delete-service-connection-${encodedServiceName}-button`}
-              >
-                {''}
-              </button>
-            ),
-          }}
-        />
+          <p>
+            <strong>{t('serviceConnections.servicePersonalData')}</strong>
+          </p>
+          {getAllowedDataFieldsFromService(service).map(node => (
+            <CheckedLabel
+              key={node.fieldName}
+              value={node.label || node.fieldName}
+              className={styles['allowed-data-field']}
+            />
+          ))}
+          <p className={styles['created-at']}>
+            {t('serviceConnections.created')}
+          </p>
+          <p className={styles['date-and-time']}>
+            {getDateTime(service.connectionCreatedAt)}
+          </p>
+        </div>
+        <StyledButton
+          onClick={onDeleteClick}
+          data-testid={`delete-service-connection-${encodedServiceName}-button`}
+        >
+          {t('serviceConnections.deleteConnection')}
+        </StyledButton>
       </ExpandingPanel>
       <DeleteServiceConnectionModal
         status={modalStatus}

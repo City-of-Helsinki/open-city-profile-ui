@@ -4,22 +4,18 @@ exports[`<AuthenticationProviderInformation />  renders correctly when AMR is he
 <AuthenticationProviderInformation>
   <ProfileSection>
     <section
-      className="profile-section"
+      className="content-box profile-section"
     >
       <div
-        className="content-wrapper"
+        className="flex-box-columns"
       >
-        <h2
-          className="section-title"
-        >
-          profileInformation.authenticationMethod
-        </h2>
         <div
-          className="text-content-wrapper"
+          className="editor-description-container"
         >
-          <span
-            className="value"
-          >
+          <h2>
+            profileInformation.authenticationMethod
+          </h2>
+          <span>
             identityProvider.helsinkiAccount
           </span>
         </div>
@@ -33,22 +29,18 @@ exports[`<AuthenticationProviderInformation />  renders correctly when AMR is tu
 <AuthenticationProviderInformation>
   <ProfileSection>
     <section
-      className="profile-section"
+      className="content-box profile-section"
     >
       <div
-        className="content-wrapper"
+        className="flex-box-columns"
       >
-        <h2
-          className="section-title"
-        >
-          profileInformation.authenticationMethod
-        </h2>
         <div
-          className="text-content-wrapper"
+          className="editor-description-container"
         >
-          <span
-            className="value"
-          >
+          <h2>
+            profileInformation.authenticationMethod
+          </h2>
+          <span>
             identityProvider.tunnistusSuomifi
           </span>
         </div>

@@ -1,4 +1,13 @@
 .profile-section {
-  padding: var(--spacing-l) 0;
   margin-bottom: var(--spacing-xl);
+}
+
+.profile-section hr {
+  margin: var(--spacing-l) 0 var(--spacing-l);
+}
+
+@media (min-width: 768px) {
+  .profile-section hr {
+    margin-top: var(--spacing-2-xs);
+  }
 }

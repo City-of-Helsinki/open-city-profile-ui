@@ -3,13 +3,15 @@ import { useTranslation } from 'react-i18next';
 import FileSaver from 'file-saver';
 import * as Sentry from '@sentry/browser';
 import { loader } from 'graphql.macro';
-import { Button, Notification } from 'hds-react';
+import { Notification } from 'hds-react';
 
-import styles from './DownloadData.module.css';
+import commonFormStyles from '../../../common/cssHelpers/form.module.css';
+import contentStyles from '../../../common/cssHelpers/content.module.css';
 import { DownloadMyProfileQuery as DownloadMyProfileRoot } from '../../../graphql/generatedTypes';
 import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { useScrollIntoView } from '../../hooks/useScrollIntoView';
+import StyledButton from '../../../common/styledButton/StyledButton';
 
 const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
@@ -39,24 +41,29 @@ function DownloadData(): React.ReactElement {
   const [scrollIntoViewRef] = useScrollIntoView(loading);
 
   return (
-    <ProfileSection>
-      <h2 ref={scrollIntoViewRef}>{t('downloadData.panelTitle')}</h2>
-      <p>{t('downloadData.panelText')}</p>
-      {hasError && (
-        <Notification
-          label={t('notification.defaultErrorText')}
-          type={'error'}
-          dataTestId="download-profile-error"
-        ></Notification>
-      )}
-      <Button
-        onClick={onDownloadClick}
-        className={styles.button}
-        disabled={isDownloadingData}
-        id="download-profile-button"
-      >
-        {isDownloadingData ? t('loading') : t('downloadData.button')}
-      </Button>
+    <ProfileSection borderless>
+      <div className={commonFormStyles['editor-description-container']}>
+        <h2 ref={scrollIntoViewRef}>{t('downloadData.panelTitle')}</h2>
+        <p>{t('downloadData.panelText')}</p>
+      </div>
+      <div className={commonFormStyles['uneditable-box-content']}>
+        <div className={contentStyles['common-child-vertical-spacing']}>
+          {hasError && (
+            <Notification
+              label={t('notification.defaultErrorText')}
+              type={'error'}
+              dataTestId="download-profile-error"
+            ></Notification>
+          )}
+          <StyledButton
+            onClick={onDownloadClick}
+            disabled={isDownloadingData}
+            id="download-profile-button"
+          >
+            {isDownloadingData ? t('loading') : t('downloadData.button')}
+          </StyledButton>
+        </div>
+      </div>
     </ProfileSection>
   );
 }

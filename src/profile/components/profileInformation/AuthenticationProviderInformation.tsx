@@ -20,14 +20,10 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
 
   return (
     <ProfileSection>
-      <div className={commonFormStyles['content-wrapper']}>
-        <h2 className={commonFormStyles['section-title']}>
-          {t('profileInformation.authenticationMethod')}
-        </h2>
-        <div className={commonFormStyles['text-content-wrapper']}>
-          <span className={commonFormStyles['value']}>
-            {authenticationMethodReferenceName}
-          </span>
+      <div className={commonFormStyles['flex-box-columns']}>
+        <div className={commonFormStyles['editor-description-container']}>
+          <h2>{t('profileInformation.authenticationMethod')}</h2>
+          <span>{authenticationMethodReferenceName}</span>
         </div>
       </div>
     </ProfileSection>

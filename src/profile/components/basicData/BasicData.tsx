@@ -1,62 +1,54 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { TextInput } from 'hds-react';
-import to from 'await-to-js';
+import classNames from 'classnames';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { getFormFields } from '../../helpers/formProperties';
-import {
-  basicDataType,
-  BasicDataValue,
-  EditDataValue,
-} from '../../helpers/editData';
-import {
-  ActionListener,
-  saveTypeToAction,
-  useProfileDataEditor,
-} from '../../hooks/useProfileDataEditor';
+import { basicDataType, BasicDataValue } from '../../helpers/editData';
+import { saveTypeToAction } from '../../hooks/useProfileDataEditor';
 import { basicDataSchema } from '../../../common/schemas/schemas';
 import { createFormFieldHelpers } from '../../helpers/formik';
-import useNotificationContent from '../editingNotifications/useNotificationContent';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
-import EditButtons, { ActionHandler } from '../editButtons/EditButtons';
+import EditButtons from '../editButtons/EditButtons';
 import FormButtons from '../formButtons/FormButtons';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
-import { useFocusSetter } from '../../hooks/useFocusSetter';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
 import { RequiredFieldsNote } from '../../../common/requiredFieldsNote/RequiredFieldsNote';
+import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 
 type FormikValues = BasicDataValue;
 
 function BasicData(): React.ReactElement | null {
-  const [isEditing, setEditing] = useState(false);
+  const dataType = basicDataType;
   const { t } = useTranslation();
+
+  const editHandler = useCommonEditHandling({
+    dataType,
+    disableEditButtons: false,
+  });
+
   const {
-    content,
-    setErrorMessage,
-    setSuccessMessage,
-    clearMessage,
-  } = useNotificationContent();
+    notificationContent,
+    actionHandler,
+    getData,
+    hasData,
+    editButtonId,
+    isEditing,
+  } = editHandler;
 
-  const { editDataList, save, reset } = useProfileDataEditor({
-    dataType: basicDataType,
-  });
+  const { content } = notificationContent;
 
-  const [editButtonId, setFocusToEditButton] = useFocusSetter({
-    targetId: `${basicDataType}-edit-button`,
-  });
-
-  if (!editDataList || !editDataList[0]) {
+  if (!hasData()) {
     return null;
   }
-  const editData = editDataList[0];
-  const { value, saving } = editData;
+  const { value, saving } = getData();
   const { firstName, nickname, lastName } = value as BasicDataValue;
   const formFields = getFormFields(basicDataType);
 
@@ -66,53 +58,29 @@ function BasicData(): React.ReactElement | null {
 
   const ariaLabels = createActionAriaLabels(basicDataType, '', t);
 
-  const onAction: ActionListener = async (action, item, newValue) => {
-    clearMessage();
-    if (action === 'save') {
-      return save(item, newValue as EditDataValue);
-    }
-    return Promise.resolve();
-  };
-
-  const actionHandler: ActionHandler = async action => {
-    const promise = await onAction(action, editData);
-    if (action === 'cancel') {
-      setFocusToEditButton();
-      reset(editData);
-      setEditing(false);
-    }
-    if (action === 'edit') {
-      clearMessage();
-      setEditing(true);
-    }
-    return promise;
-  };
   const formFieldStyle = commonFormStyles['form-field'];
+  const containerStyle = commonFormStyles['responsive-flex-box-columns-rows'];
   if (isEditing) {
     return (
       <Formik
         initialValues={{ firstName, nickname, lastName }}
-        onSubmit={async values => {
-          const [error] = await to(onAction('save', editData, values));
-          if (error) {
-            setErrorMessage('save');
-          } else {
-            setFocusToEditButton();
-            setSuccessMessage('save');
-            setEditing(false);
-          }
-        }}
+        onSubmit={async values => actionHandler('save', values)}
         validationSchema={basicDataSchema}
       >
         {(formikProps: FormikProps<FormikValues>) => (
           <ProfileSection>
-            <h2 className={commonFormStyles['section-title']}>
-              {t('profileForm.basicData')}
-            </h2>
+            <div className={commonFormStyles['editor-description-container']}>
+              <h2>{t('profileForm.basicData')}</h2>
+            </div>
             <RequiredFieldsNote />
             <Form>
               <FocusKeeper targetId={`${basicDataType}-firstName`}>
-                <div className={commonFormStyles['multi-item-wrapper']}>
+                <div
+                  className={classNames(
+                    containerStyle,
+                    commonFormStyles['editor-form-fields']
+                  )}
+                >
                   <Field
                     className={formFieldStyle}
                     name="firstName"
@@ -159,6 +127,8 @@ function BasicData(): React.ReactElement | null {
                 <EditingNotifications
                   content={content}
                   dataType={basicDataType}
+                  noSpacing
+                  topSpacingMobile
                 />
                 <FormButtons
                   handler={actionHandler}
@@ -179,11 +149,16 @@ function BasicData(): React.ReactElement | null {
 
   return (
     <ProfileSection>
-      <div className={commonFormStyles['content-wrapper']}>
-        <h2 className={commonFormStyles['section-title']}>
-          {t('profileForm.basicData')}
-        </h2>
-        <div className={commonFormStyles['multi-item-wrapper']}>
+      <div className={commonFormStyles['editor-description-container']}>
+        <h2>{t('profileForm.basicData')}</h2>
+      </div>
+      <div className={classNames(containerStyle)}>
+        <div
+          className={classNames(
+            containerStyle,
+            commonFormStyles['editor-text-fields']
+          )}
+        >
           <LabeledValue
             label={t(formFields.firstName.translationKey)}
             value={firstName}
@@ -200,14 +175,13 @@ function BasicData(): React.ReactElement | null {
             testId={`${basicDataType}-lastName`}
           />
         </div>
-        <div className={commonFormStyles['actions-wrapper']}>
+        <div className={commonFormStyles['edit-buttons']}>
           <EditButtons
             handler={actionHandler}
             actions={{
               removable: false,
               setPrimary: false,
             }}
-            buttonClassNames={commonFormStyles['actions-wrapper-button']}
             editButtonId={editButtonId}
             testId={basicDataType}
             ariaLabels={ariaLabels}

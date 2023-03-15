@@ -91,6 +91,7 @@ function CreateProfile({
         heading={t('createProfile.heading')}
         text={t('createProfile.helpText')}
         dataTestId="create-profile-heading"
+        useHeadingHeroStyle
       />
       <ProfileSection>
         <CreateProfileForm

@@ -1,5 +1,4 @@
 import {
-  Button,
   IconPenLine,
   IconMinusCircle,
   IconStarFill,
@@ -7,7 +6,6 @@ import {
 } from 'hds-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import { EditData, EditDataValue } from '../../helpers/editData';
@@ -15,6 +13,7 @@ import {
   Action,
   ActionListenerReturnType,
 } from '../../hooks/useProfileDataEditor';
+import StyledButton from '../../../common/styledButton/StyledButton';
 
 type Props = {
   handler: ActionHandler;
@@ -22,7 +21,6 @@ type Props = {
     setPrimary: boolean;
     removable: boolean;
   };
-  buttonClassNames?: string;
   editButtonId?: string;
   removeButtonId?: string;
   testId: string;
@@ -46,7 +44,6 @@ function EditButtons(props: Props): React.ReactElement {
   const {
     actions,
     handler,
-    buttonClassNames,
     editButtonId,
     removeButtonId,
     disabled,
@@ -55,13 +52,9 @@ function EditButtons(props: Props): React.ReactElement {
   } = props;
   const { t } = useTranslation();
   const { primary, removable, setPrimary } = actions;
-  const buttonStyle = [commonFormStyles['supplementary-button']];
   const editButtonIdAttr = editButtonId ? { id: editButtonId } : undefined;
-  if (buttonClassNames) {
-    buttonStyle.push(buttonClassNames);
-  }
   return (
-    <div className={commonFormStyles['actions']}>
+    <div className={commonFormStyles['edit-buttons-container']}>
       {setPrimary && primary && (
         <div
           className={commonFormStyles['primary-container']}
@@ -75,47 +68,44 @@ function EditButtons(props: Props): React.ReactElement {
         </div>
       )}
       {setPrimary && !primary && (
-        <Button
+        <StyledButton
           variant="supplementary"
           iconLeft={<IconStar />}
           onClick={async () => {
             await handler('set-primary');
           }}
-          className={classNames(buttonStyle)}
           disabled={disabled}
           data-testid={`${testId}-set-primary-button`}
           aria-label={ariaLabels.setPrimary}
         >
           {t('profileForm.setPrimary')}
-        </Button>
+        </StyledButton>
       )}
-      <Button
+      <StyledButton
         variant="supplementary"
         iconLeft={<IconPenLine />}
         onClick={async () => {
           await handler('edit');
         }}
-        className={classNames(buttonStyle)}
         disabled={disabled}
         aria-label={ariaLabels.edit}
         {...editButtonIdAttr}
       >
         {t('profileForm.edit')}
-      </Button>
+      </StyledButton>
       {removable && (
-        <Button
-          variant="supplementary"
+        <StyledButton
+          variant="secondary"
           iconLeft={<IconMinusCircle />}
           onClick={async () => {
             await handler('remove');
           }}
-          className={classNames(buttonStyle)}
           disabled={disabled}
           id={removeButtonId}
           aria-label={ariaLabels.remove}
         >
           {t('profileForm.remove')}
-        </Button>
+        </StyledButton>
       )}
     </div>
   );

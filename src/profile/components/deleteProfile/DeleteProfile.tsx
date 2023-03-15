@@ -3,7 +3,7 @@ import { ApolloError, useLazyQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
-import { Button, Notification } from 'hds-react';
+import { Notification } from 'hds-react';
 import { useHistory } from 'react-router';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
@@ -12,7 +12,8 @@ import {
   ServiceConnectionsQueryVariables,
   ServiceConnectionsRoot,
 } from '../../../graphql/typings';
-import styles from './deleteProfile.module.css';
+import commonFormStyles from '../../../common/cssHelpers/form.module.css';
+import contentStyles from '../../../common/cssHelpers/content.module.css';
 import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
@@ -24,6 +25,7 @@ import parseDeleteProfileResult, {
 } from '../../helpers/parseDeleteProfileResult';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import Loading from '../../../common/loading/Loading';
+import StyledButton from '../../../common/styledButton/StyledButton';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -142,16 +144,19 @@ function DeleteProfile(): React.ReactElement {
     />
   );
   const ServiceConnectionLoadError = () => (
-    <Notification label={t('deleteProfile.deleteFailed')} type={'error'}>
-      <Button
+    <>
+      <Notification
+        label={t('deleteProfile.deleteFailed')}
+        type={'error'}
+      ></Notification>
+      <StyledButton
         type="button"
         onClick={() => loadServiceConnections(true)}
-        className={styles.button}
         data-testid="reload-service-connections"
       >
         {t('notification.tryAgain')}
-      </Button>
-    </Notification>
+      </StyledButton>
+    </>
   );
   const LoadStateIndicator = () =>
     dataLoadState === errorLoadState ? (
@@ -169,35 +174,41 @@ function DeleteProfile(): React.ReactElement {
     );
   }
   return (
-    <ProfileSection data-test-id={'delete-profile'}>
-      <h2>{t('deleteProfile.title')}</h2>
-      <p dangerouslySetInnerHTML={{ __html: t('deleteProfile.explanation') }} />
-
-      {dataLoadState === loadingLoadState ||
-      dataLoadState === errorLoadState ? (
-        <LoadStateIndicator />
-      ) : (
-        <Button
-          type="button"
-          onClick={handleDeleteClick}
-          className={styles.button}
-          id={removeButtonId}
-        >
-          {t('deleteProfile.delete')}
-        </Button>
-      )}
-      <ConfirmationModal
-        isOpen={showConfirmationModal}
-        onClose={handleConfirmationModal}
-        onConfirm={handleProfileDelete}
-        content={() => <ModalServicesContent data={serviceConnections} />}
-        title={t('deleteProfileModal.title')}
-        actionButtonText={t('deleteProfileModal.delete')}
-      />
-      <DeleteProfileError
-        error={resultError}
-        onClose={() => setResultError(undefined)}
-      />
+    <ProfileSection data-test-id={'delete-profile'} borderless>
+      <div className={commonFormStyles['editor-description-container']}>
+        <h2>{t('deleteProfile.title')}</h2>
+        <p
+          dangerouslySetInnerHTML={{ __html: t('deleteProfile.explanation') }}
+        />
+      </div>
+      <div className={commonFormStyles['uneditable-box-content']}>
+        <div className={contentStyles['common-child-vertical-spacing']}>
+          {dataLoadState === loadingLoadState ||
+          dataLoadState === errorLoadState ? (
+            <LoadStateIndicator />
+          ) : (
+            <StyledButton
+              type="button"
+              onClick={handleDeleteClick}
+              id={removeButtonId}
+            >
+              {t('deleteProfile.delete')}
+            </StyledButton>
+          )}
+          <ConfirmationModal
+            isOpen={showConfirmationModal}
+            onClose={handleConfirmationModal}
+            onConfirm={handleProfileDelete}
+            content={() => <ModalServicesContent data={serviceConnections} />}
+            title={t('deleteProfileModal.title')}
+            actionButtonText={t('deleteProfileModal.delete')}
+          />
+          <DeleteProfileError
+            error={resultError}
+            onClose={() => setResultError(undefined)}
+          />
+        </div>
+      </div>
     </ProfileSection>
   );
 }

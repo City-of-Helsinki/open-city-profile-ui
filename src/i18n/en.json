@@ -59,6 +59,7 @@
     "panelTitle": "Do you want to download your information?"
   },
   "expandingPanel": {
+    "closeButtonText": "Close",
     "hideInformation": "Hide information",
     "showInformation": "Show information"
   },
@@ -174,6 +175,8 @@
     "ariaShowOptions": "Show options",
     "ariaSelectedOption": "{{value}} is selected",
     "ariaNoSelectedItemForLabel": "{{label}} is not selected",
+    "contact": "Contact",
+    "contactInformation": "My contact information",
     "deleteProfile": "Delete your profile",
     "description": "The data stored in the Helsinki profile is used in the City of Helsinki’s e-services. You can find more detailed information on the <linkToServices>{{linkToServicesText}} page</linkToServices>.",
     "downloadData": "Download your data",
@@ -213,8 +216,8 @@
     "empty": "You currently don't have any services connected to your profile.",
     "explanation": "You have granted the following services the right to use the data stored on your Helsinki profile.",
     "servicePersonalData": "Information which the service will know about you:",
-    "title": "Services with permission to use your data",
-    "deleteConnection": "If you want to delete your data from this service, <deleteButton>click here</deleteButton>.",
+    "title": "Your services",
+    "deleteConnection": "Delete your data from this service",
     "connectionRemovalVerification": "By continuing, you will lose all the data stored in the {{serviceName}} service and will no longer be able to use the service until you re-register to the service.",
     "connectionRemovalSuccess": "All the data we had stored in the {{serviceName}} service has been deleted successfully!",
     "connectionRemovalForbidden": "We cannot delete data from this service, for example due to the transaction status or storage time.",

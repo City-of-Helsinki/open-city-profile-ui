@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { TextInput, Checkbox, Button, PhoneInput } from 'hds-react';
+import { TextInput, Checkbox, PhoneInput } from 'hds-react';
 import { Formik, Form, Field, FormikProps } from 'formik';
 import * as yup from 'yup';
 import classNames from 'classnames';
@@ -24,6 +24,7 @@ import {
   getMemoizedCountryCallingCodes,
   getDefaultCountryCallingCode,
 } from '../../../i18n/countryCallingCodes.utils';
+import StyledButton from '../../../common/styledButton/StyledButton';
 
 const termsSchema = yup
   .object()
@@ -95,7 +96,8 @@ function CreateProfileForm(props: Props): React.ReactElement {
   ]);
   const containerStyle = classNames([
     styles['form-fields'],
-    commonFormStyles['multi-item-wrapper'],
+    commonFormStyles['responsive-flex-box-columns-rows'],
+    commonFormStyles['editor-form-fields'],
   ]);
   return (
     <Formik
@@ -235,7 +237,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
             />
           </div>
           <div>
-            <Button
+            <StyledButton
               variant="primary"
               type="submit"
               disabled={Boolean(
@@ -251,7 +253,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
               data-testid={'create-profile-submit-button'}
             >
               {t('profileForm.submit')}
-            </Button>
+            </StyledButton>
           </div>
         </Form>
       )}

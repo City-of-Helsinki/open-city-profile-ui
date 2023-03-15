@@ -1,9 +1,7 @@
 .container {
-  --vertical-padding: var(--spacing-m);
   display: flex;
   flex-direction: column;
-  padding: var(--vertical-padding) var(--content-horizontal-padding);
-  border: 1px solid var(--color-black-40);
+  position: relative;
 }
 
 .title {
@@ -15,7 +13,6 @@
 .title h2 {
   margin: 0;
   font-size: var(--h3-size);
-  color: var(--color-bus);
 }
 
 .right-side-information {
@@ -23,25 +20,44 @@
   align-items: center;
 }
 
-.right-side-information button {
-  padding-right: 0;
-  margin-right: calc(-1 * (var(--spacing-s)));
-}
-
 .show-information {
   margin-right: var(--spacing-s);
   font-size: var(--fontsize-body-s);
   font-weight: bold;
-  color: var(--color-bus);
   text-transform: uppercase;
 }
 
-.card {
+.card.card {
   padding: 0;
 }
 
-@media (min-width: 600px) {
-  .card {
-    max-width: 600px;
+.close-button-container {
+  margin: var(--spacing-m) 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+@media (max-width: 767.98px) {
+  .right-side-information {
+    position: absolute;
+    right: var(--spacing-m);
+    top: var(--spacing-m);
+  }
+  .right-side-information button > span {
+    display: none;
+  }
+  .right-side-information.right-side-information button > div {
+    margin: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .close-button-container {
+    position: absolute;
+    display: block;
+    margin: 0;
+    bottom: var(--spacing-l);
+    right: var(--spacing-m);
   }
 }

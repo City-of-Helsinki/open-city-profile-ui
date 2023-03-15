@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconAlertCircle, Button, Dialog, DialogProps } from 'hds-react';
+import { IconAlertCircle, Dialog, DialogProps } from 'hds-react';
 
 import { getModalProps } from '../getModalProps';
+import StyledButton from '../../../../common/styledButton/StyledButton';
 
 export type Props = {
   isOpen: boolean;
@@ -75,21 +76,21 @@ function ConfirmationModal({
       {!preventClosing && (actionButtonText || closeButtonText) && (
         <Dialog.ActionButtons>
           {actionButtonText && (
-            <Button
+            <StyledButton
               onClick={onConfirm}
               data-testid="confirmation-modal-confirm-button"
             >
               {actionButtonText}
-            </Button>
+            </StyledButton>
           )}
           {closeButtonText !== '' && closeButtonLabelText && (
-            <Button
+            <StyledButton
               variant="secondary"
               onClick={onClose}
               data-testid="confirmation-modal-cancel-button"
             >
               {closeButtonLabelText}
-            </Button>
+            </StyledButton>
           )}
         </Dialog.ActionButtons>
       )}

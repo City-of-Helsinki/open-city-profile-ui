@@ -6,7 +6,7 @@ import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
-import { AddressValue, EditDataType } from '../../helpers/editData';
+import { AddressValue } from '../../helpers/editData';
 import { createFormFieldHelpers } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
 import FormButtons from '../formButtons/FormButtons';
@@ -19,22 +19,87 @@ import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import getCountry from '../../helpers/getCountry';
 import { getFormFields } from '../../helpers/formProperties';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
-import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
-import { RowItemProps } from '../multiItemEditor/MultiItemEditor';
+import { EditHandling } from '../../hooks/useCommonEditHandling';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import { RequiredFieldsNote } from '../../../common/requiredFieldsNote/RequiredFieldsNote';
 import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
+import AddButton from '../addButton/AddButton';
+import EditingNotifications from '../editingNotifications/EditingNotifications';
 
 type FormikValues = AddressValue;
 
-function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
-  const dataType: EditDataType = 'addresses';
-  const { data, testId, disableEditButtons } = props;
+function AddressFormAndData({
+  editHandler,
+}: {
+  editHandler: EditHandling;
+}): React.ReactElement {
+  const {
+    getData,
+    hasData,
+    testId,
+    isEditing,
+    currentAction,
+    actionHandler,
+    isNew,
+    editButtonId,
+    removeButtonId,
+    dataType,
+    notificationContent,
+  } = editHandler;
+  const { t, i18n } = useTranslation();
+  const userIsVerified = !!useVerifiedPersonalInformation();
+  const title = userIsVerified
+    ? t('profileInformation.addressTitleWhenHasVerifiedData')
+    : t('profileInformation.address');
+
+  const description = userIsVerified
+    ? t('profileInformation.addressDescriptionNoWeakAddress')
+    : t('profileInformation.addressDescriptionNoAddress');
+  const containerStyle = commonFormStyles['responsive-flex-box-columns-rows'];
+  const DescriptionElement = (): React.ReactElement | null => {
+    if (hasData() && !isNew) {
+      return <p>{t('profileInformation.addressDescription')}</p>;
+    }
+    return <p data-testid={`${dataType}-no-data`}>{description}</p>;
+  };
+
+  const Explanation = () => (
+    <div
+      className={classNames(
+        commonFormStyles['editor-description-container'],
+        commonFormStyles['bottom-border']
+      )}
+    >
+      <h2>{title}</h2>
+      <DescriptionElement />
+    </div>
+  );
+
+  if (!hasData()) {
+    return (
+      <div className={classNames(commonFormStyles['flex-box-columns'])}>
+        <Explanation />
+        <div
+          className={classNames(
+            commonFormStyles['edit-buttons'],
+            commonFormStyles['form-buttons']
+          )}
+        >
+          <AddButton editHandler={editHandler} />
+        </div>
+        <EditingNotifications
+          content={notificationContent.content}
+          dataType={dataType}
+        />
+      </div>
+    );
+  }
+
+  const data = getData();
   const value = data.value as AddressValue;
   const { address, city, postalCode, countryCode } = value;
-  const { t, i18n } = useTranslation();
   const lang = i18n.languages[0];
   const applicationLanguage = getLanguageCode(i18n.languages[0]);
   const countryList = countries.getNames(applicationLanguage);
@@ -57,14 +122,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
     option => option.value === countryCode
   ) as OptionType;
   const formFields = getFormFields(dataType);
-  const {
-    isNew,
-    isEditing,
-    actionHandler,
-    currentAction,
-    editButtonId,
-    removeButtonId,
-  } = useCommonEditHandling(props);
+
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     FormikValues
   >(t, isNew);
@@ -73,32 +131,7 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
   const disableButtons = !!currentAction || !!saving;
   const ariaLabels = createActionAriaLabels(dataType, value.address, t);
   const formFieldStyle = commonFormStyles['form-field'];
-  const userIsVerified = !!useVerifiedPersonalInformation();
 
-  const Explanation = () => {
-    const title = userIsVerified
-      ? t('profileInformation.addressTitleWhenHasVerifiedData')
-      : t('profileInformation.address');
-
-    const DescriptionElement = (): React.ReactElement | null => {
-      if (!isNew) {
-        return <p>{t('profileInformation.addressDescription')}</p>;
-      }
-      return (
-        <p>
-          {userIsVerified
-            ? t('profileInformation.addressDescriptionNoWeakAddress')
-            : t('profileInformation.addressDescriptionNoAddress')}
-        </p>
-      );
-    };
-    return (
-      <div className={commonFormStyles['section-title-with-explanation']}>
-        <h2 className={commonFormStyles['section-title']}>{title}</h2>
-        <DescriptionElement />
-      </div>
-    );
-  };
   if (isEditing) {
     return (
       <Formik
@@ -114,11 +147,16 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
         validationSchema={addressSchema}
       >
         {(formikProps: FormikProps<FormikValues>) => (
-          <Form className={commonFormStyles['multi-item-form']}>
+          <Form>
             <Explanation />
             <RequiredFieldsNote />
             <FocusKeeper targetId={`${testId}-address`}>
-              <div className={commonFormStyles['multi-item-wrapper']}>
+              <div
+                className={classNames(
+                  containerStyle,
+                  commonFormStyles['editor-form-fields']
+                )}
+              >
                 <Field
                   name="address"
                   id={`${testId}-address`}
@@ -184,6 +222,12 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
                 formikProps={formikProps}
                 dataType={dataType}
               />
+              <EditingNotifications
+                content={notificationContent.content}
+                dataType={dataType}
+                noSpacing
+                topSpacingMobile
+              />
               <FormButtons
                 handler={actionHandler}
                 disabled={disableButtons}
@@ -197,54 +241,67 @@ function MultiItemAddressRow(props: RowItemProps): React.ReactElement {
     );
   }
   return (
-    <div
-      className={classNames([
-        commonFormStyles['content-wrapper'],
-        commonFormStyles['multi-item-content-wrapper'],
-      ])}
-    >
-      <Explanation />
-      <div className={commonFormStyles['multi-item-wrapper']}>
-        <LabeledValue
-          label={t(formFields.address.translationKey)}
-          value={value.address}
-          testId={`${testId}-address`}
-        />
-        <LabeledValue
-          label={t(formFields.postalCode.translationKey)}
-          value={value.postalCode}
-          testId={`${testId}-postalCode`}
-        />
-        <LabeledValue
-          label={t(formFields.city.translationKey)}
-          value={value.city}
-          testId={`${testId}-city`}
-        />
-        <LabeledValue
-          label={t(formFields.countryCode.translationKey)}
-          value={getCountry(value.countryCode, lang)}
-          testId={`${testId}-countryCode`}
-        />
+    <div className={classNames(commonFormStyles['flex-box-columns'])}>
+      <div
+        className={classNames(
+          commonFormStyles['editor-description-container'],
+          commonFormStyles['bottom-border']
+        )}
+      >
+        <h2>{title}</h2>
+        <DescriptionElement />
       </div>
-      <div className={commonFormStyles['actions-wrapper']}>
-        <EditButtons
-          handler={actionHandler}
-          actions={{
-            removable: true,
-            primary,
-            setPrimary: false,
-          }}
-          buttonClassNames={commonFormStyles['actions-wrapper-button']}
-          editButtonId={editButtonId}
-          removeButtonId={removeButtonId}
-          disabled={disableButtons || disableEditButtons}
-          testId={testId}
-          ariaLabels={ariaLabels}
-        />
-        <SaveIndicator action={currentAction} testId={testId} />
+      <div className={classNames(containerStyle)}>
+        <div
+          className={classNames(
+            containerStyle,
+            commonFormStyles['editor-text-fields']
+          )}
+        >
+          <LabeledValue
+            label={t(formFields.address.translationKey)}
+            value={value.address}
+            testId={`${testId}-address`}
+          />
+          <LabeledValue
+            label={t(formFields.postalCode.translationKey)}
+            value={value.postalCode}
+            testId={`${testId}-postalCode`}
+          />
+          <LabeledValue
+            label={t(formFields.city.translationKey)}
+            value={value.city}
+            testId={`${testId}-city`}
+          />
+          <LabeledValue
+            label={t(formFields.countryCode.translationKey)}
+            value={getCountry(value.countryCode, lang)}
+            testId={`${testId}-countryCode`}
+          />
+        </div>
+        <div className={commonFormStyles['edit-buttons']}>
+          <EditButtons
+            handler={actionHandler}
+            actions={{
+              removable: true,
+              primary,
+              setPrimary: false,
+            }}
+            editButtonId={editButtonId}
+            removeButtonId={removeButtonId}
+            disabled={disableButtons}
+            testId={testId}
+            ariaLabels={ariaLabels}
+          />
+          <SaveIndicator action={currentAction} testId={testId} />
+        </div>
       </div>
+      <EditingNotifications
+        content={notificationContent.content}
+        dataType={dataType}
+      />
     </div>
   );
 }
 
-export default MultiItemAddressRow;
+export default AddressFormAndData;
