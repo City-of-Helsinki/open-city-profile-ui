@@ -35,6 +35,17 @@ function CalendarIcon(): React.ReactElement {
   );
 }
 
+function Tag({ text }: { text: string }): React.ReactElement {
+  return (
+    <RoundedTag className={styles['tag']}>
+      <span className={styles['tag-content']}>
+        <IconAlertCircle />
+        <span className={styles['tag-text']}>{text}</span>
+      </span>
+    </RoundedTag>
+  );
+}
+
 function StatusText({ status }: Transaction): React.ReactElement {
   const statusToText = (itemStatus: Transaction['status']): string => {
     if (itemStatus === 'in-progress') {
@@ -44,12 +55,7 @@ function StatusText({ status }: Transaction): React.ReactElement {
   };
   return (
     <div className={styles['grid-column-status']}>
-      <RoundedTag>
-        <span className={styles['tag-content']}>
-          <IconAlertCircle />
-          <span className={styles['tag-text']}>{statusToText(status)}</span>
-        </span>
-      </RoundedTag>
+      <Tag text={statusToText(status)}></Tag>
     </div>
   );
 }
@@ -81,8 +87,18 @@ function ContentAsGridRow(transaction: Transaction): React.ReactElement {
   );
 }
 
-function Title({ title }: Transaction): React.ReactElement {
-  return <div className={styles['grid-column-title']}>{title}</div>;
+function Title({ title, actionRequired }: Transaction): React.ReactElement {
+  return (
+    <div
+      className={classNames(
+        styles['grid-column-title'],
+        actionRequired ? styles['grid-column-title-with-action-required'] : ''
+      )}
+    >
+      <span>{title}</span>
+      {actionRequired && <Tag text="Tarvitsee lisätietoja" />}
+    </div>
+  );
 }
 
 function AccordionButton(props: {

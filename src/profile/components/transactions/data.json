@@ -9,7 +9,7 @@
           "serviceUrl": "https://hel.fi",
           "status": "in-progress",
           "content": "<p>Hei, Minna</p><p>Pyydämme sinua sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p><a href=''>Jatka asiointia palvelussa</a></p><p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p><p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p><p>Terveisin....</p>",
-          "importance": 1,
+          "actionRequired": true,
           "uid": 1
         },
         {
@@ -19,7 +19,7 @@
           "serviceUrl": "https://hel.fi",
           "status": "in-progress",
           "content": "<p>Hei, Minna</p><p>Pyydämme sinua sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p><a href=''>Jatka asiointia palvelussa</a></p><p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p><p>Terveisin....</p>",
-          "importance": 1,
+
           "uid": 11
         },
         {
@@ -29,7 +29,7 @@
           "serviceUrl": "https://hel.fi",
           "status": "in-progress",
           "content": "<p>Hei, Minna</p><p>Pyydämme sinua sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p><a href=''>Jatka asiointia palvelussa</a></p><p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p><p>Terveisin....</p>",
-          "importance": 1,
+
           "uid": 12
         },
         {
@@ -39,7 +39,7 @@
           "serviceUrl": "https://hel.fi",
           "status": "in-progress",
           "content": "<p>Hei, Minna</p><p>Pyydämme sinua sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p><a href=''>Jatka asiointia palvelussa</a></p><p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p><p>Terveisin....</p>",
-          "importance": 0,
+
           "uid": 13
         }
       ]
@@ -53,7 +53,7 @@
           "serviceUrl": "https://hel.fi",
           "status": "in-progress",
           "content": "<p>Hei, Minna</p><p>Pyydämme sinua sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p><a href=''>Jatka asiointia palvelussa</a></p><p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p><p>Terveisin....</p>",
-          "importance": 1,
+
           "uid": 3
         },
         {
@@ -63,7 +63,7 @@
           "serviceUrl": "https://hel.fi",
           "status": "in-progress",
           "content": "<p>Hei, Minna</p><p>Pyydämme sinua sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p><a href=''>Jatka asiointia palvelussa</a></p><p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p><p>Terveisin....</p>",
-          "importance": 0,
+
           "uid": 4
         }
       ]

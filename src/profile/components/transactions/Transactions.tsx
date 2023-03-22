@@ -13,11 +13,12 @@ type TransactionProps = {
 };
 
 export type TransactionStatus =
+  | 'received'
   | 'in-progress'
   | 'ready'
   | 'waiting'
   | 'action-required'
-  | 'propotion';
+  | 'proposal';
 
 export type TransactionGroup = {
   transactions: Transaction[];
@@ -29,8 +30,8 @@ export type Transaction = {
   serviceName: string;
   serviceUrl: string;
   status: TransactionStatus;
+  actionRequired?: boolean;
   content: string;
-  importance: number;
   uid: string;
 };
 

@@ -51,18 +51,13 @@
   font-weight: bold;
 }
 
-.grid-column-status .tag-content {
+.tag .tag-content {
   display: flex;
   align-items: center;
 }
 
-.grid-column-status .tag-text {
+.tag .tag-text {
   padding: 0 var(--spacing-xs);
-}
-
-.grid-column-title,
-.grid-column-service {
-  opacity: 1;
 }
 
 .grid-column-calendar {
@@ -134,9 +129,12 @@
   bottom: 0;
 }
 
-.transaction:not(:first-of-type) .grid-column-title,
-.transaction:not(:first-of-type) .grid-column-service {
-  opacity: 0;
+.grid-column-title-with-action-required {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-right: var(--spacing-l);
+  box-sizing: border-box;
 }
 
 .transaction:not(:last-of-type)::after {
