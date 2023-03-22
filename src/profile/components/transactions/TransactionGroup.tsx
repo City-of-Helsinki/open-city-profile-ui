@@ -6,45 +6,31 @@ import {
   RoundedTag,
   useAccordion,
   IconAlertCircle,
+  IconCalendar,
 } from 'hds-react';
 import React, { useState } from 'react';
 
-import { Link } from '../../../common/copyOfHDSLink/Link';
 import StyledButton from '../../../common/styledButton/StyledButton';
 import { Transaction, TransactionGroup } from './Transactions';
 import styles from './Transactions.module.css';
 
-function TimeStamp({ timestamp }: Transaction): React.ReactElement {
-  return <div className={styles['grid-column-timestamp']}>{timestamp}</div>;
-}
-function Indicator({ importance }: Transaction): React.ReactElement {
+function CalendarIcon(): React.ReactElement {
   return (
-    <div className={styles['grid-column-indicator']}>
-      <span
-        className={classNames(
-          styles['indicator-dot'],
-          importance > 0 ? styles['important-dot'] : styles['unimportant-dot']
-        )}
-      ></span>
+    <div
+      className={classNames(
+        styles['grid-column-calendar'],
+        styles['grid-column-calendar-header']
+      )}
+    >
+      <span className={styles['calendar-icon']}>
+        <IconCalendar />
+      </span>
       <span
         className={classNames(
           styles['indicator-line'],
-          styles['indicator-line-with-dot']
+          styles['indicator-line-with-icon']
         )}
       ></span>
-    </div>
-  );
-}
-
-function ServiceLink({
-  serviceName,
-  serviceUrl,
-}: Transaction): React.ReactElement {
-  return (
-    <div className={styles['grid-column-service']}>
-      <Link external openInNewTab href={serviceUrl}>
-        {serviceName}
-      </Link>
     </div>
   );
 }
@@ -80,10 +66,14 @@ function Content({ content }: Transaction): React.ReactElement {
 function ContentAsGridRow(transaction: Transaction): React.ReactElement {
   return (
     <>
-      <div className={styles['grid-column-indicator']}>
-        <span className={styles['indicator-line']}></span>
+      <div className={styles['grid-column-calendar']}>
+        <span
+          className={classNames(
+            styles['indicator-line'],
+            styles['indicator-line-content']
+          )}
+        ></span>
       </div>
-      <div></div>
       <Content {...transaction} />
       <div></div>
       <div></div>
@@ -117,12 +107,26 @@ function AccordionButton(props: {
   );
 }
 
+function ServiceAndDate({
+  timestamp,
+  serviceName,
+}: Transaction): React.ReactElement {
+  return (
+    <div className={styles['grid-column-service-and-date']}>
+      <div className={styles['service']}>{serviceName}</div>
+      <div className={styles['date']}>{timestamp}</div>
+    </div>
+  );
+}
+
 function TransAction({
   transaction,
   buttonCallback,
+  position,
 }: {
   transaction: Transaction;
   buttonCallback?: () => void;
+  position: 'first' | 'last' | 'middle';
 }): React.ReactElement {
   const { isOpen, buttonProps } = useAccordion({
     initiallyOpen: false,
@@ -137,12 +141,17 @@ function TransAction({
       }
     : buttonProps;
   return (
-    <div className={styles['transaction']}>
+    <div
+      className={classNames(
+        styles['transaction'],
+        styles[`transaction-${isOpen ? 'open' : 'closed'}`],
+        styles[`transaction-position-${position}`]
+      )}
+    >
       <div className={styles['transaction-grid']}>
-        <Indicator {...transaction} />
-        <TimeStamp {...transaction} />
+        <CalendarIcon />
+        <ServiceAndDate {...transaction} />
         <Title {...transaction} />
-        <ServiceLink {...transaction} />
         <StatusText {...transaction} />
         <AccordionButton
           title="click"
@@ -166,11 +175,18 @@ function TransactionGroupComponent({
     <div className={styles['group-container']}>
       {group.transactions
         .filter((transaction, index) => isOpen || index === 0)
-        .map((transaction, index) => (
+        .map((transaction, index, arr) => (
           <TransAction
             key={transaction.uid}
             transaction={transaction}
             buttonCallback={index === 0 ? () => setIsOpen(!isOpen) : undefined}
+            position={
+              index === 0
+                ? 'first'
+                : index === arr.length - 1
+                ? 'last'
+                : 'middle'
+            }
           />
         ))}
     </div>

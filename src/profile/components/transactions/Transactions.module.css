@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: var(--spacing-m);
-  border-bottom: 1px solid var(--color-black);
+  border: 1px solid #a09c9c;
 }
 
 .transaction {
@@ -17,13 +17,13 @@
   flex-direction: column;
   position: relative;
   background: var(--color-white);
-  padding: var(--spacing-xs) var(--spacing-m);
+  padding: var(--spacing-xs) var(--spacing-xs);
 }
 
 .transaction-grid {
   display: grid;
-  grid-template-columns: 50px 100px 3fr 2fr 1fr 80px;
-  grid-template-areas: 'indicator date content content status button';
+  grid-template-columns: 24px 2fr 4fr 1fr 80px;
+  grid-template-areas: 'calendar content content status button';
   grid-template-rows: auto;
   grid-auto-flow: row;
   grid-gap: 10px;
@@ -33,7 +33,22 @@
 }
 
 .transaction-content {
-  grid-column: 3 / 5;
+  grid-column: 2 / 6;
+}
+
+.grid-column-service-and-date {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: 100%;
+}
+.grid-column-service-and-date .service {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  padding-right: var(--spacing-l);
+  font-weight: bold;
 }
 
 .grid-column-status .tag-content {
@@ -50,10 +65,18 @@
   opacity: 1;
 }
 
-.grid-column-indicator {
-  display: block;
+.grid-column-calendar {
+  display: flex;
+  flex-direction: column;
   position: relative;
   height: 100%;
+  width: 100%;
+  justify-content: flex-end;
+}
+.grid-column-calendar .calendar-icon {
+  height: 24px;
+  background-color: #fff;
+  z-index: 2;
 }
 .grid-column-button {
   display: flex;
@@ -69,49 +92,46 @@
   padding: 0;
 }
 
-.indicator-dot {
-  display: block;
-  width: 10px;
-  height: 10px;
-  background-color: var(--color-black);
-  border: 1px solid var(--color-black);
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -5px -5px 0 0;
-  z-index: 2;
-}
-
-.important-dot {
-  background-color: var(--color-brick);
-  border-color: var(--color-brick);
-}
-
-.unimportant-dot {
-  background-color: var(--color-black-20);
-  border-color: var(--color-black-20);
-}
-
 .indicator-line {
   position: absolute;
-  top: -10px;
-  bottom: -40px;
   left: 50%;
   width: 1px;
-  background-color: var(--color-black-20);
-  margin-left: 5px;
+  margin-left: 0px;
   z-index: 1;
-}
-.indicator-line-with-dot {
-  position: absolute;
-  top: unset;
-  bottom: -20px;
-  height: 40px;
+  border-left: 2px dotted rgb(0, 135, 65);
 }
 
-.transaction:last-of-type .indicator-line {
+.transaction-position-first .grid-column-calendar-header .indicator-line {
+  position: absolute;
+  top: unset;
+  bottom: -8px;
+  height: 8px;
+}
+
+.transaction-position-last .indicator-line {
+  top: -12px;
+  bottom: unset;
+  height: 16px;
+}
+
+.transaction-position-middle .indicator-line {
+  top: -10px;
+  bottom: -10px;
+}
+
+.transaction-position-first.transaction-closed .indicator-line {
   display: none;
+}
+
+.transaction .indicator-line.indicator-line-content {
+  top: 0;
+  bottom: -20px;
+  height: auto;
+}
+
+.transaction.transaction-position-last .indicator-line.indicator-line-content {
+  top: 0;
+  bottom: 0;
 }
 
 .transaction:not(:first-of-type) .grid-column-title,
@@ -127,4 +147,14 @@
   bottom: 1px;
   left: 50px;
   right: 80px;
+}
+
+.transaction:not(.transaction-position-first)
+  .grid-column-service-and-date
+  .service {
+  display: none;
+}
+
+.transaction:not(.transaction-position-first) .grid-column-calendar {
+  justify-content: center;
 }
