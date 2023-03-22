@@ -56,7 +56,17 @@
   height: 100%;
 }
 .grid-column-button {
-  display: block;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.transaction .grid-column-button.grid-column-button > button {
+  padding: 0;
+}
+.transaction .grid-column-button.grid-column-button > button > span {
+  padding: 0;
 }
 
 .indicator-dot {
