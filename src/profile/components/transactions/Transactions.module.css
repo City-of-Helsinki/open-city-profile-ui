@@ -64,6 +64,18 @@
   padding: 0 var(--spacing-xs);
 }
 
+.tag.tag-type-action-required {
+  --tag-background: #ffda07;
+}
+.tag.tag-type-ready {
+  --tag-background: #007a64;
+  --tag-color: #fff;
+}
+.tag.tag-type-in-progress {
+  --tag-background: #0062b9;
+  --tag-color: #fff;
+}
+
 .grid-column-line,
 .grid-column-calendar {
   display: flex;
@@ -145,6 +157,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
   padding-right: var(--spacing-l);
   box-sizing: border-box;
 }

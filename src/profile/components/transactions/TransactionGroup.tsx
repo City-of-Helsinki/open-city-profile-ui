@@ -7,12 +7,18 @@ import {
   useAccordion,
   IconAlertCircle,
   IconCalendar,
+  Tag,
+  IconInfoCircle,
 } from 'hds-react';
 import React, { useState } from 'react';
 
 import StyledButton from '../../../common/styledButton/StyledButton';
 import Content from './Content';
-import { Transaction, TransactionGroup } from './Transactions';
+import {
+  Transaction,
+  TransactionGroup,
+  TransactionStatus,
+} from './Transactions';
 import styles from './Transactions.module.css';
 
 function CalendarIcon(): React.ReactElement {
@@ -36,14 +42,26 @@ function CalendarIcon(): React.ReactElement {
   );
 }
 
-function Tag({ text }: { text: string }): React.ReactElement {
+function StatusTag({
+  text,
+  rounded,
+  type,
+}: {
+  text: string;
+  rounded?: boolean;
+  type?: TransactionStatus;
+}): React.ReactElement {
+  const Component = rounded ? RoundedTag : Tag;
+  const Icon = type === 'action-required' ? IconAlertCircle : IconInfoCircle;
   return (
-    <RoundedTag className={styles['tag']}>
+    <Component
+      className={classNames(styles['tag'], styles[`tag-type-${type}`])}
+    >
       <span className={styles['tag-content']}>
-        <IconAlertCircle />
+        <Icon />
         <span className={styles['tag-text']}>{text}</span>
       </span>
-    </RoundedTag>
+    </Component>
   );
 }
 
@@ -56,7 +74,7 @@ function StatusText({ status }: Transaction): React.ReactElement {
   };
   return (
     <div className={styles['grid-column-status']}>
-      <Tag text={statusToText(status)}></Tag>
+      <StatusTag text={statusToText(status)} type={status}></StatusTag>
     </div>
   );
 }
@@ -88,7 +106,13 @@ function Title({ title, actionRequired }: Transaction): React.ReactElement {
       )}
     >
       <span>{title}</span>
-      {actionRequired && <Tag text="Tarvitsee lisätietoja" />}
+      {actionRequired && (
+        <StatusTag
+          rounded
+          type="action-required"
+          text="Tarvitsee lisätietoja"
+        />
+      )}
     </div>
   );
 }

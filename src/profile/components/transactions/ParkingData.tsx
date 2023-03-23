@@ -16,7 +16,13 @@ function Attachments({
 }): React.ReactElement {
   const arr = (dataSource('attachments') as unknown) as { name: string }[];
   return (
-    <div className={styles['data-row']}>
+    <div
+      className={classNames(
+        styles['data-row'],
+        styles['attachments'],
+        styles['borderless']
+      )}
+    >
       {arr.map(item => (
         <span className={styles['attachment']} key={item.name}>
           <IconPaperclip />
@@ -79,11 +85,11 @@ function Demands({
           value={getTranslation('sentTo')}
         />
       </div>
-      <div className={styles['data-row']}>
+      <div className={classNames(styles['data-row'], styles['borderless'])}>
         <h4>{getTranslation('contents')}</h4>
         {dataSource('rectificationContent')}
       </div>
-      <div className={styles['data-row']}>
+      <div className={classNames(styles['data-row'], styles['borderless'])}>
         <h4>{getTranslation('attachments')}</h4>
         <Attachments dataSource={dataSource} />
       </div>

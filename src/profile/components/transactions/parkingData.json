@@ -54,7 +54,10 @@
   "regNumber": "ABC-123",
   "relation": "driver",
   "poaFile": { "name": "test.pdf", "size": 12345, "type": "application/pdf" },
-  "attachments": [{ "name": "test2.jpg", "size": 50100, "type": "image/jpeg" }],
+  "attachments": [
+    { "name": "test2.jpg", "size": 50100, "type": "image/jpeg" },
+    { "name": "test2.jpg", "size": 50100, "type": "image/jpeg" }
+  ],
   "toSeparateEmail": false,
   "newEmailAddress": "",
   "newEmailConfirm": "",

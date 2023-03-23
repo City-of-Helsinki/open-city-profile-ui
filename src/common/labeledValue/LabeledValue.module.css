@@ -6,10 +6,18 @@
   box-sizing: border-box;
 }
 
+.wrapper.with-icon svg {
+  padding-right: var(--spacing-xs);
+}
+.wrapper.with-icon span {
+  padding-left: 35px;
+}
+
 .label {
   font-size: var(--fontsize-body-m);
   margin-bottom: var(--spacing-xs);
   font-weight: 500;
+  display: flex;
 }
 
 .value {

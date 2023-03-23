@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Form from './Form';
 import ParkingData from './ParkingData';
 import { Transaction } from './Transactions';
 
@@ -8,6 +9,10 @@ type Props = {
 };
 
 function Content({ transaction }: Props): React.ReactElement {
+  const { contentType } = transaction;
+  if (contentType === 'certificate') {
+    return <Form {...transaction} />;
+  }
   return <ParkingData {...transaction} />;
 }
 

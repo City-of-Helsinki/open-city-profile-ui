@@ -35,7 +35,12 @@ function LabeledValue({
     return null;
   };
   return (
-    <div className={styles['wrapper']}>
+    <div
+      className={classNames(
+        styles['wrapper'],
+        labelIcon ? styles['with-icon'] : ''
+      )}
+    >
       <strong className={styles['label']} {...labelTestId}>
         <Icon /> {label}
       </strong>

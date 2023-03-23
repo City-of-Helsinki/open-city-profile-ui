@@ -52,9 +52,9 @@
           "title": "Hakemus 2.2",
           "serviceName": "Pysäköintitunnukset",
           "serviceUrl": "https://hel.fi",
-          "status": "in-progress",
+          "status": "ready",
           "content": "<p>Hei, Minna</p><p>Pyydämme sinua sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p><a href=''>Jatka asiointia palvelussa</a></p><p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p><p>Terveisin....</p>",
-          "contentType": "parking",
+          "contentType": "certificate",
           "uid": 3
         },
         {
@@ -63,8 +63,6 @@
           "serviceName": "Pysäköintitunnukset",
           "serviceUrl": "https://hel.fi",
           "status": "in-progress",
-          "content": "<p>Hei, Minna</p><p>Pyydämme sinua sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p><a href=''>Jatka asiointia palvelussa</a></p><p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p><p>Terveisin....</p>",
-          "contentType": "parking",
           "uid": 4
         }
       ]
