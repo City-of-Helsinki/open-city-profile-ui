@@ -23,7 +23,9 @@
 .transaction-grid {
   display: grid;
   grid-template-columns: 24px 2fr 4fr 1fr 80px;
-  grid-template-areas: 'calendar content content status button';
+  grid-template-areas:
+    'calendar servicedate title status button'
+    'line content content content content';
   grid-template-rows: auto;
   grid-auto-flow: row;
   grid-gap: 10px;
@@ -33,7 +35,8 @@
 }
 
 .transaction-content {
-  grid-column: 2 / 6;
+  grid-area: content;
+  width: 100%;
 }
 
 .grid-column-service-and-date {
@@ -41,6 +44,7 @@
   flex-direction: column;
   overflow: hidden;
   max-width: 100%;
+  grid-area: servicedate;
 }
 .grid-column-service-and-date .service {
   text-overflow: ellipsis;
@@ -60,13 +64,20 @@
   padding: 0 var(--spacing-xs);
 }
 
+.grid-column-line,
 .grid-column-calendar {
   display: flex;
   flex-direction: column;
   position: relative;
   height: 100%;
   width: 100%;
+}
+.grid-column-calendar {
   justify-content: flex-end;
+  grid-area: calendar;
+}
+.grid-column-line {
+  grid-area: line;
 }
 .grid-column-calendar .calendar-icon {
   height: 24px;
@@ -78,6 +89,7 @@
   width: 100%;
   flex-direction: column;
   align-items: flex-end;
+  grid-area: button;
 }
 
 .transaction .grid-column-button.grid-column-button > button {
@@ -135,6 +147,13 @@
   justify-content: space-between;
   padding-right: var(--spacing-l);
   box-sizing: border-box;
+}
+
+.grid-column-title {
+  grid-area: title;
+}
+.grid-column-status {
+  grid-area: status;
 }
 
 .transaction:not(:last-of-type)::after {

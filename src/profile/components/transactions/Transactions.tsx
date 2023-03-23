@@ -32,6 +32,8 @@ export type Transaction = {
   status: TransactionStatus;
   actionRequired?: boolean;
   content: string;
+  data: unknown;
+  contentType: 'parking' | 'parking-with-result' | 'certificate';
   uid: string;
 };
 

@@ -11,6 +11,7 @@ import {
 import React, { useState } from 'react';
 
 import StyledButton from '../../../common/styledButton/StyledButton';
+import Content from './Content';
 import { Transaction, TransactionGroup } from './Transactions';
 import styles from './Transactions.module.css';
 
@@ -60,19 +61,10 @@ function StatusText({ status }: Transaction): React.ReactElement {
   );
 }
 
-function Content({ content }: Transaction): React.ReactElement {
-  return (
-    <div
-      className={styles['transaction-content']}
-      dangerouslySetInnerHTML={{ __html: content }}
-    ></div>
-  );
-}
-
 function ContentAsGridRow(transaction: Transaction): React.ReactElement {
   return (
     <>
-      <div className={styles['grid-column-calendar']}>
+      <div className={styles['grid-column-line']}>
         <span
           className={classNames(
             styles['indicator-line'],
@@ -80,9 +72,9 @@ function ContentAsGridRow(transaction: Transaction): React.ReactElement {
           )}
         ></span>
       </div>
-      <Content {...transaction} />
-      <div></div>
-      <div></div>
+      <div className={styles['transaction-content']}>
+        <Content transaction={transaction} />
+      </div>
     </>
   );
 }

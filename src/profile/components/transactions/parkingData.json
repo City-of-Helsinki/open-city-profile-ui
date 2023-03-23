@@ -1,0 +1,153 @@
+{
+  "translations": {
+    "demand": {
+      "title": "Oikaisuvaatimuksen tiedot",
+      "doneAs": "Teen oikaisuvaatimuksen",
+      "doneAsDriver": "Ajoneuvon kuljettajana",
+      "name": "Nimi",
+      "sso": "Henkilötunnus",
+      "address": "Lähiosoite",
+      "postal": "Postinumero ja -toimipaikka",
+      "email": "Sähköpostiosoite",
+      "phone": "Puhelinnumero",
+      "iban": "Pankkitilinumero (IBAN)",
+      "decisionAs": "Haluan päätöksen",
+      "contents": "Oikaisuvaatimuksen sisältö",
+      "attachments": "Liitetiedostot",
+      "sentTo": "Pysäköinnin asiointikansiooni"
+    },
+    "decision": {
+      "title": "Korvauspäätöksen tiedot",
+      "vehicle": "Ajoneuvon tiedot",
+      "vehicleId": "Ajoneuvon rekisteritunnus",
+      "vehicleType": "Ajoneuvolaji",
+      "vehicleManufacturer": "Merkki",
+      "vehicleModel": "Malli",
+      "vehicleColor": "Väri",
+      "transferDate": "Siirron päivämäärä",
+      "uid": "Asianumero",
+      "transferReason": "Siirron syy",
+      "transferType": "Siirron tyyppi",
+      "transferStart": "Siirron lähtöosoite",
+      "transferEnd": "Siirron pääteosoite",
+      "transferStartNote": "Lähtöosoitteen lisätiedot",
+      "transferEndNote": "Pääteosoitteen lisätiedot",
+      "euros": "Korvauspäätöksen summa",
+      "dueDate": "Eräpäivä",
+      "barcode": "Virtuaaliviivakoodi",
+      "copyBarcode": "Kopioi virtuaaliviivakoodi"
+    },
+    "print": "Tulosta"
+  },
+  "user": {
+    "firstName": "Test",
+    "lastName": "User",
+    "primaryEmail": {
+      "email": "test.user@test.fi"
+    },
+    "verifiedPersonalInformation": {
+      "nationalIdentificationNumber": "123456-789A"
+    }
+  },
+  "invoiceNumber": "",
+  "refNumber": "12345678",
+  "regNumber": "ABC-123",
+  "relation": "driver",
+  "poaFile": { "name": "test.pdf", "size": 12345, "type": "application/pdf" },
+  "attachments": [{ "name": "test2.jpg", "size": 50100, "type": "image/jpeg" }],
+  "toSeparateEmail": false,
+  "newEmailAddress": "",
+  "newEmailConfirm": "",
+  "address": "Elimäenkatu 5",
+  "zipCode": "00100",
+  "city": "Helsinki",
+  "phone": "+358401234567",
+  "IBAN": "FI9780001700903330",
+  "rectificationContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse bibendum condimentum mi, vitae efficitur mi vulputate at. Aliquam porttitor tincidunt ex non fermentum. Fusce consequat imperdiet augue ut pulvinar. Praesent sollicitudin nulla non lacus tristique, sed faucibus urna viverra. Nullam pretium velit lorem. Maecenas porttitor molestie.",
+  "deliveryDecision": "toParkingService",
+  "parking-fine": {
+    "title": "Oikaisuvaatimus pysäköintivirhemaksuun",
+    "fine-info": "Pysäköintivirhemaksun tiedot",
+    "stepper": {
+      "step1": "Haku",
+      "step2": "Pysäköintivirhemaksun tiedot",
+      "step3": "Oikaisuvaatimus",
+      "step4": "Yhteenveto"
+    },
+    "make-rectification": "Tehdä oikaisuvaatimuksen",
+    "pay-fine": "Maksaa pysäköintivirhemaksun",
+    "to-payment": "Maksamaan",
+    "submit-success": "Lähetys onnistui",
+    "vehicle-info": {
+      "header": "Ajoneuvon tiedot",
+      "type": {
+        "label": "Ajoneuvolaji",
+        "placeholder": "Henkilöauto M1"
+      },
+      "brand": {
+        "label": "Merkki",
+        "placeholder": "Citroen"
+      },
+      "model": {
+        "label": "Malli",
+        "placeholder": "2D C2 HATCHBACK 1.4l-JMKFVC/232"
+      },
+      "color": {
+        "label": "Väri",
+        "placeholder": "Punainen"
+      }
+    },
+    "notifications": {
+      "success": {
+        "label": "Olemme vastaanottaneet oikaisuvaatimuksesi",
+        "text": "Saat ilmoitukset oikaisuvaatimuksen käsittelyn eri vaiheista antamaasi sähköpostiosoitteeseen. Kun päätös on tehty, saat sen pysäköinnin asiointikansioosi."
+      }
+    },
+    "submit": "Lähetä"
+  },
+  "moved-car": {
+    "title": "Ajoneuvon siirron oikaisuvaatimus",
+    "stepper": {
+      "step1": "Haku",
+      "step2": "Korvauspäätöksen tiedot",
+      "step3": "Oikaisuvaatimus",
+      "step4": "Yhteenveto"
+    },
+    "submit": "Lähetä",
+    "submit-success": "Lähetys onnistui",
+    "notifications": {
+      "success": {
+        "label": "Olemme vastaanottaneet oikaisuvaatimuksesi",
+        "text": "Saat ilmoitukset oikaisuvaatimuksen käsittelyn eri vaiheista antamaasi sähköpostiosoitteeseen. Kun päätös on tehty, saat sen pysäköinnin asiointikansioosi."
+      }
+    },
+    "move-timestamp": {
+      "label": "Siirron päivämäärä",
+      "placeholder": "1.11.2019"
+    },
+    "move-reason": {
+      "label": "Siirron syy",
+      "placeholder": "Katualue varattu"
+    },
+    "move-type": {
+      "label": "Siirron tyyppi",
+      "placeholder": "Maksullinen lähisiirto"
+    },
+    "address-from": {
+      "label": "Siirron lähtöosoite",
+      "placeholder": "Urheilukatu 38",
+      "details-label": "Lähtöosoitteen lisätiedot",
+      "details-placeholder": "Näytetään, jos on lisätietoja"
+    },
+    "address-to": {
+      "label": "Siirron pääteosoite",
+      "placeholder": "Urheilukatu 40",
+      "details-label": "Päätesoitteen lisätiedot",
+      "details-placeholder": "Näytetään, jos on lisätietoja"
+    },
+    "reimbursement-sum": {
+      "label": "Korvauspäätöksen summa",
+      "placeholder": "85,00 EUR"
+    }
+  }
+}
