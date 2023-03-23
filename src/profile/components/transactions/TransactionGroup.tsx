@@ -70,6 +70,9 @@ function StatusText({ status }: Transaction): React.ReactElement {
     if (itemStatus === 'in-progress') {
       return 'Käsittelyssä';
     }
+    if (itemStatus === 'received') {
+      return 'Vastaanotettu';
+    }
     return 'Käsitelty';
   };
   return (
@@ -121,10 +124,14 @@ function AccordionButton(props: {
   title: string;
   testId: string;
   isOpen: boolean;
+  empty: boolean;
   buttonProps: AccordionButtonProps;
 }): React.ReactElement | null {
-  const { isOpen, title, buttonProps, testId } = props;
+  const { isOpen, title, buttonProps, testId, empty } = props;
   const Icon = isOpen ? IconAngleUp : IconAngleDown;
+  if (empty) {
+    return <div className={styles['grid-column-button']}></div>;
+  }
   return (
     <div className={styles['grid-column-button']}>
       <StyledButton
@@ -190,8 +197,11 @@ function TransAction({
           buttonProps={extendedButtonProps}
           isOpen={isOpen}
           testId="testid"
+          empty={!transaction.contentType}
         />
-        {isOpen && <ContentAsGridRow {...transaction} />}
+        {isOpen && transaction.contentType && (
+          <ContentAsGridRow {...transaction} />
+        )}
       </div>
     </div>
   );

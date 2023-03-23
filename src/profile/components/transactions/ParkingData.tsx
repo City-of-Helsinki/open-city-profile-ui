@@ -228,7 +228,9 @@ function ParkingData({ contentType }: Transaction): React.ReactElement {
   return (
     <div className={styles['container']}>
       <Demands dataSource={dataSource} />
-      <Decision dataSource={dataSource} />
+      {contentType === 'parking-with-result' && (
+        <Decision dataSource={dataSource} />
+      )}
       <div className={styles['print']}>
         <StyledButton variant="primary" iconLeft={<IconPrinter />}>
           {dataSource('translations.print')}

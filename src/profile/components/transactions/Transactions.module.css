@@ -17,7 +17,7 @@
   flex-direction: column;
   position: relative;
   background: var(--color-white);
-  padding: var(--spacing-xs) var(--spacing-xs);
+  padding: var(--spacing-s) var(--spacing-xs) var(--spacing-xs);
 }
 
 .transaction-grid {
@@ -72,6 +72,10 @@
   --tag-color: #fff;
 }
 .tag.tag-type-in-progress {
+  --tag-background: #0062b9;
+  --tag-color: #fff;
+}
+.tag.tag-type-received {
   --tag-background: #0062b9;
   --tag-color: #fff;
 }
