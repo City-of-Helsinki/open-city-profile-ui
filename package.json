@@ -54,6 +54,7 @@
     "i18next": "^21.6.16",
     "i18next-browser-languagedetector": "^6.1.2",
     "jest-fetch-mock": "^3.0.3",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "oidc-client": "1.11.5",
     "oidc-client-ts": "^2.2.2",
