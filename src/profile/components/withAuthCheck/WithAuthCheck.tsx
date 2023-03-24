@@ -1,4 +1,4 @@
-import { User } from 'oidc-client';
+import { User } from 'oidc-client-ts';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';

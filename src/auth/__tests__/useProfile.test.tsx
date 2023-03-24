@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
-import { User } from 'oidc-client';
+import { User } from 'oidc-client-ts';
 
 import {
   mockUserCreator,

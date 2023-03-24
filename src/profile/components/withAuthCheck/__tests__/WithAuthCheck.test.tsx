@@ -1,6 +1,6 @@
 import React from 'react';
 import { act, waitFor } from '@testing-library/react';
-import { User } from 'oidc-client';
+import { User } from 'oidc-client-ts';
 
 import { renderComponentWithMocksAndContexts } from '../../../../common/test/testingLibraryTools';
 import WithAuthCheck, { WithAuthCheckChildProps } from '../WithAuthCheck';

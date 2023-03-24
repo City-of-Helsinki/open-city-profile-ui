@@ -1,4 +1,4 @@
-import { User, Profile as OidcProfile } from 'oidc-client';
+import { User, UserProfile } from 'oidc-client-ts';
 
 import { Profile } from '../../auth/useProfile';
 
@@ -43,9 +43,9 @@ export function mockUserCreator({
     scopes,
     toStorageString: () => 'storageString',
     refresh_token: undefined,
-    session_state: undefined,
+    session_state: null,
     state: undefined,
     ...userOverrides,
-    profile: (mockProfileCreator(profileOverrides) as unknown) as OidcProfile,
+    profile: (mockProfileCreator(profileOverrides) as unknown) as UserProfile,
   };
 }
