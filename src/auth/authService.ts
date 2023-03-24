@@ -4,7 +4,8 @@ import {
   UserManagerSettings,
   Log,
   WebStorageStateStore,
-} from 'oidc-client';
+} from 'oidc-client-ts';
+import jwtDecode from 'jwt-decode';
 import * as Sentry from '@sentry/browser';
 import HttpStatusCode from 'http-status-typed';
 import i18n from 'i18next';
@@ -55,8 +56,8 @@ export class AuthService {
 
     // Show oidc debugging info in the console only while developing
     if (window._env_.NODE_ENV === 'development') {
-      Log.logger = console;
-      Log.level = Log.INFO;
+      Log.setLogger(console);
+      Log.setLevel(Log.INFO);
     }
 
     // User Manager instance
@@ -139,10 +140,36 @@ export class AuthService {
     });
   }
 
-  public getUser(): Promise<User | null> {
-    return this.userManager.getUser();
+  public async getUser(): Promise<User | null> {
+    const user = await this.userManager.getUser();
+    if (user) {
+      return Promise.resolve(this.addAmrToUserProfile(user));
+    }
+
+    return Promise.resolve(null);
   }
 
+  public addAmrToUserProfile(user: User): User {
+    if (
+      user &&
+      user.profile.amr &&
+      Array.isArray(user.profile.amr) &&
+      user.profile.amr.length
+    ) {
+      return user;
+    }
+    if (!user || !user.id_token) {
+      return user;
+    }
+
+    const decodedToken = jwtDecode<Record<string, string>>(user.id_token);
+    const amr = decodedToken.amr;
+    if (!amr) {
+      return user;
+    }
+    user.profile.amr = Array.isArray(amr) ? amr : [amr];
+    return user;
+  }
   // It is assumed that user and api tokens are removed hand in hand.
   // If user tokens exists, api tokens must also exist.
   // That is why api tokens are not checked here.
@@ -174,7 +201,10 @@ export class AuthService {
   public async login(path = '/'): Promise<void> {
     let success = true;
     await this.userManager
-      .signinRedirect({ data: { path }, ui_locales: i18n.language })
+      .signinRedirect({
+        extraQueryParams: { ui_locales: i18n.language },
+        state: { path },
+      })
       .catch(error => {
         success = false;
         if (error.message !== 'Network Error') {
@@ -202,7 +232,7 @@ export class AuthService {
     return user;
   }
 
-  public renewToken(): Promise<User> {
+  public renewToken(): Promise<User | null> {
     return this.userManager.signinSilent();
   }
 
