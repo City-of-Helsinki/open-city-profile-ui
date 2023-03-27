@@ -21,6 +21,7 @@ describe('authService', () => {
       name: 'Mr. Louisa Tromp',
       access_token: validUser !== false ? accessToken : '',
       expired: false,
+      profile: {},
       ...optionalUserProps,
     };
     jest.spyOn(authService, 'getToken').mockReturnValue(sessionApiToken);
