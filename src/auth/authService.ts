@@ -156,6 +156,7 @@ export class AuthService {
   public addAmrToUserProfile(user: User): User {
     if (
       user &&
+      user.profile &&
       user.profile.amr &&
       Array.isArray(user.profile.amr) &&
       user.profile.amr.length
