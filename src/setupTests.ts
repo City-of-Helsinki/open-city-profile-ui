@@ -22,4 +22,25 @@ jest.mock('react-router', () => ({
 
 jest.mock('./auth/http-poller');
 
+const unload = () =>
+  setTimeout(() => window.dispatchEvent(new Event('unload')), 20);
+const location = Object.defineProperties(
+  {},
+  {
+    ...Object.getOwnPropertyDescriptors(window.location),
+    assign: {
+      enumerable: true,
+      value: jest.fn(unload),
+    },
+    replace: {
+      enumerable: true,
+      value: jest.fn(unload),
+    },
+  }
+);
+Object.defineProperty(window, 'location', {
+  enumerable: true,
+  get: () => location,
+});
+
 global.HTMLElement.prototype.scrollIntoView = jest.fn();
