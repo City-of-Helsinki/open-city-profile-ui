@@ -1,6 +1,7 @@
 /* eslint-disable jest/no-interpolation-in-snapshots */
 import to from 'await-to-js';
 import { waitFor } from '@testing-library/react';
+import fetchMock from 'jest-fetch-mock';
 
 import authService, { API_TOKEN } from '../authService';
 import {
@@ -8,10 +9,13 @@ import {
   enableActualHttpPoller,
 } from '../__mocks__/http-poller';
 import i18n from '../../common/test/testi18nInit';
+import openIdConfiguration from '../../common/test/openIdConfiguration.json';
+import apiTokens from '../../common/test/apiTokens.json';
+import { getAllLastMockCallArgs } from '../../common/test/jestMockHelper';
 
 describe('authService', () => {
   const userManager = authService.userManager;
-  const apiToken = '5ed3abc5-9b65-4879-8d09-3cd8499650eh';
+  const apiToken = Object.values(apiTokens)[0];
   const accessToken = 'db237bc3-e197-43de-8c86-3feea4c5f886';
 
   const setSession = ({ validUser, validApiToken, optionalUserProps }) => {
@@ -33,19 +37,71 @@ describe('authService', () => {
     };
   };
 
-  const spyAndMockSignoutRedirect = () =>
-    jest.spyOn(userManager, 'signoutRedirect').mockImplementation(async () => {
-      // mocking userManager: signout calls removeUser which triggers unload event
-      await userManager.events._userUnloaded.raise();
-      return Promise.resolve();
+  const returnOpenIdConfiguration = () =>
+    Promise.resolve({
+      body: JSON.stringify(openIdConfiguration),
+      headers: {
+        'content-type': 'application/json',
+      },
     });
 
-  const mockFetchApiToken = () =>
-    global.fetch.mockResponse(
-      JSON.stringify({
-        [window._env_.REACT_APP_PROFILE_AUDIENCE]: apiToken,
-      })
-    );
+  const returnApiTokens = () =>
+    Promise.resolve({
+      body: JSON.stringify(apiTokens),
+    });
+
+  const returnGraphQl = () => {
+    const response = JSON.stringify({
+      [window._env_.REACT_APP_PROFILE_AUDIENCE]: apiToken,
+    });
+    return Promise.resolve({ body: JSON.stringify(response) });
+  };
+
+  const callLog = {
+    wellKnown: 0,
+    apiTokens: 0,
+    graphql: 0,
+    log(key) {
+      this[key] = this[key] + 1;
+    },
+    clear() {
+      this.apiTokens = 0;
+      this.graphql = 0;
+      this.wellKnown = 0;
+    },
+  };
+
+  fetchMock.mockResponse(req => {
+    if (req.url.includes('well-known')) {
+      callLog.log('wellKnown');
+      return returnOpenIdConfiguration();
+    }
+    if (req.url.includes('api-tokens')) {
+      callLog.log('apiTokens');
+      return returnApiTokens();
+    }
+    if (req.url.includes('graphql')) {
+      callLog.log('graphql');
+      return returnGraphQl();
+    }
+    return Promise.reject(`Unknown url ${req.url}`);
+  });
+
+  // authService.login redirects the browser.
+  // The returned promise is never resolved.
+  async function waitForLoginToTimeout(path) {
+    await expect(() =>
+      waitFor(() => authService.login(path), { timeout: 1000 })
+    ).rejects.toThrow();
+  }
+
+  // authService.logout redirects the browser.
+  // The returned promise is never resolved.
+  async function waitForLogoutToFinish() {
+    await expect(() =>
+      waitFor(() => authService.logout(), { timeout: 1000 })
+    ).rejects.toThrow();
+  }
 
   const spyAndMockSigninRedirect = user =>
     jest
@@ -55,6 +111,7 @@ describe('authService', () => {
   afterEach(() => {
     sessionStorage.clear();
     jest.restoreAllMocks();
+    callLog.clear();
   });
 
   describe('getUser', () => {
@@ -172,27 +229,29 @@ describe('authService', () => {
 
   describe('login', () => {
     const defaultSigninParams = {
-      data: { path: '/' },
-      ui_locales: 'fi',
+      state: { path: '/' },
+      extraQueryParams: {
+        ui_locales: 'fi',
+      },
     };
     it('should call signinRedirect from oidc with the provided path', async () => {
       const path = '/applications';
       const signinRedirect = jest.spyOn(userManager, 'signinRedirect');
-
-      await to(authService.login(path));
-
+      await waitForLoginToTimeout(path);
       expect(signinRedirect).toHaveBeenNthCalledWith(1, {
         ...defaultSigninParams,
-        data: { path },
+        state: { path },
       });
     });
     it('should reflect i18n language changes in the login url', async () => {
       const signinRedirect = jest.spyOn(userManager, 'signinRedirect');
       i18n.changeLanguage('sv');
-      await to(authService.login());
+      await waitForLoginToTimeout();
       expect(signinRedirect).toHaveBeenNthCalledWith(1, {
         ...defaultSigninParams,
-        ui_locales: 'sv',
+        extraQueryParams: {
+          ui_locales: 'sv',
+        },
       });
     });
   });
@@ -200,7 +259,6 @@ describe('authService', () => {
   describe('endLogin', () => {
     let sessionUser;
     beforeEach(() => {
-      mockFetchApiToken();
       sessionUser = setSession({
         validApiToken: true,
         validUser: true,
@@ -276,13 +334,12 @@ describe('authService', () => {
   });
 
   describe('logout', () => {
-    it('should call signoutRedirect from oidc. Ui_locales is found in extraQueryParams', () => {
-      const signoutRedirect = jest.spyOn(userManager, 'signoutRedirect');
+    it('should call signoutRedirect from oidc. Ui_locales is found in extraQueryParams', async () => {
+      const signoutRedirectSpy = jest.spyOn(userManager, 'signoutRedirect');
       i18n.changeLanguage('sv');
-      authService.logout();
-
-      expect(signoutRedirect).toHaveBeenCalledTimes(1);
-      expect(signoutRedirect).toHaveBeenNthCalledWith(1, {
+      await waitForLogoutToFinish();
+      expect(signoutRedirectSpy).toHaveBeenCalledTimes(1);
+      expect(signoutRedirectSpy).toHaveBeenNthCalledWith(1, {
         extraQueryParams: {
           ui_locales: 'sv',
         },
@@ -290,22 +347,14 @@ describe('authService', () => {
     });
 
     it('should remove the tokens from sessionStorage', async () => {
-      expect.assertions(1);
-      spyAndMockSignoutRedirect();
-      const apiTokens = 'a8d56df4-7ae8-4fbf-bf73-f366cd6fc479';
-
-      sessionStorage.setItem(API_TOKEN, apiTokens);
-      await authService.logout();
+      sessionStorage.setItem(API_TOKEN, JSON.stringify(apiTokens));
+      await waitForLogoutToFinish();
       expect(sessionStorage.getItem(API_TOKEN)).toBeNull();
     });
 
     it('should call clearStaleState', async () => {
-      expect.assertions(1);
-      spyAndMockSignoutRedirect();
       jest.spyOn(userManager, 'clearStaleState').mockResolvedValue();
-
-      await authService.logout();
-
+      await waitForLogoutToFinish();
       expect(userManager.clearStaleState).toHaveBeenCalledTimes(1);
     });
   });
@@ -317,17 +366,10 @@ describe('authService', () => {
       access_token,
     };
 
-    beforeEach(() => {
-      global.fetch.resetMocks();
-      mockFetchApiToken();
-    });
-
     it('should call fetch with the right arguments', async () => {
-      expect.assertions(2);
       await authService.fetchAndStoreApiToken(mockUser);
-
-      expect(global.fetch).toHaveBeenCalledTimes(1);
-      expect(global.fetch.mock.calls[0]).toMatchInlineSnapshot(`
+      expect(callLog.apiTokens).toEqual(1);
+      expect(getAllLastMockCallArgs(fetchMock)).toMatchInlineSnapshot(`
         Array [
           "https://api.hel.fi/sso/openid/api-tokens/",
           Object {
@@ -357,8 +399,6 @@ describe('authService', () => {
   describe(`Api tokens are fetched again after user tokens are renewed.
             After silent renew completes, the _userLoaded event is raised and...`, () => {
     beforeEach(() => {
-      global.fetch.resetMocks();
-      mockFetchApiToken();
       jest.useFakeTimers();
     });
 
