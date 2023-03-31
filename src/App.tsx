@@ -40,6 +40,7 @@ const loginProps: LoginClientProps = {
     response_type: window._env_.REACT_APP_OIDC_RESPONSE_TYPE,
     scope: window._env_.REACT_APP_OIDC_SCOPE,
   },
+  apiTokenUrl: `${window._env_.REACT_APP_OIDC_AUTHORITY}api-tokens/`,
 };
 
 function App(): React.ReactElement {

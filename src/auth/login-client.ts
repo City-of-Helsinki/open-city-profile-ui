@@ -8,6 +8,8 @@ import {
   SignoutRedirectArgs,
 } from 'oidc-client-ts';
 
+import createApiTokenClient, { TokenData } from './api-token-client';
+
 export type LoginProps = {
   language?: string;
 } & SigninRedirectArgs;
@@ -23,6 +25,7 @@ export type LoginClientProps = {
   defaultPollIntervalInMs?: number;
   logLevel?: Log;
   logger?: Parameters<typeof Log.setLogger>[0];
+  apiTokenUrl?: string;
 };
 
 export type LoginClient = {
@@ -76,35 +79,44 @@ export default function createLoginClient(
     combinedProps.userManagerSettings as UserManagerSettings
   );
 
+  const apiTokenClient = createApiTokenClient();
+
   let currentUser: UserReturnType = null;
-  //let _isProcessingLogin = true;
+  let _isProcessingLogin = true;
 
   const isUserExpired = (user?: Partial<User> | null): boolean => {
     if (!user) {
       return true;
     }
     if (user.expired !== undefined) {
+      // does not detect
       return user.expired;
     }
     const expiresAtInSeconds = user.expires_at;
-
     if (expiresAtInSeconds) {
       return expiresAtInSeconds - Date.now() / 1000 <= 0;
     }
     return true;
   };
 
-  const isAuthenticatedUser = (user?: User | null): boolean =>
+  const isValidUser = (user?: User | null): boolean =>
     !!user && !isUserExpired(user) && !!user.access_token;
 
+  // This is called by userManager while processing endLogin()
+  // and when silent renew is complete
+  // endLogin() also calls fetchApiToken. Multiple calls are prevented with _isProcessingLogin
   userManager.events.addUserLoaded(user => {
     console.log('userloaded');
     currentUser = user;
+    if (!_isProcessingLogin && combinedProps.apiTokenUrl) {
+      apiTokenClient.fetch(combinedProps.apiTokenUrl, user);
+    }
   });
 
   userManager.events.addUserUnloaded(() => {
     console.log('userunloaded');
     currentUser = null;
+    apiTokenClient.clear();
   });
 
   return {
@@ -119,20 +131,23 @@ export default function createLoginClient(
       });
     },
     handleCallback: async () => {
-      //_isProcessingLogin = true;
+      _isProcessingLogin = true;
       const user = await userManager.signinRedirectCallback();
-      if (!isAuthenticatedUser(user)) {
+      if (!isValidUser(user)) {
         return Promise.reject(
           new Error('Login failed - no valid user returned')
         );
       }
       currentUser = user;
-      //_isProcessingLogin = false;
+      if (combinedProps.apiTokenUrl) {
+        await apiTokenClient.fetch(combinedProps.apiTokenUrl, user);
+      }
+      _isProcessingLogin = false;
       return Promise.resolve(user);
     },
     isAuthenticated: user => {
       const target = user || currentUser;
-      return !!target && isAuthenticatedUser(target);
+      return !!target && isValidUser(target);
     },
     getCurrentUser: () => currentUser,
     getUser: () => userManager.getUser(),
