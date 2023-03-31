@@ -288,4 +288,12 @@ export class AuthService {
   }
 }
 
-export default new AuthService();
+export default {
+  isAuthenticated: () => false,
+  login: () => Promise.reject(new Error('US')),
+  logout: () => Promise.reject(new Error('US')),
+  getUser: () => Promise.reject(new Error('US')),
+  endLogin: () => Promise.reject(new Error('US')),
+  getToken: () => Promise.reject(new Error('US')),
+  getAuthenticatedUser: () => Promise.reject(new Error('US')),
+};
