@@ -5,11 +5,16 @@ import {
   SigninRedirectArgs,
   WebStorageStateStore,
   User,
+  SignoutRedirectArgs,
 } from 'oidc-client-ts';
 
 export type LoginProps = {
   language?: string;
 } & SigninRedirectArgs;
+
+export type LogoutProps = {
+  language?: string;
+} & SignoutRedirectArgs;
 
 export type UserReturnType = User | null;
 
@@ -22,6 +27,7 @@ export type LoginClientProps = {
 
 export type LoginClient = {
   login: (props?: LoginProps) => Promise<void>;
+  logout: (props?: LogoutProps) => Promise<void>;
   handleCallback: () => Promise<User>;
   isAuthenticated: (user?: UserReturnType) => boolean;
   getCurrentUser: () => UserReturnType;
@@ -96,15 +102,20 @@ export default function createLoginClient(
     currentUser = user;
   });
 
+  userManager.events.addUserUnloaded(() => {
+    console.log('userunloaded');
+    currentUser = null;
+  });
+
   return {
     login: async loginProps => {
-      const { extraQueryParams = {}, state, language } = loginProps || {};
+      const { extraQueryParams = {}, language, ...rest } = loginProps || {};
       if (language) {
         extraQueryParams.ui_locales = language;
       }
       return userManager.signinRedirect({
         extraQueryParams,
-        state,
+        ...rest,
       });
     },
     handleCallback: async () => {
@@ -125,5 +136,15 @@ export default function createLoginClient(
     },
     getCurrentUser: () => currentUser,
     getUser: () => userManager.getUser(),
+    logout: async logoutProps => {
+      const { extraQueryParams = {}, language, ...rest } = logoutProps || {};
+      if (language) {
+        extraQueryParams.ui_locales = language;
+      }
+      return userManager.signoutRedirect({
+        extraQueryParams,
+        ...rest,
+      });
+    },
   };
 }

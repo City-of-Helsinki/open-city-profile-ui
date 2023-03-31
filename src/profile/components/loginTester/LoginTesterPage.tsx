@@ -9,7 +9,7 @@ import { useLoginClient } from '../../../auth/LoginContext';
 import WithAuthentication from '../../../auth/WithAuthentication';
 
 function LoginTesterPage(): React.ReactElement {
-  const { login } = useLoginClient();
+  const { login, logout } = useLoginClient();
   return (
     <PageLayout
       title={'Test'}
@@ -26,15 +26,13 @@ function LoginTesterPage(): React.ReactElement {
       >
         <WithAuthentication
           UnauthorisedComponent={() => (
-            <StyledButton
-              onClick={() => login()}
-              data-testid={'error-page-login-button'}
-            >
-              Login
-            </StyledButton>
+            <StyledButton onClick={() => login()}>Login</StyledButton>
           )}
           AuthorisedComponent={(props: { user: User }) => (
-            <div>Hello {props.user.profile.given_name}</div>
+            <div>
+              <p>Hello {props.user.profile.given_name}</p>
+              <StyledButton onClick={() => logout()}>Logout</StyledButton>
+            </div>
           )}
         />
       </div>
