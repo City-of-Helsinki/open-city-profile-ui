@@ -11,6 +11,7 @@ import createLoginClient, {
   LoginClientProps,
   UserReturnType,
 } from './login-client';
+import { TokenData } from './api-token-client';
 
 type ContextProps = {
   children: React.ReactNode | React.ReactNode[] | null;
@@ -19,6 +20,12 @@ type ContextProps = {
 
 export type LoginContextData = {
   getClient: () => LoginClient;
+};
+
+export type AuthenticatedUserData = {
+  resolving: boolean;
+  user: UserReturnType | undefined;
+  tokens: TokenData | null | undefined;
 };
 
 export const LoginContext = createContext<LoginContextData>({
@@ -53,28 +60,27 @@ export const useLoginClient = (): LoginClient => {
   return getClient();
 };
 
-export const useAuthenticatedUser = (): {
-  resolving: boolean;
-  user: UserReturnType | undefined;
-} => {
+export const useAuthenticatedUser = (): AuthenticatedUserData => {
   const client = useLoginClient();
-  const [storedUser, setStoredUser] = useState<UserReturnType | undefined>(
-    client.getCurrentUser() || undefined
-  );
-  const hasUser = !!storedUser;
+  const [storedData, setStoredData] = useState<
+    [UserReturnType | undefined, TokenData | null | undefined]
+  >(client.getStoredUserAndTokens());
+  const [storedUser, tokens] = storedData;
+  const hasValidData = storedUser !== undefined;
   useEffect(() => {
     async function getter() {
-      const user = await client.getUser();
-      setStoredUser(user);
+      const data = await client.getUserAndFetchTokens();
+      setStoredData(data);
     }
-    if (!hasUser) {
+    if (!hasValidData) {
       getter();
     }
-  }, [client, hasUser]);
+  }, [client, hasValidData]);
+
   if (storedUser === null) {
-    return { resolving: false, user: null };
-  } else if (storedUser && client.isAuthenticated(storedUser)) {
-    return { resolving: false, user: storedUser };
+    return { resolving: false, user: null, tokens };
+  } else if (storedUser) {
+    return { resolving: false, user: storedUser, tokens };
   }
-  return { resolving: true, user: undefined };
+  return { resolving: true, user: undefined, tokens };
 };

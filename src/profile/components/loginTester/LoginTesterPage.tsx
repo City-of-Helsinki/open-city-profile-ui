@@ -7,6 +7,7 @@ import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 import StyledButton from '../../../common/styledButton/StyledButton';
 import { useLoginClient } from '../../../auth/LoginContext';
 import WithAuthentication from '../../../auth/WithAuthentication';
+import { TokenData } from '../../../auth/api-token-client';
 
 function LoginTesterPage(): React.ReactElement {
   const { login, logout } = useLoginClient();
@@ -28,9 +29,16 @@ function LoginTesterPage(): React.ReactElement {
           UnauthorisedComponent={() => (
             <StyledButton onClick={() => login()}>Login</StyledButton>
           )}
-          AuthorisedComponent={(props: { user: User }) => (
+          AuthorisedComponent={(props: {
+            user: User;
+            tokens?: TokenData | null;
+          }) => (
             <div>
-              <p>Hello {props.user.profile.given_name}</p>
+              <p>Hello, {props.user.profile.given_name}</p>
+              <p>
+                Tokens exist?{' '}
+                {props.tokens ? JSON.stringify(props.tokens) : 'none'}
+              </p>
               <StyledButton onClick={() => logout()}>Logout</StyledButton>
             </div>
           )}

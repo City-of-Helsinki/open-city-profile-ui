@@ -35,6 +35,12 @@ export type LoginClient = {
   isAuthenticated: (user?: UserReturnType) => boolean;
   getCurrentUser: () => UserReturnType;
   getUser: () => Promise<UserReturnType>;
+  getTokens: () => TokenData | null;
+  getUserAndFetchTokens: () => Promise<[UserReturnType, TokenData | null]>;
+  getStoredUserAndTokens: () => [
+    UserReturnType | undefined,
+    TokenData | null | undefined
+  ];
 };
 
 const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
@@ -161,5 +167,40 @@ export default function createLoginClient(
         ...rest,
       });
     },
+    getUserAndFetchTokens: async () => {
+      const user = await userManager.getUser();
+      if (!isValidUser(user)) {
+        return [null, null];
+      }
+      if (!combinedProps.apiTokenUrl) {
+        return [user, null];
+      }
+      const tokens = apiTokenClient.getTokens();
+
+      if (!tokens) {
+        const fetchedTokens = await apiTokenClient.fetch(
+          combinedProps.apiTokenUrl,
+          user as User
+        );
+        // if fetching fails, user should be cleared resetUser
+        return [user, fetchedTokens as TokenData];
+      }
+      return [user, tokens];
+    },
+    getStoredUserAndTokens: () => {
+      if (!isValidUser(currentUser)) {
+        return [undefined, undefined];
+      }
+      if (!combinedProps.apiTokenUrl) {
+        return [currentUser, null];
+      }
+      const tokens = apiTokenClient.getTokens();
+
+      if (!tokens) {
+        return [null, null];
+      }
+      return [currentUser, tokens];
+    },
+    getTokens: () => apiTokenClient.getTokens(),
   };
 }
