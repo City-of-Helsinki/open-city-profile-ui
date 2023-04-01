@@ -33,8 +33,7 @@ export type LoginClient = {
   logout: (props?: LogoutProps) => Promise<void>;
   handleCallback: () => Promise<User>;
   isAuthenticated: (user?: UserReturnType) => boolean;
-  getCurrentUser: () => UserReturnType;
-  getUser: () => Promise<UserReturnType>;
+  getUser: () => UserReturnType;
   getTokens: () => TokenData | null;
   getUserAndFetchTokens: () => Promise<[UserReturnType, TokenData | null]>;
   getStoredUserAndTokens: () => [
@@ -73,13 +72,14 @@ export default function createLoginClient(
     ...restDefaultProps
   } = getDefaultProps(window.location.origin);
 
+  const store = window.sessionStorage;
   const combinedProps: LoginClientProps = {
     ...restDefaultProps,
     ...restProps,
     userManagerSettings: {
       ...defaultUserManagerSettings,
       ...userManagerSettingsFromProps,
-      userStore: new WebStorageStateStore({ store: window.sessionStorage }),
+      userStore: new WebStorageStateStore({ store }),
     },
   };
   const userManager = new UserManager(
@@ -87,8 +87,6 @@ export default function createLoginClient(
   );
 
   const apiTokenClient = createApiTokenClient();
-
-  let currentUser: UserReturnType = null;
   let _isProcessingLogin = true;
 
   const isUserExpired = (user?: Partial<User> | null): boolean => {
@@ -106,6 +104,23 @@ export default function createLoginClient(
     return true;
   };
 
+  const getUserStoreKey = (): string =>
+    // "oidc" is the default prefix passed
+    // "user" is the userStoreKey
+    `oidc.user:${combinedProps.userManagerSettings.authority}:${combinedProps.userManagerSettings.client_id}`;
+
+  const getUserFromStorageSyncronously = (): UserReturnType => {
+    const userData = store.getItem(getUserStoreKey());
+    if (!userData) {
+      return null;
+    }
+    try {
+      return JSON.parse(userData);
+    } catch (e) {
+      return null;
+    }
+  };
+
   const isValidUser = (user?: User | null): boolean =>
     !!user && !isUserExpired(user) && !!user.access_token;
 
@@ -113,19 +128,16 @@ export default function createLoginClient(
   // and when silent renew is complete
   // endLogin() also calls fetchApiToken. Multiple calls are prevented with _isProcessingLogin
   userManager.events.addUserLoaded(user => {
-    currentUser = user;
     if (!_isProcessingLogin && combinedProps.apiTokenUrl) {
       apiTokenClient.fetch(combinedProps.apiTokenUrl, user);
     }
   });
 
   userManager.events.addUserUnloaded(() => {
-    currentUser = null;
     apiTokenClient.clear();
   });
 
   const removeUser = async () => {
-    currentUser = null;
     await userManager.clearStaleState();
     await userManager.removeUser();
   };
@@ -166,7 +178,6 @@ export default function createLoginClient(
           new Error('Login failed - no valid user returned')
         );
       }
-      currentUser = user;
       if (combinedProps.apiTokenUrl) {
         await apiTokenClient.fetch(combinedProps.apiTokenUrl, user);
       }
@@ -174,11 +185,10 @@ export default function createLoginClient(
       return Promise.resolve(user);
     },
     isAuthenticated: user => {
-      const target = user || currentUser;
+      const target = user || getUserFromStorageSyncronously();
       return !!target && isValidUser(target);
     },
-    getCurrentUser: () => currentUser,
-    getUser: () => userManager.getUser(),
+    getUser: () => getUserFromStorageSyncronously(),
     logout: async logoutProps => {
       const { extraQueryParams = {}, language, ...rest } = logoutProps || {};
       if (language) {
@@ -190,7 +200,7 @@ export default function createLoginClient(
       });
     },
     getUserAndFetchTokens: async () => {
-      const user = await userManager.getUser();
+      const user = getUserFromStorageSyncronously();
       const isUserValid = await validateUserAndClearIfInvalid(user);
       if (!isUserValid) {
         return [null, null];
@@ -211,22 +221,22 @@ export default function createLoginClient(
       return [user, tokens];
     },
     getStoredUserAndTokens: () => {
-      if (!isValidUser(currentUser)) {
-        if (currentUser) {
-          currentUser = null;
+      const user = getUserFromStorageSyncronously();
+      if (!isValidUser(user)) {
+        if (user) {
           removeApiToken();
         }
         return [undefined, undefined];
       }
       if (!combinedProps.apiTokenUrl) {
-        return [currentUser, null];
+        return [user, null];
       }
       const tokens = apiTokenClient.getTokens();
 
       if (!tokens) {
         return [null, null];
       }
-      return [currentUser, tokens];
+      return [user, tokens];
     },
     getTokens: () => apiTokenClient.getTokens(),
     cleanUp: async () => {
