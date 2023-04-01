@@ -41,6 +41,7 @@ export type LoginClient = {
     UserReturnType | undefined,
     TokenData | null | undefined
   ];
+  cleanUp: () => Promise<void>;
 };
 
 const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
@@ -112,7 +113,6 @@ export default function createLoginClient(
   // and when silent renew is complete
   // endLogin() also calls fetchApiToken. Multiple calls are prevented with _isProcessingLogin
   userManager.events.addUserLoaded(user => {
-    console.log('userloaded');
     currentUser = user;
     if (!_isProcessingLogin && combinedProps.apiTokenUrl) {
       apiTokenClient.fetch(combinedProps.apiTokenUrl, user);
@@ -120,10 +120,32 @@ export default function createLoginClient(
   });
 
   userManager.events.addUserUnloaded(() => {
-    console.log('userunloaded');
     currentUser = null;
     apiTokenClient.clear();
   });
+
+  const removeUser = async () => {
+    currentUser = null;
+    await userManager.clearStaleState();
+    await userManager.removeUser();
+  };
+
+  const removeApiToken = () => {
+    apiTokenClient.clear();
+  };
+
+  const validateUserAndClearIfInvalid = async (
+    user?: UserReturnType
+  ): Promise<boolean> => {
+    if (!isValidUser(user)) {
+      if (user) {
+        await removeUser();
+        removeApiToken();
+      }
+      return Promise.resolve(false);
+    }
+    return Promise.resolve(true);
+  };
 
   return {
     login: async loginProps => {
@@ -169,7 +191,8 @@ export default function createLoginClient(
     },
     getUserAndFetchTokens: async () => {
       const user = await userManager.getUser();
-      if (!isValidUser(user)) {
+      const isUserValid = await validateUserAndClearIfInvalid(user);
+      if (!isUserValid) {
         return [null, null];
       }
       if (!combinedProps.apiTokenUrl) {
@@ -189,6 +212,10 @@ export default function createLoginClient(
     },
     getStoredUserAndTokens: () => {
       if (!isValidUser(currentUser)) {
+        if (currentUser) {
+          currentUser = null;
+          removeApiToken();
+        }
         return [undefined, undefined];
       }
       if (!combinedProps.apiTokenUrl) {
@@ -202,5 +229,9 @@ export default function createLoginClient(
       return [currentUser, tokens];
     },
     getTokens: () => apiTokenClient.getTokens(),
+    cleanUp: async () => {
+      removeApiToken();
+      await removeUser();
+    },
   };
 }
