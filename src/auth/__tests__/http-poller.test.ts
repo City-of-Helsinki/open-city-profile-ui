@@ -1,6 +1,9 @@
 import HttpStatusCode from 'http-status-typed';
+import fetchMock from 'jest-fetch-mock';
+import { waitFor } from '@testing-library/dom';
 
 import createHttpPoller, { HttpPoller, HttpPollerProps } from '../http-poller';
+import { createFetchCanceller } from '../../common/helpers/fetchCanceller';
 
 export type TestResponse = {
   status: HttpStatusCode.OK | HttpStatusCode.FORBIDDEN | -1;
@@ -158,6 +161,36 @@ describe(`http-poller`, () => {
       await advanceToTimerEnd();
       expect(shouldPollMockCallback).toHaveBeenCalledTimes(1);
       expect(pollFunctionMockCallback).toHaveBeenCalledTimes(1);
+    });
+    it(`neither onError or onSuccess are called if request is aborted`, async () => {
+      poller = createHttpPoller({
+        pollFunction: async () => fetch('http://domain.com'),
+        onError: returnedHttpStatus => {
+          onErrorMockCallback(returnedHttpStatus);
+          return { keepPolling: true };
+        },
+        shouldPoll: () => true,
+        onSuccess: () => {
+          onSuccessMockCallback();
+          return { keepPolling: true };
+        },
+        pollIntervalInMs: intervalInMs,
+      });
+      fetchMock.mockOnce(
+        () =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              reject(new DOMException('Message', 'AbortError'));
+            });
+          })
+      );
+      poller.start();
+      await waitFor(async () => {
+        await advanceOneInterval();
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+      });
+      expect(onErrorMockCallback).toHaveBeenCalledTimes(0);
+      expect(onSuccessMockCallback).toHaveBeenCalledTimes(0);
     });
     it('Polling never starts if poller.stop is called', async () => {
       poller = createPoller({

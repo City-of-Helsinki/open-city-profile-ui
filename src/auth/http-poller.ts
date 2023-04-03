@@ -1,6 +1,8 @@
 import to from 'await-to-js';
 import HttpStatusCode from 'http-status-typed';
 
+import { isAbortError } from '../common/helpers/fetchCanceller';
+
 export type HttpPoller = {
   start: () => void;
   stop: () => void;
@@ -69,6 +71,9 @@ export default function createHttpPoller({
       if (!keepPolling) {
         return;
       }
+    }
+    if (err && isAbortError(err)) {
+      return;
     }
     if (success || onError(responseStatus).keepPolling) {
       startTimer();
