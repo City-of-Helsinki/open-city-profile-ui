@@ -41,6 +41,7 @@ const loginProps: LoginClientProps = {
     scope: window._env_.REACT_APP_OIDC_SCOPE,
   },
   apiTokenUrl: `${window._env_.REACT_APP_OIDC_AUTHORITY}api-tokens/`,
+  sessionPollingIntervalInMs: 60000,
 };
 
 function App(): React.ReactElement {
@@ -60,7 +61,7 @@ function App(): React.ReactElement {
                 <Route path="/login">
                   <Login />
                 </Route>
-                <Route path={['/', '/connected-services']} exact>
+                <Route path={['/old', '/connected-services']} exact>
                   <WithAuthCheck
                     AuthenticatedComponent={Profile}
                   ></WithAuthCheck>
@@ -80,7 +81,7 @@ function App(): React.ReactElement {
                 <Route path={config.cookiePagePath} exact>
                   <CookieConsentPage />
                 </Route>
-                <Route path={'/testLogin'} exact>
+                <Route path={'/'} exact>
                   <LoginTesterPage />
                 </Route>
                 <Route path={'/callback'} exact>

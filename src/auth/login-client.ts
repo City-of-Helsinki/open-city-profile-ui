@@ -9,6 +9,9 @@ import {
 } from 'oidc-client-ts';
 
 import createApiTokenClient, { TokenData } from './api-token-client';
+import createUserSessionPoller, {
+  UserSessionPoller,
+} from './user-session-poller';
 
 export type LoginProps = {
   language?: string;
@@ -26,6 +29,7 @@ export type LoginClientProps = {
   logLevel?: Log;
   logger?: Parameters<typeof Log.setLogger>[0];
   apiTokenUrl?: string;
+  sessionPollingIntervalInMs?: number;
 };
 
 export type LoginClient = {
@@ -85,9 +89,34 @@ export default function createLoginClient(
   const userManager = new UserManager(
     combinedProps.userManagerSettings as UserManagerSettings
   );
+  let sessionPoller: UserSessionPoller;
+
+  const { sessionPollingIntervalInMs, apiTokenUrl } = combinedProps;
+  const shouldGetApiTokens = !!apiTokenUrl;
 
   const apiTokenClient = createApiTokenClient();
-  let _isProcessingLogin = true;
+  let _isProcessingLogin = false;
+
+  const startSessionPollingIfRequired = () => {
+    if (!sessionPollingIntervalInMs) {
+      return;
+    }
+    if (!sessionPoller) {
+      sessionPoller = createUserSessionPoller({
+        userManager,
+        pollIntervalInMs: sessionPollingIntervalInMs,
+        shouldPoll: () => true,
+        onError: () => false,
+      });
+    }
+    sessionPoller.start();
+  };
+
+  const stopSessionPolling = () => {
+    if (sessionPoller) {
+      sessionPoller.stop();
+    }
+  };
 
   const isUserExpired = (user?: Partial<User> | null): boolean => {
     if (!user) {
@@ -127,14 +156,16 @@ export default function createLoginClient(
   // This is called by userManager while processing endLogin()
   // and when silent renew is complete
   // endLogin() also calls fetchApiToken. Multiple calls are prevented with _isProcessingLogin
-  userManager.events.addUserLoaded(user => {
-    if (!_isProcessingLogin && combinedProps.apiTokenUrl) {
-      apiTokenClient.fetch(combinedProps.apiTokenUrl, user);
+  userManager.events.addUserLoaded(async user => {
+    startSessionPollingIfRequired();
+    if (!_isProcessingLogin && shouldGetApiTokens) {
+      await apiTokenClient.fetch(apiTokenUrl, user);
     }
   });
 
   userManager.events.addUserUnloaded(() => {
     apiTokenClient.clear();
+    stopSessionPolling();
   });
 
   const removeUser = async () => {
@@ -159,6 +190,10 @@ export default function createLoginClient(
     return Promise.resolve(true);
   };
 
+  if (isValidUser(getUserFromStorageSyncronously())) {
+    startSessionPollingIfRequired();
+  }
+
   return {
     login: async loginProps => {
       const { extraQueryParams = {}, language, ...rest } = loginProps || {};
@@ -178,8 +213,8 @@ export default function createLoginClient(
           new Error('Login failed - no valid user returned')
         );
       }
-      if (combinedProps.apiTokenUrl) {
-        await apiTokenClient.fetch(combinedProps.apiTokenUrl, user);
+      if (shouldGetApiTokens) {
+        await apiTokenClient.fetch(apiTokenUrl, user);
       }
       _isProcessingLogin = false;
       return Promise.resolve(user);
@@ -205,14 +240,14 @@ export default function createLoginClient(
       if (!isUserValid) {
         return [null, null];
       }
-      if (!combinedProps.apiTokenUrl) {
+      if (!shouldGetApiTokens) {
         return [user, null];
       }
       const tokens = apiTokenClient.getTokens();
 
       if (!tokens) {
         const fetchedTokens = await apiTokenClient.fetch(
-          combinedProps.apiTokenUrl,
+          apiTokenUrl,
           user as User
         );
         // if fetching fails, user should be cleared resetUser
@@ -228,7 +263,7 @@ export default function createLoginClient(
         }
         return [undefined, undefined];
       }
-      if (!combinedProps.apiTokenUrl) {
+      if (!shouldGetApiTokens) {
         return [user, null];
       }
       const tokens = apiTokenClient.getTokens();
