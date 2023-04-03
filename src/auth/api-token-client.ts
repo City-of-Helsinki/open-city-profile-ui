@@ -2,20 +2,29 @@ import to from 'await-to-js';
 import { User } from 'oidc-client-ts';
 
 import { createFetchCanceller } from '../common/helpers/fetchCanceller';
+import retryPollingUntilSuccessful from './http-poller-with-promises';
 
 export type TokenData = Record<string, string>;
 type FetchResult = TokenData | FetchError;
 export type ApiTokenClient = {
-  fetch: (uri: string, user: User) => Promise<FetchResult>;
+  fetch: (user: User) => Promise<FetchResult>;
   getToken: (name: string) => string | undefined;
   getTokens: () => TokenData;
   clear: () => void;
 };
 
+export type ApiTokenClientProps = {
+  url: string;
+  maxRetries?: number;
+  retryInterval?: number;
+};
+
 export type FetchApiTokenOptions = {
-  uri: string;
+  url: string;
   accessToken: string;
   signal?: AbortSignal;
+  maxRetries?: number;
+  retryInterval?: number;
 };
 
 export type FetchError = {
@@ -29,7 +38,13 @@ export const API_TOKEN_SESSION_STORAGE_KEY = 'api_token_key';
 async function fetchApiToken(
   options: FetchApiTokenOptions
 ): Promise<FetchResult> {
-  const { uri, signal, accessToken } = options;
+  const {
+    url,
+    signal,
+    accessToken,
+    maxRetries = 4,
+    retryInterval = 500,
+  } = options;
   const myHeaders = new Headers();
   myHeaders.append('Authorization', `Bearer ${accessToken}`);
 
@@ -39,10 +54,16 @@ async function fetchApiToken(
     signal,
   };
 
-  const [fetchError, fetchResponse]: [
-    Error | null,
-    Response | undefined
-  ] = await to(fetch(uri, requestOptions));
+  const pollFunction = () => fetch(url, requestOptions);
+
+  const [fetchError, fetchResponse] = await to(
+    retryPollingUntilSuccessful({
+      pollFunction,
+      pollIntervalInMs: retryInterval,
+      maxRetries,
+    })
+  );
+
   if (fetchError || !fetchResponse) {
     return {
       error: fetchError,
@@ -66,7 +87,10 @@ async function fetchApiToken(
   return json as TokenData;
 }
 
-export default function createApiTokenClient(): ApiTokenClient {
+export default function createApiTokenClient(
+  props: ApiTokenClientProps
+): ApiTokenClient {
+  const { url, maxRetries, retryInterval } = props;
   const fetchCanceller = createFetchCanceller();
 
   const getStoredTokens = (): TokenData | null => {
@@ -89,12 +113,15 @@ export default function createApiTokenClient(): ApiTokenClient {
   };
   let tokens: TokenData = getStoredTokens() || {};
   return {
-    fetch: async (uri, user) => {
+    fetch: async user => {
+      fetchCanceller.cancel();
       const { access_token: accessToken } = user;
       const result = await fetchApiToken({
-        uri,
+        url,
         accessToken,
         signal: fetchCanceller.getSignal(),
+        maxRetries,
+        retryInterval,
       });
       tokens = {};
       clearStoredTokens();

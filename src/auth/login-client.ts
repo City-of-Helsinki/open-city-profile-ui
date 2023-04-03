@@ -29,6 +29,8 @@ export type LoginClientProps = {
   logLevel?: Log;
   logger?: Parameters<typeof Log.setLogger>[0];
   apiTokenUrl?: string;
+  apiTokenMaxRetries?: number;
+  apiTokenRetryIntervalInMs?: number;
   sessionPollingIntervalInMs?: number;
 };
 
@@ -91,10 +93,21 @@ export default function createLoginClient(
   );
   let sessionPoller: UserSessionPoller;
 
-  const { sessionPollingIntervalInMs, apiTokenUrl } = combinedProps;
-  const shouldGetApiTokens = !!apiTokenUrl;
+  const {
+    sessionPollingIntervalInMs,
+    apiTokenUrl,
+    apiTokenMaxRetries,
+    apiTokenRetryIntervalInMs,
+  } = combinedProps;
 
-  const apiTokenClient = createApiTokenClient();
+  const apiTokenClient = apiTokenUrl
+    ? createApiTokenClient({
+        url: apiTokenUrl,
+        maxRetries: apiTokenMaxRetries,
+        retryInterval: apiTokenRetryIntervalInMs,
+      })
+    : undefined;
+  const shouldGetApiTokens = !!apiTokenClient;
   let _isProcessingLogin = false;
 
   const startSessionPollingIfRequired = () => {
@@ -159,12 +172,14 @@ export default function createLoginClient(
   userManager.events.addUserLoaded(async user => {
     startSessionPollingIfRequired();
     if (!_isProcessingLogin && shouldGetApiTokens) {
-      await apiTokenClient.fetch(apiTokenUrl, user);
+      await apiTokenClient.fetch(user);
     }
   });
 
   userManager.events.addUserUnloaded(() => {
-    apiTokenClient.clear();
+    if (apiTokenClient) {
+      apiTokenClient.clear();
+    }
     stopSessionPolling();
   });
 
@@ -174,7 +189,9 @@ export default function createLoginClient(
   };
 
   const removeApiToken = () => {
-    apiTokenClient.clear();
+    if (apiTokenClient) {
+      apiTokenClient.clear();
+    }
   };
 
   const validateUserAndClearIfInvalid = async (
@@ -214,7 +231,7 @@ export default function createLoginClient(
         );
       }
       if (shouldGetApiTokens) {
-        await apiTokenClient.fetch(apiTokenUrl, user);
+        await apiTokenClient.fetch(user);
       }
       _isProcessingLogin = false;
       return Promise.resolve(user);
@@ -246,10 +263,7 @@ export default function createLoginClient(
       const tokens = apiTokenClient.getTokens();
 
       if (!tokens) {
-        const fetchedTokens = await apiTokenClient.fetch(
-          apiTokenUrl,
-          user as User
-        );
+        const fetchedTokens = await apiTokenClient.fetch(user as User);
         // if fetching fails, user should be cleared resetUser
         return [user, fetchedTokens as TokenData];
       }
@@ -273,7 +287,7 @@ export default function createLoginClient(
       }
       return [user, tokens];
     },
-    getTokens: () => apiTokenClient.getTokens(),
+    getTokens: () => (apiTokenClient ? apiTokenClient.getTokens() : null),
     cleanUp: async () => {
       removeApiToken();
       await removeUser();
