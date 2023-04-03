@@ -1,6 +1,8 @@
 import to from 'await-to-js';
 import { User } from 'oidc-client-ts';
 
+import { createFetchCanceller } from '../common/helpers/fetchCanceller';
+
 export type TokenData = Record<string, string>;
 type FetchResult = TokenData | FetchError;
 export type ApiTokenClient = {
@@ -65,13 +67,7 @@ async function fetchApiToken(
 }
 
 export default function createApiTokenClient(): ApiTokenClient {
-  let abortController: AbortController | undefined;
-  const abort = () => {
-    if (abortController) {
-      abortController.abort();
-    }
-    abortController = undefined;
-  };
+  const fetchCanceller = createFetchCanceller();
 
   const getStoredTokens = (): TokenData | null => {
     const tokensString = sessionStorage.getItem(API_TOKEN_SESSION_STORAGE_KEY);
@@ -94,12 +90,12 @@ export default function createApiTokenClient(): ApiTokenClient {
   let tokens: TokenData = getStoredTokens() || {};
   return {
     fetch: async (uri, user) => {
-      abort();
-      abortController = new AbortController();
-      const { signal } = abortController;
       const { access_token: accessToken } = user;
-      const result = await fetchApiToken({ uri, accessToken, signal });
-      abortController = undefined;
+      const result = await fetchApiToken({
+        uri,
+        accessToken,
+        signal: fetchCanceller.getSignal(),
+      });
       tokens = {};
       clearStoredTokens();
       if (!(result as FetchError).error) {
@@ -112,7 +108,7 @@ export default function createApiTokenClient(): ApiTokenClient {
     getToken: name => tokens[name],
     getTokens: () => tokens,
     clear: () => {
-      abort();
+      fetchCanceller.cancel();
       clearStoredTokens();
       tokens = {};
     },

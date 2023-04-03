@@ -2,6 +2,7 @@ import { UserManager } from 'oidc-client-ts';
 import HttpStatusCode from 'http-status-typed';
 
 import createHttpPoller from './http-poller';
+import { createFetchCanceller } from '../common/helpers/fetchCanceller';
 
 export type UserSessionPoller = {
   start: () => void;
@@ -24,6 +25,7 @@ export default function createUserSessionPoller(
     onError: onErrorCallback,
     shouldPoll,
   } = options;
+  const fetchCanceller = createFetchCanceller();
   const userInfoFetchFunction = async (): Promise<Response | undefined> => {
     const uri = await userManager.metadataService.getUserInfoEndpoint();
     const user = await userManager.getUser();
@@ -37,18 +39,19 @@ export default function createUserSessionPoller(
     return fetch(uri, {
       method: 'GET',
       headers,
+      signal: fetchCanceller.getSignal(),
     });
   };
-
-  const isAuthenticated = () => false;
 
   const poller = createHttpPoller({
     pollIntervalInMs,
     pollFunction: userInfoFetchFunction,
     shouldPoll,
     onError: returnedHttpStatus => {
+      if (fetchCanceller.isCancelled()) {
+        return { keepPolling: false };
+      }
       if (
-        isAuthenticated() &&
         returnedHttpStatus &&
         (returnedHttpStatus === HttpStatusCode.FORBIDDEN ||
           returnedHttpStatus === HttpStatusCode.UNAUTHORIZED)
@@ -67,6 +70,7 @@ export default function createUserSessionPoller(
     },
     stop: () => {
       console.log('STOP POLLING');
+      fetchCanceller.cancel();
       poller.stop();
     },
   };
