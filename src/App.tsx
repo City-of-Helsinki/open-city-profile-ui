@@ -8,7 +8,6 @@ import en from 'i18n-iso-countries/langs/en.json';
 import sv from 'i18n-iso-countries/langs/sv.json';
 
 import graphqlClient from './graphql/client';
-import Login from './auth/components/login/Login';
 import { Provider as LoginProvider } from './auth/LoginContext';
 import OidcCallback from './auth/components/oidcCallback/OidcCallback';
 import Profile from './profile/components/profile/Profile';
@@ -59,7 +58,7 @@ function App(): React.ReactElement {
                   <GdprAuthorizationCodeManagerCallback />
                 </Route>
                 <Route path="/login">
-                  <Login />
+                  <LoginTesterPage />
                 </Route>
                 <Route path={['/old', '/connected-services']} exact>
                   <WithAuthCheck
