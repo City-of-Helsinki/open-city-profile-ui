@@ -13,6 +13,7 @@ import createApiTokenClient, { TokenData } from './api-token-client';
 import createUserSessionPoller, {
   UserSessionPoller,
 } from './user-session-poller';
+import { createUserLoadTrackerPromise } from './user-load-promise';
 
 export type LoginProps = {
   language?: string;
@@ -46,11 +47,13 @@ export type LoginClient = {
   getUserAndFetchTokens: () => Promise<
     [UserReturnType, TokenData | null, Error | undefined]
   >;
+  getUpdatedTokens: () => Promise<TokenData | null>;
   getStoredUserAndTokens: () => [
     UserReturnType | undefined,
     TokenData | null | undefined
   ];
   cleanUp: () => Promise<void>;
+  isRenewing: () => boolean;
 };
 
 const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
@@ -67,6 +70,7 @@ const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
     includeIdTokenInSilentRenew: true,
     validateSubOnSilentRenew: false,
     loadUserInfo: true,
+    accessTokenExpiringNotificationTimeInSeconds: 3555,
   } as UserManagerSettings,
 });
 
@@ -114,7 +118,7 @@ export default function createLoginClient(
       })
     : undefined;
   const shouldGetApiTokens = !!apiTokenClient;
-  let _isProcessingLogin = false;
+  let renewPromise: Promise<[User, TokenData | undefined | null]> | undefined;
 
   const startSessionPollingIfRequired = () => {
     if (!sessionPollingIntervalInMs) {
@@ -172,25 +176,21 @@ export default function createLoginClient(
   const isValidUser = (user?: User | null): boolean =>
     !!user && !isUserExpired(user) && !!user.access_token;
 
-  // This is called by userManager while processing endLogin()
-  // and when silent renew is complete
-  // endLogin() also calls fetchApiToken. Multiple calls are prevented with _isProcessingLogin
-  userManager.events.addUserLoaded(async user => {
-    startSessionPollingIfRequired();
-    if (!_isProcessingLogin && shouldGetApiTokens) {
-      const [fetchError, tokens] = await to(apiTokenClient.fetch(user));
+  const isRenewing = () => !!renewPromise;
+  const createRenewalPromise = async (): Promise<[
+    User,
+    TokenData | null | undefined
+  ]> => {
+    const [err, user] = await to(createUserLoadTrackerPromise(userManager));
+    if (!err && shouldGetApiTokens) {
+      const [fetchError, tokens] = await to(apiTokenClient.fetch(user as User));
       if (fetchError) {
-        //....
+        return Promise.reject(fetchError);
       }
+      return Promise.resolve([user as User, tokens]);
     }
-  });
-
-  userManager.events.addUserUnloaded(() => {
-    if (apiTokenClient) {
-      apiTokenClient.clear();
-    }
-    stopSessionPolling();
-  });
+    return Promise.resolve([user as User, undefined]);
+  };
 
   const removeUser = async () => {
     await userManager.clearStaleState();
@@ -220,6 +220,21 @@ export default function createLoginClient(
     startSessionPollingIfRequired();
   }
 
+  userManager.events.addUserUnloaded(() => {
+    removeApiTokens();
+    stopSessionPolling();
+    // removeUser is async...
+    removeUser().finally(() => false);
+  });
+
+  userManager.events.addAccessTokenExpiring(async () => {
+    stopSessionPolling();
+    renewPromise = createRenewalPromise();
+    await renewPromise;
+    startSessionPollingIfRequired();
+    renewPromise = undefined;
+  });
+
   return {
     login: async loginProps => {
       const { extraQueryParams = {}, language, ...rest } = loginProps || {};
@@ -232,7 +247,6 @@ export default function createLoginClient(
       });
     },
     handleCallback: async () => {
-      _isProcessingLogin = true;
       const user = await userManager.signinRedirectCallback();
       if (!isValidUser(user)) {
         return Promise.reject(
@@ -248,7 +262,6 @@ export default function createLoginClient(
           return Promise.reject(fetchError);
         }
       }
-      _isProcessingLogin = false;
       return Promise.resolve(user);
     },
     isAuthenticated: user => {
@@ -313,6 +326,16 @@ export default function createLoginClient(
       return [user, tokens];
     },
     getTokens: () => (apiTokenClient ? apiTokenClient.getTokens() : null),
+    getUpdatedTokens: async () => {
+      if (!apiTokenUrl) {
+        return Promise.reject(new Error('Missing apiTokenUrl'));
+      }
+      if (isRenewing()) {
+        await renewPromise;
+      }
+      return Promise.resolve(apiTokenClient?.getTokens() || null);
+    },
+    isRenewing,
     cleanUp: async () => {
       removeApiTokens();
       await removeUser();
