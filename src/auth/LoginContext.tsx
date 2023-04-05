@@ -12,6 +12,7 @@ import createLoginClient, {
   UserReturnType,
 } from './login-client';
 import { TokenData } from './api-token-client';
+import LoginClientError from './login-client-error';
 
 type ContextProps = {
   children: React.ReactNode | React.ReactNode[] | null;
@@ -26,7 +27,7 @@ export type AuthenticatedUserData = {
   resolving: boolean;
   user: UserReturnType | undefined;
   tokens: TokenData | null | undefined;
-  error?: Error;
+  error?: LoginClientError;
 };
 
 export const LoginContext = createContext<LoginContextData>({
@@ -61,17 +62,19 @@ export const useLoginClient = (): LoginClient => {
   return getClient();
 };
 
-export const useAuthenticatedUser = (): AuthenticatedUserData => {
+export const useAuthenticatedUser = (
+  validUserMustHaveTokens?: boolean
+): AuthenticatedUserData => {
   const client = useLoginClient();
   const [storedData, setStoredData] = useState<
     [
       UserReturnType | undefined,
       TokenData | null | undefined,
-      Error | undefined
+      LoginClientError | undefined
     ]
   >(client.getStoredUserAndTokens());
-  const [storedUser, tokens, error] = storedData;
-  const hasValidData = storedUser !== undefined;
+  const [user, tokens, error] = storedData;
+  const hasValidData = user !== undefined;
   useEffect(() => {
     async function getter() {
       const data = await client.getUserAndFetchTokens();
@@ -82,10 +85,22 @@ export const useAuthenticatedUser = (): AuthenticatedUserData => {
     }
   }, [client, hasValidData]);
 
-  if (storedUser === null) {
-    return { resolving: false, user: null, tokens, error };
-  } else if (storedUser) {
-    return { resolving: false, user: storedUser, tokens, error };
+  if (user && !tokens && validUserMustHaveTokens) {
+    return {
+      resolving: false,
+      user: null,
+      tokens,
+      error: new LoginClientError(
+        'Valid user does not have tokens',
+        'USER_HAS_INVALID_TOKENS'
+      ),
+    };
   }
-  return { resolving: true, user: undefined, tokens, error };
+
+  if (user === null) {
+    return { resolving: false, user, tokens, error };
+  } else if (user) {
+    return { resolving: false, user, tokens, error };
+  }
+  return { resolving: true, user, tokens, error };
 };

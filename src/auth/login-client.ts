@@ -14,7 +14,7 @@ import createUserSessionPoller, {
   UserSessionPoller,
 } from './user-session-poller';
 import { createUserLoadTrackerPromise } from './user-load-promise';
-import LoginCLientError, { LoginCLientErrorType } from './login-client-error';
+import LoginClientError, { LoginClientErrorType } from './login-client-error';
 
 export type LoginProps = {
   language?: string;
@@ -27,7 +27,7 @@ export type LogoutProps = {
 export type UserReturnType = User | null;
 type UserInData = UserReturnType | undefined;
 type TokensInData = TokenData | null | undefined;
-type ErrorInData = Error | undefined;
+type ErrorInData = LoginClientError | undefined;
 type DataArray = [UserInData, TokensInData, ErrorInData];
 
 export type LoginClientProps = {
@@ -186,10 +186,10 @@ export default function createLoginClient(
     }
   };
 
-  const createDataArrayWithError = (type: LoginCLientErrorType): DataArray => [
+  const createDataArrayWithError = (type: LoginClientErrorType): DataArray => [
     null,
     null,
-    new LoginCLientError(`${type} error`, type),
+    new LoginClientError(`${type} error`, type),
   ];
 
   const getSyncStoredData = (currentUser?: UserInData): DataArray => {
@@ -220,7 +220,7 @@ export default function createLoginClient(
       if (!tokens) {
         const [fetchError, fetchedTokens] = await to<
           TokenData,
-          LoginCLientError
+          LoginClientError
         >(apiTokenClient.fetch(user as User));
         if (fetchError) {
           return Promise.reject(fetchError);
@@ -310,7 +310,7 @@ export default function createLoginClient(
     getUpdatedTokens: async () => {
       if (!apiTokenUrl) {
         return Promise.reject(
-          new LoginCLientError('Missing apiTokenUrl', 'NO_API_TOKEN_URL')
+          new LoginClientError('Missing apiTokenUrl', 'NO_API_TOKEN_URL')
         );
       }
       const [, tokens, error] = await getAsyncStoredOrRenewingData();
