@@ -9,18 +9,17 @@ const WithAuthentication = ({
   UnauthorisedComponent,
 }: {
   AuthorisedComponent?: React.FC<{ user: User; tokens?: TokenData | null }>;
-  UnauthorisedComponent?: React.FC<Record<string, never>>;
+  UnauthorisedComponent?: React.FC<{ error?: Error }>;
 }): React.ReactElement | null => {
-  const { user, resolving, tokens } = useAuthenticatedUser();
+  const { user, resolving, tokens, error } = useAuthenticatedUser();
   if (resolving) {
-    console.log('PENDING');
     return null;
   }
   if (user && AuthorisedComponent) {
     return <AuthorisedComponent user={user} tokens={tokens} />;
   }
   if (!user && UnauthorisedComponent) {
-    return <UnauthorisedComponent />;
+    return <UnauthorisedComponent error={error} />;
   }
   return null;
 };

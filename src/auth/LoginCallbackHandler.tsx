@@ -5,7 +5,7 @@ import { useLoginClient } from './LoginContext';
 type Props = {
   children: React.ReactNode | React.ReactNode[] | null;
   onSuccess: () => void;
-  onError: (errorType: string) => void;
+  onError: (error?: Error) => void;
 };
 
 function LoginCallbackHandler({
@@ -19,8 +19,8 @@ function LoginCallbackHandler({
     .then(() => {
       onSuccess();
     })
-    .catch(() => {
-      onError('unknown');
+    .catch(err => {
+      onError(err);
     });
 
   return <>{children}</>;

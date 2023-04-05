@@ -5,11 +5,10 @@ import { createFetchCanceller } from '../common/helpers/fetchCanceller';
 import retryPollingUntilSuccessful from './http-poller-with-promises';
 
 export type TokenData = Record<string, string>;
-type FetchResult = TokenData | FetchError;
 export type ApiTokenClient = {
-  fetch: (user: User) => Promise<FetchResult>;
+  fetch: (user: User) => Promise<TokenData>;
   getToken: (name: string) => string | undefined;
-  getTokens: () => TokenData;
+  getTokens: () => TokenData | null;
   clear: () => void;
 };
 
@@ -37,7 +36,7 @@ export const API_TOKEN_SESSION_STORAGE_KEY = 'api_token_key';
 
 async function fetchApiToken(
   options: FetchApiTokenOptions
-): Promise<FetchResult> {
+): Promise<TokenData | FetchError> {
   const {
     url,
     signal,
@@ -111,7 +110,7 @@ export default function createApiTokenClient(
       JSON.stringify(tokenObj)
     );
   };
-  let tokens: TokenData = getStoredTokens() || {};
+  let tokens: TokenData | null = getStoredTokens() || null;
   return {
     fetch: async user => {
       fetchCanceller.cancel();
@@ -123,16 +122,15 @@ export default function createApiTokenClient(
         maxRetries,
         retryInterval,
       });
-      tokens = {};
       clearStoredTokens();
-      if (!(result as FetchError).error) {
-        tokens = { ...(result as TokenData) };
+      if ((result as FetchError).error) {
+        return Promise.reject(result);
       }
-      // should reject if error
+      tokens = { ...(result as TokenData) };
       setStoredTokens(tokens);
-      return tokens;
+      return Promise.resolve(tokens);
     },
-    getToken: name => tokens[name],
+    getToken: name => (tokens ? tokens[name] : undefined),
     getTokens: () => tokens,
     clear: () => {
       fetchCanceller.cancel();

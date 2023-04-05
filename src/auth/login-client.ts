@@ -7,6 +7,7 @@ import {
   User,
   SignoutRedirectArgs,
 } from 'oidc-client-ts';
+import to from 'await-to-js';
 
 import createApiTokenClient, { TokenData } from './api-token-client';
 import createUserSessionPoller, {
@@ -32,6 +33,7 @@ export type LoginClientProps = {
   apiTokenMaxRetries?: number;
   apiTokenRetryIntervalInMs?: number;
   sessionPollingIntervalInMs?: number;
+  removeUserWithoutTokens?: boolean;
 };
 
 export type LoginClient = {
@@ -41,7 +43,9 @@ export type LoginClient = {
   isAuthenticated: (user?: UserReturnType) => boolean;
   getUser: () => UserReturnType;
   getTokens: () => TokenData | null;
-  getUserAndFetchTokens: () => Promise<[UserReturnType, TokenData | null]>;
+  getUserAndFetchTokens: () => Promise<
+    [UserReturnType, TokenData | null, Error | undefined]
+  >;
   getStoredUserAndTokens: () => [
     UserReturnType | undefined,
     TokenData | null | undefined
@@ -52,6 +56,7 @@ export type LoginClient = {
 const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
   defaultPollIntervalInMs: 60000,
   logger: console,
+  removeUserWithoutTokens: true,
   userManagerSettings: {
     automaticSilentRenew: true,
     redirect_uri: `${baseUrl}/callback`,
@@ -98,6 +103,7 @@ export default function createLoginClient(
     apiTokenUrl,
     apiTokenMaxRetries,
     apiTokenRetryIntervalInMs,
+    removeUserWithoutTokens,
   } = combinedProps;
 
   const apiTokenClient = apiTokenUrl
@@ -172,7 +178,10 @@ export default function createLoginClient(
   userManager.events.addUserLoaded(async user => {
     startSessionPollingIfRequired();
     if (!_isProcessingLogin && shouldGetApiTokens) {
-      await apiTokenClient.fetch(user);
+      const [fetchError, tokens] = await to(apiTokenClient.fetch(user));
+      if (fetchError) {
+        //....
+      }
     }
   });
 
@@ -188,7 +197,7 @@ export default function createLoginClient(
     await userManager.removeUser();
   };
 
-  const removeApiToken = () => {
+  const removeApiTokens = () => {
     if (apiTokenClient) {
       apiTokenClient.clear();
     }
@@ -200,7 +209,7 @@ export default function createLoginClient(
     if (!isValidUser(user)) {
       if (user) {
         await removeUser();
-        removeApiToken();
+        removeApiTokens();
       }
       return Promise.resolve(false);
     }
@@ -231,7 +240,13 @@ export default function createLoginClient(
         );
       }
       if (shouldGetApiTokens) {
-        await apiTokenClient.fetch(user);
+        const [fetchError] = await to(apiTokenClient.fetch(user));
+        if (fetchError) {
+          if (removeUserWithoutTokens) {
+            await removeUser();
+          }
+          return Promise.reject(fetchError);
+        }
       }
       _isProcessingLogin = false;
       return Promise.resolve(user);
@@ -255,25 +270,35 @@ export default function createLoginClient(
       const user = getUserFromStorageSyncronously();
       const isUserValid = await validateUserAndClearIfInvalid(user);
       if (!isUserValid) {
-        return [null, null];
+        return [null, null, undefined];
       }
       if (!shouldGetApiTokens) {
-        return [user, null];
+        return [user, null, undefined];
       }
       const tokens = apiTokenClient.getTokens();
-
       if (!tokens) {
-        const fetchedTokens = await apiTokenClient.fetch(user as User);
-        // if fetching fails, user should be cleared resetUser
-        return [user, fetchedTokens as TokenData];
+        const [fetchError, fetchedTokens] = await to(
+          apiTokenClient.fetch(user as User)
+        );
+        if (fetchError) {
+          if (removeUserWithoutTokens) {
+            await removeUser();
+          }
+          return Promise.reject([
+            null,
+            null,
+            new Error('Failed to fetch api token'),
+          ]);
+        }
+        return [user, fetchedTokens || null, undefined];
       }
-      return [user, tokens];
+      return [user, tokens, undefined];
     },
     getStoredUserAndTokens: () => {
       const user = getUserFromStorageSyncronously();
       if (!isValidUser(user)) {
         if (user) {
-          removeApiToken();
+          removeApiTokens();
         }
         return [undefined, undefined];
       }
@@ -289,7 +314,7 @@ export default function createLoginClient(
     },
     getTokens: () => (apiTokenClient ? apiTokenClient.getTokens() : null),
     cleanUp: async () => {
-      removeApiToken();
+      removeApiTokens();
       await removeUser();
     },
   };

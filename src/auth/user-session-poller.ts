@@ -65,11 +65,9 @@ export default function createUserSessionPoller(
 
   return {
     start: () => {
-      console.log('START POLLING');
       poller.start();
     },
     stop: () => {
-      console.log('STOP POLLING');
       fetchCanceller.cancel();
       poller.stop();
     },

@@ -26,6 +26,7 @@ export type AuthenticatedUserData = {
   resolving: boolean;
   user: UserReturnType | undefined;
   tokens: TokenData | null | undefined;
+  error?: Error;
 };
 
 export const LoginContext = createContext<LoginContextData>({
@@ -63,9 +64,13 @@ export const useLoginClient = (): LoginClient => {
 export const useAuthenticatedUser = (): AuthenticatedUserData => {
   const client = useLoginClient();
   const [storedData, setStoredData] = useState<
-    [UserReturnType | undefined, TokenData | null | undefined]
-  >(client.getStoredUserAndTokens());
-  const [storedUser, tokens] = storedData;
+    [
+      UserReturnType | undefined,
+      TokenData | null | undefined,
+      Error | undefined
+    ]
+  >([...client.getStoredUserAndTokens(), undefined]);
+  const [storedUser, tokens, error] = storedData;
   const hasValidData = storedUser !== undefined;
   useEffect(() => {
     async function getter() {
@@ -78,9 +83,9 @@ export const useAuthenticatedUser = (): AuthenticatedUserData => {
   }, [client, hasValidData]);
 
   if (storedUser === null) {
-    return { resolving: false, user: null, tokens };
+    return { resolving: false, user: null, tokens, error };
   } else if (storedUser) {
-    return { resolving: false, user: storedUser, tokens };
+    return { resolving: false, user: storedUser, tokens, error };
   }
-  return { resolving: true, user: undefined, tokens };
+  return { resolving: true, user: undefined, tokens, error };
 };
