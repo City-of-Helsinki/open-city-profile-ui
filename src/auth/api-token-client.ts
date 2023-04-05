@@ -3,6 +3,7 @@ import { User } from 'oidc-client-ts';
 
 import { createFetchCanceller } from '../common/helpers/fetchCanceller';
 import retryPollingUntilSuccessful from './http-poller-with-promises';
+import LoginClientError from './login-client-error';
 
 export type TokenData = Record<string, string>;
 export type ApiTokenClient = {
@@ -26,17 +27,11 @@ export type FetchApiTokenOptions = {
   retryInterval?: number;
 };
 
-export type FetchError = {
-  status?: number;
-  error?: Error;
-  message?: string;
-};
-
 export const API_TOKEN_SESSION_STORAGE_KEY = 'api_token_key';
 
 async function fetchApiToken(
   options: FetchApiTokenOptions
-): Promise<TokenData | FetchError> {
+): Promise<TokenData | LoginClientError> {
   const {
     url,
     signal,
@@ -64,24 +59,27 @@ async function fetchApiToken(
   );
 
   if (fetchError || !fetchResponse) {
-    return {
-      error: fetchError,
-      message: 'Network or CORS error occured',
-    } as FetchError;
+    return new LoginClientError(
+      'Network or CORS error occured',
+      'API_TOKEN_NETWORK_OR_CORS_ERROR',
+      fetchError
+    );
   }
   if (!fetchResponse.ok) {
-    return {
-      status: fetchResponse.status,
-      message: fetchResponse.statusText,
-      error: new Error(await fetchResponse.text()),
-    } as FetchError;
+    const message = await fetchResponse.text();
+    return new LoginClientError(
+      `${message}.${fetchResponse.statusText} Status:${fetchResponse.status}`,
+      'API_TOKENS_FAILED',
+      fetchError
+    );
   }
   const [parseError, json] = await to(fetchResponse.json());
   if (parseError) {
-    return {
-      error: parseError,
-      message: 'Returned data is not valid json',
-    } as FetchError;
+    return new LoginClientError(
+      parseError.message,
+      'INVALID_API_TOKENS',
+      parseError
+    );
   }
   return json as TokenData;
 }
@@ -123,10 +121,10 @@ export default function createApiTokenClient(
         retryInterval,
       });
       clearStoredTokens();
-      if ((result as FetchError).error) {
+      if (result instanceof Error) {
         return Promise.reject(result);
       }
-      tokens = { ...(result as TokenData) };
+      tokens = { ...result };
       setStoredTokens(tokens);
       return Promise.resolve(tokens);
     },

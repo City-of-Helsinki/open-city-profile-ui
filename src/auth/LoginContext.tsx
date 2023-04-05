@@ -69,7 +69,7 @@ export const useAuthenticatedUser = (): AuthenticatedUserData => {
       TokenData | null | undefined,
       Error | undefined
     ]
-  >([...client.getStoredUserAndTokens(), undefined]);
+  >(client.getStoredUserAndTokens());
   const [storedUser, tokens, error] = storedData;
   const hasValidData = storedUser !== undefined;
   useEffect(() => {

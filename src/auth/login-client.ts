@@ -14,6 +14,7 @@ import createUserSessionPoller, {
   UserSessionPoller,
 } from './user-session-poller';
 import { createUserLoadTrackerPromise } from './user-load-promise';
+import LoginCLientError, { LoginCLientErrorType } from './login-client-error';
 
 export type LoginProps = {
   language?: string;
@@ -24,6 +25,10 @@ export type LogoutProps = {
 } & SignoutRedirectArgs;
 
 export type UserReturnType = User | null;
+type UserInData = UserReturnType | undefined;
+type TokensInData = TokenData | null | undefined;
+type ErrorInData = Error | undefined;
+type DataArray = [UserInData, TokensInData, ErrorInData];
 
 export type LoginClientProps = {
   userManagerSettings: Partial<UserManagerSettings>;
@@ -34,7 +39,6 @@ export type LoginClientProps = {
   apiTokenMaxRetries?: number;
   apiTokenRetryIntervalInMs?: number;
   sessionPollingIntervalInMs?: number;
-  removeUserWithoutTokens?: boolean;
 };
 
 export type LoginClient = {
@@ -44,14 +48,9 @@ export type LoginClient = {
   isAuthenticated: (user?: UserReturnType) => boolean;
   getUser: () => UserReturnType;
   getTokens: () => TokenData | null;
-  getUserAndFetchTokens: () => Promise<
-    [UserReturnType, TokenData | null, Error | undefined]
-  >;
+  getUserAndFetchTokens: () => Promise<DataArray>;
   getUpdatedTokens: () => Promise<TokenData | null>;
-  getStoredUserAndTokens: () => [
-    UserReturnType | undefined,
-    TokenData | null | undefined
-  ];
+  getStoredUserAndTokens: () => DataArray;
   cleanUp: () => Promise<void>;
   isRenewing: () => boolean;
 };
@@ -59,7 +58,6 @@ export type LoginClient = {
 const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
   defaultPollIntervalInMs: 60000,
   logger: console,
-  removeUserWithoutTokens: true,
   userManagerSettings: {
     automaticSilentRenew: true,
     redirect_uri: `${baseUrl}/callback`,
@@ -107,7 +105,6 @@ export default function createLoginClient(
     apiTokenUrl,
     apiTokenMaxRetries,
     apiTokenRetryIntervalInMs,
-    removeUserWithoutTokens,
   } = combinedProps;
 
   const apiTokenClient = apiTokenUrl
@@ -118,7 +115,7 @@ export default function createLoginClient(
       })
     : undefined;
   const shouldGetApiTokens = !!apiTokenClient;
-  let renewPromise: Promise<[User, TokenData | undefined | null]> | undefined;
+  let renewPromise: Promise<DataArray> | undefined;
 
   const startSessionPollingIfRequired = () => {
     if (!sessionPollingIntervalInMs) {
@@ -177,20 +174,6 @@ export default function createLoginClient(
     !!user && !isUserExpired(user) && !!user.access_token;
 
   const isRenewing = () => !!renewPromise;
-  const createRenewalPromise = async (): Promise<[
-    User,
-    TokenData | null | undefined
-  ]> => {
-    const [err, user] = await to(createUserLoadTrackerPromise(userManager));
-    if (!err && shouldGetApiTokens) {
-      const [fetchError, tokens] = await to(apiTokenClient.fetch(user as User));
-      if (fetchError) {
-        return Promise.reject(fetchError);
-      }
-      return Promise.resolve([user as User, tokens]);
-    }
-    return Promise.resolve([user as User, undefined]);
-  };
 
   const removeUser = async () => {
     await userManager.clearStaleState();
@@ -203,17 +186,69 @@ export default function createLoginClient(
     }
   };
 
-  const validateUserAndClearIfInvalid = async (
-    user?: UserReturnType
-  ): Promise<boolean> => {
+  const createDataArrayWithError = (type: LoginCLientErrorType): DataArray => [
+    null,
+    null,
+    new LoginCLientError(`${type} error`, type),
+  ];
+
+  const getSyncStoredData = (currentUser?: UserInData): DataArray => {
+    const user =
+      currentUser !== undefined
+        ? currentUser
+        : getUserFromStorageSyncronously();
     if (!isValidUser(user)) {
-      if (user) {
-        await removeUser();
-        removeApiTokens();
-      }
-      return Promise.resolve(false);
+      return createDataArrayWithError('INVALID_OR_EXPIRED_USER');
     }
-    return Promise.resolve(true);
+    if (shouldGetApiTokens) {
+      const tokens = apiTokenClient.getTokens();
+      return [user, tokens, undefined];
+    }
+    return [user, null, undefined];
+  };
+
+  const getAsyncStoredData = async (
+    currentUser?: UserInData
+  ): Promise<DataArray> => {
+    const user =
+      currentUser !== undefined ? currentUser : await userManager.getUser();
+    if (!isValidUser(user)) {
+      return createDataArrayWithError('INVALID_OR_EXPIRED_USER');
+    }
+    if (shouldGetApiTokens) {
+      const tokens = apiTokenClient.getTokens();
+      if (!tokens) {
+        const [fetchError, fetchedTokens] = await to<
+          TokenData,
+          LoginCLientError
+        >(apiTokenClient.fetch(user as User));
+        if (fetchError) {
+          return Promise.reject(fetchError);
+        }
+        return [user, fetchedTokens || null, undefined];
+      }
+      return [user, tokens, undefined];
+    }
+    return [user, null, undefined];
+  };
+
+  const getAsyncStoredOrRenewingData = async (
+    currentUser?: UserInData
+  ): Promise<DataArray> =>
+    isRenewing()
+      ? (renewPromise as Promise<DataArray>)
+      : getAsyncStoredData(currentUser);
+
+  const createRenewalPromise = async (): Promise<DataArray> => {
+    const [err, user] = await to(createUserLoadTrackerPromise(userManager));
+    if (!err && shouldGetApiTokens) {
+      const [, tokens, error] = await getAsyncStoredData(user as User);
+      if (error) {
+        return Promise.resolve([undefined, undefined, error]);
+      }
+      return Promise.resolve([user as User, tokens, undefined]);
+    }
+    return Promise.resolve([user as User, undefined, undefined]);
   };
 
   if (isValidUser(getUserFromStorageSyncronously())) {
@@ -223,8 +258,6 @@ export default function createLoginClient(
   userManager.events.addUserUnloaded(() => {
     removeApiTokens();
     stopSessionPolling();
-    // removeUser is async...
-    removeUser().finally(() => false);
   });
 
   userManager.events.addAccessTokenExpiring(async () => {
@@ -247,22 +280,14 @@ export default function createLoginClient(
       });
     },
     handleCallback: async () => {
-      const user = await userManager.signinRedirectCallback();
-      if (!isValidUser(user)) {
-        return Promise.reject(
-          new Error('Login failed - no valid user returned')
-        );
+      const currentUser = await userManager.signinRedirectCallback();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [user, tokens, error] = await getAsyncStoredData(currentUser);
+      if (error) {
+        await removeUser();
+        return Promise.reject(error);
       }
-      if (shouldGetApiTokens) {
-        const [fetchError] = await to(apiTokenClient.fetch(user));
-        if (fetchError) {
-          if (removeUserWithoutTokens) {
-            await removeUser();
-          }
-          return Promise.reject(fetchError);
-        }
-      }
-      return Promise.resolve(user);
+      return Promise.resolve(user as User);
     },
     isAuthenticated: user => {
       const target = user || getUserFromStorageSyncronously();
@@ -279,61 +304,19 @@ export default function createLoginClient(
         ...rest,
       });
     },
-    getUserAndFetchTokens: async () => {
-      const user = getUserFromStorageSyncronously();
-      const isUserValid = await validateUserAndClearIfInvalid(user);
-      if (!isUserValid) {
-        return [null, null, undefined];
-      }
-      if (!shouldGetApiTokens) {
-        return [user, null, undefined];
-      }
-      const tokens = apiTokenClient.getTokens();
-      if (!tokens) {
-        const [fetchError, fetchedTokens] = await to(
-          apiTokenClient.fetch(user as User)
-        );
-        if (fetchError) {
-          if (removeUserWithoutTokens) {
-            await removeUser();
-          }
-          return Promise.reject([
-            null,
-            null,
-            new Error('Failed to fetch api token'),
-          ]);
-        }
-        return [user, fetchedTokens || null, undefined];
-      }
-      return [user, tokens, undefined];
-    },
-    getStoredUserAndTokens: () => {
-      const user = getUserFromStorageSyncronously();
-      if (!isValidUser(user)) {
-        if (user) {
-          removeApiTokens();
-        }
-        return [undefined, undefined];
-      }
-      if (!shouldGetApiTokens) {
-        return [user, null];
-      }
-      const tokens = apiTokenClient.getTokens();
-
-      if (!tokens) {
-        return [null, null];
-      }
-      return [user, tokens];
-    },
+    getUserAndFetchTokens: async () => await getAsyncStoredOrRenewingData(),
+    getStoredUserAndTokens: () => getSyncStoredData(),
     getTokens: () => (apiTokenClient ? apiTokenClient.getTokens() : null),
     getUpdatedTokens: async () => {
       if (!apiTokenUrl) {
-        return Promise.reject(new Error('Missing apiTokenUrl'));
+        return Promise.reject(
+          new LoginCLientError('Missing apiTokenUrl', 'NO_API_TOKEN_URL')
+        );
       }
-      if (isRenewing()) {
-        await renewPromise;
-      }
-      return Promise.resolve(apiTokenClient?.getTokens() || null);
+      const [, tokens, error] = await getAsyncStoredOrRenewingData();
+      return error
+        ? Promise.reject(error)
+        : Promise.resolve(tokens as TokenData);
     },
     isRenewing,
     cleanUp: async () => {
