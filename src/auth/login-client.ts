@@ -53,6 +53,7 @@ export type LoginClient = {
   getStoredUserAndTokens: () => DataArray;
   cleanUp: () => Promise<void>;
   isRenewing: () => boolean;
+  getUserManager: () => UserManager;
 };
 
 const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
@@ -323,5 +324,6 @@ export default function createLoginClient(
       removeApiTokens();
       await removeUser();
     },
+    getUserManager: () => userManager,
   };
 }
