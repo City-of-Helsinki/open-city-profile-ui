@@ -31,6 +31,9 @@ class LoginClientError extends Error {
   get isApiTokenNetWorkOrCorsError() {
     return this.type === 'API_TOKEN_NETWORK_OR_CORS_ERROR';
   }
+  get isInvalidApiTokenError() {
+    return this.type === 'USER_HAS_INVALID_TOKENS';
+  }
 }
 
 export default LoginClientError;
