@@ -44,7 +44,7 @@ export type LoginClientProps = {
 export type LoginClient = {
   login: (props?: LoginProps) => Promise<void>;
   logout: (props?: LogoutProps) => Promise<void>;
-  handleCallback: () => Promise<User>;
+  handleCallback: () => Promise<DataArray>;
   isAuthenticated: (user?: UserReturnType) => boolean;
   getUser: () => UserReturnType;
   getTokens: () => TokenData | null;
@@ -224,7 +224,7 @@ export default function createLoginClient(
           LoginClientError
         >(apiTokenClient.fetch(user as User));
         if (fetchError) {
-          return Promise.reject(fetchError);
+          return [user, null, fetchError];
         }
         return [user, fetchedTokens || null, undefined];
       }
@@ -243,6 +243,7 @@ export default function createLoginClient(
   const createRenewalPromise = async (): Promise<DataArray> => {
     const [err, user] = await to(createUserLoadTrackerPromise(userManager));
     if (!err && shouldGetApiTokens) {
+      apiTokenClient.clear();
       const [, tokens, error] = await getAsyncStoredData(user as User);
       if (error) {
         return Promise.resolve([undefined, undefined, error]);
@@ -282,13 +283,14 @@ export default function createLoginClient(
     },
     handleCallback: async () => {
       const currentUser = await userManager.signinRedirectCallback();
+      const data = await getAsyncStoredData(currentUser);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const [user, tokens, error] = await getAsyncStoredData(currentUser);
+      const [user, tokens, error] = data;
       if (error) {
         await removeUser();
         return Promise.reject(error);
       }
-      return Promise.resolve(user as User);
+      return Promise.resolve(data);
     },
     isAuthenticated: user => {
       const target = user || getUserFromStorageSyncronously();
