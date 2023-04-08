@@ -133,7 +133,7 @@ export default function createApiTokenClient(
     clear: () => {
       fetchCanceller.cancel();
       clearStoredTokens();
-      tokens = {};
+      tokens = null;
     },
   };
 }
