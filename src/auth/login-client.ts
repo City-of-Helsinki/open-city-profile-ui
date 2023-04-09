@@ -253,13 +253,20 @@ export default function createLoginClient(
     return Promise.resolve([user as User, undefined, undefined]);
   };
 
-  if (isValidUser(getUserFromStorageSyncronously())) {
-    startSessionPollingIfRequired();
-  }
-
-  userManager.events.addUserUnloaded(() => {
+  const onSessionEnd = () => {
     removeApiTokens();
     stopSessionPolling();
+    if (apiTokenClient) {
+      apiTokenClient.clear();
+    }
+  };
+
+  userManager.events.addUserUnloaded(() => {
+    onSessionEnd();
+  });
+
+  userManager.events.addUserSignedOut(() => {
+    onSessionEnd();
   });
 
   userManager.events.addAccessTokenExpiring(async () => {
@@ -269,6 +276,10 @@ export default function createLoginClient(
     startSessionPollingIfRequired();
     renewPromise = undefined;
   });
+
+  if (isValidUser(getUserFromStorageSyncronously())) {
+    startSessionPollingIfRequired();
+  }
 
   return {
     login: async loginProps => {
@@ -290,6 +301,7 @@ export default function createLoginClient(
         await removeUser();
         return Promise.reject(error);
       }
+      startSessionPollingIfRequired();
       return Promise.resolve(data);
     },
     isAuthenticated: user => {
