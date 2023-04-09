@@ -26,6 +26,15 @@ type UserCreationProps = {
   expired?: boolean;
 };
 
+type PublicUserManagerEvents = {
+  _userUnloaded: {
+    raise: () => Promise<void>;
+  };
+  _userSignedOut: {
+    raise: () => Promise<void>;
+  };
+};
+
 let mockManuallyTriggerApiTokenResult = false;
 const apiTokenFetchDelayInMs = 100;
 const mockedApiTokenResponses: (TokenData | LoginClientError)[] = [];
@@ -388,9 +397,11 @@ describe('authService', () => {
       });
       let middleOfRewalTokens: TokenData | null = null;
       completeManualApiTokenFetch2();
-      const tokenPromise = loginClient.getUpdatedTokens().then(newTokens => {
-        middleOfRewalTokens = newTokens;
-      });
+      const tokenPromise = loginClient
+        .getUpdatedTokens()
+        .then(returnedTokens => {
+          middleOfRewalTokens = returnedTokens;
+        });
       completeManualApiTokenFetch2();
       await waitFor(() => {
         expect(loadListener).toHaveBeenCalledTimes(2);
@@ -406,6 +417,45 @@ describe('authService', () => {
       expect(newTokens as TokenData).toMatchObject(
         (middleOfRewalTokens as unknown) as TokenData
       );
+    });
+  });
+  describe('Session polling ', () => {
+    const mockHttpPoller = getHttpPollerMockData();
+    afterEach(() => {
+      mockHttpPoller.start.mockReset();
+      mockHttpPoller.stop.mockReset();
+    });
+    it('should start when authService.getAuthenticatedUser is called and session is valid', async () => {
+      await initTests({ validUser: true }, { apiTokenUrl: undefined });
+      expect(mockHttpPoller.start).toHaveBeenCalled();
+    });
+    it('should not start when authService.getAuthenticatedUser is called and session is invalid', async () => {
+      await initTests({ validUser: false }, { apiTokenUrl: undefined });
+      expect(mockHttpPoller.start).toHaveBeenCalledTimes(0);
+    });
+    it('should start in endLogin', async () => {
+      await initTests({ validUser: true }, { apiTokenUrl: undefined });
+      spyAndMockSigninRedirect(currentUser);
+      await loginClient.handleCallback();
+      expect(mockHttpPoller.start).toHaveBeenCalledTimes(1);
+    });
+    it('should stop when user is unloaded', async () => {
+      await initTests({ validUser: true }, { apiTokenUrl: undefined });
+      spyAndMockSigninRedirect(currentUser);
+      await loginClient.handleCallback();
+      await ((userManager.events as unknown) as PublicUserManagerEvents)._userUnloaded.raise();
+      await waitFor(() => {
+        expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+      });
+    });
+    it('should stop when user is signedOut', async () => {
+      await initTests({ validUser: true }, { apiTokenUrl: undefined });
+      spyAndMockSigninRedirect(currentUser);
+      await loginClient.handleCallback();
+      await ((userManager.events as unknown) as PublicUserManagerEvents)._userSignedOut.raise();
+      await waitFor(() => {
+        expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });
