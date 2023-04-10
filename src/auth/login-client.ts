@@ -9,12 +9,16 @@ import {
 } from 'oidc-client-ts';
 import to from 'await-to-js';
 
-import createApiTokenClient, { TokenData } from './api-token-client';
+import createApiTokenClient, {
+  ApiTokenClient,
+  TokenData,
+} from './api-token-client';
 import createUserSessionPoller, {
   UserSessionPoller,
 } from './user-session-poller';
 import { createUserLoadTrackerPromise } from './user-load-promise';
 import LoginClientError, { LoginClientErrorType } from './login-client-error';
+import { HttpPoller } from './http-poller';
 
 export type LoginProps = {
   language?: string;
@@ -54,6 +58,8 @@ export type LoginClient = {
   cleanUp: () => Promise<void>;
   isRenewing: () => boolean;
   getUserManager: () => UserManager;
+  getApiTokenClient: () => ApiTokenClient | undefined;
+  getSessionPoller: () => HttpPoller | undefined;
 };
 
 const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
@@ -72,6 +78,13 @@ const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
     accessTokenExpiringNotificationTimeInSeconds: 3555,
   } as UserManagerSettings,
 });
+
+export const getUserStoreKey = (
+  settings: Partial<UserManagerSettings>
+): string =>
+  // "oidc" is the default prefix passed in oidc-client-ts
+  // "user" is the userStoreKey in oidc-client-ts
+  `oidc.user:${settings.authority}:${settings.client_id}`;
 
 export default function createLoginClient(
   props: LoginClientProps
@@ -154,13 +167,10 @@ export default function createLoginClient(
     return true;
   };
 
-  const getUserStoreKey = (): string =>
-    // "oidc" is the default prefix passed
-    // "user" is the userStoreKey
-    `oidc.user:${combinedProps.userManagerSettings.authority}:${combinedProps.userManagerSettings.client_id}`;
-
   const getUserFromStorageSyncronously = (): UserReturnType => {
-    const userData = store.getItem(getUserStoreKey());
+    const userData = store.getItem(
+      getUserStoreKey(combinedProps.userManagerSettings)
+    );
     if (!userData) {
       return null;
     }
@@ -339,5 +349,7 @@ export default function createLoginClient(
       await removeUser();
     },
     getUserManager: () => userManager,
+    getApiTokenClient: () => apiTokenClient,
+    getSessionPoller: () => sessionPoller,
   };
 }
