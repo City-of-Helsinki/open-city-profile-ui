@@ -2,19 +2,19 @@ import { waitFor } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
 import { OidcClient, SigninResponse, User, UserManager } from 'oidc-client-ts';
 
-import {
-  getHttpPollerMockData,
-  enableActualHttpPoller,
-} from '../__mocks__/http-poller';
+import { enableActualHttpPoller } from '../__mocks__/http-poller';
 import openIdConfiguration from '../../common/test/openIdConfiguration.json';
 import apiTokens from '../../common/test/apiTokens.json';
 import createLoginClient, {
   LoginClient,
   LoginClientProps,
   LoginProps,
+  LogoutProps,
+  getUserStoreKey,
 } from '../login-client';
-import { TokenData } from '../api-token-client';
+import { API_TOKEN_SESSION_STORAGE_KEY, TokenData } from '../api-token-client';
 import LoginClientError from '../login-client-error';
+import { HttpPoller, HttpPollerProps } from '../http-poller';
 
 type TestProps = {
   validUser: boolean;
@@ -37,9 +37,50 @@ type PublicUserManagerEvents = {
 
 let mockManuallyTriggerApiTokenResult = false;
 const apiTokenFetchDelayInMs = 100;
+const sessionPollingIntervalInMs = 500;
 const mockedApiTokenResponses: (TokenData | LoginClientError)[] = [];
 
-describe('authService', () => {
+const spyOnSessionPoller = (sessionPoller: HttpPoller) => {
+  const startSpy = jest.spyOn(sessionPoller, 'start');
+  const stopSpy = jest.spyOn(sessionPoller, 'stop');
+  return {
+    removeMocks: () => {
+      startSpy.mockRestore();
+      stopSpy.mockRestore();
+    },
+    getStartCallCount: () => startSpy.mock.calls.length,
+    getStopCallCount: () => stopSpy.mock.calls.length,
+    jumpToNextPoll: () => {
+      jest.advanceTimersByTime(sessionPollingIntervalInMs + 1);
+    },
+  };
+};
+
+const resetSessionPollerSpy = () => ({
+  removeMocks: jest.fn(),
+  getStartCallCount: () => 0,
+  getStopCallCount: () => 0,
+  jumpToNextPoll: () => {
+    throw new Error('poller not used');
+  },
+});
+
+let mockSessionPollerFunctions: ReturnType<typeof spyOnSessionPoller> = resetSessionPollerSpy();
+// eslint-disable-next-line sonarjs/no-duplicate-string
+const mockActualHttpPoller = jest.requireActual('../http-poller');
+jest.mock('../http-poller', () => ({
+  __esModule: true,
+  default: (props: HttpPollerProps) => {
+    const poller = mockActualHttpPoller.default(props) as HttpPoller;
+    if (mockSessionPollerFunctions) {
+      mockSessionPollerFunctions.removeMocks();
+    }
+    mockSessionPollerFunctions = spyOnSessionPoller(poller);
+    return poller;
+  },
+}));
+
+describe('loginClient', () => {
   let loginClient: LoginClient;
   let userManager: UserManager;
   let currentUser: User;
@@ -60,7 +101,7 @@ describe('authService', () => {
       accessTokenExpiringNotificationTimeInSeconds,
     },
     apiTokenUrl: `${window._env_.REACT_APP_OIDC_AUTHORITY}api-tokens/`,
-    sessionPollingIntervalInMs: 500,
+    sessionPollingIntervalInMs,
   };
 
   const createSignInResponse = ({
@@ -118,6 +159,19 @@ describe('authService', () => {
     const user = createUser(userProps);
     await targetUserManager.storeUser(user);
     return Promise.resolve(user);
+  };
+
+  const placeUserToStorage = async (userProps: UserCreationProps = {}) => {
+    const user = createUser(userProps);
+    sessionStorage.setItem(
+      getUserStoreKey({ authority, client_id }),
+      JSON.stringify(user)
+    );
+    return user;
+  };
+
+  const removeUserFromStorage = async () => {
+    sessionStorage.removeItem(getUserStoreKey({ authority, client_id }));
   };
 
   const mockSignInResponse = (
@@ -255,9 +309,9 @@ describe('authService', () => {
 
   // loginClient.logout redirects the browser.
   // The returned promise is never resolved.
-  async function waitForLogoutToFinish() {
+  async function waitForLogoutToFinish(logoutProps?: LogoutProps) {
     await expect(() =>
-      waitFor(() => loginClient.logout(), { timeout: 1000 })
+      waitFor(() => loginClient.logout(logoutProps), { timeout: 1000 })
     ).rejects.toThrow();
   }
 
@@ -268,9 +322,6 @@ describe('authService', () => {
         1000 +
         5000
     );
-  };
-  const jumpToApiTokenFetchEndTime = () => {
-    jest.advanceTimersByTime(apiTokenFetchDelayInMs + 100000);
   };
 
   const spyAndMockSigninRedirect = (user: User) =>
@@ -284,6 +335,16 @@ describe('authService', () => {
     mockedApiTokenResponses.length = 0;
     mockManuallyTriggerApiTokenResult = false;
   });
+
+  beforeAll(() => {
+    enableActualHttpPoller(jest.requireActual('../http-poller'));
+  });
+  /*
+  afterAll(() => {
+    disableActualHttpPoller();
+  });
+
+  */
 
   describe('getUser', () => {
     beforeEach(async () => initTests({ validUser: true }));
@@ -353,9 +414,6 @@ describe('authService', () => {
     });
   });
   describe('renewing user tokens', () => {
-    beforeAll(() => {
-      //jest.useFakeTimers();
-    });
     beforeEach(async () => {
       await initTests({ validUser: true });
       mockedApiTokenResponses.push(apiTokens);
@@ -420,24 +478,24 @@ describe('authService', () => {
     });
   });
   describe('Session polling ', () => {
-    const mockHttpPoller = getHttpPollerMockData();
     afterEach(() => {
-      mockHttpPoller.start.mockReset();
-      mockHttpPoller.stop.mockReset();
+      removeUserFromStorage();
+      mockSessionPollerFunctions.removeMocks();
     });
-    it('should start when authService.getAuthenticatedUser is called and session is valid', async () => {
-      await initTests({ validUser: true }, { apiTokenUrl: undefined });
-      expect(mockHttpPoller.start).toHaveBeenCalled();
-    });
-    it('should not start when authService.getAuthenticatedUser is called and session is invalid', async () => {
+    it('should start when .... is called and session is valid', async () => {
+      placeUserToStorage();
       await initTests({ validUser: false }, { apiTokenUrl: undefined });
-      expect(mockHttpPoller.start).toHaveBeenCalledTimes(0);
+      expect(mockSessionPollerFunctions.getStartCallCount()).toBe(1);
+    });
+    it('should not start when .... is called and session is invalid', async () => {
+      await initTests({ validUser: false }, { apiTokenUrl: undefined });
+      expect(mockSessionPollerFunctions.getStartCallCount()).toBe(0);
     });
     it('should start in endLogin', async () => {
       await initTests({ validUser: true }, { apiTokenUrl: undefined });
       spyAndMockSigninRedirect(currentUser);
       await loginClient.handleCallback();
-      expect(mockHttpPoller.start).toHaveBeenCalledTimes(1);
+      expect(mockSessionPollerFunctions.getStartCallCount()).toBe(1);
     });
     it('should stop when user is unloaded', async () => {
       await initTests({ validUser: true }, { apiTokenUrl: undefined });
@@ -445,7 +503,7 @@ describe('authService', () => {
       await loginClient.handleCallback();
       await ((userManager.events as unknown) as PublicUserManagerEvents)._userUnloaded.raise();
       await waitFor(() => {
-        expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+        expect(mockSessionPollerFunctions.getStopCallCount()).toBe(1);
       });
     });
     it('should stop when user is signedOut', async () => {
@@ -454,7 +512,46 @@ describe('authService', () => {
       await loginClient.handleCallback();
       await ((userManager.events as unknown) as PublicUserManagerEvents)._userSignedOut.raise();
       await waitFor(() => {
-        expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
+        expect(mockSessionPollerFunctions.getStopCallCount()).toBe(1);
+      });
+    });
+  });
+  describe('logout', () => {
+    afterEach(() => {
+      loginClient.cleanUp();
+    });
+    beforeEach(async () => {
+      await initTests({ validUser: true });
+      mockedApiTokenResponses.push(apiTokens);
+      spyAndMockSigninRedirect(currentUser);
+      await loginClient.handleCallback();
+    });
+    it('should call signoutRedirect from oidc. Language is found in extraQueryParams', async () => {
+      const signoutRedirectSpy = jest.spyOn(userManager, 'signoutRedirect');
+      await waitForLogoutToFinish({ language: 'sv' });
+      expect(signoutRedirectSpy).toHaveBeenCalledTimes(1);
+      expect(signoutRedirectSpy).toHaveBeenNthCalledWith(1, {
+        extraQueryParams: {
+          ui_locales: 'sv',
+        },
+      });
+    });
+
+    it('should remove the tokens from sessionStorage', async () => {
+      expect(
+        sessionStorage.getItem(API_TOKEN_SESSION_STORAGE_KEY)
+      ).not.toBeNull();
+      await waitForLogoutToFinish();
+      expect(sessionStorage.getItem(API_TOKEN_SESSION_STORAGE_KEY)).toBeNull();
+    });
+
+    it('should remove user, tokens and stop polling', async () => {
+      await waitForLogoutToFinish();
+      const [user, tokens] = loginClient.getStoredUserAndTokens();
+      expect(user).toBeNull();
+      expect(tokens).toBeNull();
+      await waitFor(() => {
+        expect(mockSessionPollerFunctions.getStopCallCount()).toBe(1);
       });
     });
   });
