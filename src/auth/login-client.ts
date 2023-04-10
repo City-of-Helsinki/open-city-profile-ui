@@ -37,8 +37,6 @@ type DataArray = [UserInData, TokensInData, ErrorInData];
 export type LoginClientProps = {
   userManagerSettings: Partial<UserManagerSettings>;
   defaultPollIntervalInMs?: number;
-  logLevel?: Log;
-  logger?: Parameters<typeof Log.setLogger>[0];
   apiTokenUrl?: string;
   apiTokenMaxRetries?: number;
   apiTokenRetryIntervalInMs?: number;
@@ -64,7 +62,6 @@ export type LoginClient = {
 
 const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
   defaultPollIntervalInMs: 60000,
-  logger: console,
   userManagerSettings: {
     automaticSilentRenew: true,
     redirect_uri: `${baseUrl}/callback`,
