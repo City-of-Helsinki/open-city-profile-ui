@@ -1,7 +1,6 @@
 import {
   UserManager,
   UserManagerSettings,
-  Log,
   SigninRedirectArgs,
   WebStorageStateStore,
   User,
@@ -16,7 +15,7 @@ import createApiTokenClient, {
 import createUserSessionPoller, {
   UserSessionPoller,
 } from './user-session-poller';
-import { createUserLoadTrackerPromise } from './user-load-promise';
+import { createRenewalTrackingPromise } from './user-renewal-promise';
 import LoginClientError, { LoginClientErrorType } from './login-client-error';
 import { HttpPoller } from './http-poller';
 
@@ -33,6 +32,21 @@ type UserInData = UserReturnType | undefined;
 type TokensInData = TokenData | null | undefined;
 type ErrorInData = LoginClientError | undefined;
 type DataArray = [UserInData, TokensInData, ErrorInData];
+export type LoginClientState =
+  | 'NO_SESSION'
+  | 'VALID_SESSION'
+  | 'LOGGING_IN'
+  | 'LOGGING_OUT';
+
+export type LoginClientStateChange = {
+  state: LoginClientState;
+  previousState?: LoginClientState;
+  error?: LoginClientError;
+};
+
+export type LoginClientStateListener = (
+  newStateAndError: LoginClientStateChange
+) => void;
 
 export type LoginClientProps = {
   userManagerSettings: Partial<UserManagerSettings>;
@@ -41,6 +55,7 @@ export type LoginClientProps = {
   apiTokenMaxRetries?: number;
   apiTokenRetryIntervalInMs?: number;
   sessionPollingIntervalInMs?: number;
+  onStateChange?: LoginClientStateListener;
 };
 
 export type LoginClient = {
@@ -58,6 +73,7 @@ export type LoginClient = {
   getUserManager: () => UserManager;
   getApiTokenClient: () => ApiTokenClient | undefined;
   getSessionPoller: () => HttpPoller | undefined;
+  getState: () => LoginClientState;
 };
 
 const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
@@ -110,6 +126,7 @@ export default function createLoginClient(
     combinedProps.userManagerSettings as UserManagerSettings
   );
   let sessionPoller: UserSessionPoller;
+  let state: LoginClientState = 'NO_SESSION';
 
   const {
     sessionPollingIntervalInMs,
@@ -128,6 +145,23 @@ export default function createLoginClient(
   const shouldGetApiTokens = !!apiTokenClient;
   let renewPromise: Promise<DataArray> | undefined;
 
+  const changeState = (newState: LoginClientState) => {
+    if (state === newState) {
+      return;
+    }
+    const previousState = state;
+    state = newState;
+    if (combinedProps.onStateChange) {
+      combinedProps.onStateChange({ state, previousState });
+    }
+  };
+
+  const dispatchError = (error: LoginClientError) => {
+    if (combinedProps.onStateChange) {
+      combinedProps.onStateChange({ state, previousState: state, error });
+    }
+  };
+
   const startSessionPollingIfRequired = () => {
     if (!sessionPollingIntervalInMs) {
       return;
@@ -136,8 +170,15 @@ export default function createLoginClient(
       sessionPoller = createUserSessionPoller({
         userManager,
         pollIntervalInMs: sessionPollingIntervalInMs,
-        shouldPoll: () => true,
-        onError: () => false,
+        shouldPoll: () => state === 'VALID_SESSION',
+        onError: () => {
+          dispatchError(
+            new LoginClientError(
+              'Session polling failed',
+              'UNAUTHORIZED_SESSION'
+            )
+          );
+        },
       });
     }
     sessionPoller.start();
@@ -248,7 +289,7 @@ export default function createLoginClient(
       : getAsyncStoredData(currentUser);
 
   const createRenewalPromise = async (): Promise<DataArray> => {
-    const [err, user] = await to(createUserLoadTrackerPromise(userManager));
+    const [err, user] = await to(createRenewalTrackingPromise(userManager));
     if (!err && shouldGetApiTokens) {
       apiTokenClient.clear();
       const [, tokens, error] = await getAsyncStoredData(user as User);
@@ -257,7 +298,13 @@ export default function createLoginClient(
       }
       return Promise.resolve([user as User, tokens, undefined]);
     }
-    return Promise.resolve([user as User, undefined, undefined]);
+    return Promise.resolve([
+      user as User,
+      undefined,
+      err
+        ? new LoginClientError('Renew failed', 'RENEWAL_FAILED', err)
+        : undefined,
+    ]);
   };
 
   const onSessionEnd = () => {
@@ -279,13 +326,17 @@ export default function createLoginClient(
   userManager.events.addAccessTokenExpiring(async () => {
     stopSessionPolling();
     renewPromise = createRenewalPromise();
-    await renewPromise;
+    const [, , error] = await renewPromise;
+    if (error) {
+      dispatchError(error);
+    }
     startSessionPollingIfRequired();
     renewPromise = undefined;
   });
 
   if (isValidUser(getUserFromStorageSyncronously())) {
     startSessionPollingIfRequired();
+    state = 'VALID_SESSION';
   }
 
   return {
@@ -294,20 +345,25 @@ export default function createLoginClient(
       if (language) {
         extraQueryParams.ui_locales = language;
       }
+      changeState('LOGGING_IN');
       return userManager.signinRedirect({
         extraQueryParams,
         ...rest,
       });
     },
     handleCallback: async () => {
+      changeState('LOGGING_IN');
       const currentUser = await userManager.signinRedirectCallback();
       const data = await getAsyncStoredData(currentUser);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [user, tokens, error] = data;
       if (error) {
         await removeUser();
+        changeState('NO_SESSION');
+        dispatchError(error);
         return Promise.reject(error);
       }
+      changeState('VALID_SESSION');
       startSessionPollingIfRequired();
       return Promise.resolve(data);
     },
@@ -321,6 +377,7 @@ export default function createLoginClient(
       if (language) {
         extraQueryParams.ui_locales = language;
       }
+      changeState('LOGGING_OUT');
       return userManager.signoutRedirect({
         extraQueryParams,
         ...rest,
@@ -344,7 +401,9 @@ export default function createLoginClient(
     cleanUp: async () => {
       removeApiTokens();
       await removeUser();
+      state = 'NO_SESSION';
     },
+    getState: () => state,
     getUserManager: () => userManager,
     getApiTokenClient: () => apiTokenClient,
     getSessionPoller: () => sessionPoller,
