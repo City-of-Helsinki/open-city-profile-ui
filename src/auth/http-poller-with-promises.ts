@@ -1,6 +1,9 @@
 import to from 'await-to-js';
 
-import createHttpPoller, { HttpPoller } from './http-poller';
+import createHttpPoller, {
+  HttpPoller,
+  isSuccessfulHttpResponse,
+} from './http-poller';
 
 export type RetryingPollerProps = {
   pollFunction: () => Promise<Response | undefined>;
@@ -14,7 +17,7 @@ export default async function retryPollingUntilSuccessful({
   maxRetries = 10,
 }: RetryingPollerProps): Promise<Response> {
   const [err, response] = await to(pollFunction());
-  if (!err && response) {
+  if (!err && response && isSuccessfulHttpResponse(response)) {
     return Promise.resolve(response);
   }
   let retries = maxRetries;
