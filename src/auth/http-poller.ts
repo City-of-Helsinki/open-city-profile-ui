@@ -18,6 +18,14 @@ export type HttpPollerProps = {
 
 const defaultPollIntervalInMs = 60000;
 
+export function isSuccessfulHttpResponse(res?: Response) {
+  if (!res) {
+    return false;
+  }
+  const responseStatus = res && res.status;
+  return responseStatus === HttpStatusCode.OK;
+}
+
 export default function createHttpPoller({
   pollFunction,
   shouldPoll,
@@ -64,7 +72,7 @@ export default function createHttpPoller({
       return;
     }
     const responseStatus = data && data.status;
-    const isErrorResponse = responseStatus !== HttpStatusCode.OK;
+    const isErrorResponse = !isSuccessfulHttpResponse(data);
     const success = !err && !isErrorResponse;
     if (success && onSuccess) {
       const { keepPolling } = onSuccess(data as Response);
