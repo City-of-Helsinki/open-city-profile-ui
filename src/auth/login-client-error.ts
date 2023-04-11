@@ -4,6 +4,7 @@ export type LoginClientErrorType =
   | 'INVALID_API_TOKENS'
   | 'API_TOKEN_NETWORK_OR_CORS_ERROR'
   | 'USER_HAS_INVALID_TOKENS'
+  | 'RENEWAL_FAILED'
   | 'NO_API_TOKEN_URL';
 
 class LoginClientError extends Error {
