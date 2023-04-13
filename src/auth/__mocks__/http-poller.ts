@@ -1,3 +1,5 @@
+import HttpStatusCode from 'http-status-typed';
+
 import { HttpPoller, HttpPollerProps } from '../http-poller';
 
 type MockHttpPollerData = {
@@ -44,6 +46,14 @@ export function enableActualHttpPoller(httpPollerModule: {
 export function disableActualHttpPoller(): void {
   removeActualHttpPoller();
   mockHttpPoller.actualCreator = undefined;
+}
+
+export function isSuccessfulHttpResponse(res?: Response) {
+  if (!res) {
+    return false;
+  }
+  const responseStatus = res && res.status;
+  return responseStatus === HttpStatusCode.OK;
 }
 
 export default function createHttpPoller(
