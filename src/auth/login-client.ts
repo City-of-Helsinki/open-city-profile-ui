@@ -127,7 +127,6 @@ export default function createLoginClient(
   );
   let sessionPoller: UserSessionPoller;
   let state: LoginClientState = 'NO_SESSION';
-
   const {
     sessionPollingIntervalInMs,
     apiTokenUrl,
@@ -205,23 +204,6 @@ export default function createLoginClient(
     return true;
   };
 
-  const getUserFromStorageSyncronously = (): UserReturnType => {
-    const userData = store.getItem(
-      getUserStoreKey(combinedProps.userManagerSettings)
-    );
-    if (!userData) {
-      return null;
-    }
-    try {
-      return JSON.parse(userData);
-    } catch (e) {
-      return null;
-    }
-  };
-
-  const isValidUser = (user?: User | null): boolean =>
-    !!user && !isUserExpired(user) && !!user.access_token;
-
   const isRenewing = () => !!renewPromise;
 
   const removeUser = async () => {
@@ -235,11 +217,59 @@ export default function createLoginClient(
     }
   };
 
-  const createDataArrayWithError = (type: LoginClientErrorType): DataArray => [
+  const createDataArrayWithError = (
+    type: LoginClientErrorType,
+    message?: string
+  ): DataArray => [
     null,
     null,
-    new LoginClientError(`${type} error`, type),
+    new LoginClientError(message || `${type} error`, type),
   ];
+
+  // when apiTokenUrl is set and therefore apiTokens are required,
+  // there should not be a case where user is stored, but apiTokens are not found.
+  // Data is out of sync, so stored user should be removed.
+  const handleValidUserWithoutRequiredApiTokens = (user: User): DataArray => {
+    if (!shouldGetApiTokens) {
+      return [user, null, undefined];
+    }
+    const tokens = apiTokenClient.getTokens();
+    if (tokens) {
+      return [user, tokens, undefined];
+    }
+    removeUser().catch(() => {
+      // removeUser is async, so handling the promise silently with empty function
+      // the function will never reject when localStorage is used.
+    });
+    return createDataArrayWithError(
+      'USER_HAS_INVALID_TOKENS',
+      'User found without required tokens'
+    );
+  };
+
+  const getUserFromStorageSyncronously = (): UserReturnType => {
+    const userData = store.getItem(
+      getUserStoreKey(combinedProps.userManagerSettings)
+    );
+    if (!userData) {
+      return null;
+    }
+    try {
+      const user = JSON.parse(userData);
+      if (!user) {
+        return null;
+      }
+      const [verifiedUser, , error] = handleValidUserWithoutRequiredApiTokens(
+        user
+      );
+      return error || !verifiedUser ? null : user;
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const isValidUser = (user?: User | null): boolean =>
+    !!user && !isUserExpired(user) && !!user.access_token;
 
   const getSyncStoredData = (currentUser?: UserInData): DataArray => {
     const user =
@@ -249,13 +279,15 @@ export default function createLoginClient(
     if (!isValidUser(user)) {
       return createDataArrayWithError('INVALID_OR_EXPIRED_USER');
     }
-    if (shouldGetApiTokens) {
-      const tokens = apiTokenClient.getTokens();
-      return [user, tokens, undefined];
-    }
-    return [user, null, undefined];
-  };
 
+    // token existance is checked in getUserFromStorageSyncronously
+    // tokens exist, if user exists.
+    return [
+      user,
+      apiTokenClient ? (apiTokenClient.getTokens() as TokenData) : null,
+      undefined,
+    ];
+  };
   const getAsyncStoredData = async (
     currentUser?: UserInData
   ): Promise<DataArray> => {

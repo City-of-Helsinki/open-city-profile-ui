@@ -10,19 +10,21 @@ import createLoginClient, {
   getUserStoreKey,
 } from '../login-client';
 import openIdConfiguration from '../../common/test/openIdConfiguration.json';
-import { TokenData } from '../api-token-client';
+import { API_TOKEN_SESSION_STORAGE_KEY, TokenData } from '../api-token-client';
 import LoginClientError from '../login-client-error';
 import { HttpPoller } from '../http-poller';
+import apiTokens from '../../common/test/apiTokens.json';
 
 type TestProps = {
   validUser: boolean;
+  validApiToken?: boolean;
   userProps?: Partial<User>;
 };
 
 export type InitTestResult = {
   loginClient: LoginClient;
   userManager: UserManager;
-  currentUser: User;
+  currentUser?: User;
 };
 
 type UserCreationProps = {
@@ -42,7 +44,7 @@ type PublicUserManagerEvents = {
 export function createTestSuite() {
   let loginClient: LoginClient;
   let userManager: UserManager;
-  let currentUser: User;
+  let currentUser: User | undefined;
   let mockManuallyTriggerApiTokenResult = false;
 
   const mockedApiTokenResponses: (TokenData | LoginClientError)[] = [];
@@ -134,6 +136,13 @@ export function createTestSuite() {
     return user;
   };
 
+  const placeApiTokenToStorage = (tokenObj: TokenData) => {
+    sessionStorage.setItem(
+      API_TOKEN_SESSION_STORAGE_KEY,
+      JSON.stringify(tokenObj)
+    );
+  };
+
   const removeUserFromStorage = async () => {
     sessionStorage.removeItem(getUserStoreKey({ authority, client_id }));
   };
@@ -169,7 +178,6 @@ export function createTestSuite() {
   const setSession = async ({
     validUser,
     userManager: currentUserManager,
-    userProps,
   }: TestProps & { userManager: UserManager }): Promise<User> => {
     const user = await placeUserToUserManager(currentUserManager, {
       valid: validUser,
@@ -276,10 +284,12 @@ export function createTestSuite() {
     );
   };
 
-  const spyAndMockSigninRedirect = (user: User) =>
+  const spyAndMockSigninRedirect = (user?: User) =>
     jest
       .spyOn(userManager, 'signinRedirectCallback')
-      .mockImplementation(() => Promise.resolve(user));
+      .mockImplementation(() =>
+        user ? Promise.resolve(user) : Promise.reject(new Error('No user'))
+      );
 
   const initTests = async (
     testProps: TestProps,
@@ -289,9 +299,20 @@ export function createTestSuite() {
       ...defaultTestProps,
       ...additionalLoginClientProps,
     };
+    const { validUser, validApiToken, userProps } = testProps;
+    if (validUser) {
+      currentUser = await placeUserToStorage(userProps);
+      if (validApiToken !== false) {
+        placeApiTokenToStorage(apiTokens);
+      } else {
+        currentUser = undefined;
+      }
+    } else {
+      currentUser = undefined;
+    }
     loginClient = createLoginClient(loginClientProps);
     userManager = loginClient.getUserManager();
-    currentUser = await setSession({ ...testProps, userManager });
+    //currentUser = validUser ? (loginClient.getUser() as User) : undefined;
     return { loginClient, userManager, currentUser };
   };
 
@@ -350,15 +371,16 @@ export function createTestSuite() {
     mockSessionPollerFunctions.removeMocks();
     mockedApiTokenResponses.length = 0;
     mockManuallyTriggerApiTokenResult = false;
+    currentUser = undefined;
   };
-
-  // await ((userManager.events as unknown) as PublicUserManagerEvents)._userUnloaded.raise();
 
   const raiseUserUnloadedEvent = () =>
     ((userManager.events as unknown) as PublicUserManagerEvents)._userUnloaded.raise();
 
   const raiseUserSignedOutEvent = () =>
     ((userManager.events as unknown) as PublicUserManagerEvents)._userSignedOut.raise();
+
+  const getDefaultLoginClientProps = () => defaultTestProps;
 
   return {
     createSignInResponse,
@@ -387,5 +409,7 @@ export function createTestSuite() {
     resetSessionPollerSpy,
     raiseUserUnloadedEvent,
     raiseUserSignedOutEvent,
+    getDefaultLoginClientProps,
+    placeApiTokenToStorage,
   };
 }
