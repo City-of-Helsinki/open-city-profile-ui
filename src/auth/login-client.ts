@@ -31,7 +31,7 @@ export type UserReturnType = User | null;
 type UserInData = UserReturnType | undefined;
 type TokensInData = TokenData | null | undefined;
 type ErrorInData = LoginClientError | undefined;
-type DataArray = [UserInData, TokensInData, ErrorInData];
+export type LoginClientData = [UserInData, TokensInData, ErrorInData];
 export type LoginClientState =
   | 'NO_SESSION'
   | 'VALID_SESSION'
@@ -61,13 +61,13 @@ export type LoginClientProps = {
 export type LoginClient = {
   login: (props?: LoginProps) => Promise<void>;
   logout: (props?: LogoutProps) => Promise<void>;
-  handleCallback: () => Promise<DataArray>;
+  handleCallback: () => Promise<LoginClientData>;
   isAuthenticated: (user?: UserReturnType) => boolean;
   getUser: () => UserReturnType;
   getTokens: () => TokenData | null;
-  getUserAndFetchTokens: () => Promise<DataArray>;
+  getUserAndFetchTokens: () => Promise<LoginClientData>;
   getUpdatedTokens: () => Promise<TokenData | null>;
-  getStoredUserAndTokens: () => DataArray;
+  getStoredUserAndTokens: () => LoginClientData;
   cleanUp: () => Promise<void>;
   isRenewing: () => boolean;
   getUserManager: () => UserManager;
@@ -142,7 +142,7 @@ export default function createLoginClient(
       })
     : undefined;
   const shouldGetApiTokens = !!apiTokenClient;
-  let renewPromise: Promise<DataArray> | undefined;
+  let renewPromise: Promise<LoginClientData> | undefined;
 
   const changeState = (newState: LoginClientState) => {
     if (state === newState) {
@@ -220,7 +220,7 @@ export default function createLoginClient(
   const createDataArrayWithError = (
     type: LoginClientErrorType,
     message?: string
-  ): DataArray => [
+  ): LoginClientData => [
     null,
     null,
     new LoginClientError(message || `${type} error`, type),
@@ -229,7 +229,9 @@ export default function createLoginClient(
   // when apiTokenUrl is set and therefore apiTokens are required,
   // there should not be a case where user is stored, but apiTokens are not found.
   // Data is out of sync, so stored user should be removed.
-  const handleValidUserWithoutRequiredApiTokens = (user: User): DataArray => {
+  const handleValidUserWithoutRequiredApiTokens = (
+    user: User
+  ): LoginClientData => {
     if (!shouldGetApiTokens) {
       return [user, null, undefined];
     }
@@ -271,7 +273,7 @@ export default function createLoginClient(
   const isValidUser = (user?: User | null): boolean =>
     !!user && !isUserExpired(user) && !!user.access_token;
 
-  const getSyncStoredData = (currentUser?: UserInData): DataArray => {
+  const getSyncStoredData = (currentUser?: UserInData): LoginClientData => {
     const user =
       currentUser !== undefined
         ? currentUser
@@ -290,7 +292,7 @@ export default function createLoginClient(
   };
   const getAsyncStoredData = async (
     currentUser?: UserInData
-  ): Promise<DataArray> => {
+  ): Promise<LoginClientData> => {
     const user =
       currentUser !== undefined ? currentUser : await userManager.getUser();
     if (!isValidUser(user)) {
@@ -315,12 +317,12 @@ export default function createLoginClient(
 
   const getAsyncStoredOrRenewingData = async (
     currentUser?: UserInData
-  ): Promise<DataArray> =>
+  ): Promise<LoginClientData> =>
     isRenewing()
-      ? (renewPromise as Promise<DataArray>)
+      ? (renewPromise as Promise<LoginClientData>)
       : getAsyncStoredData(currentUser);
 
-  const createRenewalPromise = async (): Promise<DataArray> => {
+  const createRenewalPromise = async (): Promise<LoginClientData> => {
     const [err, user] = await to(createRenewalTrackingPromise(userManager));
     if (!err && shouldGetApiTokens) {
       apiTokenClient.clear();
@@ -345,6 +347,7 @@ export default function createLoginClient(
     if (apiTokenClient) {
       apiTokenClient.clear();
     }
+    changeState('NO_SESSION');
   };
 
   userManager.events.addUserUnloaded(() => {
