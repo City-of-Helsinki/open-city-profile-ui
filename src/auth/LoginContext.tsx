@@ -9,13 +9,12 @@ import React, {
 
 import createLoginClient, {
   LoginClient,
+  LoginClientData,
   LoginClientProps,
   LoginClientStateChange,
   LoginClientStateListener,
-  UserReturnType,
 } from './login-client';
 import { TokenData } from './api-token-client';
-import LoginClientError from './login-client-error';
 
 type ContextProps = {
   children: React.ReactNode | React.ReactNode[] | null;
@@ -25,13 +24,6 @@ type ContextProps = {
 export type LoginContextData = {
   getClient: () => LoginClient;
   addStateListener: (listener: LoginClientStateListener) => () => void;
-};
-
-export type AuthenticatedUserData = {
-  resolving: boolean;
-  user: UserReturnType | undefined;
-  tokens: TokenData | null | undefined;
-  error?: LoginClientError;
 };
 
 export const LoginContext = createContext<LoginContextData>({
@@ -94,9 +86,17 @@ export const useLoginClient = (): LoginClient => {
   return getClient();
 };
 
-export const useAuthenticatedUser = (
-  validUserMustHaveTokens?: boolean
-): AuthenticatedUserData => {
+export const useAuthenticatedUser = (): LoginClientData => {
+  const client = useLoginClient();
+  return client.getStoredUserAndTokens();
+};
+
+export const useApiTokens = (): (() => Promise<TokenData | null>) => {
+  const client = useLoginClient();
+  return async () => await client.getUpdatedTokens();
+};
+/*
+export const useAuthenticatedUser = (): LoginClientData => {
   const client = useLoginClient();
   const [storedData, setStoredData] = useState<
     [
@@ -106,7 +106,7 @@ export const useAuthenticatedUser = (
     ]
   >(client.getStoredUserAndTokens());
   const [user, tokens, error] = storedData;
-  const hasValidData = user !== undefined;
+  const hasValidData = !!user && !error;
   useEffect(() => {
     async function getter() {
       const data = await client.getUserAndFetchTokens();
@@ -117,25 +117,13 @@ export const useAuthenticatedUser = (
     }
   }, [client, hasValidData]);
 
-  if (user && !tokens && validUserMustHaveTokens) {
-    return {
-      resolving: false,
-      user: null,
-      tokens,
-      error: new LoginClientError(
-        'Valid user does not have tokens',
-        'USER_HAS_INVALID_TOKENS'
-      ),
-    };
-  }
-
   if (user === null) {
     return { resolving: false, user, tokens, error };
   } else if (user) {
     return { resolving: false, user, tokens, error };
   }
   return { resolving: true, user, tokens, error };
-};
+};*/
 
 export const useLoginStateListener = (
   listener?: LoginClientStateListener
