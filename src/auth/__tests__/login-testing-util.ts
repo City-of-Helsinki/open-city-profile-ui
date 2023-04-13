@@ -374,11 +374,11 @@ export function createTestSuite() {
     currentUser = undefined;
   };
 
-  const raiseUserUnloadedEvent = () =>
-    ((userManager.events as unknown) as PublicUserManagerEvents)._userUnloaded.raise();
+  const raiseUserUnloadedEvent = (targetUserManager = userManager) =>
+    ((targetUserManager.events as unknown) as PublicUserManagerEvents)._userUnloaded.raise();
 
-  const raiseUserSignedOutEvent = () =>
-    ((userManager.events as unknown) as PublicUserManagerEvents)._userSignedOut.raise();
+  const raiseUserSignedOutEvent = (targetUserManager = userManager) =>
+    ((targetUserManager.events as unknown) as PublicUserManagerEvents)._userSignedOut.raise();
 
   const getDefaultLoginClientProps = () => defaultTestProps;
 
