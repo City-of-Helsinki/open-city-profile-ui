@@ -168,6 +168,28 @@ describe(`http-poller-with-promises.ts`, () => {
     expect(mockHttpPoller.start).toHaveBeenCalledTimes(1);
     expect(mockHttpPoller.stop).toHaveBeenCalledTimes(1);
   });
+  it(`If maxRetries is 0, only one request is done resulting in rejection. HttpPoller is not started.`, async () => {
+    const promise = createAPoller(responsesWithErrorForbiddenSuccess, {
+      maxRetries: 0,
+    });
+
+    await testCallbackCount({
+      assumedCallCount: 1,
+      assumedState: 'rejected',
+    });
+    advanceOneInterval();
+    advanceOneInterval();
+    await testCallbackCount({
+      assumedCallCount: 1,
+      assumedState: 'rejected',
+    });
+    const [err, result] = await to(promise);
+    expect(err).toBeDefined();
+    expect(result).toBeUndefined();
+    expect(pollFunctionMockCallback).toHaveBeenCalledTimes(1);
+    expect(mockHttpPoller.start).toHaveBeenCalledTimes(0);
+    expect(mockHttpPoller.stop).toHaveBeenCalledTimes(0);
+  });
   it('pollIntervalInMs sets the delay between attempts', async () => {
     const promise = createAPoller(responsesWithErrorForbiddenSuccess, {
       pollIntervalInMs: pollIntervalInMs * 4,

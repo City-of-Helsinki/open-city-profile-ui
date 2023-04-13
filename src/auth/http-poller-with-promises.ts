@@ -20,13 +20,15 @@ export default async function retryPollingUntilSuccessful({
   if (!err && response && isSuccessfulHttpResponse(response)) {
     return Promise.resolve(response);
   }
+  if (!maxRetries) {
+    return Promise.reject(err);
+  }
   let retries = maxRetries;
   let poller: HttpPoller | undefined;
   const removePoller = () => {
     poller && poller.stop();
     poller = undefined;
   };
-
   return new Promise((resolve, reject) => {
     poller = createHttpPoller({
       pollFunction: async () => pollFunction(),
