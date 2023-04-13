@@ -7,6 +7,7 @@ import {
   SignoutRedirectArgs,
 } from 'oidc-client-ts';
 import to from 'await-to-js';
+import jwtDecode from 'jwt-decode';
 
 import createApiTokenClient, {
   ApiTokenClient,
@@ -74,6 +75,7 @@ export type LoginClient = {
   getApiTokenClient: () => ApiTokenClient | undefined;
   getSessionPoller: () => HttpPoller | undefined;
   getState: () => LoginClientState;
+  getAmr: () => User['profile']['amr'] | undefined;
 };
 
 const getDefaultProps = (baseUrl: string): Partial<LoginClientProps> => ({
@@ -341,6 +343,27 @@ export default function createLoginClient(
     ]);
   };
 
+  const getAmr = (): User['profile']['amr'] | undefined => {
+    const [user] = getSyncStoredData();
+    if (!user || !user.id_token) {
+      return undefined;
+    }
+    if (user.profile && Array.isArray(user.profile.amr)) {
+      return user.profile.amr.length ? user.profile.amr : undefined;
+    }
+
+    try {
+      const decodedToken = jwtDecode<Record<string, string>>(user.id_token);
+      const amr = decodedToken.amr;
+      if (!amr) {
+        return undefined;
+      }
+      return Array.isArray(amr) ? amr : [amr];
+    } catch (e) {
+      return undefined;
+    }
+  };
+
   const onSessionEnd = () => {
     removeApiTokens();
     stopSessionPolling();
@@ -442,5 +465,6 @@ export default function createLoginClient(
     getUserManager: () => userManager,
     getApiTokenClient: () => apiTokenClient,
     getSessionPoller: () => sessionPoller,
+    getAmr,
   };
 }

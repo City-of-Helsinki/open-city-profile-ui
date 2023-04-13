@@ -6,6 +6,10 @@ import { API_TOKEN_SESSION_STORAGE_KEY, TokenData } from '../api-token-client';
 import { HttpPoller, HttpPollerProps } from '../http-poller';
 import { InitTestResult, createTestSuite } from './login-testing-util';
 import { enableActualHttpPoller } from '../__mocks__/http-poller';
+import {
+  jwtWithHelloStringAmr,
+  jwtWithHelloWorldArrayAmr,
+} from '../../common/test/jwtTokens';
 
 const {
   placeUserToStorage,
@@ -283,6 +287,44 @@ describe('loginClient', () => {
       await waitFor(() => {
         expect(mockedSessionPollerFunctionsGetter().getStopCallCount()).toBe(1);
       });
+    });
+  });
+  describe('getAmr', () => {
+    it('returns the amr in user.profile, if found', async () => {
+      const { loginClient } = await initTests({
+        validUser: true,
+      });
+      expect(loginClient.getAmr()).toEqual(['validAmr']);
+    });
+    it('decodes the amr from user.id_token and returns it as an array', async () => {
+      const { loginClient } = await initTests({
+        validUser: true,
+        profileProps: { amr: undefined },
+        userProps: {
+          id_token: jwtWithHelloWorldArrayAmr,
+        },
+      });
+      expect(loginClient.getAmr()).toEqual(['hello', 'world']);
+    });
+    it('decodes the amr from user.id_token and returns it as an array if it was a strng', async () => {
+      const { loginClient } = await initTests({
+        validUser: true,
+        profileProps: { amr: undefined },
+        userProps: {
+          id_token: jwtWithHelloStringAmr,
+        },
+      });
+      expect(loginClient.getAmr()).toEqual(['hello']);
+    });
+    it('returns undefined if amr is malformed or missing', async () => {
+      const { loginClient } = await initTests({
+        validUser: true,
+        profileProps: { amr: undefined },
+        userProps: {
+          id_token: 'invalid',
+        },
+      });
+      expect(loginClient.getAmr()).toBeUndefined();
     });
   });
 });

@@ -14,11 +14,13 @@ import { API_TOKEN_SESSION_STORAGE_KEY, TokenData } from '../api-token-client';
 import LoginClientError from '../login-client-error';
 import { HttpPoller } from '../http-poller';
 import apiTokens from '../../common/test/apiTokens.json';
+import { jwtWithNoAmr } from '../../common/test/jwtTokens';
 
 type TestProps = {
   validUser: boolean;
   validApiToken?: boolean;
-  userProps?: Partial<User>;
+  userProps?: Exclude<Partial<User>, 'profile'>;
+  profileProps?: Partial<User['profile']>;
 };
 
 export type InitTestResult = {
@@ -27,7 +29,7 @@ export type InitTestResult = {
   currentUser?: User;
 };
 
-type UserCreationProps = {
+type UserCreationProps = Pick<TestProps, 'profileProps' | 'userProps'> & {
   valid?: boolean;
   expired?: boolean;
 };
@@ -51,14 +53,10 @@ export function createTestSuite() {
   const authority = 'https://api.hel.fi/sso/openid';
   const client_id = 'test-client';
   const scope = 'openid profile';
-  const accessToken = 'db237bc3-e197-43de-8c86-3feea4c5f886';
-  const idToken = 'abcd1234-0000-43de-8c86-3feea4c5f886';
-  const refreshToken = '1234zyxp-1111-43de-8c86-3feea4c5f886';
   const tokenExpirationTimeInSeconds = 100;
   const accessTokenExpiringNotificationTimeInSeconds = 10;
   const apiTokenFetchDelayInMs = 100;
   const sessionPollingIntervalInMs = 500;
-
   const defaultTestProps: LoginClientProps = {
     userManagerSettings: {
       authority,
@@ -73,18 +71,20 @@ export function createTestSuite() {
   const createSignInResponse = ({
     valid,
     expired,
+    userProps,
+    profileProps,
   }: UserCreationProps): SigninResponse => {
     const nowAsSeconds = Math.round(Date.now() / 1000);
     const expires_in = expired !== true ? tokenExpirationTimeInSeconds : -1;
     const expires_at = nowAsSeconds + expires_in;
     return {
-      access_token: valid !== false ? accessToken : '',
+      access_token: valid !== false ? jwtWithNoAmr : '',
       code: 'code',
       error: null,
       error_description: null,
       error_uri: null,
       expires_at,
-      id_token: valid !== false ? idToken : '',
+      id_token: valid !== false ? jwtWithNoAmr : '',
       profile: {
         sub: 'sub',
         iss: 'issuer',
@@ -92,8 +92,10 @@ export function createTestSuite() {
         exp: expires_at,
         iat: nowAsSeconds,
         name: 'Test User',
+        amr: ['validAmr'],
+        ...profileProps,
       },
-      refresh_token: valid !== false ? refreshToken : '',
+      refresh_token: valid !== false ? jwtWithNoAmr : '',
       scope,
       session_state: String(`${Math.random()}${Math.random()}`),
       state: '',
@@ -101,11 +103,12 @@ export function createTestSuite() {
       userState: {},
       expires_in,
       isOpenId: true,
+      ...(userProps as Partial<SigninResponse>),
     };
   };
 
-  const createUser = (props: UserCreationProps = {}): User => {
-    const response = createSignInResponse(props);
+  const createUser = (userCreationProps: UserCreationProps = {}): User => {
+    const response = createSignInResponse(userCreationProps);
     const user = {
       ...response,
       expired: false,
@@ -127,8 +130,10 @@ export function createTestSuite() {
     return Promise.resolve(user);
   };
 
-  const placeUserToStorage = async (userProps: UserCreationProps = {}) => {
-    const user = createUser(userProps);
+  const placeUserToStorage = async (
+    userCreationProps: UserCreationProps = {}
+  ) => {
+    const user = createUser(userCreationProps);
     sessionStorage.setItem(
       getUserStoreKey({ authority, client_id }),
       JSON.stringify(user)
@@ -299,9 +304,9 @@ export function createTestSuite() {
       ...defaultTestProps,
       ...additionalLoginClientProps,
     };
-    const { validUser, validApiToken, userProps } = testProps;
+    const { validUser, validApiToken, userProps, profileProps } = testProps;
     if (validUser) {
-      currentUser = await placeUserToStorage(userProps);
+      currentUser = await placeUserToStorage({ userProps, profileProps });
       if (validApiToken !== false) {
         placeApiTokenToStorage(apiTokens);
       } else {
