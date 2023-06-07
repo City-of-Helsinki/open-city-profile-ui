@@ -1,0 +1,196 @@
+{
+  "id": "41957115-eafe-4514-9959-89955c27a5e7",
+  "created_at": "2023-06-02T13:39:38.657816+03:00",
+  "updated_at": "2023-06-07T11:58:31.842440+03:00",
+  "status": {
+    "value": "accept testing",
+    "status_display_values": {
+      "en": "Accept Testing",
+      "fi": "hyväksyntätestausta"
+    },
+    "timestamp": "2023-06-05T14:28:40.486563+03:00",
+    "activities": [
+      {
+        "title": {
+          "fi": "Testi aktiviteetti"
+        },
+        "message": {
+          "fi": "Moi! Huomasimme että testaatte asiointihistorian käyttöliittymää. Voitte jatkaa ihmettelyä tässä! Linkistä ette pääse mihinkään mutta aina sopii yrittää! Terveisin Hermanni"
+        },
+        "activity_links": {
+          "fi": {
+            "url": "https://activityurl.hel.fi",
+            "display_text": "Jatka ihmettelyä palvelussa asdf."
+          }
+        },
+        "activity_timestamp": "2023-06-07T11:58:31.839960+03:00",
+        "show_to_user": true
+      },
+      {
+        "title": {
+          "fi": "Lisätietopyyntö lähetetty"
+        },
+        "message": {
+          "fi": "Hakemuksenne kaipaa täydennystä"
+        },
+        "activity_links": {},
+        "activity_timestamp": "2023-06-06T16:20:25.998615+03:00",
+        "show_to_user": true
+      },
+      {
+        "title": {
+          "fi": "Testi aktiviteetti"
+        },
+        "message": {
+          "fi": "Moi! Huomasimme että testaatte asiointihistorian käyttöliittymää. Voitte jatkaa ihmettelyä tässä! Linkistä ette pääse mihinkään mutta aina sopii yrittää! Terveisin Hermanni"
+        },
+        "activity_links": {},
+        "activity_timestamp": "2023-06-05T14:28:40.489222+03:00",
+        "show_to_user": true
+      }
+    ]
+  },
+  "status_histories": [
+    {
+      "value": "accept testing",
+      "status_display_values": {
+        "en": "Accept Testing",
+        "fi": "hyväksyntätestausta"
+      },
+      "timestamp": "2023-06-05T14:28:40.486563+03:00",
+      "activities": [
+        {
+          "title": {
+            "fi": "Testi aktiviteetti"
+          },
+          "message": {
+            "fi": "Moi! Huomasimme että testaatte asiointihistorian käyttöliittymää. Voitte jatkaa ihmettelyä tässä! Linkistä ette pääse mihinkään mutta aina sopii yrittää! Terveisin Hermanni"
+          },
+          "activity_links": {
+            "fi": {
+              "url": "https://activityurl.hel.fi",
+              "display_text": "Jatka ihmettelyä palvelussa asdf."
+            }
+          },
+          "activity_timestamp": "2023-06-07T11:58:31.839960+03:00",
+          "show_to_user": true
+        },
+        {
+          "title": {
+            "fi": "Lisätietopyyntö lähetetty"
+          },
+          "message": {
+            "fi": "Hakemuksenne kaipaa täydennystä"
+          },
+          "activity_links": {},
+          "activity_timestamp": "2023-06-06T16:20:25.998615+03:00",
+          "show_to_user": true
+        },
+        {
+          "title": {
+            "fi": "Testi aktiviteetti"
+          },
+          "message": {
+            "fi": "Moi! Huomasimme että testaatte asiointihistorian käyttöliittymää. Voitte jatkaa ihmettelyä tässä! Linkistä ette pääse mihinkään mutta aina sopii yrittää! Terveisin Hermanni"
+          },
+          "activity_links": {},
+          "activity_timestamp": "2023-06-05T14:28:40.489222+03:00",
+          "show_to_user": true
+        }
+      ]
+    },
+    {
+      "value": "testing",
+      "status_display_values": {
+        "en": "Testing",
+        "fi": "Testausta"
+      },
+      "timestamp": "2023-06-02T13:39:38.833590+03:00",
+      "activities": [
+        {
+          "title": {
+            "fi": "Testi aktiviteetti"
+          },
+          "message": {
+            "fi": "Moi! Huomasimme että testaatte asiointihistorian käyttöliittymää. Voitte jatkaa ihmettelyä tässä! Linkistä ette pääse mihinkään mutta aina sopii yrittää! Terveisin Hermanni"
+          },
+          "activity_links": {},
+          "activity_timestamp": "2023-06-05T14:25:47.625339+03:00",
+          "show_to_user": true
+        },
+        {
+          "title": {
+            "fi": "Testi aktiviteetti"
+          },
+          "message": {
+            "fi": "Moi! Huomasimme että testaatte asiointihistorian käyttöliittymää. Voitte jatkaa ihmettelyä tässä! Linkistä ette pääse mihinkään mutta aina sopii yrittää! Terveisin Hermanni"
+          },
+          "activity_links": {},
+          "activity_timestamp": "2023-06-02T13:40:22.195579+03:00",
+          "show_to_user": true
+        }
+      ]
+    }
+  ],
+  "type": "mysterious form",
+  "human_readable_type": {
+    "en": "Mysterious Form",
+    "fi": "Mysteerilomake"
+  },
+  "service": "AsiointihistoriaPOC",
+  "user_id": "c11fd9b3-241f-49f3-bb71-d5168b69f1af",
+  "transaction_id": "cf0a341b-6bfd-4f59-8d7c-87bf62ba837b",
+  "business_id": "",
+  "tos_function_id": "f917d43aab76420bb2ec53f6684da7f7",
+  "tos_record_id": "89837a682b5d410e861f8f3688154163",
+  "metadata": {
+    "businessId": "4015026-5",
+    "additionalProp2": "string",
+    "additionalProp3": "string"
+  },
+  "content": {
+    "companyName": "Testiyritys",
+    "companyNameShort": "TYY",
+    "companyHome": "Helsinki",
+    "companyHomePage": "htps://www.yle.fi",
+    "companyEmail": "testi@email.com",
+    "foundingYear": "2022",
+    "officials": [
+      {
+        "name": "Koko Nimi",
+        "role": "2",
+        "email": "kolo@mail.com",
+        "phone": "5873957983475"
+      }
+    ],
+    "addresses": [
+      {
+        "street": "Sannikontie",
+        "city": "Kouvola",
+        "postCode": "46400",
+        "country": "FI"
+      }
+    ],
+    "bankAccounts": [
+      {
+        "bankAccount": "FI985763984657"
+      }
+    ]
+  },
+  "draft": true,
+  "locked_after": null,
+  "deletable": false,
+  "document_language": "fi",
+  "content_schema_url": "https://testing.hel.fi",
+  "attachments": [
+    {
+      "id": 7508,
+      "created_at": "2023-06-02T13:39:38.696349+03:00",
+      "updated_at": "2023-06-02T13:39:38.696372+03:00",
+      "filename": "dummy_2.pdf",
+      "media_type": "application/pdf",
+      "size": 13264,
+      "href": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/41957115-eafe-4514-9959-89955c27a5e7/attachments/7508/"
+    }
+  ]
+}
