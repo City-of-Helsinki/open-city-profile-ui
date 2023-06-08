@@ -1,3 +1,5 @@
+import { AnyObject } from 'yup/lib/types';
+
 export type TextLanguageVersions = Partial<Record<SupportedLanguage, string>>;
 
 export type Link = {
@@ -19,7 +21,10 @@ export type RawStatus = {
   status_display_values?: TextLanguageVersions;
   timestamp?: string;
 };
-export type RawStatusHistory = RawActivity[];
+export type RawStatusHistory = RawStatus & {
+  timestamp: string;
+  activities: RawActivity[];
+};
 export type Official = {
   name: string;
   role: string;
@@ -33,7 +38,7 @@ export type Address = {
   country: string;
 };
 
-export type Content = {
+export type Company = {
   companyName: string;
   companyNameShort: string;
   companyHome: string;
@@ -43,6 +48,8 @@ export type Content = {
   officials: Official[];
   addresses: Address[];
 };
+export type Content = AnyObject;
+
 export type Attachment = {
   id: number;
   created_at: string;
@@ -66,29 +73,45 @@ export type RawData = {
   service: string;
   document_language: string;
   attachments: Attachment[];
+  content: AnyObject;
+};
+
+export type RawResults = {
+  results: RawData[];
+};
+
+export type History = {
+  created: string;
+  status: string;
+  statusType: StatusType;
+  activities: Activity[];
 };
 
 export type Document = {
   id: string;
-  createdt: string;
+  title: string;
+  created: string;
   updated: string;
   status: string;
-  activities: Activity[];
+  statusType: StatusType;
+  history: History[];
   type: string;
   service: string;
   attachments: Attachment[];
+  contentType: string;
+  actionRequired: boolean;
+  content?: Content;
 };
 
 export type SupportedLanguage = keyof typeof languages;
+export type StatusType = keyof typeof statusTypes;
 
 export type Activity = {
-  timestamp: string;
+  created: string;
   title: string;
   message?: string;
-  status: string;
   actionRequired: boolean;
   uid: string;
-  contentType: string;
   link?: Link;
 };
 
@@ -96,4 +119,15 @@ export const languages = {
   fi: 'fi',
   en: 'en',
   sv: 'sv',
+} as const;
+
+export const statusTypes = {
+  received: 'received',
+  submitted: 'submitted',
+  'in-progress': 'in-progress',
+  ready: 'ready',
+  waiting: 'waiting',
+  proposal: 'proposal',
+  unknown: 'unknown',
+  'action-required': 'action-required',
 } as const;

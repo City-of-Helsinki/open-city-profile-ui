@@ -1,15 +1,14 @@
 import _ from 'lodash';
 import React from 'react';
-import { IconCamera, IconCopy, IconPaperclip, IconPrinter } from 'hds-react';
-import classNames from 'classnames';
+import { IconPrinter } from 'hds-react';
 
-import { Transaction } from './Transactions';
 import styles from './ParkingData.module.css';
+import { Document } from './index';
 import data from './document.json';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import StyledButton from '../../../common/styledButton/StyledButton';
 
-function Form({ contentType }: Transaction): React.ReactElement {
+function Form({ contentType }: Document): React.ReactElement {
   const dataSource = (path: string) => _.get(data, path, path);
   const getTranslation = (key: string) => dataSource(`translations.${key}`);
   const getUserData = (key: string) =>

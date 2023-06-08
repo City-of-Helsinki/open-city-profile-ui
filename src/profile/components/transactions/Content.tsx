@@ -2,18 +2,18 @@ import React from 'react';
 
 import Form from './Form';
 import ParkingData from './ParkingData';
-import { Transaction } from './Transactions';
+import { Document } from './index';
 
 type Props = {
-  transaction: Transaction;
+  document: Document;
 };
 
-function Content({ transaction }: Props): React.ReactElement {
-  const { contentType } = transaction;
+function Content({ document }: Props): React.ReactElement {
+  const { contentType } = document;
   if (contentType === 'certificate') {
-    return <Form {...transaction} />;
+    return <Form {...document} />;
   }
-  return <ParkingData {...transaction} />;
+  return <ParkingData {...document} />;
 }
 
 export default Content;

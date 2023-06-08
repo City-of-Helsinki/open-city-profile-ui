@@ -20,11 +20,17 @@ function Header(): React.ReactElement {
   const { trackEvent } = useMatomo();
 
   const { getProfile } = useContext(ProfileContext);
-  const profilePagePaths = ['/', '/connected-services', '/transactions'];
+  const profilePagePaths = [
+    '/',
+    '/connected-services',
+    '/transactions',
+    '/documents',
+  ];
   const [
     myProfilePath,
     connectedServicesPath,
     transactionsPath,
+    documentsPath,
   ] = profilePagePaths;
   const isProfilePagePath = profilePagePaths.includes(currentPath);
   const onClick = (path: string, e?: MouseEvent) => {
@@ -64,11 +70,18 @@ function Header(): React.ReactElement {
             active={currentPath === connectedServicesPath}
           />
           <Navigation.Item
-            label={t('Asiointi')}
+            label={t('AsiointiStatic')}
             href={transactionsPath}
             variant="secondary"
             onClick={(e: MouseEvent) => onClick(transactionsPath, e)}
             active={currentPath === transactionsPath}
+          />
+          <Navigation.Item
+            label={t('Asiointi')}
+            href={documentsPath}
+            variant="secondary"
+            onClick={(e: MouseEvent) => onClick(documentsPath, e)}
+            active={currentPath === documentsPath}
           />
         </Navigation.Row>
       )}

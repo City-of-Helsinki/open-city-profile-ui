@@ -3,7 +3,7 @@ import React from 'react';
 import { IconCamera, IconCopy, IconPaperclip, IconPrinter } from 'hds-react';
 import classNames from 'classnames';
 
-import { Transaction } from './Transactions';
+import { Document } from './index';
 import styles from './ParkingData.module.css';
 import data from './parkingData.json';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -223,7 +223,7 @@ function Decision({
   );
 }
 
-function ParkingData({ contentType }: Transaction): React.ReactElement {
+function ParkingData({ contentType }: Document): React.ReactElement {
   const dataSource = (path: string) => _.get(data, path, path);
   return (
     <div className={styles['container']}>

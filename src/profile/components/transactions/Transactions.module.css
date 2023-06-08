@@ -31,7 +31,6 @@
   grid-gap: 10px;
   width: 100%;
   align-items: center;
-  justify-items: start;
 }
 
 .transaction-content {
@@ -58,6 +57,7 @@
 .tag .tag-content {
   display: flex;
   align-items: center;
+  white-space: nowrap;
 }
 
 .tag .tag-text {
@@ -171,6 +171,8 @@
 }
 .grid-column-status {
   grid-area: status;
+  display: flex;
+  justify-content: end;
 }
 
 .transaction:not(:last-of-type)::after {

@@ -20,6 +20,7 @@ import {
   TransactionStatus,
 } from './Transactions';
 import styles from './Transactions.module.css';
+import { Document } from '.';
 
 function CalendarIcon(): React.ReactElement {
   return (
@@ -94,7 +95,7 @@ function ContentAsGridRow(transaction: Transaction): React.ReactElement {
         ></span>
       </div>
       <div className={styles['transaction-content']}>
-        <Content transaction={transaction} />
+        <Content document={(transaction as unknown) as Document} />
       </div>
     </>
   );

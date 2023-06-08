@@ -4,13 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 import Explanation from '../../../common/explanation/Explanation';
-import TransactionGroupComponent from './TransactionGroup';
-import data from './data.json';
+import DocumentView from './DocumentView';
 import PageLayout from '../../../common/pageLayout/PageLayout';
-
-type TransactionProps = {
-  groups: TransactionGroup[];
-};
+import { useTransactions } from './useTransactions';
 
 export type TransactionStatus =
   | 'received'
@@ -37,9 +33,20 @@ export type Transaction = {
   uid: string;
 };
 
-function Transactions(): React.ReactElement {
+function Documents(): React.ReactElement {
   const { t } = useTranslation();
-  const { groups } = (data as unknown) as TransactionProps;
+  const { getData, isLoading, getError } = useTransactions();
+  console.log('getData', getData());
+  if (isLoading()) {
+    return <p>Loading...</p>;
+  }
+  if (getError()) {
+    return <p>Lataaminen epäonnistui!</p>;
+  }
+  const data = getData();
+  if (!data || !data.length) {
+    return <p>Ei tuloksia.</p>;
+  }
   return (
     <PageLayout title={'Asiointi'}>
       <div className={classNames([commonContentStyles['content']])}>
@@ -62,11 +69,8 @@ function Transactions(): React.ReactElement {
           <div
             className={classNames([commonContentStyles['common-content-area']])}
           >
-            {groups.map(group => (
-              <TransactionGroupComponent
-                key={group.transactions[0].uid}
-                group={group}
-              />
+            {data.map(document => (
+              <DocumentView key={document.id} document={document} />
             ))}
           </div>
         </div>
@@ -75,4 +79,4 @@ function Transactions(): React.ReactElement {
   );
 }
 
-export default Transactions;
+export default Documents;
