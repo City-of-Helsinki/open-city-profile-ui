@@ -23,6 +23,13 @@ const translations: Record<string, TextLanguageVersions> = {
   },
 };
 
+let counter = 0;
+
+const createKey = (pref: string) => {
+  counter = counter + 1;
+  return `${pref}${counter}`;
+};
+
 function translate(key: string, lang: SupportedLanguage): string {
   const translation = translations[key.toLowerCase()];
   if (!translation || !translation[lang]) {
@@ -110,6 +117,7 @@ export function convertStatusHistory(rawData: RawStatusHistory): History {
     status: getStatus(rawData),
     statusType: getStatusType(rawData),
     activities: rawData.activities?.map(convertActivity),
+    key: createKey('historyItem'),
   };
 }
 
@@ -133,6 +141,30 @@ export function convertData(rawData: RawData): Document {
   };
 }
 
+export function splitMultipleActivities(historyItems: History[]): History[] {
+  const returnArray: History[] = [];
+  historyItems.forEach(historyItem => {
+    if (historyItem.activities.length < 2) {
+      returnArray.push(historyItem);
+      return;
+    }
+    historyItem.activities.forEach(activity => {
+      returnArray.push({
+        ...historyItem,
+        activities: [activity],
+      });
+    });
+  });
+  return returnArray;
+}
+
+export function splitDocumentHistory(documents: Document[]): Document[] {
+  return documents.map(document => ({
+    ...document,
+    history: splitMultipleActivities(document.history),
+  }));
+}
+
 export function convertResults(rawData: RawResults): Document[] {
-  return rawData.results.map(convertData);
+  return splitDocumentHistory(rawData.results.map(convertData));
 }

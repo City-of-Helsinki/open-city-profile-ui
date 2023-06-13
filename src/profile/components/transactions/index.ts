@@ -85,6 +85,7 @@ export type History = {
   status: string;
   statusType: StatusType;
   activities: Activity[];
+  key: string;
 };
 
 export type Document = {

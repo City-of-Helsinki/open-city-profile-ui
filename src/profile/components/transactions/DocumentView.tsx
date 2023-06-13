@@ -148,14 +148,6 @@ function ContentAreaWrapper({
 }: React.PropsWithChildren<unknown>): React.ReactElement {
   return (
     <>
-      <div className={styles['grid-column-line']}>
-        <span
-          className={classNames(
-            indicatorLineStyle,
-            styles['indicator-line-content']
-          )}
-        ></span>
-      </div>
       <div className={styles['transaction-content']}>{children}</div>
     </>
   );
@@ -168,7 +160,11 @@ function ActivitiesView(history: History): React.ReactElement {
   );
 }
 
-function ContentView(document: Document): React.ReactElement {
+function ContentView(document: Document): React.ReactElement | null {
+  //temporarily hide these
+  if (document.content) {
+    return null;
+  }
   return (
     <ContentAreaWrapper>
       <div className={activityViewStyles['container']}>
@@ -180,7 +176,11 @@ function ContentView(document: Document): React.ReactElement {
     </ContentAreaWrapper>
   );
 }
-function AttachmentView(document: Document): React.ReactElement {
+function AttachmentView(document: Document): React.ReactElement | null {
+  //temporarily hide these
+  if (document.attachments) {
+    return null;
+  }
   return (
     <ContentAreaWrapper>
       <div className={activityViewStyles['container']}>
@@ -268,11 +268,24 @@ function AccordionButton(props: {
   );
 }
 
-function ServiceAndDate({ created, service }: Document): React.ReactElement {
+function ServiceAndDate({
+  history,
+  service,
+}: {
+  history: History;
+  service: Document['service'];
+}): React.ReactElement {
+  const { created, activities } = history;
+  const pickCreationTime = () => {
+    if (!activities.length) {
+      return created;
+    }
+    return activities[0].created;
+  };
   return (
     <div className={styles['grid-column-service-and-date']}>
       <div className={styles['service']}>{service}</div>
-      <div className={styles['date']}>{created}</div>
+      <div className={styles['date']}>{pickCreationTime()}</div>
     </div>
   );
 }
@@ -300,10 +313,10 @@ function HistoryItem({
         },
       }
     : buttonProps;
-  const hasChildren =
-    !!data.activities.length ||
-    !!document.content ||
-    !!document.attachments.length;
+  const hasChildren = !!data.activities.length;
+  // ||
+  // !!document.content ||
+  // !!document.attachments.length;
   return (
     <div
       className={classNames(
@@ -314,7 +327,7 @@ function HistoryItem({
     >
       <div className={styles['transaction-grid']}>
         <CalendarIcon />
-        <ServiceAndDate {...document} />
+        <ServiceAndDate history={data} service={document.service} />
         <Title {...document} />
         <StatusText {...document} />
         <AccordionButton
@@ -344,7 +357,7 @@ function DocumentView({
         .filter((transaction, index) => isOpen || index === 0)
         .map((data, index, arr) => (
           <HistoryItem
-            key={data.created}
+            key={data.key}
             data={data}
             document={document}
             buttonCallback={index === 0 ? () => setIsOpen(!isOpen) : undefined}
