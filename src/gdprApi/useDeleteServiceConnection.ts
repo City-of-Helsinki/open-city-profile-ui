@@ -31,9 +31,13 @@ function useDeleteServiceConnection(
 
   const executeDeletion = useCallback(
     (authorizationCode: string) => {
+      const authorizationCodeKeycloak = localStorage.getItem(
+        'keycloak_gdpr_code'
+      );
       const variablesWithAuthorizationCode = {
         input: {
           authorizationCode,
+          authorizationCodeKeycloak,
           serviceName,
           dryRun: false,
         },
@@ -52,6 +56,7 @@ function useDeleteServiceConnection(
   ] = useServiceConnectionsAuthorizationCode({
     serviceName,
     requiredGdprScope: 'delete',
+    idp: 'tunnistamo',
     deferredAction: `useDeleteServiceConnection-${serviceName}`,
     onCompleted: e => {
       executeDeletion(e);

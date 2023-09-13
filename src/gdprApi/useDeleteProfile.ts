@@ -32,9 +32,13 @@ function useDeleteProfile(
   const handleAuthorizationCodeCallback = React.useCallback(
     (authorizationCode: string | null) => {
       if (authorizationCode) {
+        const authorizationCodeKeycloak = localStorage.getItem(
+          'keycloak_gdpr_code'
+        );
         const variablesWithAuthorizationCode = {
           input: {
             authorizationCode,
+            authorizationCodeKeycloak,
           },
           ...createServiceConnectionsQueryVariables(i18n.language),
         };
@@ -51,6 +55,7 @@ function useDeleteProfile(
     authorizationCodeStatus,
   ] = useServiceConnectionsAuthorizationCode({
     requiredGdprScope: 'delete',
+    idp: 'tunnistamo',
     deferredAction: 'useDeleteProfile',
     onCompleted: e => {
       handleAuthorizationCodeCallback(e);

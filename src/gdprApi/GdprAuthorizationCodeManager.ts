@@ -76,15 +76,25 @@ class GdprAuthorizationCodeManager {
     return params.toString();
   }
 
-  makeAuthorizationUrl(scopes: string[], state: string): string {
-    const params = this.makeAuthorizationUrlParams(
-      this.config.clientId,
-      scopes,
-      this.config.redirectUri,
-      state
-    );
-
-    return `${this.config.oidcAuthority}openid/authorize?${params}`;
+  makeAuthorizationUrl(idp: string, scopes: string[], state: string): string {
+    if (idp == 'keycloak') {
+      const params = this.makeAuthorizationUrlParams(
+        'profile-gdpr-local',
+        ['openid'],
+        this.config.redirectUri,
+        state
+      );
+      // return `http://localhost:9080/auth/realms/helsinki-tunnistus/protocol/openid-connect/auth?${params}`;
+      return `http://keycloak.localhost:9080/auth/realms/helsinki-tunnistus/protocol/openid-connect/auth?${params}`;
+    } else {
+      const params = this.makeAuthorizationUrlParams(
+        this.config.clientId,
+        scopes,
+        this.config.redirectUri,
+        state
+      );
+      return `${this.config.oidcAuthority}openid/authorize?${params}`;
+    }
   }
 
   cacheApplicationState(stateId: string, deferredAction: string): void {
@@ -101,12 +111,20 @@ class GdprAuthorizationCodeManager {
     window.location.href = `${state.redirectUrl}?a=${state.deferredAction}`;
   }
 
-  fetchAuthorizationCode(deferredAction: string, scopes: string[]): void {
+  fetchAuthorizationCode(
+    idp: string,
+    deferredAction: string,
+    scopes: string[]
+  ): void {
     const codeStateId = uuidv4();
 
     this.cacheApplicationState(codeStateId, deferredAction);
 
-    const authorizationCodeUrl = this.makeAuthorizationUrl(scopes, codeStateId);
+    const authorizationCodeUrl = this.makeAuthorizationUrl(
+      idp,
+      scopes,
+      codeStateId
+    );
 
     window.location.href = authorizationCodeUrl;
   }

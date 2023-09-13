@@ -12,6 +12,7 @@ import useDownloadProfile from '../../../gdprApi/useDownloadProfile';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { useScrollIntoView } from '../../hooks/useScrollIntoView';
 import StyledButton from '../../../common/styledButton/StyledButton';
+import useFetchKeycloakCode from '../../../gdprApi/useFetchKeycloakCode';
 
 const ALL_DATA = loader('../../graphql/DownloadMyProfileQuery.graphql');
 
@@ -32,11 +33,17 @@ function DownloadData(): React.ReactElement {
     },
     fetchPolicy: 'network-only',
   });
+
+  const [fetchKeycloakCode, keycloakCodeLoading] = useFetchKeycloakCode();
   const { t } = useTranslation();
-  const isDownloadingData = loading;
+  const isDownloadingData = loading || keycloakCodeLoading;
   const onDownloadClick = () => {
     setError(false);
     downloadProfileData();
+  };
+  const onFetchKeycloakCodeClick = () => {
+    setError(false);
+    fetchKeycloakCode();
   };
   const [scrollIntoViewRef] = useScrollIntoView(loading);
 
@@ -61,6 +68,14 @@ function DownloadData(): React.ReactElement {
             id="download-profile-button"
           >
             {isDownloadingData ? t('loading') : t('downloadData.button')}
+          </StyledButton>
+          <br />
+          <StyledButton
+            onClick={onFetchKeycloakCodeClick}
+            disabled={isDownloadingData}
+            id="fetch-keycloak-code-button"
+          >
+            Fetch Keycloak code
           </StyledButton>
         </div>
       </div>

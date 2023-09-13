@@ -19,6 +19,7 @@ export type LoadStatus = {
 
 type Options = {
   requiredGdprScope: 'delete' | 'query';
+  idp: 'tunnistamo' | 'keycloak';
   deferredAction: string;
   serviceName?: Service['name'];
   onError?: (e: ApolloError, status: LoadStatus) => void;
@@ -38,6 +39,7 @@ function useServiceConnectionsAuthorizationCode(
     loadStatusRef.current = { ...loadStatusRef.current, ...newProps };
   };
   const [getAuthorizationCode] = useAuthorizationCode(
+    options.idp,
     options.deferredAction,
     authorizationCode => {
       if (!authorizationCode) {

@@ -4,6 +4,7 @@ import useActionResumer from './useActionResumer';
 import gdprAuthCodeManager from './gdprAuthCodeManager';
 
 function useAuthorizationCode(
+  idp: string,
   deferredAction: string,
   callback: (authorizationToken: string | null) => void
 ): [(additionalScopes: string[]) => void, boolean] {
@@ -11,7 +12,7 @@ function useAuthorizationCode(
     (additionalScopes: string[]) => {
       const scopes = ['openid', ...additionalScopes];
 
-      gdprAuthCodeManager.fetchAuthorizationCode(deferredAction, scopes);
+      gdprAuthCodeManager.fetchAuthorizationCode(idp, deferredAction, scopes);
     },
     [deferredAction]
   );

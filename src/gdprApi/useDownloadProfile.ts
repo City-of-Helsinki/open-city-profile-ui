@@ -26,10 +26,13 @@ function useDownloadProfile<TQuery>(
   const handleAuthorizationCodeCallback = React.useCallback(
     (authorizationCode: string | null) => {
       if (authorizationCode) {
+        const authorizationCodeKeycloak = localStorage.getItem(
+          'keycloak_gdpr_code'
+        );
         const variablesWithAuthorizationCode = {
           authorizationCode,
+          authorizationCodeKeycloak,
         };
-
         downloadProfile({
           variables: variablesWithAuthorizationCode,
         });
@@ -43,6 +46,7 @@ function useDownloadProfile<TQuery>(
     authorizationCodeStatus,
   ] = useServiceConnectionsAuthorizationCode({
     requiredGdprScope: 'query',
+    idp: 'tunnistamo',
     deferredAction: 'useDownloadProfile',
     onCompleted: e => {
       handleAuthorizationCodeCallback(e);

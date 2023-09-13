@@ -42,11 +42,11 @@ export interface GdprDeleteMyProfileMutation_deleteMyProfile {
 export interface GdprDeleteMyProfileMutation {
   /**
    * Deletes the data of the profile which is linked to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
    * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing a connected service.
    * * `CONNECTED_SERVICE_DELETION_NOT_ALLOWED_ERROR`: The profile deletion is disallowed by one or more connected services.
@@ -94,11 +94,11 @@ export interface GdprDeleteMyServiceDataMutation_deleteMyServiceData {
 export interface GdprDeleteMyServiceDataMutation {
   /**
    * Deletes the data of the profile which is linked to the currently authenticated user from one connected service.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
    * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing the service.
    * * `SERVICE_CONNECTION_DOES_NOT_EXIST_ERROR`: The user is not connected to the service.
@@ -168,11 +168,11 @@ export interface GdprServiceConnectionsQuery_myProfile {
 export interface GdprServiceConnectionsQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: GdprServiceConnectionsQuery_myProfile | null;
@@ -203,17 +203,17 @@ export interface CreateMyProfile_createMyProfile {
 export interface CreateMyProfile {
   /**
    * Creates a new profile based on the given data. The new profile is linked to the currently authenticated user.
-   * 
+   *
    * One or several of the following is possible to add:
-   * 
+   *
    * * Email
    * * Address
    * * Phone
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly createMyProfile: CreateMyProfile_createMyProfile | null;
@@ -235,11 +235,11 @@ export interface CreateMyProfileVariables {
 export interface DownloadMyProfileQuery {
   /**
    * Get the user information stored in the profile and its connected services as machine readable JSON.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing a connected service.
    */
   readonly downloadMyProfile: any | null;
@@ -247,6 +247,7 @@ export interface DownloadMyProfileQuery {
 
 export interface DownloadMyProfileQueryVariables {
   readonly authorizationCode: string;
+  readonly authorizationCodeKeycloak: string;
 }
 
 /* tslint:disable */
@@ -486,11 +487,11 @@ export interface MyProfileQuery_myProfile {
 export interface MyProfileQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: MyProfileQuery_myProfile | null;
@@ -515,11 +516,11 @@ export interface NameQuery_myProfile {
 export interface NameQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: NameQuery_myProfile | null;
@@ -601,11 +602,11 @@ export interface ServiceConnectionsQuery_myProfile {
 export interface ServiceConnectionsQuery {
   /**
    * Get the profile belonging to the currently authenticated user.
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `TODO`
    */
   readonly myProfile: ServiceConnectionsQuery_myProfile | null;
@@ -788,17 +789,17 @@ export interface UpdateMyProfile_updateMyProfile {
 export interface UpdateMyProfile {
   /**
    * Updates the profile which is linked to the currently authenticated user based on the given data.
-   * 
+   *
    * One or several of the following is possible to add, modify or remove:
-   * 
+   *
    * * Email
    * * Address
    * * Phone
-   * 
+   *
    * Requires authentication.
-   * 
+   *
    * Possible error codes:
-   * 
+   *
    * * `PROFILE_MUST_HAVE_PRIMARY_EMAIL`: If trying to get rid of the profile's primary email.
    */
   readonly updateMyProfile: UpdateMyProfile_updateMyProfile | null;
@@ -893,21 +894,23 @@ export interface CreatePhoneInput {
 
 export interface DeleteMyProfileMutationInput {
   readonly authorizationCode: string;
+  readonly authorizationCodeKeycloak: string | null;
   readonly dryRun?: boolean | null;
   readonly clientMutationId?: string | null;
 }
 
 export interface DeleteMyServiceDataMutationInput {
   readonly authorizationCode: string;
+  readonly authorizationCodeKeycloak: string | null;
   readonly serviceName: string;
   readonly dryRun?: boolean | null;
 }
 
 /**
  * The following fields are deprecated:
- * 
+ *
  * * `image`
- * 
+ *
  * There's no replacement for these.
  */
 export interface ProfileInput {
