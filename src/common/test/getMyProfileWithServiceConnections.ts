@@ -60,6 +60,7 @@ export default function getMyProfileWithServiceConnections(
                 name: 'Example service name',
                 title: 'Example UI',
                 description: 'Esimerkkiapplikaatio.',
+                isPureKeycloak: false,
                 allowedDataFields: {
                   edges: [
                     generateAllowedDataFieldEdge('name'),

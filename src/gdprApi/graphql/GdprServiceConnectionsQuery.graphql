@@ -8,6 +8,7 @@ query GdprServiceConnectionsQuery {
             name
             gdprQueryScope
             gdprDeleteScope
+            isPureKeycloak
           }
         }
       }
