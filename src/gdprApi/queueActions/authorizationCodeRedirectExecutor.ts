@@ -1,6 +1,6 @@
 import { gdprQueryScopeGetterAction } from './loadServiceConnectionsExecutor';
-import { ActionExecutor } from './useActionQueue';
-import gdprAuthCodeManager from './gdprAuthCodeManager';
+import { ActionExecutor } from '../../common/actionQueue/actionQueue';
+import gdprAuthCodeManager from '../gdprAuthCodeManager';
 
 export const authorizationRedirectionExecutor: ActionExecutor = (
   action,

@@ -1,7 +1,10 @@
 import FileSaver from 'file-saver';
 
-import { DownloadMyProfileQuery } from '../graphql/generatedTypes';
-import { ActionExecutor, ActionProps } from './useActionQueue';
+import { DownloadMyProfileQuery } from '../../graphql/generatedTypes';
+import {
+  ActionExecutor,
+  ActionProps,
+} from '../../common/actionQueue/actionQueue';
 import { downloadProfileDataAction } from './downloadProfileDataExecutor';
 
 export const downloadAsFileExecutor: ActionExecutor = async (

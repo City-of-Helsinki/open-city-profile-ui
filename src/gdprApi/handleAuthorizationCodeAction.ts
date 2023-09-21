@@ -1,4 +1,5 @@
-import { ActionQueue, Action } from './useActionQueue';
+import { ActionQueue } from '../common/actionQueue/useActionQueue';
+import { Action } from '../common/actionQueue/actionQueue';
 
 function loadScopes(queue: ActionQueue) {
   return new Promise(resolve => {

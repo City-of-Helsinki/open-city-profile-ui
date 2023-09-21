@@ -1,12 +1,15 @@
 import { loader } from 'graphql.macro';
 import to from 'await-to-js';
 
-import graphqlClient from '../graphql/client';
-import { DownloadMyProfileQuery } from '../graphql/generatedTypes';
-import { ActionExecutor, ActionProps } from './useActionQueue';
+import graphqlClient from '../../graphql/client';
+import { DownloadMyProfileQuery } from '../../graphql/generatedTypes';
+import {
+  ActionExecutor,
+  ActionProps,
+} from '../../common/actionQueue/actionQueue';
 
 const DOWNLOAD_MY_PROFILE = loader(
-  '../profile/graphql/DownloadMyProfileQuery.graphql'
+  '../../profile/graphql/DownloadMyProfileQuery.graphql'
 );
 
 export const downloadProfileDataExecutor: ActionExecutor = async (

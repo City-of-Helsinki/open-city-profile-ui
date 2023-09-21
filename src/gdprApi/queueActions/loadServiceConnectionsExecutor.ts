@@ -1,16 +1,19 @@
 import { loader } from 'graphql.macro';
 import to from 'await-to-js';
 
-import graphqlClient from '../graphql/client';
+import graphqlClient from '../../graphql/client';
 import {
   GdprServiceConnectionService,
   GdprServiceConnectionsRoot,
-} from '../graphql/typings';
-import { getServiceConnectionsServices } from './utils';
-import { ActionExecutor, ActionProps } from './useActionQueue';
+} from '../../graphql/typings';
+import { getServiceConnectionsServices } from '../utils';
+import {
+  ActionExecutor,
+  ActionProps,
+} from '../../common/actionQueue/actionQueue';
 
 const GDPR_SERVICE_CONNECTIONS = loader(
-  './graphql/GdprServiceConnectionsQuery.graphql'
+  '../graphql/GdprServiceConnectionsQuery.graphql'
 );
 
 export const serviceConnectionsQueryExecutor: ActionExecutor = async () =>

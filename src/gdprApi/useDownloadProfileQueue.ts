@@ -1,11 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router';
 
-import {
-  authorizationRedirectParserExecutor,
-  authorizationRedirectionExecutor,
-} from './authorizationCodeRedirectExecutor';
-import { gdprQueryScopeGetterAction } from './loadServiceConnectionsExecutor';
+import { authorizationRedirectParserExecutor } from './queueActions/authorizationCodeRedirectExecutor';
+import { gdprQueryScopeGetterAction } from './queueActions/loadServiceConnectionsExecutor';
 import {
   useActionQueue,
   HookFunctions,
@@ -13,13 +10,12 @@ import {
   Logger,
   HookCallback,
   createActionQueueCompleteExecutor,
-  ActionType,
-  Action,
   QueueFunctions,
-} from './useActionQueue';
-import { downloadAsFileAction } from './downloadAsFileExecutor';
-import { downloadProfileDataAction } from './downloadProfileDataExecutor';
-import { keycloakAuthorizationRedirectionAction } from './keycloakAuthorizationCodeRedirectExecutor';
+} from '../common/actionQueue/useActionQueue';
+import { ActionType, Action } from '../common/actionQueue/actionQueue';
+import { downloadAsFileAction } from './queueActions/downloadAsFileExecutor';
+import { downloadProfileDataAction } from './queueActions/downloadProfileDataExecutor';
+import { keycloakAuthorizationRedirectionAction } from './queueActions/keycloakAuthorizationCodeRedirectExecutor';
 
 export function useDownloadProfileQueueD(props?: {
   startFrom?: ActionType;

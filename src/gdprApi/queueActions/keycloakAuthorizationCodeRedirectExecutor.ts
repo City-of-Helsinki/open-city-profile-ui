@@ -1,7 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { gdprQueryScopeGetterAction } from './loadServiceConnectionsExecutor';
-import { ActionExecutor, ActionProps } from './useActionQueue';
+import {
+  ActionExecutor,
+  ActionProps,
+} from '../../common/actionQueue/actionQueue';
 
 type OidcProps = {
   clientId: string;
