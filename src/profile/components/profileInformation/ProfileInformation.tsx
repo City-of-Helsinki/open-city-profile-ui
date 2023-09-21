@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
-import DownloadData from '../downloadData/DownloadData';
+import DownloadData from '../downloadData/DownloadDataWithQueue';
 import AuthenticationProviderInformation from './AuthenticationProviderInformation';
 import { ProfileContext } from '../../context/ProfileContext';
 import VerifiedPersonalInformation from '../verifiedPersonalInformation/VerifiedPersonalInformation';

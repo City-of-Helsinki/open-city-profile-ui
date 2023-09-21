@@ -1,12 +1,13 @@
 import React from 'react';
 
-import gdprAuthCodeManager from './gdprAuthCodeManager';
 import styles from './gdprAuthorizationCodeManagerCallback.module.css';
+import { useDownloadProfileQueueD } from './useDownloadProfileQueue';
 
 function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
+  const { start } = useDownloadProfileQueueD({ doNotClearOnUnmount: true });
   React.useEffect(() => {
-    gdprAuthCodeManager.authorizationCodeFetchCallback();
-  }, []);
+    start('consumeCode');
+  }, [start]);
 
   return (
     <div className={styles['wrapper']}>

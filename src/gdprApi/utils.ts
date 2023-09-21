@@ -85,3 +85,18 @@ export function getServiceConnectionsServices<T = GdprServiceConnectionService>(
 ): T[] {
   return (servicesSelector(serviceConnectionsQuery) as unknown) as T[];
 }
+
+export function resolveAuthorizationCodeSources(
+  serviceConnectionsQuery: GdprServiceConnectionsRoot | undefined
+): { pureKeycloadServices: number; otherServices: number } {
+  const returnValue = { pureKeycloadServices: 0, otherServices: 0 };
+  servicesSelector(serviceConnectionsQuery).forEach(service => {
+    if (service.isPureKeycloak) {
+      returnValue.pureKeycloadServices += 1;
+    } else {
+      returnValue.otherServices += 1;
+    }
+  });
+
+  return returnValue;
+}

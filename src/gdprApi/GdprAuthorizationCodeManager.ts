@@ -107,20 +107,20 @@ class GdprAuthorizationCodeManager {
     this.cacheApplicationState(codeStateId, deferredAction);
 
     const authorizationCodeUrl = this.makeAuthorizationUrl(scopes, codeStateId);
-
     window.location.href = authorizationCodeUrl;
   }
 
-  authorizationCodeFetchCallback(): void {
+  authorizationCodeFetchCallback(): string | null {
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
     const state = params.get('state');
 
     if (state) {
-      this.loadApplicationState(state);
+      // this.loadApplicationState(state);
     }
 
     this.code = code;
+    return code;
   }
 }
 
