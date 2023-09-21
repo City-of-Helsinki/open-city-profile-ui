@@ -14,12 +14,12 @@ import {
   HookCallback,
   createActionQueueCompleteExecutor,
   ActionType,
-  ActionQueue,
   Action,
   QueueFunctions,
 } from './useActionQueue';
 import { downloadAsFileAction } from './downloadAsFileExecutor';
 import { downloadProfileDataAction } from './downloadProfileDataExecutor';
+import { keycloakAuthorizationRedirectionAction } from './keycloakAuthorizationCodeRedirectExecutor';
 
 export function useDownloadProfileQueueD(props?: {
   startFrom?: ActionType;
@@ -36,10 +36,13 @@ export function useDownloadProfileQueueD(props?: {
   const queue: InitialQueue = useMemo(
     (): InitialQueue => [
       gdprQueryScopeGetterAction,
+      /*
       {
         type: 'getCode',
         executor: authorizationRedirectionExecutor,
       },
+      */
+      keycloakAuthorizationRedirectionAction,
       {
         type: 'consumeCode',
         executor: authorizationRedirectParserExecutor,
@@ -47,6 +50,7 @@ export function useDownloadProfileQueueD(props?: {
           idleWhenActive: true,
         },
       },
+      /*
       {
         type: 'redirectToProfilePage',
         executor: () => {
@@ -68,7 +72,7 @@ export function useDownloadProfileQueueD(props?: {
             ? Promise.resolve(code)
             : Promise.reject(new Error('no code'));
         },
-      },
+      },*/
       downloadProfileDataAction,
       downloadAsFileAction,
       {

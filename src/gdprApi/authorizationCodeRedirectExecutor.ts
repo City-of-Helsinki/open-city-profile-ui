@@ -9,8 +9,7 @@ export const authorizationRedirectionExecutor: ActionExecutor = (
   const scopes = functions.getResult(
     gdprQueryScopeGetterAction.type
   ) as string[];
-  console.log('scopes', scopes);
-  gdprAuthCodeManager.fetchAuthorizationCode('download', scopes);
+  gdprAuthCodeManager.fetchAuthorizationCode('download', ['openid', ...scopes]);
   // get code
   return Promise.resolve();
 };
