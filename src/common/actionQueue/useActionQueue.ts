@@ -8,6 +8,7 @@ import {
   ActionType,
   ActionUpdateProps,
   ActionExecutor,
+  QueueFunctions,
 } from './actionQueue';
 
 type LogType = 'started' | 'completed' | 'error';
@@ -25,25 +26,6 @@ export type HookCallback = (
 
 export type InitialQueue = ActionProps[];
 export type ActionQueue = Action[];
-export type QueueFunctions = {
-  getNext: () => Action | undefined;
-  getActive: () => Action | undefined;
-  getFailed: () => Action | undefined;
-  getFirstIdle: () => Action | undefined;
-  getQueue: () => ActionQueue;
-  getResult: (type: ActionType) => unknown;
-  getByType: (type: ActionType) => Action | undefined;
-  getComplete: (type: ActionType) => Action[];
-  clean: () => void;
-  reset: () => void;
-  updateActionAndQueue: (
-    type: ActionType,
-    props: Partial<ActionUpdateProps>
-  ) => void;
-  isValid: () => boolean;
-  isComplete: () => boolean;
-  canStartFrom: (type: ActionType) => boolean;
-};
 
 export type HookFunctions = QueueFunctions & {
   isValid: () => boolean;

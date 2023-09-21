@@ -4,6 +4,7 @@ import {
   ActionExecutor,
   ActionProps,
 } from '../../common/actionQueue/actionQueue';
+import { getScopesFromQueue } from './loadServiceConnectionsAction';
 
 type OidcProps = {
   clientId: string;
@@ -43,10 +44,20 @@ const makeAuthorizationUrl = (
   return `${oidcAuthority}?${params}`;
 };
 
+const keycloakAuthorizationRedirectionActionType =
+  'keycloakAuthorizationRedirection';
+
 export const keycloakAuthorizationRedirectionExecutor: ActionExecutor = (
   action,
-  functions
+  queueFunctions
 ) => {
+  const { pureKeyloakServices } = getScopesFromQueue(queueFunctions);
+
+  if (!pureKeyloakServices.length) {
+    console.log('KC not needed!');
+    return Promise.resolve(false);
+  }
+  console.log('KC needed!');
   const specs: OidcProps = {
     clientId: 'profile-gdpr-dev',
     redirectUri: `${window.location.origin}/gdpr-callback`,
@@ -60,9 +71,6 @@ export const keycloakAuthorizationRedirectionExecutor: ActionExecutor = (
   // get code
   return Promise.resolve();
 };
-
-const keycloakAuthorizationRedirectionActionType =
-  'keycloakAuthorizationRedirection';
 
 export const keycloakAuthorizationRedirectionAction: ActionProps = {
   type: keycloakAuthorizationRedirectionActionType,

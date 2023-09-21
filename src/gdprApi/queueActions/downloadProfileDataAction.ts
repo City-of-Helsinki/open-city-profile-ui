@@ -2,11 +2,17 @@ import { loader } from 'graphql.macro';
 import to from 'await-to-js';
 
 import graphqlClient from '../../graphql/client';
-import { DownloadMyProfileQuery } from '../../graphql/generatedTypes';
+import {
+  DownloadMyProfileQuery,
+  DownloadMyProfileQueryVariables,
+} from '../../graphql/generatedTypes';
 import {
   ActionExecutor,
   ActionProps,
 } from '../../common/actionQueue/actionQueue';
+import { getTunnistamoAuthorizationCode } from './tunnistamoAuthorizationCodeHandlerAction';
+import { getkeycloakAuthorizationCode } from './keycloakAuthorizationCodeHandlerAction';
+import { Mutable } from '../../graphql/typings';
 
 const DOWNLOAD_MY_PROFILE = loader(
   '../../profile/graphql/DownloadMyProfileQuery.graphql'
@@ -18,14 +24,24 @@ export const downloadProfileDataExecutor: ActionExecutor = async (
 ) =>
   new Promise((resolve, reject) => {
     (async () => {
-      const authorizationCode = queueFunctions.getResult('consumeCode');
+      const authorizationCode = getTunnistamoAuthorizationCode(queueFunctions);
+      const authorizationCodeKeycloak = getkeycloakAuthorizationCode(
+        queueFunctions
+      );
+      const variables: Mutable<DownloadMyProfileQueryVariables> = {
+        authorizationCode,
+      };
+      if (typeof authorizationCodeKeycloak === 'string') {
+        variables.authorizationCodeKeycloak = authorizationCodeKeycloak;
+      }
+      console.log('variables', variables);
       //authorizationCodeKeycloak
       const [error, result] = await to(
         graphqlClient.query<DownloadMyProfileQuery>({
           query: DOWNLOAD_MY_PROFILE,
           fetchPolicy: 'network-only',
           variables: {
-            authorizationCode,
+            ...variables,
           },
         })
       );

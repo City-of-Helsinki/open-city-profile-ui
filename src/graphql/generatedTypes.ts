@@ -252,6 +252,7 @@ export interface DownloadMyProfileQuery {
 
 export interface DownloadMyProfileQueryVariables {
   readonly authorizationCode: string;
+  readonly authorizationCodeKeycloak?: string | null;
 }
 
 /* tslint:disable */

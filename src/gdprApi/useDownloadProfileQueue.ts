@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router';
 
-import { authorizationRedirectParserExecutor } from './queueActions/authorizationCodeRedirectExecutor';
-import { gdprQueryScopeGetterAction } from './queueActions/loadServiceConnectionsExecutor';
+import { gdprQueryScopeGetterAction } from './queueActions/loadServiceConnectionsAction';
 import {
   useActionQueue,
   HookFunctions,
@@ -10,12 +9,24 @@ import {
   Logger,
   HookCallback,
   createActionQueueCompleteExecutor,
-  QueueFunctions,
 } from '../common/actionQueue/useActionQueue';
-import { ActionType, Action } from '../common/actionQueue/actionQueue';
-import { downloadAsFileAction } from './queueActions/downloadAsFileExecutor';
-import { downloadProfileDataAction } from './queueActions/downloadProfileDataExecutor';
-import { keycloakAuthorizationRedirectionAction } from './queueActions/keycloakAuthorizationCodeRedirectExecutor';
+import {
+  ActionType,
+  Action,
+  QueueFunctions,
+} from '../common/actionQueue/actionQueue';
+import { downloadAsFileAction } from './queueActions/downloadAsFileAction';
+import { downloadProfileDataAction } from './queueActions/downloadProfileDataAction';
+import { keycloakAuthorizationRedirectionAction } from './queueActions/keycloakAuthorizationCodeRedirectionAction';
+import {
+  getkeycloakAuthorizationCode,
+  keycloakAuthorizationCodeHandlerAction,
+} from './queueActions/keycloakAuthorizationCodeHandlerAction';
+import {
+  getTunnistamoAuthorizationCode,
+  tunnistamoAuthorizationCodeHandlerAction,
+} from './queueActions/tunnistamoAuthorizationCodeHandlerAction';
+import { tunnistamoAuthorizationCodeRedirectionAction } from './queueActions/tunnistamoAuthorizationCodeRedirectionAction.';
 
 export function useDownloadProfileQueueD(props?: {
   startFrom?: ActionType;
@@ -32,21 +43,11 @@ export function useDownloadProfileQueueD(props?: {
   const queue: InitialQueue = useMemo(
     (): InitialQueue => [
       gdprQueryScopeGetterAction,
-      /*
-      {
-        type: 'getCode',
-        executor: authorizationRedirectionExecutor,
-      },
-      */
+      tunnistamoAuthorizationCodeRedirectionAction,
+      tunnistamoAuthorizationCodeHandlerAction,
       keycloakAuthorizationRedirectionAction,
-      {
-        type: 'consumeCode',
-        executor: authorizationRedirectParserExecutor,
-        options: {
-          idleWhenActive: true,
-        },
-      },
-      /*
+      keycloakAuthorizationCodeHandlerAction,
+
       {
         type: 'redirectToProfilePage',
         executor: () => {
@@ -62,13 +63,19 @@ export function useDownloadProfileQueueD(props?: {
         type: 'waitForRedirection',
         executor: (action, queueFunctions) => {
           //....
-          const code = queueFunctions.getResult('consumeCode');
+          const authorizationCode = getTunnistamoAuthorizationCode(
+            queueFunctions
+          );
+          const authorizationCodeKeycloak = getkeycloakAuthorizationCode(
+            queueFunctions
+          );
+          const code = authorizationCodeKeycloak || authorizationCode;
           console.log('#CODE#', code);
           return code
             ? Promise.resolve(code)
             : Promise.reject(new Error('no code'));
         },
-      },*/
+      },
       downloadProfileDataAction,
       downloadAsFileAction,
       {

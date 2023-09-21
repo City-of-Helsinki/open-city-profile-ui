@@ -5,7 +5,7 @@ import {
   ActionExecutor,
   ActionProps,
 } from '../../common/actionQueue/actionQueue';
-import { downloadProfileDataAction } from './downloadProfileDataExecutor';
+import { downloadProfileDataAction } from './downloadProfileDataAction';
 
 export const downloadAsFileExecutor: ActionExecutor = async (
   action,
