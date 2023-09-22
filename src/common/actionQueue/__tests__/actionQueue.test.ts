@@ -1,86 +1,20 @@
 import {
-  ActionProps,
   Action,
   createQueueController,
   createQueueFromProps,
-  ActionQueue,
   ActionUpdateProps,
 } from '../actionQueue';
-
-type ActionSourceForTesting = Pick<ActionProps, 'type'> & {
-  resolveValue?: Action['result'];
-  rejectValue?: string | Error;
-  executionDelay?: number;
-};
+import {
+  convertSourceToActionProps,
+  verifyAction,
+  createQueueWithCommonActions,
+  cloneArray,
+  resolvingAction1,
+  resolvingAction2,
+  readyMadeAction,
+} from '../test.util';
 
 describe('actionQueue', () => {
-  const defaultExecutionDelay = 20;
-  const convertSourceToActionProps = ({
-    type,
-    rejectValue,
-    resolveValue,
-    executionDelay = defaultExecutionDelay,
-  }: ActionSourceForTesting): ActionProps => ({
-    type,
-    executor: () => {
-      if (resolveValue) {
-        return new Promise(resolve =>
-          setTimeout(() => resolve(resolveValue), executionDelay)
-        );
-      }
-      return new Promise((resolve, reject) =>
-        setTimeout(() => reject(rejectValue), executionDelay)
-      );
-    },
-  });
-
-  const resolvingAction1: ActionSourceForTesting = {
-    type: 'resolving1',
-    resolveValue: 1,
-  };
-
-  const resolvingAction2: ActionSourceForTesting = {
-    type: 'resolving2',
-    resolveValue: 1,
-  };
-
-  const readyMadeActionSource: ActionSourceForTesting = {
-    type: 'readyMadeAction',
-    resolveValue: 'ready',
-  };
-
-  const readyMadeAction: Action = {
-    ...{ ...convertSourceToActionProps(readyMadeActionSource) },
-    complete: false,
-    active: false,
-    updatedAt: 1,
-    result: undefined,
-    errorMessage: undefined,
-  };
-
-  const verifyAction = (action: Partial<Action>): boolean =>
-    typeof action.complete === 'boolean' &&
-    typeof action.active === 'boolean' &&
-    typeof action.executor === 'function' &&
-    typeof action.errorMessage === 'undefined' &&
-    typeof action.updatedAt === 'number' &&
-    typeof action.type === 'string' &&
-    typeof action.result === 'undefined';
-
-  const cloneArray = (array: ActionQueue) => array.map(item => ({ ...item }));
-
-  const createQueueWithCommonActions = (
-    additionalActions: Array<ActionProps | Action> = []
-  ) =>
-    createQueueFromProps([
-      ...[
-        convertSourceToActionProps(resolvingAction1),
-        convertSourceToActionProps(resolvingAction2),
-        { ...readyMadeAction },
-      ],
-      ...additionalActions,
-    ]);
-
   describe('createQueueFromProps', () => {
     it('Converts plain props to an Action', () => {
       const queue = createQueueFromProps([
