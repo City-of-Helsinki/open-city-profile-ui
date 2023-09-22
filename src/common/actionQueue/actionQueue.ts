@@ -1,9 +1,10 @@
 export type ActionType = string;
 
+export type ActionExecutorPromise = Promise<JSONStringifyableResult>;
 export type ActionExecutor = (
   action: Action,
   controller: QueueController
-) => Promise<JSONStringifyableResult>;
+) => ActionExecutorPromise;
 
 export type ActionOptions = {
   idleWhenActive?: boolean;
@@ -48,6 +49,7 @@ export type QueueController = {
   getResult: (type: ActionType) => unknown;
   getByType: (type: ActionType) => Action | undefined;
   getComplete: () => Action[];
+  isFinished: () => boolean;
 };
 
 type ActionFilter = (action: Action) => boolean;
@@ -140,6 +142,9 @@ export function createQueueController(
   const getByType = (type: ActionType) => queue.filter(f => f.type === type)[0];
   checkTypesAreUniqueAndSet(initialQueue);
   const getNext = () => queue.find(idleFilter);
+  const isFinished = () =>
+    !!filterQueue(errorFilter).length ||
+    filterQueue(completeFilter).length === queue.length;
   return {
     getQueue: () => queue.map(action => ({ ...action })),
     clean: () => {
@@ -180,5 +185,6 @@ export function createQueueController(
     },
     getNext,
     getByType,
+    isFinished,
   };
 }

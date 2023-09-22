@@ -403,5 +403,60 @@ describe('actionQueue', () => {
         expect(getCompleteTypes()).toHaveLength(0);
       });
     });
+    describe('isFinished()', () => {
+      it(`Returns true if all actions are complete or if one has failed (and is completed).`, () => {
+        const testQueue = createQueueFromProps([
+          {
+            ...readyMadeAction,
+            type: 'complete1',
+            complete: true,
+            active: true,
+          },
+          {
+            ...readyMadeAction,
+            type: 'complete2',
+            complete: true,
+          },
+          {
+            ...readyMadeAction,
+            type: 'complete3',
+            complete: true,
+            active: true,
+            options: {
+              idleWhenActive: true,
+            },
+          },
+          {
+            ...readyMadeAction,
+            type: 'complete4',
+            complete: true,
+          },
+        ]);
+        const controller = createQueueController(testQueue);
+
+        // if all are complete, whole queue is complete
+        expect(controller.isFinished()).toBeTruthy();
+
+        controller.updateActionAndQueue('complete4', {
+          complete: undefined,
+        });
+        // if one has only errorMessage but is not complete, whole queue is not complete
+        expect(controller.isFinished()).toBeFalsy();
+
+        controller.reset();
+        // if one has error, whole queue is complete
+        controller.updateActionAndQueue('complete4', {
+          complete: true,
+          errorMessage: 'error',
+        });
+        expect(controller.isFinished()).toBeTruthy();
+
+        // if one is complete, whole queue is not complete
+        controller.updateActionAndQueue('complete4', {
+          errorMessage: undefined,
+        });
+        expect(controller.isFinished()).toBeFalsy();
+      });
+    });
   });
 });
