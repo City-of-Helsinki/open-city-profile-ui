@@ -46,7 +46,7 @@ describe('actionQueue', () => {
 
   const readyMadeActionSource: ActionSourceForTesting = {
     type: 'readyMadeAction',
-    resolveValue: 'readt',
+    resolveValue: 'ready',
   };
 
   const readyMadeAction: Action = {
@@ -68,6 +68,18 @@ describe('actionQueue', () => {
     typeof action.result === 'undefined';
 
   const cloneArray = (array: ActionQueue) => array.map(item => ({ ...item }));
+
+  const createQueueWithCommonActions = (
+    additionalActions: Array<ActionProps | Action> = []
+  ) =>
+    createQueueFromProps([
+      ...[
+        convertSourceToActionProps(resolvingAction1),
+        convertSourceToActionProps(resolvingAction2),
+        { ...readyMadeAction },
+      ],
+      ...additionalActions,
+    ]);
 
   describe('createQueueFromProps', () => {
     it('Converts plain props to an Action', () => {
@@ -107,21 +119,23 @@ describe('actionQueue', () => {
       it('Throws when passing actions without a type', () => {
         expect(() =>
           createQueueController(
-            cloneArray([...basicQueue, { ...readyMadeAction, type: '' }])
+            createQueueWithCommonActions([{ ...readyMadeAction, type: '' }])
           )
         ).toThrow();
       });
       it('Throws when passing actions with same types', () => {
         expect(() =>
           createQueueController(
-            cloneArray([...basicQueue, { ...readyMadeAction }])
+            cloneArray(createQueueWithCommonActions([{ ...readyMadeAction }]))
           )
         ).toThrow();
       });
     });
     describe('getQueue()', () => {
       it('Returns only a copy of actions. Queue cannot be mutated externally and stored actions are preserved.', () => {
-        const controller = createQueueController(cloneArray(basicQueue));
+        const controller = createQueueController(
+          createQueueWithCommonActions()
+        );
         const copiedQueue = controller.getQueue();
         copiedQueue.forEach(action => {
           expect(verifyAction(action)).toBeTruthy();
@@ -134,7 +148,7 @@ describe('actionQueue', () => {
     });
     describe('clean()', () => {
       it('Invalidates all actions and removes them from queue', () => {
-        const safeArray = cloneArray(basicQueue);
+        const safeArray = createQueueWithCommonActions();
         const controller = createQueueController(safeArray);
         const copyOfReadyMadeAction = safeArray.at(-1) as Action;
         const oldQueue = controller.getQueue();
@@ -158,7 +172,7 @@ describe('actionQueue', () => {
           result: 100,
           errorMessage: 'Error',
         };
-        const testQueue = [...cloneArray(basicQueue), { ...finishedAction }];
+        const testQueue = createQueueWithCommonActions([{ ...finishedAction }]);
 
         const copyOfFinishedAction = testQueue.at(-1) as Action;
         const controller = createQueueController(testQueue);
@@ -190,7 +204,7 @@ describe('actionQueue', () => {
           "updatedAt" will be set to Date.now(). 
           The old queue is copied as new.
           Old queue is invalidated.`, () => {
-        const testQueue = cloneArray(basicQueue);
+        const testQueue = createQueueWithCommonActions();
 
         const originalReadyMadeAction = testQueue.at(-1) as Action;
         const copyOfReadyMadeActionProps = { ...originalReadyMadeAction };
@@ -224,6 +238,235 @@ describe('actionQueue', () => {
         expect(verifyAction(originalReadyMadeAction)).toBeFalsy();
         expect(originalReadyMadeAction.executor).toThrow();
         expect(originalReadyMadeAction.type).toBe('');
+      });
+    });
+    describe('getByType()', () => {
+      it('Returns one matching action or undefined', () => {
+        const testQueue = createQueueWithCommonActions();
+        const controller = createQueueController(testQueue);
+        testQueue.forEach(action => {
+          expect(action).toMatchObject(
+            controller.getByType(action.type) as Action
+          );
+        });
+        expect(controller.getByType('')).toBeUndefined();
+        expect(controller.getByType('abc')).toBeUndefined();
+      });
+    });
+    describe('getResult()', () => {
+      it('Returns result of an action by type. Action must have complete:true', () => {
+        const testQueue = createQueueWithCommonActions([
+          {
+            ...readyMadeAction,
+            type: 'result1',
+            result: 'result1',
+            complete: true,
+          },
+          {
+            ...readyMadeAction,
+            type: 'result2',
+            result: { value: 'result2' },
+            complete: true,
+          },
+          {
+            ...readyMadeAction,
+            type: 'result3',
+            result: 'result',
+          },
+        ]);
+        const controller = createQueueController(testQueue);
+        expect(controller.getResult('result1')).toBe('result1');
+        expect(controller.getResult('result2')).toMatchObject({
+          value: 'result2',
+        });
+        expect(controller.getResult('result3')).toBe(undefined);
+      });
+    });
+    describe('getNext()', () => {
+      it(`Returns the first action which is not completed and not active. 
+          If action.options.idleWhenActive is true, then active action is returned.`, () => {
+        const testQueue = createQueueFromProps([
+          {
+            ...readyMadeAction,
+            type: 'complete1',
+            complete: true,
+            active: false,
+          },
+          {
+            ...readyMadeAction,
+            type: 'complete2',
+            complete: true,
+            active: false,
+          },
+          {
+            ...readyMadeAction,
+            type: 'active',
+            complete: false,
+            active: true,
+          },
+          {
+            ...readyMadeAction,
+            type: 'idleWhenActive',
+            complete: false,
+            active: true,
+            options: {
+              idleWhenActive: true,
+            },
+          },
+        ]);
+        const controller = createQueueController(testQueue);
+        expect(controller.getNext()).toMatchObject(testQueue[3]);
+        // change #2 to fulfill getNext()-filter requirements
+        controller.updateActionAndQueue('active', { active: false });
+        expect((controller.getNext() as Action).type).toBe('active');
+        // change #1 to fulfill getNext()-filter requirements
+        controller.updateActionAndQueue('complete2', { complete: false });
+        expect((controller.getNext() as Action).type).toBe('complete2');
+        // change #0 to fulfill getNext()-filter requirements
+        controller.updateActionAndQueue('complete1', { complete: false });
+        expect((controller.getNext() as Action).type).toBe('complete1');
+      });
+      it(`Returns undefined when there are no idle actions`, () => {
+        const testQueue = createQueueFromProps([
+          {
+            ...readyMadeAction,
+            type: 'complete1',
+            complete: true,
+            active: false,
+          },
+          {
+            ...readyMadeAction,
+            type: 'complete2',
+            complete: true,
+            active: false,
+          },
+        ]);
+        const controller = createQueueController(testQueue);
+        expect(controller.getNext()).toBeUndefined();
+      });
+    });
+    describe('getActive()', () => {
+      it(`Returns the first action where active is true. Or undefined when no action is found.`, () => {
+        const testQueue = createQueueFromProps([
+          {
+            ...readyMadeAction,
+            type: 'completeAndActive',
+            complete: true,
+            active: true,
+          },
+          {
+            ...readyMadeAction,
+            type: 'active',
+            complete: false,
+            active: true,
+          },
+          {
+            ...readyMadeAction,
+            type: 'idleWhenActive',
+            complete: false,
+            active: true,
+            options: {
+              idleWhenActive: true,
+            },
+          },
+        ]);
+        const controller = createQueueController(testQueue);
+        expect((controller.getActive() as Action).type).toBe(
+          'completeAndActive'
+        );
+
+        controller.updateActionAndQueue('completeAndActive', { active: false });
+        expect((controller.getActive() as Action).type).toBe('active');
+
+        controller.updateActionAndQueue('active', { active: false });
+        expect((controller.getActive() as Action).type).toBe('idleWhenActive');
+
+        controller.updateActionAndQueue('idleWhenActive', { active: false });
+        expect(controller.getActive() as Action).toBeUndefined();
+      });
+    });
+    describe('getFailed()', () => {
+      it(`Returns the first action which has an errorMessage and is complete.`, () => {
+        const testQueue = createQueueFromProps([
+          {
+            ...readyMadeAction,
+            type: 'error1',
+            errorMessage: 'error',
+            complete: false,
+          },
+          {
+            ...readyMadeAction,
+            type: 'noError',
+            complete: true,
+            active: true,
+            result: 'result',
+          },
+          {
+            ...readyMadeAction,
+            type: 'errorAndResult',
+            errorMessage: 'error',
+            complete: true,
+          },
+        ]);
+        const controller = createQueueController(testQueue);
+        expect((controller.getFailed() as Action).type).toBe('errorAndResult');
+
+        controller.updateActionAndQueue('errorAndResult', {
+          errorMessage: undefined,
+        });
+        controller.updateActionAndQueue('error1', {
+          complete: true,
+        });
+        expect((controller.getFailed() as Action).type).toBe('error1');
+
+        controller.updateActionAndQueue('error1', {
+          errorMessage: undefined,
+        });
+        expect(controller.getFailed() as Action).toBeUndefined();
+      });
+    });
+    describe('getComplete()', () => {
+      it(`Returns all actions where complete is true.`, () => {
+        const testQueue = createQueueFromProps([
+          {
+            ...readyMadeAction,
+            type: 'completeAndActive',
+            complete: true,
+            active: true,
+          },
+          {
+            ...readyMadeAction,
+            type: 'active',
+            complete: false,
+            active: true,
+          },
+          {
+            ...readyMadeAction,
+            type: 'idleWhenActive',
+            complete: true,
+            active: true,
+            options: {
+              idleWhenActive: true,
+            },
+          },
+        ]);
+        const controller = createQueueController(testQueue);
+        const getCompleteTypes = () =>
+          controller.getComplete().map(action => action.type);
+        expect(getCompleteTypes()).toMatchObject([
+          'completeAndActive',
+          'idleWhenActive',
+        ]);
+
+        controller.updateActionAndQueue('completeAndActive', {
+          complete: false,
+        });
+        expect(getCompleteTypes()).toMatchObject(['idleWhenActive']);
+
+        controller.updateActionAndQueue('idleWhenActive', {
+          complete: false,
+        });
+        expect(getCompleteTypes()).toHaveLength(0);
       });
     });
   });

@@ -3,11 +3,16 @@ export type ActionType = string;
 export type ActionExecutor = (
   action: Action,
   controller: QueueController
-) => Promise<unknown>;
+) => Promise<JSONStringifyableResult>;
+
+export type ActionOptions = {
+  idleWhenActive?: boolean;
+};
 
 export type ActionProps = {
   type: ActionType;
   executor: ActionExecutor;
+  options?: ActionOptions;
 };
 
 export type JSONStringifyableResult =
@@ -37,7 +42,15 @@ export type QueueController = {
     type: ActionType,
     props: Partial<Exclude<ActionUpdateProps, 'updatedAt'>>
   ) => void;
+  getNext: () => Action | undefined;
+  getActive: () => Action | undefined;
+  getFailed: () => Action | undefined;
+  getResult: (type: ActionType) => unknown;
+  getByType: (type: ActionType) => Action | undefined;
+  getComplete: () => Action[];
 };
+
+type ActionFilter = (action: Action) => boolean;
 
 function restore(
   storedProps: Partial<Action | ActionProps | ActionUpdateProps>,
@@ -107,12 +120,26 @@ export function createQueueFromProps(
   });
 }
 
+const activeFilter: ActionFilter = action => action.active;
+const idleFilter: ActionFilter = action => {
+  if (action.complete) {
+    return false;
+  }
+  const isIdleWhenActive = !!action.options && !!action.options.idleWhenActive;
+  return !action.active || isIdleWhenActive;
+};
+const completeFilter: ActionFilter = action => action.complete;
+const errorFilter: ActionFilter = action =>
+  action.complete && !!action.errorMessage;
+
 export function createQueueController(
   initialQueue: ActionQueue
 ): QueueController {
   let queue: ActionQueue = initialQueue;
+  const filterQueue = (f: ActionFilter): Action[] => queue.filter(f);
   const getByType = (type: ActionType) => queue.filter(f => f.type === type)[0];
   checkTypesAreUniqueAndSet(initialQueue);
+  const getNext = () => queue.find(idleFilter);
   return {
     getQueue: () => queue.map(action => ({ ...action })),
     clean: () => {
@@ -144,5 +171,14 @@ export function createQueueController(
       queue.map(invalidate);
       queue = newQueue;
     },
+    getActive: () => filterQueue(activeFilter)[0],
+    getComplete: () => filterQueue(completeFilter),
+    getFailed: () => filterQueue(errorFilter)[0],
+    getResult: (type: ActionType) => {
+      const item = getByType(type);
+      return item && item.complete ? item.result : undefined;
+    },
+    getNext,
+    getByType,
   };
 }
