@@ -43,7 +43,7 @@ export const resolvingAction2: ActionSourceForTesting = {
   resolveValue: 2,
 };
 
-export const rejecting: ActionSourceForTesting = {
+export const rejectingAction: ActionSourceForTesting = {
   type: 'rejecting1',
   rejectValue: new Error('Rejected'),
 };
