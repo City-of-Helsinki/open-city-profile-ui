@@ -3,6 +3,8 @@ import {
   createQueueController,
   createQueueFromProps,
   ActionUpdateProps,
+  QueueController,
+  ActionQueue,
 } from '../actionQueue';
 import {
   convertSourceToActionProps,
@@ -456,6 +458,190 @@ describe('actionQueue', () => {
           errorMessage: undefined,
         });
         expect(controller.isFinished()).toBeFalsy();
+      });
+    });
+    describe('action updaters', () => {
+      const createUpdateScenarioForTwoActions = (): [
+        QueueController,
+        Action,
+        Action,
+        Action
+      ] => {
+        const controller = createQueueController(
+          createQueueWithCommonActions()
+        );
+        const queue = controller.getQueue();
+        return [controller, { ...queue[0] }, { ...queue[1] }, { ...queue[2] }];
+      };
+      const checkUpdatedQueueProps = (
+        action: Action,
+        newQueue: ActionQueue,
+        expectedProps: Partial<Action>
+      ) => {
+        expect(
+          newQueue.find(queueAction => queueAction.type === action.type)
+        ).toMatchObject(expectedProps);
+      };
+
+      describe('completeAction()', () => {
+        it(`Sets action.complete to true and action.result to passed result. 
+          Passed target can be action or action.type. 
+          Returns an updated queue.`, () => {
+          const [
+            controller,
+            targetAction1,
+            targetAction2,
+            targetAction3,
+          ] = createUpdateScenarioForTwoActions();
+
+          const setActionAsComplete = (action: Action) => {
+            const result = `${action.type} result`;
+            const newQueue = controller.completeAction(action, result);
+            checkUpdatedQueueProps(action, newQueue, {
+              complete: true,
+              result,
+            });
+          };
+
+          setActionAsComplete(targetAction1);
+          setActionAsComplete(targetAction2);
+          setActionAsComplete(targetAction3);
+        });
+        it(`Throws when action is already complete, errorneous or invalid`, () => {
+          const [
+            controller,
+            targetAction1,
+            targetAction2,
+            targetAction3,
+          ] = createUpdateScenarioForTwoActions();
+
+          const attemptCompleteAction = (
+            action: Action,
+            presetPropsForError?: Partial<ActionUpdateProps>
+          ) => {
+            if (presetPropsForError) {
+              controller.updateActionAndQueue(action.type, presetPropsForError);
+            }
+            expect(() =>
+              controller.completeAction(action.type, 'result')
+            ).toThrow();
+          };
+
+          attemptCompleteAction(targetAction1, {
+            complete: true,
+          });
+          attemptCompleteAction(targetAction2, {
+            complete: true,
+            errorMessage: 'error',
+          });
+          controller.clean();
+          attemptCompleteAction(targetAction3);
+        });
+      });
+      describe('setActionFailed()', () => {
+        it(`Sets action.complete to true and action.errorMessage to passed string. 
+          Passed target can be action or action.type. 
+          Returns an updated queue.`, () => {
+          const [
+            controller,
+            targetAction1,
+            targetAction2,
+            targetAction3,
+          ] = createUpdateScenarioForTwoActions();
+
+          const setActionAsFailed = (action: Action) => {
+            const errorMessage = `${action.type} failed`;
+            const newQueue = controller.setActionFailed(action, errorMessage);
+            checkUpdatedQueueProps(action, newQueue, {
+              complete: true,
+              errorMessage,
+            });
+          };
+
+          setActionAsFailed(targetAction1);
+          setActionAsFailed(targetAction2);
+          setActionAsFailed(targetAction3);
+        });
+        it(`Throws when action is already complete, errorneous or invalid`, () => {
+          const [
+            controller,
+            targetAction1,
+            targetAction2,
+            targetAction3,
+          ] = createUpdateScenarioForTwoActions();
+
+          const attemptCompleteAction = (
+            action: Action,
+            presetPropsForError?: Partial<ActionUpdateProps>
+          ) => {
+            if (presetPropsForError) {
+              controller.updateActionAndQueue(action.type, presetPropsForError);
+            }
+            expect(() =>
+              controller.setActionFailed(action.type, 'result')
+            ).toThrow();
+          };
+
+          attemptCompleteAction(targetAction1, {
+            complete: true,
+          });
+          attemptCompleteAction(targetAction2, {
+            complete: true,
+            errorMessage: 'error',
+          });
+          controller.clean();
+          attemptCompleteAction(targetAction3);
+        });
+      });
+      describe('activateAction()', () => {
+        it(`Sets action.active to true. 
+          Passed target can be action or action.type. 
+          Returns an updated queue.`, () => {
+          const [
+            controller,
+            targetAction1,
+            targetAction2,
+            targetAction3,
+          ] = createUpdateScenarioForTwoActions();
+
+          const setActionAsComplete = (action: Action) => {
+            const newQueue = controller.activateAction(action);
+            checkUpdatedQueueProps(action, newQueue, {
+              active: true,
+            });
+          };
+
+          setActionAsComplete(targetAction1);
+          setActionAsComplete(targetAction2);
+          setActionAsComplete(targetAction3);
+        });
+        it(`Throws when action is already active, finished or invalid`, () => {
+          const [
+            controller,
+            targetAction1,
+            targetAction2,
+            targetAction3,
+          ] = createUpdateScenarioForTwoActions();
+
+          const attemptActivateAction = (
+            action: Action,
+            presetPropsForError?: Partial<ActionUpdateProps>
+          ) => {
+            if (presetPropsForError) {
+              controller.updateActionAndQueue(action.type, presetPropsForError);
+            }
+            expect(() => controller.activateAction(action.type)).toThrow();
+          };
+
+          attemptActivateAction(targetAction1, {
+            complete: true,
+          });
+          attemptActivateAction(targetAction2, {
+            active: true,
+          });
+          controller.clean();
+          attemptActivateAction(targetAction3);
+        });
       });
     });
   });

@@ -42,14 +42,23 @@ export type QueueController = {
   updateActionAndQueue: (
     type: ActionType,
     props: Partial<Exclude<ActionUpdateProps, 'updatedAt'>>
-  ) => void;
+  ) => ActionQueue;
   getNext: () => Action | undefined;
   getActive: () => Action | undefined;
   getFailed: () => Action | undefined;
-  getResult: (type: ActionType) => unknown;
+  getResult: (actionOrActionType: Action | ActionType) => unknown;
   getByType: (type: ActionType) => Action | undefined;
   getComplete: () => Action[];
   isFinished: () => boolean;
+  activateAction: (actionOrActionType: Action | ActionType) => ActionQueue;
+  completeAction: (
+    actionOrActionType: Action | ActionType,
+    result: Action['result']
+  ) => ActionQueue;
+  setActionFailed: (
+    actionOrActionType: Action | ActionType,
+    errorMessage: Action['errorMessage']
+  ) => ActionQueue;
 };
 
 type ActionFilter = (action: Action) => boolean;
@@ -145,32 +154,64 @@ export function createQueueController(
   const isFinished = () =>
     !!filterQueue(errorFilter).length ||
     filterQueue(completeFilter).length === queue.length;
+  const checkIfActionCanUpdate = (
+    action: Action,
+    newProps: Partial<ActionUpdateProps>
+  ) => {
+    if (completeFilter(action) || errorFilter(action) || !action.type) {
+      return false;
+    }
+    if (newProps.active && action.active) {
+      return false;
+    }
+    return true;
+  };
+  const getCurrentActionVersion = (actionOrActionType: Action | ActionType) =>
+    getByType(
+      typeof actionOrActionType === 'string'
+        ? actionOrActionType
+        : actionOrActionType.type
+    );
+  const updateActionAndQueue: QueueController['updateActionAndQueue'] = (
+    type,
+    props
+  ) => {
+    const item = getByType(type);
+    if (!item) {
+      throw new Error(`Unable to update item. Item of type ${type} not found.`);
+    }
+    const newQueue = queue.map(action => {
+      if (action.type === type) {
+        return restore(item, { ...props, updatedAt: Date.now() });
+      } else {
+        return { ...action };
+      }
+    });
+    queue.map(invalidate);
+    queue = newQueue;
+    return queue;
+  };
+  const updateIfPossible = (
+    actionOrActionType: Action | ActionType,
+    newProps: Partial<ActionUpdateProps>
+  ) => {
+    const action = getCurrentActionVersion(actionOrActionType);
+    if (checkIfActionCanUpdate(action, newProps)) {
+      return updateActionAndQueue(action.type, newProps);
+    } else {
+      throw new Error(
+        `Action cannot be updated to ${JSON.stringify(newProps)}`
+      );
+    }
+  };
+
   return {
     getQueue: () => queue.map(action => ({ ...action })),
     clean: () => {
       queue.forEach(item => invalidate(item));
       queue = [];
     },
-    updateActionAndQueue: (
-      type: ActionType,
-      props: Partial<Exclude<ActionUpdateProps, 'updatedAt'>>
-    ) => {
-      const item = getByType(type);
-      if (!item) {
-        throw new Error(
-          `Unable to update item. Item of type ${type} not found.`
-        );
-      }
-      const newQueue = queue.map(action => {
-        if (action.type === type) {
-          return restore(item, { ...props, updatedAt: Date.now() });
-        } else {
-          return { ...action };
-        }
-      });
-      queue.map(invalidate);
-      queue = newQueue;
-    },
+    updateActionAndQueue,
     reset: () => {
       const newQueue = queue.map(item => reset(item));
       queue.map(invalidate);
@@ -179,12 +220,26 @@ export function createQueueController(
     getActive: () => filterQueue(activeFilter)[0],
     getComplete: () => filterQueue(completeFilter),
     getFailed: () => filterQueue(errorFilter)[0],
-    getResult: (type: ActionType) => {
-      const item = getByType(type);
-      return item && item.complete ? item.result : undefined;
+    getResult: actionOrActionType => {
+      const action = getCurrentActionVersion(actionOrActionType);
+      return action && action.complete ? action.result : undefined;
     },
     getNext,
     getByType,
     isFinished,
+    activateAction: actionOrActionType =>
+      updateIfPossible(actionOrActionType, { active: true }),
+    setActionFailed: (actionOrActionType, errorMessage) =>
+      updateIfPossible(actionOrActionType, {
+        errorMessage,
+        complete: true,
+        active: false,
+      }),
+    completeAction: (actionOrActionType, result) =>
+      updateIfPossible(actionOrActionType, {
+        result,
+        complete: true,
+        active: false,
+      }),
   };
 }

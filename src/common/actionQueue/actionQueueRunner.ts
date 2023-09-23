@@ -38,7 +38,6 @@ export type Logger = (
 ) => void;
 
 export type InitialQueue = ActionProps[];
-export type ActionQueue = Action[];
 export type ActionStatus =
   | 'next'
   | 'complete'
@@ -73,13 +72,6 @@ export function createActionQueueRunner(
   const queueController = createQueueController(
     createQueueFromProps(initialQueueProps)
   );
-
-  const updateQueue = (
-    { type }: Action,
-    updateProps: Partial<ActionUpdateProps>
-  ) => {
-    queueController.updateActionAndQueue(type, updateProps);
-  };
 
   // returns status of an action and what can be done with given action
   const getActionStatus: RunnerFunctions['getActionStatus'] = typeOrAction => {
@@ -121,24 +113,24 @@ export function createActionQueueRunner(
     const getCurrentActionVersion = () =>
       queueController.getByType(type) as Action;
 
-    updateQueue(action, {
-      active: true,
-      complete: false,
-    });
+    queueController.activateAction(type);
     logger('started', getCurrentActionVersion(), queueController);
 
     const completeAction = (
       propsForCompleteAction: Pick<ActionUpdateProps, 'errorMessage' | 'result'>
     ) => {
       pendingPromise = undefined;
-      updateQueue(getCurrentActionVersion(), {
-        ...propsForCompleteAction,
-        complete: true,
-        active: false,
-      });
       const logType: LogType = propsForCompleteAction.errorMessage
         ? 'error'
         : 'completed';
+      if (logType === 'completed') {
+        queueController.completeAction(type, propsForCompleteAction.result);
+      } else {
+        queueController.setActionFailed(
+          type,
+          propsForCompleteAction.errorMessage
+        );
+      }
       logger(logType, getCurrentActionVersion(), queueController);
     };
 
