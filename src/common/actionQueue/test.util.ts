@@ -3,6 +3,8 @@ import {
   Action,
   ActionQueue,
   createQueueFromProps,
+  ActionExecutor,
+  JSONStringifyableResult,
 } from './actionQueue';
 
 export type ActionSourceForTesting = Pick<ActionProps, 'type'> & {
@@ -89,4 +91,30 @@ export function createQueueWithCommonActions(
     ],
     ...additionalActions,
   ]);
+}
+
+export function createManuallyTriggerableExecutor({
+  resolveValue,
+  rejectValue,
+}: ActionSourceForTesting) {
+  const voidFunction: () => void | undefined = () => undefined;
+  let trigger = voidFunction;
+  const reset = () => {
+    trigger = voidFunction;
+  };
+  const promise = new Promise<JSONStringifyableResult>((resolve, reject) => {
+    if (resolveValue) {
+      trigger = () => {
+        resolve(resolveValue);
+        reset();
+      };
+    } else {
+      trigger = () => {
+        reject(rejectValue);
+        reset();
+      };
+    }
+  });
+  const executor: ActionExecutor = async () => promise;
+  return { trigger, executor };
 }
