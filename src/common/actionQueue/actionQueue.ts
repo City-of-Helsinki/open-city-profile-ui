@@ -8,6 +8,7 @@ export type ActionExecutor = (
 
 export type ActionOptions = {
   idleWhenActive?: boolean;
+  noStorage?: boolean;
 };
 
 export type ActionProps = {
@@ -117,6 +118,16 @@ function checkTypesAreUniqueAndSet(list: Array<ActionProps | Action>) {
     }
     uniqueTypes.add(type);
   });
+}
+
+export function getOption(
+  action: Action,
+  optionName: keyof ActionOptions
+): boolean | undefined {
+  if (!action.options) {
+    return undefined;
+  }
+  return action.options[optionName];
 }
 
 export function createQueueFromProps(

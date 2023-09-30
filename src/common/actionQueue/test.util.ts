@@ -5,6 +5,7 @@ import {
   createQueueFromProps,
   ActionExecutor,
   JSONStringifyableResult,
+  InitialQueue,
 } from './actionQueue';
 
 export type ActionSourceForTesting = Pick<ActionProps, 'type'> & {
@@ -55,14 +56,27 @@ export const readyMadeActionSource: ActionSourceForTesting = {
   resolveValue: 'ready',
 };
 
-export const readyMadeAction: Action = {
-  ...{ ...convertSourceToActionProps(readyMadeActionSource) },
+export const baseAction: Action = {
+  type: '',
+  executor: () => Promise.reject(new Error('Base action')),
   complete: false,
   active: false,
   updatedAt: 1,
   result: undefined,
   errorMessage: undefined,
 };
+
+export const readyMadeAction: Action = {
+  ...baseAction,
+  ...{ ...convertSourceToActionProps(readyMadeActionSource) },
+};
+
+export function getSuccessfulQueueProps(): InitialQueue {
+  return [
+    convertSourceToActionProps(resolvingAction1),
+    convertSourceToActionProps(resolvingAction2),
+  ];
+}
 
 export function verifyAction(action: Partial<Action>): boolean {
   return (
