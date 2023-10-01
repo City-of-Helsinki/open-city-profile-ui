@@ -130,6 +130,10 @@ export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_
    * GDPR API delete operation scope
    */
   readonly gdprDeleteScope: string;
+  /**
+   * If this service accepts only Keycloak API tokens
+   */
+  readonly isPureKeycloak: boolean;
 }
 
 export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
@@ -240,6 +244,7 @@ export interface DownloadMyProfileQuery {
    * 
    * Possible error codes:
    * 
+   * * `CONNECTED_SERVICE_DATA_QUERY_FAILED_ERROR`: Querying data from a connected service was not possible or failed.
    * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing a connected service.
    */
   readonly downloadMyProfile: any | null;
@@ -247,6 +252,7 @@ export interface DownloadMyProfileQuery {
 
 export interface DownloadMyProfileQueryVariables {
   readonly authorizationCode: string;
+  readonly authorizationCodeKeycloak?: string | null;
 }
 
 /* tslint:disable */
@@ -562,6 +568,10 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node
   readonly title: string | null;
   readonly description: string | null;
   readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;
+  /**
+   * If this service accepts only Keycloak API tokens
+   */
+  readonly isPureKeycloak: boolean;
 }
 
 export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
@@ -800,6 +810,7 @@ export interface UpdateMyProfile {
    * Possible error codes:
    * 
    * * `PROFILE_MUST_HAVE_PRIMARY_EMAIL`: If trying to get rid of the profile's primary email.
+   * * `DATA_CONFLICT_ERROR`: Could not update with the provided data because it would cause a conflict.
    */
   readonly updateMyProfile: UpdateMyProfile_updateMyProfile | null;
 }
@@ -893,12 +904,14 @@ export interface CreatePhoneInput {
 
 export interface DeleteMyProfileMutationInput {
   readonly authorizationCode: string;
+  readonly authorizationCodeKeycloak?: string | null;
   readonly dryRun?: boolean | null;
   readonly clientMutationId?: string | null;
 }
 
 export interface DeleteMyServiceDataMutationInput {
   readonly authorizationCode: string;
+  readonly authorizationCodeKeycloak?: string | null;
   readonly serviceName: string;
   readonly dryRun?: boolean | null;
 }

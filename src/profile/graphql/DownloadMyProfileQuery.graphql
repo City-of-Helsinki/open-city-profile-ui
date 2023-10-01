@@ -1,3 +1,9 @@
-query DownloadMyProfileQuery($authorizationCode: String!) {
-  downloadMyProfile(authorizationCode: $authorizationCode)
+query DownloadMyProfileQuery(
+  $authorizationCode: String!
+  $authorizationCodeKeycloak: String
+) {
+  downloadMyProfile(
+    authorizationCode: $authorizationCode
+    authorizationCodeKeycloak: $authorizationCodeKeycloak
+  )
 }
