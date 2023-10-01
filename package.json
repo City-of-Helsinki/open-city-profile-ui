@@ -47,7 +47,7 @@
     "graphql.macro": "^1.4.2",
     "hds-core": "2.10.0",
     "hds-design-tokens": "2.10.0",
-    "hds-react": "2.10.0",
+    "hds-react": "2.13.0",
     "history": "^4.9.0",
     "http-status-typed": "^1.0.0",
     "i18n-iso-countries": "^7.0.0",
