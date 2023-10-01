@@ -9,6 +9,7 @@ export type ActionExecutor = (
 export type ActionOptions = {
   idleWhenActive?: boolean;
   noStorage?: boolean;
+  syncronousCompletion?: boolean;
 };
 
 export type ActionProps = {

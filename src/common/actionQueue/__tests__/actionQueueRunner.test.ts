@@ -378,4 +378,29 @@ describe('actionQueueRunner', () => {
       ]);
     });
   });
+  describe('Action is completed in sync when action.options.syncronousCompletion is "true"', () => {
+    const initTest = () => {
+      runner = createActionQueueRunner(
+        getSuccessfulQueue([{ options: { syncronousCompletion: true } }]).map(
+          trackExecutor
+        ),
+        (type, action) => track(type, action ? action.type : 'no-action')
+      );
+    };
+    it('Action.complete is set to true and logged. The queue advances after the promise is resolved', async () => {
+      initTest();
+      runner.start();
+      const promise = runner.getPromise();
+      expect(getTrackingData().map(mapTrackingData)).toEqual([
+        ...getSuccessLogDataForAction(resolvingAction1),
+      ]);
+      // even if the action was completed, next one is not started until promise is resolved.
+      expect(runner.getActive()).toBeUndefined();
+      await promise;
+      expect(getTrackingData().map(mapTrackingData)).toEqual([
+        ...getSuccessLogDataForAction(resolvingAction1),
+        ...getActiveLogDataForAction(resolvingAction2),
+      ]);
+    });
+  });
 });

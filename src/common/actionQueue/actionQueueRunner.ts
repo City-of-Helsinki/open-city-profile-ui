@@ -7,6 +7,7 @@ import {
   QueueController,
   createQueueController,
   createQueueFromProps,
+  getOption,
 } from './actionQueue';
 
 export type GenericErrorType = keyof typeof genericErrorTypes;
@@ -115,11 +116,19 @@ export function createActionQueueRunner(
 
     queueController.activateAction(type);
     logger('started', getCurrentActionVersion(), queueController);
+    const completeImmediately = getOption(action, 'syncronousCompletion');
+    if (completeImmediately) {
+      queueController.completeAction(type, undefined);
+      logger('completed', getCurrentActionVersion(), queueController);
+    }
 
     const completeAction = (
       propsForCompleteAction: Pick<ActionUpdateProps, 'errorMessage' | 'result'>
     ) => {
       pendingPromise = undefined;
+      if (completeImmediately) {
+        return;
+      }
       const logType: LogType = propsForCompleteAction.errorMessage
         ? 'error'
         : 'completed';
@@ -141,6 +150,7 @@ export function createActionQueueRunner(
           return;
         }
         completeAction({ result: value });
+
         const next = queueController.getNext();
         if (next) {
           execute(next);
