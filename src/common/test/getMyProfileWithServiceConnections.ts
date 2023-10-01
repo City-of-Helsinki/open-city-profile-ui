@@ -36,6 +36,7 @@ export default function getMyProfileWithServiceConnections(
                 title: 'Profiili käyttöliittymä',
                 description:
                   'Henkilön omien profiilitietojen hallintakäyttöliittymä.',
+                isPureKeycloak: true,
                 allowedDataFields: {
                   edges: [
                     generateAllowedDataFieldEdge('name'),
@@ -60,6 +61,7 @@ export default function getMyProfileWithServiceConnections(
                 name: 'Example service name',
                 title: 'Example UI',
                 description: 'Esimerkkiapplikaatio.',
+                isPureKeycloak: false,
                 allowedDataFields: {
                   edges: [
                     generateAllowedDataFieldEdge('name'),
