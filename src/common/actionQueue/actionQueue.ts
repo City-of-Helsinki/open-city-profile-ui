@@ -17,6 +17,8 @@ export type ActionProps = {
   options?: ActionOptions;
 };
 
+type ActionSource = Partial<Action>;
+
 export type JSONStringifyableResult =
   | string
   | number
@@ -128,6 +130,35 @@ export function getOption(
     return undefined;
   }
   return action.options[optionName];
+}
+
+export function verifyQueuesMatch(
+  primaryQueue: ActionSource[],
+  secondaryQueue: ActionSource[]
+) {
+  if (primaryQueue.length !== secondaryQueue.length) {
+    return false;
+  }
+  return !primaryQueue.some((action, index) => {
+    const actionInOtherQueue = secondaryQueue[index];
+    return action.type !== actionInOtherQueue.type;
+  });
+}
+
+export function mergeQueues(
+  primaryQueue: ActionSource[],
+  newProps: ActionSource[]
+): Partial<Action>[] {
+  if (!verifyQueuesMatch(primaryQueue, newProps)) {
+    return primaryQueue;
+  }
+  return primaryQueue.map((action, index) => {
+    const actionInOtherQueue = newProps[index];
+    return {
+      ...action,
+      ...actionInOtherQueue,
+    };
+  });
 }
 
 export function createQueueFromProps(

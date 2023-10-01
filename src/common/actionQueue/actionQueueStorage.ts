@@ -1,6 +1,13 @@
-import { ActionQueue, getOption } from './actionQueue';
+import {
+  Action,
+  ActionQueue,
+  ActionUpdateProps,
+  getOption,
+} from './actionQueue';
 
-export function getStoredQueue(storageKey: string): ActionQueue | undefined {
+type ActionStorageProps = ActionUpdateProps & Pick<Action, 'type' | 'options'>;
+export type StoredQueue = ActionStorageProps[];
+export function getStoredQueue(storageKey: string): StoredQueue | undefined {
   const queue = sessionStorage.getItem(storageKey);
   try {
     return queue ? JSON.parse(queue) : undefined;
@@ -9,21 +16,23 @@ export function getStoredQueue(storageKey: string): ActionQueue | undefined {
   }
 }
 
-function createStorageVersion(queue: ActionQueue) {
-  return JSON.stringify(
-    queue.map(action => {
-      // "executor" is picked just to exclude it from "rest"
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { result, executor, ...rest } = action;
+function createStorageVersion(queue: ActionQueue): StoredQueue {
+  return queue.map(action => {
+    // "executor" is picked just to exclude it from "rest"
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { result, executor, ...rest } = action;
 
-      const storageResult =
-        getOption(action, 'noStorage') === true ? undefined : result;
-      return {
-        ...rest,
-        result: storageResult,
-      };
-    })
-  );
+    const storageResult =
+      getOption(action, 'noStorage') === true ? undefined : result;
+    return {
+      ...rest,
+      result: storageResult,
+    };
+  });
+}
+
+function createStorageValue(queue: ActionQueue) {
+  return JSON.stringify(createStorageVersion(queue));
 }
 
 export function storeQueue(storageKey: string, queue: ActionQueue | null) {
@@ -31,7 +40,7 @@ export function storeQueue(storageKey: string, queue: ActionQueue | null) {
     if (!queue) {
       sessionStorage.removeItem(storageKey);
     } else {
-      sessionStorage.setItem(storageKey, createStorageVersion(queue));
+      sessionStorage.setItem(storageKey, createStorageValue(queue));
     }
     return true;
   } catch (e) {

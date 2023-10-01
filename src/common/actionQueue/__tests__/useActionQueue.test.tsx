@@ -5,13 +5,20 @@ import { QueueState, useActionQueue } from '../useActionQueue';
 import {
   ActionSourceForTesting,
   createManuallyTriggerableExecutor,
+  pickUpdateActionProps,
   rejectingAction,
   resolvingAction1,
   resolvingAction2,
 } from '../test.util';
-import { Action, ActionType } from '../actionQueue';
+import {
+  Action,
+  ActionQueue,
+  ActionType,
+  createQueueFromProps,
+} from '../actionQueue';
+import { getStoredQueue, storeQueue } from '../actionQueueStorage';
 
-type TestComponentProps = { fail?: boolean };
+type TestComponentProps = { fail?: boolean; storageKey?: string };
 
 describe('useActionQueue', () => {
   const elementIds = {
@@ -24,6 +31,10 @@ describe('useActionQueue', () => {
     isActive: 'is-active',
     lastLogType: 'last-log-type',
     unmountButton: 'unmount-button',
+    nextAction: 'next-action',
+    activeAction: 'active-action',
+    queueDump: 'queue-dump',
+    resumeButton: 'resume-button',
   };
 
   const triggers = new Map<ActionType, () => void>();
@@ -66,7 +77,7 @@ describe('useActionQueue', () => {
   ];
 
   const TestUseActionQueueHook = (props: TestComponentProps = {}) => {
-    const { fail } = props;
+    const { fail, storageKey } = props;
     const queue = useMemo(
       () => (fail ? getFailingQueue() : getSuccessfulQueue()),
       [fail]
@@ -75,7 +86,7 @@ describe('useActionQueue', () => {
     const forceRender = () => {
       rerender(n => n + 1);
     };
-    const { state, getQueueRunner } = useActionQueue(queue);
+    const { state, getQueueRunner } = useActionQueue(queue, storageKey);
     const {
       lastActionType,
       isComplete,
@@ -83,6 +94,10 @@ describe('useActionQueue', () => {
       hasError,
       isActive,
     } = state;
+
+    const next = getQueueRunner().getNext();
+    const active = getQueueRunner().getActive();
+
     return (
       <div>
         <span id={elementIds.lastActionType}>{lastActionType}</span>
@@ -91,6 +106,11 @@ describe('useActionQueue', () => {
         <span id={elementIds.isActive}>{String(isActive)}</span>
         <span id={elementIds.lastLogType}>{lastLogType}</span>
         <span id={elementIds.renderCount}>{renderCount}</span>
+        <span id={elementIds.nextAction}>{next ? next.type : ''}</span>
+        <span id={elementIds.activeAction}>{active ? active.type : ''}</span>
+        <span id={elementIds.queueDump}>
+          {JSON.stringify(getQueueRunner().getQueue())}
+        </span>
         <button
           id={elementIds.startButton}
           onClick={() => {
@@ -106,6 +126,16 @@ describe('useActionQueue', () => {
           }}
         >
           Render
+        </button>
+        <button
+          id={elementIds.resumeButton}
+          onClick={() => {
+            if (next) {
+              getQueueRunner().resume(next.type);
+            }
+          }}
+        >
+          Resume
         </button>
       </div>
     );
@@ -132,15 +162,19 @@ describe('useActionQueue', () => {
   const renderTestComponent = (props?: TestComponentProps) => {
     const result = render(<UnmountingHookWrapper {...props} />);
     const { container } = result;
+
     const getElementById = (id: string) =>
       container.querySelector(`#${id}`) as HTMLElement;
+
     const getRenderCount = () =>
       parseInt(getElementById(elementIds.renderCount).innerHTML, 10);
+
     const getLastActionType = () =>
       getElementById(elementIds.lastActionType).innerHTML || undefined;
 
     const getLastLogType = () =>
       getElementById(elementIds.lastLogType).innerHTML || undefined;
+
     const getIsComplete = () =>
       getElementById(elementIds.isComplete).innerHTML === 'true';
 
@@ -150,10 +184,25 @@ describe('useActionQueue', () => {
     const getIsActive = () =>
       getElementById(elementIds.isActive).innerHTML === 'true';
 
+    const getActiveActionType = () =>
+      getElementById(elementIds.activeAction).innerHTML || undefined;
+
+    const getNextActionType = () =>
+      getElementById(elementIds.nextAction).innerHTML || undefined;
+
+    const getQueue = () =>
+      JSON.parse(getElementById(elementIds.queueDump).innerHTML);
+
     const start = () => {
       const button = getElementById(elementIds.startButton);
       fireEvent.click(button);
     };
+
+    const resume = () => {
+      const button = getElementById(elementIds.resumeButton);
+      fireEvent.click(button);
+    };
+
     const rerender = async () => {
       const startCount = getRenderCount();
       const button = getElementById(elementIds.reRenderButton);
@@ -164,6 +213,7 @@ describe('useActionQueue', () => {
         }
       });
     };
+
     const getState = () => ({
       lastLogType: getLastLogType(),
       hasError: getHasError(),
@@ -195,6 +245,10 @@ describe('useActionQueue', () => {
       rerender,
       getState,
       toggleComponentMounting,
+      getActiveActionType,
+      getNextActionType,
+      getQueue,
+      resume,
     };
   };
 
@@ -220,6 +274,8 @@ describe('useActionQueue', () => {
     isComplete: true,
     hasError: !!props.errorMessage,
   });
+
+  const queueStorageKey = 'test-key';
 
   afterEach(async () => {
     jest.restoreAllMocks();
@@ -320,6 +376,120 @@ describe('useActionQueue', () => {
     await rerender();
     await waitFor(() => {
       expect(getState()).toMatchObject(initialQueueState);
+    });
+  });
+  it('Merges the queue from storage when a storageKey is passed.', async () => {
+    const queueInStorage = createQueueFromProps(getSuccessfulQueue());
+    queueInStorage[0].complete = true;
+    queueInStorage[0].result = '100';
+    queueInStorage[1].complete = true;
+    queueInStorage[1].errorMessage = 'error';
+    storeQueue(queueStorageKey, queueInStorage);
+    const { getNextActionType, getQueue } = renderTestComponent({
+      storageKey: queueStorageKey,
+    });
+    expect(getQueue()).toMatchObject([
+      pickUpdateActionProps(queueInStorage[0]),
+      pickUpdateActionProps(queueInStorage[1]),
+    ]);
+    expect(getNextActionType()).toBeUndefined();
+  });
+  it('Action.active are set to "false" even if stored value is "true" ', async () => {
+    const queueInStorage = createQueueFromProps(getSuccessfulQueue());
+    queueInStorage[0].active = true;
+    queueInStorage[1].active = true;
+    storeQueue(queueStorageKey, queueInStorage);
+    const { getQueue } = renderTestComponent({
+      storageKey: queueStorageKey,
+    });
+    expect(getQueue()).toMatchObject([
+      {
+        active: false,
+      },
+      {
+        active: false,
+      },
+    ]);
+  });
+  it('Storage updates while queue is executing ', async () => {
+    const { start, getState, getQueue } = renderTestComponent({
+      storageKey: queueStorageKey,
+      fail: true,
+    });
+    expect(getState()).toMatchObject(initialQueueState);
+    start();
+
+    await waitFor(() => {
+      const storedQueue = getStoredQueue(queueStorageKey) as ActionQueue;
+      expect(storedQueue).toMatchObject(getQueue());
+      expect(storedQueue[0].active).toBeTruthy();
+    });
+    completeActionExecutor(resolvingAction1.type);
+    await waitFor(() => {
+      const storedQueue = getStoredQueue(queueStorageKey) as ActionQueue;
+      expect(getStoredQueue(queueStorageKey)).toMatchObject(getQueue());
+      expect(storedQueue[0]).toMatchObject({
+        complete: true,
+        active: false,
+        result: resolvingAction1.resolveValue,
+      });
+    });
+    await waitFor(() => {
+      const storedQueue = getStoredQueue(queueStorageKey) as ActionQueue;
+      expect(storedQueue[1].active).toBeTruthy();
+    });
+
+    completeActionExecutor(rejectingAction.type);
+    await waitFor(() => {
+      const storedQueue = getStoredQueue(queueStorageKey) as ActionQueue;
+      expect(getStoredQueue(queueStorageKey)).toMatchObject(getQueue());
+      expect(storedQueue[1]).toMatchObject({
+        complete: true,
+        active: false,
+        errorMessage: (rejectingAction.rejectValue as Error).message,
+      });
+    });
+  });
+  it('Does not merge stored queue if actions do not match', async () => {
+    const queue = getSuccessfulQueue();
+    const queueInStorage = createQueueFromProps([queue[1], queue[0]]);
+    queueInStorage[0].complete = true;
+    queueInStorage[0].result = '100';
+    queueInStorage[1].complete = true;
+    queueInStorage[1].errorMessage = 'error';
+    storeQueue(queueStorageKey, queueInStorage);
+    const { getNextActionType, getQueue } = renderTestComponent({
+      storageKey: queueStorageKey,
+    });
+    expect(getQueue()).toMatchObject([
+      {
+        active: false,
+        complete: false,
+        type: resolvingAction1.type,
+      },
+      {
+        active: false,
+        complete: false,
+        type: resolvingAction2.type,
+      },
+    ]);
+    expect(getNextActionType()).toBe(resolvingAction1.type);
+  });
+  it('Initial state reflects merged queues', async () => {
+    const queueInStorage = createQueueFromProps(getSuccessfulQueue());
+    queueInStorage[0].complete = true;
+    queueInStorage[1].complete = true;
+    queueInStorage[1].errorMessage = 'error';
+    storeQueue(queueStorageKey, queueInStorage);
+    const { getState } = renderTestComponent({
+      storageKey: queueStorageKey,
+    });
+    expect(getState()).toMatchObject({
+      isComplete: true,
+      isActive: false,
+      hasError: true,
+      lastActionType: undefined,
+      lastLogType: undefined,
     });
   });
 });

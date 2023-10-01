@@ -6,6 +6,9 @@ import {
   ActionExecutor,
   JSONStringifyableResult,
   InitialQueue,
+  mergeQueues,
+  ActionUpdateProps,
+  ActionType,
 } from './actionQueue';
 
 export type ActionSourceForTesting = Pick<ActionProps, 'type'> & {
@@ -131,4 +134,70 @@ export function createManuallyTriggerableExecutor({
   });
   const executor: ActionExecutor = async () => promise;
   return { trigger, executor };
+}
+
+function mergeProps(queue: InitialQueue, extraProps?: Partial<Action>[]) {
+  if (extraProps) {
+    // mergeQueues checks types, so match them and array lengths
+    const mergeableExtraProps = queue.map((action, index) => {
+      const extra = extraProps[index];
+      const { type } = action;
+      return {
+        type: (extra && extra.type) || type,
+        // complete must be added because actionQueue checks if it exists
+        // and resets all props if not.
+        complete: false,
+        ...extra,
+      };
+    });
+    return mergeQueues(queue, mergeableExtraProps) as InitialQueue;
+  }
+  return queue;
+}
+
+export function getSuccessfulQueue(
+  extraProps?: Partial<Action>[]
+): InitialQueue {
+  const queue = [
+    {
+      ...convertSourceToActionProps(resolvingAction1),
+    },
+    {
+      ...convertSourceToActionProps(resolvingAction2),
+    },
+  ];
+  return mergeProps(queue, extraProps);
+}
+
+export function getFailingQueue(extraProps?: Partial<Action>[]): InitialQueue {
+  const queue = [
+    {
+      ...convertSourceToActionProps(resolvingAction1),
+    },
+    {
+      ...convertSourceToActionProps(rejectingAction),
+    },
+    {
+      ...convertSourceToActionProps(resolvingAction2),
+    },
+  ];
+  return mergeProps(queue, extraProps);
+}
+
+export function pickUpdateActionProps(
+  action: Partial<Action>,
+  addType = true,
+  filterUndefined = true
+): Partial<ActionUpdateProps> & { type?: ActionType } {
+  const { complete, active, result, errorMessage, updatedAt, type } = action;
+  return {
+    complete,
+    active,
+    updatedAt,
+    ...(addType && { type }),
+    // json strigify drops "undefined" values, so those props are not present in parsed objects
+    ...(!filterUndefined && typeof result !== 'undefined' && { result }),
+    ...(!filterUndefined &&
+      typeof errorMessage !== 'undefined' && { errorMessage }),
+  };
 }

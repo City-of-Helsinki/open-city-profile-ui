@@ -1,3 +1,5 @@
+import { waitFor } from '@testing-library/react';
+
 import { getMockCalls } from '../../test/jestMockHelper';
 import {
   Action,
@@ -7,11 +9,13 @@ import {
   InitialQueue,
 } from '../actionQueue';
 import {
+  ActionStatus,
   LogType,
   Logger,
   RunnerFunctions,
   actionLogTypes,
   createActionQueueRunner,
+  genericErrorTypes,
   isGenericError,
 } from '../actionQueueRunner';
 import {
@@ -21,6 +25,7 @@ import {
   readyMadeAction,
   ActionSourceForTesting,
   rejectingAction,
+  getSuccessfulQueue,
 } from '../test.util';
 
 describe('actionQueueRunner', () => {
@@ -83,6 +88,11 @@ describe('actionQueueRunner', () => {
       [executeLogType, actionLogTypes.started, actionLogTypes.error],
       action.type
     );
+
+  // use mapLogTypes() to make an array of log types of started action execution
+  const getActiveLogDataForAction = (
+    action: Action | ActionSourceForTesting | ActionProps
+  ) => mapLogTypes([executeLogType, actionLogTypes.started], action.type);
 
   // get results of all actions
   const getResults = () => runner.getQueue().map(action => action.result);
@@ -147,7 +157,7 @@ describe('actionQueueRunner', () => {
         resolvingAction2.resolveValue,
       ]);
 
-      // actions are should be complete and not active
+      // actions should be complete and not active
       expect(runner.getQueue()).toMatchObject([
         {
           type: resolvingAction1.type,
@@ -204,6 +214,168 @@ describe('actionQueueRunner', () => {
         complete: true,
         active: false,
       });
+    });
+  });
+  describe('resume()', () => {
+    const initTest = (props: Partial<Action>[]) => {
+      runner = createActionQueueRunner(
+        getSuccessfulQueue(props).map(trackExecutor),
+        (type, action) => track(type, action ? action.type : 'no-action')
+      );
+    };
+
+    const initTestAndExpectError = async (
+      props: Partial<Action>[],
+      resumeAction: Action | ActionProps | ActionSourceForTesting,
+      error: TrackingData
+    ) => {
+      initTest(props);
+      runner.resume(resumeAction.type);
+      await waitFor(() => {
+        expect(getTrackingData().map(mapTrackingData)).toEqual([
+          mapTrackingData(error),
+        ]);
+      });
+    };
+
+    it('starts running the queue from the action matching the given type - if possible', async () => {
+      initTest([{ complete: true }]);
+      runner.resume(resolvingAction2.type);
+      await waitFor(() => {
+        expect(getTrackingData().map(mapTrackingData)).toEqual([
+          ...getSuccessLogDataForAction(resolvingAction2),
+        ]);
+      });
+    });
+    it('logs CANNOT_EXECUTE_ACTION_IS_COMPLETE error if given action is complete', async () => {
+      await initTestAndExpectError([{ complete: true }], resolvingAction1, {
+        trackingType: genericErrorTypes.CANNOT_EXECUTE_ACTION_IS_COMPLETE,
+        actionType: resolvingAction1.type,
+      });
+    });
+    it('logs an CANNOT_EXECUTE_ACTION_IS_ACTIVE error if given action is active', async () => {
+      await initTestAndExpectError([{ active: true }], resolvingAction1, {
+        trackingType: genericErrorTypes.CANNOT_EXECUTE_ACTION_IS_ACTIVE,
+        actionType: resolvingAction1.type,
+      });
+    });
+    it('logs an UNKNOWN_ACTION_TYPE error if given action is invalid', async () => {
+      await initTestAndExpectError(
+        [],
+        { type: 'notFound' },
+        {
+          trackingType: genericErrorTypes.UNKNOWN_ACTION_TYPE,
+          actionType: 'no-action',
+        }
+      );
+    });
+    it('logs an CANNOT_EXECUTE_ACTION_IS_NOT_NEXT error if given action is not next', async () => {
+      await initTestAndExpectError([], resolvingAction2, {
+        trackingType: genericErrorTypes.CANNOT_EXECUTE_ACTION_IS_NOT_NEXT,
+        actionType: resolvingAction2.type,
+      });
+    });
+    it('logs an CANNOT_EXECUTE_ANOTHER_ACTION_IS_ACTIVE error if another action is active', async () => {
+      await initTestAndExpectError([{ active: true }], resolvingAction2, {
+        trackingType: genericErrorTypes.CANNOT_EXECUTE_ANOTHER_ACTION_IS_ACTIVE,
+        actionType: resolvingAction2.type,
+      });
+    });
+  });
+  describe('getActionStatus()', () => {
+    const initTest = (props: Partial<Action>[]) => {
+      runner = createActionQueueRunner(getSuccessfulQueue(props));
+    };
+
+    const initTestAndExpectStatus = async (
+      props: Partial<Action>[],
+      action: Partial<Action>,
+      status: ActionStatus
+    ) => {
+      initTest(props);
+      await waitFor(() => {
+        expect(runner.getActionStatus(action as Action)).toBe(status);
+      });
+    };
+
+    it('returns action status "complete" if given action is complete', async () => {
+      await initTestAndExpectStatus(
+        [{ complete: true }],
+        resolvingAction1,
+        'complete'
+      );
+    });
+    it('returns action status "active" if given action is active, but a promise is not pending', async () => {
+      await initTestAndExpectStatus(
+        [{ active: true }],
+        resolvingAction1,
+        'active'
+      );
+    });
+    it('returns action status "pending" if given action has been executed', async () => {
+      initTest([]);
+      runner.start();
+      expect(runner.getActionStatus(resolvingAction1.type)).toBe('pending');
+    });
+    it('returns action status "next" if given action is not active, but next in queue', async () => {
+      await initTestAndExpectStatus([], resolvingAction1, 'next');
+    });
+    it('returns action status "not-next" if no action is active, but given action is not next in queue', async () => {
+      await initTestAndExpectStatus([], resolvingAction2, 'not-next');
+    });
+    it('returns action status "in-queue" if an action is active and given action queued', async () => {
+      await initTestAndExpectStatus(
+        [{ active: true }],
+        resolvingAction2,
+        'in-queue'
+      );
+    });
+    it('returns action status "invalid" if an action is not found', async () => {
+      await initTestAndExpectStatus([], { type: 'notFound' }, 'invalid');
+    });
+  });
+  describe('getPromise()', () => {
+    it('returns current pending promise if any', async () => {
+      runner = createActionQueueRunner([{ ...readyMadeAction }]);
+      expect(runner.getPromise()).toBeUndefined();
+      runner.start();
+      expect(runner.getPromise()).toBeDefined();
+      await runner.getPromise();
+      expect(runner.getPromise()).toBeUndefined();
+    });
+  });
+  describe('dispose()', () => {
+    const initTest = () => {
+      runner = createActionQueueRunner(
+        getSuccessfulQueue().map(trackExecutor),
+        (type, action) => track(type, action ? action.type : 'no-action')
+      );
+    };
+    it('clears the queue', async () => {
+      initTest();
+      expect(runner.getQueue()).toHaveLength(2);
+      runner.dispose();
+      expect(runner.getQueue()).toHaveLength(0);
+    });
+    it('clears pending promises', async () => {
+      initTest();
+      runner.start();
+      expect(runner.getPromise()).toBeDefined();
+      runner.dispose();
+      expect(runner.getPromise()).toBeUndefined();
+    });
+    it('started promises will not trigger changes.', async () => {
+      initTest();
+      runner.start();
+      const promise = runner.getPromise();
+      expect(getTrackingData().map(mapTrackingData)).toEqual([
+        ...getActiveLogDataForAction(resolvingAction1),
+      ]);
+      runner.dispose();
+      await promise;
+      expect(getTrackingData().map(mapTrackingData)).toEqual([
+        ...getActiveLogDataForAction(resolvingAction1),
+      ]);
     });
   });
 });

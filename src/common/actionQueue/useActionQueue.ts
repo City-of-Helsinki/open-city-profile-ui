@@ -1,6 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { ActionType, InitialQueue } from './actionQueue';
+import {
+  Action,
+  ActionQueue,
+  ActionType,
+  InitialQueue,
+  QueueController,
+  mergeQueues,
+  verifyQueuesMatch,
+} from './actionQueue';
 import {
   LogType,
   Logger,
@@ -8,6 +16,7 @@ import {
   createActionQueueRunner,
   isGenericError,
 } from './actionQueueRunner';
+import { getStoredQueue, storeQueue } from './actionQueueStorage';
 
 export type QueueState = {
   lastActionType: ActionType | undefined;
@@ -25,7 +34,10 @@ export type HookFunctions = {
   state: QueueState;
 };
 
-export function useActionQueue(initialQueueProps: InitialQueue): HookFunctions {
+export function useActionQueue(
+  initialQueueProps: InitialQueue,
+  storageKey?: string
+): HookFunctions {
   const [, update] = useState(0);
   const queueStateRef = useRef<QueueState>({
     lastActionType: undefined,
@@ -48,9 +60,30 @@ export function useActionQueue(initialQueueProps: InitialQueue): HookFunctions {
       );
     }
     functionsHaveBeenMemoized.current = true;
-    const logger: Logger = (type, action, controller) => {
-      const newState: QueueState = queueStateRef.current;
 
+    const storageFunctions = {
+      getFromStorage: () => {
+        if (!storageKey) {
+          return undefined;
+        }
+        return getStoredQueue(storageKey);
+      },
+      setToStorage: (queue: ActionQueue) => {
+        if (!storageKey) {
+          return false;
+        }
+        return storeQueue(storageKey, queue);
+      },
+    };
+
+    const getNewState = (
+      controller: QueueController,
+      type?: LogType,
+      action?: Action
+    ): QueueState => {
+      const newState = {
+        ...queueStateRef.current,
+      };
       if (controller.getFailed()) {
         newState.hasError = true;
       }
@@ -66,14 +99,41 @@ export function useActionQueue(initialQueueProps: InitialQueue): HookFunctions {
           newState.isActive = false;
         }
       }
-      if (type === 'error' || isGenericError(type)) {
+      if (type && (type === 'error' || isGenericError(type))) {
         newState.hasError = true;
       }
       newState.lastLogType = type;
-      queueStateRef.current = newState;
+      return newState;
+    };
+
+    const logger: Logger = (type, action, controller) => {
+      queueStateRef.current = getNewState(controller, type, action);
+      storageFunctions.setToStorage(controller.getQueue());
       forceRerender();
     };
-    const runner = createActionQueueRunner(initialQueueProps, logger);
+
+    const resolveQueue = (primaryQueue: InitialQueue) => {
+      const storedQueue = storageFunctions.getFromStorage();
+      if (!storedQueue) {
+        return primaryQueue;
+      }
+      if (!verifyQueuesMatch(primaryQueue, storedQueue)) {
+        return primaryQueue;
+      }
+      return mergeQueues(primaryQueue, storedQueue).map(props => {
+        // A stored action can, and probably will, have active: true,
+        // but none of the actions can be in active state when queue is initiated.
+        // If an action is active, getNext() can return wrong action
+        // Action should only be active when its executor have been called and it is pending.
+        props.active = false;
+        return props;
+      });
+    };
+
+    const runner = createActionQueueRunner(
+      resolveQueue(initialQueueProps) as InitialQueue,
+      logger
+    );
     const dispose = () => {
       runner.dispose();
     };
@@ -84,13 +144,14 @@ export function useActionQueue(initialQueueProps: InitialQueue): HookFunctions {
     const isValid: HookFunctions['isValid'] = () =>
       runner.getQueue().length > 0;
 
+    queueStateRef.current = getNewState(runner);
     return {
       getQueueRunner: () => runner,
       dispose,
       isValid,
       reset,
     };
-  }, [initialQueueProps, forceRerender]);
+  }, [initialQueueProps, forceRerender, storageKey]);
 
   useEffect(
     () => () => {
