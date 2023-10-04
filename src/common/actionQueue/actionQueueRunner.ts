@@ -64,6 +64,13 @@ export function isGenericError(loggedType: LogType) {
   return Object.keys(genericErrorTypes).includes(loggedType);
 }
 
+export function canQueueContinueFrom(
+  runner: RunnerFunctions,
+  actionOrType: Action | ActionType
+): boolean {
+  return runner.getActionStatus(actionOrType) === 'next';
+}
+
 export function createActionQueueRunner(
   initialQueueProps: InitialQueue,
   logger: Logger = () => undefined

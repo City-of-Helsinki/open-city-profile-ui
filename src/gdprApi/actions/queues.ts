@@ -1,0 +1,43 @@
+import {
+  tunnistamoAuthCodeCallbackUrlAction,
+  keycloakAuthCodeCallbackUrlAction,
+} from './authCodeCallbackUrlDetector';
+import {
+  tunnistamoAuthCodeParserAction,
+  keycloakAuthCodeParserAction,
+} from './authCodeParser';
+import {
+  tunnistamoAuthCodeRedirectionAction,
+  keycloakAuthCodeRedirectionAction,
+} from './authCodeRedirectionHandler';
+import {
+  tunnistamoRedirectionInitializationAction,
+  keycloakRedirectionInitializationAction,
+} from './authCodeRedirectionInitialization';
+import { downloadAsFileAction } from './downloadAsFile';
+import { getDownloadDataAction } from './getDownloadData';
+import { getGdprQueryScopesAction } from './getGdprScopes';
+import { getServiceConnectionsAction } from './getServiceConnections';
+import { loadKeycloakConfigAction } from './loadKeycloakConfig';
+import {
+  redirectToDownloadAction,
+  waitForDownloadPageRedirectionAction,
+} from './redirectionHandlers';
+
+export const downloadDataQueue = [
+  getServiceConnectionsAction,
+  getGdprQueryScopesAction,
+  tunnistamoRedirectionInitializationAction,
+  tunnistamoAuthCodeRedirectionAction,
+  tunnistamoAuthCodeCallbackUrlAction,
+  tunnistamoAuthCodeParserAction,
+  loadKeycloakConfigAction,
+  keycloakRedirectionInitializationAction,
+  keycloakAuthCodeRedirectionAction,
+  keycloakAuthCodeCallbackUrlAction,
+  keycloakAuthCodeParserAction,
+  redirectToDownloadAction,
+  waitForDownloadPageRedirectionAction,
+  getDownloadDataAction,
+  downloadAsFileAction,
+];

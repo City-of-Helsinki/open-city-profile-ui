@@ -1,3 +1,6 @@
+import { useHistory } from 'react-router';
+import { useMemo, useRef } from 'react';
+
 import {
   Action,
   ActionExecutorPromise,
@@ -7,11 +10,16 @@ import {
   QueueController,
 } from '../../common/actionQueue/actionQueue';
 import config from '../../config';
-import { tunnistamoRedirectionInitializationAction } from './authCodeRedirectionInitialization';
 import {
   isTunnistamoAuthorisationCodeNeeded,
   isKeycloakAuthorisationCodeNeeded,
 } from './getGdprScopes';
+import { tunnistamoRedirectionInitializationAction } from './authCodeRedirectionInitialization';
+import { tunnistamoAuthCodeParserAction } from './authCodeParser';
+import { tunnistamoAuthCodeRedirectionAction } from './authCodeRedirectionHandler';
+import { tunnistamoAuthCodeCallbackUrlAction } from './authCodeCallbackUrlDetector';
+import { AnyObject } from '../../graphql/typings';
+import matchUrls from '../../common/helpers/matchUrls';
 
 export type AuthorizationUrlParams = {
   oidcUri: string;
@@ -26,7 +34,7 @@ type RedirectionRequest = {
   path: string;
 };
 
-export const thirtySecondsInMs = 30 * 10000;
+export const thirtySecondsInMs = 30 * 1000;
 
 export function getActionResultAndErrorMessage<T = JSONStringifyableResult>(
   actionType: ActionType,
@@ -47,7 +55,12 @@ export function getActionResultAndErrorMessage<T = JSONStringifyableResult>(
 }
 
 export function isTunnistamoAuthCodeAction(action: Action): boolean {
-  return action.type === tunnistamoRedirectionInitializationAction.type;
+  return (
+    action.type === tunnistamoRedirectionInitializationAction.type ||
+    action.type === tunnistamoAuthCodeParserAction.type ||
+    action.type === tunnistamoAuthCodeCallbackUrlAction.type ||
+    action.type === tunnistamoAuthCodeRedirectionAction.type
+  );
 }
 
 export function isAuthCodeActionNeeded(
@@ -102,6 +115,20 @@ export function createInternalRedirectionRequestForError(path: string): string {
   return JSON.stringify(createInternalRedirectionRequest(path));
 }
 
+export function createTimeOutPromise(
+  errorText: string,
+  uri?: string
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (uri) {
+        window.location.href = uri;
+      }
+      reject(new Error(errorText));
+    }, thirtySecondsInMs);
+  });
+}
+
 export function createFailedActionParams(
   action: Action | ActionProps,
   message = '',
@@ -115,13 +142,65 @@ export function createFailedActionParams(
   return params.toString();
 }
 
+export function getFailedActionFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('error') || '';
+}
+
+export function createDownloadPagePath(
+  action?: Action | ActionProps,
+  errorText?: string
+) {
+  if (!action) {
+    return config.downloadPath;
+  }
+  return `${config.downloadPath}?${createFailedActionParams(
+    action,
+    errorText
+  )}`;
+}
+
+export function parseRequestPath(
+  source: AnyObject | undefined
+): string | undefined {
+  return typeof source === 'object' && source.isRedirectionRequest
+    ? (source.path as string)
+    : undefined;
+}
+
+export function getInternalRequestPathFromResult(action: Action) {
+  const result = action.complete
+    ? (action.result as RedirectionRequest)
+    : undefined;
+  return parseRequestPath(result);
+}
+
+export function getInternalRequestPathFromError(action: Action) {
+  const errorMessage = action.complete ? action.errorMessage : undefined;
+  if (!errorMessage || !errorMessage.includes('isRedirectionRequest')) {
+    return undefined;
+  }
+  try {
+    return parseRequestPath(JSON.parse(errorMessage));
+  } catch (e) {
+    return undefined;
+  }
+}
+
+export function getInternalRequestPathFromAction(action: Action) {
+  return (
+    getInternalRequestPathFromResult(action) ||
+    getInternalRequestPathFromError(action)
+  );
+}
+
 export function rejectExecutorWithDownloadPageRedirection(
   action: Action | ActionProps,
   errorText?: string,
   timeout = 0
 ): ActionExecutorPromise {
   const errorMessage = createInternalRedirectionRequestForError(
-    `${config.downloadPath}?${createFailedActionParams(action, errorText)}`
+    createDownloadPagePath(action, errorText)
   );
   const error = new Error(errorMessage);
   if (timeout) {
@@ -168,4 +247,57 @@ export function resolveExecutorWithDownloadPageRedirection(
     `${config.downloadPath}?${createNextActionParams(action)}`
   );
   return Promise.resolve(result);
+}
+
+// There cannot be more than one redirection active - in the last completed action.
+// This hook allows one redirection per initialization.
+// The hook is cleared when a component using it is unmounted, so it is reset on each mount.
+export function useInternalRedirect(
+  controller: QueueController
+): {
+  check: () => boolean;
+  reset: () => void;
+  redirect: (path: string) => boolean;
+} {
+  const currentRedirectPath = useRef<string | undefined>();
+  const history = useHistory();
+  const isRouteMatch = (path?: string) => (path ? matchUrls(path) : false);
+  const funcs = useMemo(() => {
+    const reset = () => (currentRedirectPath.current = undefined);
+    const redirect = (path: string) => {
+      if (currentRedirectPath.current || isRouteMatch(path)) {
+        return false;
+      }
+      history.push(path);
+      currentRedirectPath.current = path;
+      return true;
+    };
+    const check = () => {
+      if (currentRedirectPath.current) {
+        if (isRouteMatch(currentRedirectPath.current)) {
+          currentRedirectPath.current = undefined;
+        } else {
+          return true;
+        }
+      }
+      const completedActions = controller.getComplete();
+      const lastCompleteAction = completedActions.length
+        ? completedActions[completedActions.length - 1]
+        : undefined;
+      const path = lastCompleteAction
+        ? getInternalRequestPathFromAction(lastCompleteAction)
+        : undefined;
+      if (!path) {
+        return false;
+      }
+      return redirect(path);
+    };
+
+    return {
+      check,
+      reset,
+      redirect,
+    };
+  }, [controller, history]);
+  return funcs;
 }
