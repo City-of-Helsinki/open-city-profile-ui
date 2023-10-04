@@ -85,6 +85,10 @@ export function isGdprCallbackUrl(): boolean {
   return window.location.pathname === config.gdprCallbackPath;
 }
 
+export function isDownloadPageUrl(): boolean {
+  return window.location.pathname === config.downloadPath;
+}
+
 export function createInternalRedirectionRequest(
   path: string
 ): RedirectionRequest {
@@ -141,4 +145,27 @@ export function parseAuthorizationCallbackUrl(): {
     code,
     state,
   };
+}
+
+export function createNextActionParams(
+  action: Action | ActionProps,
+  append = false
+) {
+  const params = new URLSearchParams(append ? window.location.search : '');
+  params.append('next', action.type);
+  return params.toString();
+}
+
+export function getNextActionFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('next') || '';
+}
+
+export function resolveExecutorWithDownloadPageRedirection(
+  action: Action | ActionProps
+): ActionExecutorPromise {
+  const result = createInternalRedirectionRequest(
+    `${config.downloadPath}?${createNextActionParams(action)}`
+  );
+  return Promise.resolve(result);
 }
