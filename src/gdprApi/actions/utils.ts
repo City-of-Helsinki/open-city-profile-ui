@@ -129,3 +129,16 @@ export function rejectExecutorWithDownloadPageRedirection(
   }
   return Promise.reject(error);
 }
+
+export function parseAuthorizationCallbackUrl(): {
+  code: string;
+  state: string;
+} {
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code') || '';
+  const state = params.get('state') || '';
+  return {
+    code,
+    state,
+  };
+}
