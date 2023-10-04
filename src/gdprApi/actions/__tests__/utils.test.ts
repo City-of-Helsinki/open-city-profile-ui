@@ -1,5 +1,6 @@
 import fetchMock from 'jest-fetch-mock';
 import { waitFor } from '@testing-library/react';
+import to from 'await-to-js';
 
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import {
@@ -10,9 +11,13 @@ import {
   resolvingAction2,
 } from '../../../common/actionQueue/test.util';
 import {
+  createFailedActionParams,
+  createInternalRedirectionRequest,
+  createInternalRedirectionRequestForError,
   getActionResultAndErrorMessage,
   isAuthCodeActionNeeded,
   isTunnistamoAuthCodeAction,
+  rejectExecutorWithDownloadPageRedirection,
 } from '../utils';
 import {
   keycloakRedirectionInitializationAction,
@@ -20,6 +25,8 @@ import {
 } from '../authCodeRedirectionInitialization';
 import { Action } from '../../../common/actionQueue/actionQueue';
 import { getGdprQueryScopesAction } from '../getGdprScopes';
+import mockWindowLocation from '../../../common/test/mockWindowLocation';
+import config from '../../../config';
 
 describe('utils.ts', () => {
   const initTests = ({ fail }: { fail?: boolean } = {}) => {
@@ -29,7 +36,14 @@ describe('utils.ts', () => {
       runner,
     };
   };
+  const mockedWindowControls = mockWindowLocation();
+
+  afterAll(() => {
+    mockedWindowControls.restore();
+  });
+
   afterEach(() => {
+    mockedWindowControls.reset();
     fetchMock.resetMocks();
     jest.restoreAllMocks();
     jest.resetAllMocks();
@@ -150,6 +164,76 @@ describe('utils.ts', () => {
           runner
         )
       ).toBeFalsy();
+    });
+  });
+  describe('createFailedActionParams()', () => {
+    it('creates url params with failed action type and an optional message', async () => {
+      expect(
+        createFailedActionParams(
+          tunnistamoRedirectionInitializationAction as Action
+        )
+      ).toBe(`error=${tunnistamoRedirectionInitializationAction.type}`);
+      expect(
+        createFailedActionParams(
+          tunnistamoRedirectionInitializationAction as Action,
+          'errorMessage'
+        )
+      ).toBe(
+        `error=${tunnistamoRedirectionInitializationAction.type}&message=errorMessage`
+      );
+    });
+    it('if third argument is true, new params are appended to existing', async () => {
+      const existingParams = 'param1=1&param2=2';
+      mockedWindowControls.setSearch(existingParams);
+      expect(
+        createFailedActionParams(
+          tunnistamoRedirectionInitializationAction as Action,
+          'errorMessage',
+          true
+        )
+      ).toBe(
+        `${existingParams}&error=${tunnistamoRedirectionInitializationAction.type}&message=errorMessage`
+      );
+    });
+  });
+  describe('createInternalRedirectionRequest() and createInternalRedirectionRequestForError()', () => {
+    describe('createInternalRedirectionRequest()', () => {
+      it('creates an object that can be used as action.result, indicating a redirection should be done', async () => {
+        const path = '/redirect';
+        expect(createInternalRedirectionRequest(path)).toMatchObject({
+          isRedirectionRequest: true,
+          path,
+        });
+      });
+    });
+    describe('createInternalRedirectionRequestForError()', () => {
+      it('does the same, but errorMessage can only be a string, so it returns a string', async () => {
+        const path = '/redirect';
+        expect(
+          JSON.parse(createInternalRedirectionRequestForError(path))
+        ).toMatchObject({
+          isRedirectionRequest: true,
+          path,
+        });
+      });
+    });
+  });
+  describe('rejectExecutorWithDownloadPageRedirection()', () => {
+    it(`creates a rejected promise with a redirection path to download path 
+        and an error message in the error.message`, async () => {
+      const [error] = await to(
+        rejectExecutorWithDownloadPageRedirection(
+          tunnistamoRedirectionInitializationAction as Action,
+          'errorMessage'
+        )
+      );
+      expect(JSON.parse(error?.message as string)).toMatchObject({
+        isRedirectionRequest: true,
+        path: `${config.downloadPath}?${createFailedActionParams(
+          tunnistamoRedirectionInitializationAction as Action,
+          'errorMessage'
+        )}`,
+      });
     });
   });
 });

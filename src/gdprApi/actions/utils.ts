@@ -1,9 +1,12 @@
 import {
   Action,
+  ActionExecutorPromise,
+  ActionProps,
   ActionType,
   JSONStringifyableResult,
   QueueController,
 } from '../../common/actionQueue/actionQueue';
+import config from '../../config';
 import { tunnistamoRedirectionInitializationAction } from './authCodeRedirectionInitialization';
 import {
   isTunnistamoAuthorisationCodeNeeded,
@@ -17,6 +20,13 @@ export type AuthorizationUrlParams = {
   redirectUri: string;
   state: string;
 };
+
+type RedirectionRequest = {
+  isRedirectionRequest: boolean;
+  path: string;
+};
+
+export const thirtySecondsInMs = 30 * 10000;
 
 export function getActionResultAndErrorMessage<T = JSONStringifyableResult>(
   actionType: ActionType,
@@ -69,4 +79,53 @@ export function makeAuthorizationUrl(
   params.append('state', state);
 
   return `${oidcUri}?${params.toString()}`;
+}
+
+export function isGdprCallbackUrl(): boolean {
+  return window.location.pathname === config.gdprCallbackPath;
+}
+
+export function createInternalRedirectionRequest(
+  path: string
+): RedirectionRequest {
+  return {
+    isRedirectionRequest: true,
+    path,
+  };
+}
+
+export function createInternalRedirectionRequestForError(path: string): string {
+  return JSON.stringify(createInternalRedirectionRequest(path));
+}
+
+export function createFailedActionParams(
+  action: Action | ActionProps,
+  message = '',
+  append = false
+) {
+  const params = new URLSearchParams(append ? window.location.search : '');
+  params.append('error', action.type);
+  if (message) {
+    params.append('message', message);
+  }
+  return params.toString();
+}
+
+export function rejectExecutorWithDownloadPageRedirection(
+  action: Action | ActionProps,
+  errorText?: string,
+  timeout = 0
+): ActionExecutorPromise {
+  const errorMessage = createInternalRedirectionRequestForError(
+    `${config.downloadPath}?${createFailedActionParams(action, errorText)}`
+  );
+  const error = new Error(errorMessage);
+  if (timeout) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(error);
+      }, timeout);
+    });
+  }
+  return Promise.reject(error);
 }
