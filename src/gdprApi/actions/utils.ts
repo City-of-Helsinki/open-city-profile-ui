@@ -48,3 +48,25 @@ export function isAuthCodeActionNeeded(
     ? isTunnistamoAuthorisationCodeNeeded(controller)
     : isKeycloakAuthorisationCodeNeeded(controller);
 }
+
+export function delayRedirection(uri: string) {
+  return setTimeout(() => {
+    window.location.assign(uri);
+  }, 60);
+}
+
+export function makeAuthorizationUrl(
+  urlParams: AuthorizationUrlParams
+): string {
+  const { oidcUri, clientId, scopes, redirectUri, state } = urlParams;
+  const scope = scopes.join(' ');
+  const params = new URLSearchParams();
+
+  params.append('response_type', 'code');
+  params.append('client_id', clientId);
+  params.append('scope', scope);
+  params.append('redirect_uri', redirectUri);
+  params.append('state', state);
+
+  return `${oidcUri}?${params.toString()}`;
+}

@@ -7,14 +7,14 @@ import {
   ActionProps,
   QueueController,
 } from '../../common/actionQueue/actionQueue';
+import authService from '../../auth/authService';
+import { getloadKeycloakConfigResult } from './loadKeycloakConfig';
 import {
   AuthorizationUrlParams,
   getActionResultAndErrorMessage,
   isAuthCodeActionNeeded,
   isTunnistamoAuthCodeAction,
 } from './utils';
-import authService from '../../auth/authService';
-import { loadKeycloakConfigAction } from './loadKeycloakConfig';
 
 type RedirectionProps = Pick<AuthorizationUrlParams, 'state' | 'oidcUri'>;
 
@@ -44,7 +44,7 @@ const authCodeRedirectionInitializationExecutor: ActionExecutor = async (
   const [error, oidcUri] = await to(
     isTunnistamoAuthCodeAction(action)
       ? authService.userManager.metadataService.getAuthorizationEndpoint()
-      : loadKeycloakConfigAction.executor(action, controller)
+      : Promise.resolve(getloadKeycloakConfigResult(controller))
   );
 
   if (error || !oidcUri) {
