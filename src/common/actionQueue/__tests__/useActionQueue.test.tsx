@@ -35,6 +35,7 @@ describe('useActionQueue', () => {
     activeAction: 'active-action',
     queueDump: 'queue-dump',
     resumeButton: 'resume-button',
+    resetButton: 'reset-button',
   };
 
   const triggers = new Map<ActionType, () => void>();
@@ -86,7 +87,7 @@ describe('useActionQueue', () => {
     const forceRender = () => {
       rerender(n => n + 1);
     };
-    const { state, getQueueRunner } = useActionQueue(queue, storageKey);
+    const { state, getQueueRunner, reset } = useActionQueue(queue, storageKey);
     const {
       lastActionType,
       isComplete,
@@ -136,6 +137,16 @@ describe('useActionQueue', () => {
           }}
         >
           Resume
+        </button>
+        <button
+          id={elementIds.resetButton}
+          onClick={() => {
+            if (next) {
+              reset();
+            }
+          }}
+        >
+          Reset
         </button>
       </div>
     );
@@ -203,6 +214,11 @@ describe('useActionQueue', () => {
       fireEvent.click(button);
     };
 
+    const reset = () => {
+      const button = getElementById(elementIds.resetButton);
+      fireEvent.click(button);
+    };
+
     const rerender = async () => {
       const startCount = getRenderCount();
       const button = getElementById(elementIds.reRenderButton);
@@ -249,6 +265,7 @@ describe('useActionQueue', () => {
       getNextActionType,
       getQueue,
       resume,
+      reset,
     };
   };
 
@@ -490,6 +507,27 @@ describe('useActionQueue', () => {
       hasError: true,
       lastActionType: undefined,
       lastLogType: undefined,
+    });
+  });
+  it('Resetting changes state accordingly ', async () => {
+    const { start, getState, reset, getIsComplete } = renderTestComponent({
+      fail: true,
+    });
+    start();
+    completeActionExecutor(resolvingAction1.type);
+    completeActionExecutor(rejectingAction.type);
+    await waitFor(() => {
+      expect(getIsComplete()).toBeTruthy();
+    });
+    reset();
+    await waitFor(() => {
+      expect(getState()).toMatchObject({
+        isComplete: false,
+        isActive: false,
+        hasError: false,
+        lastActionType: undefined,
+        lastLogType: 'reset',
+      });
     });
   });
 });

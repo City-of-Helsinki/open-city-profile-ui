@@ -25,11 +25,12 @@ export const genericErrorTypes = {
   UNKNOWN_ACTION_TYPE: 'UNKNOWN_ACTION_TYPE',
 } as const;
 
-// logged when an action is executed and when execution is ended
+// logged when an action is executed and when execution is ended or actions are reset.
 export const actionLogTypes = {
   started: 'started',
   completed: 'completed',
   error: 'error',
+  reset: 'reset',
 } as const;
 
 export type Logger = (
@@ -227,6 +228,11 @@ export function createActionQueueRunner(
     return resume(first.type);
   };
 
+  const reset = () => {
+    queueController.reset();
+    logger('reset', undefined, queueController);
+  };
+
   const dispose = () => {
     if (isDisposed) {
       return;
@@ -238,6 +244,7 @@ export function createActionQueueRunner(
 
   return {
     ...queueController,
+    reset,
     start,
     resume,
     dispose,

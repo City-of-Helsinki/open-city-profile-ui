@@ -403,4 +403,20 @@ describe('actionQueueRunner', () => {
       ]);
     });
   });
+  describe('reset()', () => {
+    it('Resets the queue and a "reset" log type is logged', async () => {
+      await createPromiseForRunner([
+        convertSourceToActionProps({ ...resolvingAction1 }),
+        convertSourceToActionProps({ ...rejectingAction }),
+      ]);
+      runner.reset();
+      await waitFor(() => {
+        expect(getTrackingData().map(mapTrackingData)).toEqual([
+          ...getSuccessLogDataForAction(resolvingAction1),
+          ...getErrorLogDataForAction(rejectingAction),
+          'reset:no-action',
+        ]);
+      });
+    });
+  });
 });

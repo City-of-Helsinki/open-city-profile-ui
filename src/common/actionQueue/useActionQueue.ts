@@ -84,12 +84,8 @@ export function useActionQueue(
       const newState = {
         ...queueStateRef.current,
       };
-      if (controller.getFailed()) {
-        newState.hasError = true;
-      }
-      if (controller.isFinished()) {
-        newState.isComplete = true;
-      }
+      newState.hasError = !!controller.getFailed();
+      newState.isComplete = controller.isFinished();
       if (action) {
         if (type === 'started') {
           newState.lastActionType = action.type;
@@ -98,6 +94,9 @@ export function useActionQueue(
         if (type === 'completed' || type === 'error') {
           newState.isActive = false;
         }
+      } else {
+        newState.isActive = false;
+        newState.lastActionType = undefined;
       }
       if (type && (type === 'error' || isGenericError(type))) {
         newState.hasError = true;
