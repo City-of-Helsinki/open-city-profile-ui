@@ -8,6 +8,7 @@ import {
   enableActualHttpPoller,
 } from '../__mocks__/http-poller';
 import i18n from '../../common/test/testi18nInit';
+import mockWindowLocation from '../../common/test/mockWindowLocation';
 
 describe('authService', () => {
   const userManager = authService.userManager;
@@ -51,8 +52,11 @@ describe('authService', () => {
       .spyOn(userManager, 'signinRedirectCallback')
       .mockImplementation(() => Promise.resolve(user));
 
+  const mockedWindowControls = mockWindowLocation();
+
   afterEach(() => {
     sessionStorage.clear();
+    mockedWindowControls.restore();
     jest.restoreAllMocks();
   });
 
@@ -442,7 +446,7 @@ describe('authService', () => {
       const [error, returnedUser] = await to(
         authService.getAuthenticatedUser()
       );
-      expect(error).toBeDefined();
+      expect(error).not.toBeNull();
       expect(returnedUser).toBeUndefined();
     });
   });
