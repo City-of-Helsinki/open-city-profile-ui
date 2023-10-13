@@ -54,7 +54,7 @@ export type QueueComponentState = QueueState & {
   nextPhase?: NextPhase;
 };
 
-function useDownloadProfileQueue(): {
+function useAuthCodeQueues(): {
   canStart: () => boolean;
   startOrRestart: () => void;
   shouldRestart: () => boolean;
@@ -253,4 +253,4 @@ function useDownloadProfileQueue(): {
   };
 }
 
-export default useDownloadProfileQueue;
+export default useAuthCodeQueues;

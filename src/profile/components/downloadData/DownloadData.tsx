@@ -7,7 +7,7 @@ import contentStyles from '../../../common/cssHelpers/content.module.css';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { useScrollIntoView } from '../../hooks/useScrollIntoView';
 import StyledButton from '../../../common/styledButton/StyledButton';
-import useDownloadProfileQueue from '../../../gdprApi/useDownloadProfileQueue';
+import useAuthCodeQueues from '../../../gdprApi/useAuthCodeQueues';
 
 function DownloadData(): React.ReactElement {
   const {
@@ -18,7 +18,7 @@ function DownloadData(): React.ReactElement {
     isLoading,
     shouldResumeWithAuthCodes,
     resume,
-  } = useDownloadProfileQueue();
+  } = useAuthCodeQueues();
   const canUserDoSomething = canStart() || shouldRestart();
   const { t } = useTranslation();
   const onDownloadClick = () => {

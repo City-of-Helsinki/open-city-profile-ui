@@ -1,10 +1,10 @@
 import React from 'react';
 
 import styles from './gdprAuthorizationCodeManagerCallback.module.css';
-import useDownloadProfileQueue from './useDownloadProfileQueue';
+import useAuthCodeQueues from './useAuthCodeQueues';
 
 function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
-  const downloadProfileQueue = useDownloadProfileQueue();
+  const downloadProfileQueue = useAuthCodeQueues();
   React.useEffect(() => {
     if (downloadProfileQueue.shouldHandleCallback()) {
       downloadProfileQueue.resume();

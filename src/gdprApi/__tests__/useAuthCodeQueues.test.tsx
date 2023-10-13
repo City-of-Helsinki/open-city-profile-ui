@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 
-import useDownloadProfileQueue, {
+import useAuthCodeQueues, {
   QueueComponentState,
   currentPhases,
   nextPhases,
-} from '../useDownloadProfileQueue';
+} from '../useAuthCodeQueues';
 import {
   Action,
   ActionType,
@@ -105,7 +105,7 @@ jest.mock('file-saver', () => ({
 
 jest.mock('../actions/queues');
 
-describe('useDownloadProfileQueue', () => {
+describe('useAuthCodeQueues', () => {
   const elementIds = {
     lastActionType: 'last-action-type',
     startButton: 'start-button',
@@ -163,7 +163,7 @@ describe('useDownloadProfileQueue', () => {
     }
   };
 
-  const TestUseDownloadProfileQueueHook = () => {
+  const TestUseAuthCodeQueuesHook = () => {
     const [renderCount, rerender] = useState(0);
     const forceRender = () => {
       rerender(n => n + 1);
@@ -178,7 +178,7 @@ describe('useDownloadProfileQueue', () => {
       canStart,
       state,
       resume,
-    } = useDownloadProfileQueue();
+    } = useAuthCodeQueues();
 
     const functionResults = {
       hasError,
@@ -231,7 +231,7 @@ describe('useDownloadProfileQueue', () => {
     };
     return (
       <div>
-        {shouldRender && <TestUseDownloadProfileQueueHook />}
+        {shouldRender && <TestUseAuthCodeQueuesHook />}
         <button
           id={elementIds.unmountButton}
           onClick={() => {
