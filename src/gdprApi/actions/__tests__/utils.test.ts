@@ -17,16 +17,20 @@ import {
   getActionResultAndErrorMessage,
   isAuthCodeActionNeeded,
   isTunnistamoAuthCodeAction,
-  rejectExecutorWithDownloadPageRedirection,
+  rejectExecutorWithStartPageRedirection,
 } from '../utils';
 import {
   keycloakRedirectionInitializationAction,
   tunnistamoRedirectionInitializationAction,
 } from '../authCodeRedirectionInitialization';
-import { Action } from '../../../common/actionQueue/actionQueue';
+import {
+  Action,
+  createQueueController,
+  createQueueFromProps,
+} from '../../../common/actionQueue/actionQueue';
 import { getGdprQueryScopesAction } from '../getGdprScopes';
 import mockWindowLocation from '../../../common/test/mockWindowLocation';
-import config from '../../../config';
+import { createRedirectorAndCatcherActionProps } from '../redirectionHandlers';
 
 describe('utils.ts', () => {
   const initTests = ({ fail }: { fail?: boolean } = {}) => {
@@ -218,22 +222,42 @@ describe('utils.ts', () => {
       });
     });
   });
-  describe('rejectExecutorWithDownloadPageRedirection()', () => {
-    it(`creates a rejected promise with a redirection path to download path 
+  describe('rejectExecutorWithStartPageRedirection()', () => {
+    it(`creates a rejected promise with a redirection path to the start page path 
         and an error message in the error.message`, async () => {
+      const path = '/startPage';
+      const queue = createQueueController(
+        createQueueFromProps([
+          ...createRedirectorAndCatcherActionProps(path),
+          keycloakRedirectionInitializationAction,
+        ])
+      );
       const [error] = await to(
-        rejectExecutorWithDownloadPageRedirection(
+        rejectExecutorWithStartPageRedirection(
+          queue,
           tunnistamoRedirectionInitializationAction as Action,
           'errorMessage'
         )
       );
       expect(JSON.parse(error?.message as string)).toMatchObject({
         isRedirectionRequest: true,
-        path: `${config.downloadPath}?${createFailedActionParams(
+        path: `${path}?${createFailedActionParams(
           tunnistamoRedirectionInitializationAction as Action,
           'errorMessage'
         )}`,
       });
+    });
+    it(`throws if there is no startPagePath provided by any action`, async () => {
+      const queue = createQueueController(
+        createQueueFromProps([keycloakRedirectionInitializationAction])
+      );
+      expect(() =>
+        rejectExecutorWithStartPageRedirection(
+          queue,
+          tunnistamoRedirectionInitializationAction as Action,
+          'errorMessage'
+        )
+      ).toThrow();
     });
   });
 });

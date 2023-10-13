@@ -18,12 +18,12 @@ import {
 import mockWindowLocation from '../../../common/test/mockWindowLocation';
 import config from '../../../config';
 
-const mockRejectExecutorWithDownloadPageRedirection = jest.fn();
+const mockrejectExecutorWithStartPageRedirection = jest.fn();
 jest.mock('../utils', () => ({
   __esModule: true,
   ...jest.requireActual('../utils'),
-  rejectExecutorWithDownloadPageRedirection: (...args: unknown[]) => {
-    mockRejectExecutorWithDownloadPageRedirection(args);
+  rejectExecutorWithStartPageRedirection: (...args: unknown[]) => {
+    mockrejectExecutorWithStartPageRedirection(args);
     return Promise.reject(new Error('Mocked timeout'));
   },
 }));

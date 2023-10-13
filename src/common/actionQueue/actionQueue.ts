@@ -10,6 +10,7 @@ export type ActionOptions = {
   idleWhenActive?: boolean;
   noStorage?: boolean;
   syncronousCompletion?: boolean;
+  data?: JSONStringifyableResult;
 };
 
 export type ActionProps = {
@@ -128,9 +129,22 @@ export function getOption(
   optionName: keyof ActionOptions
 ): boolean | undefined {
   if (!action.options) {
+    return false;
+  }
+  return !!action.options[optionName];
+}
+
+export function getData(
+  action: Action,
+  propertyName?: string
+): JSONStringifyableResult | undefined {
+  if (!action.options || !action.options.data) {
     return undefined;
   }
-  return action.options[optionName];
+  const { data } = action.options;
+  return propertyName && typeof data === 'object'
+    ? Reflect.get(data, propertyName)
+    : data;
 }
 
 export function verifyQueuesMatch(

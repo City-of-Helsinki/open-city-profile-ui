@@ -5,6 +5,8 @@ import {
   ActionUpdateProps,
   QueueController,
   ActionQueue,
+  getOption,
+  getData,
 } from '../actionQueue';
 import {
   convertSourceToActionProps,
@@ -643,6 +645,63 @@ describe('actionQueue', () => {
           attemptActivateAction(targetAction3);
         });
       });
+    });
+  });
+  describe('Helpers', () => {
+    it('getOption() returns any action option as boolean, if exists', () => {
+      const actionWithAllOptions = {
+        ...readyMadeAction,
+        type: 'result1',
+        options: {
+          noStorage: true,
+          syncronousCompletion: true,
+          idleWhenActive: true,
+          data: { name: 'result1' },
+        },
+      };
+      const actionWithNoOptionsProp = {
+        ...readyMadeAction,
+        type: 'result2',
+      };
+      const actionWithoutOptions = {
+        ...readyMadeAction,
+        type: 'result3',
+        options: {},
+      };
+
+      expect(getOption(actionWithAllOptions, 'data')).toBeTruthy();
+      expect(getOption(actionWithAllOptions, 'noStorage')).toBeTruthy();
+      expect(
+        getOption(actionWithAllOptions, 'syncronousCompletion')
+      ).toBeTruthy();
+      expect(getOption(actionWithAllOptions, 'idleWhenActive')).toBeTruthy();
+
+      expect(getOption(actionWithNoOptionsProp, 'data')).toBeFalsy();
+      expect(getOption(actionWithNoOptionsProp, 'idleWhenActive')).toBeFalsy();
+      expect(getOption(actionWithoutOptions, 'noStorage')).toBeFalsy();
+      expect(
+        getOption(actionWithoutOptions, 'syncronousCompletion')
+      ).toBeFalsy();
+    });
+    it('getData() returns action.option.data or undefined', () => {
+      const data = { prop: 1 };
+      const actionWithData = {
+        ...readyMadeAction,
+        type: 'result1',
+        options: {
+          noStorage: true,
+          syncronousCompletion: true,
+          idleWhenActive: true,
+          data,
+        },
+      };
+      const actionWithoutData = {
+        ...readyMadeAction,
+        type: 'result2',
+      };
+
+      expect(getData(actionWithData)).toBe(data);
+      expect(getData(actionWithoutData)).toBeUndefined();
     });
   });
 });

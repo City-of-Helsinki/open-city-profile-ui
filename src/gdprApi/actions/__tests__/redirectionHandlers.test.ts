@@ -1,8 +1,11 @@
 import to from 'await-to-js';
 
-import { createRedirectorAndCatcherActionProps } from '../redirectionHandlers';
+import {
+  createRedirectorAndCatcherActionProps,
+  getStartPagePathFromQueue,
+} from '../redirectionHandlers';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
-import { Action } from '../../../common/actionQueue/actionQueue';
+import { Action, getData } from '../../../common/actionQueue/actionQueue';
 import mockWindowLocation from '../../../common/test/mockWindowLocation';
 import { AnyObject } from '../../../graphql/typings';
 import {
@@ -10,6 +13,7 @@ import {
   createNextActionParams,
   thirtySecondsInMs,
 } from '../utils';
+import { baseAction } from '../../../common/actionQueue/test.util';
 
 describe('redirectionHandlers.ts', () => {
   const expectedPath = '/expected-path';
@@ -102,6 +106,51 @@ describe('redirectionHandlers.ts', () => {
         const [error] = await to(promise);
         expect(error?.message.includes(rejectionPath)).toBeTruthy();
       });
+    });
+  });
+  describe(`getStartPagePathFromQueue()-helper finds start page path from the queue`, () => {
+    const actionWithPath = {
+      ...baseAction,
+      type: 'actionWithPath',
+      options: {
+        data: {
+          startPagePath: '/test-path',
+        },
+      },
+    };
+    const redirectorWithoutPath = {
+      ...redirector,
+      options: {
+        data: {
+          startPagePath: '',
+        },
+      },
+    };
+    it('primary source is the redirectionAction', async () => {
+      const queue = [redirector, catcher, actionWithPath];
+      const runner = createActionQueueRunner(queue);
+      const path = getStartPagePathFromQueue(runner);
+      expect(path).toBeDefined();
+      expect(path).toBe(getData(redirector as Action, 'startPagePath'));
+    });
+    it('if path is not found from redirector action, an action with data.startPagePath is searched for', async () => {
+      const queue = [redirectorWithoutPath, catcher, actionWithPath];
+      const runner = createActionQueueRunner(queue);
+      const path = getStartPagePathFromQueue(runner);
+      expect(path).toBeDefined();
+      expect(path).toBe(getData(actionWithPath as Action, 'startPagePath'));
+    });
+    it('action type for the action containing startPagePath can be provided', async () => {
+      const queue = [redirectorWithoutPath, catcher, actionWithPath];
+      const runner = createActionQueueRunner(queue);
+      expect(getStartPagePathFromQueue(runner, actionWithPath.type)).toBe(
+        getData(actionWithPath as Action, 'startPagePath')
+      );
+    });
+    it('returns undefined if not found', async () => {
+      const queue = [redirectorWithoutPath, catcher];
+      const runner = createActionQueueRunner(queue);
+      expect(getStartPagePathFromQueue(runner)).toBeUndefined();
     });
   });
 });

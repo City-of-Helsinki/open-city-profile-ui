@@ -10,7 +10,7 @@ import {
   isAuthCodeActionNeeded,
   isGdprCallbackUrl,
   parseAuthorizationCallbackUrl,
-  rejectExecutorWithDownloadPageRedirection,
+  rejectExecutorWithStartPageRedirection,
   thirtySecondsInMs,
 } from './utils';
 
@@ -98,7 +98,8 @@ const authCodeCallbackUrlDetectorExecutor: ActionExecutor = async (
   };
 
   if (isWrongPathOrState()) {
-    return rejectExecutorWithDownloadPageRedirection(
+    return rejectExecutorWithStartPageRedirection(
+      controller,
       action,
       'Gdpr redirection to server timed out.',
       thirtySecondsInMs

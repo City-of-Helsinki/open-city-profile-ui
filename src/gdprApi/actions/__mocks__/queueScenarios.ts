@@ -284,7 +284,7 @@ export function getScenarioWhereNextPhaseIsResumeCallback({
 }
 
 // auth codes are fetched, user has been redirected back to download page
-// next action is waitForDownloadPageRedirectionAction
+// next action is waitForStartPageRedirectionAction
 export function getScenarioWhereNextPhaseIsResumeDownload({
   overrides,
 }: ScenarioProps = {}) {

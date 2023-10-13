@@ -1,5 +1,11 @@
-import { Action, ActionQueue, createQueueFromProps } from '../actionQueue';
-import { storeQueue, getStoredQueue } from '../actionQueueStorage';
+import {
+  Action,
+  ActionQueue,
+  createQueueFromProps,
+  getData,
+  getOption,
+} from '../actionQueue';
+import { storeQueue, getStoredQueue, StoredQueue } from '../actionQueueStorage';
 import { baseAction, getSuccessfulQueueProps } from '../test.util';
 
 describe('actionStorage', () => {
@@ -49,11 +55,26 @@ describe('actionStorage', () => {
   });
   describe('storeQueue() converts queue to a string and stores it', () => {
     it('Returns true when save was successful', () => {
-      const queue = createQueueFromProps(getSuccessfulQueueProps());
+      const actionsWithOptions = getSuccessfulQueueProps().map(action => ({
+        ...action,
+        options: {
+          idleWhenActive: true,
+          noStorage: true,
+          data: {
+            type: action.type,
+          },
+        },
+      }));
+      const queue = createQueueFromProps(actionsWithOptions);
       expect(storeQueue(storageKey, queue)).toBeTruthy();
-      expect(getStoredQueue(storageKey)).toMatchObject(
+      const restoredQueue = getStoredQueue(storageKey) as StoredQueue;
+      expect(restoredQueue).toMatchObject(
         queue.map(action => getStoredVersion(action))
       );
+      const action0 = restoredQueue[0] as Action;
+      expect(getOption(action0, 'idleWhenActive')).toBeTruthy();
+      expect(getOption(action0, 'noStorage')).toBeTruthy();
+      expect(getData(action0)).toMatchObject({ type: action0.type });
     });
     it('Returns false when save failed', () => {
       const queue = [

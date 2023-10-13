@@ -2,6 +2,8 @@ import {
   ActionExecutor,
   ActionProps,
   ActionType,
+  QueueController,
+  getData,
 } from '../../common/actionQueue/actionQueue';
 import {
   RunnerFunctions,
@@ -28,6 +30,24 @@ export const resumeQueueFromRedirectionCatcher = (
   runner: RunnerFunctions,
   catcherActionType = defaultRedirectionCatcherActionType
 ) => resumeQueueFromAction(runner, catcherActionType);
+
+export const getStartPagePathFromQueue = (
+  controller: QueueController,
+  redirectorActionType = defaultRedirectorActionType
+): string | undefined => {
+  const redirector = controller.getByType(redirectorActionType);
+  if (redirector) {
+    const path = getData(redirector, 'path');
+    if (path) {
+      return path as string;
+    }
+  }
+  const startPagePaths = controller
+    .getQueue()
+    .map(action => getData(action, 'startPagePath'))
+    .filter(v => !!v);
+  return startPagePaths[0] as string | undefined;
+};
 
 const createRedirectionCatcherExecutor = (
   targetPath: string,
@@ -69,6 +89,9 @@ export const createRedirectorAndCatcherActionProps = (
     executor: () => resolveExecutorWithRedirection(targetPath, catcherProps),
     options: {
       noStorage: true,
+      data: {
+        startPagePath: targetPath,
+      },
     },
   };
   return [redirector, catcherProps];

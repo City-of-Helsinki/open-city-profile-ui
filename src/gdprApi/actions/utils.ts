@@ -20,6 +20,7 @@ import { tunnistamoAuthCodeRedirectionAction } from './authCodeRedirectionHandle
 import { tunnistamoAuthCodeCallbackUrlAction } from './authCodeCallbackUrlDetector';
 import { AnyObject } from '../../graphql/typings';
 import matchUrls from '../../common/helpers/matchUrls';
+import { getStartPagePathFromQueue } from './redirectionHandlers';
 
 export type AuthorizationUrlParams = {
   oidcUri: string;
@@ -98,10 +99,6 @@ export function isGdprCallbackUrl(): boolean {
   return window.location.pathname === config.gdprCallbackPath;
 }
 
-export function isDownloadPageUrl(): boolean {
-  return window.location.pathname === config.downloadPath;
-}
-
 export function createInternalRedirectionRequest(
   path: string
 ): RedirectionRequest {
@@ -158,17 +155,6 @@ export function createPagePathWithFailedActionParams(
   return `${path}?${createFailedActionParams(action, errorText)}`;
 }
 
-export function createDownloadPagePath(
-  action?: Action | ActionProps,
-  errorText?: string
-) {
-  return createPagePathWithFailedActionParams(
-    config.downloadPath,
-    action,
-    errorText
-  );
-}
-
 export function parseRequestPath(
   source: AnyObject | undefined
 ): string | undefined {
@@ -222,13 +208,18 @@ export function rejectExecutorWithRedirection(
   }
   return Promise.reject(error);
 }
-export function rejectExecutorWithDownloadPageRedirection(
+export function rejectExecutorWithStartPageRedirection(
+  controller: QueueController,
   action: Action | ActionProps,
   errorText?: string,
   timeout = 0
 ): ActionExecutorPromise {
+  const path = getStartPagePathFromQueue(controller);
+  if (!path) {
+    throw new Error('The queue has not start page path action');
+  }
   const errorMessage = createInternalRedirectionRequestForError(
-    createDownloadPagePath(action, errorText)
+    createPagePathWithFailedActionParams(path, action, errorText)
   );
   const error = new Error(errorMessage);
   if (timeout) {
@@ -276,12 +267,6 @@ export function resolveExecutorWithRedirection(
     `${path}?${createNextActionParams(nextAction)}`
   );
   return Promise.resolve(result);
-}
-
-export function resolveExecutorWithDownloadPageRedirection(
-  nextAction: Action | ActionProps
-): ActionExecutorPromise {
-  return resolveExecutorWithRedirection(config.downloadPath, nextAction);
 }
 
 // There cannot be more than one redirection active - in the last completed action.

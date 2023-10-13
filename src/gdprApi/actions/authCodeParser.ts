@@ -9,7 +9,7 @@ import {
   isAuthCodeActionNeeded,
   isTunnistamoAuthCodeAction,
   parseAuthorizationCallbackUrl,
-  rejectExecutorWithDownloadPageRedirection,
+  rejectExecutorWithStartPageRedirection,
 } from './utils';
 import { getAuthCodeRedirectionInitializationResult } from './authCodeRedirectionInitialization';
 
@@ -49,7 +49,8 @@ const authCodeParserExecutor: ActionExecutor = async (action, controller) => {
     return Promise.reject('Stored state not found');
   }
   if (!state || !storedUrlProps.state || storedUrlProps.state !== state) {
-    return rejectExecutorWithDownloadPageRedirection(
+    return rejectExecutorWithStartPageRedirection(
+      controller,
       action,
       'State is not for this action'
     );
