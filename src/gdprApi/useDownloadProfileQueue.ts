@@ -5,12 +5,13 @@ import {
   useActionQueue,
 } from '../common/actionQueue/useActionQueue';
 import {
+  canResumeWithRedirectionCatcher,
   resumeQueueFromDownLoadPageRedirection,
-  shouldResumeWithDownloadRedirection,
+  waitForDownloadPageRedirectionType,
 } from './actions/redirectionHandlers';
 import { isQueueWaitingForAuthCodeRedirection } from './actions/authCodeRedirectionHandler';
 import {
-  createDownloadPagePath,
+  createPagePathWithFailedActionParams,
   isGdprCallbackUrl,
   useInternalRedirect,
 } from './actions/utils';
@@ -39,15 +40,14 @@ export type NextPhase = keyof typeof nextPhases;
 
 export const nextPhases = {
   waitForAction: 'waitForAction',
-  resumeDownload: 'resumeDownload',
+  resumeWithAuthCodes: 'resumeWithAuthCodes',
   resumeCallback: 'resumeCallback',
   stoppedInMidQueue: 'stoppedInMidQueue',
   restart: 'restart',
   start: 'start',
   waitForInternalRedirect: 'waitForInternalRedirect',
   waitForAuthCodeRedirect: 'waitForAuthCodeRedirect',
-  waitForDownloadPageRedirect: 'waitForDownloadPageRedirect',
-  redirectToDownloadPage: 'redirectToDownloadPage',
+  redirectBackToStartPage: 'redirectBackToStartPage',
 } as const;
 
 export type QueueComponentState = QueueState & {
@@ -59,7 +59,7 @@ function useDownloadProfileQueue(): {
   canStart: () => boolean;
   startOrRestart: () => void;
   shouldRestart: () => boolean;
-  shouldResumeDownload: () => boolean;
+  shouldResumeWithAuthCodes: () => boolean;
   shouldHandleCallback: () => boolean;
   resume: () => boolean;
   hasError: boolean;
@@ -113,15 +113,14 @@ function useDownloadProfileQueue(): {
   /**
    * Next possible phases:
    * - waitForAction: non-essential action is running
-   * - resumeDownload: profile data query is next and queue should be resumed
+   * - resumeWithAuthCodes: authcodes are fetched, resume from next action (redirectionCatcher)
    * - resumeCallback: the browser has returned from oidc server and queue should be resumed
    * - stoppedInMidQueue: queue is stopped in non-essential action. After the queue was restored from storage.
    * - restart: an action has failed and user should restart it
    * - start: user should start the queue
    * - waitForAuthCodeRedirect: there is a redirection to the oidc server on-going
-   * - waitForDownloadPageRedirect: there is a redirection to the download page on-going
    * - waitForInternalRedirect: there is a redirection on-going (other that listed above)
-   * - redirectToDownloadPage: user should be (and will be) redirected to download page
+   * - redirectBackToStartPage: user should be (and will be) redirected back to the page where auth codes are needed.
    */
 
   const resolveNextPhase = useCallback(
@@ -136,10 +135,15 @@ function useDownloadProfileQueue(): {
           return nextPhases.waitForAuthCodeRedirect;
         }
 
-        if (shouldResumeWithDownloadRedirection(queueRunner)) {
+        if (
+          canResumeWithRedirectionCatcher(
+            queueRunner,
+            waitForDownloadPageRedirectionType
+          )
+        ) {
           return isOnGrprCallbackPage
-            ? nextPhases.redirectToDownloadPage
-            : nextPhases.resumeDownload;
+            ? nextPhases.redirectBackToStartPage
+            : nextPhases.resumeWithAuthCodes;
         }
         if (shouldResumeWithAuthCodeCallback(queueRunner)) {
           return isOnGrprCallbackPage
@@ -158,7 +162,7 @@ function useDownloadProfileQueue(): {
       }
       if (currentPhase === currentPhases.error) {
         return isOnGrprCallbackPage
-          ? nextPhases.redirectToDownloadPage
+          ? nextPhases.redirectBackToStartPage
           : nextPhases.restart;
       }
       return nextPhases.waitForAction;
@@ -171,11 +175,11 @@ function useDownloadProfileQueue(): {
       const currentPhase = resolveCurrentPhase(newState);
       const nextPhase = resolveNextPhase(currentPhase);
 
-      if (nextPhase === nextPhases.redirectToDownloadPage) {
+      if (nextPhase === nextPhases.redirectBackToStartPage) {
         // if a redirection is stored in a result, use it
         if (!internalRedirections.check()) {
           internalRedirections.redirect(
-            createDownloadPagePath(queueRunner.getFailed())
+            createPagePathWithFailedActionParams(path, queueRunner.getFailed())
           );
         }
       }
@@ -190,7 +194,13 @@ function useDownloadProfileQueue(): {
         nextPhase,
       };
     },
-    [resolveCurrentPhase, resolveNextPhase, internalRedirections, queueRunner]
+    [
+      resolveCurrentPhase,
+      resolveNextPhase,
+      internalRedirections,
+      queueRunner,
+      path,
+    ]
   );
 
   handleChange(state);
@@ -217,17 +227,19 @@ function useDownloadProfileQueue(): {
     return !!resumeQueueFromNextCallbackDetector(queueRunner);
   }, [queueRunner]);
 
-  const resumeDownload = useCallback(() => {
-    if (queueComponentState.current.nextPhase !== nextPhases.resumeDownload) {
+  const resumeWithAuthCodes = useCallback(() => {
+    if (
+      queueComponentState.current.nextPhase !== nextPhases.resumeWithAuthCodes
+    ) {
       return false;
     }
     return !!resumeQueueFromDownLoadPageRedirection(queueRunner);
   }, [queueRunner]);
 
-  const resume = () => resumeDownload() || resumeGdprCallback();
+  const resume = () => resumeWithAuthCodes() || resumeGdprCallback();
 
-  const shouldResumeDownload = () =>
-    queueComponentState.current.nextPhase === nextPhases.resumeDownload;
+  const shouldResumeWithAuthCodes = () =>
+    queueComponentState.current.nextPhase === nextPhases.resumeWithAuthCodes;
 
   const shouldHandleCallback = () =>
     queueComponentState.current.currentPhase === 'idle' &&
@@ -238,7 +250,7 @@ function useDownloadProfileQueue(): {
     resume,
     canStart,
     shouldRestart,
-    shouldResumeDownload,
+    shouldResumeWithAuthCodes,
     shouldHandleCallback,
     hasError: queueComponentState.current.hasError,
     isLoading:

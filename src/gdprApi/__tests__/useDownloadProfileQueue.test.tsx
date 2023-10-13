@@ -174,7 +174,7 @@ describe('useDownloadProfileQueue', () => {
       isLoading,
       shouldHandleCallback,
       shouldRestart,
-      shouldResumeDownload,
+      shouldResumeWithAuthCodes: shouldResumeDownload,
       canStart,
       state,
       resume,
@@ -459,7 +459,7 @@ describe('useDownloadProfileQueue', () => {
       await waitFor(() => {
         expect(mockHistoryPushTracker).toHaveBeenCalledTimes(1);
         expect(
-          getState().nextPhase === nextPhases.redirectToDownloadPage
+          getState().nextPhase === nextPhases.redirectBackToStartPage
         ).toBeTruthy();
       });
       expect(getFunctionResults()).toMatchObject({
@@ -504,7 +504,7 @@ describe('useDownloadProfileQueue', () => {
       await waitFor(async () => {
         expect(getState().currentPhase === currentPhases.error).toBeTruthy();
         expect(
-          getState().nextPhase === nextPhases.redirectToDownloadPage
+          getState().nextPhase === nextPhases.redirectBackToStartPage
         ).toBeTruthy();
       });
       expect(getFunctionResults()).toMatchObject({
@@ -538,7 +538,7 @@ describe('useDownloadProfileQueue', () => {
         expect(mockHistoryPushTracker).toHaveBeenCalledTimes(1);
         expect(getState().currentPhase === currentPhases.error).toBeTruthy();
         expect(
-          getState().nextPhase === nextPhases.redirectToDownloadPage
+          getState().nextPhase === nextPhases.redirectBackToStartPage
         ).toBeTruthy();
       });
       expect(getFunctionResults()).toMatchObject({
@@ -560,7 +560,9 @@ describe('useDownloadProfileQueue', () => {
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
         expect(getState().currentPhase === currentPhases.idle).toBeTruthy();
-        expect(getState().nextPhase === nextPhases.resumeDownload).toBeTruthy();
+        expect(
+          getState().nextPhase === nextPhases.resumeWithAuthCodes
+        ).toBeTruthy();
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -633,7 +635,9 @@ describe('useDownloadProfileQueue', () => {
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
         expect(getState().currentPhase === currentPhases.idle).toBeTruthy();
-        expect(getState().nextPhase === nextPhases.resumeDownload).toBeTruthy();
+        expect(
+          getState().nextPhase === nextPhases.resumeWithAuthCodes
+        ).toBeTruthy();
       });
       resume();
       await waitFor(async () => {
@@ -822,7 +826,7 @@ describe('useDownloadProfileQueue', () => {
       );
       expect(getState().currentPhase === currentPhases.running).toBeTruthy();
       expect(
-        getState().nextPhase === nextPhases.redirectToDownloadPage
+        getState().nextPhase === nextPhases.redirectBackToStartPage
       ).toBeTruthy();
 
       expect(getFunctionResults()).toMatchObject({
@@ -840,7 +844,9 @@ describe('useDownloadProfileQueue', () => {
       await toggleComponentMounting();
 
       expect(getState().currentPhase === currentPhases.idle).toBeTruthy();
-      expect(getState().nextPhase === nextPhases.resumeDownload).toBeTruthy();
+      expect(
+        getState().nextPhase === nextPhases.resumeWithAuthCodes
+      ).toBeTruthy();
 
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,

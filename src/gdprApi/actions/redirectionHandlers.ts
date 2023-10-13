@@ -20,10 +20,13 @@ export const waitForDownloadPageRedirectionType =
   'waitForDownloadPageRedirection';
 export const redirectToDownloadType = 'redirectToDownload';
 
-export const shouldResumeWithDownloadRedirection = (
-  controller: RunnerFunctions
-): boolean =>
-  canQueueContinueFrom(controller, waitForDownloadPageRedirectionType, true);
+export const defaultRedirectorActionType = 'redirector';
+export const defaultRedirectionCatcherActionType = 'redirectionCatcher';
+
+export const canResumeWithRedirectionCatcher = (
+  controller: RunnerFunctions,
+  catcherActionType = defaultRedirectionCatcherActionType
+): boolean => canQueueContinueFrom(controller, catcherActionType, true);
 
 export const resumeQueueFromDownLoadPageRedirection = (
   runner: RunnerFunctions
@@ -58,8 +61,8 @@ const createRedirectionCatcherExecutor = (
 
 export const createRedirectorAndCatcherActionProps = (
   targetPath: string,
-  redirectorActionType: ActionType = 'redirector',
-  catcherActionType: ActionType = 'redirectionCatcher'
+  redirectorActionType: ActionType = defaultRedirectorActionType,
+  catcherActionType: ActionType = defaultRedirectionCatcherActionType
 ): [ActionProps, ActionProps] => {
   const catcherProps: ActionProps = {
     type: catcherActionType,

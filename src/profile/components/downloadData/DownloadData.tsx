@@ -16,7 +16,7 @@ function DownloadData(): React.ReactElement {
     shouldRestart,
     hasError,
     isLoading,
-    shouldResumeDownload,
+    shouldResumeWithAuthCodes,
     resume,
   } = useDownloadProfileQueue();
   const canUserDoSomething = canStart() || shouldRestart();
@@ -25,10 +25,10 @@ function DownloadData(): React.ReactElement {
     startOrRestart();
   };
   useEffect(() => {
-    if (shouldResumeDownload()) {
+    if (shouldResumeWithAuthCodes()) {
       resume();
     }
-  }, [shouldResumeDownload, resume]);
+  }, [shouldResumeWithAuthCodes, resume]);
   const [scrollIntoViewRef] = useScrollIntoView(isLoading || hasError);
   return (
     <ProfileSection borderless>
