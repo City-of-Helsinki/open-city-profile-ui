@@ -6,8 +6,7 @@ import {
 } from '../common/actionQueue/useActionQueue';
 import {
   canResumeWithRedirectionCatcher,
-  resumeQueueFromDownLoadPageRedirection,
-  waitForDownloadPageRedirectionType,
+  resumeQueueFromRedirectionCatcher,
 } from './actions/redirectionHandlers';
 import { isQueueWaitingForAuthCodeRedirection } from './actions/authCodeRedirectionHandler';
 import {
@@ -135,12 +134,7 @@ function useDownloadProfileQueue(): {
           return nextPhases.waitForAuthCodeRedirect;
         }
 
-        if (
-          canResumeWithRedirectionCatcher(
-            queueRunner,
-            waitForDownloadPageRedirectionType
-          )
-        ) {
+        if (canResumeWithRedirectionCatcher(queueRunner)) {
           return isOnGrprCallbackPage
             ? nextPhases.redirectBackToStartPage
             : nextPhases.resumeWithAuthCodes;
@@ -233,7 +227,7 @@ function useDownloadProfileQueue(): {
     ) {
       return false;
     }
-    return !!resumeQueueFromDownLoadPageRedirection(queueRunner);
+    return resumeQueueFromRedirectionCatcher(queueRunner);
   }, [queueRunner]);
 
   const resume = () => resumeWithAuthCodes() || resumeGdprCallback();

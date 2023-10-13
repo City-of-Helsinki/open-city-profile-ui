@@ -65,6 +65,12 @@ export function isGenericError(loggedType: LogType) {
   return Object.keys(genericErrorTypes).includes(loggedType);
 }
 
+export function getActionType(
+  typeOrAction: Action | ActionProps | ActionType
+): ActionType {
+  return typeof typeOrAction === 'string' ? typeOrAction : typeOrAction.type;
+}
+
 export function canQueueContinueFrom(
   runner: RunnerFunctions,
   actionOrType: Action | ActionType,
@@ -73,6 +79,11 @@ export function canQueueContinueFrom(
   const status = runner.getActionStatus(actionOrType);
   return status === 'next' || (acceptPending && status === 'pending');
 }
+
+export const resumeQueueFromAction = (
+  runner: RunnerFunctions,
+  actionOrType: Action | ActionType
+) => !!runner.resume(getActionType(actionOrType));
 
 export function createActionQueueRunner(
   initialQueueProps: InitialQueue,
@@ -86,9 +97,7 @@ export function createActionQueueRunner(
 
   // returns status of an action and what can be done with given action
   const getActionStatus: RunnerFunctions['getActionStatus'] = typeOrAction => {
-    const action = queueController.getByType(
-      typeof typeOrAction === 'string' ? typeOrAction : typeOrAction.type
-    );
+    const action = queueController.getByType(getActionType(typeOrAction));
     if (!action || !action.type) {
       return 'invalid';
     }

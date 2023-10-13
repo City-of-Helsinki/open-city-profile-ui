@@ -21,8 +21,8 @@ import {
   tunnistamoAuthCodeCallbackUrlAction,
 } from '../actions/authCodeCallbackUrlDetector';
 import {
-  redirectToDownloadType,
-  waitForDownloadPageRedirectionType,
+  defaultRedirectorActionType,
+  defaultRedirectionCatcherActionType,
 } from '../actions/redirectionHandlers';
 import {
   createFailedActionParams,
@@ -552,7 +552,7 @@ describe('useDownloadProfileQueue', () => {
       mockedWindowControls.setPath(config.downloadPath);
       mockedWindowControls.setSearch(
         createNextActionParams({
-          type: waitForDownloadPageRedirectionType,
+          type: defaultRedirectionCatcherActionType,
         } as Action)
       );
       initQueue(getScenarioWhereNextPhaseIsResumeDownload());
@@ -616,7 +616,7 @@ describe('useDownloadProfileQueue', () => {
       mockedWindowControls.setPath(config.downloadPath);
       mockedWindowControls.setSearch(
         createNextActionParams({
-          type: waitForDownloadPageRedirectionType,
+          type: defaultRedirectionCatcherActionType,
         } as Action)
       );
       initQueue(
@@ -815,14 +815,14 @@ describe('useDownloadProfileQueue', () => {
 
       await checkCurrentActionAndManuallyCompleteIt(
         keycloakAuthCodeParserAction.type,
-        redirectToDownloadType
+        defaultRedirectorActionType
       );
       expect(getState().currentPhase === currentPhases.running).toBeTruthy();
       expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
 
       await checkCurrentActionAndManuallyCompleteIt(
-        redirectToDownloadType,
-        waitForDownloadPageRedirectionType
+        defaultRedirectorActionType,
+        defaultRedirectionCatcherActionType
       );
       expect(getState().currentPhase === currentPhases.running).toBeTruthy();
       expect(
@@ -838,7 +838,7 @@ describe('useDownloadProfileQueue', () => {
       mockedWindowControls.setPath(config.downloadPath);
       mockedWindowControls.setSearch(
         createNextActionParams({
-          type: waitForDownloadPageRedirectionType,
+          type: defaultRedirectionCatcherActionType,
         } as Action)
       );
       await toggleComponentMounting();
@@ -854,7 +854,7 @@ describe('useDownloadProfileQueue', () => {
       });
       resume();
       await checkCurrentActionAndManuallyCompleteIt(
-        waitForDownloadPageRedirectionType,
+        defaultRedirectionCatcherActionType,
         getDownloadDataAction.type
       );
       expect(getState().currentPhase === currentPhases.running).toBeTruthy();

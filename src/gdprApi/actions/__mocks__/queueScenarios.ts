@@ -20,8 +20,8 @@ import { getGdprQueryScopesAction } from '../getGdprScopes';
 import { getServiceConnectionsAction } from '../getServiceConnections';
 import { loadKeycloakConfigAction } from '../loadKeycloakConfig';
 import {
-  waitForDownloadPageRedirectionType,
-  redirectToDownloadType,
+  defaultRedirectionCatcherActionType,
+  defaultRedirectorActionType,
 } from '../redirectionHandlers';
 import { ActionMockData } from './mock.util';
 
@@ -176,19 +176,19 @@ export function getScenarioForKeycloakAuth({
   return list;
 }
 
-export function getScenarioForDownloadPageRedirect({
+export function getScenarioForStartPageRedirect({
   runOriginal = true,
   overrides,
   ...rest
 }: ScenarioProps = {}): ActionMockData[] {
   const list = [
     {
-      type: redirectToDownloadType,
+      type: defaultRedirectorActionType,
       runOriginal,
       ...rest,
     },
     {
-      type: waitForDownloadPageRedirectionType,
+      type: defaultRedirectionCatcherActionType,
       runOriginal,
       ...rest,
     },
@@ -271,7 +271,7 @@ export function getScenarioWhereNextPhaseIsResumeCallback({
       ],
     }),
     ...getScenarioForKeycloakAuth({ runOriginal: true }),
-    ...getScenarioForDownloadPageRedirect({
+    ...getScenarioForStartPageRedirect({
       autoTrigger: true,
       runOriginal: true,
     }),
@@ -294,11 +294,11 @@ export function getScenarioWhereNextPhaseIsResumeDownload({
       store: true,
     }),
     ...getScenarioForKeycloakAuth({ store: true }),
-    ...getScenarioForDownloadPageRedirect({
+    ...getScenarioForStartPageRedirect({
       store: true,
       overrides: [
         {
-          type: waitForDownloadPageRedirectionType,
+          type: defaultRedirectionCatcherActionType,
           store: false,
         },
       ],
@@ -336,7 +336,7 @@ export function getScenarioWhereKeycloakAuthCodeNotInUrl({
         },
       ],
     }),
-    ...getScenarioForDownloadPageRedirect(),
+    ...getScenarioForStartPageRedirect(),
     ...getScenarioForDownloadData(),
   ];
   if (overrides) {
@@ -351,15 +351,15 @@ export function getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully(
     ...getScenarioForScopes(),
     ...getScenarioForTunnistamoAuth(),
     ...getScenarioForKeycloakAuth(),
-    ...getScenarioForDownloadPageRedirect({
+    ...getScenarioForStartPageRedirect({
       overrides: [
         {
-          type: redirectToDownloadType,
+          type: defaultRedirectorActionType,
           runOriginal: false,
           resolveValue: true,
         },
         {
-          type: waitForDownloadPageRedirectionType,
+          type: defaultRedirectionCatcherActionType,
           runOriginal: false,
           resolveValue: true,
         },

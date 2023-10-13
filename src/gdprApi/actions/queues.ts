@@ -19,11 +19,7 @@ import { getDownloadDataAction } from './getDownloadData';
 import { getGdprQueryScopesAction } from './getGdprScopes';
 import { getServiceConnectionsAction } from './getServiceConnections';
 import { loadKeycloakConfigAction } from './loadKeycloakConfig';
-import {
-  createRedirectorAndCatcherActionProps,
-  redirectToDownloadType,
-  waitForDownloadPageRedirectionType,
-} from './redirectionHandlers';
+import { createRedirectorAndCatcherActionProps } from './redirectionHandlers';
 
 export function getQueue(
   name: 'downloadProfile' | 'deleteProfile' | 'removeServiceConnection',
@@ -32,11 +28,7 @@ export function getQueue(
   const [
     redirectorAction,
     catcherAction,
-  ] = createRedirectorAndCatcherActionProps(
-    path,
-    redirectToDownloadType,
-    waitForDownloadPageRedirectionType
-  );
+  ] = createRedirectorAndCatcherActionProps(path);
   if (name === 'downloadProfile') {
     return [
       getServiceConnectionsAction,

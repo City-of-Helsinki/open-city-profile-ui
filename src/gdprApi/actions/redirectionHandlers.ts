@@ -6,19 +6,15 @@ import {
 import {
   RunnerFunctions,
   canQueueContinueFrom,
+  resumeQueueFromAction,
 } from '../../common/actionQueue/actionQueueRunner';
 import matchUrls from '../../common/helpers/matchUrls';
-import config from '../../config';
 import {
   createNextActionParams,
   rejectExecutorWithRedirection,
   resolveExecutorWithRedirection,
   thirtySecondsInMs,
 } from './utils';
-
-export const waitForDownloadPageRedirectionType =
-  'waitForDownloadPageRedirection';
-export const redirectToDownloadType = 'redirectToDownload';
 
 export const defaultRedirectorActionType = 'redirector';
 export const defaultRedirectionCatcherActionType = 'redirectionCatcher';
@@ -28,15 +24,10 @@ export const canResumeWithRedirectionCatcher = (
   catcherActionType = defaultRedirectionCatcherActionType
 ): boolean => canQueueContinueFrom(controller, catcherActionType, true);
 
-export const resumeQueueFromDownLoadPageRedirection = (
-  runner: RunnerFunctions
-) => {
-  // test how error flows if this is forceed.
-  if (runner.resume(waitForDownloadPageRedirectionType)) {
-    return waitForDownloadPageRedirectionType;
-  }
-  return undefined;
-};
+export const resumeQueueFromRedirectionCatcher = (
+  runner: RunnerFunctions,
+  catcherActionType = defaultRedirectionCatcherActionType
+) => resumeQueueFromAction(runner, catcherActionType);
 
 const createRedirectionCatcherExecutor = (
   targetPath: string,
@@ -82,11 +73,3 @@ export const createRedirectorAndCatcherActionProps = (
   };
   return [redirector, catcherProps];
 };
-
-export function createDownloadPageRedirectorAndCatcher() {
-  return createRedirectorAndCatcherActionProps(
-    config.downloadPath,
-    redirectToDownloadType,
-    waitForDownloadPageRedirectionType
-  );
-}
