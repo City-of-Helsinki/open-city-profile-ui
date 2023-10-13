@@ -147,17 +147,26 @@ export function getFailedActionFromUrl() {
   return params.get('error') || '';
 }
 
-export function createDownloadPagePath(
+export function createPagePathWithFailedActionParams(
+  path: string,
   action?: Action | ActionProps,
   errorText?: string
 ) {
   if (!action) {
-    return config.downloadPath;
+    return path;
   }
-  return `${config.downloadPath}?${createFailedActionParams(
+  return `${path}?${createFailedActionParams(action, errorText)}`;
+}
+
+export function createDownloadPagePath(
+  action?: Action | ActionProps,
+  errorText?: string
+) {
+  return createPagePathWithFailedActionParams(
+    config.downloadPath,
     action,
     errorText
-  )}`;
+  );
 }
 
 export function parseRequestPath(
@@ -194,6 +203,25 @@ export function getInternalRequestPathFromAction(action: Action) {
   );
 }
 
+export function rejectExecutorWithRedirection(
+  path: string,
+  action: Action | ActionProps,
+  errorText?: string,
+  timeout = 0
+): ActionExecutorPromise {
+  const errorMessage = createInternalRedirectionRequestForError(
+    createPagePathWithFailedActionParams(path, action, errorText)
+  );
+  const error = new Error(errorMessage);
+  if (timeout) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(error);
+      }, timeout);
+    });
+  }
+  return Promise.reject(error);
+}
 export function rejectExecutorWithDownloadPageRedirection(
   action: Action | ActionProps,
   errorText?: string,

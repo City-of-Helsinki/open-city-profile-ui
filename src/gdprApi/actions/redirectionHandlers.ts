@@ -11,7 +11,7 @@ import matchUrls from '../../common/helpers/matchUrls';
 import config from '../../config';
 import {
   createNextActionParams,
-  rejectExecutorWithDownloadPageRedirection,
+  rejectExecutorWithRedirection,
   resolveExecutorWithRedirection,
   thirtySecondsInMs,
 } from './utils';
@@ -46,7 +46,8 @@ const createRedirectionCatcherExecutor = (
     } as ActionProps)}`
   );
   if (!isUrlMatch) {
-    return rejectExecutorWithDownloadPageRedirection(
+    return rejectExecutorWithRedirection(
+      targetPath,
       action,
       `Redirection to ${targetPath} page timed out.`,
       timeout
