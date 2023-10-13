@@ -1,9 +1,6 @@
 import to from 'await-to-js';
 
-import {
-  redirectToDownloadAction,
-  waitForDownloadPageRedirectionAction,
-} from '../redirectionHandlers';
+import { createDownloadPageRedirectorAndCatcher } from '../redirectionHandlers';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import { Action } from '../../../common/actionQueue/actionQueue';
 import mockWindowLocation from '../../../common/test/mockWindowLocation';
@@ -12,6 +9,10 @@ import { createNextActionParams, thirtySecondsInMs } from '../utils';
 import config from '../../../config';
 
 describe('redirectionHandlers.ts', () => {
+  const [
+    redirectToDownloadAction,
+    waitForDownloadPageRedirectionAction,
+  ] = createDownloadPageRedirectorAndCatcher();
   const mockedWindowControls = mockWindowLocation();
   const initTests = () => {
     const queue = [

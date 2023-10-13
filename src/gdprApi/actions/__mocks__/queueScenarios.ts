@@ -20,8 +20,8 @@ import { getGdprQueryScopesAction } from '../getGdprScopes';
 import { getServiceConnectionsAction } from '../getServiceConnections';
 import { loadKeycloakConfigAction } from '../loadKeycloakConfig';
 import {
-  redirectToDownloadAction,
-  waitForDownloadPageRedirectionAction,
+  waitForDownloadPageRedirectionType,
+  redirectToDownloadType,
 } from '../redirectionHandlers';
 import { ActionMockData } from './mock.util';
 
@@ -183,12 +183,12 @@ export function getScenarioForDownloadPageRedirect({
 }: ScenarioProps = {}): ActionMockData[] {
   const list = [
     {
-      type: redirectToDownloadAction.type,
+      type: redirectToDownloadType,
       runOriginal,
       ...rest,
     },
     {
-      type: waitForDownloadPageRedirectionAction.type,
+      type: waitForDownloadPageRedirectionType,
       runOriginal,
       ...rest,
     },
@@ -298,7 +298,7 @@ export function getScenarioWhereNextPhaseIsResumeDownload({
       store: true,
       overrides: [
         {
-          type: waitForDownloadPageRedirectionAction.type,
+          type: waitForDownloadPageRedirectionType,
           store: false,
         },
       ],
@@ -354,12 +354,12 @@ export function getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully(
     ...getScenarioForDownloadPageRedirect({
       overrides: [
         {
-          type: redirectToDownloadAction.type,
+          type: redirectToDownloadType,
           runOriginal: false,
           resolveValue: true,
         },
         {
-          type: waitForDownloadPageRedirectionAction.type,
+          type: waitForDownloadPageRedirectionType,
           runOriginal: false,
           resolveValue: true,
         },

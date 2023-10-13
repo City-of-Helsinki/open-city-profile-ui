@@ -67,9 +67,11 @@ export function isGenericError(loggedType: LogType) {
 
 export function canQueueContinueFrom(
   runner: RunnerFunctions,
-  actionOrType: Action | ActionType
+  actionOrType: Action | ActionType,
+  acceptPending = false
 ): boolean {
-  return runner.getActionStatus(actionOrType) === 'next';
+  const status = runner.getActionStatus(actionOrType);
+  return status === 'next' || (acceptPending && status === 'pending');
 }
 
 export function createActionQueueRunner(

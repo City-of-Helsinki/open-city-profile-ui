@@ -1,39 +1,29 @@
 import {
   ActionExecutor,
   ActionProps,
+  ActionType,
 } from '../../common/actionQueue/actionQueue';
-import { RunnerFunctions } from '../../common/actionQueue/actionQueueRunner';
 import {
-  getNextActionFromUrl,
-  isDownloadPageUrl,
+  RunnerFunctions,
+  canQueueContinueFrom,
+} from '../../common/actionQueue/actionQueueRunner';
+import matchUrls from '../../common/helpers/matchUrls';
+import config from '../../config';
+import {
+  createNextActionParams,
   rejectExecutorWithDownloadPageRedirection,
-  resolveExecutorWithDownloadPageRedirection,
+  resolveExecutorWithRedirection,
   thirtySecondsInMs,
 } from './utils';
 
-const waitForDownloadPageRedirectionType = 'waitForDownloadPageRedirection';
-
-const waitForDownloadPageRedirectionExecutor: ActionExecutor = async action => {
-  const nextActionInUrl = getNextActionFromUrl();
-  if (
-    !isDownloadPageUrl() ||
-    nextActionInUrl !== waitForDownloadPageRedirectionType
-  ) {
-    return rejectExecutorWithDownloadPageRedirection(
-      action,
-      'Redirection to download page timed out.',
-      thirtySecondsInMs
-    );
-  }
-  return Promise.resolve(true);
-};
+export const waitForDownloadPageRedirectionType =
+  'waitForDownloadPageRedirection';
+export const redirectToDownloadType = 'redirectToDownload';
 
 export const shouldResumeWithDownloadRedirection = (
   controller: RunnerFunctions
-): boolean => {
-  const status = controller.getActionStatus(waitForDownloadPageRedirectionType);
-  return status === 'next' || status === 'pending';
-};
+): boolean =>
+  canQueueContinueFrom(controller, waitForDownloadPageRedirectionType, true);
 
 export const resumeQueueFromDownLoadPageRedirection = (
   runner: RunnerFunctions
@@ -45,26 +35,54 @@ export const resumeQueueFromDownLoadPageRedirection = (
   return undefined;
 };
 
-export const waitForDownloadPageRedirectionAction: ActionProps = {
-  type: waitForDownloadPageRedirectionType,
-  executor: waitForDownloadPageRedirectionExecutor,
-  options: {
-    noStorage: true,
-    idleWhenActive: true,
-  },
-};
-
-const redirectToDownloadType = 'redirectToDownload';
-
-const redirectToDownloadExecutor: ActionExecutor = async () =>
-  resolveExecutorWithDownloadPageRedirection(
-    waitForDownloadPageRedirectionAction
+const createRedirectionCatcherExecutor = (
+  targetPath: string,
+  catcherActionType: ActionType,
+  timeout = thirtySecondsInMs
+): ActionExecutor => async action => {
+  const isUrlMatch = matchUrls(
+    `${targetPath}?${createNextActionParams({
+      type: catcherActionType,
+    } as ActionProps)}`
   );
-
-export const redirectToDownloadAction: ActionProps = {
-  type: redirectToDownloadType,
-  executor: redirectToDownloadExecutor,
-  options: {
-    noStorage: true,
-  },
+  if (!isUrlMatch) {
+    return rejectExecutorWithDownloadPageRedirection(
+      action,
+      `Redirection to ${targetPath} page timed out.`,
+      timeout
+    );
+  }
+  return Promise.resolve(true);
 };
+
+export const createRedirectorAndCatcherActionProps = (
+  targetPath: string,
+  redirectorActionType: ActionType = 'redirector',
+  catcherActionType: ActionType = 'redirectionCatcher'
+): [ActionProps, ActionProps] => {
+  const catcherProps: ActionProps = {
+    type: catcherActionType,
+    executor: createRedirectionCatcherExecutor(targetPath, catcherActionType),
+    options: {
+      noStorage: true,
+      idleWhenActive: true,
+    },
+  };
+
+  const redirector: ActionProps = {
+    type: redirectorActionType,
+    executor: () => resolveExecutorWithRedirection(targetPath, catcherProps),
+    options: {
+      noStorage: true,
+    },
+  };
+  return [redirector, catcherProps];
+};
+
+export function createDownloadPageRedirectorAndCatcher() {
+  return createRedirectorAndCatcherActionProps(
+    config.downloadPath,
+    redirectToDownloadType,
+    waitForDownloadPageRedirectionType
+  );
+}

@@ -19,10 +19,12 @@ import { getDownloadDataAction } from './getDownloadData';
 import { getGdprQueryScopesAction } from './getGdprScopes';
 import { getServiceConnectionsAction } from './getServiceConnections';
 import { loadKeycloakConfigAction } from './loadKeycloakConfig';
-import {
+import { createDownloadPageRedirectorAndCatcher } from './redirectionHandlers';
+
+const [
   redirectToDownloadAction,
   waitForDownloadPageRedirectionAction,
-} from './redirectionHandlers';
+] = createDownloadPageRedirectorAndCatcher();
 
 export const downloadDataQueue = [
   getServiceConnectionsAction,

@@ -240,13 +240,20 @@ export function getNextActionFromUrl() {
   return params.get('next') || '';
 }
 
-export function resolveExecutorWithDownloadPageRedirection(
-  action: Action | ActionProps
+export function resolveExecutorWithRedirection(
+  path: string,
+  nextAction: Action | ActionProps
 ): ActionExecutorPromise {
   const result = createInternalRedirectionRequest(
-    `${config.downloadPath}?${createNextActionParams(action)}`
+    `${path}?${createNextActionParams(nextAction)}`
   );
   return Promise.resolve(result);
+}
+
+export function resolveExecutorWithDownloadPageRedirection(
+  nextAction: Action | ActionProps
+): ActionExecutorPromise {
+  return resolveExecutorWithRedirection(config.downloadPath, nextAction);
 }
 
 // There cannot be more than one redirection active - in the last completed action.
