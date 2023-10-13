@@ -13,7 +13,6 @@ import {
 } from '../../common/actionQueue/actionQueue';
 import { getServiceConnectionsAction } from '../actions/getServiceConnections';
 import { getGdprQueryScopesAction } from '../actions/getGdprScopes';
-import { downloadDataQueue } from '../actions/queues';
 import { storeQueue } from '../../common/actionQueue/actionQueueStorage';
 import mockWindowLocation from '../../common/test/mockWindowLocation';
 import config from '../../config';
@@ -66,6 +65,7 @@ import {
 } from '../actions/authCodeRedirectionInitialization';
 import { downloadAsFileAction } from '../actions/downloadAsFile';
 import { actionLogTypes } from '../../common/actionQueue/actionQueueRunner';
+import { getQueue } from '../actions/queues';
 
 type HookFunctionResults = {
   hasError: boolean;
@@ -130,14 +130,16 @@ describe('useDownloadProfileQueue', () => {
 
   // store the queue actions from actual downloadDataQueue with new props
   const setStoredState = (overrideQueueProps: Partial<Action>[]) => {
-    const queue = downloadDataQueue.map(queueProps => {
-      const overrides =
-        overrideQueueProps.find(op => op.type === queueProps.type) || {};
-      return {
-        ...queueProps,
-        ...overrides,
-      };
-    });
+    const queue = getQueue('downloadProfile', config.downloadPath).map(
+      queueProps => {
+        const overrides =
+          overrideQueueProps.find(op => op.type === queueProps.type) || {};
+        return {
+          ...queueProps,
+          ...overrides,
+        };
+      }
+    );
     storeQueue('downloadProfileQueue', createQueueFromProps(queue));
   };
 

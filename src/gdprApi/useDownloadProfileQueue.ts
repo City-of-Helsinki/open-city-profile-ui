@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 
 import {
   QueueState,
@@ -22,8 +22,9 @@ import {
   actionLogTypes,
   isGenericError,
 } from '../common/actionQueue/actionQueueRunner';
-import { downloadDataQueue } from './actions/queues';
+import { getQueue } from './actions/queues';
 import { storeQueue } from '../common/actionQueue/actionQueueStorage';
+import config from '../config';
 
 export type CurrentPhase = keyof typeof currentPhases;
 
@@ -76,7 +77,10 @@ function useDownloadProfileQueue(): {
   });
 
   const storageKey = 'downloadProfileQueue';
-  const queueHookProps = useActionQueue(downloadDataQueue, storageKey);
+  const path = config.downloadPath;
+  const queueName = 'downloadProfile';
+  const queue = useMemo(() => getQueue(queueName, path), [queueName, path]);
+  const queueHookProps = useActionQueue(queue, storageKey);
   const { state } = queueHookProps;
   const queueRunner = queueHookProps.getQueueRunner();
   const internalRedirections = useInternalRedirect(queueRunner);

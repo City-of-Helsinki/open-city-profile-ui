@@ -19,27 +19,42 @@ import { getDownloadDataAction } from './getDownloadData';
 import { getGdprQueryScopesAction } from './getGdprScopes';
 import { getServiceConnectionsAction } from './getServiceConnections';
 import { loadKeycloakConfigAction } from './loadKeycloakConfig';
-import { createDownloadPageRedirectorAndCatcher } from './redirectionHandlers';
+import {
+  createRedirectorAndCatcherActionProps,
+  redirectToDownloadType,
+  waitForDownloadPageRedirectionType,
+} from './redirectionHandlers';
 
-const [
-  redirectToDownloadAction,
-  waitForDownloadPageRedirectionAction,
-] = createDownloadPageRedirectorAndCatcher();
-
-export const downloadDataQueue = [
-  getServiceConnectionsAction,
-  getGdprQueryScopesAction,
-  tunnistamoRedirectionInitializationAction,
-  tunnistamoAuthCodeRedirectionAction,
-  tunnistamoAuthCodeCallbackUrlAction,
-  tunnistamoAuthCodeParserAction,
-  loadKeycloakConfigAction,
-  keycloakRedirectionInitializationAction,
-  keycloakAuthCodeRedirectionAction,
-  keycloakAuthCodeCallbackUrlAction,
-  keycloakAuthCodeParserAction,
-  redirectToDownloadAction,
-  waitForDownloadPageRedirectionAction,
-  getDownloadDataAction,
-  downloadAsFileAction,
-];
+export function getQueue(
+  name: 'downloadProfile' | 'deleteProfile' | 'removeServiceConnection',
+  path: string
+) {
+  const [
+    redirectorAction,
+    catcherAction,
+  ] = createRedirectorAndCatcherActionProps(
+    path,
+    redirectToDownloadType,
+    waitForDownloadPageRedirectionType
+  );
+  if (name === 'downloadProfile') {
+    return [
+      getServiceConnectionsAction,
+      getGdprQueryScopesAction,
+      tunnistamoRedirectionInitializationAction,
+      tunnistamoAuthCodeRedirectionAction,
+      tunnistamoAuthCodeCallbackUrlAction,
+      tunnistamoAuthCodeParserAction,
+      loadKeycloakConfigAction,
+      keycloakRedirectionInitializationAction,
+      keycloakAuthCodeRedirectionAction,
+      keycloakAuthCodeCallbackUrlAction,
+      keycloakAuthCodeParserAction,
+      redirectorAction,
+      catcherAction,
+      getDownloadDataAction,
+      downloadAsFileAction,
+    ];
+  }
+  return [];
+}
