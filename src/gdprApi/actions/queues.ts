@@ -19,6 +19,7 @@ import { getDownloadDataAction } from './getDownloadData';
 import { getGdprQueryScopesAction } from './getGdprScopes';
 import { getServiceConnectionsAction } from './getServiceConnections';
 import { loadKeycloakConfigAction } from './loadKeycloakConfig';
+import { createQueueInfoAction } from './queueInfo';
 import { createRedirectorAndCatcherActionProps } from './redirectionHandlers';
 
 export function getQueue(
@@ -29,6 +30,7 @@ export function getQueue(
     redirectorAction,
     catcherAction,
   ] = createRedirectorAndCatcherActionProps(path);
+  const infoAction = createQueueInfoAction(name);
   if (name === 'downloadProfile') {
     return [
       getServiceConnectionsAction,
@@ -46,7 +48,9 @@ export function getQueue(
       catcherAction,
       getDownloadDataAction,
       downloadAsFileAction,
+      infoAction,
     ];
   }
+
   return [];
 }

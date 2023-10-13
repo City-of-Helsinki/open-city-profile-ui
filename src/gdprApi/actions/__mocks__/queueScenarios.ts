@@ -19,6 +19,7 @@ import { getDownloadDataAction } from '../getDownloadData';
 import { getGdprQueryScopesAction } from '../getGdprScopes';
 import { getServiceConnectionsAction } from '../getServiceConnections';
 import { loadKeycloakConfigAction } from '../loadKeycloakConfig';
+import { queueInfoActionType } from '../queueInfo';
 import {
   defaultRedirectionCatcherActionType,
   defaultRedirectorActionType,
@@ -224,6 +225,19 @@ export function getScenarioForDownloadData({
   return list;
 }
 
+export function getScenarioForAutoTriggeringQueueInfo({
+  ...rest
+}: ScenarioProps = {}): ActionMockData[] {
+  return [
+    {
+      type: queueInfoActionType,
+      runOriginal: true,
+      autoTrigger: true,
+      ...rest,
+    },
+  ];
+}
+
 // next action is tunnistamoAuthCodeCallbackUrlAction
 // actions before it are stored and complete
 // keycloak auth code is not needed, because there are no keylocak scopes
@@ -240,6 +254,7 @@ export function getScenarioWhichGoesFromStartToAuthRedirectAutomatically({
         },
       ],
     }),
+    ...getScenarioForAutoTriggeringQueueInfo(),
   ];
   if (overrides) {
     return modifyScenario(list, overrides);
@@ -276,6 +291,7 @@ export function getScenarioWhereNextPhaseIsResumeCallback({
       runOriginal: true,
     }),
     ...getScenarioForDownloadData(),
+    ...getScenarioForAutoTriggeringQueueInfo(),
   ];
   if (overrides) {
     return modifyScenario(list, overrides);
@@ -304,6 +320,7 @@ export function getScenarioWhereNextPhaseIsResumeDownload({
       ],
     }),
     ...getScenarioForDownloadData({ autoTrigger: true }),
+    ...getScenarioForAutoTriggeringQueueInfo(),
   ];
   if (overrides) {
     return modifyScenario(list, overrides);
@@ -338,6 +355,7 @@ export function getScenarioWhereKeycloakAuthCodeNotInUrl({
     }),
     ...getScenarioForStartPageRedirect(),
     ...getScenarioForDownloadData(),
+    ...getScenarioForAutoTriggeringQueueInfo(),
   ];
   if (overrides) {
     return modifyScenario(list, overrides);
@@ -366,6 +384,7 @@ export function getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully(
       ],
     }),
     ...getScenarioForDownloadData(),
+    ...getScenarioForAutoTriggeringQueueInfo(),
   ];
   if (overrides) {
     return modifyScenario(list, overrides);
