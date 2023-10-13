@@ -11,6 +11,7 @@ import {
   ActionExecutor,
   ActionProps,
   QueueController,
+  getData,
 } from '../../common/actionQueue/actionQueue';
 import { getActionResultAndErrorMessage } from './utils';
 
@@ -28,7 +29,7 @@ export const getServiceConnectionsResultAndError = (
     queueController
   );
 
-const serviceConnectionsQueryExecutor: ActionExecutor = async () =>
+const serviceConnectionsQueryExecutor: ActionExecutor = async action =>
   new Promise((resolve, reject) => {
     (async () => {
       const [error, result] = await to(
@@ -45,7 +46,12 @@ const serviceConnectionsQueryExecutor: ActionExecutor = async () =>
           new Error("'No results in GDPR_SERVICE_CONNECTIONS query")
         );
       }
-      return resolve(getServiceConnectionsServices(result.data));
+      return resolve(
+        getServiceConnectionsServices(
+          result.data,
+          getData(action, 'serviceName') as string
+        )
+      );
     })();
   });
 
@@ -56,3 +62,18 @@ export const getServiceConnectionsAction: ActionProps = {
     noStorage: true,
   },
 };
+
+export function createActionForGettingSpecificServiceConnection(
+  serviceName: string
+): ActionProps {
+  return {
+    type: serviceConnectionsType,
+    executor: serviceConnectionsQueryExecutor,
+    options: {
+      noStorage: true,
+      data: {
+        serviceName,
+      },
+    },
+  };
+}
