@@ -1,3 +1,4 @@
+import { TranslationLanguage } from '../../graphql/generatedTypes';
 import {
   tunnistamoAuthCodeCallbackUrlAction,
   keycloakAuthCodeCallbackUrlAction,
@@ -14,6 +15,7 @@ import {
   tunnistamoRedirectionInitializationAction,
   keycloakRedirectionInitializationAction,
 } from './authCodeRedirectionInitialization';
+import { createDeleteProfileAction } from './deleteProfile';
 import { createDeleteServiceConnectionAction } from './deleteServiceConnection';
 import { downloadAsFileAction } from './downloadAsFile';
 import { getDownloadDataAction } from './getDownloadData';
@@ -45,21 +47,24 @@ export function getQueue({
     catcherAction,
   ] = createRedirectorAndCatcherActionProps(startPagePath);
   const infoAction = createQueueInfoAction(queueName);
+  const commonAuthCodeActions = [
+    tunnistamoRedirectionInitializationAction,
+    tunnistamoAuthCodeRedirectionAction,
+    tunnistamoAuthCodeCallbackUrlAction,
+    tunnistamoAuthCodeParserAction,
+    loadKeycloakConfigAction,
+    keycloakRedirectionInitializationAction,
+    keycloakAuthCodeRedirectionAction,
+    keycloakAuthCodeCallbackUrlAction,
+    keycloakAuthCodeParserAction,
+    redirectorAction,
+    catcherAction,
+  ];
   if (queueName === 'downloadProfile') {
     return [
       getServiceConnectionsAction,
       getGdprQueryScopesAction,
-      tunnistamoRedirectionInitializationAction,
-      tunnistamoAuthCodeRedirectionAction,
-      tunnistamoAuthCodeCallbackUrlAction,
-      tunnistamoAuthCodeParserAction,
-      loadKeycloakConfigAction,
-      keycloakRedirectionInitializationAction,
-      keycloakAuthCodeRedirectionAction,
-      keycloakAuthCodeCallbackUrlAction,
-      keycloakAuthCodeParserAction,
-      redirectorAction,
-      catcherAction,
+      ...commonAuthCodeActions,
       getDownloadDataAction,
       downloadAsFileAction,
       infoAction,
@@ -72,18 +77,17 @@ export function getQueue({
     return [
       createActionForGettingSpecificServiceConnection(serviceName),
       getGdprDeleteScopesAction,
-      tunnistamoRedirectionInitializationAction,
-      tunnistamoAuthCodeRedirectionAction,
-      tunnistamoAuthCodeCallbackUrlAction,
-      tunnistamoAuthCodeParserAction,
-      loadKeycloakConfigAction,
-      keycloakRedirectionInitializationAction,
-      keycloakAuthCodeRedirectionAction,
-      keycloakAuthCodeCallbackUrlAction,
-      keycloakAuthCodeParserAction,
-      redirectorAction,
-      catcherAction,
+      ...commonAuthCodeActions,
       createDeleteServiceConnectionAction(serviceName),
+      infoAction,
+    ];
+  }
+  if (queueName === 'deleteProfile') {
+    return [
+      getServiceConnectionsAction,
+      getGdprDeleteScopesAction,
+      ...commonAuthCodeActions,
+      createDeleteProfileAction('FI' as TranslationLanguage),
       infoAction,
     ];
   }
