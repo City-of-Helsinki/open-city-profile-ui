@@ -22,9 +22,8 @@ import {
   actionLogTypes,
   isGenericError,
 } from '../common/actionQueue/actionQueueRunner';
-import { getQueue } from './actions/queues';
+import { QueueProps, getQueue } from './actions/queues';
 import { storeQueue } from '../common/actionQueue/actionQueueStorage';
-import config from '../config';
 
 export type CurrentPhase = keyof typeof currentPhases;
 
@@ -54,7 +53,11 @@ export type QueueComponentState = QueueState & {
   nextPhase?: NextPhase;
 };
 
-function useAuthCodeQueues(): {
+function useAuthCodeQueues({
+  startPagePath,
+  serviceName,
+  queueName,
+}: QueueProps): {
   canStart: () => boolean;
   startOrRestart: () => void;
   shouldRestart: () => boolean;
@@ -75,10 +78,11 @@ function useAuthCodeQueues(): {
     nextPhase: undefined,
   });
 
-  const storageKey = 'downloadProfileQueue';
-  const path = config.downloadPath;
-  const queueName = 'downloadProfile';
-  const queue = useMemo(() => getQueue(queueName, path), [queueName, path]);
+  const storageKey = 'authCodeQueue';
+  const queue = useMemo(
+    () => getQueue({ startPagePath, serviceName, queueName }),
+    [startPagePath, serviceName, queueName]
+  );
   const queueHookProps = useActionQueue(queue, storageKey);
   const { state } = queueHookProps;
   const queueRunner = queueHookProps.getQueueRunner();
@@ -173,7 +177,10 @@ function useAuthCodeQueues(): {
         // if a redirection is stored in a result, use it
         if (!internalRedirections.check()) {
           internalRedirections.redirect(
-            createPagePathWithFailedActionParams(path, queueRunner.getFailed())
+            createPagePathWithFailedActionParams(
+              startPagePath,
+              queueRunner.getFailed()
+            )
           );
         }
       }
@@ -193,7 +200,7 @@ function useAuthCodeQueues(): {
       resolveNextPhase,
       internalRedirections,
       queueRunner,
-      path,
+      startPagePath,
     ]
   );
 

@@ -65,7 +65,7 @@ import {
 } from '../actions/authCodeRedirectionInitialization';
 import { downloadAsFileAction } from '../actions/downloadAsFile';
 import { actionLogTypes } from '../../common/actionQueue/actionQueueRunner';
-import { getQueue } from '../actions/queues';
+import { QueueProps, getQueue } from '../actions/queues';
 
 type HookFunctionResults = {
   hasError: boolean;
@@ -128,19 +128,22 @@ describe('useAuthCodeQueues', () => {
 
   const mockedWindowControls = mockWindowLocation();
 
+  const downloadQueueProps: QueueProps = {
+    queueName: 'downloadProfile',
+    startPagePath: config.downloadPath,
+  };
+
   // store the queue actions from actual downloadDataQueue with new props
   const setStoredState = (overrideQueueProps: Partial<Action>[]) => {
-    const queue = getQueue('downloadProfile', config.downloadPath).map(
-      queueProps => {
-        const overrides =
-          overrideQueueProps.find(op => op.type === queueProps.type) || {};
-        return {
-          ...queueProps,
-          ...overrides,
-        };
-      }
-    );
-    storeQueue('downloadProfileQueue', createQueueFromProps(queue));
+    const queue = getQueue(downloadQueueProps).map(queueProps => {
+      const overrides =
+        overrideQueueProps.find(op => op.type === queueProps.type) || {};
+      return {
+        ...queueProps,
+        ...overrides,
+      };
+    });
+    storeQueue('authCodeQueue', createQueueFromProps(queue));
   };
 
   // set mocked responses and stored data
@@ -178,7 +181,7 @@ describe('useAuthCodeQueues', () => {
       canStart,
       state,
       resume,
-    } = useAuthCodeQueues();
+    } = useAuthCodeQueues(downloadQueueProps);
 
     const functionResults = {
       hasError,
