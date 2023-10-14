@@ -24,6 +24,7 @@ import {
 } from '../common/actionQueue/actionQueueRunner';
 import { QueueProps, getQueue } from './actions/queues';
 import { storeQueue } from '../common/actionQueue/actionQueueStorage';
+import { QueueController } from '../common/actionQueue/actionQueue';
 
 export type CurrentPhase = keyof typeof currentPhases;
 
@@ -53,13 +54,20 @@ export type QueueComponentState = QueueState & {
   nextPhase?: NextPhase;
 };
 
+export type AuthCodeQueuesProps = {
+  onCompleted?: (controller: QueueController, state: QueueState) => void;
+  onError?: (controller: QueueController, state: QueueState) => void;
+} & QueueProps;
+
 export const authCodeQueuesStorageKey = 'authCodeQueue';
 
 function useAuthCodeQueues({
   startPagePath,
   serviceName,
   queueName,
-}: QueueProps): {
+  onCompleted,
+  onError,
+}: AuthCodeQueuesProps): {
   canStart: () => boolean;
   startOrRestart: () => void;
   shouldRestart: () => boolean;
@@ -192,16 +200,20 @@ function useAuthCodeQueues({
           );
         }
       }
-      if (newState.isComplete && !queueComponentState.current.isComplete) {
-        storeQueue(authCodeQueuesStorageKey, null);
-      }
-
+      const oldIsComplete = queueComponentState.current.isComplete;
       queueComponentState.current = {
         ...queueComponentState.current,
         ...newState,
         currentPhase,
         nextPhase,
       };
+      if (queueComponentState.current.isComplete && !oldIsComplete) {
+        storeQueue(authCodeQueuesStorageKey, null);
+        const callback = newState.hasError ? onError : onCompleted;
+        if (callback) {
+          callback(queueRunner, newState);
+        }
+      }
     },
     [
       resolveCurrentPhase,
@@ -209,6 +221,8 @@ function useAuthCodeQueues({
       internalRedirections,
       queueRunner,
       startPagePath,
+      onCompleted,
+      onError,
     ]
   );
 

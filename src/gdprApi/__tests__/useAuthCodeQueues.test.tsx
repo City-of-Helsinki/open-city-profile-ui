@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 
 import useAuthCodeQueues, {
+  AuthCodeQueuesProps,
   QueueComponentState,
   authCodeQueuesStorageKey,
   currentPhases,
@@ -66,7 +67,7 @@ import {
 } from '../actions/authCodeRedirectionInitialization';
 import { downloadAsFileAction } from '../actions/downloadAsFile';
 import { actionLogTypes } from '../../common/actionQueue/actionQueueRunner';
-import { QueueProps, getQueue } from '../actions/queues';
+import { getQueue } from '../actions/queues';
 
 type HookFunctionResults = {
   hasError: boolean;
@@ -128,10 +129,14 @@ describe('useAuthCodeQueues', () => {
   };
 
   const mockedWindowControls = mockWindowLocation();
+  const onCompleted = jest.fn();
+  const onError = jest.fn();
 
-  const downloadQueueProps: QueueProps = {
+  const downloadQueueProps: AuthCodeQueuesProps = {
     queueName: 'downloadProfile',
     startPagePath: config.downloadPath,
+    onCompleted,
+    onError,
   };
 
   // store the queue actions from actual downloadDataQueue with new props
@@ -944,6 +949,100 @@ describe('useAuthCodeQueues', () => {
           getState().lastActionType === getServiceConnectionsAction.type
         ).toBeTruthy();
       });
+    });
+  });
+  describe('onCompleted and onError callbacks are only triggered when queue is complete', () => {
+    it('onCompleted is called when queue is completed without errors.', async () => {
+      mockedWindowControls.setPath(config.downloadPath);
+      mockedWindowControls.setSearch(
+        createNextActionParams({
+          type: defaultRedirectionCatcherActionType,
+        } as Action)
+      );
+      initQueue(getScenarioWhereNextPhaseIsResumeDownload());
+      const { resume, getState, rerender } = renderTestComponent();
+      expect(onCompleted).toHaveBeenCalledTimes(0);
+      expect(onError).toHaveBeenCalledTimes(0);
+
+      await act(async () => {
+        resume();
+      });
+
+      await waitFor(() => {
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.complete,
+          nextPhase: nextPhases.restart,
+        });
+      });
+
+      expect(onCompleted).toHaveBeenCalledTimes(1);
+      expect(onError).toHaveBeenCalledTimes(0);
+
+      await rerender();
+      await rerender();
+
+      expect(onCompleted).toHaveBeenCalledTimes(1);
+      expect(onError).toHaveBeenCalledTimes(0);
+    });
+    it('onError is called when queue fails. Again after restart', async () => {
+      initQueue(
+        getScenarioForScopes({
+          autoTrigger: true,
+          overrides: [
+            {
+              type: getGdprQueryScopesAction.type,
+              resolveValue: undefined,
+              rejectValue: rejectionError,
+            },
+          ],
+        })
+      );
+      const {
+        start,
+        getState,
+        rerender,
+        toggleComponentMounting,
+      } = renderTestComponent();
+      expect(onCompleted).toHaveBeenCalledTimes(0);
+      expect(onError).toHaveBeenCalledTimes(0);
+
+      await act(async () => {
+        start();
+      });
+
+      await waitFor(() => {
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.error,
+        });
+      });
+
+      expect(onCompleted).toHaveBeenCalledTimes(0);
+      expect(onError).toHaveBeenCalledTimes(1);
+
+      await rerender();
+      await rerender();
+
+      expect(onCompleted).toHaveBeenCalledTimes(0);
+      expect(onError).toHaveBeenCalledTimes(1);
+
+      await toggleComponentMounting();
+      await toggleComponentMounting();
+
+      expect(onCompleted).toHaveBeenCalledTimes(0);
+      expect(onError).toHaveBeenCalledTimes(1);
+
+      await act(async () => {
+        start();
+      });
+
+      await waitFor(() => {
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.error,
+        });
+      });
+
+      expect(onCompleted).toHaveBeenCalledTimes(0);
+      expect(onError).toHaveBeenCalledTimes(2);
     });
   });
 });
