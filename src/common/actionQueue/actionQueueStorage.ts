@@ -1,7 +1,9 @@
+import { AnyObject } from '../../graphql/typings';
 import {
   Action,
   ActionQueue,
   ActionUpdateProps,
+  getData,
   getOption,
 } from './actionQueue';
 
@@ -46,4 +48,19 @@ export function storeQueue(storageKey: string, queue: ActionQueue | null) {
   } catch (e) {
     return false;
   }
+}
+
+export function getStoredQueueData(storageKey: string) {
+  const storedQueue = getStoredQueue(storageKey);
+  return storedQueue
+    ? storedQueue.reduce((data, action) => {
+        const actionData = getData(action as Action);
+        return actionData && typeof actionData === 'object'
+          ? {
+              ...data,
+              ...actionData,
+            }
+          : data;
+      }, {} as AnyObject)
+    : undefined;
 }

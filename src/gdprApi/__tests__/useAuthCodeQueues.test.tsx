@@ -3,6 +3,7 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react';
 
 import useAuthCodeQueues, {
   QueueComponentState,
+  authCodeQueuesStorageKey,
   currentPhases,
   nextPhases,
 } from '../useAuthCodeQueues';
@@ -143,7 +144,7 @@ describe('useAuthCodeQueues', () => {
         ...overrides,
       };
     });
-    storeQueue('authCodeQueue', createQueueFromProps(queue));
+    storeQueue(authCodeQueuesStorageKey, createQueueFromProps(queue));
   };
 
   // set mocked responses and stored data

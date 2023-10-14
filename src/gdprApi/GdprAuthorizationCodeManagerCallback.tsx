@@ -1,15 +1,20 @@
 import React from 'react';
 
 import styles from './gdprAuthorizationCodeManagerCallback.module.css';
-import useAuthCodeQueues from './useAuthCodeQueues';
+import useAuthCodeQueues, {
+  authCodeQueuesStorageKey,
+} from './useAuthCodeQueues';
+import { getStoredQueueData } from '../common/actionQueue/actionQueueStorage';
+import { QueueProps } from './actions/queues';
 
 function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
-  const downloadProfileQueue = useAuthCodeQueues();
+  const storedData = getStoredQueueData(authCodeQueuesStorageKey) as QueueProps;
+  const downloadProfileQueue = useAuthCodeQueues(storedData);
   React.useEffect(() => {
     if (downloadProfileQueue.shouldHandleCallback()) {
       downloadProfileQueue.resume();
     }
-  }, [downloadProfileQueue]);
+  });
 
   return (
     <div className={styles['wrapper']}>

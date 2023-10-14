@@ -53,6 +53,8 @@ export type QueueComponentState = QueueState & {
   nextPhase?: NextPhase;
 };
 
+export const authCodeQueuesStorageKey = 'authCodeQueue';
+
 function useAuthCodeQueues({
   startPagePath,
   serviceName,
@@ -78,12 +80,11 @@ function useAuthCodeQueues({
     nextPhase: undefined,
   });
 
-  const storageKey = 'authCodeQueue';
   const queue = useMemo(
     () => getQueue({ startPagePath, serviceName, queueName }),
     [startPagePath, serviceName, queueName]
   );
-  const queueHookProps = useActionQueue(queue, storageKey);
+  const queueHookProps = useActionQueue(queue, authCodeQueuesStorageKey);
   const { state } = queueHookProps;
   const queueRunner = queueHookProps.getQueueRunner();
   const internalRedirections = useInternalRedirect(queueRunner);
@@ -137,7 +138,6 @@ function useAuthCodeQueues({
           // eslint-disable-next-line sonarjs/no-duplicate-string
           return nextPhases.waitForAuthCodeRedirect;
         }
-
         if (canResumeWithRedirectionCatcher(queueRunner)) {
           return isOnGrprCallbackPage
             ? nextPhases.redirectBackToStartPage
@@ -185,7 +185,7 @@ function useAuthCodeQueues({
         }
       }
       if (newState.isComplete && !queueComponentState.current.isComplete) {
-        storeQueue(storageKey, null);
+        storeQueue(authCodeQueuesStorageKey, null);
       }
 
       queueComponentState.current = {
