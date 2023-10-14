@@ -14,9 +14,13 @@ import {
   keycloakRedirectionInitializationAction,
   tunnistamoRedirectionInitializationAction,
 } from '../authCodeRedirectionInitialization';
+import { deleteServiceConnectionType } from '../deleteServiceConnection';
 import { downloadAsFileAction } from '../downloadAsFile';
 import { getDownloadDataAction } from '../getDownloadData';
-import { getGdprQueryScopesAction } from '../getGdprScopes';
+import {
+  getGdprDeleteScopesAction,
+  getGdprQueryScopesAction,
+} from '../getGdprScopes';
 import { getServiceConnectionsAction } from '../getServiceConnections';
 import { loadKeycloakConfigAction } from '../loadKeycloakConfig';
 import { queueInfoActionType } from '../queueInfo';
@@ -57,11 +61,13 @@ export function modifyScenario(
 export function getScenarioForScopes({
   hasKeycloakScopes = true,
   hasTunnistamoScopes = true,
+  hasDeleteScopes = false,
   overrides,
   ...rest
 }: ScenarioProps & {
   hasKeycloakScopes?: boolean;
   hasTunnistamoScopes?: boolean;
+  hasDeleteScopes?: boolean;
 } = {}): ActionMockData[] {
   const list = [
     {
@@ -70,7 +76,9 @@ export function getScenarioForScopes({
       ...rest,
     },
     {
-      type: getGdprQueryScopesAction.type,
+      type: hasDeleteScopes
+        ? getGdprDeleteScopesAction.type
+        : getGdprQueryScopesAction.type,
       resolveValue: {
         keycloakScopes: hasKeycloakScopes
           ? ['keycloak-scope1', 'keycloak-scope2']
@@ -238,6 +246,31 @@ export function getScenarioForAutoTriggeringQueueInfo({
   ];
 }
 
+export function getScenarioForDeleteServiceConnection({
+  overrides,
+  serviceName,
+  ...rest
+}: ScenarioProps & {
+  serviceName?: string;
+} = {}): ActionMockData[] {
+  const list = [
+    {
+      type: deleteServiceConnectionType,
+      resolveValue: true,
+      options: {
+        data: {
+          serviceName,
+        },
+      },
+      ...rest,
+    },
+  ];
+  if (overrides) {
+    return modifyScenario(list, overrides);
+  }
+  return list;
+}
+
 // next action is tunnistamoAuthCodeCallbackUrlAction
 // actions before it are stored and complete
 // keycloak auth code is not needed, because there are no keylocak scopes
@@ -384,6 +417,40 @@ export function getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully(
       ],
     }),
     ...getScenarioForDownloadData(),
+    ...getScenarioForAutoTriggeringQueueInfo(),
+  ];
+  if (overrides) {
+    return modifyScenario(list, overrides);
+  }
+  return list;
+}
+
+export function getScenarioWhereDeleteServiceConnectionIsResumable({
+  overrides,
+  serviceName,
+}: ScenarioProps & { serviceName?: string } = {}) {
+  const list = [
+    ...getScenarioForScopes({ store: true, hasDeleteScopes: true }),
+    ...getScenarioForTunnistamoAuth({
+      store: true,
+    }),
+    ...getScenarioForKeycloakAuth({
+      store: true,
+    }),
+    ...getScenarioForStartPageRedirect({
+      store: true,
+      overrides: [
+        {
+          type: defaultRedirectionCatcherActionType,
+          store: false,
+          autoTrigger: true,
+        },
+      ],
+    }),
+    ...getScenarioForDeleteServiceConnection({
+      serviceName,
+      autoTrigger: true,
+    }),
     ...getScenarioForAutoTriggeringQueueInfo(),
   ];
   if (overrides) {

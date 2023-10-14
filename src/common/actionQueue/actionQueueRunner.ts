@@ -180,10 +180,7 @@ export function createActionQueueRunner(
           return;
         }
         completeAction({
-          errorMessage:
-            e instanceof Error
-              ? e.message
-              : `An error was returned: ${e ? e.toString() : ''}`,
+          errorMessage: e instanceof Error ? e.message : e ? e.toString() : '',
         });
       });
     return promise;
