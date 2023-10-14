@@ -421,8 +421,10 @@ describe('useAuthCodeQueues', () => {
       await act(async () => {
         start();
         await waitFor(() => {
-          expect(getState().currentPhase === currentPhases.error).toBeTruthy();
-          expect(getState().nextPhase === nextPhases.restart).toBeTruthy();
+          expect(getState()).toMatchObject({
+            currentPhase: currentPhases.error,
+            nextPhase: nextPhases.restart,
+          });
         });
         expect(
           isActionCompleted(tunnistamoAuthCodeRedirectionAction.type)
@@ -801,14 +803,22 @@ describe('useAuthCodeQueues', () => {
         keycloakAuthCodeRedirectionAction.type,
         keycloakAuthCodeCallbackUrlAction.type
       );
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(getState().nextPhase === nextPhases.resumeCallback).toBeTruthy();
+
+      await toggleComponentMounting();
+      mockedWindowControls.setPath(config.gdprCallbackPath);
+      await toggleComponentMounting();
+
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.idle,
+        nextPhase: nextPhases.resumeCallback,
+      });
 
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
-        // note: this is false, because queue is not idle shouldHandleCallback: true,
-        isLoading: true,
+        shouldHandleCallback: true,
       });
+
+      resume();
 
       await checkCurrentActionAndManuallyCompleteIt(
         keycloakAuthCodeCallbackUrlAction.type,
@@ -828,10 +838,11 @@ describe('useAuthCodeQueues', () => {
         defaultRedirectorActionType,
         defaultRedirectionCatcherActionType
       );
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(
-        getState().nextPhase === nextPhases.redirectBackToStartPage
-      ).toBeTruthy();
+
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.redirectBackToStartPage,
+      });
 
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -856,7 +867,9 @@ describe('useAuthCodeQueues', () => {
         ...hookFunctionResultsAsFalse,
         shouldResumeDownload: true,
       });
+
       resume();
+
       await checkCurrentActionAndManuallyCompleteIt(
         defaultRedirectionCatcherActionType,
         getDownloadDataAction.type

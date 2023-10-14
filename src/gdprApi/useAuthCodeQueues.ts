@@ -138,12 +138,18 @@ function useAuthCodeQueues({
           // eslint-disable-next-line sonarjs/no-duplicate-string
           return nextPhases.waitForAuthCodeRedirect;
         }
+
         if (canResumeWithRedirectionCatcher(queueRunner)) {
           return isOnGrprCallbackPage
             ? nextPhases.redirectBackToStartPage
-            : nextPhases.resumeWithAuthCodes;
+            : currentPhase === currentPhases.idle
+            ? nextPhases.resumeWithAuthCodes
+            : nextPhases.waitForInternalRedirect;
         }
-        if (shouldResumeWithAuthCodeCallback(queueRunner)) {
+        if (
+          currentPhase === currentPhases.idle &&
+          shouldResumeWithAuthCodeCallback(queueRunner)
+        ) {
           return isOnGrprCallbackPage
             ? nextPhases.resumeCallback
             : nextPhases.stoppedInMidQueue;
@@ -174,7 +180,9 @@ function useAuthCodeQueues({
       const nextPhase = resolveNextPhase(currentPhase);
 
       if (nextPhase === nextPhases.redirectBackToStartPage) {
-        // if a redirection is stored in a result, use it
+        // if a redirection is stored in an action result,
+        // it is stored in internalRedirections and
+        // .check() returns false when redirection has been done and is pending.
         if (!internalRedirections.check()) {
           internalRedirections.redirect(
             createPagePathWithFailedActionParams(
