@@ -22,9 +22,8 @@ function DeleteProfileError({
   if (!error) {
     return null;
   }
-
   const failureList = (error as DeleteResultLists).failures || [];
-  const errorIsListOfServices = failureList.length;
+  const errorIsListOfServices = !!failureList.length;
   const id = 'delete-profile-error-modal';
   const closeButtonText = t('notification.closeButtonText');
   const {

@@ -1,3 +1,4 @@
+import { DeleteResultLists } from '../../../profile/helpers/parseDeleteProfileResult';
 import {
   keycloakAuthCodeCallbackUrlAction,
   tunnistamoAuthCodeCallbackUrlAction,
@@ -14,6 +15,7 @@ import {
   keycloakRedirectionInitializationAction,
   tunnistamoRedirectionInitializationAction,
 } from '../authCodeRedirectionInitialization';
+import { deleteProfileType } from '../deleteProfile';
 import { deleteServiceConnectionType } from '../deleteServiceConnection';
 import { downloadAsFileAction } from '../downloadAsFile';
 import { getDownloadDataAction } from '../getDownloadData';
@@ -271,6 +273,29 @@ export function getScenarioForDeleteServiceConnection({
   return list;
 }
 
+export function getScenarioForDeleteProfile({
+  overrides,
+  results = { failures: [], successful: ['serviceX'] },
+  error,
+  ...rest
+}: ScenarioProps & {
+  results?: DeleteResultLists;
+  error?: boolean;
+} = {}): ActionMockData[] {
+  const list = [
+    {
+      type: deleteProfileType,
+      resolveValue: error ? undefined : results,
+      rejectValue: error ? new Error('Failed') : undefined,
+      ...rest,
+    },
+  ];
+  if (overrides) {
+    return modifyScenario(list, overrides);
+  }
+  return list;
+}
+
 // next action is tunnistamoAuthCodeCallbackUrlAction
 // actions before it are stored and complete
 // keycloak auth code is not needed, because there are no keylocak scopes
@@ -450,6 +475,62 @@ export function getScenarioWhereDeleteServiceConnectionIsResumable({
     ...getScenarioForDeleteServiceConnection({
       serviceName,
       autoTrigger: true,
+    }),
+    ...getScenarioForAutoTriggeringQueueInfo(),
+  ];
+  if (overrides) {
+    return modifyScenario(list, overrides);
+  }
+  return list;
+}
+
+export function getScenarioWhereDeleteProfileCanStartAndProceedToRedirection({
+  overrides,
+}: ScenarioProps & { serviceName?: string } = {}) {
+  const list = [
+    ...getScenarioForScopes({ hasDeleteScopes: true, autoTrigger: true }),
+    ...getScenarioForTunnistamoAuth({ autoTrigger: true }),
+    ...getScenarioForKeycloakAuth({ autoTrigger: true }),
+    ...getScenarioForStartPageRedirect({ autoTrigger: true }),
+    ...getScenarioForDeleteProfile(),
+    ...getScenarioForAutoTriggeringQueueInfo(),
+  ];
+  if (overrides) {
+    return modifyScenario(list, overrides);
+  }
+  return list;
+}
+
+export function getScenarioWhereDeleteProfileIsResumable({
+  overrides,
+  results,
+  error,
+}: ScenarioProps & {
+  results?: DeleteResultLists;
+  error?: boolean;
+} = {}) {
+  const list = [
+    ...getScenarioForScopes({ store: true, hasDeleteScopes: true }),
+    ...getScenarioForTunnistamoAuth({
+      store: true,
+    }),
+    ...getScenarioForKeycloakAuth({
+      store: true,
+    }),
+    ...getScenarioForStartPageRedirect({
+      store: true,
+      overrides: [
+        {
+          type: defaultRedirectionCatcherActionType,
+          store: false,
+          autoTrigger: true,
+        },
+      ],
+    }),
+    ...getScenarioForDeleteProfile({
+      autoTrigger: true,
+      results,
+      error,
     }),
     ...getScenarioForAutoTriggeringQueueInfo(),
   ];
