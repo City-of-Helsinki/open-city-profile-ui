@@ -59,6 +59,9 @@ const authCodeParserExecutor: ActionExecutor = async (action, controller) => {
 
 const options: ActionOptions = {
   idleWhenActive: true,
+  data: {
+    redirectsOnError: true,
+  },
 };
 
 export const tunnistamoAuthCodeParserAction: ActionProps = {
