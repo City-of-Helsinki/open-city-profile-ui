@@ -3,15 +3,11 @@ import { act, waitFor } from '@testing-library/react';
 
 import {
   renderComponentWithMocksAndContexts,
-  TestTools,
   cleanComponentMocks,
   ElementSelector,
 } from '../../../../common/test/testingLibraryTools';
 import DownloadData from '../DownloadData';
-import { ResponseProvider } from '../../../../common/test/MockApolloClientProvider';
-import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
 import i18n from '../../../../common/test/testi18nInit';
-import { DownloadMyProfileQueryVariables } from '../../../../graphql/generatedTypes';
 import mockWindowLocation from '../../../../common/test/mockWindowLocation';
 import {
   Action,
@@ -47,8 +43,6 @@ jest.mock('file-saver', () => ({
 jest.mock('../../../../gdprApi/actions/queues');
 
 describe('<DownloadData /> ', () => {
-  let responseCounter = -1;
-  const serviceConnections = getMyProfileWithServiceConnections(true);
   const mockedWindowControls = mockWindowLocation();
 
   const onCompleted = jest.fn();
@@ -94,31 +88,10 @@ describe('<DownloadData /> ', () => {
     }
   };
 
-  const queryVariableTracker = jest.fn();
   const t = i18n.getFixedT('fi');
 
-  const renderTestSuite = (errorResponseIndex = -1) => {
-    const responseProvider: ResponseProvider = payload => {
-      responseCounter = responseCounter + 1;
-      queryVariableTracker(payload as DownloadMyProfileQueryVariables);
-      if (responseCounter === errorResponseIndex) {
-        return { errorType: 'networkError' };
-      }
-      if (
-        payload &&
-        (payload as DownloadMyProfileQueryVariables).authorizationCode
-      ) {
-        return { downloadMyProfile: {} };
-      }
-
-      return { profileDataWithServiceConnections: serviceConnections };
-    };
-
-    return renderComponentWithMocksAndContexts(
-      responseProvider,
-      <DownloadData />
-    );
-  };
+  const initTests = async () =>
+    renderComponentWithMocksAndContexts(jest.fn(), <DownloadData />);
 
   const submitButton: ElementSelector = {
     id: 'download-profile-button',
@@ -127,17 +100,11 @@ describe('<DownloadData /> ', () => {
     testId: 'download-profile-error',
   };
 
-  beforeEach(() => {
-    responseCounter = -1;
-  });
   afterEach(() => {
     mockedWindowControls.reset();
     cleanComponentMocks();
     jest.clearAllMocks();
   });
-
-  const initTests = async (errorResponseIndex = -1): Promise<TestTools> =>
-    renderTestSuite(errorResponseIndex);
 
   it(`Clicking the button disables it, changes its text and starts the queue.`, async () => {
     initQueue(getScenarioWhichGoesFromStartToAuthRedirectAutomatically());
@@ -174,7 +141,7 @@ describe('<DownloadData /> ', () => {
       })
     );
     await act(async () => {
-      const { clickElement, waitForElement } = await initTests(1);
+      const { clickElement, waitForElement } = await initTests();
       await clickElement(submitButton);
       await waitForElement(errorNotification);
     });
