@@ -1,9 +1,11 @@
 import {
+  Action,
   ActionExecutor,
   ActionProps,
   ActionType,
   QueueController,
   getData,
+  isResumable,
 } from '../../common/actionQueue/actionQueue';
 import {
   RunnerFunctions,
@@ -13,6 +15,7 @@ import {
 import matchUrls from '../../common/helpers/matchUrls';
 import {
   createNextActionParams,
+  isOnActionRequiredPath,
   rejectExecutorWithRedirection,
   resolveExecutorWithRedirection,
   thirtySecondsInMs,
@@ -21,15 +24,23 @@ import {
 export const defaultRedirectorActionType = 'redirector';
 export const defaultRedirectionCatcherActionType = 'redirectionCatcher';
 
-export const canResumeWithRedirectionCatcher = (
-  controller: RunnerFunctions,
-  catcherActionType = defaultRedirectionCatcherActionType
-): boolean => canQueueContinueFrom(controller, catcherActionType, true);
-
 export const resumeQueueFromRedirectionCatcher = (
   runner: RunnerFunctions,
   catcherActionType = defaultRedirectionCatcherActionType
 ) => resumeQueueFromAction(runner, catcherActionType);
+
+export const isResumableRedirectionCatcher = (action: Action) => {
+  if (
+    !isResumable(action) ||
+    getData(action, 'isRedirectionCatcher') !== true
+  ) {
+    return false;
+  }
+  return isOnActionRequiredPath(action);
+};
+
+export const isWaitingForRedirectionCatcher = (action: Action) =>
+  action.active && !isOnActionRequiredPath(action);
 
 export const getStartPagePathFromQueue = (
   controller: QueueController,
@@ -81,6 +92,11 @@ export const createRedirectorAndCatcherActionProps = (
     options: {
       noStorage: true,
       idleWhenActive: true,
+      resumable: true,
+      data: {
+        isRedirectionCatcher: true,
+        requiredPath: targetPath,
+      },
     },
   };
 
@@ -91,6 +107,7 @@ export const createRedirectorAndCatcherActionProps = (
       noStorage: true,
       data: {
         startPagePath: targetPath,
+        redirectsInternally: true,
       },
     },
   };

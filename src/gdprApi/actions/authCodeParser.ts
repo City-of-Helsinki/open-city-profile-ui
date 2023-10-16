@@ -36,9 +36,12 @@ const authCodeParserExecutor: ActionExecutor = async (action, controller) => {
     );
   }
 
+  const rejector = (message: string) =>
+    rejectExecutorWithStartPageRedirection(controller, action, message);
+
   const { code, state } = parseAuthorizationCallbackUrl();
   if (!code || !state) {
-    return Promise.reject('No code or state found in callback url');
+    return rejector('No code or state found in callback url');
   }
 
   const storedUrlProps = getAuthCodeRedirectionInitializationResult(
@@ -46,14 +49,10 @@ const authCodeParserExecutor: ActionExecutor = async (action, controller) => {
     controller
   );
   if (!storedUrlProps) {
-    return Promise.reject('Stored state not found');
+    return rejector('Stored state not found');
   }
   if (!state || !storedUrlProps.state || storedUrlProps.state !== state) {
-    return rejectExecutorWithStartPageRedirection(
-      controller,
-      action,
-      'State is not for this action'
-    );
+    return rejector('State is not for this action');
   }
   return Promise.resolve(code);
 };

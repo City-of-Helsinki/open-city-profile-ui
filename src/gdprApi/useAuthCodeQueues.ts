@@ -5,18 +5,14 @@ import {
   useActionQueue,
 } from '../common/actionQueue/useActionQueue';
 import {
-  canResumeWithRedirectionCatcher,
+  isResumableRedirectionCatcher,
   resumeQueueFromRedirectionCatcher,
 } from './actions/redirectionHandlers';
 import { isQueueWaitingForAuthCodeRedirection } from './actions/authCodeRedirectionHandler';
+import { useInternalRedirect } from './actions/utils';
 import {
-  createPagePathWithFailedActionParams,
-  isGdprCallbackUrl,
-  useInternalRedirect,
-} from './actions/utils';
-import {
+  isResumableGdprCallback,
   resumeQueueFromNextCallbackDetector,
-  shouldResumeWithAuthCodeCallback,
 } from './actions/authCodeCallbackUrlDetector';
 import {
   actionLogTypes,
@@ -24,7 +20,11 @@ import {
 } from '../common/actionQueue/actionQueueRunner';
 import { QueueProps, getQueue } from './actions/queues';
 import { storeQueue } from '../common/actionQueue/actionQueueStorage';
-import { QueueController } from '../common/actionQueue/actionQueue';
+import {
+  Action,
+  QueueController,
+  isResumable,
+} from '../common/actionQueue/actionQueue';
 
 export type CurrentPhase = keyof typeof currentPhases;
 
@@ -46,7 +46,6 @@ export const nextPhases = {
   start: 'start',
   waitForInternalRedirect: 'waitForInternalRedirect',
   waitForAuthCodeRedirect: 'waitForAuthCodeRedirect',
-  redirectBackToStartPage: 'redirectBackToStartPage',
 } as const;
 
 export type QueueComponentState = QueueState & {
@@ -127,12 +126,11 @@ function useAuthCodeQueues({
    * - waitForAction: non-essential action is running
    * - resumeWithAuthCodes: authcodes are fetched, resume from next action (redirectionCatcher)
    * - resumeCallback: the browser has returned from oidc server and queue should be resumed
-   * - stoppedInMidQueue: queue is stopped in non-essential action. After the queue was restored from storage.
+   * - stoppedInMidQueue: queue is stopped in some non-essential action.
    * - restart: an action has failed and user should restart it
    * - start: user should start the queue
    * - waitForAuthCodeRedirect: there is a redirection to the oidc server on-going
-   * - waitForInternalRedirect: there is a redirection on-going (other that listed above)
-   * - redirectBackToStartPage: user should be (and will be) redirected back to the page where auth codes are needed.
+   * - waitForInternalRedirect: there is internal redirection in action
    */
 
   const resolveNextPhase = useCallback(
@@ -140,43 +138,34 @@ function useAuthCodeQueues({
       if (currentPhase === currentPhases.complete) {
         return nextPhases.restart;
       }
-      const isOnGrprCallbackPage = isGdprCallbackUrl();
-      if (currentPhase !== currentPhases.error) {
-        if (isQueueWaitingForAuthCodeRedirection(queueRunner)) {
-          // eslint-disable-next-line sonarjs/no-duplicate-string
-          return nextPhases.waitForAuthCodeRedirect;
+      const next = queueRunner.getNext();
+      const couldResume = !!next && currentPhase === 'idle';
+      const isNextResumable = couldResume ? isResumable(next) : false;
+      if (isNextResumable) {
+        if (isResumableGdprCallback(next as Action)) {
+          return nextPhases.resumeCallback;
         }
-
-        if (canResumeWithRedirectionCatcher(queueRunner)) {
-          return isOnGrprCallbackPage
-            ? nextPhases.redirectBackToStartPage
-            : currentPhase === currentPhases.idle
-            ? nextPhases.resumeWithAuthCodes
-            : nextPhases.waitForInternalRedirect;
-        }
-        if (
-          currentPhase === currentPhases.idle &&
-          shouldResumeWithAuthCodeCallback(queueRunner)
-        ) {
-          return isOnGrprCallbackPage
-            ? nextPhases.resumeCallback
-            : nextPhases.stoppedInMidQueue;
+        if (isResumableRedirectionCatcher(next as Action)) {
+          return nextPhases.resumeWithAuthCodes;
         }
       }
       if (internalRedirections.check()) {
         return nextPhases.waitForInternalRedirect;
       }
+      if (currentPhase === currentPhases.error) {
+        return nextPhases.restart;
+      }
+      if (isQueueWaitingForAuthCodeRedirection(queueRunner)) {
+        return nextPhases.waitForAuthCodeRedirect;
+      }
+
       if (currentPhase === currentPhases.idle) {
         if (queueRunner.getComplete().length) {
           return nextPhases.stoppedInMidQueue;
         }
         return nextPhases.start;
       }
-      if (currentPhase === currentPhases.error) {
-        return isOnGrprCallbackPage
-          ? nextPhases.redirectBackToStartPage
-          : nextPhases.restart;
-      }
+
       return nextPhases.waitForAction;
     },
     [queueRunner, internalRedirections]
@@ -186,20 +175,6 @@ function useAuthCodeQueues({
     (newState: QueueState) => {
       const currentPhase = resolveCurrentPhase(newState);
       const nextPhase = resolveNextPhase(currentPhase);
-
-      if (nextPhase === nextPhases.redirectBackToStartPage) {
-        // if a redirection is stored in an action result,
-        // it is stored in internalRedirections and
-        // .check() returns false when redirection has been done and is pending.
-        if (!internalRedirections.check()) {
-          internalRedirections.redirect(
-            createPagePathWithFailedActionParams(
-              startPagePath,
-              queueRunner.getFailed()
-            )
-          );
-        }
-      }
       const oldIsComplete = queueComponentState.current.isComplete;
       queueComponentState.current = {
         ...queueComponentState.current,
@@ -215,15 +190,7 @@ function useAuthCodeQueues({
         }
       }
     },
-    [
-      resolveCurrentPhase,
-      resolveNextPhase,
-      internalRedirections,
-      queueRunner,
-      startPagePath,
-      onCompleted,
-      onError,
-    ]
+    [resolveCurrentPhase, resolveNextPhase, queueRunner, onCompleted, onError]
   );
 
   handleChange(state);

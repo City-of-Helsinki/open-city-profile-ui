@@ -45,7 +45,6 @@ import {
 } from '../actions/__mocks__/mock.util';
 import {
   getScenarioForScopes,
-  getScenarioForTunnistamoAuth,
   getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully,
   getScenarioWhereKeycloakAuthCodeNotInUrl,
   getScenarioWhereNextPhaseIsResumeCallback,
@@ -68,6 +67,7 @@ import {
 import { downloadAsFileAction } from '../actions/downloadAsFile';
 import { actionLogTypes } from '../../common/actionQueue/actionQueueRunner';
 import { getQueue } from '../actions/queues';
+import { getMockCallArgs } from '../../common/test/jestMockHelper';
 
 type HookFunctionResults = {
   hasError: boolean;
@@ -448,7 +448,7 @@ describe('useAuthCodeQueues', () => {
     beforeEach(() => {
       mockedWindowControls.setPath(config.gdprCallbackPath);
     });
-    it('When codes are fetched, next phase is "resume-callback". User is redirected to the download page', async () => {
+    it('When codes are fetched, next action will redirect back to start page.', async () => {
       mockedWindowControls.setSearch(
         `state=${tunnistamoState}&code=${tunnistamoCode}`
       );
@@ -474,9 +474,11 @@ describe('useAuthCodeQueues', () => {
         expect(isActionCompleted(loadKeycloakConfigAction.type)).toBeTruthy();
       });
       await waitFor(() => {
-        expect(mockHistoryPushTracker).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPushTracker).toHaveBeenLastCalledWith(
+          '/?next=redirectionCatcher'
+        );
         expect(getState()).toMatchObject({
-          nextPhase: nextPhases.redirectBackToStartPage,
+          nextPhase: nextPhases.waitForInternalRedirect,
         });
       });
       expect(getFunctionResults()).toMatchObject({
@@ -484,7 +486,7 @@ describe('useAuthCodeQueues', () => {
         isLoading: true,
       });
     });
-    it('When an action fails, an error is logged and redirection to download page is done', async () => {
+    it('When an action fails, an error is logged and redirection to start page is done', async () => {
       mockedWindowControls.setSearch(`state=${keycloakState}&code=`);
       initQueue(getScenarioWhereKeycloakAuthCodeNotInUrl());
       const { resume, getState, getFunctionResults } = renderTestComponent();
@@ -520,46 +522,20 @@ describe('useAuthCodeQueues', () => {
       });
       await waitFor(async () => {
         expect(mockHistoryPushTracker).toHaveBeenCalledTimes(1);
+        const lastCall = getMockCallArgs(
+          mockHistoryPushTracker,
+          0
+        )[0] as string;
+
+        expect(
+          lastCall.includes(`/?error=${keycloakAuthCodeParserAction.type}`)
+        ).toBeTruthy();
       });
 
       await waitFor(async () => {
         expect(getState()).toMatchObject({
           currentPhase: currentPhases.error,
-          nextPhase: nextPhases.redirectBackToStartPage,
-        });
-      });
-      expect(getFunctionResults()).toMatchObject({
-        ...hookFunctionResultsAsFalse,
-        hasError: true,
-      });
-    });
-    it('Download page redirection is always done when gdpr-callback page has an error', async () => {
-      initQueue([
-        ...getScenarioForScopes({ store: true }),
-        ...getScenarioForTunnistamoAuth({
-          store: true,
-          overrides: [
-            {
-              type: tunnistamoAuthCodeCallbackUrlAction.type,
-              rejectValue: rejectionError,
-              resolveValue: undefined,
-              store: false,
-              autoTrigger: true,
-            },
-            {
-              type: tunnistamoAuthCodeParserAction.type,
-              store: false,
-            },
-          ],
-        }),
-      ]);
-      const { resume, getState, getFunctionResults } = renderTestComponent();
-      resume();
-      await waitFor(async () => {
-        expect(mockHistoryPushTracker).toHaveBeenCalledTimes(1);
-        expect(getState()).toMatchObject({
-          currentPhase: currentPhases.error,
-          nextPhase: nextPhases.redirectBackToStartPage,
+          nextPhase: nextPhases.waitForInternalRedirect,
         });
       });
       expect(getFunctionResults()).toMatchObject({
@@ -871,18 +847,21 @@ describe('useAuthCodeQueues', () => {
 
       expect(getState()).toMatchObject({
         currentPhase: currentPhases.running,
-        nextPhase: nextPhases.waitForAction,
+        nextPhase: nextPhases.waitForInternalRedirect,
       });
 
       await checkCurrentActionAndManuallyCompleteIt(
-        defaultRedirectorActionType,
         defaultRedirectionCatcherActionType
       );
 
       expect(getState()).toMatchObject({
         currentPhase: currentPhases.running,
-        nextPhase: nextPhases.redirectBackToStartPage,
+        nextPhase: nextPhases.waitForInternalRedirect,
       });
+
+      expect(mockHistoryPushTracker).toHaveBeenLastCalledWith(
+        '/?next=redirectionCatcher'
+      );
 
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,

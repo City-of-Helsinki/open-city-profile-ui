@@ -1,14 +1,18 @@
 import {
+  Action,
   ActionExecutor,
   ActionOptions,
   ActionProps,
   QueueController,
+  isResumable,
 } from '../../common/actionQueue/actionQueue';
 import { RunnerFunctions } from '../../common/actionQueue/actionQueueRunner';
+import config from '../../config';
 import { getAuthCodeRedirectionInitializationResult } from './authCodeRedirectionInitialization';
 import {
   isAuthCodeActionNeeded,
   isGdprCallbackUrl,
+  isOnActionRequiredPath,
   parseAuthorizationCallbackUrl,
   rejectExecutorWithStartPageRedirection,
   thirtySecondsInMs,
@@ -50,17 +54,6 @@ export const isQueueWaitingForAuthCodeCallback = (
   controller: QueueController
 ) => !!getNextAuthCodeCallbackDetector(controller);
 
-export const shouldResumeWithAuthCodeCallback = (
-  runner: RunnerFunctions
-): boolean => {
-  const action = getNextAuthCodeCallbackDetector(runner);
-  if (!action) {
-    return false;
-  }
-  const status = runner.getActionStatus(action);
-  return status === 'next' || status === 'pending';
-};
-
 export const resumeQueueFromNextCallbackDetector = (
   runner: RunnerFunctions
 ) => {
@@ -72,6 +65,19 @@ export const resumeQueueFromNextCallbackDetector = (
     return actionType;
   }
   return undefined;
+};
+
+export const isResumableGdprCallback = (action: Action) => {
+  if (
+    action.type !== tunnistamoAuthCodeCallbackUrlDetectorType &&
+    action.type !== keycloakAuthCodeCallbackUrlDetectorType
+  ) {
+    return false;
+  }
+  if (!isResumable(action)) {
+    return false;
+  }
+  return isOnActionRequiredPath(action);
 };
 
 const authCodeCallbackUrlDetectorExecutor: ActionExecutor = async (
@@ -96,7 +102,6 @@ const authCodeCallbackUrlDetectorExecutor: ActionExecutor = async (
     );
     return state && storedUrlProps && storedUrlProps.state !== state;
   };
-
   if (isWrongPathOrState()) {
     return rejectExecutorWithStartPageRedirection(
       controller,
@@ -111,6 +116,11 @@ const authCodeCallbackUrlDetectorExecutor: ActionExecutor = async (
 const options: ActionOptions = {
   noStorage: true,
   idleWhenActive: true,
+  resumable: true,
+  data: {
+    requiredPath: config.gdprCallbackPath,
+    redirectsOnError: true,
+  },
 };
 
 export const tunnistamoAuthCodeCallbackUrlAction: ActionProps = {

@@ -8,6 +8,7 @@ import {
   ActionType,
   JSONStringifyableResult,
   QueueController,
+  getData,
 } from '../../common/actionQueue/actionQueue';
 import config from '../../config';
 import {
@@ -267,6 +268,14 @@ export function resolveExecutorWithRedirection(
     `${path}?${createNextActionParams(nextAction)}`
   );
   return Promise.resolve(result);
+}
+
+export function isOnActionRequiredPath(action: Action): boolean {
+  const requiredPath = getData(action, 'requiredPath') as string;
+  if (!requiredPath) {
+    return true;
+  }
+  return matchUrls(requiredPath);
 }
 
 // There cannot be more than one redirection active - in the last completed action.

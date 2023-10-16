@@ -431,7 +431,7 @@ export function getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully(
       overrides: [
         {
           type: defaultRedirectorActionType,
-          runOriginal: false,
+          runOriginal: true,
           resolveValue: true,
         },
         {

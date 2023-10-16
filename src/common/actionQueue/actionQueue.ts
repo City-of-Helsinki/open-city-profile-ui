@@ -10,6 +10,7 @@ export type ActionOptions = {
   idleWhenActive?: boolean;
   noStorage?: boolean;
   syncronousCompletion?: boolean;
+  resumable?: boolean;
   data?: JSONStringifyableResult;
 };
 
@@ -145,6 +146,10 @@ export function getData(
   return propertyName && typeof data === 'object'
     ? Reflect.get(data, propertyName)
     : data;
+}
+
+export function isResumable(action: Action): boolean {
+  return !!getOption(action, 'resumable');
 }
 
 export function verifyQueuesMatch(
