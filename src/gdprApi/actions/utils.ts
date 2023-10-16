@@ -330,3 +330,10 @@ export function useInternalRedirect(
   }, [controller, history]);
   return funcs;
 }
+
+export function didFailedActionRedirect(action: Action) {
+  return (
+    getData(action, 'redirectsOnError') === true ||
+    getInternalRequestPathFromError(action) !== undefined
+  );
+}
