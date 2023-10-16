@@ -398,8 +398,10 @@ describe('useAuthCodeQueues', () => {
           ).toBeTruthy();
           expect(getFunctionResults().isLoading).toBeFalsy();
         });
-        expect(getState().currentPhase === currentPhases.error).toBeTruthy();
-        expect(getState().nextPhase === nextPhases.restart).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.error,
+          nextPhase: nextPhases.restart,
+        });
         expect(getFunctionResults()).toMatchObject({
           ...hookFunctionResultsAsFalse,
           hasError: true,
@@ -453,8 +455,10 @@ describe('useAuthCodeQueues', () => {
       initQueue(getScenarioWhereNextPhaseIsResumeCallback());
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(() => {
-        expect(getState().currentPhase === currentPhases.idle).toBeTruthy();
-        expect(getState().nextPhase === nextPhases.resumeCallback).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.idle,
+          nextPhase: nextPhases.resumeCallback,
+        });
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -462,16 +466,18 @@ describe('useAuthCodeQueues', () => {
       });
       resume();
       await waitFor(() => {
-        expect(getState().currentPhase === currentPhases.running).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.running,
+        });
       });
       await waitFor(() => {
         expect(isActionCompleted(loadKeycloakConfigAction.type)).toBeTruthy();
       });
       await waitFor(() => {
         expect(mockHistoryPushTracker).toHaveBeenCalledTimes(1);
-        expect(
-          getState().nextPhase === nextPhases.redirectBackToStartPage
-        ).toBeTruthy();
+        expect(getState()).toMatchObject({
+          nextPhase: nextPhases.redirectBackToStartPage,
+        });
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -483,8 +489,10 @@ describe('useAuthCodeQueues', () => {
       initQueue(getScenarioWhereKeycloakAuthCodeNotInUrl());
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
-        expect(getState().currentPhase === currentPhases.idle).toBeTruthy();
-        expect(getState().nextPhase === nextPhases.resumeCallback).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.idle,
+          nextPhase: nextPhases.resumeCallback,
+        });
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -492,7 +500,9 @@ describe('useAuthCodeQueues', () => {
       });
       resume();
       await waitFor(async () => {
-        expect(getState().currentPhase === currentPhases.running).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.running,
+        });
       });
 
       completeActionExecutor(keycloakAuthCodeCallbackUrlAction.type);
@@ -513,10 +523,10 @@ describe('useAuthCodeQueues', () => {
       });
 
       await waitFor(async () => {
-        expect(getState().currentPhase === currentPhases.error).toBeTruthy();
-        expect(
-          getState().nextPhase === nextPhases.redirectBackToStartPage
-        ).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.error,
+          nextPhase: nextPhases.redirectBackToStartPage,
+        });
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -547,10 +557,10 @@ describe('useAuthCodeQueues', () => {
       resume();
       await waitFor(async () => {
         expect(mockHistoryPushTracker).toHaveBeenCalledTimes(1);
-        expect(getState().currentPhase === currentPhases.error).toBeTruthy();
-        expect(
-          getState().nextPhase === nextPhases.redirectBackToStartPage
-        ).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.error,
+          nextPhase: nextPhases.redirectBackToStartPage,
+        });
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -570,10 +580,10 @@ describe('useAuthCodeQueues', () => {
 
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
-        expect(getState().currentPhase === currentPhases.idle).toBeTruthy();
-        expect(
-          getState().nextPhase === nextPhases.resumeWithAuthCodes
-        ).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.idle,
+          nextPhase: nextPhases.resumeWithAuthCodes,
+        });
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -581,7 +591,9 @@ describe('useAuthCodeQueues', () => {
       });
       resume();
       await waitFor(async () => {
-        expect(getState().currentPhase === currentPhases.complete).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.complete,
+        });
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -607,8 +619,10 @@ describe('useAuthCodeQueues', () => {
 
       const { getState, start, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
-        expect(getState().currentPhase === currentPhases.complete).toBeTruthy();
-        expect(getState().nextPhase === nextPhases.restart).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.complete,
+          nextPhase: nextPhases.restart,
+        });
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -617,10 +631,10 @@ describe('useAuthCodeQueues', () => {
       });
       start();
       await waitFor(async () => {
-        expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-        expect(
-          getState().lastActionType === getServiceConnectionsAction.type
-        ).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.running,
+          lastActionType: getServiceConnectionsAction.type,
+        });
       });
     });
     it('if download data fails, next phase is "restart"', async () => {
@@ -645,15 +659,17 @@ describe('useAuthCodeQueues', () => {
 
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
-        expect(getState().currentPhase === currentPhases.idle).toBeTruthy();
-        expect(
-          getState().nextPhase === nextPhases.resumeWithAuthCodes
-        ).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.idle,
+          nextPhase: nextPhases.resumeWithAuthCodes,
+        });
       });
       resume();
       await waitFor(async () => {
-        expect(getState().currentPhase === currentPhases.error).toBeTruthy();
-        expect(getState().nextPhase === nextPhases.restart).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.error,
+          nextPhase: nextPhases.restart,
+        });
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -681,16 +697,18 @@ describe('useAuthCodeQueues', () => {
         nextActionType?: ActionType
       ) => {
         expect(isActionTriggered(actionType)).toBeTruthy();
-        expect(getState().lastActionType === actionType).toBeTruthy();
-        expect(getState().lastLogType === actionLogTypes.started).toBeTruthy();
+        expect(getState()).toMatchObject({
+          lastActionType: actionType,
+          lastLogType: actionLogTypes.started,
+        });
         completeActionExecutor(actionType);
         expect(isActionCompleted(actionType)).toBeTruthy();
         if (nextActionType) {
           await waitFor(() => {
-            expect(getState().lastActionType === nextActionType).toBeTruthy();
-            expect(
-              getState().lastLogType === actionLogTypes.started
-            ).toBeTruthy();
+            expect(getState()).toMatchObject({
+              lastActionType: nextActionType,
+              lastLogType: actionLogTypes.started,
+            });
           });
         }
       };
@@ -707,8 +725,10 @@ describe('useAuthCodeQueues', () => {
           getServiceConnectionsAction.type,
           getGdprQueryScopesAction.type
         );
-        expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-        expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.running,
+          nextPhase: nextPhases.waitForAction,
+        });
       });
 
       expect(getFunctionResults()).toMatchObject({
@@ -717,12 +737,12 @@ describe('useAuthCodeQueues', () => {
       });
 
       await rerender();
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
-      expect(
-        getState().lastActionType === getGdprQueryScopesAction.type
-      ).toBeTruthy();
-      expect(getState().lastLogType === actionLogTypes.started).toBeTruthy();
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.waitForAction,
+        lastActionType: getGdprQueryScopesAction.type,
+        lastLogType: actionLogTypes.started,
+      });
 
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -733,8 +753,10 @@ describe('useAuthCodeQueues', () => {
         getGdprQueryScopesAction.type,
         tunnistamoRedirectionInitializationAction.type
       );
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.waitForAction,
+      });
 
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -745,10 +767,10 @@ describe('useAuthCodeQueues', () => {
         tunnistamoRedirectionInitializationAction.type,
         tunnistamoAuthCodeRedirectionAction.type
       );
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(
-        getState().nextPhase === nextPhases.waitForAuthCodeRedirect
-      ).toBeTruthy();
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.waitForAuthCodeRedirect,
+      });
 
       await checkCurrentActionAndManuallyCompleteIt(
         tunnistamoAuthCodeRedirectionAction.type,
@@ -775,22 +797,29 @@ describe('useAuthCodeQueues', () => {
         tunnistamoAuthCodeCallbackUrlAction.type,
         tunnistamoAuthCodeParserAction.type
       );
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
+
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.waitForAction,
+      });
 
       await checkCurrentActionAndManuallyCompleteIt(
         tunnistamoAuthCodeParserAction.type,
         loadKeycloakConfigAction.type
       );
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.waitForAction,
+      });
 
       await checkCurrentActionAndManuallyCompleteIt(
         loadKeycloakConfigAction.type,
         keycloakRedirectionInitializationAction.type
       );
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.waitForAction,
+      });
 
       await checkCurrentActionAndManuallyCompleteIt(
         keycloakRedirectionInitializationAction.type,
@@ -799,10 +828,10 @@ describe('useAuthCodeQueues', () => {
 
       await rerender();
 
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(
-        getState().nextPhase === nextPhases.waitForAuthCodeRedirect
-      ).toBeTruthy();
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.waitForAuthCodeRedirect,
+      });
 
       await checkCurrentActionAndManuallyCompleteIt(
         keycloakAuthCodeRedirectionAction.type,
@@ -829,15 +858,21 @@ describe('useAuthCodeQueues', () => {
         keycloakAuthCodeCallbackUrlAction.type,
         keycloakAuthCodeParserAction.type
       );
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
+
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.waitForAction,
+      });
 
       await checkCurrentActionAndManuallyCompleteIt(
         keycloakAuthCodeParserAction.type,
         defaultRedirectorActionType
       );
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
+
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.waitForAction,
+      });
 
       await checkCurrentActionAndManuallyCompleteIt(
         defaultRedirectorActionType,
@@ -863,10 +898,10 @@ describe('useAuthCodeQueues', () => {
       );
       await toggleComponentMounting();
 
-      expect(getState().currentPhase === currentPhases.idle).toBeTruthy();
-      expect(
-        getState().nextPhase === nextPhases.resumeWithAuthCodes
-      ).toBeTruthy();
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.idle,
+        nextPhase: nextPhases.resumeWithAuthCodes,
+      });
 
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -879,20 +914,28 @@ describe('useAuthCodeQueues', () => {
         defaultRedirectionCatcherActionType,
         getDownloadDataAction.type
       );
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
+
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.waitForAction,
+      });
 
       await checkCurrentActionAndManuallyCompleteIt(
         getDownloadDataAction.type,
         downloadAsFileAction.type
       );
-      expect(getState().currentPhase === currentPhases.running).toBeTruthy();
-      expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
+
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.running,
+        nextPhase: nextPhases.waitForAction,
+      });
 
       await checkCurrentActionAndManuallyCompleteIt(downloadAsFileAction.type);
       await waitFor(async () => {
-        expect(getState().currentPhase === currentPhases.complete).toBeTruthy();
-        expect(getState().nextPhase === nextPhases.restart).toBeTruthy();
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.complete,
+          nextPhase: nextPhases.restart,
+        });
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
