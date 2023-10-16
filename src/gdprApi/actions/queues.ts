@@ -91,5 +91,12 @@ export function getQueue({
       infoAction,
     ];
   }
-  return [];
+  return [
+    {
+      type: 'error',
+      executor: () => Promise.reject(new Error('Unknown queue')),
+      complete: true,
+      errorMessage: 'Unknown queue',
+    },
+  ];
 }

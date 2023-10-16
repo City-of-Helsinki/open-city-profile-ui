@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import styles from './gdprAuthorizationCodeManagerCallback.module.css';
 import useAuthCodeQueues, {
+  AuthCodeQueuesProps,
   authCodeQueuesStorageKey,
 } from './useAuthCodeQueues';
 import { getStoredQueueData } from '../common/actionQueue/actionQueueStorage';
-import { QueueProps } from './actions/queues';
+import { useErrorPageRedirect } from '../profile/hooks/useErrorPageRedirect';
 
 function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
-  const storedData = getStoredQueueData(authCodeQueuesStorageKey) as QueueProps;
-  const downloadProfileQueue = useAuthCodeQueues(storedData);
+  const redirectToErrorPage = useErrorPageRedirect();
+  const { t } = useTranslation();
+  const storedData = getStoredQueueData(authCodeQueuesStorageKey) || {};
+
+  const onError = useCallback(() => {
+    redirectToErrorPage({
+      message: t('notification.defaultErrorText'),
+    });
+  }, [redirectToErrorPage, t]);
+  const authCodeQueueProps = ({
+    ...storedData,
+    onError,
+  } as unknown) as AuthCodeQueuesProps;
+  const downloadProfileQueue = useAuthCodeQueues(authCodeQueueProps);
   React.useEffect(() => {
     if (downloadProfileQueue.shouldHandleCallback()) {
       downloadProfileQueue.resume();
