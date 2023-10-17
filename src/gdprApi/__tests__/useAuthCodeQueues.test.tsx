@@ -45,6 +45,7 @@ import {
   getScenarioWhereNextPhaseIsResumeCallback,
   getScenarioWhereNextPhaseIsResumeDownload,
   getScenarioWhichGoesFromStartToAuthRedirectAutomatically,
+  getScenarioWithoutScopesWillAutoComplete,
   keycloakState,
   tunnistamoCode,
   tunnistamoOidcUri,
@@ -62,6 +63,7 @@ import {
 import { downloadAsFileAction } from '../actions/downloadAsFile';
 import { actionLogTypes } from '../../common/actionQueue/actionQueueRunner';
 import { getMockCallArgs } from '../../common/test/jestMockHelper';
+import { getStoredQueue } from '../../common/actionQueue/actionQueueStorage';
 
 type HookFunctionResults = {
   hasError: boolean;
@@ -887,19 +889,7 @@ describe('useAuthCodeQueues', () => {
       });
     });
     it('If there are no tunnistamo or keycloak scopes, the queue will complete without redirections', async () => {
-      initTestQueue(
-        getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully({
-          overrides: [
-            {
-              type: getGdprQueryScopesAction.type,
-              resolveValue: {
-                keycloakScopes: [],
-                tunnistamoScopes: [],
-              },
-            },
-          ],
-        }).map(data => ({ ...data, autoTrigger: true }))
-      );
+      initTestQueue(getScenarioWithoutScopesWillAutoComplete());
       const { start, getState, getFunctionResults } = renderTestComponent();
 
       expect(getState()).toMatchObject({
@@ -1070,6 +1060,47 @@ describe('useAuthCodeQueues', () => {
 
       expect(onCompleted).toHaveBeenCalledTimes(0);
       expect(onError).toHaveBeenCalledTimes(2);
+    });
+  });
+  describe('Storage is cleared when queue is completed', () => {
+    it('It is cleared on successful completion', async () => {
+      initTestQueue(getScenarioWithoutScopesWillAutoComplete());
+      const { start } = renderTestComponent();
+
+      await act(async () => {
+        start();
+      });
+
+      expect(getStoredQueue(authCodeQueuesStorageKey)).toBeDefined();
+      await waitFor(async () => {
+        expect(onCompleted).toHaveBeenCalledTimes(1);
+      });
+      expect(getStoredQueue(authCodeQueuesStorageKey)).toBeUndefined();
+    });
+    it('It is cleared on failed completion', async () => {
+      initTestQueue(
+        getScenarioForScopes({
+          autoTrigger: true,
+          overrides: [
+            {
+              type: getGdprQueryScopesAction.type,
+              resolveValue: undefined,
+              rejectValue: rejectionError,
+            },
+          ],
+        })
+      );
+      const { start } = renderTestComponent();
+
+      await act(async () => {
+        start();
+      });
+
+      expect(getStoredQueue(authCodeQueuesStorageKey)).toBeDefined();
+      await waitFor(async () => {
+        expect(onError).toHaveBeenCalledTimes(1);
+      });
+      expect(getStoredQueue(authCodeQueuesStorageKey)).toBeUndefined();
     });
   });
 });

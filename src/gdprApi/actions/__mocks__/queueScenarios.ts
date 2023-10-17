@@ -539,3 +539,17 @@ export function getScenarioWhereDeleteProfileIsResumable({
   }
   return list;
 }
+
+export function getScenarioWithoutScopesWillAutoComplete() {
+  return getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully({
+    overrides: [
+      {
+        type: getGdprQueryScopesAction.type,
+        resolveValue: {
+          keycloakScopes: [],
+          tunnistamoScopes: [],
+        },
+      },
+    ],
+  }).map(data => ({ ...data, autoTrigger: true }));
+}
