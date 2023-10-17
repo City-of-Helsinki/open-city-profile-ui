@@ -9,7 +9,6 @@ import {
 } from '../../common/actionQueue/actionQueue';
 import {
   RunnerFunctions,
-  canQueueContinueFrom,
   resumeQueueFromAction,
 } from '../../common/actionQueue/actionQueueRunner';
 import matchUrls from '../../common/helpers/matchUrls';
