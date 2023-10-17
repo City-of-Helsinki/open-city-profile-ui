@@ -8,14 +8,9 @@ import useAuthCodeQueues, {
   currentPhases,
   nextPhases,
 } from '../useAuthCodeQueues';
-import {
-  Action,
-  ActionType,
-  createQueueFromProps,
-} from '../../common/actionQueue/actionQueue';
+import { Action, ActionType } from '../../common/actionQueue/actionQueue';
 import { getServiceConnectionsAction } from '../actions/getServiceConnections';
 import { getGdprQueryScopesAction } from '../actions/getGdprScopes';
-import { storeQueue } from '../../common/actionQueue/actionQueueStorage';
 import mockWindowLocation from '../../common/test/mockWindowLocation';
 import config from '../../config';
 import {
@@ -40,8 +35,8 @@ import {
   completeActionExecutor,
   isActionCompleted,
   isActionTriggered,
-  setMockActionData,
   ActionMockData,
+  initMockQueue,
 } from '../actions/__mocks__/mock.util';
 import {
   getScenarioForScopes,
@@ -66,7 +61,6 @@ import {
 } from '../actions/authCodeRedirectionInitialization';
 import { downloadAsFileAction } from '../actions/downloadAsFile';
 import { actionLogTypes } from '../../common/actionQueue/actionQueueRunner';
-import { getQueue } from '../actions/queues';
 import { getMockCallArgs } from '../../common/test/jestMockHelper';
 
 type HookFunctionResults = {
@@ -139,37 +133,8 @@ describe('useAuthCodeQueues', () => {
     onError,
   };
 
-  // store the queue actions from actual downloadDataQueue with new props
-  const setStoredState = (overrideQueueProps: Partial<Action>[]) => {
-    const queue = getQueue(downloadQueueProps).map(queueProps => {
-      const overrides =
-        overrideQueueProps.find(op => op.type === queueProps.type) || {};
-      return {
-        ...queueProps,
-        ...overrides,
-      };
-    });
-    storeQueue(authCodeQueuesStorageKey, createQueueFromProps(queue));
-  };
-
-  // set mocked responses and stored data
-  const initQueue = (props: ActionMockData[]) => {
-    const storedProps: Partial<Action>[] = [];
-    props.forEach(data => {
-      setMockActionData(data);
-      if (data.store) {
-        storedProps.push({
-          type: data.type,
-          complete: true, //!data.storeAsActive
-          errorMessage: data.rejectValue ? String(data.rejectValue) : undefined,
-          result: data.resolveValue,
-          active: !!data.storeAsActive,
-        });
-      }
-    });
-    if (storedProps.length) {
-      setStoredState(storedProps);
-    }
+  const initTestQueue = (props: ActionMockData[]) => {
+    initMockQueue(props, downloadQueueProps, authCodeQueuesStorageKey);
   };
 
   const TestUseAuthCodeQueuesHook = () => {
@@ -332,7 +297,7 @@ describe('useAuthCodeQueues', () => {
 
   describe('On download page', () => {
     it('The queue can be started and proceeds to auth code redirection automatically', async () => {
-      initQueue(getScenarioWhichGoesFromStartToAuthRedirectAutomatically());
+      initTestQueue(getScenarioWhichGoesFromStartToAuthRedirectAutomatically());
       const { start, getState, getFunctionResults } = renderTestComponent();
       expect(getState()).toMatchObject({
         currentPhase: currentPhases.idle,
@@ -360,7 +325,7 @@ describe('useAuthCodeQueues', () => {
       });
     });
     it('The queue stops on error and when an action fails, next phase is "restart"', async () => {
-      initQueue(
+      initTestQueue(
         getScenarioForScopes({
           overrides: [
             {
@@ -412,7 +377,7 @@ describe('useAuthCodeQueues', () => {
     it('When redirection times out, an error is logged and next phase is "restart"', async () => {
       // timeout is not tested here, there is a test for it in the action's own tests
       // this test just rejects the promise like a timeout would.
-      initQueue(
+      initTestQueue(
         getScenarioWhichGoesFromStartToAuthRedirectAutomatically({
           overrides: [
             {
@@ -452,7 +417,7 @@ describe('useAuthCodeQueues', () => {
       mockedWindowControls.setSearch(
         `state=${tunnistamoState}&code=${tunnistamoCode}`
       );
-      initQueue(getScenarioWhereNextPhaseIsResumeCallback());
+      initTestQueue(getScenarioWhereNextPhaseIsResumeCallback());
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(() => {
         expect(getState()).toMatchObject({
@@ -488,7 +453,7 @@ describe('useAuthCodeQueues', () => {
     });
     it('When an action fails, an error is logged and redirection to start page is done', async () => {
       mockedWindowControls.setSearch(`state=${keycloakState}&code=`);
-      initQueue(getScenarioWhereKeycloakAuthCodeNotInUrl());
+      initTestQueue(getScenarioWhereKeycloakAuthCodeNotInUrl());
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
         expect(getState()).toMatchObject({
@@ -552,7 +517,7 @@ describe('useAuthCodeQueues', () => {
           type: defaultRedirectionCatcherActionType,
         } as Action)
       );
-      initQueue(getScenarioWhereNextPhaseIsResumeDownload());
+      initTestQueue(getScenarioWhereNextPhaseIsResumeDownload());
 
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
@@ -581,7 +546,7 @@ describe('useAuthCodeQueues', () => {
       mockedWindowControls.setSearch(
         createFailedActionParams(tunnistamoAuthCodeCallbackUrlAction as Action)
       );
-      initQueue(
+      initTestQueue(
         getScenarioWhereNextPhaseIsResumeCallback({
           overrides: [
             {
@@ -620,7 +585,7 @@ describe('useAuthCodeQueues', () => {
           type: defaultRedirectionCatcherActionType,
         } as Action)
       );
-      initQueue(
+      initTestQueue(
         getScenarioWhereNextPhaseIsResumeDownload({
           overrides: [
             {
@@ -654,9 +619,9 @@ describe('useAuthCodeQueues', () => {
       });
     });
   });
-  describe('Manually processing whole queue', () => {
+  describe('Testing whole download queue action by action.', () => {
     it('phases change and re-rendering or unmounting (in correct phases) wont affect anything', async () => {
-      initQueue(
+      initTestQueue(
         getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully()
       );
       const {
@@ -921,10 +886,50 @@ describe('useAuthCodeQueues', () => {
         shouldRestart: true,
       });
     });
+    it('If there are no tunnistamo or keycloak scopes, the queue will complete without redirections', async () => {
+      initTestQueue(
+        getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully({
+          overrides: [
+            {
+              type: getGdprQueryScopesAction.type,
+              resolveValue: {
+                keycloakScopes: [],
+                tunnistamoScopes: [],
+              },
+            },
+          ],
+        }).map(data => ({ ...data, autoTrigger: true }))
+      );
+      const { start, getState, getFunctionResults } = renderTestComponent();
+
+      expect(getState()).toMatchObject({
+        currentPhase: currentPhases.idle,
+        nextPhase: nextPhases.start,
+      });
+      await act(async () => {
+        start();
+      });
+
+      expect(getFunctionResults()).toMatchObject({
+        ...hookFunctionResultsAsFalse,
+        isLoading: true,
+      });
+
+      await waitFor(async () => {
+        expect(getState()).toMatchObject({
+          currentPhase: currentPhases.complete,
+          nextPhase: nextPhases.restart,
+        });
+      });
+      expect(getFunctionResults()).toMatchObject({
+        ...hookFunctionResultsAsFalse,
+        shouldRestart: true,
+      });
+    });
   });
   describe('If queue is restored (from storage) in some unintended and unresumable position', () => {
     it('nextPhase is "stoppedInMidQueue", and queue can be restarted.', async () => {
-      initQueue(
+      initTestQueue(
         getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully()
       );
       const {
@@ -981,7 +986,7 @@ describe('useAuthCodeQueues', () => {
           type: defaultRedirectionCatcherActionType,
         } as Action)
       );
-      initQueue(getScenarioWhereNextPhaseIsResumeDownload());
+      initTestQueue(getScenarioWhereNextPhaseIsResumeDownload());
       const { resume, getState, rerender } = renderTestComponent();
       expect(onCompleted).toHaveBeenCalledTimes(0);
       expect(onError).toHaveBeenCalledTimes(0);
@@ -1007,7 +1012,7 @@ describe('useAuthCodeQueues', () => {
       expect(onError).toHaveBeenCalledTimes(0);
     });
     it('onError is called when queue fails. Again after restart', async () => {
-      initQueue(
+      initTestQueue(
         getScenarioForScopes({
           autoTrigger: true,
           overrides: [
