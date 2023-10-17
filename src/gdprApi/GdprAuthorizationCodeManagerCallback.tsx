@@ -9,34 +9,46 @@ import useAuthCodeQueues, {
 } from './useAuthCodeQueues';
 import { getStoredQueueData } from '../common/actionQueue/actionQueueStorage';
 import { useErrorPageRedirect } from '../profile/hooks/useErrorPageRedirect';
-import { QueueState } from '../common/actionQueue/useActionQueue';
-import { QueueController } from '../common/actionQueue/actionQueue';
-import { didFailedActionRedirect } from './actions/utils';
+import { Action, QueueController } from '../common/actionQueue/actionQueue';
+import {
+  createPagePathWithFailedActionParams,
+  didFailedActionRedirect,
+} from './actions/utils';
 
 function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
   const redirectToErrorPage = useErrorPageRedirect();
   const { t } = useTranslation();
-  //const history = useHistory();
+  const history = useHistory();
   const storedData = useMemo(
     () => getStoredQueueData(authCodeQueuesStorageKey) || {},
     []
   );
-  const onError = useCallback(
-    (controller: QueueController, state: QueueState) => {
-      const failedAction = controller.getFailed();
+  const redirectAfterError = useCallback(
+    (failedAction?: Action) => {
       if (!failedAction || !didFailedActionRedirect(failedAction)) {
-        console.log('action does not redirect', failedAction);
-        // if storedData.startP....
-        //history.push(`/?error=${failedAction ? failedAction.type : 'unknown'}`);
-        // else
-        redirectToErrorPage({
-          message: t('notification.defaultErrorText'),
-        });
-      } else {
-        console.log('action redirects', failedAction);
+        const path = storedData.startPagePath as string;
+        if (path) {
+          history.push(
+            createPagePathWithFailedActionParams(
+              path,
+              failedAction || ({ type: 'unknown' } as Action),
+              'Failed grpr callback'
+            )
+          );
+        } else {
+          redirectToErrorPage({
+            message: t('notification.defaultErrorText'),
+          });
+        }
       }
     },
-    [redirectToErrorPage, t]
+    [redirectToErrorPage, t, history, storedData.startPagePath]
+  );
+  const onError = useCallback(
+    (controller: QueueController) => {
+      redirectAfterError(controller.getFailed());
+    },
+    [redirectAfterError]
   );
   const authCodeQueueProps = ({
     ...storedData,
@@ -47,9 +59,14 @@ function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
   );
   React.useEffect(() => {
     if (shouldHandleCallback()) {
+      // resuming will update state (in useActionQueue) and updating
+      // while rendering shows a warning,
+      // so wait for one tick before updating/resuming
       window.requestAnimationFrame(() => {
         resume();
       });
+    } else {
+      redirectAfterError();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

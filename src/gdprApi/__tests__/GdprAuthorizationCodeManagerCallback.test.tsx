@@ -47,9 +47,11 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
   const onCompleted = jest.fn();
   const onError = jest.fn();
 
+  const startPagePath = '/start-page';
+
   const downloadQueueProps: AuthCodeQueuesProps = {
     queueName: 'downloadProfile',
-    startPagePath: config.downloadPath,
+    startPagePath,
     onCompleted,
     onError,
   };
@@ -93,6 +95,9 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       <GdprAuthorizationCodeManagerCallback />
     );
 
+  const getRedirectPath = () =>
+    getMockCallArgs(mockHistoryTracker, 0)[0] as string;
+
   afterEach(() => {
     mockedWindowControls.reset();
     cleanComponentMocks();
@@ -114,7 +119,8 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       });
     });
   });
-  it(`Queue is not resumed when next action is not resumable. (Should redirect!)`, async () => {
+  it(`Queue is not resumed when next action is not resumable. 
+          User is redirected to the start or error page`, async () => {
     initQueue(
       getScenarioWhereNextPhaseIsResumeCallback({
         overrides: [
@@ -133,6 +139,9 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       await initTests();
       await waitFor(() => {
         expect(isActionTriggered(loadKeycloakConfigAction.type)).toBeFalsy();
+      });
+      await waitFor(() => {
+        expect(getRedirectPath().includes(`${startPagePath}?`)).toBeTruthy();
       });
     });
   });
@@ -155,9 +164,11 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
           isActionTriggered(tunnistamoAuthCodeParserAction.type)
         ).toBeTruthy();
       });
-      const lastCall = getMockCallArgs(mockHistoryTracker, 0)[0] as string;
+      expect(mockHistoryTracker).toHaveBeenCalledTimes(1);
       expect(
-        lastCall.includes(`/?error=${tunnistamoAuthCodeParserAction.type}`)
+        getRedirectPath().includes(
+          `${startPagePath}?error=${tunnistamoAuthCodeParserAction.type}`
+        )
       ).toBeTruthy();
     });
   });
@@ -179,9 +190,12 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       await initTests();
       await waitFor(() => {
         expect(isActionTriggered(loadKeycloakConfigAction.type)).toBeTruthy();
+        expect(
+          getRedirectPath().includes(
+            `${startPagePath}?error=${loadKeycloakConfigAction.type}`
+          )
+        ).toBeTruthy();
       });
-      const lastCall = getMockCallArgs(mockHistoryTracker, 0)[0] as string;
-      expect(lastCall.includes('/error?message=')).toBeTruthy();
     });
   });
 });
