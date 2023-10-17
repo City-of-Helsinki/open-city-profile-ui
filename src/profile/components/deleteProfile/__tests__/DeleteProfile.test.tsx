@@ -103,6 +103,7 @@ describe('<DeleteProfile /> ', () => {
   const authCodeQueueProps: AuthCodeQueuesProps = {
     queueName: 'deleteProfile',
     startPagePath: config.deletePath,
+    language: 'fi',
     onCompleted,
     onError,
   };

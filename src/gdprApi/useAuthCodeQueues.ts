@@ -64,6 +64,7 @@ function useAuthCodeQueues({
   startPagePath,
   serviceName,
   queueName,
+  language,
   onCompleted,
   onError,
 }: AuthCodeQueuesProps): {
@@ -88,8 +89,8 @@ function useAuthCodeQueues({
   });
 
   const queue = useMemo(
-    () => getQueue({ startPagePath, serviceName, queueName }),
-    [startPagePath, serviceName, queueName]
+    () => getQueue({ startPagePath, serviceName, queueName, language }),
+    [startPagePath, serviceName, queueName, language]
   );
   const queueHookProps = useActionQueue(queue, authCodeQueuesStorageKey);
   const { state } = queueHookProps;

@@ -44,6 +44,7 @@ function DeleteProfile(): React.ReactElement {
     | typeof errorLoadState
   >(notStartedLoadState);
   const history = useHistory();
+  const { t, i18n } = useTranslation();
   const { trackEvent } = useMatomo();
   const [resultError, setResultError] = useState<
     ApolloError | Error | undefined | DeleteResultLists
@@ -56,6 +57,7 @@ function DeleteProfile(): React.ReactElement {
   } = useAuthCodeQueues({
     queueName: 'deleteProfile',
     startPagePath: config.deletePath,
+    language: i18n.language,
     onCompleted: controller => {
       const { failures, successful } = getDeleteProfileResult(controller) || {
         failures: [],
@@ -77,8 +79,6 @@ function DeleteProfile(): React.ReactElement {
       setResultError(error);
     },
   });
-
-  const { t, i18n } = useTranslation();
 
   const [removeButtonId, setFocusToRemoveButton] = useFocusSetter({
     targetId: `delete-profile-button`,

@@ -15,7 +15,6 @@ import {
   getDeleteProfileResult,
 } from '../deleteProfile';
 import { getDeleteMyProfileMutationResult } from '../../../common/test/getDeleteMyProfileMutationResult';
-import createServiceConnectionsQueryVariables from '../../../profile/helpers/createServiceConnectionsQueryVariables';
 import { DeleteResultLists } from '../../../profile/helpers/parseDeleteProfileResult';
 
 describe('deleteProfile.ts', () => {
@@ -57,9 +56,7 @@ describe('deleteProfile.ts', () => {
     const queue = [
       tunnistamoAuthCodeParserAction,
       keycloakAuthCodeParserAction,
-      createDeleteProfileAction(
-        createServiceConnectionsQueryVariables(language).language
-      ),
+      createDeleteProfileAction(language),
     ];
     const runner = createActionQueueRunner(queue);
     runner.updateActionAndQueue(tunnistamoAuthCodeParserAction.type, {

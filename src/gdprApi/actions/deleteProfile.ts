@@ -23,6 +23,7 @@ import {
 import parseDeleteProfileResult, {
   DeleteResultLists,
 } from '../../profile/helpers/parseDeleteProfileResult';
+import { convertStringToTranslationLanguage } from '../../profile/helpers/createServiceConnectionsQueryVariables';
 
 const DELETE_PROFILE = loader('../graphql/GdprDeleteMyProfileMutation.graphql');
 
@@ -74,9 +75,7 @@ const deleteProfileExecutor: ActionExecutor = async (
   return Promise.resolve(parseDeleteProfileResult(result.data));
 };
 
-export function createDeleteProfileAction(
-  language: TranslationLanguage
-): ActionProps {
+export function createDeleteProfileAction(language: string): ActionProps {
   return {
     type: deleteProfileType,
     executor: deleteProfileExecutor,
@@ -84,7 +83,7 @@ export function createDeleteProfileAction(
       noStorage: true,
       idleWhenActive: true,
       data: {
-        language,
+        language: convertStringToTranslationLanguage(language),
       },
     },
   };

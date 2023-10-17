@@ -1,4 +1,3 @@
-import { TranslationLanguage } from '../../graphql/generatedTypes';
 import {
   tunnistamoAuthCodeCallbackUrlAction,
   keycloakAuthCodeCallbackUrlAction,
@@ -35,12 +34,14 @@ export type QueueProps = {
   startPagePath: string;
   queueName: 'downloadProfile' | 'deleteProfile' | 'deleteServiceConnection';
   serviceName?: string;
+  language?: string;
 };
 
 export function getQueue({
   queueName,
   startPagePath,
   serviceName,
+  language,
 }: QueueProps) {
   const [
     redirectorAction,
@@ -83,11 +84,14 @@ export function getQueue({
     ];
   }
   if (queueName === 'deleteProfile') {
+    if (!language) {
+      throw new Error('Language must be given for deleteProfile');
+    }
     return [
       getServiceConnectionsAction,
       getGdprDeleteScopesAction,
       ...commonAuthCodeActions,
-      createDeleteProfileAction('FI' as TranslationLanguage),
+      createDeleteProfileAction(language),
       infoAction,
     ];
   }

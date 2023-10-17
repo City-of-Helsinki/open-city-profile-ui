@@ -4,12 +4,18 @@ import {
   TranslationLanguage,
 } from '../../graphql/typings';
 
+export function convertStringToTranslationLanguage(
+  langOrLangAndLocale: string
+): TranslationLanguage {
+  return getLanguageCode(
+    langOrLangAndLocale
+  ).toUpperCase() as TranslationLanguage;
+}
+
 export default function createServiceConnectionsQueryVariables(
   langOrLangAndLocale: string
 ): ServiceConnectionsQueryVariables {
   return {
-    language: getLanguageCode(
-      langOrLangAndLocale
-    ).toUpperCase() as TranslationLanguage,
+    language: convertStringToTranslationLanguage(langOrLangAndLocale),
   };
 }
