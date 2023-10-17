@@ -5,6 +5,7 @@ import {
   ActionType,
   QueueController,
   getData,
+  hasMatchingDataProperty,
   isResumable,
 } from '../../common/actionQueue/actionQueue';
 import {
@@ -31,7 +32,7 @@ export const resumeQueueFromRedirectionCatcher = (
 export const isResumableRedirectionCatcher = (action: Action) => {
   if (
     !isResumable(action) ||
-    getData(action, 'isRedirectionCatcher') !== true
+    !hasMatchingDataProperty(action, 'isRedirectionCatcher', true)
   ) {
     return false;
   }

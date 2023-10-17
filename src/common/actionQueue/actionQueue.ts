@@ -147,6 +147,13 @@ export function getData(
     ? Reflect.get(data, propertyName)
     : data;
 }
+export function hasMatchingDataProperty(
+  action: Action,
+  propertyName: string,
+  assumedValue: unknown
+): boolean {
+  return getData(action, propertyName) === assumedValue;
+}
 
 export function isResumable(action: Action): boolean {
   return !!getOption(action, 'resumable');

@@ -7,6 +7,7 @@ import {
   ActionQueue,
   getOption,
   getData,
+  hasMatchingDataProperty,
 } from '../actionQueue';
 import {
   convertSourceToActionProps,
@@ -702,6 +703,71 @@ describe('actionQueue', () => {
 
       expect(getData(actionWithData)).toBe(data);
       expect(getData(actionWithoutData)).toBeUndefined();
+    });
+    it('hasMatchingDataProperty() returns true if action has data with given name and the value matches', () => {
+      const data = { prop: 1, truthy: true, falsy: false, nullish: null };
+      const actionWithData = {
+        ...readyMadeAction,
+        type: 'result1',
+        options: {
+          data,
+        },
+      };
+
+      const actionWithoutData = {
+        ...readyMadeAction,
+        type: 'actionWithoutData',
+      };
+
+      const actionWithDataObject = {
+        ...readyMadeAction,
+        type: 'result2',
+        options: {
+          data: { data, prop2: 'hello' },
+        },
+      };
+
+      expect(hasMatchingDataProperty(actionWithData, 'prop', 1)).toBeTruthy();
+      expect(hasMatchingDataProperty(actionWithData, 'prop', true)).toBeFalsy();
+
+      expect(
+        hasMatchingDataProperty(actionWithData, 'truthy', true)
+      ).toBeTruthy();
+      expect(
+        hasMatchingDataProperty(actionWithData, 'truthy', false)
+      ).toBeFalsy();
+
+      expect(
+        hasMatchingDataProperty(actionWithData, 'falsy', false)
+      ).toBeTruthy();
+      expect(
+        hasMatchingDataProperty(actionWithData, 'falsy', true)
+      ).toBeFalsy();
+
+      expect(
+        hasMatchingDataProperty(actionWithData, 'nullish', null)
+      ).toBeTruthy();
+      expect(
+        hasMatchingDataProperty(actionWithData, 'nullish', undefined)
+      ).toBeFalsy();
+
+      expect(
+        hasMatchingDataProperty(actionWithData, 'notFound', undefined)
+      ).toBeTruthy();
+
+      expect(
+        hasMatchingDataProperty(actionWithDataObject, 'data', data)
+      ).toBeTruthy();
+      expect(
+        hasMatchingDataProperty(actionWithDataObject, 'prop2', 'hello')
+      ).toBeTruthy();
+
+      expect(
+        hasMatchingDataProperty(actionWithoutData, 'complete', false)
+      ).toBeFalsy();
+      expect(
+        hasMatchingDataProperty(actionWithoutData, 'type', 'actionWithoutData')
+      ).toBeFalsy();
     });
   });
 });
