@@ -59,12 +59,7 @@ function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
   );
   React.useEffect(() => {
     if (shouldHandleCallback()) {
-      // resuming will update state (in useActionQueue) and updating
-      // while rendering shows a warning,
-      // so wait for one tick before updating/resuming
-      window.requestAnimationFrame(() => {
-        resume();
-      });
+      resume();
     } else {
       redirectAfterError();
     }
