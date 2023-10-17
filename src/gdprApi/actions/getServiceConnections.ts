@@ -29,31 +29,28 @@ export const getServiceConnectionsResultAndError = (
     queueController
   );
 
-const serviceConnectionsQueryExecutor: ActionExecutor = async action =>
-  new Promise((resolve, reject) => {
-    (async () => {
-      const [error, result] = await to(
-        graphqlClient.query<GdprServiceConnectionsRoot>({
-          query: GDPR_SERVICE_CONNECTIONS,
-          fetchPolicy: 'no-cache',
-        })
-      );
-      if (error) {
-        return reject(error);
-      }
-      if (!result || !result.data) {
-        return reject(
-          new Error("'No results in GDPR_SERVICE_CONNECTIONS query")
-        );
-      }
-      return resolve(
-        getServiceConnectionsServices(
-          result.data,
-          getData(action, 'serviceName') as string
-        )
-      );
-    })();
-  });
+const serviceConnectionsQueryExecutor: ActionExecutor = async action => {
+  const [error, result] = await to(
+    graphqlClient.query<GdprServiceConnectionsRoot>({
+      query: GDPR_SERVICE_CONNECTIONS,
+      fetchPolicy: 'no-cache',
+    })
+  );
+  if (error) {
+    return Promise.reject(error);
+  }
+  if (!result || !result.data) {
+    return Promise.reject(
+      new Error("'No results in GDPR_SERVICE_CONNECTIONS query")
+    );
+  }
+  return Promise.resolve(
+    getServiceConnectionsServices(
+      result.data,
+      getData(action, 'serviceName') as string
+    )
+  );
+};
 
 export const getServiceConnectionsAction: ActionProps = {
   type: serviceConnectionsType,
