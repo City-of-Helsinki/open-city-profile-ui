@@ -9,18 +9,12 @@ import {
 import DownloadData from '../DownloadData';
 import i18n from '../../../../common/test/testi18nInit';
 import mockWindowLocation from '../../../../common/test/mockWindowLocation';
-import {
-  Action,
-  createQueueFromProps,
-} from '../../../../common/actionQueue/actionQueue';
-import { storeQueue } from '../../../../common/actionQueue/actionQueueStorage';
 import config from '../../../../config';
 import {
   ActionMockData,
+  initMockQueue,
   isActionTriggered,
-  setMockActionData,
 } from '../../../../gdprApi/actions/__mocks__/mock.util';
-import { getQueue } from '../../../../gdprApi/actions/queues';
 import {
   AuthCodeQueuesProps,
   authCodeQueuesStorageKey,
@@ -55,37 +49,8 @@ describe('<DownloadData /> ', () => {
     onError,
   };
 
-  // store the queue actions from actual downloadDataQueue with new props
-  const setStoredState = (overrideQueueProps: Partial<Action>[]) => {
-    const queue = getQueue(downloadQueueProps).map(queueProps => {
-      const overrides =
-        overrideQueueProps.find(op => op.type === queueProps.type) || {};
-      return {
-        ...queueProps,
-        ...overrides,
-      };
-    });
-    storeQueue(authCodeQueuesStorageKey, createQueueFromProps(queue));
-  };
-
-  // set mocked responses and stored data
-  const initQueue = (props: ActionMockData[]) => {
-    const storedProps: Partial<Action>[] = [];
-    props.forEach(data => {
-      setMockActionData(data);
-      if (data.store) {
-        storedProps.push({
-          type: data.type,
-          complete: true, //!data.storeAsActive
-          errorMessage: data.rejectValue ? String(data.rejectValue) : undefined,
-          result: data.resolveValue,
-          active: !!data.storeAsActive,
-        });
-      }
-    });
-    if (storedProps.length) {
-      setStoredState(storedProps);
-    }
+  const initTestQueue = (props: ActionMockData[]) => {
+    initMockQueue(props, downloadQueueProps, authCodeQueuesStorageKey);
   };
 
   const t = i18n.getFixedT('fi');
@@ -107,7 +72,7 @@ describe('<DownloadData /> ', () => {
   });
 
   it(`Clicking the button disables it, changes its text and starts the queue.`, async () => {
-    initQueue(getScenarioWhichGoesFromStartToAuthRedirectAutomatically());
+    initTestQueue(getScenarioWhichGoesFromStartToAuthRedirectAutomatically());
     await act(async () => {
       const { clickElement, getElement, isDisabled } = await initTests();
       await clickElement(submitButton);
@@ -128,7 +93,7 @@ describe('<DownloadData /> ', () => {
   });
 
   it(`When load fails, an error is shown.`, async () => {
-    initQueue(
+    initTestQueue(
       getScenarioForScopes({
         autoTrigger: true,
         overrides: [

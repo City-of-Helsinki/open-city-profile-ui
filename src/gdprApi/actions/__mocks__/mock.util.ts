@@ -1,9 +1,13 @@
 import {
+  Action,
   ActionExecutor,
   ActionProps,
   ActionType,
+  createQueueFromProps,
 } from '../../../common/actionQueue/actionQueue';
+import { storeQueue } from '../../../common/actionQueue/actionQueueStorage';
 import { ActionSourceForTesting } from '../../../common/actionQueue/test.util';
+import { QueueProps, getQueue } from '../queues';
 
 export type ActionMockData = Pick<
   ActionSourceForTesting,
@@ -109,4 +113,45 @@ export const setMockActionData = (data: ActionMockData) => {
     isTriggered: false,
     isComplete: false,
   });
+};
+
+// store the queue actions from actual downloadDataQueue with new props
+const setStoredState = (
+  overrideQueueProps: Partial<Action>[],
+  queueProps: QueueProps,
+  storageKey: string
+) => {
+  const queue = getQueue(queueProps).map(action => {
+    const overrides =
+      overrideQueueProps.find(op => op.type === action.type) || {};
+    return {
+      ...action,
+      ...overrides,
+    };
+  });
+  storeQueue(storageKey, createQueueFromProps(queue));
+};
+
+// set mocked responses and stored data
+export const initMockQueue = (
+  props: ActionMockData[],
+  queueProps: QueueProps,
+  storageKey: string
+) => {
+  const storedProps: Partial<Action>[] = [];
+  props.forEach(data => {
+    setMockActionData(data);
+    if (data.store) {
+      storedProps.push({
+        type: data.type,
+        complete: true,
+        errorMessage: data.rejectValue ? String(data.rejectValue) : undefined,
+        result: data.resolveValue,
+        active: !!data.storeAsActive,
+      });
+    }
+  });
+  if (storedProps.length) {
+    setStoredState(storedProps, queueProps, storageKey);
+  }
 };

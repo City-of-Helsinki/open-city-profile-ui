@@ -2,12 +2,6 @@ import React from 'react';
 import { act, waitFor } from '@testing-library/react';
 
 import {
-  createQueueFromProps,
-  Action,
-} from '../../common/actionQueue/actionQueue';
-import { storeQueue } from '../../common/actionQueue/actionQueueStorage';
-import mockWindowLocation from '../../common/test/mockWindowLocation';
-import {
   renderComponentWithMocksAndContexts,
   cleanComponentMocks,
 } from '../../common/test/testingLibraryTools';
@@ -15,11 +9,10 @@ import config from '../../config';
 import GdprAuthorizationCodeManagerCallback from '../GdprAuthorizationCodeManagerCallback';
 import {
   ActionMockData,
-  setMockActionData,
   isActionTriggered,
+  initMockQueue,
 } from '../actions/__mocks__/mock.util';
 import { getScenarioWhereNextPhaseIsResumeCallback } from '../actions/__mocks__/queueScenarios';
-import { getQueue } from '../actions/queues';
 import {
   AuthCodeQueuesProps,
   authCodeQueuesStorageKey,
@@ -28,6 +21,7 @@ import { tunnistamoAuthCodeParserAction } from '../actions/authCodeParser';
 import { tunnistamoAuthCodeCallbackUrlAction } from '../actions/authCodeCallbackUrlDetector';
 import { loadKeycloakConfigAction } from '../actions/loadKeycloakConfig';
 import { getMockCallArgs } from '../../common/test/jestMockHelper';
+import mockWindowLocation from '../../common/test/mockWindowLocation';
 
 const mockHistoryTracker = jest.fn();
 
@@ -56,37 +50,8 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
     onError,
   };
 
-  // store the queue actions from actual GdprAuthorizationCodeManagerCallbackQueue with new props
-  const setStoredState = (overrideQueueProps: Partial<Action>[]) => {
-    const queue = getQueue(downloadQueueProps).map(queueProps => {
-      const overrides =
-        overrideQueueProps.find(op => op.type === queueProps.type) || {};
-      return {
-        ...queueProps,
-        ...overrides,
-      };
-    });
-    storeQueue(authCodeQueuesStorageKey, createQueueFromProps(queue));
-  };
-
-  // set mocked responses and stored data
-  const initQueue = (props: ActionMockData[]) => {
-    const storedProps: Partial<Action>[] = [];
-    props.forEach(data => {
-      setMockActionData(data);
-      if (data.store) {
-        storedProps.push({
-          type: data.type,
-          complete: true, //!data.storeAsActive
-          errorMessage: data.rejectValue ? String(data.rejectValue) : undefined,
-          result: data.resolveValue,
-          active: !!data.storeAsActive,
-        });
-      }
-    });
-    if (storedProps.length) {
-      setStoredState(storedProps);
-    }
+  const initTestQueue = (props: ActionMockData[]) => {
+    initMockQueue(props, downloadQueueProps, authCodeQueuesStorageKey);
   };
 
   const initTests = async () =>
@@ -109,7 +74,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
   });
 
   it(`Queue is resumed  - if possible`, async () => {
-    initQueue(getScenarioWhereNextPhaseIsResumeCallback());
+    initTestQueue(getScenarioWhereNextPhaseIsResumeCallback());
     await act(async () => {
       await initTests();
       await waitFor(() => {
@@ -121,7 +86,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
   });
   it(`Queue is not resumed when next action is not resumable. 
           User is redirected to the start or error page`, async () => {
-    initQueue(
+    initTestQueue(
       getScenarioWhereNextPhaseIsResumeCallback({
         overrides: [
           {
@@ -146,7 +111,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
     });
   });
   it(`If queue fails and failed action will redirect, redirection in not made again.`, async () => {
-    initQueue(
+    initTestQueue(
       getScenarioWhereNextPhaseIsResumeCallback({
         overrides: [
           {
@@ -173,7 +138,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
     });
   });
   it(`If queue fails and failed action will not redirect, redirect to start page.`, async () => {
-    initQueue(
+    initTestQueue(
       getScenarioWhereNextPhaseIsResumeCallback({
         overrides: [
           {

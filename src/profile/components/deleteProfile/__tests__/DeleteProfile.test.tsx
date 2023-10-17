@@ -13,18 +13,13 @@ import getMyProfileWithServiceConnections from '../../../../common/test/getMyPro
 import i18n from '../../../../common/test/testi18nInit';
 import { ServiceConnectionsQueryVariables } from '../../../../graphql/typings';
 import mockWindowLocation from '../../../../common/test/mockWindowLocation';
-import {
-  Action,
-  createQueueFromProps,
-} from '../../../../common/actionQueue/actionQueue';
-import { storeQueue } from '../../../../common/actionQueue/actionQueueStorage';
+import { Action } from '../../../../common/actionQueue/actionQueue';
 import config from '../../../../config';
 import {
   ActionMockData,
+  initMockQueue,
   isActionTriggered,
-  setMockActionData,
 } from '../../../../gdprApi/actions/__mocks__/mock.util';
-import { getQueue } from '../../../../gdprApi/actions/queues';
 import {
   AuthCodeQueuesProps,
   authCodeQueuesStorageKey,
@@ -112,43 +107,14 @@ describe('<DeleteProfile /> ', () => {
     onError,
   };
 
-  // store the queue actions from actual downloadDataQueue with new props
-  const setStoredState = (overrideQueueProps: Partial<Action>[]) => {
-    const queue = getQueue(authCodeQueueProps).map(queueProps => {
-      const overrides =
-        overrideQueueProps.find(op => op.type === queueProps.type) || {};
-      return {
-        ...queueProps,
-        ...overrides,
-      };
-    });
-    storeQueue(authCodeQueuesStorageKey, createQueueFromProps(queue));
-  };
-
-  // set mocked responses and stored data
-  const initQueue = (props: ActionMockData[]) => {
-    const storedProps: Partial<Action>[] = [];
-    props.forEach(data => {
-      setMockActionData(data);
-      if (data.store) {
-        storedProps.push({
-          type: data.type,
-          complete: true, //!data.storeAsActive
-          errorMessage: data.rejectValue ? String(data.rejectValue) : undefined,
-          result: data.resolveValue,
-          active: !!data.storeAsActive,
-        });
-      }
-    });
-    if (storedProps.length) {
-      setStoredState(storedProps);
-    }
+  const initTestQueue = (props: ActionMockData[]) => {
+    initMockQueue(props, authCodeQueueProps, authCodeQueuesStorageKey);
   };
 
   const initQueueAndLocationForResume = (
     ...args: Parameters<typeof getScenarioWhereDeleteProfileIsResumable>
   ) => {
-    initQueue(getScenarioWhereDeleteProfileIsResumable(...args));
+    initTestQueue(getScenarioWhereDeleteProfileIsResumable(...args));
     mockedWindowControls.setPath(config.deletePath);
     mockedWindowControls.setSearch(
       createNextActionParams({
@@ -173,7 +139,9 @@ describe('<DeleteProfile /> ', () => {
   it(`Submitting starts to load serviceConnections.
       When loaded, a confirmation dialog is shown and after confirmation
       queue is started.`, async () => {
-    initQueue(getScenarioWhereDeleteProfileCanStartAndProceedToRedirection());
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
     await act(async () => {
       const testTools = await initTests();
       await proceedUIToDeletionConfimed(testTools);
@@ -188,7 +156,9 @@ describe('<DeleteProfile /> ', () => {
   });
 
   it(`UI won't get stuck on "loading" -state when re-rendered.`, async () => {
-    initQueue(getScenarioWhereDeleteProfileCanStartAndProceedToRedirection());
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
     await act(async () => {
       const { clickElement, getElement, waitForElement } = await initTests();
       await clickElement(submitButton);
@@ -205,7 +175,9 @@ describe('<DeleteProfile /> ', () => {
 
   it(`When service connection load fails, an error notification is shown with a reload button. 
           After successful reload, the queue is started.`, async () => {
-    initQueue(getScenarioWhereDeleteProfileCanStartAndProceedToRedirection());
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
     await act(async () => {
       const { clickElement, waitForElement } = await initTests(0);
       await clickElement(submitButton);
@@ -219,7 +191,9 @@ describe('<DeleteProfile /> ', () => {
     });
   });
   it(`When deleting starts, an indicator is shown and browser is redirected.`, async () => {
-    initQueue(getScenarioWhereDeleteProfileCanStartAndProceedToRedirection());
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
     await act(async () => {
       const testTools = await initTests();
       const { waitForElement } = testTools;

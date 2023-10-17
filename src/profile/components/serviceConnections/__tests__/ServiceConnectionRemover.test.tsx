@@ -13,17 +13,12 @@ import getServiceConnectionData, {
 } from '../../../helpers/getServiceConnectionData';
 import i18n from '../../../../common/test/testi18nInit';
 import mockWindowLocation from '../../../../common/test/mockWindowLocation';
-import {
-  Action,
-  createQueueFromProps,
-} from '../../../../common/actionQueue/actionQueue';
-import { storeQueue } from '../../../../common/actionQueue/actionQueueStorage';
+import { Action } from '../../../../common/actionQueue/actionQueue';
 import config from '../../../../config';
 import {
   ActionMockData,
-  setMockActionData,
+  initMockQueue,
 } from '../../../../gdprApi/actions/__mocks__/mock.util';
-import { getQueue } from '../../../../gdprApi/actions/queues';
 import {
   AuthCodeQueuesProps,
   authCodeQueuesStorageKey,
@@ -83,37 +78,8 @@ describe('<ServiceConnectionRemover /> ', () => {
     serviceName: defaultServiceConnectionData.name,
   };
 
-  // store the queue actions from actual downloadDataQueue with new props
-  const setStoredState = (overrideQueueProps: Partial<Action>[]) => {
-    const queue = getQueue(authCodeQueueProps).map(queueProps => {
-      const overrides =
-        overrideQueueProps.find(op => op.type === queueProps.type) || {};
-      return {
-        ...queueProps,
-        ...overrides,
-      };
-    });
-    storeQueue(authCodeQueuesStorageKey, createQueueFromProps(queue));
-  };
-
-  // set mocked responses and stored data
-  const initQueue = (props: ActionMockData[]) => {
-    const storedProps: Partial<Action>[] = [];
-    props.forEach(data => {
-      setMockActionData(data);
-      if (data.store) {
-        storedProps.push({
-          type: data.type,
-          complete: true, //!data.storeAsActive
-          errorMessage: data.rejectValue ? String(data.rejectValue) : undefined,
-          result: data.resolveValue,
-          active: !!data.storeAsActive,
-        });
-      }
-    });
-    if (storedProps.length) {
-      setStoredState(storedProps);
-    }
+  const initTestQueue = (props: ActionMockData[]) => {
+    initMockQueue(props, authCodeQueueProps, authCodeQueuesStorageKey);
   };
 
   const initQueueAndLocationForResume = (
@@ -121,7 +87,7 @@ describe('<ServiceConnectionRemover /> ', () => {
       typeof getScenarioWhereDeleteServiceConnectionIsResumable
     >
   ) => {
-    initQueue(getScenarioWhereDeleteServiceConnectionIsResumable(...args));
+    initTestQueue(getScenarioWhereDeleteServiceConnectionIsResumable(...args));
     mockedWindowControls.setPath(config.serviceConnectionsPath);
     mockedWindowControls.setSearch(
       createNextActionParams({
