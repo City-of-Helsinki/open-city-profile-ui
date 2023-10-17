@@ -188,7 +188,7 @@ export function createActionQueueRunner(
 
   // returns an error why an action cannot be executed
   // or undefined if it can be executed
-  const getActionExectionError = (
+  const getActionExecutionError = (
     actionStatus: ActionStatus
   ): GenericErrorType | undefined => {
     if (actionStatus === 'pending' || actionStatus === 'next') {
@@ -220,7 +220,7 @@ export function createActionQueueRunner(
       );
     }
     const actionstatus = getActionStatus(action);
-    const exectionError = getActionExectionError(actionstatus);
+    const exectionError = getActionExecutionError(actionstatus);
     if (!exectionError) {
       if (actionstatus !== 'pending') {
         execute(action);
