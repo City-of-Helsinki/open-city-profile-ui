@@ -7,7 +7,7 @@ import {
   getOption,
 } from './actionQueue';
 
-type ActionStorageProps = ActionUpdateProps & Pick<Action, 'type'>;
+type ActionStorageProps = ActionUpdateProps & Pick<Action, 'type' | 'data'>;
 export type StoredQueue = ActionStorageProps[];
 export function getStoredQueue(storageKey: string): StoredQueue | undefined {
   const queue = sessionStorage.getItem(storageKey);
@@ -28,6 +28,7 @@ function createStorageVersion(queue: ActionQueue): StoredQueue {
         errorMessage,
         type,
         active,
+        data,
       } = action;
 
       const storageResult =
@@ -39,6 +40,7 @@ function createStorageVersion(queue: ActionQueue): StoredQueue {
         type,
         active,
         result: storageResult,
+        data,
       };
     }
   );

@@ -15,9 +15,11 @@ describe('actionQueueStorage', () => {
       Reflect.set(obj, key, value);
       return obj;
     }, {} as Partial<Action>);
+
   afterEach(() => {
     sessionStorage.removeItem(storageKey);
   });
+
   const defaultAction: Action = {
     type: 'action',
     executor: () => Promise.reject(new Error('Base action')),
@@ -29,26 +31,28 @@ describe('actionQueueStorage', () => {
     options: {
       idleWhenActive: true,
       syncronousCompletion: false,
-      data: {
-        item: 'some data',
-      },
+    },
+    data: {
+      item: 'some data',
     },
   };
   describe('getStoredQueue() returns stored data as a parsed object. ', () => {
-    it('If result is an object, it is returned as an object', () => {
-      const complexResult = { a: 'a', b: { c: 'c' } };
+    it('If result or data are objects, it is returned as an object', () => {
+      const complexObject = { a: 'a', b: { c: 'c' } };
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { executor, errorMessage, ...storedData } = {
         ...defaultAction,
-        result: { a: 'a', b: { c: 'c' } },
+        result: complexObject,
+        data: complexObject,
       };
       const data = JSON.stringify([storedData]);
       manuallySetSessionStorage(data);
       const fetchedData = getStoredQueue(storageKey);
       expect(fetchedData).toMatchObject([{ ...storedData }]);
       expect((fetchedData as ActionQueue)[0].result).toMatchObject(
-        complexResult
+        complexObject
       );
+      expect((fetchedData as ActionQueue)[0].data).toMatchObject(complexObject);
     });
     it('Returns undefined, if stored value is invalid JSON object', () => {
       manuallySetSessionStorage('fooo');
@@ -69,17 +73,19 @@ describe('actionQueueStorage', () => {
       ]);
     });
     it('Returns true when save was successful', () => {
-      const actionsWithOptions = getSuccessfulQueueProps().map(action => ({
-        ...action,
-        options: {
-          idleWhenActive: true,
-          noStorage: true,
+      const actionsWithOptionsAndData = getSuccessfulQueueProps().map(
+        action => ({
+          ...action,
+          options: {
+            idleWhenActive: true,
+            noStorage: true,
+          },
           data: {
             type: action.type,
           },
-        },
-      }));
-      const queue = createQueueFromProps(actionsWithOptions);
+        })
+      );
+      const queue = createQueueFromProps(actionsWithOptionsAndData);
       expect(storeQueue(storageKey, queue)).toBeTruthy();
       const restoredQueue = getStoredQueue(storageKey) as StoredQueue;
       expect(restoredQueue).toMatchObject(

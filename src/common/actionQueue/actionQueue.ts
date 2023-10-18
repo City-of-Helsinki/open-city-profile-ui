@@ -11,13 +11,13 @@ export type ActionOptions = {
   noStorage?: boolean;
   syncronousCompletion?: boolean;
   resumable?: boolean;
-  data?: JSONStringifyableResult;
 };
 
 export type ActionProps = {
   type: ActionType;
   executor: ActionExecutor;
   options?: ActionOptions;
+  data?: JSONStringifyableResult;
 };
 
 type ActionSource = Partial<Action>;
@@ -128,7 +128,7 @@ function checkTypesAreUniqueAndSet(list: Array<ActionProps | Action>) {
 export function getOption(
   action: Action,
   optionName: keyof ActionOptions
-): boolean | undefined {
+): boolean {
   if (!action.options) {
     return false;
   }
@@ -139,10 +139,10 @@ export function getData(
   action: Action,
   propertyName?: string
 ): JSONStringifyableResult | undefined {
-  if (!action.options || !action.options.data) {
+  const { data } = action;
+  if (!data) {
     return undefined;
   }
-  const { data } = action.options;
   return propertyName && typeof data === 'object'
     ? Reflect.get(data, propertyName)
     : data;
@@ -200,15 +200,18 @@ export function createQueueFromProps(
   });
 }
 
-const activeFilter: ActionFilter = action => action.active;
+const activeFilter: ActionFilter = action =>
+  action.active && !getOption(action, 'idleWhenActive');
+
 const idleFilter: ActionFilter = action => {
   if (action.complete) {
     return false;
   }
-  const isIdleWhenActive = !!action.options && !!action.options.idleWhenActive;
+  const isIdleWhenActive = getOption(action, 'idleWhenActive');
   return !action.active || isIdleWhenActive;
 };
 const completeFilter: ActionFilter = action => action.complete;
+
 const errorFilter: ActionFilter = action =>
   action.complete && !!action.errorMessage;
 

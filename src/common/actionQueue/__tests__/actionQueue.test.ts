@@ -285,7 +285,7 @@ describe('actionQueue', () => {
       });
     });
     describe('getActive()', () => {
-      it(`Returns the first action where active is true. Or undefined when no action is found.`, () => {
+      it(`Returns the first action, if any, where active is true and options.idleWhenActive is not true.`, () => {
         const testQueue = createQueueFromProps([
           {
             ...readyMadeAction,
@@ -318,10 +318,7 @@ describe('actionQueue', () => {
         expect((controller.getActive() as Action).type).toBe('active');
 
         controller.updateActionAndQueue('active', { active: false });
-        expect((controller.getActive() as Action).type).toBe('idleWhenActive');
-
-        controller.updateActionAndQueue('idleWhenActive', { active: false });
-        expect(controller.getActive() as Action).toBeUndefined();
+        expect(controller.getActive()).toBeUndefined();
       });
     });
     describe('getFailed()', () => {
@@ -670,21 +667,19 @@ describe('actionQueue', () => {
         options: {},
       };
 
-      expect(getOption(actionWithAllOptions, 'data')).toBeTruthy();
       expect(getOption(actionWithAllOptions, 'noStorage')).toBeTruthy();
       expect(
         getOption(actionWithAllOptions, 'syncronousCompletion')
       ).toBeTruthy();
       expect(getOption(actionWithAllOptions, 'idleWhenActive')).toBeTruthy();
 
-      expect(getOption(actionWithNoOptionsProp, 'data')).toBeFalsy();
       expect(getOption(actionWithNoOptionsProp, 'idleWhenActive')).toBeFalsy();
       expect(getOption(actionWithoutOptions, 'noStorage')).toBeFalsy();
       expect(
         getOption(actionWithoutOptions, 'syncronousCompletion')
       ).toBeFalsy();
     });
-    it('getData() returns action.option.data or undefined', () => {
+    it('getData() returns action.data or undefined', () => {
       const data = { prop: 1 };
       const actionWithData = {
         ...readyMadeAction,
@@ -693,8 +688,8 @@ describe('actionQueue', () => {
           noStorage: true,
           syncronousCompletion: true,
           idleWhenActive: true,
-          data,
         },
+        data,
       };
       const actionWithoutData = {
         ...readyMadeAction,
@@ -709,9 +704,7 @@ describe('actionQueue', () => {
       const actionWithData = {
         ...readyMadeAction,
         type: 'result1',
-        options: {
-          data,
-        },
+        data,
       };
 
       const actionWithoutData = {
@@ -722,9 +715,7 @@ describe('actionQueue', () => {
       const actionWithDataObject = {
         ...readyMadeAction,
         type: 'result2',
-        options: {
-          data: { data, prop2: 'hello' },
-        },
+        data: { data, prop2: 'hello' },
       };
 
       expect(hasMatchingDataProperty(actionWithData, 'prop', 1)).toBeTruthy();
