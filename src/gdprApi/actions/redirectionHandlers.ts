@@ -93,10 +93,10 @@ export const createRedirectorAndCatcherActionProps = (
       noStorage: true,
       idleWhenActive: true,
       resumable: true,
-      data: {
-        isRedirectionCatcher: true,
-        requiredPath: targetPath,
-      },
+    },
+    data: {
+      isRedirectionCatcher: true,
+      requiredPath: targetPath,
     },
   };
 
@@ -105,10 +105,10 @@ export const createRedirectorAndCatcherActionProps = (
     executor: () => resolveExecutorWithRedirection(targetPath, catcherProps),
     options: {
       noStorage: true,
-      data: {
-        startPagePath: targetPath,
-        redirectsInternally: true,
-      },
+    },
+    data: {
+      startPagePath: targetPath,
+      redirectsInternally: true,
     },
   };
   return [redirector, catcherProps];

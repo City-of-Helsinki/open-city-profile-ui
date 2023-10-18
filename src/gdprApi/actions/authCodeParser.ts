@@ -1,4 +1,5 @@
 import {
+  Action,
   ActionExecutor,
   ActionOptions,
   ActionProps,
@@ -59,19 +60,21 @@ const authCodeParserExecutor: ActionExecutor = async (action, controller) => {
 
 const options: ActionOptions = {
   idleWhenActive: true,
-  data: {
-    redirectsOnError: true,
-  },
+};
+const data: Action['data'] = {
+  redirectsOnError: true,
 };
 
 export const tunnistamoAuthCodeParserAction: ActionProps = {
   type: tunnistamoAuthCodeParserType,
   executor: authCodeParserExecutor,
   options,
+  data,
 };
 
 export const keycloakAuthCodeParserAction: ActionProps = {
   type: keycloakAuthCodeParserType,
   executor: authCodeParserExecutor,
   options,
+  data,
 };

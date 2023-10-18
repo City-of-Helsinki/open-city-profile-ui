@@ -68,9 +68,9 @@ export function createActionForGettingSpecificServiceConnection(
     executor: serviceConnectionsQueryExecutor,
     options: {
       noStorage: true,
-      data: {
-        serviceName,
-      },
+    },
+    data: {
+      serviceName,
     },
   };
 }

@@ -101,9 +101,9 @@ export function createDeleteServiceConnectionAction(
     options: {
       noStorage: true,
       idleWhenActive: true,
-      data: {
-        serviceName,
-      },
+    },
+    data: {
+      serviceName,
     },
   };
 }

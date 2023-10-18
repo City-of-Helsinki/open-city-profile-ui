@@ -112,18 +112,14 @@ describe('redirectionHandlers.ts', () => {
     const actionWithPath = {
       ...baseAction,
       type: 'actionWithPath',
-      options: {
-        data: {
-          startPagePath: '/test-path',
-        },
+      data: {
+        startPagePath: '/test-path',
       },
     };
     const redirectorWithoutPath = {
       ...redirector,
-      options: {
-        data: {
-          startPagePath: '',
-        },
+      data: {
+        startPagePath: '',
       },
     };
     it('primary source is the redirectionAction', async () => {

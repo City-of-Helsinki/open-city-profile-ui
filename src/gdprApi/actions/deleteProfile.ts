@@ -82,9 +82,9 @@ export function createDeleteProfileAction(language: string): ActionProps {
     options: {
       noStorage: true,
       idleWhenActive: true,
-      data: {
-        language: convertStringToTranslationLanguage(language),
-      },
+    },
+    data: {
+      language: convertStringToTranslationLanguage(language),
     },
   };
 }

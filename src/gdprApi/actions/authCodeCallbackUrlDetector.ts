@@ -117,20 +117,23 @@ const options: ActionOptions = {
   noStorage: true,
   idleWhenActive: true,
   resumable: true,
-  data: {
-    requiredPath: config.gdprCallbackPath,
-    redirectsOnError: true,
-  },
+};
+
+const data: Action['data'] = {
+  requiredPath: config.gdprCallbackPath,
+  redirectsOnError: true,
 };
 
 export const tunnistamoAuthCodeCallbackUrlAction: ActionProps = {
   type: tunnistamoAuthCodeCallbackUrlDetectorType,
   executor: authCodeCallbackUrlDetectorExecutor,
   options,
+  data,
 };
 
 export const keycloakAuthCodeCallbackUrlAction: ActionProps = {
   type: keycloakAuthCodeCallbackUrlDetectorType,
   executor: authCodeCallbackUrlDetectorExecutor,
   options,
+  data,
 };

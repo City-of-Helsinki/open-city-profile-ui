@@ -25,10 +25,8 @@ export function createQueueInfoAction(queueName: string): ActionProps {
   return {
     type: queueInfoActionType,
     executor: queueInfoExecutor,
-    options: {
-      data: {
-        queueName,
-      },
+    data: {
+      queueName,
     },
   };
 }
