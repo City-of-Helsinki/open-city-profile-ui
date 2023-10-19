@@ -81,7 +81,11 @@ export function getServiceConnectionsServices<T = GdprServiceConnectionService>(
   serviceConnectionsQuery:
     | GdprServiceConnectionsRoot
     | ServiceConnectionsRoot
-    | undefined
+    | undefined,
+  serviceName?: Service['name']
 ): T[] {
-  return (servicesSelector(serviceConnectionsQuery) as unknown) as T[];
+  return (servicesSelector(
+    serviceConnectionsQuery,
+    serviceName
+  ) as unknown) as T[];
 }

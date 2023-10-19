@@ -131,6 +131,21 @@ export function getSuccessfulQueue(
   return mergeProps(queue, extraProps);
 }
 
+export function getFailingQueue(extraProps?: Partial<Action>[]): InitialQueue {
+  const queue = [
+    {
+      ...convertSourceToActionProps(resolvingActionSource1),
+    },
+    {
+      ...convertSourceToActionProps(rejectingActionSource),
+    },
+    {
+      ...convertSourceToActionProps(resolvingActionSource2),
+    },
+  ];
+  return mergeProps(queue, extraProps);
+}
+
 export function pickUpdateActionProps(
   action: Partial<Action>,
   addType = true,
