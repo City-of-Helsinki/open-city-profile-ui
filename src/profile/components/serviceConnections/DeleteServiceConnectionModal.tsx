@@ -12,7 +12,7 @@ import {
   STATUS_ERROR,
   STATUS_LOADING,
   STATUS_PENDING_CONFIRMATION,
-} from './ServiceConnection';
+} from './ServiceConnectionRemover';
 
 function DeleteServiceConnectionModal(props: {
   service: ServiceConnectionData;
