@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { ServiceConnectionData } from '../../helpers/getServiceConnectionData';
 import DeleteServiceConnectionModal from './DeleteServiceConnectionModal';
 import useAuthCodeQueues, {
-  currentPhases,
+  AuthCodeQueuesProps,
 } from '../../../gdprApi/useAuthCodeQueues';
 import config from '../../../config';
 import { isForbiddenResult } from '../../../gdprApi/actions/deleteServiceConnection';
@@ -34,25 +34,26 @@ function ServiceConnectionRemover(props: {
 }): React.ReactElement | null {
   const [errorMessage, setErrorMessage] = useState<string>();
   const { service, onDeletion, onAbort } = props;
+  const onError: AuthCodeQueuesProps['onError'] = useCallback(controller => {
+    const failed = controller.getFailed();
+    const message = (failed && failed.errorMessage) || 'unknown';
+    setErrorMessage(message);
+  }, []);
   const {
     isLoading,
     startOrRestart,
     hasError,
+    isComplete,
     shouldResumeWithAuthCodes,
     resume,
-    state,
   } = useAuthCodeQueues({
     startPagePath: config.serviceConnectionsPath,
     queueName: 'deleteServiceConnection',
     serviceName: service.name,
-    onError: controller => {
-      const failed = controller.getFailed();
-      const message = (failed && failed.errorMessage) || 'unknown';
-      setErrorMessage(message);
-    },
+    onError,
   });
 
-  const isDeleted = state.currentPhase === currentPhases.complete && !hasError;
+  const isDeleted = isComplete && !hasError;
 
   const [deletionStatus, setDeletionStatus] = useState<DeletionStatus>(
     isLoading

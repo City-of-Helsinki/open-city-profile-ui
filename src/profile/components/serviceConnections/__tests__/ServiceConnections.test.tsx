@@ -74,10 +74,8 @@ describe('<ServiceConnections />', () => {
         {
           type: getServiceConnectionsAction.type,
           executor: jest.fn(),
-          options: {
-            data: {
-              serviceName: serviceList[0].name,
-            },
+          data: {
+            serviceName: serviceList[0].name,
           },
         },
       ])

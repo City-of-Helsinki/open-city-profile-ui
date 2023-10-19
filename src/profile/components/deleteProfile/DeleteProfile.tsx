@@ -23,7 +23,9 @@ import { DeleteResultLists } from '../../helpers/parseDeleteProfileResult';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import Loading from '../../../common/loading/Loading';
 import StyledButton from '../../../common/styledButton/StyledButton';
-import useAuthCodeQueues from '../../../gdprApi/useAuthCodeQueues';
+import useAuthCodeQueues, {
+  AuthCodeQueuesProps,
+} from '../../../gdprApi/useAuthCodeQueues';
 import config from '../../../config';
 import { getDeleteProfileResult } from '../../../gdprApi/actions/deleteProfile';
 
@@ -49,16 +51,8 @@ function DeleteProfile(): React.ReactElement {
   const [resultError, setResultError] = useState<
     ApolloError | Error | undefined | DeleteResultLists
   >(undefined);
-  const {
-    startOrRestart,
-    shouldResumeWithAuthCodes,
-    resume,
-    isLoading: isDeletingProfile,
-  } = useAuthCodeQueues({
-    queueName: 'deleteProfile',
-    startPagePath: config.deletePath,
-    language: i18n.language,
-    onCompleted: controller => {
+  const onCompleted: AuthCodeQueuesProps['onCompleted'] = useCallback(
+    controller => {
       const { failures, successful } = getDeleteProfileResult(controller) || {
         failures: [],
         successful: [],
@@ -70,14 +64,28 @@ function DeleteProfile(): React.ReactElement {
         setResultError({ failures, successful });
       }
     },
-    onError: controller => {
-      const failed = controller.getFailed();
-      const error = new Error(failed ? failed.errorMessage : 'Unknown error');
-      if (error) {
-        Sentry.captureException(error);
-      }
-      setResultError(error);
-    },
+    [history, trackEvent]
+  );
+  const onError: AuthCodeQueuesProps['onError'] = useCallback(controller => {
+    const failed = controller.getFailed();
+    const error = new Error(failed ? failed.errorMessage : 'Unknown error');
+    if (error) {
+      Sentry.captureException(error);
+    }
+    setResultError(error);
+  }, []);
+
+  const {
+    startOrRestart,
+    shouldResumeWithAuthCodes,
+    resume,
+    isLoading: isDeletingProfile,
+  } = useAuthCodeQueues({
+    queueName: 'deleteProfile',
+    startPagePath: config.deletePath,
+    language: i18n.language,
+    onCompleted,
+    onError,
   });
 
   const [removeButtonId, setFocusToRemoveButton] = useFocusSetter({

@@ -5,7 +5,7 @@ import useAuthCodeQueues, {
   AuthCodeQueuesProps,
   QueueComponentState,
   authCodeQueuesStorageKey,
-  currentPhases,
+  runningStatuses,
   nextPhases,
 } from '../useAuthCodeQueues';
 import { Action, ActionType } from '../../common/actionQueue/actionQueue';
@@ -302,7 +302,7 @@ describe('useAuthCodeQueues', () => {
       initTestQueue(getScenarioWhichGoesFromStartToAuthRedirectAutomatically());
       const { start, getState, getFunctionResults } = renderTestComponent();
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.idle,
+        runningStatus: runningStatuses.idle,
         nextPhase: nextPhases.start,
       });
       expect(getFunctionResults()).toMatchObject({
@@ -316,7 +316,7 @@ describe('useAuthCodeQueues', () => {
 
       await waitFor(() => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.running,
+          runningStatus: runningStatuses.running,
           nextPhase: nextPhases.waitForAuthCodeRedirect,
         });
       });
@@ -340,7 +340,7 @@ describe('useAuthCodeQueues', () => {
       );
       const { start, getFunctionResults, getState } = renderTestComponent();
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.idle,
+        runningStatus: runningStatuses.idle,
         nextPhase: nextPhases.start,
       });
       await act(async () => {
@@ -366,7 +366,7 @@ describe('useAuthCodeQueues', () => {
           expect(getFunctionResults().isLoading).toBeFalsy();
         });
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.error,
+          runningStatus: runningStatuses.error,
           nextPhase: nextPhases.restart,
         });
         expect(getFunctionResults()).toMatchObject({
@@ -396,7 +396,7 @@ describe('useAuthCodeQueues', () => {
         start();
         await waitFor(() => {
           expect(getState()).toMatchObject({
-            currentPhase: currentPhases.error,
+            runningStatus: runningStatuses.error,
             nextPhase: nextPhases.restart,
           });
         });
@@ -423,7 +423,7 @@ describe('useAuthCodeQueues', () => {
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(() => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.idle,
+          runningStatus: runningStatuses.idle,
           nextPhase: nextPhases.resumeCallback,
         });
       });
@@ -434,7 +434,7 @@ describe('useAuthCodeQueues', () => {
       resume();
       await waitFor(() => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.running,
+          runningStatus: runningStatuses.running,
         });
       });
       await waitFor(() => {
@@ -459,7 +459,7 @@ describe('useAuthCodeQueues', () => {
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.idle,
+          runningStatus: runningStatuses.idle,
           nextPhase: nextPhases.resumeCallback,
         });
       });
@@ -470,7 +470,7 @@ describe('useAuthCodeQueues', () => {
       resume();
       await waitFor(async () => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.running,
+          runningStatus: runningStatuses.running,
         });
       });
 
@@ -501,7 +501,7 @@ describe('useAuthCodeQueues', () => {
 
       await waitFor(async () => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.error,
+          runningStatus: runningStatuses.error,
           nextPhase: nextPhases.waitForInternalRedirect,
         });
       });
@@ -524,7 +524,7 @@ describe('useAuthCodeQueues', () => {
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.idle,
+          runningStatus: runningStatuses.idle,
           nextPhase: nextPhases.resumeWithAuthCodes,
         });
       });
@@ -535,7 +535,7 @@ describe('useAuthCodeQueues', () => {
       resume();
       await waitFor(async () => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.complete,
+          runningStatus: runningStatuses.complete,
         });
       });
       expect(getFunctionResults()).toMatchObject({
@@ -563,7 +563,7 @@ describe('useAuthCodeQueues', () => {
       const { getState, start, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.complete,
+          runningStatus: runningStatuses.complete,
           nextPhase: nextPhases.restart,
         });
       });
@@ -575,7 +575,7 @@ describe('useAuthCodeQueues', () => {
       start();
       await waitFor(async () => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.running,
+          runningStatus: runningStatuses.running,
           lastActionType: getServiceConnectionsAction.type,
         });
       });
@@ -603,14 +603,14 @@ describe('useAuthCodeQueues', () => {
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(async () => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.idle,
+          runningStatus: runningStatuses.idle,
           nextPhase: nextPhases.resumeWithAuthCodes,
         });
       });
       resume();
       await waitFor(async () => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.error,
+          runningStatus: runningStatuses.error,
           nextPhase: nextPhases.restart,
         });
       });
@@ -657,7 +657,7 @@ describe('useAuthCodeQueues', () => {
       };
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.idle,
+        runningStatus: runningStatuses.idle,
         nextPhase: nextPhases.start,
       });
       await act(async () => {
@@ -669,7 +669,7 @@ describe('useAuthCodeQueues', () => {
           getGdprQueryScopesAction.type
         );
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.running,
+          runningStatus: runningStatuses.running,
           nextPhase: nextPhases.waitForAction,
         });
       });
@@ -681,7 +681,7 @@ describe('useAuthCodeQueues', () => {
 
       await rerender();
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAction,
         lastActionType: getGdprQueryScopesAction.type,
         lastLogType: actionLogTypes.started,
@@ -697,7 +697,7 @@ describe('useAuthCodeQueues', () => {
         tunnistamoRedirectionInitializationAction.type
       );
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAction,
       });
 
@@ -711,7 +711,7 @@ describe('useAuthCodeQueues', () => {
         tunnistamoAuthCodeRedirectionAction.type
       );
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAuthCodeRedirect,
       });
 
@@ -725,7 +725,7 @@ describe('useAuthCodeQueues', () => {
       await toggleComponentMounting();
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.idle,
+        runningStatus: runningStatuses.idle,
         nextPhase: nextPhases.resumeCallback,
       });
 
@@ -742,7 +742,7 @@ describe('useAuthCodeQueues', () => {
       );
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAction,
       });
 
@@ -751,7 +751,7 @@ describe('useAuthCodeQueues', () => {
         loadKeycloakConfigAction.type
       );
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAction,
       });
 
@@ -760,7 +760,7 @@ describe('useAuthCodeQueues', () => {
         keycloakRedirectionInitializationAction.type
       );
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAction,
       });
 
@@ -772,7 +772,7 @@ describe('useAuthCodeQueues', () => {
       await rerender();
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAuthCodeRedirect,
       });
 
@@ -786,7 +786,7 @@ describe('useAuthCodeQueues', () => {
       await toggleComponentMounting();
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.idle,
+        runningStatus: runningStatuses.idle,
         nextPhase: nextPhases.resumeCallback,
       });
 
@@ -803,7 +803,7 @@ describe('useAuthCodeQueues', () => {
       );
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAction,
       });
 
@@ -813,7 +813,7 @@ describe('useAuthCodeQueues', () => {
       );
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForInternalRedirect,
       });
 
@@ -822,7 +822,7 @@ describe('useAuthCodeQueues', () => {
       );
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForInternalRedirect,
       });
 
@@ -845,7 +845,7 @@ describe('useAuthCodeQueues', () => {
       await toggleComponentMounting();
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.idle,
+        runningStatus: runningStatuses.idle,
         nextPhase: nextPhases.resumeWithAuthCodes,
       });
 
@@ -862,7 +862,7 @@ describe('useAuthCodeQueues', () => {
       );
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAction,
       });
 
@@ -872,14 +872,14 @@ describe('useAuthCodeQueues', () => {
       );
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.running,
+        runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAction,
       });
 
       await checkCurrentActionAndManuallyCompleteIt(downloadAsFileAction.type);
       await waitFor(async () => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.complete,
+          runningStatus: runningStatuses.complete,
           nextPhase: nextPhases.restart,
         });
       });
@@ -893,7 +893,7 @@ describe('useAuthCodeQueues', () => {
       const { start, getState, getFunctionResults } = renderTestComponent();
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.idle,
+        runningStatus: runningStatuses.idle,
         nextPhase: nextPhases.start,
       });
       await act(async () => {
@@ -907,7 +907,7 @@ describe('useAuthCodeQueues', () => {
 
       await waitFor(async () => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.complete,
+          runningStatus: runningStatuses.complete,
           nextPhase: nextPhases.restart,
         });
       });
@@ -930,14 +930,16 @@ describe('useAuthCodeQueues', () => {
       } = renderTestComponent();
 
       expect(getState()).toMatchObject({
-        currentPhase: currentPhases.idle,
+        runningStatus: runningStatuses.idle,
         nextPhase: nextPhases.start,
       });
       await act(async () => {
         start();
       });
       await act(async () => {
-        expect(getState().currentPhase === currentPhases.running).toBeTruthy();
+        expect(
+          getState().runningStatus === runningStatuses.running
+        ).toBeTruthy();
         expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
       });
       completeActionExecutor(getServiceConnectionsAction.type);
@@ -949,7 +951,7 @@ describe('useAuthCodeQueues', () => {
       await toggleComponentMounting();
       await toggleComponentMounting();
       await waitFor(async () => {
-        expect(getState().currentPhase === currentPhases.idle).toBeTruthy();
+        expect(getState().runningStatus === runningStatuses.idle).toBeTruthy();
         expect(
           getState().nextPhase === nextPhases.stoppedInMidQueue
         ).toBeTruthy();
@@ -961,7 +963,9 @@ describe('useAuthCodeQueues', () => {
       cleanMockData();
       start();
       await act(async () => {
-        expect(getState().currentPhase === currentPhases.running).toBeTruthy();
+        expect(
+          getState().runningStatus === runningStatuses.running
+        ).toBeTruthy();
         expect(
           getState().lastActionType === getServiceConnectionsAction.type
         ).toBeTruthy();
@@ -987,7 +991,7 @@ describe('useAuthCodeQueues', () => {
 
       await waitFor(() => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.complete,
+          runningStatus: runningStatuses.complete,
           nextPhase: nextPhases.restart,
         });
       });
@@ -1029,7 +1033,7 @@ describe('useAuthCodeQueues', () => {
 
       await waitFor(() => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.error,
+          runningStatus: runningStatuses.error,
         });
       });
 
@@ -1054,7 +1058,7 @@ describe('useAuthCodeQueues', () => {
 
       await waitFor(() => {
         expect(getState()).toMatchObject({
-          currentPhase: currentPhases.error,
+          runningStatus: runningStatuses.error,
         });
       });
 

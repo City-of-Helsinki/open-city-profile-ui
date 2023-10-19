@@ -19,7 +19,7 @@ function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
   const redirectToErrorPage = useErrorPageRedirect();
   const { t } = useTranslation();
   const history = useHistory();
-  const storedData = useMemo(
+  const storedData = useMemo<Partial<AuthCodeQueuesProps>>(
     () => getStoredQueueData(authCodeQueuesStorageKey) || {},
     []
   );
@@ -50,13 +50,17 @@ function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
     },
     [redirectAfterError]
   );
-  const authCodeQueueProps = ({
-    ...storedData,
-    onError,
-  } as unknown) as AuthCodeQueuesProps;
-  const { shouldHandleCallback, resume } = useAuthCodeQueues(
-    authCodeQueueProps
+
+  const memoizedProps = useMemo<AuthCodeQueuesProps>(
+    () =>
+      ({
+        ...storedData,
+        onError,
+      } as AuthCodeQueuesProps),
+    [storedData, onError]
   );
+
+  const { shouldHandleCallback, resume } = useAuthCodeQueues(memoizedProps);
   React.useEffect(() => {
     if (shouldHandleCallback()) {
       resume();
