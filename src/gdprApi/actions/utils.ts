@@ -1,8 +1,11 @@
 import {
   Action,
+  ActionExecutorPromise,
+  ActionProps,
   ActionType,
   JSONStringifyableResult,
   QueueController,
+  getData,
 } from '../../common/actionQueue/actionQueue';
 import {
   isTunnistamoAuthorisationCodeNeeded,
@@ -10,6 +13,8 @@ import {
 } from './getGdprScopes';
 import { tunnistamoRedirectionInitializationAction } from './authCodeRedirectionInitialization';
 import { tunnistamoAuthCodeRedirectionAction } from './authCodeRedirectionHandler';
+import matchUrls from '../../common/helpers/matchUrls';
+import { getStartPagePathFromQueue } from './redirectionHandlers';
 
 export type AuthorizationUrlParams = {
   oidcUri: string;
@@ -17,6 +22,11 @@ export type AuthorizationUrlParams = {
   scopes: string[];
   redirectUri: string;
   state: string;
+};
+
+type RedirectionRequest = {
+  isRedirectionRequest: boolean;
+  path: string;
 };
 
 export const thirtySecondsInMs = 30 * 1000;
@@ -45,6 +55,7 @@ export function isTunnistamoAuthCodeAction(action: Action): boolean {
     action.type === tunnistamoAuthCodeRedirectionAction.type
   );
 }
+
 export function isAuthCodeActionNeeded(
   action: Action,
   controller: QueueController
@@ -74,4 +85,114 @@ export function makeAuthorizationUrl(
   params.append('state', state);
 
   return `${oidcUri}?${params.toString()}`;
+}
+
+function createInternalRedirectionRequest(path: string): RedirectionRequest {
+  return {
+    isRedirectionRequest: true,
+    path,
+  };
+}
+
+function createInternalRedirectionRequestForError(path: string): string {
+  return JSON.stringify(createInternalRedirectionRequest(path));
+}
+
+export function createFailedActionParams(
+  action: Action | ActionProps,
+  message = '',
+  append = false
+) {
+  const params = new URLSearchParams(append ? window.location.search : '');
+  params.append('error', action.type);
+  if (message) {
+    params.append('message', message);
+  }
+  return params.toString();
+}
+
+function createPagePathWithFailedActionParams(
+  path: string,
+  action?: Action | ActionProps,
+  errorText?: string
+) {
+  if (!action) {
+    return path;
+  }
+  return `${path}?${createFailedActionParams(action, errorText)}`;
+}
+
+export function rejectExecutorWithRedirection(
+  path: string,
+  action: Action | ActionProps,
+  errorText?: string,
+  timeout = 0
+): ActionExecutorPromise {
+  const errorMessage = createInternalRedirectionRequestForError(
+    createPagePathWithFailedActionParams(path, action, errorText)
+  );
+  const error = new Error(errorMessage);
+  if (timeout) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(error);
+      }, timeout);
+    });
+  }
+  return Promise.reject(error);
+}
+export function rejectExecutorWithStartPageRedirection(
+  controller: QueueController,
+  action: Action | ActionProps,
+  errorText?: string,
+  timeout = 0
+): ActionExecutorPromise {
+  const path = getStartPagePathFromQueue(controller);
+  if (!path) {
+    throw new Error('The queue has not start page path action');
+  }
+  const errorMessage = createInternalRedirectionRequestForError(
+    createPagePathWithFailedActionParams(path, action, errorText)
+  );
+  const error = new Error(errorMessage);
+  if (timeout) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(error);
+      }, timeout);
+    });
+  }
+  return Promise.reject(error);
+}
+
+export function createNextActionParams(
+  action: Action | ActionProps,
+  append = false
+) {
+  const params = new URLSearchParams(append ? window.location.search : '');
+  params.append('next', action.type);
+  return params.toString();
+}
+
+export function getNextActionFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('next') || '';
+}
+
+export function resolveExecutorWithRedirection(
+  path: string,
+  nextAction: Action | ActionProps
+): ActionExecutorPromise {
+  const result = createInternalRedirectionRequest(
+    `${path}?${createNextActionParams(nextAction)}`
+  );
+  return Promise.resolve(result);
+}
+
+export function isOnActionRequiredPath(action: Action): boolean {
+  const requiredPath = getData(action, 'requiredPath') as string;
+  if (!requiredPath) {
+    return true;
+  }
+  return matchUrls(requiredPath);
 }

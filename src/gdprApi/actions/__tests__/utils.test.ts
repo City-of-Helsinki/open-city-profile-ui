@@ -1,4 +1,6 @@
+import fetchMock from 'jest-fetch-mock';
 import { waitFor } from '@testing-library/react';
+import to from 'await-to-js';
 
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import {
@@ -9,16 +11,24 @@ import {
   resolvingActionSource2,
 } from '../../../common/actionQueue/test.util';
 import {
+  createFailedActionParams,
   getActionResultAndErrorMessage,
   isAuthCodeActionNeeded,
   isTunnistamoAuthCodeAction,
+  rejectExecutorWithStartPageRedirection,
 } from '../utils';
 import {
   keycloakRedirectionInitializationAction,
   tunnistamoRedirectionInitializationAction,
 } from '../authCodeRedirectionInitialization';
-import { Action } from '../../../common/actionQueue/actionQueue';
+import {
+  Action,
+  createQueueController,
+  createQueueFromProps,
+} from '../../../common/actionQueue/actionQueue';
 import { getGdprQueryScopesAction } from '../getGdprScopes';
+import mockWindowLocation from '../../../common/test/mockWindowLocation';
+import { createRedirectorAndCatcherActionProps } from '../redirectionHandlers';
 
 describe('utils.ts', () => {
   const initTests = ({ fail }: { fail?: boolean } = {}) => {
@@ -28,8 +38,16 @@ describe('utils.ts', () => {
       runner,
     };
   };
+  const mockedWindowControls = mockWindowLocation();
+
+  afterAll(() => {
+    mockedWindowControls.restore();
+  });
 
   afterEach(() => {
+    mockedWindowControls.reset();
+    fetchMock.resetMocks();
+    jest.restoreAllMocks();
     jest.resetAllMocks();
   });
   describe('getActionResultAndErrorMessage()', () => {
@@ -150,6 +168,45 @@ describe('utils.ts', () => {
           runner
         )
       ).toBeFalsy();
+    });
+  });
+
+  describe('rejectExecutorWithStartPageRedirection()', () => {
+    it(`creates a rejected promise with a redirection path to the start page path 
+        and an error message in the error.message`, async () => {
+      const path = '/startPage';
+      const queue = createQueueController(
+        createQueueFromProps([
+          ...createRedirectorAndCatcherActionProps(path),
+          keycloakRedirectionInitializationAction,
+        ])
+      );
+      const [error] = await to(
+        rejectExecutorWithStartPageRedirection(
+          queue,
+          tunnistamoRedirectionInitializationAction as Action,
+          'errorMessage'
+        )
+      );
+      expect(JSON.parse(error?.message as string)).toMatchObject({
+        isRedirectionRequest: true,
+        path: `${path}?${createFailedActionParams(
+          tunnistamoRedirectionInitializationAction as Action,
+          'errorMessage'
+        )}`,
+      });
+    });
+    it(`throws if there is no startPagePath provided by any action`, async () => {
+      const queue = createQueueController(
+        createQueueFromProps([keycloakRedirectionInitializationAction])
+      );
+      expect(() =>
+        rejectExecutorWithStartPageRedirection(
+          queue,
+          tunnistamoRedirectionInitializationAction as Action,
+          'errorMessage'
+        )
+      ).toThrow();
     });
   });
 });
