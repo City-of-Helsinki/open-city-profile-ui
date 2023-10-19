@@ -3,6 +3,8 @@ import {
   Action,
   ActionQueue,
   createQueueFromProps,
+  InitialQueue,
+  mergeQueues,
 } from './actionQueue';
 
 export type ActionSourceForTesting = Pick<ActionProps, 'type'> & {
@@ -92,4 +94,37 @@ export function createQueueWithCommonActions(
     ],
     ...additionalActions,
   ]);
+}
+
+function mergeProps(queue: InitialQueue, extraProps?: Partial<Action>[]) {
+  if (extraProps) {
+    // mergeQueues checks types, so match them and array lengths
+    const mergeableExtraProps = queue.map((action, index) => {
+      const extra = extraProps[index];
+      const { type } = action;
+      return {
+        type: (extra && extra.type) || type,
+        // complete must be added because actionQueue checks if it exists
+        // and resets all props if not.
+        complete: false,
+        ...extra,
+      };
+    });
+    return mergeQueues(queue, mergeableExtraProps) as InitialQueue;
+  }
+  return queue;
+}
+
+export function getSuccessfulQueue(
+  extraProps?: Partial<Action>[]
+): InitialQueue {
+  const queue = [
+    {
+      ...convertSourceToActionProps(resolvingActionSource1),
+    },
+    {
+      ...convertSourceToActionProps(resolvingActionSource2),
+    },
+  ];
+  return mergeProps(queue, extraProps);
 }

@@ -20,6 +20,8 @@ export type ActionProps = {
   data?: JSONStringifyableResult;
 };
 
+type ActionSource = Partial<Action>;
+
 export type JSONStringifyableResult =
   | string
   | number
@@ -164,6 +166,37 @@ export function isResumable(action: Action): boolean {
   return !!getOption(action, 'resumable');
 }
 
+// Checks both queues have the same number of actions in the same order
+export function verifyQueuesMatch(
+  primaryQueue: ActionSource[],
+  secondaryQueue: ActionSource[]
+) {
+  if (primaryQueue.length !== secondaryQueue.length) {
+    return false;
+  }
+  return !primaryQueue.some((action, index) => {
+    const actionInOtherQueue = secondaryQueue[index];
+    return action.type !== actionInOtherQueue.type;
+  });
+}
+
+// Merges queues if they match
+// Otherwise rejects the secondary queue and returns only the primary
+export function mergeQueues(
+  primaryQueue: ActionSource[],
+  newProps: ActionSource[]
+): Partial<Action>[] {
+  if (!verifyQueuesMatch(primaryQueue, newProps)) {
+    return primaryQueue;
+  }
+  return primaryQueue.map((action, index) => {
+    const actionInOtherQueue = newProps[index];
+    return {
+      ...action,
+      ...actionInOtherQueue,
+    };
+  });
+}
 export function createQueueFromProps(
   props: Array<Action | ActionProps>
 ): ActionQueue {
@@ -240,7 +273,7 @@ export function createQueueController(
       }
       return { ...action };
     });
-    queue.map(invalidate);
+    queue.forEach(invalidate);
     queue = newQueue;
     return queue;
   };
@@ -268,7 +301,7 @@ export function createQueueController(
     updateActionAndQueue,
     reset: () => {
       const newQueue = queue.map(item => reset(item));
-      queue.map(invalidate);
+      queue.forEach(invalidate);
       queue = newQueue;
     },
     getActive: () => filterQueue(activeFilter)[0],

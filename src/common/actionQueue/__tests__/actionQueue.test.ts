@@ -8,6 +8,7 @@ import {
   getOption,
   getData,
   hasMatchingDataProperty,
+  verifyQueuesMatch,
 } from '../actionQueue';
 import {
   convertSourceToActionProps,
@@ -17,6 +18,7 @@ import {
   resolvingActionSource1,
   resolvingActionSource2,
   resolvingAction,
+  getSuccessfulQueue,
 } from '../test.util';
 
 describe('actionQueue', () => {
@@ -759,6 +761,21 @@ describe('actionQueue', () => {
       ).toBeFalsy();
       expect(
         hasMatchingDataProperty(actionWithoutData, 'type', 'actionWithoutData')
+      ).toBeFalsy();
+    });
+    it(`verifyQueuesMatch() makes sure two queues have matching number and order of actions. 
+        Used when merging stored queues.`, () => {
+      const queue = getSuccessfulQueue();
+      expect(verifyQueuesMatch(queue, queue)).toBeTruthy();
+      expect(verifyQueuesMatch([], [])).toBeTruthy();
+      expect(verifyQueuesMatch(queue, [...queue, ...queue])).toBeFalsy();
+      expect(verifyQueuesMatch([{ type: 'x' }], [{ type: 'x' }])).toBeTruthy();
+      expect(verifyQueuesMatch([{ type: 'x' }], [{ type: 'y' }])).toBeFalsy();
+      expect(
+        verifyQueuesMatch(
+          [{ type: 'x' }, { type: 'y' }],
+          [{ type: 'y' }, { type: 'x' }]
+        )
       ).toBeFalsy();
     });
   });
