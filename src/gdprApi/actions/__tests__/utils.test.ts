@@ -12,6 +12,7 @@ import {
 } from '../../../common/actionQueue/test.util';
 import {
   createFailedActionParams,
+  createInternalRedirectionRequest,
   getActionResultAndErrorMessage,
   isAuthCodeActionNeeded,
   isTunnistamoAuthCodeAction,
@@ -170,7 +171,47 @@ describe('utils.ts', () => {
       ).toBeFalsy();
     });
   });
-
+  describe('createFailedActionParams()', () => {
+    it('creates url params with failed action type and an optional message', async () => {
+      expect(
+        createFailedActionParams(
+          tunnistamoRedirectionInitializationAction as Action
+        )
+      ).toBe(`error=${tunnistamoRedirectionInitializationAction.type}`);
+      expect(
+        createFailedActionParams(
+          tunnistamoRedirectionInitializationAction as Action,
+          'errorMessage'
+        )
+      ).toBe(
+        `error=${tunnistamoRedirectionInitializationAction.type}&message=errorMessage`
+      );
+    });
+    it('if third argument is true, new params are appended to existing', async () => {
+      const existingParams = 'param1=1&param2=2';
+      mockedWindowControls.setSearch(existingParams);
+      expect(
+        createFailedActionParams(
+          tunnistamoRedirectionInitializationAction as Action,
+          'errorMessage',
+          true
+        )
+      ).toBe(
+        `${existingParams}&error=${tunnistamoRedirectionInitializationAction.type}&message=errorMessage`
+      );
+    });
+  });
+  describe('createInternalRedirectionRequest()', () => {
+    describe('createInternalRedirectionRequest()', () => {
+      it('creates an object that can be used as action.result, indicating a redirection should be done', async () => {
+        const path = '/redirect';
+        expect(createInternalRedirectionRequest(path)).toMatchObject({
+          isRedirectionRequest: true,
+          path,
+        });
+      });
+    });
+  });
   describe('rejectExecutorWithStartPageRedirection()', () => {
     it(`creates a rejected promise with a redirection path to the start page path 
         and an error message in the error.message`, async () => {

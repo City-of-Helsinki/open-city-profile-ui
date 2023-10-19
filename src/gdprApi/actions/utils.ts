@@ -7,12 +7,14 @@ import {
   QueueController,
   getData,
 } from '../../common/actionQueue/actionQueue';
+import config from '../../config';
 import {
   isTunnistamoAuthorisationCodeNeeded,
   isKeycloakAuthorisationCodeNeeded,
 } from './getGdprScopes';
 import { tunnistamoRedirectionInitializationAction } from './authCodeRedirectionInitialization';
 import { tunnistamoAuthCodeRedirectionAction } from './authCodeRedirectionHandler';
+import { tunnistamoAuthCodeCallbackUrlAction } from './authCodeCallbackUrlDetector';
 import matchUrls from '../../common/helpers/matchUrls';
 import { getStartPagePathFromQueue } from './redirectionHandlers';
 
@@ -52,6 +54,7 @@ export function getActionResultAndErrorMessage<T = JSONStringifyableResult>(
 export function isTunnistamoAuthCodeAction(action: Action): boolean {
   return (
     action.type === tunnistamoRedirectionInitializationAction.type ||
+    action.type === tunnistamoAuthCodeCallbackUrlAction.type ||
     action.type === tunnistamoAuthCodeRedirectionAction.type
   );
 }
@@ -87,7 +90,13 @@ export function makeAuthorizationUrl(
   return `${oidcUri}?${params.toString()}`;
 }
 
-function createInternalRedirectionRequest(path: string): RedirectionRequest {
+export function isGdprCallbackUrl(): boolean {
+  return window.location.pathname === config.gdprCallbackPath;
+}
+
+export function createInternalRedirectionRequest(
+  path: string
+): RedirectionRequest {
   return {
     isRedirectionRequest: true,
     path,
@@ -111,7 +120,7 @@ export function createFailedActionParams(
   return params.toString();
 }
 
-function createPagePathWithFailedActionParams(
+export function createPagePathWithFailedActionParams(
   path: string,
   action?: Action | ActionProps,
   errorText?: string
@@ -163,6 +172,19 @@ export function rejectExecutorWithStartPageRedirection(
     });
   }
   return Promise.reject(error);
+}
+
+export function parseAuthorizationCallbackUrl(): {
+  code: string;
+  state: string;
+} {
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code') || '';
+  const state = params.get('state') || '';
+  return {
+    code,
+    state,
+  };
 }
 
 export function createNextActionParams(
