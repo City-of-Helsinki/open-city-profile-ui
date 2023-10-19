@@ -5,6 +5,8 @@ import {
   createQueueFromProps,
   InitialQueue,
   mergeQueues,
+  ActionUpdateProps,
+  ActionType,
 } from './actionQueue';
 
 export type ActionSourceForTesting = Pick<ActionProps, 'type'> & {
@@ -127,4 +129,22 @@ export function getSuccessfulQueue(
     },
   ];
   return mergeProps(queue, extraProps);
+}
+
+export function pickUpdateActionProps(
+  action: Partial<Action>,
+  addType = true,
+  filterUndefined = true
+): Partial<ActionUpdateProps> & { type?: ActionType } {
+  const { complete, active, result, errorMessage, updatedAt, type } = action;
+  return {
+    complete,
+    active,
+    updatedAt,
+    ...(addType && { type }),
+    // json strigify drops "undefined" values, so those props are not present in parsed objects
+    ...(!filterUndefined && typeof result !== 'undefined' && { result }),
+    ...(!filterUndefined &&
+      typeof errorMessage !== 'undefined' && { errorMessage }),
+  };
 }
