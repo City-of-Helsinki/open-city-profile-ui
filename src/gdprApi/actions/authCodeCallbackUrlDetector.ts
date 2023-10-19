@@ -6,7 +6,7 @@ import {
   QueueController,
   isResumable,
 } from '../../common/actionQueue/actionQueue';
-import { RunnerFunctions } from '../../common/actionQueue/actionQueueRunner';
+import { QueueRunner } from '../../common/actionQueue/actionQueueRunner';
 import config from '../../config';
 import { getAuthCodeRedirectionInitializationResult } from './authCodeRedirectionInitialization';
 import {
@@ -54,9 +54,7 @@ export const isQueueWaitingForAuthCodeCallback = (
   controller: QueueController
 ) => !!getNextAuthCodeCallbackDetector(controller);
 
-export const resumeQueueFromNextCallbackDetector = (
-  runner: RunnerFunctions
-) => {
+export const resumeQueueFromNextCallbackDetector = (runner: QueueRunner) => {
   const actionType = getNextAuthCodeCallbackDetector(runner);
   if (!actionType) {
     return undefined;

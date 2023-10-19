@@ -12,7 +12,7 @@ import {
   ActionStatus,
   LogType,
   Logger,
-  RunnerFunctions,
+  QueueRunner,
   actionLogTypes,
   createActionQueueRunner,
   genericErrorTypes,
@@ -43,7 +43,7 @@ describe('actionQueueRunner', () => {
   const track = (trackingType: TrackingType, actionType: ActionType) => {
     tracker({ trackingType, actionType, time: Date.now() });
   };
-  let runner: RunnerFunctions;
+  let runner: QueueRunner;
 
   // wrap action.executor so tracker is called when an action is executed.
   const trackExecutor = (targetAction: ActionProps) => {

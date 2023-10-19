@@ -12,7 +12,7 @@ import {
 import {
   LogType,
   Logger,
-  RunnerFunctions,
+  QueueRunner,
   createActionQueueRunner,
   isGenericError,
 } from './actionQueueRunner';
@@ -30,7 +30,7 @@ export type HookFunctions = {
   isValid: () => boolean;
   dispose: () => void;
   reset: () => void;
-  getQueueRunner: () => RunnerFunctions;
+  getQueueRunner: () => QueueRunner;
   state: QueueState;
 };
 

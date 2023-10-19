@@ -52,7 +52,7 @@ export type ActionStatus =
   | 'not-next'
   | 'unknown';
 
-export type RunnerFunctions = QueueController & {
+export type QueueRunner = QueueController & {
   dispose: () => void;
   start: () => Action | void;
   resume: (startFrom: ActionType) => Action | void;
@@ -72,7 +72,7 @@ export function getActionType(
 }
 
 export function canQueueContinueFrom(
-  runner: RunnerFunctions,
+  runner: QueueRunner,
   actionOrType: Action | ActionType,
   acceptPending = false
 ): boolean {
@@ -81,14 +81,14 @@ export function canQueueContinueFrom(
 }
 
 export const resumeQueueFromAction = (
-  runner: RunnerFunctions,
+  runner: QueueRunner,
   actionOrType: Action | ActionType
 ) => !!runner.resume(getActionType(actionOrType));
 
 export function createActionQueueRunner(
   initialQueueProps: InitialQueue,
   logger: Logger = () => undefined
-): RunnerFunctions {
+): QueueRunner {
   let pendingPromise: ActionExecutorPromise | undefined = undefined;
   let isDisposed = false;
   const queueController = createQueueController(
@@ -96,7 +96,7 @@ export function createActionQueueRunner(
   );
 
   // returns status of an action and what can be done with given action
-  const getActionStatus: RunnerFunctions['getActionStatus'] = typeOrAction => {
+  const getActionStatus: QueueRunner['getActionStatus'] = typeOrAction => {
     const action = queueController.getByType(getActionType(typeOrAction));
     if (!action || !action.type) {
       return 'invalid';

@@ -9,7 +9,7 @@ import {
   isResumable,
 } from '../../common/actionQueue/actionQueue';
 import {
-  RunnerFunctions,
+  QueueRunner,
   resumeQueueFromAction,
 } from '../../common/actionQueue/actionQueueRunner';
 import matchUrls from '../../common/helpers/matchUrls';
@@ -25,7 +25,7 @@ export const defaultRedirectorActionType = 'redirector';
 export const defaultRedirectionCatcherActionType = 'redirectionCatcher';
 
 export const resumeQueueFromRedirectionCatcher = (
-  runner: RunnerFunctions,
+  runner: QueueRunner,
   catcherActionType = defaultRedirectionCatcherActionType
 ) => resumeQueueFromAction(runner, catcherActionType);
 
