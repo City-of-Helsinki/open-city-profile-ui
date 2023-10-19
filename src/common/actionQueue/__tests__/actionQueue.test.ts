@@ -5,6 +5,9 @@ import {
   ActionUpdateProps,
   QueueController,
   ActionQueue,
+  getOption,
+  getData,
+  hasMatchingDataProperty,
 } from '../actionQueue';
 import {
   convertSourceToActionProps,
@@ -220,7 +223,8 @@ describe('actionQueue', () => {
       });
     });
     describe('getNext()', () => {
-      it(`Returns the first action which is not completed and not active.`, () => {
+      it(`Returns the first action which is not completed and not active. 
+          If action.options.idleWhenActive is true, then active action is returned.`, () => {
         const testQueue = createQueueFromProps([
           {
             ...resolvingAction,
@@ -242,9 +246,12 @@ describe('actionQueue', () => {
           },
           {
             ...resolvingAction,
-            type: 'inactive',
+            type: 'idleWhenActive',
             complete: false,
-            active: false,
+            active: true,
+            options: {
+              idleWhenActive: true,
+            },
           },
         ]);
         const controller = createQueueController(testQueue);
@@ -279,7 +286,7 @@ describe('actionQueue', () => {
       });
     });
     describe('getActive()', () => {
-      it(`Returns the first action, if any, where active is true.`, () => {
+      it(`Returns the first action, if any, where active is true and options.idleWhenActive is not true.`, () => {
         const testQueue = createQueueFromProps([
           {
             ...resolvingAction,
@@ -295,9 +302,12 @@ describe('actionQueue', () => {
           },
           {
             ...resolvingAction,
-            type: 'inactive',
+            type: 'idleWhenActive',
             complete: false,
-            active: false,
+            active: true,
+            options: {
+              idleWhenActive: true,
+            },
           },
         ]);
         const controller = createQueueController(testQueue);
@@ -369,9 +379,12 @@ describe('actionQueue', () => {
           },
           {
             ...resolvingAction,
-            type: 'completeAndActive2',
+            type: 'idleWhenActive',
             complete: true,
             active: true,
+            options: {
+              idleWhenActive: true,
+            },
           },
         ]);
         const controller = createQueueController(testQueue);
@@ -379,15 +392,15 @@ describe('actionQueue', () => {
           controller.getComplete().map(action => action.type);
         expect(getCompleteTypes()).toMatchObject([
           'completeAndActive',
-          'completeAndActive2',
+          'idleWhenActive',
         ]);
 
         controller.updateActionAndQueue('completeAndActive', {
           complete: false,
         });
-        expect(getCompleteTypes()).toMatchObject(['completeAndActive2']);
+        expect(getCompleteTypes()).toMatchObject(['idleWhenActive']);
 
-        controller.updateActionAndQueue('completeAndActive2', {
+        controller.updateActionAndQueue('idleWhenActive', {
           complete: false,
         });
         expect(getCompleteTypes()).toHaveLength(0);
@@ -412,6 +425,9 @@ describe('actionQueue', () => {
             type: 'complete3',
             complete: true,
             active: true,
+            options: {
+              idleWhenActive: true,
+            },
           },
           {
             ...resolvingAction,
@@ -628,6 +644,122 @@ describe('actionQueue', () => {
           attemptActivateAction(targetAction3);
         });
       });
+    });
+  });
+  describe('Helpers', () => {
+    it('getOption() returns any action option as boolean, if exists', () => {
+      const actionWithAllOptions = {
+        ...resolvingAction,
+        type: 'result1',
+        options: {
+          noStorage: true,
+          syncronousCompletion: true,
+          idleWhenActive: true,
+          data: { name: 'result1' },
+        },
+      };
+      const actionWithNoOptionsProp = {
+        ...resolvingAction,
+        type: 'result2',
+      };
+      const actionWithoutOptions = {
+        ...resolvingAction,
+        type: 'result3',
+        options: {},
+      };
+
+      expect(getOption(actionWithAllOptions, 'noStorage')).toBeTruthy();
+      expect(
+        getOption(actionWithAllOptions, 'syncronousCompletion')
+      ).toBeTruthy();
+      expect(getOption(actionWithAllOptions, 'idleWhenActive')).toBeTruthy();
+
+      expect(getOption(actionWithNoOptionsProp, 'idleWhenActive')).toBeFalsy();
+      expect(getOption(actionWithoutOptions, 'noStorage')).toBeFalsy();
+      expect(
+        getOption(actionWithoutOptions, 'syncronousCompletion')
+      ).toBeFalsy();
+    });
+    it('getData() returns action.data or undefined', () => {
+      const data = { prop: 1 };
+      const actionWithData = {
+        ...resolvingAction,
+        type: 'result1',
+        options: {
+          noStorage: true,
+          syncronousCompletion: true,
+          idleWhenActive: true,
+        },
+        data,
+      };
+      const actionWithoutData = {
+        ...resolvingAction,
+        type: 'result2',
+      };
+
+      expect(getData(actionWithData)).toBe(data);
+      expect(getData(actionWithoutData)).toBeUndefined();
+    });
+    it('hasMatchingDataProperty() returns true if action has data with given name and the value matches', () => {
+      const data = { prop: 1, truthy: true, falsy: false, nullish: null };
+      const actionWithData = {
+        ...resolvingAction,
+        type: 'result1',
+        data,
+      };
+
+      const actionWithoutData = {
+        ...resolvingAction,
+        type: 'actionWithoutData',
+      };
+
+      const actionWithDataObject = {
+        ...resolvingAction,
+        type: 'result2',
+        data: { data, prop2: 'hello' },
+      };
+
+      expect(hasMatchingDataProperty(actionWithData, 'prop', 1)).toBeTruthy();
+      expect(hasMatchingDataProperty(actionWithData, 'prop', true)).toBeFalsy();
+
+      expect(
+        hasMatchingDataProperty(actionWithData, 'truthy', true)
+      ).toBeTruthy();
+      expect(
+        hasMatchingDataProperty(actionWithData, 'truthy', false)
+      ).toBeFalsy();
+
+      expect(
+        hasMatchingDataProperty(actionWithData, 'falsy', false)
+      ).toBeTruthy();
+      expect(
+        hasMatchingDataProperty(actionWithData, 'falsy', true)
+      ).toBeFalsy();
+
+      expect(
+        hasMatchingDataProperty(actionWithData, 'nullish', null)
+      ).toBeTruthy();
+      expect(
+        hasMatchingDataProperty(actionWithData, 'nullish', undefined)
+      ).toBeFalsy();
+
+      expect(
+        hasMatchingDataProperty(actionWithData, 'notFound', undefined)
+      ).toBeTruthy();
+
+      expect(
+        hasMatchingDataProperty(actionWithDataObject, 'data', data)
+      ).toBeTruthy();
+      expect(
+        hasMatchingDataProperty(actionWithDataObject, 'prop2', 'hello')
+      ).toBeTruthy();
+
+      expect(
+        hasMatchingDataProperty(actionWithoutData, 'complete', false)
+      ).toBeFalsy();
+      expect(
+        hasMatchingDataProperty(actionWithoutData, 'type', 'actionWithoutData')
+      ).toBeFalsy();
     });
   });
 });

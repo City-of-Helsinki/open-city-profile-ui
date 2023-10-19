@@ -6,9 +6,18 @@ export type ActionExecutor = (
   controller: QueueController
 ) => ActionExecutorPromise;
 
+export type ActionOptions = {
+  idleWhenActive?: boolean;
+  noStorage?: boolean;
+  syncronousCompletion?: boolean;
+  resumable?: boolean;
+};
+
 export type ActionProps = {
   type: ActionType;
   executor: ActionExecutor;
+  options?: ActionOptions;
+  data?: JSONStringifyableResult;
 };
 
 export type JSONStringifyableResult =
@@ -106,7 +115,6 @@ function hasOnlyActionProps(action: ActionProps | Action) {
   return typeof Reflect.get(action, 'complete') === 'undefined';
 }
 
-// Checks all actions have type defined and they are unique
 function checkTypesAreUniqueAndSet(list: Array<ActionProps | Action>) {
   const uniqueTypes = new Set<ActionType>();
   list.forEach(action => {
@@ -121,6 +129,41 @@ function checkTypesAreUniqueAndSet(list: Array<ActionProps | Action>) {
   });
 }
 
+export function getOption(
+  action: Action,
+  optionName: keyof ActionOptions
+): boolean {
+  if (!action.options) {
+    return false;
+  }
+  return !!action.options[optionName];
+}
+
+export function getData(
+  action: Action,
+  propertyName?: string
+): JSONStringifyableResult | undefined {
+  const { data } = action;
+  if (!data) {
+    return undefined;
+  }
+  return propertyName && typeof data === 'object'
+    ? Reflect.get(data, propertyName)
+    : data;
+}
+
+export function hasMatchingDataProperty(
+  action: Action,
+  propertyName: string,
+  assumedValue: unknown
+): boolean {
+  return getData(action, propertyName) === assumedValue;
+}
+
+export function isResumable(action: Action): boolean {
+  return !!getOption(action, 'resumable');
+}
+
 export function createQueueFromProps(
   props: Array<Action | ActionProps>
 ): ActionQueue {
@@ -133,13 +176,15 @@ export function createQueueFromProps(
   });
 }
 
-const activeFilter: ActionFilter = action => action.active;
+const activeFilter: ActionFilter = action =>
+  action.active && !getOption(action, 'idleWhenActive');
 
 const idleFilter: ActionFilter = action => {
   if (action.complete) {
     return false;
   }
-  return !action.active;
+  const isIdleWhenActive = getOption(action, 'idleWhenActive');
+  return !action.active || isIdleWhenActive;
 };
 
 const completeFilter: ActionFilter = action => action.complete;
