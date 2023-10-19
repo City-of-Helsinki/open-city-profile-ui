@@ -1,10 +1,13 @@
 import {
+  Action,
   ActionExecutor,
   ActionProps,
   ActionType,
   createQueueFromProps,
 } from './actionQueue';
+import { storeQueue } from './actionQueueStorage';
 import { ActionSourceForTesting } from './test.util';
+import { QueueProps, getQueue } from '../../gdprApi/actions/queues';
 
 export type ActionMockData = Pick<
   ActionSourceForTesting,
@@ -12,6 +15,8 @@ export type ActionMockData = Pick<
 > & {
   isTriggered?: boolean;
   isComplete?: boolean;
+  store?: boolean;
+  storeAsActive?: boolean;
   runOriginal?: boolean;
   autoTrigger?: boolean;
 };
@@ -127,4 +132,45 @@ export const createActionWithTriggerableExecutor = (source: ActionMockData) => {
   ])[0];
   storeOriginalExecutor(action);
   return createTriggerableExecutor(action);
+};
+
+// store the queue actions from actual downloadDataQueue with new props
+const setStoredState = (
+  overrideQueueProps: Partial<Action>[],
+  queueProps: QueueProps,
+  storageKey: string
+) => {
+  const queue = getQueue(queueProps).map(action => {
+    const overrides =
+      overrideQueueProps.find(op => op.type === action.type) || {};
+    return {
+      ...action,
+      ...overrides,
+    };
+  });
+  storeQueue(storageKey, createQueueFromProps(queue));
+};
+
+// set mocked responses and stored data
+export const initMockQueue = (
+  props: ActionMockData[],
+  queueProps: QueueProps,
+  storageKey: string
+) => {
+  const storedProps: Partial<Action>[] = [];
+  props.forEach(data => {
+    setMockActionData(data);
+    if (data.store) {
+      storedProps.push({
+        type: data.type,
+        complete: true,
+        errorMessage: data.rejectValue ? String(data.rejectValue) : undefined,
+        result: data.resolveValue,
+        active: !!data.storeAsActive,
+      });
+    }
+  });
+  if (storedProps.length) {
+    setStoredState(storedProps, queueProps, storageKey);
+  }
 };
