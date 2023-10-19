@@ -14,9 +14,9 @@ import {
   verifyAction,
   createQueueWithCommonActions,
   cloneArray,
-  resolvingAction1,
-  resolvingAction2,
-  readyMadeAction,
+  resolvingActionSource1,
+  resolvingActionSource2,
+  resolvingAction,
 } from '../test.util';
 
 describe('actionQueue', () => {
@@ -24,49 +24,49 @@ describe('actionQueue', () => {
   describe('createQueueFromProps', () => {
     it('Converts plain props to an Action', () => {
       const queue = createQueueFromProps([
-        convertSourceToActionProps(resolvingAction1),
-        convertSourceToActionProps(resolvingAction2),
-        readyMadeAction,
+        convertSourceToActionProps(resolvingActionSource1),
+        convertSourceToActionProps(resolvingActionSource2),
+        resolvingAction,
       ]);
       expect(verifyAction(queue[0])).toBeTruthy();
       expect(verifyAction(queue[1])).toBeTruthy();
       expect(verifyAction(queue[2])).toBeTruthy();
     });
     it('Passed objects that are valid actions, are not mutated', () => {
-      const props = convertSourceToActionProps(resolvingAction1);
-      const queue = createQueueFromProps([readyMadeAction, props]);
-      expect(queue[0]).toEqual(readyMadeAction);
+      const props = convertSourceToActionProps(resolvingActionSource1);
+      const queue = createQueueFromProps([resolvingAction, props]);
+      expect(queue[0]).toEqual(resolvingAction);
       expect(queue[1]).not.toEqual(props);
     });
     it('Throws when passing actions without a type', () => {
       expect(() =>
-        createQueueFromProps([{ ...readyMadeAction, type: '' }])
+        createQueueFromProps([{ ...resolvingAction, type: '' }])
       ).toThrow();
     });
     it('Throws when passing actions with same types', () => {
       expect(() =>
-        createQueueFromProps([readyMadeAction, readyMadeAction])
+        createQueueFromProps([resolvingAction, resolvingAction])
       ).toThrow();
     });
   });
   describe('createQueueController', () => {
     const basicQueue = createQueueFromProps([
-      convertSourceToActionProps(resolvingAction1),
-      convertSourceToActionProps(resolvingAction2),
-      { ...readyMadeAction },
+      convertSourceToActionProps(resolvingActionSource1),
+      convertSourceToActionProps(resolvingActionSource2),
+      { ...resolvingAction },
     ]);
     describe('calling the function', () => {
       it('Throws when passing actions without a type', () => {
         expect(() =>
           createQueueController(
-            createQueueWithCommonActions([{ ...readyMadeAction, type: '' }])
+            createQueueWithCommonActions([{ ...resolvingAction, type: '' }])
           )
         ).toThrow();
       });
       it('Throws when passing actions with same types', () => {
         expect(() =>
           createQueueController(
-            cloneArray(createQueueWithCommonActions([{ ...readyMadeAction }]))
+            cloneArray(createQueueWithCommonActions([{ ...resolvingAction }]))
           )
         ).toThrow();
       });
@@ -104,7 +104,7 @@ describe('actionQueue', () => {
     describe('reset()', () => {
       it('Copies old actions and resets updatable props. Old actions are invalidated.', () => {
         const finishedAction: Action = {
-          ...readyMadeAction,
+          ...resolvingAction,
           type: 'copyOfReadyMadeAction',
           complete: true,
           active: true,
@@ -157,7 +157,7 @@ describe('actionQueue', () => {
           active: true,
           updatedAt: -10,
         };
-        controller.updateActionAndQueue(readyMadeAction.type, updatedProps);
+        controller.updateActionAndQueue(resolvingAction.type, updatedProps);
         const updatedQueue = controller.getQueue();
         const updatedFinishedAction = getLastArrayItem(updatedQueue) as Action;
         expect(updatedFinishedAction).toMatchObject({
@@ -197,19 +197,19 @@ describe('actionQueue', () => {
       it('Returns result of an action by type. Action must have complete:true', () => {
         const testQueue = createQueueWithCommonActions([
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'result1',
             result: 'result1',
             complete: true,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'result2',
             result: { value: 'result2' },
             complete: true,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'result3',
             result: 'result',
           },
@@ -227,25 +227,25 @@ describe('actionQueue', () => {
           If action.options.idleWhenActive is true, then active action is returned.`, () => {
         const testQueue = createQueueFromProps([
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'complete1',
             complete: true,
             active: false,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'complete2',
             complete: true,
             active: false,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'active',
             complete: false,
             active: true,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'idleWhenActive',
             complete: false,
             active: true,
@@ -269,13 +269,13 @@ describe('actionQueue', () => {
       it(`Returns undefined when there are no idle actions`, () => {
         const testQueue = createQueueFromProps([
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'complete1',
             complete: true,
             active: false,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'complete2',
             complete: true,
             active: false,
@@ -289,19 +289,19 @@ describe('actionQueue', () => {
       it(`Returns the first action, if any, where active is true and options.idleWhenActive is not true.`, () => {
         const testQueue = createQueueFromProps([
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'completeAndActive',
             complete: true,
             active: true,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'active',
             complete: false,
             active: true,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'idleWhenActive',
             complete: false,
             active: true,
@@ -326,20 +326,20 @@ describe('actionQueue', () => {
       it(`Returns the first action which has an errorMessage and is complete.`, () => {
         const testQueue = createQueueFromProps([
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'error1',
             errorMessage: 'error',
             complete: false,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'noError',
             complete: true,
             active: true,
             result: 'result',
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'errorAndResult',
             errorMessage: 'error',
             complete: true,
@@ -366,19 +366,19 @@ describe('actionQueue', () => {
       it(`Returns all actions where complete is true.`, () => {
         const testQueue = createQueueFromProps([
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'completeAndActive',
             complete: true,
             active: true,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'active',
             complete: false,
             active: true,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'idleWhenActive',
             complete: true,
             active: true,
@@ -410,18 +410,18 @@ describe('actionQueue', () => {
       it(`Returns true if all actions are complete or if one has failed (and is completed).`, () => {
         const testQueue = createQueueFromProps([
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'complete1',
             complete: true,
             active: true,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'complete2',
             complete: true,
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'complete3',
             complete: true,
             active: true,
@@ -430,7 +430,7 @@ describe('actionQueue', () => {
             },
           },
           {
-            ...readyMadeAction,
+            ...resolvingAction,
             type: 'complete4',
             complete: true,
           },
@@ -649,7 +649,7 @@ describe('actionQueue', () => {
   describe('Helpers', () => {
     it('getOption() returns any action option as boolean, if exists', () => {
       const actionWithAllOptions = {
-        ...readyMadeAction,
+        ...resolvingAction,
         type: 'result1',
         options: {
           noStorage: true,
@@ -659,11 +659,11 @@ describe('actionQueue', () => {
         },
       };
       const actionWithNoOptionsProp = {
-        ...readyMadeAction,
+        ...resolvingAction,
         type: 'result2',
       };
       const actionWithoutOptions = {
-        ...readyMadeAction,
+        ...resolvingAction,
         type: 'result3',
         options: {},
       };
@@ -683,7 +683,7 @@ describe('actionQueue', () => {
     it('getData() returns action.data or undefined', () => {
       const data = { prop: 1 };
       const actionWithData = {
-        ...readyMadeAction,
+        ...resolvingAction,
         type: 'result1',
         options: {
           noStorage: true,
@@ -693,7 +693,7 @@ describe('actionQueue', () => {
         data,
       };
       const actionWithoutData = {
-        ...readyMadeAction,
+        ...resolvingAction,
         type: 'result2',
       };
 
@@ -703,18 +703,18 @@ describe('actionQueue', () => {
     it('hasMatchingDataProperty() returns true if action has data with given name and the value matches', () => {
       const data = { prop: 1, truthy: true, falsy: false, nullish: null };
       const actionWithData = {
-        ...readyMadeAction,
+        ...resolvingAction,
         type: 'result1',
         data,
       };
 
       const actionWithoutData = {
-        ...readyMadeAction,
+        ...resolvingAction,
         type: 'actionWithoutData',
       };
 
       const actionWithDataObject = {
-        ...readyMadeAction,
+        ...resolvingAction,
         type: 'result2',
         data: { data, prop2: 'hello' },
       };

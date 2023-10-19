@@ -20,11 +20,11 @@ import {
 } from '../actionQueueRunner';
 import {
   convertSourceToActionProps,
-  resolvingAction1,
-  resolvingAction2,
-  readyMadeAction,
+  resolvingActionSource1,
+  resolvingActionSource2,
+  resolvingAction,
   ActionSourceForTesting,
-  rejectingAction,
+  rejectingActionSource,
   getSuccessfulQueue,
 } from '../test.util';
 
@@ -124,14 +124,14 @@ describe('actionQueueRunner', () => {
   });
   describe('createActionQueueRunner', () => {
     it('creates a new runner and an actionQueue', () => {
-      runner = createActionQueueRunner([{ ...readyMadeAction }]);
+      runner = createActionQueueRunner([{ ...resolvingAction }]);
       expect(runner.getQueue()).toHaveLength(1);
     });
     it('Also throws when adding actions with same type', () => {
       expect(() => {
         createActionQueueRunner([
-          { ...readyMadeAction },
-          { ...readyMadeAction },
+          { ...resolvingAction },
+          { ...resolvingAction },
         ]);
       }).toThrow();
     });
@@ -139,35 +139,35 @@ describe('actionQueueRunner', () => {
   describe('start()', () => {
     it('starts running the queue from the first action to the last.', async () => {
       await createPromiseForRunner([
-        convertSourceToActionProps({ ...resolvingAction1 }),
-        convertSourceToActionProps({ ...resolvingAction2 }),
+        convertSourceToActionProps({ ...resolvingActionSource1 }),
+        convertSourceToActionProps({ ...resolvingActionSource2 }),
       ]);
 
       // actions are run in the order they are in the queue
       // successful tracked sequence is 'execute', 'start', 'complete'
       // logged data is mapped and compared to assumed logging order
       expect(getTrackingData().map(mapTrackingData)).toEqual([
-        ...getSuccessLogDataForAction(resolvingAction1),
-        ...getSuccessLogDataForAction(resolvingAction2),
+        ...getSuccessLogDataForAction(resolvingActionSource1),
+        ...getSuccessLogDataForAction(resolvingActionSource2),
       ]);
 
       // results must match
       expect(getResults()).toEqual([
-        resolvingAction1.resolveValue,
-        resolvingAction2.resolveValue,
+        resolvingActionSource1.resolveValue,
+        resolvingActionSource2.resolveValue,
       ]);
 
       // actions should be complete and not active
       expect(runner.getQueue()).toMatchObject([
         {
-          type: resolvingAction1.type,
-          result: resolvingAction1.resolveValue,
+          type: resolvingActionSource1.type,
+          result: resolvingActionSource1.resolveValue,
           complete: true,
           active: false,
         },
         {
-          type: resolvingAction2.type,
-          result: resolvingAction2.resolveValue,
+          type: resolvingActionSource2.type,
+          result: resolvingActionSource2.resolveValue,
           complete: true,
           active: false,
         },
@@ -176,10 +176,10 @@ describe('actionQueueRunner', () => {
     it('logs a generic error when first action is not executable', async () => {
       await createPromiseForRunner([
         {
-          ...convertSourceToActionProps({ ...resolvingAction1 }),
+          ...convertSourceToActionProps({ ...resolvingActionSource1 }),
           complete: true,
         } as ActionProps,
-        convertSourceToActionProps({ ...resolvingAction2 }),
+        convertSourceToActionProps({ ...resolvingActionSource2 }),
       ]);
 
       expect(
@@ -188,9 +188,9 @@ describe('actionQueueRunner', () => {
     });
     it('starts running the queue from the first action error one.', async () => {
       await createPromiseForRunner([
-        convertSourceToActionProps({ ...resolvingAction1 }),
-        convertSourceToActionProps({ ...rejectingAction }),
-        convertSourceToActionProps({ ...resolvingAction2 }),
+        convertSourceToActionProps({ ...resolvingActionSource1 }),
+        convertSourceToActionProps({ ...rejectingActionSource }),
+        convertSourceToActionProps({ ...resolvingActionSource2 }),
       ]);
 
       // actions are run in the order they are in the queue
@@ -198,18 +198,18 @@ describe('actionQueueRunner', () => {
       // logged data is mapped to {trackingType}:{actionType}
       // which is compared to the array returned from getSuccessLogDataForAction
       expect(getTrackingData().map(mapTrackingData)).toEqual([
-        ...getSuccessLogDataForAction(resolvingAction1),
-        ...getErrorLogDataForAction(rejectingAction),
+        ...getSuccessLogDataForAction(resolvingActionSource1),
+        ...getErrorLogDataForAction(rejectingActionSource),
       ]);
       // results must match
       expect(getResults()).toEqual([
-        resolvingAction1.resolveValue,
+        resolvingActionSource1.resolveValue,
         undefined,
         undefined,
       ]);
       expect(runner.getFailed()).toMatchObject({
-        errorMessage: (rejectingAction.rejectValue as Error).message,
-        type: rejectingAction.type,
+        errorMessage: (rejectingActionSource.rejectValue as Error).message,
+        type: rejectingActionSource.type,
         result: undefined,
         complete: true,
         active: false,
@@ -240,23 +240,27 @@ describe('actionQueueRunner', () => {
 
     it('starts running the queue from the action matching the given type - if possible', async () => {
       initTest([{ complete: true }]);
-      runner.resume(resolvingAction2.type);
+      runner.resume(resolvingActionSource2.type);
       await waitFor(() => {
         expect(getTrackingData().map(mapTrackingData)).toEqual([
-          ...getSuccessLogDataForAction(resolvingAction2),
+          ...getSuccessLogDataForAction(resolvingActionSource2),
         ]);
       });
     });
     it('logs CANNOT_EXECUTE_ACTION_IS_COMPLETE error if given action is complete', async () => {
-      await initTestAndExpectError([{ complete: true }], resolvingAction1, {
-        trackingType: genericErrorTypes.CANNOT_EXECUTE_ACTION_IS_COMPLETE,
-        actionType: resolvingAction1.type,
-      });
+      await initTestAndExpectError(
+        [{ complete: true }],
+        resolvingActionSource1,
+        {
+          trackingType: genericErrorTypes.CANNOT_EXECUTE_ACTION_IS_COMPLETE,
+          actionType: resolvingActionSource1.type,
+        }
+      );
     });
     it('logs an CANNOT_EXECUTE_ACTION_IS_ACTIVE error if given action is active', async () => {
-      await initTestAndExpectError([{ active: true }], resolvingAction1, {
+      await initTestAndExpectError([{ active: true }], resolvingActionSource1, {
         trackingType: genericErrorTypes.CANNOT_EXECUTE_ACTION_IS_ACTIVE,
-        actionType: resolvingAction1.type,
+        actionType: resolvingActionSource1.type,
       });
     });
     it('logs an UNKNOWN_ACTION_TYPE error if given action is invalid', async () => {
@@ -270,15 +274,15 @@ describe('actionQueueRunner', () => {
       );
     });
     it('logs an CANNOT_EXECUTE_ACTION_IS_NOT_NEXT error if given action is not next', async () => {
-      await initTestAndExpectError([], resolvingAction2, {
+      await initTestAndExpectError([], resolvingActionSource2, {
         trackingType: genericErrorTypes.CANNOT_EXECUTE_ACTION_IS_NOT_NEXT,
-        actionType: resolvingAction2.type,
+        actionType: resolvingActionSource2.type,
       });
     });
     it('logs an CANNOT_EXECUTE_ANOTHER_ACTION_IS_ACTIVE error if another action is active', async () => {
-      await initTestAndExpectError([{ active: true }], resolvingAction2, {
+      await initTestAndExpectError([{ active: true }], resolvingActionSource2, {
         trackingType: genericErrorTypes.CANNOT_EXECUTE_ANOTHER_ACTION_IS_ACTIVE,
-        actionType: resolvingAction2.type,
+        actionType: resolvingActionSource2.type,
       });
     });
   });
@@ -301,32 +305,34 @@ describe('actionQueueRunner', () => {
     it('returns action status "complete" if given action is complete', async () => {
       await initTestAndExpectStatus(
         [{ complete: true }],
-        resolvingAction1,
+        resolvingActionSource1,
         'complete'
       );
     });
     it('returns action status "active" if given action is active, but a promise is not pending', async () => {
       await initTestAndExpectStatus(
         [{ active: true }],
-        resolvingAction1,
+        resolvingActionSource1,
         'active'
       );
     });
     it('returns action status "pending" if given action has been executed', async () => {
       initTest([]);
       runner.start();
-      expect(runner.getActionStatus(resolvingAction1.type)).toBe('pending');
+      expect(runner.getActionStatus(resolvingActionSource1.type)).toBe(
+        'pending'
+      );
     });
     it('returns action status "next" if given action is not active, but next in queue', async () => {
-      await initTestAndExpectStatus([], resolvingAction1, 'next');
+      await initTestAndExpectStatus([], resolvingActionSource1, 'next');
     });
     it('returns action status "not-next" if no action is active, but given action is not next in queue', async () => {
-      await initTestAndExpectStatus([], resolvingAction2, 'not-next');
+      await initTestAndExpectStatus([], resolvingActionSource2, 'not-next');
     });
     it('returns action status "in-queue" if an action is active and given action queued', async () => {
       await initTestAndExpectStatus(
         [{ active: true }],
-        resolvingAction2,
+        resolvingActionSource2,
         'in-queue'
       );
     });
@@ -336,7 +342,7 @@ describe('actionQueueRunner', () => {
   });
   describe('getPromise()', () => {
     it('returns current pending promise if any', async () => {
-      runner = createActionQueueRunner([{ ...readyMadeAction }]);
+      runner = createActionQueueRunner([{ ...resolvingAction }]);
       expect(runner.getPromise()).toBeUndefined();
       runner.start();
       expect(runner.getPromise()).toBeDefined();
@@ -369,12 +375,12 @@ describe('actionQueueRunner', () => {
       runner.start();
       const promise = runner.getPromise();
       expect(getTrackingData().map(mapTrackingData)).toEqual([
-        ...getActiveLogDataForAction(resolvingAction1),
+        ...getActiveLogDataForAction(resolvingActionSource1),
       ]);
       runner.dispose();
       await promise;
       expect(getTrackingData().map(mapTrackingData)).toEqual([
-        ...getActiveLogDataForAction(resolvingAction1),
+        ...getActiveLogDataForAction(resolvingActionSource1),
       ]);
     });
   });
@@ -392,28 +398,28 @@ describe('actionQueueRunner', () => {
       runner.start();
       const promise = runner.getPromise();
       expect(getTrackingData().map(mapTrackingData)).toEqual([
-        ...getSuccessLogDataForAction(resolvingAction1),
+        ...getSuccessLogDataForAction(resolvingActionSource1),
       ]);
       // even if the action was completed, next one is not started until promise is resolved.
       expect(runner.getActive()).toBeUndefined();
       await promise;
       expect(getTrackingData().map(mapTrackingData)).toEqual([
-        ...getSuccessLogDataForAction(resolvingAction1),
-        ...getActiveLogDataForAction(resolvingAction2),
+        ...getSuccessLogDataForAction(resolvingActionSource1),
+        ...getActiveLogDataForAction(resolvingActionSource2),
       ]);
     });
   });
   describe('reset()', () => {
     it('Resets the queue and a "reset" log type is logged', async () => {
       await createPromiseForRunner([
-        convertSourceToActionProps({ ...resolvingAction1 }),
-        convertSourceToActionProps({ ...rejectingAction }),
+        convertSourceToActionProps({ ...resolvingActionSource1 }),
+        convertSourceToActionProps({ ...rejectingActionSource }),
       ]);
       runner.reset();
       await waitFor(() => {
         expect(getTrackingData().map(mapTrackingData)).toEqual([
-          ...getSuccessLogDataForAction(resolvingAction1),
-          ...getErrorLogDataForAction(rejectingAction),
+          ...getSuccessLogDataForAction(resolvingActionSource1),
+          ...getErrorLogDataForAction(rejectingActionSource),
           'reset:no-action',
         ]);
       });

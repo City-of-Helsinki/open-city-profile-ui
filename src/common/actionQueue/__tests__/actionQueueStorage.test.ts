@@ -1,6 +1,6 @@
 import { Action, ActionQueue, createQueueFromProps } from '../actionQueue';
 import { storeQueue, getStoredQueue, StoredQueue } from '../actionQueueStorage';
-import { getSuccessfulQueueProps } from '../test.util';
+import { getSuccessfulQueue } from '../test.util';
 
 describe('actionQueueStorage', () => {
   const storageKey = 'test-key';
@@ -73,18 +73,16 @@ describe('actionQueueStorage', () => {
       ]);
     });
     it('Returns true when save was successful', () => {
-      const actionsWithOptionsAndData = getSuccessfulQueueProps().map(
-        action => ({
-          ...action,
-          options: {
-            idleWhenActive: true,
-            noStorage: true,
-          },
-          data: {
-            type: action.type,
-          },
-        })
-      );
+      const actionsWithOptionsAndData = getSuccessfulQueue().map(action => ({
+        ...action,
+        options: {
+          idleWhenActive: true,
+          noStorage: true,
+        },
+        data: {
+          type: action.type,
+        },
+      }));
       const queue = createQueueFromProps(actionsWithOptionsAndData);
       expect(storeQueue(storageKey, queue)).toBeTruthy();
       const restoredQueue = getStoredQueue(storageKey) as StoredQueue;

@@ -30,7 +30,7 @@ import {
   defaultRedirectionCatcherActionType,
   defaultRedirectorActionType,
 } from '../redirectionHandlers';
-import { ActionMockData } from './mock.util';
+import { ActionMockData } from '../../../common/actionQueue/mock.util';
 
 type ScenarioProps = Pick<
   ActionMockData,

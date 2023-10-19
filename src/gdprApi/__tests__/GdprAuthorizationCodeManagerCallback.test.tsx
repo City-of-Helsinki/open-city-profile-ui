@@ -11,7 +11,7 @@ import {
   ActionMockData,
   isActionTriggered,
   initMockQueue,
-} from '../actions/__mocks__/mock.util';
+} from '../../common/actionQueue/mock.util';
 import { getScenarioWhereNextPhaseIsResumeCallback } from '../actions/__mocks__/queueScenarios';
 import {
   AuthCodeQueuesProps,

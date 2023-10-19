@@ -3,8 +3,6 @@ import {
   Action,
   ActionQueue,
   createQueueFromProps,
-  ActionExecutor,
-  JSONStringifyableResult,
   InitialQueue,
   mergeQueues,
   ActionUpdateProps,
@@ -17,46 +15,33 @@ export type ActionSourceForTesting = Pick<ActionProps, 'type'> & {
   executionDelay?: number;
 };
 
-const defaultExecutionDelay = 20;
 export function convertSourceToActionProps({
   type,
   rejectValue,
   resolveValue,
-  executionDelay = defaultExecutionDelay,
 }: ActionSourceForTesting): ActionProps {
   return {
     type,
-    executor: () => {
-      if (resolveValue) {
-        return new Promise(resolve =>
-          setTimeout(() => resolve(resolveValue), executionDelay)
-        );
-      }
-      return new Promise((resolve, reject) =>
-        setTimeout(() => reject(rejectValue), executionDelay)
-      );
-    },
+    executor: () =>
+      resolveValue
+        ? Promise.resolve(resolveValue)
+        : Promise.reject(rejectValue),
   };
 }
 
-export const resolvingAction1: ActionSourceForTesting = {
+export const resolvingActionSource1: ActionSourceForTesting = {
   type: 'resolving1',
   resolveValue: 1,
 };
 
-export const resolvingAction2: ActionSourceForTesting = {
+export const resolvingActionSource2: ActionSourceForTesting = {
   type: 'resolving2',
   resolveValue: 2,
 };
 
-export const rejectingAction: ActionSourceForTesting = {
+export const rejectingActionSource: ActionSourceForTesting = {
   type: 'rejecting1',
   rejectValue: new Error('Rejected'),
-};
-
-export const readyMadeActionSource: ActionSourceForTesting = {
-  type: 'readyMadeAction',
-  resolveValue: 'ready',
 };
 
 export const baseAction: Action = {
@@ -69,17 +54,15 @@ export const baseAction: Action = {
   errorMessage: undefined,
 };
 
-export const readyMadeAction: Action = {
+export const resolvingAction: Action = {
   ...baseAction,
-  ...{ ...convertSourceToActionProps(readyMadeActionSource) },
+  ...{
+    ...convertSourceToActionProps({
+      type: 'readyMadeAction',
+      resolveValue: 'ready',
+    }),
+  },
 };
-
-export function getSuccessfulQueueProps(): InitialQueue {
-  return [
-    convertSourceToActionProps(resolvingAction1),
-    convertSourceToActionProps(resolvingAction2),
-  ];
-}
 
 export function verifyAction(action: Partial<Action>): boolean {
   return (
@@ -102,38 +85,12 @@ export function createQueueWithCommonActions(
 ) {
   return createQueueFromProps([
     ...[
-      convertSourceToActionProps(resolvingAction1),
-      convertSourceToActionProps(resolvingAction2),
-      { ...readyMadeAction },
+      convertSourceToActionProps(resolvingActionSource1),
+      convertSourceToActionProps(resolvingActionSource2),
+      { ...resolvingAction },
     ],
     ...additionalActions,
   ]);
-}
-
-export function createManuallyTriggerableExecutor({
-  resolveValue,
-  rejectValue,
-}: ActionSourceForTesting) {
-  const voidFunction: () => void | undefined = () => undefined;
-  let trigger = voidFunction;
-  const reset = () => {
-    trigger = voidFunction;
-  };
-  const promise = new Promise<JSONStringifyableResult>((resolve, reject) => {
-    if (resolveValue) {
-      trigger = () => {
-        resolve(resolveValue);
-        reset();
-      };
-    } else {
-      trigger = () => {
-        reject(rejectValue);
-        reset();
-      };
-    }
-  });
-  const executor: ActionExecutor = async () => promise;
-  return { trigger, executor };
 }
 
 function mergeProps(queue: InitialQueue, extraProps?: Partial<Action>[]) {
@@ -160,10 +117,10 @@ export function getSuccessfulQueue(
 ): InitialQueue {
   const queue = [
     {
-      ...convertSourceToActionProps(resolvingAction1),
+      ...convertSourceToActionProps(resolvingActionSource1),
     },
     {
-      ...convertSourceToActionProps(resolvingAction2),
+      ...convertSourceToActionProps(resolvingActionSource2),
     },
   ];
   return mergeProps(queue, extraProps);
@@ -172,13 +129,13 @@ export function getSuccessfulQueue(
 export function getFailingQueue(extraProps?: Partial<Action>[]): InitialQueue {
   const queue = [
     {
-      ...convertSourceToActionProps(resolvingAction1),
+      ...convertSourceToActionProps(resolvingActionSource1),
     },
     {
-      ...convertSourceToActionProps(rejectingAction),
+      ...convertSourceToActionProps(rejectingActionSource),
     },
     {
-      ...convertSourceToActionProps(resolvingAction2),
+      ...convertSourceToActionProps(resolvingActionSource2),
     },
   ];
   return mergeProps(queue, extraProps);

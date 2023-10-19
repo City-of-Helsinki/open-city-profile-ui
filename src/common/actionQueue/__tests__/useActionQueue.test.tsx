@@ -4,19 +4,19 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import { QueueState, useActionQueue } from '../useActionQueue';
 import {
   ActionSourceForTesting,
-  createManuallyTriggerableExecutor,
   pickUpdateActionProps,
-  rejectingAction,
-  resolvingAction1,
-  resolvingAction2,
+  rejectingActionSource,
+  resolvingActionSource1,
+  resolvingActionSource2,
 } from '../test.util';
-import {
-  Action,
-  ActionQueue,
-  ActionType,
-  createQueueFromProps,
-} from '../actionQueue';
+import { Action, ActionQueue, createQueueFromProps } from '../actionQueue';
 import { getStoredQueue, storeQueue } from '../actionQueueStorage';
+import {
+  cleanMockData,
+  completeActionExecutor,
+  createActionWithTriggerableExecutor,
+  isActionTriggered,
+} from '../mock.util';
 
 type TestComponentProps = { fail?: boolean; storageKey?: string };
 
@@ -38,42 +38,27 @@ describe('useActionQueue', () => {
     resetButton: 'reset-button',
   };
 
-  const triggers = new Map<ActionType, () => void>();
-  const completeActionExecutor = (type: ActionType) => {
-    const trigger = triggers.get(type);
-    if (!trigger) {
-      throw new Error(`Unknown type ${type}`);
-    }
-    trigger();
-  };
-
-  const createActionProps = (props: ActionSourceForTesting) => {
-    const { trigger, executor } = createManuallyTriggerableExecutor(props);
-    triggers.set(props.type, trigger);
-    return {
-      type: props.type,
-      executor,
-    };
-  };
+  const createActionProps = (props: ActionSourceForTesting) =>
+    createActionWithTriggerableExecutor(props);
 
   const getSuccessfulQueue = () => [
     {
-      ...createActionProps(resolvingAction1),
+      ...createActionProps(resolvingActionSource1),
     },
     {
-      ...createActionProps(resolvingAction2),
+      ...createActionProps(resolvingActionSource2),
     },
   ];
 
   const getFailingQueue = () => [
     {
-      ...createActionProps(resolvingAction1),
+      ...createActionProps(resolvingActionSource1),
     },
     {
-      ...createActionProps(rejectingAction),
+      ...createActionProps(rejectingActionSource),
     },
     {
-      ...createActionProps(resolvingAction2),
+      ...createActionProps(resolvingActionSource2),
     },
   ];
 
@@ -295,11 +280,8 @@ describe('useActionQueue', () => {
   const queueStorageKey = 'test-key';
 
   afterEach(async () => {
+    cleanMockData();
     jest.restoreAllMocks();
-    triggers.forEach(value => {
-      value();
-    });
-    await Promise.resolve();
   });
 
   it('Actions are executed and state changes while queue is processed ', async () => {
@@ -309,20 +291,20 @@ describe('useActionQueue', () => {
 
     await waitFor(() => {
       expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingAction1.type })
+        getActionStartedState({ type: resolvingActionSource1.type })
       );
     });
-    completeActionExecutor(resolvingAction1.type);
+    completeActionExecutor(resolvingActionSource1.type);
     await waitFor(() => {
       expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingAction2.type })
+        getActionStartedState({ type: resolvingActionSource2.type })
       );
     });
 
-    completeActionExecutor(resolvingAction2.type);
+    completeActionExecutor(resolvingActionSource2.type);
     await waitFor(() => {
       expect(getState()).toMatchObject(
-        getActionCompleteState({ type: resolvingAction2.type })
+        getActionCompleteState({ type: resolvingActionSource2.type })
       );
     });
   });
@@ -330,13 +312,16 @@ describe('useActionQueue', () => {
     const { start, getState } = renderTestComponent({ fail: true });
     start();
 
-    completeActionExecutor(resolvingAction1.type);
-    completeActionExecutor(rejectingAction.type);
+    completeActionExecutor(resolvingActionSource1.type);
+    await waitFor(() => {
+      expect(isActionTriggered(rejectingActionSource.type)).toBeTruthy();
+    });
+    completeActionExecutor(rejectingActionSource.type);
     await waitFor(() => {
       expect(getState()).toMatchObject(
         getActionCompleteState({
-          type: rejectingAction.type,
-          errorMessage: (rejectingAction.rejectValue as Error).message,
+          type: rejectingActionSource.type,
+          errorMessage: (rejectingActionSource.rejectValue as Error).message,
         })
       );
     });
@@ -347,28 +332,28 @@ describe('useActionQueue', () => {
 
     await waitFor(() => {
       expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingAction1.type })
+        getActionStartedState({ type: resolvingActionSource1.type })
       );
     });
     await rerender();
     await rerender();
     await waitFor(() => {
       expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingAction1.type })
+        getActionStartedState({ type: resolvingActionSource1.type })
       );
     });
     await rerender();
     await rerender();
-    completeActionExecutor(resolvingAction1.type);
+    completeActionExecutor(resolvingActionSource1.type);
     await waitFor(() => {
       expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingAction2.type })
+        getActionStartedState({ type: resolvingActionSource2.type })
       );
     });
-    completeActionExecutor(resolvingAction2.type);
+    completeActionExecutor(resolvingActionSource2.type);
     await waitFor(() => {
       expect(getState()).toMatchObject(
-        getActionCompleteState({ type: resolvingAction2.type })
+        getActionCompleteState({ type: resolvingActionSource2.type })
       );
     });
   });
@@ -383,12 +368,12 @@ describe('useActionQueue', () => {
 
     await waitFor(() => {
       expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingAction1.type })
+        getActionStartedState({ type: resolvingActionSource1.type })
       );
     });
     await toggleComponentMounting();
     // completing an action after queue is cleared has no effect.
-    completeActionExecutor(resolvingAction1.type);
+    completeActionExecutor(resolvingActionSource1.type);
     await toggleComponentMounting();
     await rerender();
     await waitFor(() => {
@@ -441,14 +426,14 @@ describe('useActionQueue', () => {
       expect(storedQueue).toMatchObject(getQueue());
       expect(storedQueue[0].active).toBeTruthy();
     });
-    completeActionExecutor(resolvingAction1.type);
+    completeActionExecutor(resolvingActionSource1.type);
     await waitFor(() => {
       const storedQueue = getStoredQueue(queueStorageKey) as ActionQueue;
       expect(getStoredQueue(queueStorageKey)).toMatchObject(getQueue());
       expect(storedQueue[0]).toMatchObject({
         complete: true,
         active: false,
-        result: resolvingAction1.resolveValue,
+        result: resolvingActionSource1.resolveValue,
       });
     });
     await waitFor(() => {
@@ -456,14 +441,14 @@ describe('useActionQueue', () => {
       expect(storedQueue[1].active).toBeTruthy();
     });
 
-    completeActionExecutor(rejectingAction.type);
+    completeActionExecutor(rejectingActionSource.type);
     await waitFor(() => {
       const storedQueue = getStoredQueue(queueStorageKey) as ActionQueue;
       expect(getStoredQueue(queueStorageKey)).toMatchObject(getQueue());
       expect(storedQueue[1]).toMatchObject({
         complete: true,
         active: false,
-        errorMessage: (rejectingAction.rejectValue as Error).message,
+        errorMessage: (rejectingActionSource.rejectValue as Error).message,
       });
     });
   });
@@ -482,15 +467,15 @@ describe('useActionQueue', () => {
       {
         active: false,
         complete: false,
-        type: resolvingAction1.type,
+        type: resolvingActionSource1.type,
       },
       {
         active: false,
         complete: false,
-        type: resolvingAction2.type,
+        type: resolvingActionSource2.type,
       },
     ]);
-    expect(getNextActionType()).toBe(resolvingAction1.type);
+    expect(getNextActionType()).toBe(resolvingActionSource1.type);
   });
   it('Initial state reflects merged queues', async () => {
     const queueInStorage = createQueueFromProps(getSuccessfulQueue());
@@ -514,8 +499,11 @@ describe('useActionQueue', () => {
       fail: true,
     });
     start();
-    completeActionExecutor(resolvingAction1.type);
-    completeActionExecutor(rejectingAction.type);
+    completeActionExecutor(resolvingActionSource1.type);
+    await waitFor(() => {
+      expect(isActionTriggered(rejectingActionSource.type)).toBeTruthy();
+    });
+    completeActionExecutor(rejectingActionSource.type);
     await waitFor(() => {
       expect(getIsComplete()).toBeTruthy();
     });

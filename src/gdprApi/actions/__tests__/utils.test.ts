@@ -6,9 +6,9 @@ import { createActionQueueRunner } from '../../../common/actionQueue/actionQueue
 import {
   getFailingQueue,
   getSuccessfulQueue,
-  rejectingAction,
-  resolvingAction1,
-  resolvingAction2,
+  rejectingActionSource,
+  resolvingActionSource1,
+  resolvingActionSource2,
 } from '../../../common/actionQueue/test.util';
 import {
   createFailedActionParams,
@@ -56,7 +56,7 @@ describe('utils.ts', () => {
     it('returns result and error message of given action', async () => {
       const { runner } = initTests({ fail: true });
       const resolvingAction1Before = getActionResultAndErrorMessage(
-        resolvingAction1.type,
+        resolvingActionSource1.type,
         runner
       );
       expect(resolvingAction1Before.result).toBeUndefined();
@@ -66,21 +66,23 @@ describe('utils.ts', () => {
         expect(runner.isFinished()).toBeTruthy();
       });
       const resolvingAction1After = getActionResultAndErrorMessage(
-        resolvingAction1.type,
+        resolvingActionSource1.type,
         runner
       );
-      expect(resolvingAction1After.result).toBe(resolvingAction1.resolveValue);
+      expect(resolvingAction1After.result).toBe(
+        resolvingActionSource1.resolveValue
+      );
       expect(resolvingAction1After.errorMessage).toBeUndefined();
       const rejectingActionAfter = getActionResultAndErrorMessage(
-        rejectingAction.type,
+        rejectingActionSource.type,
         runner
       );
       expect(rejectingActionAfter.result).toBeUndefined();
       expect(rejectingActionAfter.errorMessage).toBe(
-        (rejectingAction.rejectValue as Error).message
+        (rejectingActionSource.rejectValue as Error).message
       );
       const notRunExecutedAction = getActionResultAndErrorMessage(
-        resolvingAction2.type,
+        resolvingActionSource2.type,
         runner
       );
       expect(notRunExecutedAction.result).toBeUndefined();
@@ -101,7 +103,7 @@ describe('utils.ts', () => {
         )
       ).toBeTruthy();
       expect(
-        isTunnistamoAuthCodeAction(resolvingAction1 as Action)
+        isTunnistamoAuthCodeAction(resolvingActionSource1 as Action)
       ).toBeFalsy();
     });
   });

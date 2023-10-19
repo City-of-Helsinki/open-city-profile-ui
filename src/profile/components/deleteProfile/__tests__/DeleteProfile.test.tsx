@@ -19,7 +19,7 @@ import {
   ActionMockData,
   initMockQueue,
   isActionTriggered,
-} from '../../../../gdprApi/actions/__mocks__/mock.util';
+} from '../../../../common/actionQueue/mock.util';
 import {
   AuthCodeQueuesProps,
   authCodeQueuesStorageKey,

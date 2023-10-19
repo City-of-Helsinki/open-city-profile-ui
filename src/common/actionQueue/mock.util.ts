@@ -4,10 +4,10 @@ import {
   ActionProps,
   ActionType,
   createQueueFromProps,
-} from '../../../common/actionQueue/actionQueue';
-import { storeQueue } from '../../../common/actionQueue/actionQueueStorage';
-import { ActionSourceForTesting } from '../../../common/actionQueue/test.util';
-import { QueueProps, getQueue } from '../queues';
+} from './actionQueue';
+import { storeQueue } from './actionQueueStorage';
+import { ActionSourceForTesting } from './test.util';
+import { QueueProps, getQueue } from '../../gdprApi/actions/queues';
 
 export type ActionMockData = Pick<
   ActionSourceForTesting,
@@ -113,6 +113,25 @@ export const setMockActionData = (data: ActionMockData) => {
     isTriggered: false,
     isComplete: false,
   });
+};
+
+export const createTriggerableExecutor = (actionProps: ActionProps) => {
+  storeOriginalExecutor(actionProps);
+  return {
+    ...actionProps,
+    executor: (...args: Parameters<ActionExecutor>) =>
+      runOrCreateExecutor(...args),
+  };
+};
+
+export const createActionWithTriggerableExecutor = (source: ActionMockData) => {
+  const { type } = source;
+  setMockActionData(source);
+  const action = createQueueFromProps([
+    { type, executor: () => Promise.resolve(true) },
+  ])[0];
+  storeOriginalExecutor(action);
+  return createTriggerableExecutor(action);
 };
 
 // store the queue actions from actual downloadDataQueue with new props

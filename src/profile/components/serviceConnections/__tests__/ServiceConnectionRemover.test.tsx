@@ -18,7 +18,7 @@ import config from '../../../../config';
 import {
   ActionMockData,
   initMockQueue,
-} from '../../../../gdprApi/actions/__mocks__/mock.util';
+} from '../../../../common/actionQueue/mock.util';
 import {
   AuthCodeQueuesProps,
   authCodeQueuesStorageKey,

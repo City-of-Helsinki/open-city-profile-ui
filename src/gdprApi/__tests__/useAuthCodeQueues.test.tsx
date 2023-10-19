@@ -37,7 +37,7 @@ import {
   isActionTriggered,
   ActionMockData,
   initMockQueue,
-} from '../actions/__mocks__/mock.util';
+} from '../../common/actionQueue/mock.util';
 import {
   getScenarioForScopes,
   getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully,
