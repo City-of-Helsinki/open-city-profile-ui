@@ -19,6 +19,7 @@ import {
   getStoredKeycloakAuthCode,
   getStoredTunnistamoAuthCode,
 } from './authCodeParser';
+import reportErrorsToSentry from '../../common/sentry/reportGraphQlErrors';
 
 const DELETE_SERVICE_DATA = loader('../graphql/GdprDeleteServiceData.graphql');
 
@@ -80,6 +81,7 @@ const deleteServiceConnectionExecutor: ActionExecutor = async (
     })
   );
   if (error) {
+    reportErrorsToSentry(error);
     return Promise.reject(resultTypes.queryError);
   }
 

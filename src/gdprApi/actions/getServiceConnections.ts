@@ -14,6 +14,7 @@ import {
   getData,
 } from '../../common/actionQueue/actionQueue';
 import { getActionResultAndErrorMessage } from './utils';
+import reportErrorsToSentry from '../../common/sentry/reportGraphQlErrors';
 
 const GDPR_SERVICE_CONNECTIONS = loader(
   '../graphql/GdprServiceConnectionsQuery.graphql'
@@ -37,6 +38,7 @@ const serviceConnectionsQueryExecutor: ActionExecutor = async action => {
     })
   );
   if (error) {
+    reportErrorsToSentry(error);
     return Promise.reject(error);
   }
   if (!result || !result.data) {

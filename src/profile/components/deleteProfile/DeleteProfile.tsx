@@ -28,6 +28,7 @@ import useAuthCodeQueues, {
 } from '../../../gdprApi/useAuthCodeQueues';
 import config from '../../../config';
 import { getDeleteProfileResult } from '../../../gdprApi/actions/deleteProfile';
+import reportErrorsToSentry from '../../../common/sentry/reportGraphQlErrors';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -112,9 +113,9 @@ function DeleteProfile(): React.ReactElement {
       setDataLoadState(loadedLoadState);
       handleConfirmationModal();
     },
-    onError: (error: Error) => {
+    onError: error => {
       setDataLoadState(errorLoadState);
-      Sentry.captureException(error);
+      reportErrorsToSentry(error);
     },
   });
 

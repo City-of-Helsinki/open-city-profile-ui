@@ -24,6 +24,7 @@ import parseDeleteProfileResult, {
   DeleteResultLists,
 } from '../../profile/helpers/parseDeleteProfileResult';
 import { convertStringToTranslationLanguage } from '../../profile/helpers/createServiceConnectionsQueryVariables';
+import reportErrorsToSentry from '../../common/sentry/reportGraphQlErrors';
 
 const DELETE_PROFILE = loader('../graphql/GdprDeleteMyProfileMutation.graphql');
 
@@ -66,6 +67,7 @@ const deleteProfileExecutor: ActionExecutor = async (
     })
   );
   if (error) {
+    reportErrorsToSentry(error);
     return Promise.reject(error);
   }
   if (!result || !result.data) {

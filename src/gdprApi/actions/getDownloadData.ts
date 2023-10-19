@@ -17,6 +17,7 @@ import {
   getStoredKeycloakAuthCode,
   getStoredTunnistamoAuthCode,
 } from './authCodeParser';
+import reportErrorsToSentry from '../../common/sentry/reportGraphQlErrors';
 
 const DOWNLOAD_MY_PROFILE = loader(
   '../../profile/graphql/DownloadMyProfileQuery.graphql'
@@ -53,6 +54,7 @@ const getDownloadDataExecutor: ActionExecutor = async (
     })
   );
   if (error) {
+    reportErrorsToSentry(error);
     return Promise.reject(error);
   }
   if (!result || !result.data) {
