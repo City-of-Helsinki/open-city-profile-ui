@@ -13,6 +13,7 @@ import {
   isKeycloakAuthorisationCodeNeeded,
 } from './getGdprScopes';
 import { tunnistamoRedirectionInitializationAction } from './authCodeRedirectionInitialization';
+import { tunnistamoAuthCodeParserAction } from './authCodeParser';
 import { tunnistamoAuthCodeRedirectionAction } from './authCodeRedirectionHandler';
 import { tunnistamoAuthCodeCallbackUrlAction } from './authCodeCallbackUrlDetector';
 import matchUrls from '../../common/helpers/matchUrls';
@@ -54,6 +55,7 @@ export function getActionResultAndErrorMessage<T = JSONStringifyableResult>(
 export function isTunnistamoAuthCodeAction(action: Action): boolean {
   return (
     action.type === tunnistamoRedirectionInitializationAction.type ||
+    action.type === tunnistamoAuthCodeParserAction.type ||
     action.type === tunnistamoAuthCodeCallbackUrlAction.type ||
     action.type === tunnistamoAuthCodeRedirectionAction.type
   );
