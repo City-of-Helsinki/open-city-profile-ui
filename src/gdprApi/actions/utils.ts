@@ -9,6 +9,7 @@ import {
   JSONStringifyableResult,
   QueueController,
   getData,
+  hasMatchingDataProperty,
 } from '../../common/actionQueue/actionQueue';
 import config from '../../config';
 import {
@@ -309,4 +310,11 @@ export function useInternalRedirect(
       redirect,
     };
   }, [controller, history]);
+}
+
+export function didFailedActionRedirect(action: Action) {
+  return (
+    hasMatchingDataProperty(action, 'redirectsOnError', true) ||
+    getInternalRequestPathFromError(action) !== undefined
+  );
 }
