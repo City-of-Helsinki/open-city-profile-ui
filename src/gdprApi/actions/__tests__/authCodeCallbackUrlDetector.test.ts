@@ -1,4 +1,5 @@
 import to from 'await-to-js';
+import { waitFor } from '@testing-library/react';
 
 import { getGdprQueryScopesAction } from '../getGdprScopes';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
@@ -6,6 +7,9 @@ import { Action } from '../../../common/actionQueue/actionQueue';
 import {
   tunnistamoAuthCodeCallbackUrlAction,
   keycloakAuthCodeCallbackUrlAction,
+  isQueueWaitingForAuthCodeCallback,
+  resumeQueueFromNextCallbackDetector,
+  getNextAuthCodeCallbackDetector,
 } from '../authCodeCallbackUrlDetector';
 import {
   keycloakAuthCodeRedirectionAction,
@@ -137,6 +141,54 @@ describe('authCodeRedirectionAction.ts', () => {
       });
       const [error] = await to(keycloadAction.executor(keycloadAction, runner));
       expect(error).not.toBeNull();
+    });
+  });
+  describe(`getNextAuthCodeCallbackDetector() and isQueueWaitingForAuthCodeCallback() are helpers for determining
+            what should be done next - usually after a redirection to auth code provider has returned back.`, () => {
+    it(`getNextAuthCodeCallbackDetector() returns action.type if next action is a detector or undefinded.
+      isQueueWaitingForAuthCodeCallback() converts same value to a boolean.`, async () => {
+      const { runner, getTunnistamoAction, getKeycloadAction } = initTests();
+      expect(getNextAuthCodeCallbackDetector(runner)).toBeUndefined();
+      expect(isQueueWaitingForAuthCodeCallback(runner)).toBeFalsy();
+      runner.updateActionAndQueue(tunnistamoAuthCodeRedirectionAction.type, {
+        complete: true,
+      });
+      expect(getNextAuthCodeCallbackDetector(runner)).toBe(
+        getTunnistamoAction().type
+      );
+      expect(isQueueWaitingForAuthCodeCallback(runner)).toBeTruthy();
+      runner.updateActionAndQueue(getTunnistamoAction().type, {
+        complete: true,
+      });
+      expect(isQueueWaitingForAuthCodeCallback(runner)).toBeFalsy();
+      runner.updateActionAndQueue(keycloakAuthCodeRedirectionAction.type, {
+        complete: true,
+      });
+      expect(isQueueWaitingForAuthCodeCallback(runner)).toBeTruthy();
+      expect(getNextAuthCodeCallbackDetector(runner)).toBe(
+        getKeycloadAction().type
+      );
+      runner.updateActionAndQueue(getKeycloadAction().type, {
+        complete: true,
+      });
+      expect(getNextAuthCodeCallbackDetector(runner)).toBeUndefined();
+      expect(isQueueWaitingForAuthCodeCallback(runner)).toBeFalsy();
+    });
+  });
+  describe(`resumeQueueFromNextCallbackDetector() is a helper to resume queue from a detector.`, () => {
+    it(`it returns the resumed action.type or undefined if no action was resumed.`, async () => {
+      const { runner, getTunnistamoAction } = initTests();
+      expect(resumeQueueFromNextCallbackDetector(runner)).toBeUndefined();
+      runner.updateActionAndQueue(tunnistamoAuthCodeRedirectionAction.type, {
+        complete: true,
+      });
+      expect(resumeQueueFromNextCallbackDetector(runner)).toBe(
+        getTunnistamoAction().type
+      );
+      await waitFor(() => {
+        expect(runner.isFinished()).toBeTruthy();
+      });
+      expect(resumeQueueFromNextCallbackDetector(runner)).toBeUndefined();
     });
   });
 });

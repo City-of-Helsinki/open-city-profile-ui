@@ -3,12 +3,16 @@ import {
   ActionExecutor,
   ActionOptions,
   ActionProps,
+  QueueController,
+  isResumable,
 } from '../../common/actionQueue/actionQueue';
+import { QueueRunner } from '../../common/actionQueue/actionQueueRunner';
 import config from '../../config';
 import { getAuthCodeRedirectionInitializationResult } from './authCodeRedirectionInitialization';
 import {
   isAuthCodeActionNeeded,
   isGdprCallbackUrl,
+  isOnActionRequiredPath,
   parseAuthorizationCallbackUrl,
   rejectExecutorWithStartPageRedirection,
   thirtySecondsInMs,
@@ -27,6 +31,50 @@ const tunnistamoAuthCodeCallbackUrlDetectorType =
 
 const keycloakAuthCodeCallbackUrlDetectorType =
   'keycloakAuthCodeCallbackUrlDetectorType';
+
+export const getNextAuthCodeCallbackDetector = (
+  controller: QueueController
+) => {
+  const nextAction = controller.getNext();
+  if (!nextAction) {
+    return undefined;
+  }
+  if (nextAction.type === tunnistamoAuthCodeCallbackUrlDetectorType) {
+    return tunnistamoAuthCodeCallbackUrlDetectorType;
+  }
+  if (nextAction.type === keycloakAuthCodeCallbackUrlDetectorType) {
+    return keycloakAuthCodeCallbackUrlDetectorType;
+  }
+  return undefined;
+};
+
+export const isQueueWaitingForAuthCodeCallback = (
+  controller: QueueController
+) => !!getNextAuthCodeCallbackDetector(controller);
+
+export const resumeQueueFromNextCallbackDetector = (runner: QueueRunner) => {
+  const actionType = getNextAuthCodeCallbackDetector(runner);
+  if (!actionType) {
+    return undefined;
+  }
+  if (runner.resume(actionType)) {
+    return actionType;
+  }
+  return undefined;
+};
+
+export const isResumableGdprCallback = (action: Action) => {
+  if (
+    action.type !== tunnistamoAuthCodeCallbackUrlDetectorType &&
+    action.type !== keycloakAuthCodeCallbackUrlDetectorType
+  ) {
+    return false;
+  }
+  if (!isResumable(action)) {
+    return false;
+  }
+  return isOnActionRequiredPath(action);
+};
 
 const authCodeCallbackUrlDetectorExecutor: ActionExecutor = async (
   action,
