@@ -20,6 +20,7 @@ import {
 } from '../test.util';
 
 describe('actionQueue', () => {
+  const getLastArrayItem = (arr: unknown[]) => arr[arr.length - 1];
   describe('createQueueFromProps', () => {
     it('Converts plain props to an Action', () => {
       const queue = createQueueFromProps([
@@ -89,7 +90,7 @@ describe('actionQueue', () => {
       it('Invalidates all actions and removes them from queue', () => {
         const safeArray = createQueueWithCommonActions();
         const controller = createQueueController(safeArray);
-        const copyOfReadyMadeAction = safeArray.at(-1) as Action;
+        const copyOfReadyMadeAction = getLastArrayItem(safeArray) as Action;
         const oldQueue = controller.getQueue();
         controller.clean();
         const clearedQueue = controller.getQueue();
@@ -113,12 +114,12 @@ describe('actionQueue', () => {
         };
         const testQueue = createQueueWithCommonActions([{ ...finishedAction }]);
 
-        const copyOfFinishedAction = testQueue.at(-1) as Action;
+        const copyOfFinishedAction = getLastArrayItem(testQueue) as Action;
         const controller = createQueueController(testQueue);
         const oldQueue = controller.getQueue();
         controller.reset();
         const resetQueue = controller.getQueue();
-        const resetFinishedAction = resetQueue.at(-1) as Action;
+        const resetFinishedAction = getLastArrayItem(resetQueue) as Action;
         expect(resetQueue.length).toBe(oldQueue.length);
 
         // values are reset
@@ -145,7 +146,7 @@ describe('actionQueue', () => {
           Old queue is invalidated.`, () => {
         const testQueue = createQueueWithCommonActions();
 
-        const originalReadyMadeAction = testQueue.at(-1) as Action;
+        const originalReadyMadeAction = getLastArrayItem(testQueue) as Action;
         const copyOfReadyMadeActionProps = { ...originalReadyMadeAction };
         const controller = createQueueController(testQueue);
         const oldQueue = controller.getQueue();
@@ -158,7 +159,7 @@ describe('actionQueue', () => {
         };
         controller.updateActionAndQueue(readyMadeAction.type, updatedProps);
         const updatedQueue = controller.getQueue();
-        const updatedFinishedAction = updatedQueue.at(-1) as Action;
+        const updatedFinishedAction = getLastArrayItem(updatedQueue) as Action;
         expect(updatedFinishedAction).toMatchObject({
           ...copyOfReadyMadeActionProps,
           ...updatedProps,
