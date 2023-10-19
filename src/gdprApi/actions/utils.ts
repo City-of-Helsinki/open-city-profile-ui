@@ -1,8 +1,24 @@
 import {
+  Action,
   ActionType,
   JSONStringifyableResult,
   QueueController,
 } from '../../common/actionQueue/actionQueue';
+import {
+  isTunnistamoAuthorisationCodeNeeded,
+  isKeycloakAuthorisationCodeNeeded,
+} from './getGdprScopes';
+import { tunnistamoRedirectionInitializationAction } from './authCodeRedirectionInitialization';
+
+export type AuthorizationUrlParams = {
+  oidcUri: string;
+  clientId: string;
+  scopes: string[];
+  redirectUri: string;
+  state: string;
+};
+
+export const thirtySecondsInMs = 30 * 1000;
 
 export function getActionResultAndErrorMessage<T = JSONStringifyableResult>(
   actionType: ActionType,
@@ -20,4 +36,17 @@ export function getActionResultAndErrorMessage<T = JSONStringifyableResult>(
     result: (result as unknown) as T,
     errorMessage,
   };
+}
+
+export function isTunnistamoAuthCodeAction(action: Action): boolean {
+  return action.type === tunnistamoRedirectionInitializationAction.type;
+}
+
+export function isAuthCodeActionNeeded(
+  action: Action,
+  controller: QueueController
+): boolean {
+  return isTunnistamoAuthCodeAction(action)
+    ? isTunnistamoAuthorisationCodeNeeded(controller)
+    : isKeycloakAuthorisationCodeNeeded(controller);
 }

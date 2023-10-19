@@ -8,7 +8,17 @@ import {
   resolvingActionSource1,
   resolvingActionSource2,
 } from '../../../common/actionQueue/test.util';
-import { getActionResultAndErrorMessage } from '../utils';
+import {
+  getActionResultAndErrorMessage,
+  isAuthCodeActionNeeded,
+  isTunnistamoAuthCodeAction,
+} from '../utils';
+import {
+  keycloakRedirectionInitializationAction,
+  tunnistamoRedirectionInitializationAction,
+} from '../authCodeRedirectionInitialization';
+import { Action } from '../../../common/actionQueue/actionQueue';
+import { getGdprQueryScopesAction } from '../getGdprScopes';
 
 describe('utils.ts', () => {
   const initTests = ({ fail }: { fail?: boolean } = {}) => {
@@ -58,11 +68,88 @@ describe('utils.ts', () => {
       expect(notRunExecutedAction.result).toBeUndefined();
       expect(notRunExecutedAction.errorMessage).toBeUndefined();
     });
-    it('returns undefined values when given action is not found', async () => {
+    it('returns undefined  values when given type is not found', async () => {
       const { runner } = initTests({ fail: true });
       const result = getActionResultAndErrorMessage('foo', runner);
       expect(result.result).toBeUndefined();
       expect(result.errorMessage).toBeUndefined();
+    });
+  });
+  describe('isTunnistamoAuthCodeAction()', () => {
+    it('returns true if given action is one of tunnistamo related actions', async () => {
+      expect(
+        isTunnistamoAuthCodeAction(
+          tunnistamoRedirectionInitializationAction as Action
+        )
+      ).toBeTruthy();
+      expect(
+        isTunnistamoAuthCodeAction(resolvingActionSource1 as Action)
+      ).toBeFalsy();
+    });
+  });
+  describe(`isAuthCodeActionNeeded() returns true is auth code is needed for Tunnistamo/Keycloak related action. 
+            Uses isTunnistamoAuthCodeAction() to define which scopes to check.
+            Uses getGrprScopes as a source for scopes`, () => {
+    const initAuthCodeTests = ({
+      noKeycloakScopes,
+      noTunnistamoScopes,
+    }: {
+      noTunnistamoScopes?: boolean;
+      noKeycloakScopes?: boolean;
+    } = {}) => {
+      const queue = [
+        getGdprQueryScopesAction,
+        tunnistamoRedirectionInitializationAction,
+        keycloakRedirectionInitializationAction,
+      ];
+      const runner = createActionQueueRunner(queue);
+      runner.updateActionAndQueue(getGdprQueryScopesAction.type, {
+        result: {
+          keycloakScopes: noKeycloakScopes ? [] : ['scope'],
+          tunnistamoScopes: noTunnistamoScopes ? [] : ['scope'],
+        },
+        complete: true,
+      });
+
+      return {
+        runner,
+      };
+    };
+    it(`returns true when Tunnistamo scopes exist and action is Tunnistamo related`, async () => {
+      const { runner } = initAuthCodeTests();
+      expect(
+        isAuthCodeActionNeeded(
+          tunnistamoRedirectionInitializationAction as Action,
+          runner
+        )
+      ).toBeTruthy();
+    });
+    it(`returns false when Tunnistamo scopes does not exist and action is Tunnistamo related`, async () => {
+      const { runner } = initAuthCodeTests({ noTunnistamoScopes: true });
+      expect(
+        isAuthCodeActionNeeded(
+          tunnistamoRedirectionInitializationAction as Action,
+          runner
+        )
+      ).toBeFalsy();
+    });
+    it(`returns true when Keycloak scopes exist and action is Keycloak related`, async () => {
+      const { runner } = initAuthCodeTests();
+      expect(
+        isAuthCodeActionNeeded(
+          keycloakRedirectionInitializationAction as Action,
+          runner
+        )
+      ).toBeTruthy();
+    });
+    it(`returns false when Tunnistamo scopes does not exist and action is Keycloak related`, async () => {
+      const { runner } = initAuthCodeTests({ noKeycloakScopes: true });
+      expect(
+        isAuthCodeActionNeeded(
+          keycloakRedirectionInitializationAction as Action,
+          runner
+        )
+      ).toBeFalsy();
     });
   });
 });
