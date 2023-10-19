@@ -9,6 +9,7 @@ import {
   isKeycloakAuthorisationCodeNeeded,
 } from './getGdprScopes';
 import { tunnistamoRedirectionInitializationAction } from './authCodeRedirectionInitialization';
+import { tunnistamoAuthCodeRedirectionAction } from './authCodeRedirectionHandler';
 
 export type AuthorizationUrlParams = {
   oidcUri: string;
@@ -39,9 +40,11 @@ export function getActionResultAndErrorMessage<T = JSONStringifyableResult>(
 }
 
 export function isTunnistamoAuthCodeAction(action: Action): boolean {
-  return action.type === tunnistamoRedirectionInitializationAction.type;
+  return (
+    action.type === tunnistamoRedirectionInitializationAction.type ||
+    action.type === tunnistamoAuthCodeRedirectionAction.type
+  );
 }
-
 export function isAuthCodeActionNeeded(
   action: Action,
   controller: QueueController
@@ -49,4 +52,26 @@ export function isAuthCodeActionNeeded(
   return isTunnistamoAuthCodeAction(action)
     ? isTunnistamoAuthorisationCodeNeeded(controller)
     : isKeycloakAuthorisationCodeNeeded(controller);
+}
+
+export function delayRedirection(uri: string) {
+  return setTimeout(() => {
+    window.location.assign(uri);
+  }, 60);
+}
+
+export function makeAuthorizationUrl(
+  urlParams: AuthorizationUrlParams
+): string {
+  const { oidcUri, clientId, scopes, redirectUri, state } = urlParams;
+  const scope = scopes.join(' ');
+  const params = new URLSearchParams();
+
+  params.append('response_type', 'code');
+  params.append('client_id', clientId);
+  params.append('scope', scope);
+  params.append('redirect_uri', redirectUri);
+  params.append('state', state);
+
+  return `${oidcUri}?${params.toString()}`;
 }
