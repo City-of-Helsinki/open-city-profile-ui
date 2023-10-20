@@ -149,13 +149,15 @@ export function getFailingQueue(extraProps?: Partial<Action>[]): InitialQueue {
 export function pickUpdateActionProps(
   action: Partial<Action>,
   addType = true,
-  filterUndefined = true
+  filterUndefined = true,
+  ignoreUpdatedAt = false
 ): Partial<ActionUpdateProps> & { type?: ActionType } {
   const { complete, active, result, errorMessage, updatedAt, type } = action;
   return {
     complete,
     active,
-    updatedAt,
+    // when comparing two identical queues created at different times, the 'updatedAt' will not match.
+    ...(!ignoreUpdatedAt && { updatedAt }),
     ...(addType && { type }),
     // json strigify drops "undefined" values, so those props are not present in parsed objects
     ...(!filterUndefined && typeof result !== 'undefined' && { result }),

@@ -16,7 +16,7 @@ import {
   createActionQueueRunner,
   isGenericError,
 } from './actionQueueRunner';
-import { getStoredQueue, storeQueue } from './actionQueueStorage';
+import { StoredQueue, getStoredQueue, storeQueue } from './actionQueueStorage';
 
 export type QueueState = {
   lastActionType: ActionType | undefined;
@@ -65,6 +65,10 @@ export function useActionQueue(
         }
         return storeQueue(storageKey, queue);
       },
+      verifyQueueIsCurrent: (queue: StoredQueue) => {
+        const { updatedAt } = queue[0];
+        return Date.now() - updatedAt < 2 * 60 * 1000;
+      },
     };
 
     const getNewState = (
@@ -107,7 +111,10 @@ export function useActionQueue(
       if (!storedQueue) {
         return primaryQueue;
       }
-      if (!verifyQueuesMatch(primaryQueue, storedQueue)) {
+      if (
+        !verifyQueuesMatch(primaryQueue, storedQueue) ||
+        !storageFunctions.verifyQueueIsCurrent(storedQueue)
+      ) {
         return primaryQueue;
       }
       return mergeQueues(primaryQueue, storedQueue).map(props => {

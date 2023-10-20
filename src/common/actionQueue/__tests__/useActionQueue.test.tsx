@@ -4,6 +4,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import { QueueState, useActionQueue } from '../useActionQueue';
 import {
   ActionSourceForTesting,
+  cloneArray,
   pickUpdateActionProps,
   rejectingActionSource,
   resolvingActionSource1,
@@ -38,10 +39,12 @@ describe('useActionQueue', () => {
     resetButton: 'reset-button',
   };
 
-  const createActionProps = (props: ActionSourceForTesting) =>
-    createActionWithTriggerableExecutor(props);
+  const createActionProps = (props: ActionSourceForTesting) => ({
+    ...createActionWithTriggerableExecutor(props),
+    result: `Result for action ${props.type}`,
+  });
 
-  const getSuccessfulQueue = () => [
+  const getSuccessfulQueueWithResult = () => [
     {
       ...createActionProps(resolvingActionSource1),
     },
@@ -50,7 +53,7 @@ describe('useActionQueue', () => {
     },
   ];
 
-  const getFailingQueue = () => [
+  const getFailingQueueWithResult = () => [
     {
       ...createActionProps(resolvingActionSource1),
     },
@@ -65,7 +68,8 @@ describe('useActionQueue', () => {
   const TestUseActionQueueHook = (props: TestComponentProps = {}) => {
     const { fail, storageKey } = props;
     const queue = useMemo(
-      () => (fail ? getFailingQueue() : getSuccessfulQueue()),
+      () =>
+        fail ? getFailingQueueWithResult() : getSuccessfulQueueWithResult(),
       [fail]
     );
     const [renderCount, rerender] = useState(0);
@@ -381,7 +385,7 @@ describe('useActionQueue', () => {
     });
   });
   it('Merges the queue from storage when a storageKey is passed.', async () => {
-    const queueInStorage = createQueueFromProps(getSuccessfulQueue());
+    const queueInStorage = createQueueFromProps(getSuccessfulQueueWithResult());
     queueInStorage[0].complete = true;
     queueInStorage[0].result = '100';
     queueInStorage[1].complete = true;
@@ -396,8 +400,24 @@ describe('useActionQueue', () => {
     ]);
     expect(getNextActionType()).toBeUndefined();
   });
+  it('Discards stored queue if it is older than 2 minutes.', async () => {
+    const queueInComponent = createQueueFromProps(
+      getSuccessfulQueueWithResult()
+    );
+    const queueInStorage = cloneArray(queueInComponent);
+    queueInStorage[0].updatedAt = Date.now() - 60 * 1000 * 2 - 1;
+    queueInStorage[0].result = 'this should not be set';
+    storeQueue(queueStorageKey, queueInStorage);
+    const { getQueue } = renderTestComponent({
+      storageKey: queueStorageKey,
+    });
+    expect(getQueue()).toMatchObject([
+      pickUpdateActionProps(queueInComponent[0], true, false, true),
+      pickUpdateActionProps(queueInComponent[1], true, false, true),
+    ]);
+  });
   it('Action.active are set to "false" even if stored value is "true" ', async () => {
-    const queueInStorage = createQueueFromProps(getSuccessfulQueue());
+    const queueInStorage = createQueueFromProps(getSuccessfulQueueWithResult());
     queueInStorage[0].active = true;
     queueInStorage[1].active = true;
     storeQueue(queueStorageKey, queueInStorage);
@@ -453,7 +473,7 @@ describe('useActionQueue', () => {
     });
   });
   it('Does not merge stored queue if actions do not match', async () => {
-    const queue = getSuccessfulQueue();
+    const queue = getSuccessfulQueueWithResult();
     const queueInStorage = createQueueFromProps([queue[1], queue[0]]);
     queueInStorage[0].complete = true;
     queueInStorage[0].result = '100';
@@ -478,7 +498,7 @@ describe('useActionQueue', () => {
     expect(getNextActionType()).toBe(resolvingActionSource1.type);
   });
   it('Initial state reflects merged queues', async () => {
-    const queueInStorage = createQueueFromProps(getSuccessfulQueue());
+    const queueInStorage = createQueueFromProps(getSuccessfulQueueWithResult());
     queueInStorage[0].complete = true;
     queueInStorage[1].complete = true;
     queueInStorage[1].errorMessage = 'error';

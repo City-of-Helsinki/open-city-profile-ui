@@ -146,6 +146,7 @@ const setStoredState = (
     return {
       ...action,
       ...overrides,
+      updatedAt: Date.now(),
     };
   });
   storeQueue(storageKey, createQueueFromProps(queue));
