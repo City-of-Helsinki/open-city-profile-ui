@@ -14,7 +14,7 @@ import {
   getData,
 } from '../../common/actionQueue/actionQueue';
 import { getActionResultAndErrorMessage } from './utils';
-import reportErrorsToSentry from '../../common/sentry/reportGraphQlErrors';
+import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
 
 const GDPR_SERVICE_CONNECTIONS = loader(
   '../graphql/GdprServiceConnectionsQuery.graphql'

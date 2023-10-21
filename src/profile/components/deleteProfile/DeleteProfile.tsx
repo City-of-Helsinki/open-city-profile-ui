@@ -28,7 +28,7 @@ import useAuthCodeQueues, {
 } from '../../../gdprApi/useAuthCodeQueues';
 import config from '../../../config';
 import { getDeleteProfileResult } from '../../../gdprApi/actions/deleteProfile';
-import reportErrorsToSentry from '../../../common/sentry/reportGraphQlErrors';
+import reportErrorsToSentry from '../../../common/sentry/reportErrorsToSentry';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'

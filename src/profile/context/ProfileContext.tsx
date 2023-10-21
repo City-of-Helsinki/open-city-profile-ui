@@ -14,7 +14,7 @@ import { ProfileRoot } from '../../graphql/typings';
 import getVerifiedPersonalInformation from '../helpers/getVerifiedPersonalInformation';
 import { useProfileQuery, QueryResult } from '../hooks/useProfileQuery';
 import parseGraphQLError from '../helpers/parseGraphQLError';
-import reportErrorsToSentry from '../../common/sentry/reportGraphQlErrors';
+import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
 
 type ContextProps = {
   children: React.ReactNode | React.ReactNode[] | null;

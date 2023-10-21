@@ -19,7 +19,7 @@ import {
   getStoredKeycloakAuthCode,
   getStoredTunnistamoAuthCode,
 } from './authCodeParser';
-import reportErrorsToSentry from '../../common/sentry/reportGraphQlErrors';
+import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
 
 const DELETE_SERVICE_DATA = loader('../graphql/GdprDeleteServiceData.graphql');
 
