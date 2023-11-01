@@ -103,7 +103,7 @@ h3.label-size {
 
 .visually-hidden {
   clip-path: polygon(0 0, 0 0, 0 0, 0 0);
-  composes: hiddenFromScreen from '~hds-core/lib/base.css';
+  composes: visually-hidden from '~hds-core/lib/base.css';
   width: 1px;
 }
 

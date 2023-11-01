@@ -155,7 +155,7 @@ export const Link = ({
         </span>
       )}
       {children}
-      {renderIcon && (
+      {/* {renderIcon && (
         <Icon
           size={mapLinkSizeToExternalIconSize[size]}
           className={classNames(
@@ -166,7 +166,7 @@ export const Link = ({
           )}
           aria-hidden
         />
-      )}
+      )} */}
     </a>
   );
 };

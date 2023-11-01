@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigation } from 'hds-react';
+// import { Navigation } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
@@ -20,21 +20,22 @@ function LanguageSwitcher(): React.ReactElement {
     { code: 'en', label: 'In English' },
   ];
   return (
-    <Navigation.LanguageSelector
-      label={i18NLanguageCode.toUpperCase()}
-      buttonAriaLabel={t('landmarks.navigation.language')}
-    >
-      {languages.map(lang => (
-        <Navigation.Item
-          href="#"
-          onClick={(e: React.MouseEvent) => setLanguage(lang.code, e)}
-          label={lang.label}
-          active={i18NLanguageCode === lang.code}
-          key={lang.code}
-          lang={lang.code}
-        />
-      ))}
-    </Navigation.LanguageSelector>
+    <h2>languageselector</h2>
+    // <Navigation.LanguageSelector
+    //   label={i18NLanguageCode.toUpperCase()}
+    //   buttonAriaLabel={t('landmarks.navigation.language')}
+    // >
+    //   {languages.map(lang => (
+    //     <Navigation.Item
+    //       href="#"
+    //       onClick={(e: React.MouseEvent) => setLanguage(lang.code, e)}
+    //       label={lang.label}
+    //       active={i18NLanguageCode === lang.code}
+    //       key={lang.code}
+    //       lang={lang.code}
+    //     />
+    //   ))}
+    // </Navigation.LanguageSelector>
   );
 }
 // without the componentName, this component won't show beside the menu icon in mobile.

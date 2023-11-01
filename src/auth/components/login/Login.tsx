@@ -2,8 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import classNames from 'classnames';
+import { Logo, logoFi, logoSv } from 'hds-react';
 
-import HelsinkiLogo from '../../../common/helsinkiLogo/HelsinkiLogo';
 import styles from './Login.module.css';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
@@ -12,8 +12,11 @@ import FocusableH1 from '../../../common/focusableH1/FocusableH1';
 import StyledButton from '../../../common/styledButton/StyledButton';
 
 function Login(): React.ReactElement {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { trackEvent } = useMatomo();
+
+  const lang = i18n.resolvedLanguage;
+  const logoSrcFromLanguage = lang === 'sv' ? logoSv : logoFi;
 
   return (
     <PageLayout title={'login.login'}>
@@ -24,7 +27,11 @@ function Login(): React.ReactElement {
             styles.content,
           ])}
         >
-          <HelsinkiLogo />
+          <Logo
+            src={logoSrcFromLanguage}
+            size="large"
+            alt={t('helsinkiLogo')}
+          />
           <FocusableH1>{t('login.title')}</FocusableH1>
           <p className={styles.ingress}>{t('login.description')}</p>
           <StyledButton

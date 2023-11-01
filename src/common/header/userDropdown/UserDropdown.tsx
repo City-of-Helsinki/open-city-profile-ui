@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconSignout, Navigation } from 'hds-react';
+import { IconSignout /*, Navigation */ } from 'hds-react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import authService from '../../../auth/authService';
@@ -58,23 +58,24 @@ function UserDropdown(): React.ReactElement {
   };
   const { label, userName, onClick } = getUserDataWithActions();
   return (
-    <Navigation.User
-      authenticated={isAuthenticated}
-      label={label}
-      onSignIn={(): Promise<void> => onClick()}
-      userName={userName}
-      buttonAriaLabel={label}
-      id="header-user-dropdown"
-    >
-      <Navigation.Item
-        onClick={(e: React.MouseEvent): Promise<void> => onClick(e)}
-        variant="supplementary"
-        label={label}
-        href="/logout"
-        data-testid="header-logout-button"
-        icon={<IconSignout aria-hidden />}
-      />
-    </Navigation.User>
+    <h2>user</h2>
+    // <Navigation.User
+    //   authenticated={isAuthenticated}
+    //   label={label}
+    //   onSignIn={(): Promise<void> => onClick()}
+    //   userName={userName}
+    //   buttonAriaLabel={label}
+    //   id="header-user-dropdown"
+    // >
+    //   <Navigation.Item
+    //     onClick={(e: React.MouseEvent): Promise<void> => onClick(e)}
+    //     variant="supplementary"
+    //     label={label}
+    //     href="/logout"
+    //     data-testid="header-logout-button"
+    //     icon={<IconSignout aria-hidden />}
+    //   />
+    // </Navigation.User>
   );
 }
 
