@@ -1,4 +1,5 @@
 import { useCallback, useContext, useEffect, useRef } from 'react';
+import { useApiTokens, useApiTokensClientTracking } from 'hds-react';
 
 import { ProfileContext, ProfileContextData } from '../context/ProfileContext';
 import parseGraphQLError from '../helpers/parseGraphQLError';
@@ -78,6 +79,9 @@ export function useProfileLoadTracker(): useProfileLoaderHookReturnType {
   const profileContext = useContext(ProfileContext);
   const statusRef = useRef<Status>(STATUS_WAITING);
 
+  const [signal, , client] = useApiTokensClientTracking();
+  console.log('#####useApiTokens', signal, client.getTokens());
+
   const updateStatus = useCallback((updatedStatus?: Status): Status => {
     if (!updatedStatus) {
       return statusRef.current;
@@ -92,6 +96,7 @@ export function useProfileLoadTracker(): useProfileLoaderHookReturnType {
   useEffect(() => {
     if (shouldLoad(newStatus)) {
       updateStatus(STATUS_LOADING);
+      console.log('useProfileLoadTracker-->fetch');
       profileContext.fetch();
     }
   }, [newStatus, updateStatus, profileContext]);

@@ -98,6 +98,7 @@ export const Provider = (props: ContextProps): React.ReactElement => {
   );
 
   const fetchDataIfNotLoaded: ProfileContextData['fetch'] = useCallback(() => {
+    console.log('fetchDataIfNotLoaded');
     if (loadTracker.current.started) {
       return;
     }

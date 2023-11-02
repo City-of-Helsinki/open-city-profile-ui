@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
-import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
-import { LoadingSpinner } from 'hds-react';
+import { LoginCallbackHandler, OidcClientError } from 'hds-react';
 
-import authService from '../../authService';
-import { useErrorPageRedirect } from '../../../profile/hooks/useErrorPageRedirect';
-import styles from './OidcCallback.module.css';
-import { getLinkRedirectState } from '../../../profile/hooks/useHistoryListener';
-
+/*
 function OidcCallback({
   history,
 }: RouteChildrenProps): React.ReactElement | null {
@@ -52,9 +47,43 @@ function OidcCallback({
 
   return (
     <div className={styles.wrapper}>
+      <LoginCallbackHandler onSuccess={onSuccess} onError={onError}>
       <LoadingSpinner small />
       <p>{t('oidc.authenticating')}</p>
+      </LoginCallbackHandler>
     </div>
+  );
+}
+*/
+
+function OidcCallback({
+  history,
+}: RouteChildrenProps): React.ReactElement | null {
+  const [userOrError, setUserOrError] = useState<
+    Sentry.User | OidcClientError | undefined
+  >(undefined);
+  const onSuccess = (user: Sentry.User) => {
+    history.push('/');
+  };
+  const onError = (error?: OidcClientError) => {
+    setUserOrError(error);
+  };
+
+  if (userOrError instanceof Error) {
+    return (
+      <div>
+        <p>Login failed!</p>
+      </div>
+    );
+  }
+  if (userOrError) {
+    return <div>Redirecting...</div>;
+  }
+
+  return (
+    <LoginCallbackHandler onSuccess={onSuccess} onError={onError}>
+      <div>Logging in...</div>
+    </LoginCallbackHandler>
   );
 }
 

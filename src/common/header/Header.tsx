@@ -9,6 +9,10 @@ import {
   logoFi,
   logoSv,
   IconUser,
+  useOidcClient,
+  useAuthenticatedUser,
+  Button,
+  IconSignout,
 } from 'hds-react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
@@ -17,7 +21,6 @@ import { MAIN_CONTENT_ID } from '../constants';
 // import UserDropdown from './userDropdown/UserDropdown';
 // import styles from './Header.module.css';
 import { ProfileContext } from '../../profile/context/ProfileContext';
-import authService from '../../auth/authService';
 // import getLanguageCode from '../helpers/getLanguageCode';
 
 function Header(): React.ReactElement {
@@ -25,6 +28,21 @@ function Header(): React.ReactElement {
   const history = useHistory();
   const location = useLocation();
   const currentPath = location.pathname;
+
+  const { login, logout } = useOidcClient();
+  const user = useAuthenticatedUser();
+  const authenticated = !!user;
+  const userName = user && user.profile.given_name;
+  const label = userName ? String(userName) : 'Log in';
+  const onLoginOrLogoutClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+
+    if (authenticated) {
+      logout();
+    } else {
+      login();
+    }
+  };
 
   const { trackEvent } = useMatomo();
 
@@ -80,7 +98,7 @@ function Header(): React.ReactElement {
   const logoutAction = (e?: React.MouseEvent): Promise<void> => {
     e && e.preventDefault();
     trackEvent({ category: 'action', action: 'Log out' });
-    return authService.logout();
+    return logout();
   };
   // const loginAction = (): Promise<void> => {
   //   trackEvent({ category: 'action', action: 'Log in' });
@@ -105,20 +123,23 @@ function Header(): React.ReactElement {
         frontPageLabel={t('nav.goToHomePage')}
       >
         <HDS_header.SimpleLanguageOptions languages={languageOptions} />
-        <HDS_header.Link label="kekkonen">perkele</HDS_header.Link>
         {!!getProfile() && isProfilePagePath && (
           <HDS_header.ActionBarItem
-            label="XXX"
-            ariaLabel={t('nav.menuButtonLabel')}
-            id="profileMenu"
+            label={label}
+            fixedRightPosition
             icon={<IconUser />}
-            closeLabel="XXX"
-            closeIcon={<IconUser />}
+            id="action-bar-login-action"
+            {...(!authenticated ? { onClick: onLoginOrLogoutClick } : {})}
           >
-            {/* <HDS_header.Link
-              label={t('nav.signout')}
-              onClick={(e: MouseEvent) => logoutAction(e)}
-            /> */}
+            {authenticated && (
+              <Button
+                onClick={onLoginOrLogoutClick}
+                variant="supplementary"
+                iconLeft={<IconSignout />}
+              >
+                Log out
+              </Button>
+            )}
           </HDS_header.ActionBarItem>
         )}
       </HDS_header.ActionBar>

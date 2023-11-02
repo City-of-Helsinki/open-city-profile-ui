@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import { Notification } from 'hds-react';
+import { Notification, User } from 'hds-react';
 
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import CreateProfile from '../createProfile/CreateProfile';
@@ -11,10 +11,9 @@ import styles from './Profile.module.css';
 import authService from '../../../auth/authService';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import { useProfileLoadTracker } from '../../hooks/useProfileLoadTracker';
-import { WithAuthCheckChildProps } from '../withAuthCheck/WithAuthCheck';
 import StyledButton from '../../../common/styledButton/StyledButton';
 
-function Profile(props: WithAuthCheckChildProps): React.ReactElement {
+function Profile(props: { user: User }): React.ReactElement {
   const { t } = useTranslation();
   const location = useLocation();
   const {

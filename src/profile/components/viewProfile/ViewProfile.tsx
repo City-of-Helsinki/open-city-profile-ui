@@ -7,7 +7,7 @@ import { ProfileContext } from '../../context/ProfileContext';
 
 function ViewProfile(): React.ReactElement {
   const { isComplete } = useContext(ProfileContext);
-
+  console.log('isComplete');
   return (
     <React.Fragment>
       {isComplete && (

@@ -8,6 +8,7 @@ const config = {
     'helusername'
   ),
   oidcAuthority: window._env_.REACT_APP_OIDC_AUTHORITY,
+  profileAudience: window._env_.REACT_APP_PROFILE_AUDIENCE,
   errorPagePath: '/error',
   cookiePagePath: '/cookies',
   autoSSOLoginPath: '/loginsso',

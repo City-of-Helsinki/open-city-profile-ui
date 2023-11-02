@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import { useApiTokens } from 'hds-react';
 
 import DeleteProfile from '../deleteProfile/DeleteProfile';
 import DownloadData from '../downloadData/DownloadData';
@@ -14,8 +15,11 @@ import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 import EditableProfileData from '../editableProfileData/EditableProfileData';
 
 function ProfileInformation(): React.ReactElement {
+  console.log('ProfileInformation');
   const { data } = useContext(ProfileContext);
   const { t } = useTranslation();
+  const { getStoredApiTokens } = useApiTokens();
+  console.log('useApiTokens', getStoredApiTokens());
   const hasVerifiedData = !!getVerifiedPersonalInformation(data);
   return (
     <div className={classNames([commonContentStyles['content']])}>
