@@ -27,24 +27,18 @@ exports[`Toast should render correct toast 1`] = `
                 >
                   <svg
                     aria-hidden="true"
+                    aria-label="error-fill"
                     class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Notification-module_icon__1ans7 notification_hds-icon__29HQM"
                     role="img"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g
-                      fill="none"
+                    <path
+                      clip-rule="evenodd"
+                      d="M11.175 3.45608C11.5239 2.86969 12.3977 2.84875 12.7842 3.39325L12.825 3.45608L21.8771 18.6666C22.2202 19.2432 21.8055 19.951 21.1235 19.9976L21.052 20H2.94799C2.24813 20 1.7987 19.3114 2.09013 18.7267L2.12295 18.6666L11.175 3.45608ZM13 16V18H11V16H13ZM13 8.5V14.5H11V8.5H13Z"
+                      fill="currentColor"
                       fill-rule="evenodd"
-                    >
-                      <rect
-                        height="24"
-                        width="24"
-                      />
-                      <path
-                        d="M11.1749534,3.45608205 C11.5239234,2.86969084 12.3977071,2.8487483 12.7841638,3.39325442 L12.8250466,3.45608205 L21.8770534,18.6666084 C22.2201691,19.2431624 21.8055019,19.9510257 21.123493,19.997576 L21.0520068,20 L2.94799316,20 C2.24813009,20 1.7986969,19.3113552 2.09013491,18.7266878 L2.1229466,18.6666084 L11.1749534,3.45608205 Z M13,16 L13,18 L11,18 L11,16 L13,16 Z M13,8.5 L13,14.5 L11,14.5 L11,8.5 L13,8.5 Z"
-                        fill="currentColor"
-                      />
-                    </g>
+                    />
                   </svg>
                   test title
                 </div>
@@ -66,24 +60,18 @@ exports[`Toast should render correct toast 1`] = `
               >
                 <svg
                   aria-hidden="true"
+                  aria-label="cross"
                   class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
                   role="img"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <g
-                    fill="none"
+                  <path
+                    clip-rule="evenodd"
+                    d="M18 7.5L13.5 12L18 16.5L16.5 18L12 13.5L7.5 18L6 16.5L10.5 12L6 7.5L7.5 6L12 10.5L16.5 6L18 7.5Z"
+                    fill="currentColor"
                     fill-rule="evenodd"
-                  >
-                    <rect
-                      height="24"
-                      width="24"
-                    />
-                    <polygon
-                      fill="currentColor"
-                      points="18 7.5 13.5 12 18 16.5 16.5 18 12 13.5 7.5 18 6 16.5 10.5 12 6 7.5 7.5 6 12 10.5 16.5 6"
-                    />
-                  </g>
+                  />
                 </svg>
               </button>
             </section>
@@ -119,7 +107,7 @@ exports[`Toast should render correct toast 1`] = `
               onClose={[Function]}
               type="error"
             >
-              <ka
+              <hn
                 visuallyHidden={false}
               >
                 <Animated(section)
@@ -140,38 +128,32 @@ exports[`Toast should render correct toast 1`] = `
                         className="Notification-module_label__1bhNu notification_hds-notification__label__2t1lR"
                         role="heading"
                       >
-                        <U
+                        <Y
                           aria-hidden={true}
                           className="Notification-module_icon__1ans7 notification_hds-icon__29HQM"
                         >
                           <svg
                             aria-hidden={true}
+                            aria-label="error-fill"
                             className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Notification-module_icon__1ans7 notification_hds-icon__29HQM"
                             role="img"
                             style={Object {}}
                             viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
                           >
-                            <g
-                              fill="none"
+                            <path
+                              clipRule="evenodd"
+                              d="M11.175 3.45608C11.5239 2.86969 12.3977 2.84875 12.7842 3.39325L12.825 3.45608L21.8771 18.6666C22.2202 19.2432 21.8055 19.951 21.1235 19.9976L21.052 20H2.94799C2.24813 20 1.7987 19.3114 2.09013 18.7267L2.12295 18.6666L11.175 3.45608ZM13 16V18H11V16H13ZM13 8.5V14.5H11V8.5H13Z"
+                              fill="currentColor"
                               fillRule="evenodd"
-                            >
-                              <rect
-                                height="24"
-                                width="24"
-                              />
-                              <path
-                                d="M11.1749534,3.45608205 C11.5239234,2.86969084 12.3977071,2.8487483 12.7841638,3.39325442 L12.8250466,3.45608205 L21.8770534,18.6666084 C22.2201691,19.2431624 21.8055019,19.9510257 21.123493,19.997576 L21.0520068,20 L2.94799316,20 C2.24813009,20 1.7986969,19.3113552 2.09013491,18.7266878 L2.1229466,18.6666084 L11.1749534,3.45608205 Z M13,16 L13,18 L11,18 L11,16 L13,16 Z M13,8.5 L13,14.5 L11,14.5 L11,8.5 L13,8.5 Z"
-                                fill="currentColor"
-                              />
-                            </g>
+                            />
                           </svg>
-                        </U>
-                        <ka
+                        </Y>
+                        <hn
                           visuallyHidden={false}
                         >
                           test title
-                        </ka>
+                        </hn>
                       </div>
                       <div
                         className="Notification-module_body__9BSAD notification_hds-notification__body__3cobH"
@@ -190,36 +172,30 @@ exports[`Toast should render correct toast 1`] = `
                       title="notification.closeButtonText"
                       type="button"
                     >
-                      <P
+                      <R
                         aria-hidden={true}
                       >
                         <svg
                           aria-hidden={true}
+                          aria-label="cross"
                           className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
                           role="img"
                           style={Object {}}
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <g
-                            fill="none"
+                          <path
+                            clipRule="evenodd"
+                            d="M18 7.5L13.5 12L18 16.5L16.5 18L12 13.5L7.5 18L6 16.5L10.5 12L6 7.5L7.5 6L12 10.5L16.5 6L18 7.5Z"
+                            fill="currentColor"
                             fillRule="evenodd"
-                          >
-                            <rect
-                              height="24"
-                              width="24"
-                            />
-                            <polygon
-                              fill="currentColor"
-                              points="18 7.5 13.5 12 18 16.5 16.5 18 12 13.5 7.5 18 6 16.5 10.5 12 6 7.5 7.5 6 12 10.5 16.5 6"
-                            />
-                          </g>
+                          />
                         </svg>
-                      </P>
+                      </R>
                     </button>
                   </section>
                 </Animated(section)>
-              </ka>
+              </hn>
             </ForwardRef>
           </div>
         </NotificationComponent>
