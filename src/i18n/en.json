@@ -190,7 +190,7 @@
     "permanentAddress": "Permanent address",
     "permanentForeignAddress": "Permanent foreign address",
     "verifiedDataInformation": "You can only see the official information when you have logged in using strong authentication via the Suomi.fi service. The information has been retrieved from The National Population Information System and cannot be edited via your Helsinki profile. You can check the data stored about you in the Population Information System in the <suomiFiLink>suomi.fi -web service</suomiFiLink>.",
-    "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
+    "verifiedDataInformationLink": "https://www.suomi.fi/",
     "verifiedData": "Verified data",
     "verifiedBasicData": "Official information",
     "phones": "Phone numbers",
