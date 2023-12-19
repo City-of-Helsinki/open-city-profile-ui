@@ -89,6 +89,8 @@ The following envs are used:
 | `REACT_APP_PROFILE_GRAPHQL`           | URL to the profile graphql.                                                            |
 | `REACT_APP_SENTRY_DSN`                | Sentry public dns-key.                                                                 |
 | `REACT_APP_OIDC_RESPONSE_TYPE`        | Which response type to require.                                                        |
+| `REACT_APP_KEYCLOAK_GDPR_CLIENT_ID`   | Client id for getting auth codes from keycloak                                         |
+| `REACT_APP_KEYCLOAK_AUTHORITY`        | Url to Keycloak. The openid config is fetched from this url                            |
 
 ## Setting up local development environment with Docker
 

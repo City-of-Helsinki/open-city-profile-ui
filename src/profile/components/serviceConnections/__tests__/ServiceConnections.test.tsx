@@ -7,14 +7,24 @@ import {
   resetApolloMocks,
   ResponseProvider,
 } from '../../../../common/test/MockApolloClientProvider';
-import { renderComponentWithMocksAndContexts } from '../../../../common/test/testingLibraryTools';
+import {
+  ElementSelector,
+  renderComponentWithMocksAndContexts,
+} from '../../../../common/test/testingLibraryTools';
 import {
   AnyObject,
   ServiceConnectionsQueryVariables,
 } from '../../../../graphql/typings';
-import getServiceConnectionData from '../../../helpers/getServiceConnectionData';
+import getServiceConnectionData, {
+  ServiceConnectionData,
+} from '../../../helpers/getServiceConnectionData';
 import ServiceConnections from '../ServiceConnections';
 import i18n from '../../../../common/test/testi18nInit';
+import encodeServiceName from '../../../helpers/encodeServiceName';
+import { createQueueFromProps } from '../../../../common/actionQueue/actionQueue';
+import { storeQueue } from '../../../../common/actionQueue/actionQueueStorage';
+import { authCodeQueuesStorageKey } from '../../../../gdprApi/useAuthCodeQueues';
+import { getServiceConnectionsAction } from '../../../../gdprApi/actions/getServiceConnections';
 
 describe('<ServiceConnections />', () => {
   const queryVariableTracker = jest.fn();
@@ -36,84 +46,153 @@ describe('<ServiceConnections />', () => {
   const queryResultWithoutServiceConnections = getMyProfileWithServiceConnections();
   ((queryResultWithoutServiceConnections.myProfile as unknown) as AnyObject).serviceConnections = null;
 
+  const getDefaultResponse = () => [
+    { profileDataWithServiceConnections: queryResultWithServiceConnection },
+  ];
+
+  const testIds = {
+    confirmButton: 'confirmation-modal-confirm-button',
+    cancelButton: 'confirmation-modal-cancel-button',
+    deleteVerificationText: 'service-connection-delete-verification-text',
+    loadIndicator: 'service-connection-delete-load-indicator',
+  };
+
+  const getTestId = (key: keyof typeof testIds): ElementSelector => ({
+    testId: testIds[key],
+  });
+
+  const getDeleteButtonSelector = (
+    service: ServiceConnectionData
+  ): ElementSelector => ({
+    testId: `delete-service-connection-${encodeServiceName(service)}-button`,
+  });
+
+  const setServiceDataToStorage = () => {
+    storeQueue(
+      authCodeQueuesStorageKey,
+      createQueueFromProps([
+        {
+          type: getServiceConnectionsAction.type,
+          executor: jest.fn(),
+          data: {
+            serviceName: serviceList[0].name,
+          },
+        },
+      ])
+    );
+  };
+
   afterEach(() => {
     jest.resetAllMocks();
     cleanup();
     resetApolloMocks();
   });
-
-  it('should render all service connections. A load indicator is shown while loading', async () => {
-    const responses: MockedResponse[] = [
-      { profileDataWithServiceConnections: queryResultWithServiceConnection },
-    ];
-    await act(async () => {
-      const { getElement, waitForElement } = await renderTestSuite(responses);
-      await waitForElement({ testId: 'load-indicator' });
-      await waitFor(() =>
-        serviceList.forEach(service => {
-          expect(getElement({ text: service.title as string })).toBeDefined();
-        })
-      );
+  describe('Loads and lists service connections', () => {
+    it('should render all service connections. A load indicator is shown while loading', async () => {
+      await act(async () => {
+        const { getElement, waitForElement } = await renderTestSuite(
+          getDefaultResponse()
+        );
+        await waitForElement({ testId: 'load-indicator' });
+        await waitFor(() =>
+          serviceList.forEach(service => {
+            expect(getElement({ text: service.title as string })).toBeDefined();
+          })
+        );
+      });
     });
-  });
 
-  it('should render specific text if there are no service connections', async () => {
-    const t = i18n.getFixedT('fi');
-    const responses: MockedResponse[] = [
-      {
-        profileDataWithServiceConnections: queryResultWithoutServiceConnections,
-      },
-    ];
-    await act(async () => {
-      const { getElement } = await renderTestSuite(responses);
-      await waitFor(() => {
-        expect(
-          getElement({ text: t('serviceConnections.empty') })
-        ).toBeDefined();
+    it('should render specific text if there are no service connections', async () => {
+      const t = i18n.getFixedT('fi');
+      const responses: MockedResponse[] = [
+        {
+          profileDataWithServiceConnections: queryResultWithoutServiceConnections,
+        },
+      ];
+      await act(async () => {
+        const { getElement } = await renderTestSuite(responses);
+        await waitFor(() => {
+          expect(
+            getElement({ text: t('serviceConnections.empty') })
+          ).toBeDefined();
+        });
+      });
+    });
+
+    it('should send current language as a variable. Value must be in uppercase', async () => {
+      const lang = 'af';
+      i18n.language = lang;
+      await act(async () => {
+        const { waitForElement } = await renderTestSuite(getDefaultResponse());
+        await waitForElement({ text: serviceList[0].title as string });
+        expect(queryVariableTracker).toHaveBeenCalledWith({
+          language: lang.toUpperCase(),
+        });
+      });
+    });
+
+    it('should render a notification with reload button when error occurs. Button click refetches data.', async () => {
+      const responses: MockedResponse[] = [
+        {
+          errorType: 'graphQLError',
+        },
+        ...getDefaultResponse(),
+      ];
+      const t = i18n.getFixedT('fi');
+      await act(async () => {
+        const {
+          getElement,
+          waitForElement,
+          clickElement,
+        } = await renderTestSuite(responses);
+
+        await waitForElement({ testId: 'service-connections-load-error' });
+
+        await clickElement({
+          querySelector:
+            '[data-testid="service-connections-load-error"] button',
+        });
+
+        await waitFor(() => {
+          expect(
+            getElement({ text: t('serviceConnections.title') })
+          ).toBeDefined();
+        });
+      });
+    });
+
+    it('If a serviceConnection is found in the sessionStorage, it is auto opened', async () => {
+      setServiceDataToStorage();
+      await act(async () => {
+        const { getElement, waitForElement } = await renderTestSuite(
+          getDefaultResponse()
+        );
+        await waitFor(() =>
+          serviceList.forEach(service => {
+            expect(getElement({ text: service.title as string })).toBeDefined();
+          })
+        );
+        await waitFor(async () => {
+          await waitForElement(getDeleteButtonSelector(serviceList[0]));
+        });
       });
     });
   });
-
-  it('should send current language as a variable. Value must be in uppercase', async () => {
-    const responses: MockedResponse[] = [
-      { profileDataWithServiceConnections: queryResultWithServiceConnection },
-    ];
-    const lang = 'af';
-    i18n.language = lang;
-    await act(async () => {
-      const { waitForElement } = await renderTestSuite(responses);
-      await waitForElement({ text: serviceList[0].title as string });
-      expect(queryVariableTracker).toHaveBeenCalledWith({
-        language: lang.toUpperCase(),
-      });
-    });
-  });
-
-  it('should render a notification with reload button when error occurs. Button click refetches data.', async () => {
-    const responses: MockedResponse[] = [
-      {
-        errorType: 'graphQLError',
-      },
-      { profileDataWithServiceConnections: queryResultWithServiceConnection },
-    ];
-    const t = i18n.getFixedT('fi');
-    await act(async () => {
-      const {
-        getElement,
-        waitForElement,
-        clickElement,
-      } = await renderTestSuite(responses);
-
-      await waitForElement({ testId: 'service-connections-load-error' });
-
-      await clickElement({
-        querySelector: '[data-testid="service-connections-load-error"] button',
-      });
-
-      await waitFor(() => {
-        expect(
-          getElement({ text: t('serviceConnections.title') })
-        ).toBeDefined();
+  describe('Renders the ServiceConnectionsRemover when a delete button is clicked', () => {
+    it('Modal is shown. It is removed when close button is clicked', async () => {
+      setServiceDataToStorage();
+      await act(async () => {
+        const {
+          clickElement,
+          waitForElement,
+          waitForElementNotToExist,
+        } = await renderTestSuite(getDefaultResponse());
+        await waitFor(async () => {
+          await clickElement(getDeleteButtonSelector(serviceList[0]));
+        });
+        await waitForElement(getTestId('deleteVerificationText'));
+        await clickElement(getTestId('cancelButton'));
+        await waitForElementNotToExist(getTestId('cancelButton'));
       });
     });
   });

@@ -9,12 +9,12 @@ import React, {
   useState,
 } from 'react';
 import { useMemoizedFn } from 'ahooks';
-import * as Sentry from '@sentry/browser';
 
 import { ProfileRoot } from '../../graphql/typings';
 import getVerifiedPersonalInformation from '../helpers/getVerifiedPersonalInformation';
 import { useProfileQuery, QueryResult } from '../hooks/useProfileQuery';
 import parseGraphQLError from '../helpers/parseGraphQLError';
+import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
 
 type ContextProps = {
   children: React.ReactNode | React.ReactNode[] | null;
@@ -41,7 +41,7 @@ const reportErrorToSentry = (apolloError: ApolloError) => {
   if (parseGraphQLError(apolloError).isAllowedError) {
     return;
   }
-  Sentry.captureException(apolloError);
+  reportErrorsToSentry(apolloError);
 };
 
 export const ProfileContext = createContext<ProfileContextData>({

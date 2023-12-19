@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
@@ -13,16 +13,27 @@ import {
   ServiceConnectionsQueryVariables,
   ServiceConnectionsRoot,
 } from '../../../graphql/typings';
-import getServiceConnectionData from '../../helpers/getServiceConnectionData';
+import getServiceConnectionData, {
+  ServiceConnectionData,
+} from '../../helpers/getServiceConnectionData';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import ServiceConnection from './ServiceConnection';
 import StyledButton from '../../../common/styledButton/StyledButton';
+import ServiceConnectionRemover from './ServiceConnectionRemover';
+import { getStoredQueueData } from '../../../common/actionQueue/actionQueueStorage';
+import { authCodeQueuesStorageKey } from '../../../gdprApi/useAuthCodeQueues';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
 );
 
 function ServiceConnections(): React.ReactElement {
+  const [deletingServiceName, setSeletingServiceName] = useState<
+    string | undefined
+  >(() => {
+    const storedData = getStoredQueueData(authCodeQueuesStorageKey);
+    return storedData ? (storedData.serviceName as string) : undefined;
+  });
   const { t, i18n } = useTranslation();
   const { data, loading, refetch, error } = useQuery<
     ServiceConnectionsRoot,
@@ -34,7 +45,6 @@ function ServiceConnections(): React.ReactElement {
       Sentry.captureException(loadError);
     },
   });
-
   const ContentWrapper = ({
     children,
   }: {
@@ -90,8 +100,22 @@ function ServiceConnections(): React.ReactElement {
   const services = getServiceConnectionData(data);
   const hasNoServices = !loading && services.length === 0;
   const onServiceConnectionDeleted = () => {
+    setSeletingServiceName(undefined);
     refetch();
   };
+  const onDeleteServiceConnection = (service: ServiceConnectionData) => {
+    setSeletingServiceName(service.name);
+  };
+  const onDeleteAborted = () => {
+    setSeletingServiceName(undefined);
+  };
+  const getServiceData = (name: string) =>
+    services.find(s => s.name === name) as ServiceConnectionData;
+
+  const deletingServiceData = deletingServiceName
+    ? getServiceData(deletingServiceName)
+    : undefined;
+
   return (
     <ContentWrapper>
       <Explanation
@@ -109,10 +133,18 @@ function ServiceConnections(): React.ReactElement {
           <ServiceConnection
             key={service.name}
             service={service}
-            onDeletion={onServiceConnectionDeleted}
+            onDeletion={onDeleteServiceConnection}
+            isActive={service.name === deletingServiceName}
           />
         ))}
       </div>
+      {deletingServiceData && (
+        <ServiceConnectionRemover
+          service={deletingServiceData}
+          onDeletion={onServiceConnectionDeleted}
+          onAbort={onDeleteAborted}
+        />
+      )}
     </ContentWrapper>
   );
 }

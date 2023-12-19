@@ -149,7 +149,7 @@ export class AuthService {
   public async getAuthenticatedUser(): Promise<User | null> {
     const user = await this.getUser();
     if (!this.isAuthenticatedUser(user)) {
-      return Promise.reject(null);
+      return Promise.reject(new Error('User not authenticated'));
     }
     this.userSessionValidityPoller.start();
     return Promise.resolve(user);

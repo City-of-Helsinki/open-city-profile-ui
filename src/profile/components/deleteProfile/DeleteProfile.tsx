@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ApolloError, useLazyQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
@@ -14,18 +14,21 @@ import {
 } from '../../../graphql/typings';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import contentStyles from '../../../common/cssHelpers/content.module.css';
-import useDeleteProfile from '../../../gdprApi/useDeleteProfile';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
 import { useFocusSetter } from '../../hooks/useFocusSetter';
 import DeleteProfileError from '../modals/deleteProfileError/DeleteProfileError';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { useScrollIntoView } from '../../hooks/useScrollIntoView';
-import parseDeleteProfileResult, {
-  DeleteResultLists,
-} from '../../helpers/parseDeleteProfileResult';
+import { DeleteResultLists } from '../../helpers/parseDeleteProfileResult';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import Loading from '../../../common/loading/Loading';
 import StyledButton from '../../../common/styledButton/StyledButton';
+import useAuthCodeQueues, {
+  AuthCodeQueuesProps,
+} from '../../../gdprApi/useAuthCodeQueues';
+import config from '../../../config';
+import { getDeleteProfileResult } from '../../../gdprApi/actions/deleteProfile';
+import reportErrorsToSentry from '../../../common/sentry/reportErrorsToSentry';
 
 const SERVICE_CONNECTIONS = loader(
   '../../graphql/ServiceConnectionsQuery.graphql'
@@ -44,13 +47,17 @@ function DeleteProfile(): React.ReactElement {
     | typeof errorLoadState
   >(notStartedLoadState);
   const history = useHistory();
+  const { t, i18n } = useTranslation();
   const { trackEvent } = useMatomo();
   const [resultError, setResultError] = useState<
     ApolloError | Error | undefined | DeleteResultLists
   >(undefined);
-  const [deleteProfile, { loading: isDeletingProfile }] = useDeleteProfile({
-    onCompleted: returnedData => {
-      const { failures, successful } = parseDeleteProfileResult(returnedData);
+  const onCompleted: AuthCodeQueuesProps['onCompleted'] = useCallback(
+    controller => {
+      const { failures, successful } = getDeleteProfileResult(controller) || {
+        failures: [],
+        successful: [],
+      };
       if (!failures.length) {
         trackEvent({ category: 'action', action: 'Delete profile' });
         history.push('/profile-deleted');
@@ -58,19 +65,29 @@ function DeleteProfile(): React.ReactElement {
         setResultError({ failures, successful });
       }
     },
-    onError: error => {
-      if (error.graphQLErrors) {
-        error.graphQLErrors.forEach(graphQlError => {
-          Sentry.captureException(new Error(graphQlError.message));
-        });
-      } else {
-        Sentry.captureException(error);
-      }
-      setResultError(error);
-    },
-  });
+    [history, trackEvent]
+  );
+  const onError: AuthCodeQueuesProps['onError'] = useCallback(controller => {
+    const failed = controller.getFailed();
+    const error = new Error(failed ? failed.errorMessage : 'Unknown error');
+    if (error) {
+      Sentry.captureException(error);
+    }
+    setResultError(error);
+  }, []);
 
-  const { t, i18n } = useTranslation();
+  const {
+    startOrRestart,
+    shouldResumeWithAuthCodes,
+    resume,
+    isLoading: isDeletingProfile,
+  } = useAuthCodeQueues({
+    queueName: 'deleteProfile',
+    startPagePath: config.deletePath,
+    language: i18n.language,
+    onCompleted,
+    onError,
+  });
 
   const [removeButtonId, setFocusToRemoveButton] = useFocusSetter({
     targetId: `delete-profile-button`,
@@ -96,9 +113,9 @@ function DeleteProfile(): React.ReactElement {
       setDataLoadState(loadedLoadState);
       handleConfirmationModal();
     },
-    onError: (error: Error) => {
+    onError: error => {
       setDataLoadState(errorLoadState);
-      Sentry.captureException(error);
+      reportErrorsToSentry(error);
     },
   });
 
@@ -131,9 +148,14 @@ function DeleteProfile(): React.ReactElement {
     if (serviceConnections === undefined) {
       throw Error('Could not find services to delete');
     }
-
-    deleteProfile();
+    startOrRestart();
   };
+
+  useEffect(() => {
+    if (shouldResumeWithAuthCodes()) {
+      resume();
+    }
+  }, [shouldResumeWithAuthCodes, resume]);
 
   const LoadIndicator = ({ text }: { text: string }) => (
     <Loading

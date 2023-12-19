@@ -12,35 +12,31 @@ import { ResponseProvider } from '../../../../common/test/MockApolloClientProvid
 import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
 import i18n from '../../../../common/test/testi18nInit';
 import { ServiceConnectionsQueryVariables } from '../../../../graphql/typings';
-import { GdprDeleteMyProfileMutationVariables } from '../../../../graphql/generatedTypes';
-import { getDeleteMyProfileMutationResult } from '../../../../common/test/getDeleteMyProfileMutationResult';
+import mockWindowLocation from '../../../../common/test/mockWindowLocation';
+import { Action } from '../../../../common/actionQueue/actionQueue';
+import config from '../../../../config';
+import {
+  ActionMockData,
+  initMockQueue,
+  isActionTriggered,
+} from '../../../../common/actionQueue/mock.util';
+import {
+  AuthCodeQueuesProps,
+  authCodeQueuesStorageKey,
+} from '../../../../gdprApi/useAuthCodeQueues';
+import {
+  getScenarioWhereDeleteProfileCanStartAndProceedToRedirection,
+  getScenarioWhereDeleteProfileIsResumable,
+} from '../../../../gdprApi/actions/__mocks__/queueScenarios';
+import { getServiceConnectionsAction } from '../../../../gdprApi/actions/getServiceConnections';
+import { defaultRedirectionCatcherActionType } from '../../../../gdprApi/actions/redirectionHandlers';
+import { createNextActionParams } from '../../../../gdprApi/actions/utils';
+import { tunnistamoAuthCodeRedirectionAction } from '../../../../gdprApi/actions/authCodeRedirectionHandler';
 
-const mockStartFetchingAuthorizationCode = jest.fn();
-const mockHistoryPushListener = jest.fn();
-
-jest.mock(
-  '../../../../gdprApi/useAuthorizationCode.ts',
-  () => (...args: [string, (code: string) => void]) => [
-    async () => {
-      const cb = args[1];
-      mockStartFetchingAuthorizationCode();
-      await new Promise(resolve => {
-        setTimeout(resolve, 100);
-      });
-      return Promise.resolve(cb('code'));
-    },
-    false,
-  ]
-);
-
-jest.mock('react-router', () => ({
-  ...jest.requireActual('react-router'),
-  useHistory: jest.fn().mockImplementation(() => ({
-    push: mockHistoryPushListener,
-  })),
-}));
+jest.mock('../../../../gdprApi/actions/queues');
 
 describe('<DeleteProfile /> ', () => {
+  const mockedWindowControls = mockWindowLocation();
   let responseCounter = -1;
   const serviceConnections = getMyProfileWithServiceConnections();
   const queryVariableTracker = jest.fn();
@@ -52,23 +48,10 @@ describe('<DeleteProfile /> ', () => {
     return <div>{isOpen ? <DeleteProfile /> : <span>closed</span>}</div>;
   };
 
-  const renderTestSuite = (
-    errorResponseIndex = -1,
-    serviceDeletetionErrorCodes?: string[]
-  ) => {
+  const renderTestSuite = (errorResponseIndex = -1) => {
     const responseProvider: ResponseProvider = payload => {
       responseCounter = responseCounter + 1;
       queryVariableTracker(payload as ServiceConnectionsQueryVariables);
-      if (
-        payload &&
-        (payload as GdprDeleteMyProfileMutationVariables).input &&
-        (payload as GdprDeleteMyProfileMutationVariables).input
-          .authorizationCode
-      ) {
-        return responseCounter === errorResponseIndex
-          ? { errorType: 'networkError' }
-          : getDeleteMyProfileMutationResult(serviceDeletetionErrorCodes);
-      }
       return responseCounter === errorResponseIndex
         ? { errorType: 'networkError' }
         : { profileDataWithServiceConnections: serviceConnections };
@@ -109,18 +92,40 @@ describe('<DeleteProfile /> ', () => {
     responseCounter = -1;
   });
   afterEach(() => {
+    mockedWindowControls.reset();
     cleanComponentMocks();
     jest.clearAllMocks();
   });
 
-  const initTests = async (
-    errorResponseIndex = -1,
-    serviceDeletetionErrorCodes?: string[]
-  ): Promise<TestTools> => {
-    const testTools = await renderTestSuite(
-      errorResponseIndex,
-      serviceDeletetionErrorCodes
+  const onCompleted = jest.fn();
+  const onError = jest.fn();
+
+  const authCodeQueueProps: AuthCodeQueuesProps = {
+    queueName: 'deleteProfile',
+    startPagePath: config.deletePath,
+    language: 'fi',
+    onCompleted,
+    onError,
+  };
+
+  const initTestQueue = (props: ActionMockData[]) => {
+    initMockQueue(props, authCodeQueueProps, authCodeQueuesStorageKey);
+  };
+
+  const initQueueAndLocationForResume = (
+    ...args: Parameters<typeof getScenarioWhereDeleteProfileIsResumable>
+  ) => {
+    initTestQueue(getScenarioWhereDeleteProfileIsResumable(...args));
+    mockedWindowControls.setPath(config.deletePath);
+    mockedWindowControls.setSearch(
+      createNextActionParams({
+        type: defaultRedirectionCatcherActionType,
+      } as Action)
     );
+  };
+
+  const initTests = async (errorResponseIndex = -1): Promise<TestTools> => {
+    const testTools = await renderTestSuite(errorResponseIndex);
     return Promise.resolve(testTools);
   };
 
@@ -134,25 +139,27 @@ describe('<DeleteProfile /> ', () => {
 
   it(`Submitting starts to load serviceConnections.
       When loaded, a confirmation dialog is shown and after confirmation
-      authorisation code is fetched.
-      Window.history is called and redirects user.
-      `, async () => {
+      queue is started.`, async () => {
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
     await act(async () => {
       const testTools = await initTests();
       await proceedUIToDeletionConfimed(testTools);
       await waitFor(() => {
-        expect(mockStartFetchingAuthorizationCode).toHaveBeenCalledTimes(1);
+        expect(queryVariableTracker).toHaveBeenCalledTimes(1);
       });
       expect(queryVariableTracker).toHaveBeenCalledWith({
         language: i18n.language.toUpperCase(),
       });
-      await waitFor(() => {
-        expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);
-      });
+      expect(isActionTriggered(getServiceConnectionsAction.type)).toBeTruthy();
     });
   });
 
   it(`UI won't get stuck on "loading" -state when re-rendered.`, async () => {
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
     await act(async () => {
       const { clickElement, getElement, waitForElement } = await initTests();
       await clickElement(submitButton);
@@ -167,56 +174,66 @@ describe('<DeleteProfile /> ', () => {
     });
   });
 
-  it(`When service connection load fails, an error notification is shown.`, async () => {
+  it(`When service connection load fails, an error notification is shown with a reload button. 
+          After successful reload, the queue is started.`, async () => {
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
     await act(async () => {
       const { clickElement, waitForElement } = await initTests(0);
       await clickElement(submitButton);
       await waitForElement(loadIndicator);
       await waitForElement(reloadServiceConnectionsButtonSelector);
+      expect(isActionTriggered(getServiceConnectionsAction.type)).toBeFalsy();
       await clickElement(reloadServiceConnectionsButtonSelector);
       await waitForElement(confirmButtonSelector);
       await clickElement(confirmButtonSelector);
-      await waitFor(() => {
-        expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);
-      });
+      expect(isActionTriggered(getServiceConnectionsAction.type)).toBeTruthy();
     });
   });
-  it(`When deleting starts, an indicator is shown`, async () => {
+  it(`When deleting starts, an indicator is shown and browser is redirected.`, async () => {
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
     await act(async () => {
       const testTools = await initTests();
       const { waitForElement } = testTools;
       await proceedUIToDeletionConfimed(testTools);
 
       await waitFor(() => {
-        expect(mockStartFetchingAuthorizationCode).toHaveBeenCalledTimes(1);
+        expect(
+          isActionTriggered(getServiceConnectionsAction.type)
+        ).toBeTruthy();
       });
       await waitForElement(deletingProfileSelector);
       await waitFor(() => {
-        expect(mockHistoryPushListener).toHaveBeenCalledTimes(1);
+        expect(
+          isActionTriggered(tunnistamoAuthCodeRedirectionAction.type)
+        ).toBeTruthy();
       });
     });
   });
-  it(`When deletion fails with unsuccessful service deletions, 
-      a list of successful and failed services is shown.
-      `, async () => {
+  it(`When deletion fails with unsuccessful and successful service deletions, 
+      a list of successful and failed services is shown.`, async () => {
+    initQueueAndLocationForResume({
+      results: {
+        failures: ['Failed service'],
+        successful: ['Successful service'],
+      },
+    });
     await act(async () => {
-      const testTools = await initTests(-1, ['errorCode']);
+      const testTools = await initTests(-1);
       const { waitForElement } = testTools;
-      await proceedUIToDeletionConfimed(testTools);
       await waitForElement(failedServicesListSelector);
       await waitForElement(serviceConnectionsPageLinkSelector);
-      await waitFor(() => {
-        expect(mockHistoryPushListener).toHaveBeenCalledTimes(0);
-      });
     });
   });
   it(`When deletion returns a generic error, an error message is shown`, async () => {
+    initQueueAndLocationForResume({ error: true });
     await act(async () => {
       const testTools = await initTests(1);
       const { waitForElement } = testTools;
-      await proceedUIToDeletionConfimed(testTools);
       await waitForElement(errorDescriptionSelector);
-      expect(mockHistoryPushListener).toHaveBeenCalledTimes(0);
     });
   });
 });

@@ -3,31 +3,30 @@ import { act, waitFor } from '@testing-library/react';
 
 import {
   renderComponentWithMocksAndContexts,
-  TestTools,
   cleanComponentMocks,
   ElementSelector,
 } from '../../../../common/test/testingLibraryTools';
 import DownloadData from '../DownloadData';
-import { ResponseProvider } from '../../../../common/test/MockApolloClientProvider';
-import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
 import i18n from '../../../../common/test/testi18nInit';
-import { DownloadMyProfileQueryVariables } from '../../../../graphql/generatedTypes';
+import mockWindowLocation from '../../../../common/test/mockWindowLocation';
+import config from '../../../../config';
+import {
+  ActionMockData,
+  initMockQueue,
+  isActionTriggered,
+} from '../../../../common/actionQueue/mock.util';
+import {
+  AuthCodeQueuesProps,
+  authCodeQueuesStorageKey,
+} from '../../../../gdprApi/useAuthCodeQueues';
+import {
+  getScenarioForScopes,
+  getScenarioWhichGoesFromStartToAuthRedirectAutomatically,
+} from '../../../../gdprApi/actions/__mocks__/queueScenarios';
+import { tunnistamoAuthCodeRedirectionAction } from '../../../../gdprApi/actions/authCodeRedirectionHandler';
+import { getGdprQueryScopesAction } from '../../../../gdprApi/actions/getGdprScopes';
 
 const mockSaveAsListener = jest.fn();
-
-jest.mock(
-  '../../../../gdprApi/useAuthorizationCode.ts',
-  () => (...args: [string, (code: string) => void]) => [
-    async () => {
-      const cb = args[1];
-      await new Promise(resolve => {
-        setTimeout(resolve, 100);
-      });
-      return Promise.resolve(cb('code'));
-    },
-    false,
-  ]
-);
 
 jest.mock('file-saver', () => ({
   saveAs: () => {
@@ -35,35 +34,29 @@ jest.mock('file-saver', () => ({
   },
 }));
 
-describe('<DownloadData /> ', () => {
-  let responseCounter = -1;
-  const serviceConnections = getMyProfileWithServiceConnections(true);
+jest.mock('../../../../gdprApi/actions/queues');
 
-  const queryVariableTracker = jest.fn();
+describe('<DownloadData /> ', () => {
+  const mockedWindowControls = mockWindowLocation();
+
+  const onCompleted = jest.fn();
+  const onError = jest.fn();
+
+  const downloadQueueProps: AuthCodeQueuesProps = {
+    queueName: 'downloadProfile',
+    startPagePath: config.downloadPath,
+    onCompleted,
+    onError,
+  };
+
+  const initTestQueue = (props: ActionMockData[]) => {
+    initMockQueue(props, downloadQueueProps, authCodeQueuesStorageKey);
+  };
+
   const t = i18n.getFixedT('fi');
 
-  const renderTestSuite = (errorResponseIndex = -1) => {
-    const responseProvider: ResponseProvider = payload => {
-      responseCounter = responseCounter + 1;
-      queryVariableTracker(payload as DownloadMyProfileQueryVariables);
-      if (responseCounter === errorResponseIndex) {
-        return { errorType: 'networkError' };
-      }
-      if (
-        payload &&
-        (payload as DownloadMyProfileQueryVariables).authorizationCode
-      ) {
-        return { downloadMyProfile: {} };
-      }
-
-      return { profileDataWithServiceConnections: serviceConnections };
-    };
-
-    return renderComponentWithMocksAndContexts(
-      responseProvider,
-      <DownloadData />
-    );
-  };
+  const initTests = async () =>
+    renderComponentWithMocksAndContexts(jest.fn(), <DownloadData />);
 
   const submitButton: ElementSelector = {
     id: 'download-profile-button',
@@ -72,18 +65,14 @@ describe('<DownloadData /> ', () => {
     testId: 'download-profile-error',
   };
 
-  beforeEach(() => {
-    responseCounter = -1;
-  });
   afterEach(() => {
+    mockedWindowControls.reset();
     cleanComponentMocks();
     jest.clearAllMocks();
   });
 
-  const initTests = async (errorResponseIndex = -1): Promise<TestTools> =>
-    renderTestSuite(errorResponseIndex);
-
-  it(`Submitting disables the button and changes its text.`, async () => {
+  it(`Clicking the button disables it, changes its text and starts the queue.`, async () => {
+    initTestQueue(getScenarioWhichGoesFromStartToAuthRedirectAutomatically());
     await act(async () => {
       const { clickElement, getElement, isDisabled } = await initTests();
       await clickElement(submitButton);
@@ -96,17 +85,28 @@ describe('<DownloadData /> ', () => {
         expect(button.textContent).toBe(t('loading'));
       });
       await waitFor(() => {
-        expect(mockSaveAsListener).toHaveBeenCalledTimes(1);
-      });
-      expect(queryVariableTracker).toHaveBeenLastCalledWith({
-        authorizationCode: 'code',
+        expect(
+          isActionTriggered(tunnistamoAuthCodeRedirectionAction.type)
+        ).toBeTruthy();
       });
     });
   });
 
   it(`When load fails, an error is shown.`, async () => {
+    initTestQueue(
+      getScenarioForScopes({
+        autoTrigger: true,
+        overrides: [
+          {
+            type: getGdprQueryScopesAction.type,
+            resolveValue: undefined,
+            rejectValue: new Error('Failed'),
+          },
+        ],
+      })
+    );
     await act(async () => {
-      const { clickElement, waitForElement } = await initTests(1);
+      const { clickElement, waitForElement } = await initTests();
       await clickElement(submitButton);
       await waitForElement(errorNotification);
     });
