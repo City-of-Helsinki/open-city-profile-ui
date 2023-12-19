@@ -190,7 +190,7 @@
     "permanentAddress": "Vakinainen osoite",
     "permanentForeignAddress": "Vakinainen ulkomainen osoite",
     "verifiedDataInformation": "Viralliset tiedot näet vain, kun olet vahvasti tunnistautunut Suomi.fi -kirjautumisen avulla. Tiedot on haettu virallisesta väestötietojärjestelmästä, eikä niitä voi muokata Helsinki-profiilin kautta. Voit tutustua väestötietojärjestelmään tallennettuihin tietoihisi <suomiFiLink>suomi.fi -verkkopalvelussa</suomiFiLink>.",
-    "verifiedDataInformationLink": "https://testipalvelu.apro.tunnistus.fi",
+    "verifiedDataInformationLink": "https://www.suomi.fi/",
     "verifiedData": "Vahvistettu tieto",
     "verifiedBasicData": "Viralliset tiedot",
     "phones": "Puhelinnumerot",
