@@ -97,6 +97,8 @@
     ]
   },
   "devDependencies": {
+    "@sinonjs/fake-timers": "^8.1.0",
+    "@types/sinonjs__fake-timers": "^8.1.0",
     "apollo": "^2.33.9",
     "cross-env": "^7.0.3",
     "helsinki-utils": "City-of-Helsinki/helsinki-utils-js#0.1.0",
