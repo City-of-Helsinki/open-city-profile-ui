@@ -1,4 +1,5 @@
 import to from 'await-to-js';
+import FakeTimers from '@sinonjs/fake-timers';
 
 import {
   createRedirectorAndCatcherActionProps,
@@ -25,6 +26,8 @@ describe('redirectionHandlers.ts', () => {
     redirectorType,
     catcherType
   );
+  // this must match the value in redirectionHandlers action;
+  const rematchDelay = 2000;
   const mockedWindowControls = mockWindowLocation();
   const initTests = () => {
     const queue = [redirector, catcher];
@@ -38,20 +41,20 @@ describe('redirectionHandlers.ts', () => {
 
   const resolvePath = `${expectedPath}?${createNextActionParams(catcher)}`;
   const rejectionPath = `${expectedPath}?${createFailedActionParams(catcher)}`;
-
+  let clock: ReturnType<typeof FakeTimers.install>;
   afterAll(() => {
     mockedWindowControls.restore();
   });
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    clock = FakeTimers.install();
   });
 
   afterEach(() => {
     mockedWindowControls.reset();
     jest.restoreAllMocks();
     jest.resetAllMocks();
-    jest.useRealTimers();
+    clock.uninstall();
   });
 
   describe(`createRedirectorAndCatcherActionProps() creates an action that redirects and 
@@ -83,6 +86,7 @@ describe('redirectionHandlers.ts', () => {
         expect(waitResult).toBeTruthy();
       });
       it('Rejects when next action type in the url does not match.', async () => {
+        let err;
         const { runner, getCatcherAction } = initTests();
 
         mockedWindowControls.setPath(expectedPath);
@@ -90,21 +94,33 @@ describe('redirectionHandlers.ts', () => {
           createNextActionParams({ type: 'wrongAction' } as Action)
         );
         const waitAction = getCatcherAction();
-        const promise = waitAction.executor(waitAction, runner);
-        jest.advanceTimersByTime(thirtySecondsInMs + 1);
-        const [error] = await to(promise);
-        expect(error?.message.includes(rejectionPath)).toBeTruthy();
+        const promise = waitAction.executor(waitAction, runner).catch(x => {
+          err = x;
+        });
+        await clock.tickAsync(rematchDelay + 1);
+        await clock.tickAsync(thirtySecondsInMs + 1);
+        await promise;
+        // err is typed, because of "used before defined error"
+        expect(
+          ((err as unknown) as Error).message.includes(rejectionPath)
+        ).toBeTruthy();
       });
       it('Rejects when path in the url does not match', async () => {
+        let err;
         const { runner, getCatcherAction } = initTests();
 
         const waitAction = getCatcherAction();
         mockedWindowControls.setPath(wrongPath);
         mockedWindowControls.setSearch(createNextActionParams(waitAction));
-        const promise = waitAction.executor(waitAction, runner);
-        jest.advanceTimersByTime(thirtySecondsInMs + 1);
-        const [error] = await to(promise);
-        expect(error?.message.includes(rejectionPath)).toBeTruthy();
+        const promise = waitAction.executor(waitAction, runner).catch(x => {
+          err = x;
+        });
+        await clock.tickAsync(rematchDelay + 1);
+        await clock.tickAsync(thirtySecondsInMs + 1);
+        await promise;
+        expect(
+          ((err as unknown) as Error).message.includes(rejectionPath)
+        ).toBeTruthy();
       });
     });
   });
