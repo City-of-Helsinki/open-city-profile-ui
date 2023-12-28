@@ -243,6 +243,19 @@ describe('actionQueueRunner', () => {
         ]);
       });
     });
+    it('does not throw when action is already active and has options.idleWhenActive', async () => {
+      initTest([{}, { active: false, options: { idleWhenActive: true } }]);
+      runner.start();
+      await runner.getPromise();
+      expect(() => {
+        runner.resume(resolvingActionSource2.type);
+      }).not.toThrow();
+      await runner.getPromise();
+      expect(getTrackingData().map(mapTrackingData)).toEqual([
+        ...getSuccessLogDataForAction(resolvingActionSource1),
+        ...getSuccessLogDataForAction(resolvingActionSource2),
+      ]);
+    });
     it('logs CANNOT_EXECUTE_ACTION_IS_COMPLETE error if given action is complete', async () => {
       await initTestAndExpectError(
         [{ complete: true }],
@@ -282,7 +295,7 @@ describe('actionQueueRunner', () => {
       });
     });
   });
-  describe('getActionStatus()', () => {
+  describe('getActionStatus() returns an actionStatus', () => {
     const initTest = (props: Partial<Action>[]) => {
       runner = createActionQueueRunner(getSuccessfulQueue(props));
     };
@@ -298,41 +311,52 @@ describe('actionQueueRunner', () => {
       });
     };
 
-    it('returns action status "complete" if given action is complete', async () => {
+    it('it\'s "complete" when action is complete', async () => {
       await initTestAndExpectStatus(
         [{ complete: true }],
         resolvingActionSource1,
         'complete'
       );
     });
-    it('returns action status "active" if given action is active, but a promise is not pending', async () => {
+    it('it\'s "active" when action is active, but a promise is not pending', async () => {
       await initTestAndExpectStatus(
         [{ active: true }],
         resolvingActionSource1,
         'active'
       );
     });
-    it('returns action status "pending" if given action has been executed', async () => {
+    it('it\'s "pending" when action has been executed', async () => {
       initTest([]);
       runner.start();
       expect(runner.getActionStatus(resolvingActionSource1.type)).toBe(
         'pending'
       );
     });
-    it('returns action status "next" if given action is not active, but next in queue', async () => {
+    it('it\'s "next" when action is not active, but next in queue', async () => {
       await initTestAndExpectStatus([], resolvingActionSource1, 'next');
     });
-    it('returns action status "not-next" if no action is active, but given action is not next in queue', async () => {
+    it('it\'s "next" when action is active, but it has options.idleWhenActive and its next in queue', async () => {
+      initTest([{ active: true, options: { idleWhenActive: true } }]);
+      expect(runner.getActionStatus(resolvingActionSource1.type)).toBe('next');
+    });
+    it('it\'s "pending" when action is active and has options.idleWhenActive but a promise is pending', async () => {
+      initTest([{ active: false, options: { idleWhenActive: true } }]);
+      runner.start();
+      expect(runner.getActionStatus(resolvingActionSource1.type)).toBe(
+        'pending'
+      );
+    });
+    it('it\'s "not-next" if no action is active, but given action is not next in queue', async () => {
       await initTestAndExpectStatus([], resolvingActionSource2, 'not-next');
     });
-    it('returns action status "in-queue" if an action is active and given action queued', async () => {
+    it('it\'s "in-queue" if an action is active and given action queued', async () => {
       await initTestAndExpectStatus(
         [{ active: true }],
         resolvingActionSource2,
         'in-queue'
       );
     });
-    it('returns action status "invalid" if an action is not found', async () => {
+    it('it\'s "invalid" if an action is not found', async () => {
       await initTestAndExpectStatus([], { type: 'notFound' }, 'invalid');
     });
   });

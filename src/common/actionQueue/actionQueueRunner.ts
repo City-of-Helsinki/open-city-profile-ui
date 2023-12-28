@@ -116,6 +116,13 @@ export function createActionQueueRunner(
     }
     const next = queueController.getNext();
     if (next) {
+      if (
+        action.active &&
+        getOption(action, 'idleWhenActive') &&
+        pendingPromise
+      ) {
+        return 'pending';
+      }
       return next.type === action.type ? 'next' : 'not-next';
     }
 
