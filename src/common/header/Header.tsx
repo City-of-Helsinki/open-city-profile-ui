@@ -40,13 +40,13 @@ function Header(): React.ReactElement {
   const languageLabel = (langCode: string): string => {
     switch (langCode) {
       case 'fi':
-        return 'Suomeksi';
+        return 'Suomi';
       case 'sv':
-        return 'På svenska';
+        return 'Svenska';
       case 'en':
-        return 'In English';
+        return 'English';
       default:
-        return 'Suomeksi';
+        return 'Suomi';
     }
   };
 
@@ -87,8 +87,10 @@ function Header(): React.ReactElement {
         titleHref={myProfilePath}
         logo={<Logo src={logoSrcFromLanguage} alt={t('helsinkiLogo')} />}
         frontPageLabel={t('nav.goToHomePage')}
+        onMenuClick={e => e.stopPropagation()}
       >
         <HDSHeader.SimpleLanguageOptions languages={languageOptions} />
+        <hr aria-hidden="true" />
         <UserDropdown />
       </HDSHeader.ActionBar>
       {!!getProfile() && isProfilePagePath && (

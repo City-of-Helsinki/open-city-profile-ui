@@ -4,13 +4,18 @@ import React, {
   useLayoutEffect,
   useRef,
 } from 'react';
-import { Card, IconAngleDown, IconAngleUp, useAccordion } from 'hds-react';
+import {
+  Button,
+  Card,
+  IconAngleDown,
+  IconAngleUp,
+  useAccordion,
+} from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import styles from './ExpandingPanel.module.css';
 import commonStyles from '../cssHelpers/common.module.css';
-import StyledButton from '../styledButton/StyledButton';
 
 type Props = PropsWithChildren<{
   title?: string;
@@ -73,9 +78,9 @@ function ExpandingPanel({
       <div className={styles['title']}>
         <h2>{title}</h2>
         <div className={styles['right-side-information']}>
-          <StyledButton
+          <Button
             title={title}
-            variant={'transparent'}
+            variant={'supplementary'}
             iconRight={<Icon aria-hidden />}
             {...buttonProps}
             {...buttonTestId}
@@ -85,7 +90,7 @@ function ExpandingPanel({
                 {buttonText}
               </span>
             )}
-          </StyledButton>
+          </Button>
         </div>
       </div>
       <Card aria-label={title} className={styles['card']} {...contentProps}>
@@ -93,14 +98,14 @@ function ExpandingPanel({
       </Card>
       {isOpen && (
         <div className={styles['close-button-container']}>
-          <StyledButton
+          <Button
             title={title}
-            variant={'transparent'}
+            variant={'supplementary'}
             iconRight={<Icon aria-hidden />}
             {...buttonProps}
           >
             {t('expandingPanel.closeButtonText')}
-          </StyledButton>
+          </Button>
         </div>
       )}
     </div>

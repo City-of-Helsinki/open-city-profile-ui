@@ -12,14 +12,24 @@ const Footer = () => {
 
   const createAriaLabel = (title: string) => {
     const titleWithoutLastDot =
-      title.slice(-1) === '.' ? title.substr(0, title.length - 1) : title;
+      title.slice(-1) === '.' ? title.substring(0, title.length - 1) : title;
     return t('opensInNewWindow', {
       title: titleWithoutLastDot,
     });
   };
 
+  const whiteColor = 'var(--color-white)';
+
   return (
-    <HDSFooter theme="dark" title={t('appName')}>
+    <HDSFooter
+      theme={{
+        '--footer-background': 'var(--color-bus)',
+        '--footer-color': whiteColor,
+        '--footer-divider-color': whiteColor,
+        '--footer-focus-outline-color': whiteColor,
+      }}
+      title={t('appName')}
+    >
       <HDSFooter.Utilities>
         <HDSFooter.Link
           aria-label={createAriaLabel(t('footer.contactUs'))}

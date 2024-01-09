@@ -3,7 +3,7 @@ import { ApolloError, useLazyQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
-import { Notification } from 'hds-react';
+import { Button, Notification } from 'hds-react';
 import { useHistory } from 'react-router';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
@@ -22,7 +22,6 @@ import { useScrollIntoView } from '../../hooks/useScrollIntoView';
 import { DeleteResultLists } from '../../helpers/parseDeleteProfileResult';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import Loading from '../../../common/loading/Loading';
-import StyledButton from '../../../common/styledButton/StyledButton';
 import useAuthCodeQueues, {
   AuthCodeQueuesProps,
 } from '../../../gdprApi/useAuthCodeQueues';
@@ -171,13 +170,13 @@ function DeleteProfile(): React.ReactElement {
         label={t('deleteProfile.deleteFailed')}
         type={'error'}
       ></Notification>
-      <StyledButton
+      <Button
         type="button"
         onClick={() => loadServiceConnections(true)}
         data-testid="reload-service-connections"
       >
         {t('notification.tryAgain')}
-      </StyledButton>
+      </Button>
     </>
   );
   const LoadStateIndicator = () =>
@@ -209,13 +208,13 @@ function DeleteProfile(): React.ReactElement {
           dataLoadState === errorLoadState ? (
             <LoadStateIndicator />
           ) : (
-            <StyledButton
+            <Button
               type="button"
               onClick={handleDeleteClick}
               id={removeButtonId}
             >
               {t('deleteProfile.delete')}
-            </StyledButton>
+            </Button>
           )}
           <ConfirmationModal
             isOpen={showConfirmationModal}

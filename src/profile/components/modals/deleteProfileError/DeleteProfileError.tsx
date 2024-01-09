@@ -1,12 +1,11 @@
 import React from 'react';
-import { Dialog, DialogProps, IconAlertCircle } from 'hds-react';
+import { Button, Dialog, DialogProps, IconAlertCircle } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import { ApolloError } from '@apollo/client';
 
 import { getModalProps } from '../getModalProps';
 import { DeleteResultLists } from '../../../helpers/parseDeleteProfileResult';
 import DeleteFailureList from '../../deleteProfile/DeleteFailureList';
-import StyledButton from '../../../../common/styledButton/StyledButton';
 
 export type Props = {
   error?: ApolloError | Error | DeleteResultLists;
@@ -67,13 +66,13 @@ function DeleteProfileError({
         )}
       </Dialog.Content>
       <Dialog.ActionButtons>
-        <StyledButton
+        <Button
           variant="secondary"
           onClick={onClose}
           data-testid={`${id}-close-button`}
         >
           {closeButtonLabelText}
-        </StyledButton>
+        </Button>
       </Dialog.ActionButtons>
     </Dialog>
   );

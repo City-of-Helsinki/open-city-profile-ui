@@ -104,7 +104,8 @@
     "signin": "Logga in",
     "signout": "Logga ut",
     "titleAriaLabel": "Gå till profilens startsida",
-    "goToHomePage": "Till startsidan"
+    "goToHomePage": "Till startsidan",
+    "close": "Stäng"
   },
   "notification": {
     "closeButtonText": "Stäng",

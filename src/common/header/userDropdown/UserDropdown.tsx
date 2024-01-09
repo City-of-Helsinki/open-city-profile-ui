@@ -56,15 +56,16 @@ const UserDropdown = () => {
       ariaLabel,
     };
   };
-  const { label, userName, onClick } = getUserDataWithActions();
+  const { label, onClick } = getUserDataWithActions();
   return (
     <HDSHeader.ActionBarItem
-      label={t('nav.menuButtonLabel')}
+      label={label}
       ariaLabel={t('nav.menuButtonLabel')}
       id="header-user-dropdown"
+      fixedRightPosition
       icon={<IconUser />}
-      closeLabel={t('notification.closeButtonText')}
-      closeIcon={<IconUser />}
+      closeLabel={t('nav.close')}
+      preventButtonResize
     >
       <HDSHeader.Link
         label={label}
