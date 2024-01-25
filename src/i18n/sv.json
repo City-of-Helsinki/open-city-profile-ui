@@ -25,7 +25,10 @@
     "removePhone": "Ta bort telefonnummer?",
     "removeAddress": "Ta bort adress?",
     "saveMessage": "Informationen som du har ändrat är omedelbart tillgänglig för följande Helsingfors stads tjänster:",
-    "saveTitle": "Vill du spara dina ändringar?"
+    "saveTitle": "Vill du spara dina ändringar?",
+    "idleWarning": "Sessionen är på väg att gå ut. Om du vill fortsätta ska du klicka på Fortsätt. Annars loggas du ut.",
+    "idleWarningTitle": "Du loggas ut inom kort",
+    "continue": "Fortsätt"
   },
   "createProfile": {
     "heading": "Fyll i detaljerna för att skapa en profil",
@@ -48,10 +51,11 @@
     "title": "Är du säker på att du vill radera din information?",
     "notAllowed": "Du kan inte ta bort din profil eftersom någon av tjänsterna som används behöver dina uppgifter till exempel för fakturering.",
     "deletionErrorTitle": "Profilen kunde inte avlägsnas!",
+    "genericError": "Profilen kunde inte avlägsnas. Försök senare på nytt.",
     "deleteServiceFromPage": "Du kan ta bort uppgifterna från dessa tjänster på sidan <linkToServices>{{linkToServicesText}}</linkToServices>.",
     "unableToDeleteServices": "Vi kan inte radera data från dessa tjänster, till exempel på grund av transaktionsstatus eller lagringstid.",
     "contactServiceToDelete": "Om du ändå vill ta bort uppgifterna, kontakta <linkToExternalServiceList>tjänsten</linkToExternalServiceList> i fråga direkt och försök därefter att ta bort profilen på nytt.",
-    "urlToServiceList": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/forvaltning/tjanster"
+    "urlToServiceList": "https://www.hel.fi/sok/tjanster"
   },
   "downloadData": {
     "button": "Ladda ner min information",
@@ -67,11 +71,11 @@
     "accessibility": "Tillgänglighetsdokument",
     "copyright": "Upphovsrätt {{year}}",
     "feedback": "Ge feedback",
-    "feedbackLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/delta/feedback",
+    "feedbackLink": "https://palautteet.hel.fi/sv/",
     "privacy": "Integritetspolicy",
     "reserveRights": "Alla rättigheter förbehållna",
     "contactUs": "Ta kontakt",
-    "contactUsLink": "https://hel.fi/helsinki/sv/stad-och-forvaltning/delta/kontakt",
+    "contactUsLink": "https://www.hel.fi/sv/beslutsfattande-och-forvaltning/kontakta-helsingfors-stad",
     "backToTop": "Till början av sidan"
   },
   "helsinkiLogo": "Helsingfors logotyp",
@@ -154,9 +158,9 @@
     "remove": "Ta bort",
     "setPrimary": "Ange som primär",
     "submit": "Spara",
-    "termsLabel": "Jag har bekantat mig med tjänstens registerbeskrivning och stadens sekretesspolicy",
-    "terms": "Läs tjänstens <fileDescriptionLink>registerbeskrivning</fileDescriptionLink> och stadens <dataProtectionLink>sekretesspolicy</dataProtectionLink>",
-    "termsDataProtectionLink": "https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/dataskydd",
+    "termsLabel": "Jag har bekantat mig med tjänstens integritetspolicy och stadens sekretesspolicy",
+    "terms": "Läs tjänstens <fileDescriptionLink>integritetspolicy</fileDescriptionLink> och stadens <dataProtectionLink>sekretesspolicy</dataProtectionLink>",
+    "termsDataProtectionLink": "https://www.hel.fi/sv/beslutsfattande-och-forvaltning/information-om-helsingfors/dataskydd-och-informationshantering/dataskydd",
     "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Register%20over%20e-tjanster.pdf",
     "nationalIdentificationNumber": "Personbeteckning",
     "municipalityOfResidence": "Hemkommun",
@@ -175,8 +179,6 @@
     "ariaShowOptions": "Visa alternativ",
     "ariaSelectedOption": "{{value}} har valts",
     "ariaNoSelectedItemForLabel": "{{label}} har inte valts",
-    "contact": "Kontaktinformation",
-    "contactInformation": "Min kontaktinformation",
     "deleteProfile": "Radera profil",
     "description": "Uppgifterna som sparats i Helsingforsprofilen används i Helsingfors stads e-tjänster. Närmare information hittar du på <linkToServices>{{linkToServicesText}} sidan</linkToServices>.",
     "downloadData": "Ladda ner min information",
@@ -190,7 +192,7 @@
     "permanentAddress": "Stadigvarande adress",
     "permanentForeignAddress": "Stadigvarande utländsk adress",
     "verifiedDataInformation": "Du ser de officiella uppgifterna endast när du loggat in med stark identifiering, det vill säga Suomi-fi-identifieringen. Uppgifterna har hämtats från det officiella Befolkningsdatasystemet och de kan inte tas bort via Helsingforsprofilen. Du kan se uppgifterna om dig i befolkningsdatasystemet <suomiFiLink>i webbtjänsten suomi.fi</suomiFiLink>.",
-    "verifiedDataInformationLink": "https://www.suomi.fi/",
+    "verifiedDataInformationLink": "https://www.suomi.fi/hemsidan",
     "verifiedData": "Verifierad uppgift",
     "verifiedBasicData": "Officiella uppgifter",
     "phones": "Telefonnummer",
@@ -207,9 +209,12 @@
     "noAddress": "Du har inte uppgett en adress",
     "noEmail": "Du har inte upgett en e-postadress",
     "verifyEmailText": "Vi har skickat en bekräftelse till e-postadressen som du angett. Om du inte har fått meddelandet, vänligen kontrollera skräpkorgen för e-post.",
-    "verifyEmailTitle": "Bekräfta e-postadressen"
+    "verifyEmailTitle": "Bekräfta e-postadressen",
+    "contact": "Kontaktinformation",
+    "emailInUse": "E-postadressen du uppgett används redan.",
+    "contactInformation": "Min kontaktinformation"
   },
-  "sanityCheck": "open-city-profile.sv",
+  "sanityCheck": "https://profiili.hel.fi/login",
   "serviceConnections": {
     "clock": "kl.",
     "created": "Skapad:",
@@ -254,6 +259,7 @@
   "pageNotFoundText": "Kontrollera att URL-adressen är rätt skriven (kontrollera stora och små bokstäver och skiljetecken). Eller gå tillbaka till föregående sida genom att klicka på tangenten Föregående i webbläsaren. Du kan också gå tillbaka till första sidan via länken här nedan.",
   "cookies": {
     "pageName": "Kakinställningar",
+    "loginCookieDescription": "Cookie som krävs för att bevara autentiseringssession.",
     "securityCookieDescription": "Datasäkerhetskontroll",
     "loadBalancerCookieName": "En slumpmässig teckensträng med 32 tecken",
     "loadBalancerCookieDescription": "Teknisk routning av webbtrafiken.",
@@ -261,6 +267,8 @@
     "sessionExpiration": "Session",
     "daysPlural": "dagar",
     "minutesPlural": "minuter",
+    "languageGroupTitle": "Språkval",
+    "languageGroupText": "I språkkakorna lagras användarens språkval för att minnas vilket språk som har valts.",
     "mainText": "Denna webbplats använder nödvändiga kakor för att säkerställa basfunktionerna och prestandan. Dessutom använder vi inriktningskakor för analys.",
     "trackingCookieDescription": "Statistiksystemets kaka samlar information om hur webbplatsen används.",
     "consentStorageDescription": "Kakan lagrar samtycke för användning av statistikkakorna."
