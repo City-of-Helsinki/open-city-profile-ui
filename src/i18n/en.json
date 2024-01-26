@@ -25,7 +25,10 @@
     "removePhone": "Remove phone number?",
     "removeAddress": "Remove address?",
     "saveMessage": "The information you have changed is immediately available to the following City of Helsinki services:",
-    "saveTitle": "Do you want to save your changes?"
+    "saveTitle": "Do you want to save your changes?",
+    "idleWarning": "The session is about to expire. To prevent an automatic logout, select Continue",
+    "idleWarningTitle": "You will be logged out soon",
+    "continue": "Continue"
   },
   "createProfile": {
     "heading": "Fill in your details to create a profile",
@@ -48,10 +51,11 @@
     "title": "Are you sure you want to delete your information?",
     "notAllowed": "You cannot delete your profile because one of the services using it needs your information, for example, for invoicing.",
     "deletionErrorTitle": "The deletion failed!",
+    "genericError": "The profile could not be deleted. Please try again later.",
     "deleteServiceFromPage": "You can delete the data from these services via the <linkToServices>{{linkToServicesText}}</linkToServices> page.",
     "unableToDeleteServices": "We cannot delete data from these services, for example due to the transaction status or storage time.",
     "contactServiceToDelete": "If you still want to delete the data, please contact <linkToExternalServiceList >the service</linkToExternalServiceList> directly and then retry deleting the profile.",
-    "urlToServiceList": "https://www.hel.fi/helsinki/en/administration/administration/services"
+    "urlToServiceList": "https://www.hel.fi/search/services"
   },
   "downloadData": {
     "button": "Download my information",
@@ -67,11 +71,11 @@
     "accessibility": "Accessibility document",
     "copyright": "Copyright {{year}}",
     "feedback": "Give feedback",
-    "feedbackLink": "https://www.hel.fi/helsinki/en/administration/participate/feedback",
+    "feedbackLink": "https://palautteet.hel.fi/en/",
     "privacy": "Privacy policy",
     "reserveRights": "All rights reserved",
     "contactUs": "Contact us",
-    "contactUsLink": "https://hel.fi/helsinki/en/administration/participate/contact",
+    "contactUsLink": "https://www.hel.fi/en/decision-making/contact-the-city-of-helsinki",
     "backToTop": "Back to the top"
   },
   "helsinkiLogo": "Helsinki logo",
@@ -154,9 +158,9 @@
     "remove": "Remove",
     "setPrimary": "Set as primary",
     "submit": "Save",
-    "termsLabel": "I have read the service's file description and the city's data protection principles",
-    "terms": "Read <fileDescriptionLink>file description</fileDescriptionLink> and  city's <dataProtectionLink>data protection principles</dataProtectionLink>",
-    "termsDataProtectionLink": "https://www.hel.fi/helsinki/en/administration/information/data-protection",
+    "termsLabel": "I have read the service's data protection notice and the city's data protection principles",
+    "terms": "Read <fileDescriptionLink>the data protection notice in Finnish</fileDescriptionLink> and  city's <dataProtectionLink>data protection principles</dataProtectionLink>",
+    "termsDataProtectionLink": "https://www.hel.fi/en/decision-making/information-on-helsinki/data-protection-and-information-management/data-protection",
     "termsFileDescriptionLink": "https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Sahkoisten%20asiointipalveluiden%20rekisteri.pdf",
     "nationalIdentificationNumber": "Personal identity code",
     "municipalityOfResidence": "Municipality of residence",
@@ -175,8 +179,6 @@
     "ariaShowOptions": "Show options",
     "ariaSelectedOption": "{{value}} is selected",
     "ariaNoSelectedItemForLabel": "{{label}} is not selected",
-    "contact": "Contact",
-    "contactInformation": "My contact information",
     "deleteProfile": "Delete your profile",
     "description": "The data stored in the Helsinki profile is used in the City of Helsinki’s e-services. You can find more detailed information on the <linkToServices>{{linkToServicesText}} page</linkToServices>.",
     "downloadData": "Download your data",
@@ -190,7 +192,7 @@
     "permanentAddress": "Permanent address",
     "permanentForeignAddress": "Permanent foreign address",
     "verifiedDataInformation": "You can only see the official information when you have logged in using strong authentication via the Suomi.fi service. The information has been retrieved from The National Population Information System and cannot be edited via your Helsinki profile. You can check the data stored about you in the Population Information System in the <suomiFiLink>suomi.fi -web service</suomiFiLink>.",
-    "verifiedDataInformationLink": "https://www.suomi.fi/",
+    "verifiedDataInformationLink": "https://www.suomi.fi/frontpage",
     "verifiedData": "Verified data",
     "verifiedBasicData": "Official information",
     "phones": "Phone numbers",
@@ -207,9 +209,12 @@
     "noAddress": "You have not entered an address",
     "noEmail": "You have not entered an email address.",
     "verifyEmailText": "We have sent a verification email to the email address you have entered. If you did not receive the verification email, please check your junk mail folder.",
-    "verifyEmailTitle": "Verify email"
+    "verifyEmailTitle": "Verify email",
+    "contact": "Contact",
+    "emailInUse": "The email address you entered is already in use.",
+    "contactInformation": "My contact information"
   },
-  "sanityCheck": "open-city-profile.en",
+  "sanityCheck": "https://profiili.hel.fi/login",
   "serviceConnections": {
     "clock": "at",
     "created": "Created:",
@@ -254,6 +259,7 @@
   "pageNotFoundText": "Check the spelling of the URL (upper and lower case letters and punctuation marks). Or click the Back button on your browser to return to the previous page. You can also go to the front page via the link below.",
   "cookies": {
     "pageName": "Cookie settings",
+    "loginCookieDescription": "Required to persist the authentication session.",
     "securityCookieDescription": "A security control",
     "loadBalancerCookieName": "A random 32-character long string",
     "loadBalancerCookieDescription": "Technical routing of requests.",
@@ -261,6 +267,8 @@
     "sessionExpiration": "Session",
     "daysPlural": "days",
     "minutesPlural": "minutes",
+    "languageGroupTitle": "Language settings",
+    "languageGroupText": "Language cookies store the language selections by the user to remember the preferred language.",
     "mainText": "This website uses required cookies to ensure the basic functionality and performance. In addition, we use targeting cookies to perform analytics.",
     "trackingCookieDescription": "This cookie is used to store a few details about the user such as the unique visitor ID.",
     "consentStorageDescription": "Cookie stores consent for using analytics cookies."
