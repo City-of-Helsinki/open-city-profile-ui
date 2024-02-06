@@ -13,7 +13,7 @@ export function mockProfileCreator(
   overrides?: MockedUserOverrides['profileOverrides']
 ): Profile {
   return {
-    amr: ['helusername-test'],
+    amr: ['helsinki_tunnus-test'],
     auth_time: 1593431180,
     email: 'email@email.com',
     email_verified: false,
