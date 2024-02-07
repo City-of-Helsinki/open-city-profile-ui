@@ -6,7 +6,7 @@ import AuthenticationProviderInformation from '../AuthenticationProviderInformat
 import { mockUserCreator } from '../../../../common/test/userMocking';
 
 let mockCurrentAmr;
-const helsinkiAccountAMR = 'helusername-test';
+const helsinkiAccountAMR = 'helsinki_tunnus-test';
 
 jest.mock('../../../../config', () => ({
   helsinkiAccountAMR,
@@ -29,7 +29,7 @@ describe('<AuthenticationProviderInformation /> ', () => {
     });
 
     afterAll(() => {
-      window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = 'helusername';
+      window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = 'helsinki_tunnus';
     });
 
     it('should render helsinki account information as expected based on config', () => {
