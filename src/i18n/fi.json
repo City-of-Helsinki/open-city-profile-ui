@@ -55,7 +55,7 @@
     "deleteServiceFromPage": "Voit poistaa tiedot näistä palveluista <linkToServices>{{linkToServicesText}}</linkToServices> -sivulta.",
     "unableToDeleteServices": "Emme voi poistaa tietoja näistä palveluista esimerkiksi asioinnin tilan tai säilytysajan vuoksi.",
     "contactServiceToDelete": "Jos haluat silti poistaa tiedot, ole suoraan yhteydessä <linkToExternalServiceList>kyseiseen palveluun</linkToExternalServiceList> ja yritä profiilin poistoa sen jälkeen uudestaan.",
-    "urlToServiceList": "https://www.hel.fi/haku/palvelut"
+    "urlToServiceList": "https://www.hel.fi/search/services"
   },
   "downloadData": {
     "button": "Lataa omat tiedot",
@@ -104,7 +104,8 @@
     "signin": "Kirjaudu sisään",
     "signout": "Kirjaudu ulos",
     "titleAriaLabel": "Siirry Profiilin etusivulle",
-    "goToHomePage": "Etusivulle"
+    "goToHomePage": "Etusivulle",
+    "close": "Sulje"
   },
   "notification": {
     "closeButtonText": "Sulje",
