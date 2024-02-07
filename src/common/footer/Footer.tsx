@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Footer as HDSFooter, Logo, logoFiDark, logoSvDark } from 'hds-react';
+import { Link } from 'react-router-dom';
 
 import getLanguageCode from '../helpers/getLanguageCode';
 import config from '../../config';
@@ -66,11 +67,13 @@ const Footer = () => {
           target="_blank"
         />
         <HDSFooter.Link
-          href="/accessibility"
+          as={Link}
+          to="/accessibility"
           label={t('footer.accessibility')}
         />
         <HDSFooter.Link
-          href={config.cookiePagePath}
+          as={Link}
+          to={config.cookiePagePath}
           label={t('cookies.pageName')}
         />
       </HDSFooter.Base>

@@ -87,7 +87,6 @@ function Header(): React.ReactElement {
         titleHref={myProfilePath}
         logo={<Logo src={logoSrcFromLanguage} alt={t('helsinkiLogo')} />}
         frontPageLabel={t('nav.goToHomePage')}
-        onMenuClick={e => e.stopPropagation()}
       >
         <HDSHeader.SimpleLanguageOptions languages={languageOptions} />
         <hr aria-hidden="true" />

@@ -115,3 +115,8 @@ main h4 {
     --h4-size: var(--fontsize-heading-m);
   }
 }
+
+body {
+  margin: 0;
+  padding: 0;
+}
