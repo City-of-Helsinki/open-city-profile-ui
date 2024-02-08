@@ -39,7 +39,6 @@ resources:
     - repository: helsinki-profile-ui-aok
       type: git
       ref: refs/heads/ansible_automation_update
-      
       # Azure DevOps project/repository
       name: helsinki-profile-ui/helsinki-profile-ui-aok
 
