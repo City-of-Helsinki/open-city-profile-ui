@@ -1,0 +1,50 @@
+# Continuous integration (CI) triggers cause a pipeline to run whenever you push
+# an update to the specified branches or you push specified tags.
+trigger:
+  batch: true
+  tags:
+    include:
+      - open-city-profile-ui-v*
+
+# Pull request (PR) triggers cause a pipeline to run whenever a pull request is
+# opened with one of the specified target branches, or when updates are made to
+# such a pull request.
+#
+# GitHub creates a new ref when a pull request is created. The ref points to a
+# merge commit, which is the merged code between the source and target branches
+# of the pull request.
+#
+# Opt out of pull request validation
+pr: none
+
+# By default, use self-hosted agents
+pool: Default
+
+resources:
+  repositories:
+    # Azure DevOps repository
+    - repository: helsinki-profile-ui-aok
+      type: git
+      # Azure DevOps project/repository
+      name: helsinki-profile-ui/helsinki-profile-ui-aok
+
+extends:
+  # Filename in Azure DevOps Repository
+  template: azure-pipelines-helsinki-profile-ui-release.yml@helsinki-profile-ui-aok
+  # parameters:
+    # Application build arguments and config map values as key value pairs.
+    # Does not contain all buildArguments or configMap values, the rest located in helsinki-profile-ui-aok
+    # Default value to nodeVersion is set on template.
+    # The values here will override the values defined in the helsinki-profile-ui-aok repository
+    ## Staging definitions
+    # buildArgsStage:
+    #   DEBUG: 1
+    # configMapStage: # pod environment variables
+    #   DEBUG: 1
+    ## Production definitions
+    # buildArgs:
+    #   DEBUG: 1
+    # configMap: # pod environment variables
+    #   DEBUG: 1
+    ## Used tool version
+    # nodeVersion: 18
