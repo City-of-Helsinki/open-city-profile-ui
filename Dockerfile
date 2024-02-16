@@ -1,9 +1,5 @@
 # ===============================================
-<<<<<<< HEAD
 FROM registry.access.redhat.com/ubi9/nodejs-18 as appbase
-=======
-FROM helsinkitest/node:16-slim as appbase
->>>>>>> 6a8d38b ((HP-2047) PR fixes)
 # ===============================================
 
 WORKDIR /app
