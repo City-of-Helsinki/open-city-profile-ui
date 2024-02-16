@@ -160,7 +160,7 @@ export interface GdprServiceConnectionsQuery_myProfile_serviceConnections {
 export interface GdprServiceConnectionsQuery_myProfile {
   readonly __typename: "ProfileNode";
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   /**
@@ -194,7 +194,7 @@ export interface GdprServiceConnectionsQuery {
 export interface CreateMyProfile_createMyProfile_profile {
   readonly __typename: "ProfileNode";
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
 }
@@ -267,7 +267,7 @@ export interface DownloadMyProfileQueryVariables {
 export interface MyProfileQuery_myProfile_primaryAddress {
   readonly __typename: "AddressNode";
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly primary: boolean;
@@ -282,7 +282,7 @@ export interface MyProfileQuery_myProfile_addresses_edges_node {
   readonly __typename: "AddressNode";
   readonly primary: boolean;
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly address: string;
@@ -311,7 +311,7 @@ export interface MyProfileQuery_myProfile_addresses {
 export interface MyProfileQuery_myProfile_primaryEmail {
   readonly __typename: "EmailNode";
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly email: string;
@@ -323,7 +323,7 @@ export interface MyProfileQuery_myProfile_emails_edges_node {
   readonly __typename: "EmailNode";
   readonly primary: boolean;
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly email: string;
@@ -349,7 +349,7 @@ export interface MyProfileQuery_myProfile_emails {
 export interface MyProfileQuery_myProfile_primaryPhone {
   readonly __typename: "PhoneNode";
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly phone: string;
@@ -361,7 +361,7 @@ export interface MyProfileQuery_myProfile_phones_edges_node {
   readonly __typename: "PhoneNode";
   readonly primary: boolean;
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly phone: string;
@@ -452,7 +452,7 @@ export interface MyProfileQuery_myProfile_verifiedPersonalInformation {
 export interface MyProfileQuery_myProfile {
   readonly __typename: "ProfileNode";
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly firstName: string;
@@ -599,7 +599,7 @@ export interface ServiceConnectionsQuery_myProfile_serviceConnections {
 export interface ServiceConnectionsQuery_myProfile {
   readonly __typename: "ProfileNode";
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   /**
@@ -637,7 +637,7 @@ export interface ServiceConnectionsQueryVariables {
 export interface UpdateMyProfile_updateMyProfile_profile_primaryAddress {
   readonly __typename: "AddressNode";
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly primary: boolean;
@@ -652,7 +652,7 @@ export interface UpdateMyProfile_updateMyProfile_profile_addresses_edges_node {
   readonly __typename: "AddressNode";
   readonly primary: boolean;
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly address: string;
@@ -681,7 +681,7 @@ export interface UpdateMyProfile_updateMyProfile_profile_addresses {
 export interface UpdateMyProfile_updateMyProfile_profile_primaryEmail {
   readonly __typename: "EmailNode";
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly email: string;
@@ -693,7 +693,7 @@ export interface UpdateMyProfile_updateMyProfile_profile_emails_edges_node {
   readonly __typename: "EmailNode";
   readonly primary: boolean;
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly email: string;
@@ -719,7 +719,7 @@ export interface UpdateMyProfile_updateMyProfile_profile_emails {
 export interface UpdateMyProfile_updateMyProfile_profile_primaryPhone {
   readonly __typename: "PhoneNode";
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly phone: string;
@@ -731,7 +731,7 @@ export interface UpdateMyProfile_updateMyProfile_profile_phones_edges_node {
   readonly __typename: "PhoneNode";
   readonly primary: boolean;
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly phone: string;
@@ -757,7 +757,7 @@ export interface UpdateMyProfile_updateMyProfile_profile_phones {
 export interface UpdateMyProfile_updateMyProfile_profile {
   readonly __typename: "ProfileNode";
   /**
-   * The ID of the object.
+   * The ID of the object
    */
   readonly id: string;
   readonly firstName: string;

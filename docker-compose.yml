@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   app:
+    platform: linux/amd64
     container_name: open-city-profile-ui
     build:
       context: .
