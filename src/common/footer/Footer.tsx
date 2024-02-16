@@ -58,6 +58,7 @@ const Footer = () => {
             alt="Helsingin kaupunki"
           />
         }
+        logoHref="https://hel.fi"
       >
         <HDSFooter.Link
           aria-label={createAriaLabel(t('footer.privacy'))}
