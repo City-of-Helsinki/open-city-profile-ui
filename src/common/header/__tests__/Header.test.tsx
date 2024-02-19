@@ -1,32 +1,32 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import i18n from '../../test/testi18nInit';
 import Header from '../Header';
 
-const getWrapper = () => mount(<Header />);
-
-it('language is changed from header language selector', () => {
+it('language is changed from header language selector', async () => {
   i18n.changeLanguage('fi');
-  const wrapper = getWrapper();
+  const { getByText } = render(<Header />);
 
   const ariaCurrent = 'aria-current';
 
-  const fiButton = wrapper
-    .find('button')
-    .filterWhere(node => node.text() === 'Suomi');
-  expect(fiButton.props()[ariaCurrent]).toBe(true);
+  // Find the button for Finnish
+  const fiButton = getByText('Suomi').parentElement;
+  expect(fiButton?.getAttribute(ariaCurrent)).toBe('true');
   expect(i18n.language).toBe('fi');
 
-  const svButton = wrapper
-    .find('button')
-    .filterWhere(node => node.text() === 'Svenska');
-  expect(svButton.props()[ariaCurrent]).toBe(false);
-  // Change the language
-  svButton.simulate('click');
+  // Find the button for Swedish
+  const svButton = getByText('Svenska').parentElement;
+  expect(svButton?.getAttribute(ariaCurrent)).toBe('false');
 
-  setTimeout(() => {
-    expect(fiButton.props()[ariaCurrent]).toBe(false);
+  // Change the language
+  if (svButton) {
+    fireEvent.click(svButton);
+  }
+
+  await waitFor(() => {
+    expect(fiButton?.getAttribute(ariaCurrent)).toBe('false');
+    expect(svButton?.getAttribute(ariaCurrent)).toBe('true');
     expect(i18n.language).toBe('sv');
-  }, 100);
+  });
 });
