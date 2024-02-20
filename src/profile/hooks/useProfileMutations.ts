@@ -4,7 +4,6 @@ import {
   Reference,
   ApolloCache,
 } from '@apollo/client';
-import { loader } from 'graphql.macro';
 import { useContext } from 'react';
 import { Modifiers } from '@apollo/client/cache/core/types/common';
 
@@ -23,9 +22,8 @@ import {
 } from '../helpers/editData';
 import { updateMutationVariables } from '../helpers/updateMutationVariables';
 import { ProfileContext, ProfileContextData } from '../context/ProfileContext';
-
-const UPDATE_PROFILE = loader('../../profile/graphql/UpdateMyProfile.graphql');
-const MY_PROFILE = loader('../../profile/graphql/MyProfileQuery.graphql');
+import UPDATE_PROFILE from '../../profile/graphql/UpdateMyProfile.graphql';
+import MY_PROFILE from '../../profile/graphql/MyProfileQuery.graphql';
 
 export type QueryResult = FetchResult<ProfileRoot, AnyObject, AnyObject>;
 export type UpdateResult = FetchResult<UpdateProfileRoot>;

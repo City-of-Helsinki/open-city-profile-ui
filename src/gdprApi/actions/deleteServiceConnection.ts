@@ -1,4 +1,3 @@
-import { loader } from 'graphql.macro';
 import to from 'await-to-js';
 
 import {
@@ -20,8 +19,7 @@ import {
   getStoredTunnistamoAuthCode,
 } from './authCodeParser';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
-
-const DELETE_SERVICE_DATA = loader('../graphql/GdprDeleteServiceData.graphql');
+import DELETE_SERVICE_DATA from '../graphql/GdprDeleteServiceData.graphql';
 
 export const deleteServiceConnectionType = 'deleteServiceConnection';
 

@@ -1,6 +1,7 @@
 /* eslint-disable jest/no-interpolation-in-snapshots */
 import to from 'await-to-js';
 import { waitFor } from '@testing-library/react';
+import fetchMock from 'jest-fetch-mock';
 
 import authService, { API_TOKEN } from '../authService';
 import {
@@ -41,7 +42,7 @@ describe('authService', () => {
     });
 
   const mockFetchApiToken = () =>
-    global.fetch.mockResponse(
+    fetchMock.mockResponse(
       JSON.stringify({
         [window._env_.REACT_APP_PROFILE_AUDIENCE]: apiToken,
       })
@@ -321,7 +322,7 @@ describe('authService', () => {
     };
 
     beforeEach(() => {
-      global.fetch.resetMocks();
+      fetchMock.resetMocks();
       mockFetchApiToken();
     });
 
@@ -329,8 +330,8 @@ describe('authService', () => {
       expect.assertions(2);
       await authService.fetchAndStoreApiToken(mockUser);
 
-      expect(global.fetch).toHaveBeenCalledTimes(1);
-      expect(global.fetch.mock.calls[0]).toMatchInlineSnapshot(`
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      expect(fetchMock.mock.calls[0]).toMatchInlineSnapshot(`
         Array [
           "https://api.hel.fi/sso/openid/api-tokens/",
           Object {
@@ -360,7 +361,7 @@ describe('authService', () => {
   describe(`Api tokens are fetched again after user tokens are renewed.
             After silent renew completes, the _userLoaded event is raised and...`, () => {
     beforeEach(() => {
-      global.fetch.resetMocks();
+      fetchMock.resetMocks();
       mockFetchApiToken();
       jest.useFakeTimers();
     });

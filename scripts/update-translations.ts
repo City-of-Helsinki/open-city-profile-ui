@@ -1,11 +1,19 @@
 #!/usr/bin/env ts-node-script
+import dotenv from 'dotenv';
 import * as path from 'path';
 
 /// <reference types="./helsinki-utils" />
 import fetchTranslations from 'helsinki-utils/scripts/fetch-translations';
 
-const languages = process.env.TRANSLATION_LANGUAGES.split(',');
-const sheetId = process.env.TRANSLATIONS_SHEET_ID;
+/* @ts-ignore */
+import.meta.env = {};
+dotenv.config({
+  processEnv: import.meta.env,
+  path: ['.env.local', '.env.development', '.env.test', '.env'],
+});
+
+const languages = import.meta.env.TRANSLATION_LANGUAGES.split(',');
+const sheetId = import.meta.env.TRANSLATIONS_SHEET_ID;
 
 const pathToLocales: string = path.join(__dirname, '../src/i18n');
 

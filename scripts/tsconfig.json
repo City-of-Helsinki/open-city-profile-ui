@@ -1,13 +1,17 @@
 {
-    "compilerOptions": {
-      "module": "commonjs",
-      "target": "es5",
-      "noImplicitAny": true,
-      "outDir": "./dist",
-      "sourceMap": true,
-      "esModuleInterop": true
-    },
-    "include": [
-      "*"
-    ],
-  }
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "noImplicitAny": true,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "types": [
+      "vite/client",
+    ]
+  },
+  "include": [
+    "*"
+  ],
+}

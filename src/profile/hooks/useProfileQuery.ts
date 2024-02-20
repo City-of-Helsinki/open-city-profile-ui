@@ -1,12 +1,10 @@
 import { ApolloError, FetchResult, useLazyQuery } from '@apollo/client';
-import { loader } from 'graphql.macro';
 import { useEffect, useRef } from 'react';
 import { useMemoizedFn } from 'ahooks';
 import _ from 'lodash';
 
 import { ProfileRoot } from '../../graphql/typings';
-
-const MY_PROFILE = loader('../graphql/MyProfileQuery.graphql');
+import MY_PROFILE from '../graphql/MyProfileQuery.graphql';
 
 export type QueryResult = FetchResult<ProfileRoot>;
 

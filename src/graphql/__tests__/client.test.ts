@@ -1,16 +1,17 @@
 import { gql } from '@apollo/client';
+import fetchMock from 'jest-fetch-mock';
 
 import authService from '../../auth/authService';
 import client from '../client';
 
 describe('graphql client', () => {
   beforeEach(() => {
-    global.fetch.resetMocks();
+    fetchMock.resetMocks();
     jest.spyOn(authService, 'getToken').mockReturnValue('foo.bar.baz');
   });
 
   it('sets authorization-header to requests', async () => {
-    global.fetch.mockResponse(
+    fetchMock.mockResponse(
       JSON.stringify({
         data: {
           profile: null,
@@ -29,7 +30,7 @@ describe('graphql client', () => {
       // eslint-disable-next-line no-empty
     } catch (e) {}
 
-    const fetchOptions = global.fetch.mock.calls[0][1] as RequestInit;
+    const fetchOptions = fetchMock.mock.calls[0][1] as RequestInit;
     expect(fetchOptions.headers).toHaveProperty(
       'authorization',
       'Bearer foo.bar.baz'

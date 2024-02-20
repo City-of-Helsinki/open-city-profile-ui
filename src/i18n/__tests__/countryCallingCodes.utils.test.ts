@@ -66,7 +66,7 @@ describe('countryCallingCode.utils', () => {
         }
       );
     });
-    it(`if multiple countries have partially same country calling code, 
+    it(`if multiple countries have partially same country calling code,
         return the one with longest matching code (DO +1809 vs US +1).
         Or the first alphabetically
       `, () => {
@@ -134,7 +134,7 @@ describe('countryCallingCode.utils', () => {
         });
       });
     });
-    it(`if multiple countries have partially same country calling code, 
+    it(`if multiple countries have partially same country calling code,
         return the one with longest matching code (DO +1809 vs US +1).
         Or the first alphabetically
       `, () => {
@@ -178,7 +178,9 @@ describe('countryCallingCode.utils', () => {
           const option = list.find(item => item.value === countryCallingCode);
           const label = option?.label;
           expect(
-            label?.includes(countries.getName(countryAlpha2Code, 'en'))
+            label?.includes(
+              countries.getName(countryAlpha2Code, 'en') as string
+            )
           ).toBeTruthy();
           expect(label?.includes(countryCallingCode)).toBeTruthy();
         });
