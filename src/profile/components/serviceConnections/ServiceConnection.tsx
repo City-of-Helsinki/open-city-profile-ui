@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
+import { Button } from 'hds-react';
 
 import { ServiceConnectionData } from '../../helpers/getServiceConnectionData';
 import ExpandingPanel from '../../../common/expandingPanel/ExpandingPanel';
@@ -8,7 +9,6 @@ import CheckedLabel from '../../../common/checkedLabel/CheckedLabel';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
 import styles from './ServiceConnections.module.css';
 import encodeServiceName from '../../helpers/encodeServiceName';
-import StyledButton from '../../../common/styledButton/StyledButton';
 
 function ServiceConnection({
   service,
@@ -58,12 +58,12 @@ function ServiceConnection({
             {getDateTime(service.connectionCreatedAt)}
           </p>
         </div>
-        <StyledButton
+        <Button
           onClick={() => onDeletion(service)}
           data-testid={`delete-service-connection-${encodedServiceName}-button`}
         >
           {t('serviceConnections.deleteConnection')}
-        </StyledButton>
+        </Button>
       </ExpandingPanel>
     </>
   );

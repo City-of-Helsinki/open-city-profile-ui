@@ -1,4 +1,5 @@
 import {
+  Button,
   IconPenLine,
   IconMinusCircle,
   IconStarFill,
@@ -13,7 +14,6 @@ import {
   Action,
   ActionListenerReturnType,
 } from '../../hooks/useProfileDataEditor';
-import StyledButton from '../../../common/styledButton/StyledButton';
 
 type Props = {
   handler: ActionHandler;
@@ -68,7 +68,7 @@ function EditButtons(props: Props): React.ReactElement {
         </div>
       )}
       {setPrimary && !primary && (
-        <StyledButton
+        <Button
           variant="supplementary"
           iconLeft={<IconStar />}
           onClick={async () => {
@@ -79,10 +79,9 @@ function EditButtons(props: Props): React.ReactElement {
           aria-label={ariaLabels.setPrimary}
         >
           {t('profileForm.setPrimary')}
-        </StyledButton>
+        </Button>
       )}
-      <StyledButton
-        variant="supplementary"
+      <Button
         iconLeft={<IconPenLine />}
         onClick={async () => {
           await handler('edit');
@@ -92,9 +91,9 @@ function EditButtons(props: Props): React.ReactElement {
         {...editButtonIdAttr}
       >
         {t('profileForm.edit')}
-      </StyledButton>
+      </Button>
       {removable && (
-        <StyledButton
+        <Button
           variant="secondary"
           iconLeft={<IconMinusCircle />}
           onClick={async () => {
@@ -105,7 +104,7 @@ function EditButtons(props: Props): React.ReactElement {
           aria-label={ariaLabels.remove}
         >
           {t('profileForm.remove')}
-        </StyledButton>
+        </Button>
       )}
     </div>
   );

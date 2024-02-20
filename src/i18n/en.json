@@ -76,7 +76,7 @@
     "reserveRights": "All rights reserved",
     "contactUs": "Contact us",
     "contactUsLink": "https://www.hel.fi/en/decision-making/contact-the-city-of-helsinki",
-    "backToTop": "Back to the top"
+    "backToTop": "Back to top"
   },
   "helsinkiLogo": "Helsinki logo",
   "landmarks": {
@@ -104,7 +104,8 @@
     "signin": "Log in",
     "signout": "Sign out",
     "titleAriaLabel": "Go to homepage of the Profile",
-    "goToHomePage": "Go to homepage"
+    "goToHomePage": "Go to homepage",
+    "close": "Close"
   },
   "notification": {
     "closeButtonText": "Close",
@@ -192,7 +193,7 @@
     "permanentAddress": "Permanent address",
     "permanentForeignAddress": "Permanent foreign address",
     "verifiedDataInformation": "You can only see the official information when you have logged in using strong authentication via the Suomi.fi service. The information has been retrieved from The National Population Information System and cannot be edited via your Helsinki profile. You can check the data stored about you in the Population Information System in the <suomiFiLink>suomi.fi -web service</suomiFiLink>.",
-    "verifiedDataInformationLink": "https://www.suomi.fi/frontpage",
+    "verifiedDataInformationLink": "https://www.suomi.fi/",
     "verifiedData": "Verified data",
     "verifiedBasicData": "Official information",
     "phones": "Phone numbers",

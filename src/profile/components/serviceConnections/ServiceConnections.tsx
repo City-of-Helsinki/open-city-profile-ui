@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 import * as Sentry from '@sentry/browser';
-import { LoadingSpinner, Notification } from 'hds-react';
+import { Button, LoadingSpinner, Notification } from 'hds-react';
 import classNames from 'classnames';
 
 import Explanation from '../../../common/explanation/Explanation';
@@ -18,7 +18,6 @@ import getServiceConnectionData, {
 } from '../../helpers/getServiceConnectionData';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import ServiceConnection from './ServiceConnection';
-import StyledButton from '../../../common/styledButton/StyledButton';
 import ServiceConnectionRemover from './ServiceConnectionRemover';
 import { getStoredQueueData } from '../../../common/actionQueue/actionQueueStorage';
 import { authCodeQueuesStorageKey } from '../../../gdprApi/useAuthCodeQueues';
@@ -85,13 +84,13 @@ function ServiceConnections(): React.ReactElement {
           dataTestId={'service-connections-load-error'}
         >
           <p>{t('notification.defaultErrorText')}</p>
-          <StyledButton
+          <Button
             onClick={() => {
               refetch();
             }}
           >
             {t('notification.tryAgain')}
-          </StyledButton>
+          </Button>
         </Notification>
       </ContentWrapper>
     );

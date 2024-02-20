@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconSignout, Navigation } from 'hds-react';
+import { Header as HDSHeader, IconUser } from 'hds-react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import authService from '../../../auth/authService';
@@ -13,7 +13,7 @@ type UserDataWithActions = {
   onClick: (e?: React.MouseEvent) => Promise<void>;
 };
 
-function UserDropdown(): React.ReactElement {
+const UserDropdown = () => {
   const { t } = useTranslation();
   const { trackEvent } = useMatomo();
   const { getName } = useContext(ProfileContext);
@@ -25,7 +25,7 @@ function UserDropdown(): React.ReactElement {
     const name = getName(true);
 
     const logoutAction = (e?: React.MouseEvent): Promise<void> => {
-      e && e.preventDefault();
+      e?.preventDefault();
       trackEvent({ category: 'action', action: 'Log out' });
       return authService.logout();
     };
@@ -56,26 +56,23 @@ function UserDropdown(): React.ReactElement {
       ariaLabel,
     };
   };
-  const { label, userName, onClick } = getUserDataWithActions();
+  const { label, onClick } = getUserDataWithActions();
   return (
-    <Navigation.User
-      authenticated={isAuthenticated}
+    <HDSHeader.ActionBarItem
       label={label}
-      onSignIn={(): Promise<void> => onClick()}
-      userName={userName}
-      buttonAriaLabel={label}
+      ariaLabel={t('nav.menuButtonLabel')}
       id="header-user-dropdown"
+      fixedRightPosition
+      icon={<IconUser />}
+      closeLabel={t('nav.close')}
+      preventButtonResize
     >
-      <Navigation.Item
-        onClick={(e: React.MouseEvent): Promise<void> => onClick(e)}
-        variant="supplementary"
+      <HDSHeader.Link
         label={label}
-        href="/logout"
-        data-testid="header-logout-button"
-        icon={<IconSignout aria-hidden />}
+        onClick={(e: React.MouseEvent) => onClick(e)}
       />
-    </Navigation.User>
+    </HDSHeader.ActionBarItem>
   );
-}
+};
 
 export default UserDropdown;

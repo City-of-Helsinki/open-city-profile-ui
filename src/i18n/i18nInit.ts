@@ -15,18 +15,18 @@ i18n
       escapeValue: false,
     },
     resources: {
-      en: {
-        translation: en,
-      },
       fi: {
         translation: fi,
       },
       sv: {
         translation: sv,
       },
+      en: {
+        translation: en,
+      },
     },
     detection: {
-      order: ['localStorage', 'cookie', 'navigator'],
+      order: ['localStorage', 'cookie'],
       caches: ['localStorage', 'cookie'],
     },
   });

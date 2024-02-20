@@ -1,8 +1,7 @@
-import { IconPlusCircle } from 'hds-react';
+import { Button, IconPlusCircle } from 'hds-react';
 import React from 'react';
 import { t } from 'i18next';
 
-import StyledButton from '../../../common/styledButton/StyledButton';
 import { EditHandling } from '../../hooks/useCommonEditHandling';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
@@ -26,7 +25,7 @@ function AddButton({
     return null;
   }
   return (
-    <StyledButton
+    <Button
       iconLeft={<IconPlusCircle />}
       onClick={async () => {
         actionHandler('add');
@@ -37,7 +36,7 @@ function AddButton({
       id={addButtonId}
     >
       {text}
-    </StyledButton>
+    </Button>
   );
 }
 

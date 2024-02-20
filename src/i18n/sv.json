@@ -104,7 +104,8 @@
     "signin": "Logga in",
     "signout": "Logga ut",
     "titleAriaLabel": "Gå till profilens startsida",
-    "goToHomePage": "Till startsidan"
+    "goToHomePage": "Till startsidan",
+    "close": "Stäng"
   },
   "notification": {
     "closeButtonText": "Stäng",
@@ -192,7 +193,7 @@
     "permanentAddress": "Stadigvarande adress",
     "permanentForeignAddress": "Stadigvarande utländsk adress",
     "verifiedDataInformation": "Du ser de officiella uppgifterna endast när du loggat in med stark identifiering, det vill säga Suomi-fi-identifieringen. Uppgifterna har hämtats från det officiella Befolkningsdatasystemet och de kan inte tas bort via Helsingforsprofilen. Du kan se uppgifterna om dig i befolkningsdatasystemet <suomiFiLink>i webbtjänsten suomi.fi</suomiFiLink>.",
-    "verifiedDataInformationLink": "https://www.suomi.fi/hemsidan",
+    "verifiedDataInformationLink": "https://www.suomi.fi/",
     "verifiedData": "Verifierad uppgift",
     "verifiedBasicData": "Officiella uppgifter",
     "phones": "Telefonnummer",

@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Notification } from 'hds-react';
+import { Button, Notification } from 'hds-react';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import contentStyles from '../../../common/cssHelpers/content.module.css';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { useScrollIntoView } from '../../hooks/useScrollIntoView';
-import StyledButton from '../../../common/styledButton/StyledButton';
 import useAuthCodeQueues from '../../../gdprApi/useAuthCodeQueues';
 import config from '../../../config';
 
@@ -49,13 +48,13 @@ function DownloadData(): React.ReactElement {
               dataTestId="download-profile-error"
             ></Notification>
           )}
-          <StyledButton
+          <Button
             onClick={onDownloadClick}
             disabled={!canUserDoSomething}
             id="download-profile-button"
           >
             {!canUserDoSomething ? t('loading') : t('downloadData.button')}
-          </StyledButton>
+          </Button>
         </div>
       </div>
     </ProfileSection>

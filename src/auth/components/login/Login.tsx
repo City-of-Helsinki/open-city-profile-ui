@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import classNames from 'classnames';
+import { Button } from 'hds-react';
 
 import HelsinkiLogo from '../../../common/helsinkiLogo/HelsinkiLogo';
 import styles from './Login.module.css';
@@ -9,7 +10,6 @@ import PageLayout from '../../../common/pageLayout/PageLayout';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 import authService from '../../authService';
 import FocusableH1 from '../../../common/focusableH1/FocusableH1';
-import StyledButton from '../../../common/styledButton/StyledButton';
 
 function Login(): React.ReactElement {
   const { t } = useTranslation();
@@ -27,16 +27,15 @@ function Login(): React.ReactElement {
           <HelsinkiLogo />
           <FocusableH1>{t('login.title')}</FocusableH1>
           <p className={styles.ingress}>{t('login.description')}</p>
-          <StyledButton
-            variant="primary"
-            className={styles.button}
+
+          <Button
             onClick={() => {
               trackEvent({ category: 'action', action: 'Log in' });
               authService.login();
             }}
           >
             {t('login.login')}
-          </StyledButton>
+          </Button>
         </div>
       </div>
     </PageLayout>

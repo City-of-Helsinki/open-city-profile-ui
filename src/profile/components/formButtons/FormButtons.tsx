@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from 'hds-react';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
-import StyledButton from '../../../common/styledButton/StyledButton';
 import { ActionHandler } from '../editButtons/EditButtons';
 
 type Props = {
@@ -23,15 +23,15 @@ function FormButtons(props: Props): React.ReactElement {
         commonFormStyles['form-buttons']
       )}
     >
-      <StyledButton
+      <Button
         type="submit"
         disabled={disabled}
         className={commonFormStyles['responsive-button']}
         data-testid={`${testId}-save-button`}
       >
         {t('profileForm.submit')}
-      </StyledButton>
-      <StyledButton
+      </Button>
+      <Button
         variant="secondary"
         onClick={async () => {
           await handler('cancel');
@@ -41,7 +41,7 @@ function FormButtons(props: Props): React.ReactElement {
         data-testid={`${testId}-cancel-button`}
       >
         {t('profileForm.cancel')}
-      </StyledButton>
+      </Button>
     </div>
   );
 }

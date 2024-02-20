@@ -21,11 +21,14 @@ button.button {
 }
 
 .content h1 {
-  margin-top: var(--common-top-spacing);
+  margin-top: var(--spacing-layout-m);
+  margin-bottom: 0;
+  line-height: var(--lineheight-s);;
 }
 
 .ingress {
+  margin-top: var(--spacing-layout-l);
+  margin-bottom: var(--spacing-layout-m);
   line-height: var(--lineheight-l);
   font-size: var(--fontsize-body-l);
-  font-weight: bold;
 }
