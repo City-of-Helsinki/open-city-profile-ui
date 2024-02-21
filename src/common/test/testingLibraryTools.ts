@@ -160,8 +160,10 @@ export const renderComponentWithMocksAndContexts = async (
 
   const waitForDataChange: TestTools['waitForDataChange'] = async previousChangeTime => {
     const latest = previousChangeTime || getLastTime('dataUpdateTime');
+
     await waitFor(() => {
       const time = getLastTime('dataUpdateTime');
+
       if (time <= latest) {
         throw new Error('DATA NOT CHANGED');
       }

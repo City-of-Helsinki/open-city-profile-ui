@@ -62,7 +62,7 @@ import {
 } from '../actions/authCodeRedirectionInitialization';
 import { downloadAsFileAction } from '../actions/downloadAsFile';
 import { actionLogTypes } from '../../common/actionQueue/actionQueueRunner';
-import { getMockCallArgs } from '../../common/test/jestMockHelper';
+import { getMockCallArgs } from '../../common/test/mockHelper';
 import { getStoredQueue } from '../../common/actionQueue/actionQueueStorage';
 
 type HookFunctionResults = {
@@ -76,32 +76,41 @@ type HookFunctionResults = {
 
 const mockTunnistamoOidcUri = tunnistamoOidcUri;
 
-jest.mock('../../auth/authService', () => ({
-  __esModule: true,
-  ...jest.requireActual('../../auth/authService'),
-  default: {
-    userManager: {
-      metadataService: {
-        getAuthorizationEndpoint: () => Promise.resolve(mockTunnistamoOidcUri),
+vi.mock('../../auth/authService', async () => {
+  const module = await vi.importActual('../../auth/authService');
+
+  return {
+    __esModule: true,
+    ...module,
+    default: {
+      userManager: {
+        metadataService: {
+          getAuthorizationEndpoint: () =>
+            Promise.resolve(mockTunnistamoOidcUri),
+        },
       },
     },
-  },
+  };
+});
+
+const mockHistoryPushTracker = vi.fn();
+
+vi.mock('react-router', async () => {
+  const module = await vi.importActual('react-router');
+
+  return {
+    ...module,
+    useHistory: () => ({
+      push: mockHistoryPushTracker,
+    }),
+  };
+});
+
+vi.mock('file-saver', () => ({
+  saveAs: () => vi.fn(),
 }));
 
-const mockHistoryPushTracker = jest.fn();
-
-jest.mock('react-router', () => ({
-  ...jest.requireActual('react-router'),
-  useHistory: () => ({
-    push: mockHistoryPushTracker,
-  }),
-}));
-
-jest.mock('file-saver', () => ({
-  saveAs: () => jest.fn(),
-}));
-
-jest.mock('../actions/queues');
+vi.mock('../actions/queues');
 
 describe('useAuthCodeQueues', () => {
   const elementIds = {
@@ -125,8 +134,8 @@ describe('useAuthCodeQueues', () => {
   };
 
   const mockedWindowControls = mockWindowLocation();
-  const onCompleted = jest.fn();
-  const onError = jest.fn();
+  const onCompleted = vi.fn();
+  const onError = vi.fn();
 
   const downloadQueueProps: AuthCodeQueuesProps = {
     queueName: 'downloadProfile',
@@ -290,8 +299,8 @@ describe('useAuthCodeQueues', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
     cleanMockData();
     mockedWindowControls.reset();
     sessionStorage.clear();

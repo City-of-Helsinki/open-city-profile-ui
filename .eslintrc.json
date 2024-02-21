@@ -8,68 +8,106 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
-    "plugin:jest/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
     "plugin:jsx-a11y/recommended",
+    "plugin:vitest-globals/recommended",
     "plugin:prettier/recommended" // this should always be the last item on this array
   ],
   "plugins": [
     "react",
     "@typescript-eslint",
     "prettier",
-    "jest",
     "import",
     "sonarjs",
     "jsx-a11y"
   ],
   "rules": {
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-use-before-define": [
+      "error"
+    ],
     "@typescript-eslint/brace-style": [
       "error",
       "1tbs",
-      { "allowSingleLine": true }
+      {
+        "allowSingleLine": true
+      }
     ],
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/func-call-spacing": ["error"],
-    "@typescript-eslint/member-ordering": ["warn"],
-    "@typescript-eslint/no-require-imports": ["error"],
-    "react/no-unused-prop-types": ["warn", { "skipShapeProps": true }],
-    "array-bracket-spacing": ["warn", "never"],
+    "@typescript-eslint/func-call-spacing": [
+      "error"
+    ],
+    "@typescript-eslint/member-ordering": [
+      "warn"
+    ],
+    "@typescript-eslint/no-require-imports": [
+      "error"
+    ],
+    "react/no-unused-prop-types": [
+      "warn",
+      {
+        "skipShapeProps": true
+      }
+    ],
+    "array-bracket-spacing": [
+      "warn",
+      "never"
+    ],
     "import/order": [
       "error",
       {
         "groups": [
           "builtin",
           "external",
-          ["internal", "parent", "sibling", "index"]
+          [
+            "internal",
+            "parent",
+            "sibling",
+            "index"
+          ]
         ],
         "newlines-between": "always"
       }
     ],
-    "max-len": ["warn", { "code": 120 }],
+    "max-len": [
+      "warn",
+      {
+        "code": 120
+      }
+    ],
     "no-console": "warn",
     "no-plusplus": "error",
     "no-undef": "error",
-    "object-curly-spacing": ["warn", "always"],
+    "object-curly-spacing": [
+      "warn",
+      "always"
+    ],
     "curly": "error",
     "consistent-return": "error",
-    "no-shadow": ["error", { "hoist": "all" }],
+    "no-shadow": [
+      "error",
+      {
+        "hoist": "all"
+      }
+    ],
     "sonarjs/no-duplicate-string": "error",
-    "arrow-parens": ["error", "as-needed"],
-    "arrow-body-style": ["error", "as-needed"],
-    "object-shorthand": ["error", "properties"],
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
+    "arrow-body-style": [
+      "error",
+      "as-needed"
+    ],
+    "object-shorthand": [
+      "error",
+      "properties"
+    ],
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "jsx-a11y/no-autofocus": "off",
-    "jest/valid-title": "off",
     "import/no-named-as-default": "off",
-    "jest/no-conditional-expect": "off",
-    "jest/expect-expect": "off",
-    "jest/no-mocks-import": "off",
-    "jest/no-export": "off",
-    "jest/no-standalone-expect": "off",
     "import/no-named-as-default-member": "off"
   },
   "settings": {
@@ -78,15 +116,25 @@
     },
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "paths": ["src"]
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ],
+        "paths": [
+          "src"
+        ]
       }
     }
   },
   "env": {
     "browser": true,
-    "jest": true,
-    "node": true
+    "node": true,
+    "vitest-globals/env": true
+  },
+  "globals": {
+    "fetchMock": true
   },
   "parserOptions": {
     "project": "./tsconfig.json"

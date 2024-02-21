@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { ContentSource } from 'hds-react';
+import { Mock } from 'vitest';
 
 import CookieConsentModal from '../CookieConsentModal';
 import MockCookieModal, {
@@ -13,12 +14,16 @@ import MockCookieModal, {
 import { trackingCookieId } from '../cookieContentSource';
 import config from '../../config';
 
-jest.mock('hds-react', () => ({
-  ...jest.requireActual('hds-react'),
-  CookieModal: (props: { contentSource: ContentSource }) => (
-    <MockCookieModal contentSource={props.contentSource} />
-  ),
-}));
+vi.mock('hds-react', async () => {
+  const module = await vi.importActual('hds-react');
+
+  return {
+    ...module,
+    CookieModal: (props: { contentSource: ContentSource }) => (
+      <MockCookieModal contentSource={props.contentSource} />
+    ),
+  };
+});
 
 const mockUseLocationValue = {
   pathname: '/',
@@ -27,17 +32,21 @@ const mockUseLocationValue = {
   state: null,
 };
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn().mockImplementation(() => mockUseLocationValue),
-}));
+vi.mock('react-router-dom', async () => {
+  const module = await vi.importActual('react-router-dom');
+
+  return {
+    ...module,
+    useLocation: vi.fn().mockImplementation(() => mockUseLocationValue),
+  };
+});
 
 describe('CookieConsentModal', () => {
-  const pushTracker = jest.fn();
+  const pushTracker = vi.fn();
   const initialEnv = window._env_.REACT_APP_ENVIRONMENT;
   const renderComponent = () => render(<CookieConsentModal />);
   beforeAll(() => {
-    ((global.window as unknown) as { _paq: { push: jest.Mock } })._paq = {
+    ((global.window as unknown) as { _paq: { push: Mock } })._paq = {
       push: pushTracker,
     };
     window._env_.REACT_APP_ENVIRONMENT = 'production';

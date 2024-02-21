@@ -18,22 +18,33 @@ import {
 import mockWindowLocation from '../../../common/test/mockWindowLocation';
 import config from '../../../config';
 
-const mockrejectExecutorWithStartPageRedirection = jest.fn();
-jest.mock('../utils', () => ({
-  __esModule: true,
-  ...jest.requireActual('../utils'),
-  rejectExecutorWithStartPageRedirection: (...args: unknown[]) => {
-    mockrejectExecutorWithStartPageRedirection(args);
-    return Promise.reject(new Error('Mocked timeout'));
-  },
-}));
-const mockGetAuthCodeRedirectionInitializationResult = jest.fn();
-jest.mock('../authCodeRedirectionInitialization', () => ({
-  __esModule: true,
-  ...jest.requireActual('../authCodeRedirectionInitialization'),
-  getAuthCodeRedirectionInitializationResult: () =>
-    mockGetAuthCodeRedirectionInitializationResult(),
-}));
+const mockrejectExecutorWithStartPageRedirection = vi.fn();
+
+vi.mock('../utils', async () => {
+  const module = await vi.importActual('../utils');
+
+  return {
+    __esModule: true,
+    ...module,
+    rejectExecutorWithStartPageRedirection: (...args: unknown[]) => {
+      mockrejectExecutorWithStartPageRedirection(args);
+      return Promise.reject(new Error('Mocked timeout'));
+    },
+  };
+});
+
+const mockGetAuthCodeRedirectionInitializationResult = vi.fn();
+
+vi.mock('../authCodeRedirectionInitialization', async () => {
+  const module = await vi.importActual('../authCodeRedirectionInitialization');
+
+  return {
+    __esModule: true,
+    ...module,
+    getAuthCodeRedirectionInitializationResult: () =>
+      mockGetAuthCodeRedirectionInitializationResult(),
+  };
+});
 
 describe('authCodeRedirectionAction.ts', () => {
   const mockedWindowControls = mockWindowLocation();
@@ -76,8 +87,8 @@ describe('authCodeRedirectionAction.ts', () => {
 
   afterEach(() => {
     mockedWindowControls.reset();
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
 
   describe('tunnistamoAuthCodeCallbackUrlAction and keycloakAuthCodeCallbackUrlAction', () => {
@@ -127,7 +138,7 @@ describe('authCodeRedirectionAction.ts', () => {
       );
       expect(error2).not.toBeNull();
     });
-    it(`Rejects after a timeout, if url is a gdrp callback, but state in the url 
+    it(`Rejects after a timeout, if url is a gdrp callback, but state in the url
         does not match the action's assumed state`, async () => {
       const state = 'keycloak-state';
       mockedWindowControls.setPath(config.gdprCallbackPath);

@@ -1,9 +1,10 @@
 import React from 'react';
 import { RenderResult } from '@testing-library/react';
 import { ContentSource } from 'hds-react';
+import { Mock } from 'vitest';
 
 import { AnyObject } from '../../graphql/typings';
-import { getMockCallArgs } from '../../common/test/jestMockHelper';
+import { getMockCallArgs } from '../../common/test/mockHelper';
 
 export async function setCookieConsents(
   result: RenderResult,
@@ -32,7 +33,7 @@ export async function triggeronAllConsentsGiven(result: RenderResult) {
   return clickButton(result, 'trigger-on-all-consents-given');
 }
 
-export function verifyTrackingCookiesAreRemembered(mockFn: jest.Mock) {
+export function verifyTrackingCookiesAreRemembered(mockFn: Mock) {
   const calls = getMockCallArgs(mockFn) as string[];
   expect(calls).toEqual([
     ['rememberCookieConsentGiven'],
@@ -40,7 +41,7 @@ export function verifyTrackingCookiesAreRemembered(mockFn: jest.Mock) {
   ]);
 }
 
-export function verifyTrackingCookiesAreForgotten(mockFn: jest.Mock) {
+export function verifyTrackingCookiesAreForgotten(mockFn: Mock) {
   const calls = getMockCallArgs(mockFn) as string[];
   expect(calls).toEqual([['forgetCookieConsentGiven'], ['forgetConsentGiven']]);
 }

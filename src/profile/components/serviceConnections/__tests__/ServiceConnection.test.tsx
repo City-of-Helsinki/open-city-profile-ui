@@ -16,7 +16,7 @@ import getServiceConnectionData, {
 import encodeServiceName from '../../../helpers/encodeServiceName';
 
 describe('<ServiceConnection /> ', () => {
-  const onDeleteTracker = jest.fn();
+  const onDeleteTracker = vi.fn();
 
   const queryResultWithServiceConnection = getMyProfileWithServiceConnections();
   const serviceConnectionDataList = getServiceConnectionData(
@@ -90,8 +90,8 @@ describe('<ServiceConnection /> ', () => {
 
   afterEach(async () => {
     cleanComponentMocks();
-    jest.clearAllMocks();
-    jest.resetAllMocks();
+    vi.clearAllMocks();
+    vi.resetAllMocks();
   });
 
   const initTests = async (
@@ -100,7 +100,7 @@ describe('<ServiceConnection /> ', () => {
   ): Promise<TestTools> =>
     renderTestSuite(service || defaultServiceConnectionData, isActive);
 
-  it(`Shows the service title and the accordion can be expanded. 
+  it(`Shows the service title and the accordion can be expanded.
       Expanding shows service connection info and a remove button.`, async () => {
     await act(async () => {
       const { clickElement, getByText, waitForElement } = await initTests();

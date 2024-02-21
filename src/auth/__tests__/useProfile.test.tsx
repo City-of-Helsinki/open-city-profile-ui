@@ -53,7 +53,7 @@ describe('useProfile', () => {
     error = false
   ): DataGetters => {
     const userData = mockUserCreator(overrides);
-    const mockedGetUser = jest.spyOn(authService, 'getUser');
+    const mockedGetUser = vi.spyOn(authService, 'getUser');
 
     if (error) {
       mockedGetUser.mockRejectedValueOnce(null);
@@ -81,7 +81,7 @@ describe('useProfile', () => {
   };
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should return the profile which the authService.getUser() provides where amr is always an array', async () => {

@@ -10,13 +10,18 @@ import {
 import { ProfileData } from '../../../graphql/typings';
 import { exposeProfileContext } from '../../../common/test/exposeHooksForTesting';
 
-const mockSentyCaptureException = jest.fn();
-jest.mock('@sentry/browser', () => ({
-  ...jest.requireActual('@sentry/browser'),
-  captureException: () => {
-    mockSentyCaptureException();
-  },
-}));
+const mockSentyCaptureException = vi.fn();
+
+vi.mock('@sentry/browser', async () => {
+  const module = await vi.importActual('@sentry/browser');
+
+  return {
+    ...module,
+    captureException: () => {
+      mockSentyCaptureException();
+    },
+  };
+});
 
 describe('ProfileContext', () => {
   function createTestEnv(responses: MockedResponse[]) {
@@ -93,8 +98,8 @@ describe('ProfileContext', () => {
     ];
     const { result, waitForErrorChange } = createTestEnv(responses);
     let context = result.current;
-    const errorListener = jest.fn();
-    const errorListener2 = jest.fn();
+    const errorListener = vi.fn();
+    const errorListener2 = vi.fn();
     await act(async () => {
       // first promise is resolved when context.loading changes to true
       const errorPromise = waitForErrorChange();

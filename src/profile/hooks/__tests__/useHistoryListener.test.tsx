@@ -13,8 +13,8 @@ import {
 type HistoryListener = (e: Location) => void;
 type DomHelpers = ReturnType<typeof createDomHelpersWithTesting>;
 
-const stopListeningMock = jest.fn();
-const startListeningMock = jest.fn();
+const stopListeningMock = vi.fn();
+const startListeningMock = vi.fn();
 const mockHistory = {
   listeners: new Set<HistoryListener>(),
   listen(listener: HistoryListener) {
@@ -40,10 +40,14 @@ const resetMockHistory = () => {
   startListeningMock.mockClear();
 };
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn().mockImplementation(() => mockHistory),
-}));
+vi.mock('react-router-dom', async () => {
+  const module = await vi.importActual('react-router-dom');
+
+  return {
+    ...module,
+    useHistory: vi.fn().mockImplementation(() => mockHistory),
+  };
+});
 
 describe('useHistoryListener.ts ', () => {
   describe('helper function checkForInternalPageLoads', () => {

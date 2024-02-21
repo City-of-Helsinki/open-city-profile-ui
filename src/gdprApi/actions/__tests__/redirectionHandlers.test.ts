@@ -52,12 +52,12 @@ describe('redirectionHandlers.ts', () => {
 
   afterEach(() => {
     mockedWindowControls.reset();
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
     clock.uninstall();
   });
 
-  describe(`createRedirectorAndCatcherActionProps() creates an action that redirects and 
+  describe(`createRedirectorAndCatcherActionProps() creates an action that redirects and
             an action that catches the redirection.`, () => {
     describe(`redirector action`, () => {
       it('sets the given path and catcher action type to the url. Result is path?next=action.type', async () => {
@@ -71,7 +71,7 @@ describe('redirectionHandlers.ts', () => {
       });
     });
 
-    describe(`catcher action resolves with "true" and 
+    describe(`catcher action resolves with "true" and
               rejects with an error including redirection to given path and failed action type`, () => {
       it('Resolves to true, if path and next action in the url match.', async () => {
         const { runner, getCatcherAction } = initTests();

@@ -23,7 +23,12 @@ import i18n from '../../../../common/test/testi18nInit';
 import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
 import getEmailsFromNode from '../../../helpers/getEmailsFromNode';
 import { mockProfileCreator } from '../../../../common/test/userMocking';
-import { AMRStatic } from '../../../../auth/useProfile';
+import {
+  AMRStatic,
+  ProfileState,
+  tunnistusSuomifiAMR,
+} from '../../../../auth/useProfile';
+import * as useProfile from '../../../../auth/useProfile';
 import {
   CommonTestSuite,
   DataSource,
@@ -42,12 +47,14 @@ import {
 let mockedAmr: AMRStatic;
 const suomifiAmr: AMRStatic = 'tunnistusSuomifi';
 
-jest.mock('../../../../auth/useProfile', () => ({
-  __esModule: true,
-  ...jest.requireActual('../../../../auth/useProfile'),
-  tunnistusSuomifiAMR: suomifiAmr,
-  default: () => ({ profile: mockProfileCreator({ amr: [mockedAmr] }) }),
-}));
+vi.spyOn(useProfile, 'default').mockImplementation(
+  () =>
+    (({
+      profile: mockProfileCreator({
+        amr: [mockedAmr],
+      }),
+    } as unknown) as ProfileState)
+);
 
 describe('<EmailEditor /> ', () => {
   const responses: MockedResponse[] = [];
@@ -81,6 +88,7 @@ describe('<EmailEditor /> ', () => {
     responses.length = 0;
     mockedAmr = suomifiAmr;
   });
+
   afterEach(() => {
     cleanComponentMocks();
   });
@@ -173,6 +181,15 @@ describe('<EmailEditor /> ', () => {
   });
 
   it("will render email verification information when user's amr is tunnistusSuomifiAMR", async () => {
+    vi.spyOn(useProfile, 'default').mockImplementation(
+      () =>
+        (({
+          profile: mockProfileCreator({
+            amr: [tunnistusSuomifiAMR],
+          }),
+        } as unknown) as ProfileState)
+    );
+
     await act(async () => {
       const testTools = await initTests();
       await testEditingItem({

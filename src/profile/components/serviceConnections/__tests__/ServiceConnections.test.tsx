@@ -27,7 +27,7 @@ import { authCodeQueuesStorageKey } from '../../../../gdprApi/useAuthCodeQueues'
 import { getServiceConnectionsAction } from '../../../../gdprApi/actions/getServiceConnections';
 
 describe('<ServiceConnections />', () => {
-  const queryVariableTracker = jest.fn();
+  const queryVariableTracker = vi.fn();
   const renderTestSuite = (responses: MockedResponse[]) => {
     const responseProvider: ResponseProvider = payload => {
       queryVariableTracker(payload as ServiceConnectionsQueryVariables);
@@ -73,7 +73,7 @@ describe('<ServiceConnections />', () => {
       createQueueFromProps([
         {
           type: getServiceConnectionsAction.type,
-          executor: jest.fn(),
+          executor: vi.fn(),
           data: {
             serviceName: serviceList[0].name,
           },
@@ -83,7 +83,7 @@ describe('<ServiceConnections />', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     cleanup();
     resetApolloMocks();
   });

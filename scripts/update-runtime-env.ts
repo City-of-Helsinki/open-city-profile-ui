@@ -9,15 +9,14 @@ import.meta.env = {};
 
 dotenv.config({
   processEnv: import.meta.env,
-  path: ['.env.local', '.env.development', '.env.test', '.env'],
+  path: [`.env.${process.env.NODE_ENV}`, '.env'],
 });
 
 // react-scipts config requires ENV to be set
-const defaultNodeEnv = import.meta.env.TEST ? 'test' : 'development';
+const defaultNodeEnv = process.env.NODE_ENV ? 'test' : 'development';
 // Prevent collision is app is running while tests are started
-const configFile = import.meta.env.TEST
-  ? 'test-env-config.js'
-  : 'env-config.js';
+
+const configFile = process.env.TEST ? 'test-env-config.js' : 'env-config.js';
 
 import.meta.env.NODE_ENV = import.meta.env.NODE_ENV || defaultNodeEnv;
 

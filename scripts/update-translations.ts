@@ -7,9 +7,10 @@ import fetchTranslations from 'helsinki-utils/scripts/fetch-translations';
 
 /* @ts-ignore */
 import.meta.env = {};
+
 dotenv.config({
   processEnv: import.meta.env,
-  path: ['.env.local', '.env.development', '.env.test', '.env'],
+  path: [`.env.${process.env.NODE_ENV}`, '.env'],
 });
 
 const languages = import.meta.env.TRANSLATION_LANGUAGES.split(',');

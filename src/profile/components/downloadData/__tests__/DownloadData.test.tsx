@@ -26,21 +26,21 @@ import {
 import { tunnistamoAuthCodeRedirectionAction } from '../../../../gdprApi/actions/authCodeRedirectionHandler';
 import { getGdprQueryScopesAction } from '../../../../gdprApi/actions/getGdprScopes';
 
-const mockSaveAsListener = jest.fn();
+const mockSaveAsListener = vi.fn();
 
-jest.mock('file-saver', () => ({
+vi.mock('file-saver', () => ({
   saveAs: () => {
     mockSaveAsListener();
   },
 }));
 
-jest.mock('../../../../gdprApi/actions/queues');
+vi.mock('../../../../gdprApi/actions/queues');
 
 describe('<DownloadData /> ', () => {
   const mockedWindowControls = mockWindowLocation();
 
-  const onCompleted = jest.fn();
-  const onError = jest.fn();
+  const onCompleted = vi.fn();
+  const onError = vi.fn();
 
   const downloadQueueProps: AuthCodeQueuesProps = {
     queueName: 'downloadProfile',
@@ -56,7 +56,7 @@ describe('<DownloadData /> ', () => {
   const t = i18n.getFixedT('fi');
 
   const initTests = async () =>
-    renderComponentWithMocksAndContexts(jest.fn(), <DownloadData />);
+    renderComponentWithMocksAndContexts(vi.fn(), <DownloadData />);
 
   const submitButton: ElementSelector = {
     id: 'download-profile-button',
@@ -68,7 +68,7 @@ describe('<DownloadData /> ', () => {
   afterEach(() => {
     mockedWindowControls.reset();
     cleanComponentMocks();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it(`Clicking the button disables it, changes its text and starts the queue.`, async () => {

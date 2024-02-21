@@ -13,17 +13,17 @@ type TestProps = {
   shouldPollReturnValue: boolean;
 };
 
-jest.unmock('../http-poller');
+vi.unmock('../http-poller');
 
 const originalSetTimeout = global.setTimeout;
 const setImmediate = (f: (value?: unknown) => void) => originalSetTimeout(f, 0);
 
 describe(`http-poller`, () => {
-  const pollFunctionMockCallback = jest.fn();
-  const onErrorMockCallback = jest.fn();
-  const shouldPollMockCallback = jest.fn();
-  const loadCallTracker = jest.fn();
-  const onSuccessMockCallback = jest.fn();
+  const pollFunctionMockCallback = vi.fn();
+  const onErrorMockCallback = vi.fn();
+  const shouldPollMockCallback = vi.fn();
+  const loadCallTracker = vi.fn();
+  const onSuccessMockCallback = vi.fn();
   const intervalInMs = 200;
   let poller: HttpPoller;
   const forbiddenResponse: TestResponse = { status: HttpStatusCode.FORBIDDEN };
@@ -70,7 +70,7 @@ describe(`http-poller`, () => {
     });
   }
   const advanceOneInterval = async () => {
-    jest.advanceTimersByTime(intervalInMs + 1);
+    vi.advanceTimersByTime(intervalInMs + 1);
   };
   const advanceToTimerEnd = async () => {
     await advanceOneInterval();
@@ -78,7 +78,7 @@ describe(`http-poller`, () => {
   const advanceFromTimerEndToLoadEnd = async () => {
     await advanceOneInterval();
     await advanceOneInterval();
-    // https://stackoverflow.com/questions/52177631/jest-timer-and-promise-dont-work-well-settimeout-and-async-function
+    // https://stackoverflow.com/questions/52177631/vi-timer-and-promise-dont-work-well-settimeout-and-async-function
     await new Promise(resolve => setImmediate(resolve));
   };
   const advanceFromStartTimerToLoadEnd = async () => {
@@ -91,11 +91,11 @@ describe(`http-poller`, () => {
   };
   afterEach(() => {
     poller.stop();
-    jest.resetAllMocks();
-    jest.useRealTimers();
+    vi.resetAllMocks();
+    vi.useRealTimers();
   });
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
   describe('Calling start() starts the timer and when timer ends ', () => {
     it('the pollFunction and shouldPoll have been called continuously', async () => {
@@ -128,7 +128,7 @@ describe(`http-poller`, () => {
       expect(shouldPollMockCallback).toHaveBeenCalledTimes(2);
       expect(pollFunctionMockCallback).toHaveBeenCalledTimes(0);
     });
-    it(`the onError is called with responseStatus when response status is not httpStatus.OK (200). 
+    it(`the onError is called with responseStatus when response status is not httpStatus.OK (200).
         Polling continues when onError returns {keepPolling : true}`, async () => {
       poller = createPoller({
         ...pollerDefaultTestProps,
@@ -142,7 +142,7 @@ describe(`http-poller`, () => {
       await advanceToTimerEnd();
       expect(shouldPollMockCallback).toHaveBeenCalledTimes(2);
     });
-    it(`the onError is called also on network error 
+    it(`the onError is called also on network error
         and polling stops after error when onError returns {keepPolling : false}`, async () => {
       poller = createPoller({
         ...pollerDefaultTestProps,

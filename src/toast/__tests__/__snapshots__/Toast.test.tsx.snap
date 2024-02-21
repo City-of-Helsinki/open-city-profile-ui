@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Toast should render correct toast 1`] = `
+exports[`Toast > should render correct toast 1`] = `
 <ToastProvider>
   <Portal
     containerInfo={
@@ -8,10 +8,10 @@ exports[`Toast should render correct toast 1`] = `
         id="toast-root"
       >
         <div
-          class="toast-container"
+          class="_toast-container_4ca617"
         >
           <div
-            class="notification"
+            class="_notification_067b98"
           >
             <section
               aria-label="Notification"
@@ -46,7 +46,7 @@ exports[`Toast should render correct toast 1`] = `
                   class="Notification-module_body__9BSAD notification_hds-notification__body__3cobH"
                 >
                   <div
-                    class="message-wrapper"
+                    class="_message-wrapper_067b98"
                   >
                     notification.defaultErrorText
                   </div>
@@ -81,7 +81,7 @@ exports[`Toast should render correct toast 1`] = `
     }
   >
     <div
-      className="toast-container"
+      className="_toast-container_4ca617"
     >
       <Toast
         hidden={false}
@@ -98,7 +98,7 @@ exports[`Toast should render correct toast 1`] = `
           type="error"
         >
           <div
-            className="notification"
+            className="_notification_067b98"
           >
             <ForwardRef
               closeButtonLabelText="notification.closeButtonText"
@@ -113,12 +113,12 @@ exports[`Toast should render correct toast 1`] = `
                 <Animated(section)
                   aria-label="Notification"
                   className="Notification-module_notification__2hN3H notification_hds-notification__2DQPN Notification-module_error__2sn9y notification_hds-notification--error__3T1Of"
-                  style={Object {}}
+                  style={{}}
                 >
                   <section
                     aria-label="Notification"
                     className="Notification-module_notification__2hN3H notification_hds-notification__2DQPN Notification-module_error__2sn9y notification_hds-notification--error__3T1Of"
-                    style={Object {}}
+                    style={{}}
                   >
                     <div
                       className="Notification-module_content__ZZKvE notification_hds-notification__content__5ylSS"
@@ -137,7 +137,7 @@ exports[`Toast should render correct toast 1`] = `
                             aria-label="error-fill"
                             className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Notification-module_icon__1ans7 notification_hds-icon__29HQM"
                             role="img"
-                            style={Object {}}
+                            style={{}}
                             viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
                           >
@@ -159,7 +159,7 @@ exports[`Toast should render correct toast 1`] = `
                         className="Notification-module_body__9BSAD notification_hds-notification__body__3cobH"
                       >
                         <div
-                          className="message-wrapper"
+                          className="_message-wrapper_067b98"
                         >
                           notification.defaultErrorText
                         </div>
@@ -180,7 +180,7 @@ exports[`Toast should render correct toast 1`] = `
                           aria-label="cross"
                           className="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
                           role="img"
-                          style={Object {}}
+                          style={{}}
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
                         >
@@ -204,7 +204,8 @@ exports[`Toast should render correct toast 1`] = `
   </Portal>
   <TestInvoker
     toast={
-      Object {
+      {
+        "hidden": false,
         "id": "test-1",
         "title": "test title",
         "type": "error",

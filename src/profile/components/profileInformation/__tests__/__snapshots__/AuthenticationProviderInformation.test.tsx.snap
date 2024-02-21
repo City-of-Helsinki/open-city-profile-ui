@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<AuthenticationProviderInformation />  renders correctly when AMR is helsinkiAccountAMR should render helsinki account information as expected based on config 1`] = `
+exports[`<AuthenticationProviderInformation />  > renders correctly when AMR is helsinkiAccountAMR > should render helsinki account information as expected based on config 1`] = `
 <AuthenticationProviderInformation>
   <ProfileSection>
     <section
-      className="content-box profile-section"
+      className="_content-box_56bee9 _profile-section_4e7a14"
     >
       <div
-        className="flex-box-columns"
+        className="_flex-box-columns_31c5b6"
       >
         <div
-          className="editor-description-container"
+          className="_editor-description-container_31c5b6"
         >
           <h2>
             profileInformation.authenticationMethod
@@ -25,17 +25,17 @@ exports[`<AuthenticationProviderInformation />  renders correctly when AMR is he
 </AuthenticationProviderInformation>
 `;
 
-exports[`<AuthenticationProviderInformation />  renders correctly when AMR is tunnistusSuomifiAMR should render suomi.fi information as expected based on config 1`] = `
+exports[`<AuthenticationProviderInformation />  > renders correctly when AMR is tunnistusSuomifiAMR > should render suomi.fi information as expected based on config 1`] = `
 <AuthenticationProviderInformation>
   <ProfileSection>
     <section
-      className="content-box profile-section"
+      className="_content-box_56bee9 _profile-section_4e7a14"
     >
       <div
-        className="flex-box-columns"
+        className="_flex-box-columns_31c5b6"
       >
         <div
-          className="editor-description-container"
+          className="_editor-description-container_31c5b6"
         >
           <h2>
             profileInformation.authenticationMethod

@@ -285,7 +285,7 @@ describe('useActionQueue', () => {
 
   afterEach(async () => {
     cleanMockData();
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('Actions are executed and state changes while queue is processed ', async () => {

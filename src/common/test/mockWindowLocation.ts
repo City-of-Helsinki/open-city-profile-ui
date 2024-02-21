@@ -16,7 +16,7 @@ export default function mockWindowLocation(): MockedWindowLocationActions {
 
   const unload = () =>
     setTimeout(() => window.dispatchEvent(new Event('unload')), 20);
-  const tracker = jest.fn(unload);
+  const tracker = vi.fn(unload);
   const location = Object.defineProperties(
     {},
     {

@@ -1,8 +1,10 @@
+import { Mock } from 'vitest';
+
 import { HttpPoller, HttpPollerProps } from '../http-poller';
 
 type MockHttpPollerData = {
-  start: jest.Mock;
-  stop: jest.Mock;
+  start: Mock;
+  stop: Mock;
   props?: HttpPollerProps;
   actual?: HttpPoller;
   actualCreator?: (p: HttpPollerProps) => HttpPoller;
@@ -16,8 +18,8 @@ const globalWithPollerData = (global as unknown) as GlobalWithPollerData;
 
 if (!globalWithPollerData.mockHttpPoller) {
   globalWithPollerData.mockHttpPoller = {
-    start: jest.fn(),
-    stop: jest.fn(),
+    start: vi.fn(),
+    stop: vi.fn(),
     props: undefined,
   };
 }

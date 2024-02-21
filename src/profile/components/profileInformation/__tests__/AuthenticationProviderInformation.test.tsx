@@ -3,26 +3,25 @@ import { mount } from 'enzyme';
 import enzymeToJson from 'enzyme-to-json';
 
 import AuthenticationProviderInformation from '../AuthenticationProviderInformation';
-import { mockUserCreator } from '../../../../common/test/userMocking';
+import { mockProfileCreator } from '../../../../common/test/userMocking';
+import * as useProfile from '../../../../auth/useProfile';
+import * as authenticationProviderUtil from '../authenticationProviderUtil';
 
-let mockCurrentAmr;
 const helsinkiAccountAMR = 'helsinki_tunnus-test';
 
-jest.mock('../../../../config', () => ({
-  helsinkiAccountAMR,
-}));
-
-jest.mock('../../../../auth/useProfile', () => () => mockUserCreator());
-
-jest.mock('../authenticationProviderUtil', () => ({
-  ...jest.requireActual('../authenticationProviderUtil'),
-  getAmrStatic: () => mockCurrentAmr,
-}));
+vi.spyOn(useProfile, 'default').mockImplementation(
+  () =>
+    (({
+      profile: mockProfileCreator(),
+    } as unknown) as useProfile.ProfileState)
+);
 
 describe('<AuthenticationProviderInformation /> ', () => {
   const defaultProps = {};
-  const getWrapper = props =>
-    mount(<AuthenticationProviderInformation {...defaultProps} {...props} />);
+
+  const getWrapper = () =>
+    mount(<AuthenticationProviderInformation {...defaultProps} />);
+
   describe('renders correctly when AMR is helsinkiAccountAMR', () => {
     beforeAll(() => {
       window._env_.REACT_APP_HELSINKI_ACCOUNT_AMR = helsinkiAccountAMR;
@@ -33,14 +32,20 @@ describe('<AuthenticationProviderInformation /> ', () => {
     });
 
     it('should render helsinki account information as expected based on config', () => {
-      mockCurrentAmr = 'helsinkiAccount';
+      vi.spyOn(authenticationProviderUtil, 'getAmrStatic').mockImplementation(
+        () => 'helsinkiAccount' as useProfile.AMRStatic
+      );
+
       const wrapper = getWrapper();
       expect(enzymeToJson(wrapper)).toMatchSnapshot();
     });
   });
   describe('renders correctly when AMR is tunnistusSuomifiAMR', () => {
     it('should render suomi.fi information as expected based on config', () => {
-      mockCurrentAmr = 'tunnistusSuomifi';
+      vi.spyOn(authenticationProviderUtil, 'getAmrStatic').mockImplementation(
+        () => 'tunnistusSuomifi' as useProfile.AMRStatic
+      );
+
       const wrapper = getWrapper();
       expect(enzymeToJson(wrapper)).toMatchSnapshot();
     });

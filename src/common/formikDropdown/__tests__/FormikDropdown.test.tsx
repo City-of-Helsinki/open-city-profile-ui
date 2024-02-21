@@ -3,6 +3,7 @@ import { I18nextProvider, useTranslation } from 'react-i18next';
 import { Formik, FormikProps, Form } from 'formik';
 import { act, waitFor } from '@testing-library/react';
 import to from 'await-to-js';
+import { Mock } from 'vitest';
 
 import FormikDropdown, { OptionType } from '../FormikDropdown';
 import i18nModule from '../../../i18n/i18nInit';
@@ -29,8 +30,8 @@ type RenderProps = {
 
 describe('<FormikDropdown /> ', () => {
   const formikId = 'formik-dropdown';
-  const onChangeListener = jest.fn();
-  const onSubmitListener = jest.fn();
+  const onChangeListener = vi.fn();
+  const onSubmitListener = vi.fn();
   let injectNewCurrentOption: (newCurrentOption: OptionType) => void;
   let optionsInComponent: OptionType[];
   const svLanguageCode = 'sv';
@@ -182,7 +183,7 @@ describe('<FormikDropdown /> ', () => {
       );
     });
 
-  const getLastMockCallArgs = (func: jest.Mock) =>
+  const getLastMockCallArgs = (func: Mock) =>
     func.mock.calls[func.mock.calls.length - 1];
 
   const submitFormAndReturnData = async (
@@ -200,16 +201,16 @@ describe('<FormikDropdown /> ', () => {
 
   beforeEach(() => {
     optionsInComponent = [];
-    jest.resetAllMocks();
+    vitest.resetAllMocks();
   });
 
   describe('throws an error when ', () => {
     // suppress errors in console
     beforeAll(() => {
-      jest.spyOn(console, 'error').mockImplementation(() => jest.fn());
+      vitest.spyOn(console, 'error').mockImplementation(() => vitest.fn());
     });
     afterAll(() => {
-      jest.restoreAllMocks();
+      vitest.restoreAllMocks();
     });
 
     it('allowSearch is enabled, but toggleButtonAriaLabel is not set', async () => {
@@ -268,7 +269,7 @@ describe('<FormikDropdown /> ', () => {
       );
     });
 
-    it(`input value equals the label of the initial option when 
+    it(`input value equals the label of the initial option when
         default option exists, but current does not`, async () => {
       await renderAndVerifyInputAndFormValue(
         { defaultValue: defaultTestValue, initialValue: initialTestValue },
@@ -277,7 +278,7 @@ describe('<FormikDropdown /> ', () => {
     });
 
     it(`When allowSearch is false, input field does not exist.
-        Button text equals label of the current option. Even when default and initial options exist. 
+        Button text equals label of the current option. Even when default and initial options exist.
         "allowSearch" must be false when current option is used`, async () => {
       const { getElement } = await renderAndVerifyInputAndFormValue(
         {
@@ -373,7 +374,7 @@ describe('<FormikDropdown /> ', () => {
       }
     }, 15000);
     it(`Using current option prevents visible changes from within the FormikDropdown.
-        Button text does not change even when option is changed. 
+        Button text does not change even when option is changed.
         Form value changes, but the component which set the current option should handle it.
         Button text can match new option if parent sets new currentOption.
         `, async () => {

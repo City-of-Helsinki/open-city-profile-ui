@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import fetchMock from 'jest-fetch-mock';
 
 import authService from '../../auth/authService';
 import client from '../client';
@@ -7,7 +6,7 @@ import client from '../client';
 describe('graphql client', () => {
   beforeEach(() => {
     fetchMock.resetMocks();
-    jest.spyOn(authService, 'getToken').mockReturnValue('foo.bar.baz');
+    vi.spyOn(authService, 'getToken').mockReturnValue('foo.bar.baz');
   });
 
   it('sets authorization-header to requests', async () => {
