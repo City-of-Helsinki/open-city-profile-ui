@@ -1,17 +1,29 @@
 .logo {
   background-color: var(--color-black);
   background-size: contain;
-  height: 60px;
+  height: 80px;
 }
 
 .logo-fi {
-  width: 130px;
+  width: 174.21px;
   -webkit-mask: url('../svg/HelsinkiLogoFi.svg') no-repeat;
   mask: url('../svg/HelsinkiLogoFi.svg') no-repeat;
 }
 
 .logo-sv {
-  width: 175px;
+  width: 230px;
   -webkit-mask: url('../svg/HelsinkiLogoSv.svg') no-repeat;
   mask: url('../svg/HelsinkiLogoSv.svg') no-repeat;
+}
+
+.logoWrapper {
+  margin-top: var(--spacing-layout-l);
+  height: 80px;
+}
+
+@media (max-width: 767.98px) {
+  .logoWrapper {
+    margin-top: var(--spacing-layout-s);
+    height: 65px;
+  }
 }
