@@ -19,6 +19,7 @@ const Footer = () => {
     });
   };
 
+  const logoHref = `https://hel.fi/${lang}`;
   const whiteColor = 'var(--color-white)';
 
   return (
@@ -58,7 +59,7 @@ const Footer = () => {
             alt="Helsingin kaupunki"
           />
         }
-        logoHref="https://hel.fi"
+        logoHref={logoHref}
       >
         <HDSFooter.Link
           aria-label={createAriaLabel(t('footer.privacy'))}
