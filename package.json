@@ -104,7 +104,10 @@
     "helsinki-utils": "City-of-Helsinki/helsinki-utils-js#0.1.0"
   },
   "resolutions": {
-    "@apollo/federation": "0.38.1"
+    "@apollo/federation": "0.38.1",
+    "git-url-parse": "^13.0.0",
+    "moment": "^2.29.4",
+    "node-fetch": "^2.6.7"
   },
   "jest": {
     "resetMocks": false
