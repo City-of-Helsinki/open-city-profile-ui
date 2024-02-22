@@ -7,6 +7,7 @@ import {
   Logo,
   logoFi,
   logoSv,
+  LanguageSelectorProps,
 } from 'hds-react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
@@ -71,6 +72,13 @@ function Header(): React.ReactElement {
     }
   };
 
+  // List all languages as primary languages
+  const sortLanguageOptions: LanguageSelectorProps['sortLanguageOptions'] = (
+    options: LanguageOption[],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _activeLanguage
+  ) => [options, []];
+
   return (
     <HDSHeader
       onDidChangeLanguage={changeLanguageAction}
@@ -88,7 +96,8 @@ function Header(): React.ReactElement {
         logo={<Logo src={logoSrcFromLanguage} alt={t('helsinkiLogo')} />}
         frontPageLabel={t('nav.goToHomePage')}
       >
-        <HDSHeader.SimpleLanguageOptions languages={languageOptions} />
+        <HDSHeader.LanguageSelector sortLanguageOptions={sortLanguageOptions} />
+
         <hr aria-hidden="true" />
         <UserDropdown />
       </HDSHeader.ActionBar>
