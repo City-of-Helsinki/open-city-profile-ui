@@ -74,9 +74,7 @@ function Header(): React.ReactElement {
 
   // List all languages as primary languages
   const sortLanguageOptions: LanguageSelectorProps['sortLanguageOptions'] = (
-    options: LanguageOption[],
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _activeLanguage
+    options: LanguageOption[]
   ) => [options, []];
 
   return (
