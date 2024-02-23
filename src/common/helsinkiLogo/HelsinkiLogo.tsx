@@ -1,32 +1,26 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import classNames from 'classnames';
+import { Logo, logoFi, logoSv } from 'hds-react';
 
 import styles from './HelsinkiLogo.module.css';
 import getLanguageCode from '../helpers/getLanguageCode';
 
-type Props = {
-  className?: string;
-  isLinkToFrontPage?: boolean;
-};
-function HelsinkiLogo({
-  className,
-  isLinkToFrontPage,
-}: Props): React.ReactElement {
+function HelsinkiLogo(): React.ReactElement {
   const { t, i18n } = useTranslation();
-
   const lang = getLanguageCode(i18n.languages[0]);
-  const logoStyle = lang === 'sv' ? styles['logo-sv'] : styles['logo-fi'];
+  const logoSrc = lang === 'sv' ? logoSv : logoFi;
+  const altText = t('helsinkiLogo');
 
-  const logoClassName = classNames(styles['logo'], logoStyle, className);
-  const titleAndAriaLabel = t('nav.titleAriaLabel');
-
-  if (isLinkToFrontPage) {
-    return <Link to="/" className={logoClassName} title={titleAndAriaLabel} />;
-  }
-
-  return <span className={logoClassName} aria-label={titleAndAriaLabel} />;
+  return (
+    <div className={styles.logoWrapper}>
+      <Logo
+        src={logoSrc}
+        size="full"
+        alt={altText}
+        data-testid={'helsinki-logo'}
+      />
+    </div>
+  );
 }
 
 export default HelsinkiLogo;

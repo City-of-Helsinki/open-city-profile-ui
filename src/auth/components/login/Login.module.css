@@ -16,14 +16,17 @@
   padding-bottom: var(--spacing-layout-l);
 }
 
-button.button {
-  margin-top: var(--spacing-layout-m);
-}
-
 .content h1 {
   margin-top: var(--spacing-layout-m);
   margin-bottom: 0;
-  line-height: var(--lineheight-s);;
+  line-height: var(--lineheight-s);
+}
+
+@media (max-width: 767.98px) {
+  .content h1 {
+    margin-top: var(--spacing-layout-xs);
+    font-size: 2rem;
+  }
 }
 
 .ingress {
@@ -31,4 +34,12 @@ button.button {
   margin-bottom: var(--spacing-layout-m);
   line-height: var(--lineheight-l);
   font-size: var(--fontsize-body-l);
+}
+
+@media (max-width: 767.98px) {
+  .ingress {
+    margin-top: var(--spacing-layout-xs);
+    margin-bottom: var(--spacing-layout-s);
+    font-size: var(--fontsize-body-s);
+  }
 }
