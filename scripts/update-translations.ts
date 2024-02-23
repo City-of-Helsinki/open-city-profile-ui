@@ -10,7 +10,8 @@ import.meta.env = {};
 
 dotenv.config({
   processEnv: import.meta.env,
-  path: [`.env.${process.env.NODE_ENV}`, '.env'],
+  path: ['.env', `.env.${process.env.NODE_ENV}`, '.env.local'],
+  override: true,
 });
 
 const languages = import.meta.env.TRANSLATION_LANGUAGES.split(',');

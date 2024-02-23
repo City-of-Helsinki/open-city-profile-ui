@@ -201,16 +201,16 @@ describe('<FormikDropdown /> ', () => {
 
   beforeEach(() => {
     optionsInComponent = [];
-    vitest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   describe('throws an error when ', () => {
     // suppress errors in console
     beforeAll(() => {
-      vitest.spyOn(console, 'error').mockImplementation(() => vitest.fn());
+      vi.spyOn(console, 'error').mockImplementation(() => vi.fn());
     });
     afterAll(() => {
-      vitest.restoreAllMocks();
+      vi.restoreAllMocks();
     });
 
     it('allowSearch is enabled, but toggleButtonAriaLabel is not set', async () => {

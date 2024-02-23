@@ -6,10 +6,12 @@ import { User } from 'oidc-client';
 import authService, { API_TOKEN } from '../authService';
 import {
   getHttpPollerMockData,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   enableActualHttpPoller,
 } from '../__mocks__/http-poller';
 import i18n from '../../common/test/testi18nInit';
 import mockWindowLocation from '../../common/test/mockWindowLocation';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as HttpPoller from '../http-poller';
 
 describe('authService', () => {
@@ -411,6 +413,7 @@ describe('authService', () => {
   //       expect(sessionStorage.getItem(API_TOKEN)).toEqual(apiToken);
   //     });
   //   });
+  // eslint-disable-next-line max-len
   //   it('fetchApiToken calls are retried until maxRetries is reached. Then authService.logout() is called', async () => {
   //     const { sessionUser } = setSession({
   //       validUser: true,

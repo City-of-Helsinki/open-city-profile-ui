@@ -1,6 +1,6 @@
 # Helsinki-profile / OmaHelsinki / Citizen-profile UI
 
-UI for citizen-profile - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+UI for citizen-profile.
 
 ## Environments
 
@@ -22,28 +22,30 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
+https://vitejs.dev/guide/cli.html#vite
+
 Scripts generates first environment variables to `public/env-config.js` with `scripts/update-runtime-env.ts`, which contains the
-actual used variables when running the app. App is not using CRA's default `process.env` way to refer of variables but
+actual used variables when running the app. App is not using default `process.env` way to refer of variables but
 `window._env_` object.
 
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+See the section about [running tests](https://vitest.dev/guide/) for more information.
 
 Scripts generates first environment variables to `public/env-config.js` with `scripts/update-runtime-env.ts`, which contains the
-actual used variables when running the app. App is not using CRA's default `process.env` way to refer of variables but
+actual used variables when running the app. App is not using default `process.env` way to refer of variables but
 `window._env_` object.
 
 ### `yarn build`
 
 Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+It correctly bundles app in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+See the section about [build](https://vitejs.dev/guide/cli.html#build) for more information.
 
 Note that running built application locally you need to generate also `public/env-config.js` file. It can be done with
 `yarn update-runtime-env`. By default it's generated for development environment if no `NODE_ENV` is set.
@@ -63,8 +65,8 @@ You still need to update tests and add the translation files to the git reposito
 Generates variable object used when app is running. Generated object is stored at `public/env-config.js` and available
 as `window._env_` object.
 
-Generation uses `react-scripts` internals, so values come from either environment variables or files (according
-[reac-scripts documentation](https://create-react-app.dev/docs/adding-custom-environment-variables/#what-other-env-files-can-be-used)).
+Generation uses values from either
+[environment variables or files](https://vitejs.dev/guide/env-and-mode.html).
 
 At the production deployment same generation is done with [`env.sh`](scripts/env.sh).
 
@@ -73,10 +75,6 @@ At the production deployment same generation is done with [`env.sh`](scripts/env
 Fetches country calling codes and generates src/i18n/countryCallingCodes.json file. See scripts/update-country-calling-codes.ts for more information.
 
 ## Environment variables
-
-Since this app uses react-scripts (Create React App) the env-files work a bit differently to what people are used to. Read more about them [here](https://create-react-app.dev/docs/adding-custom-environment-variables).
-
-The following envs are used:
 
 | Name                                  | Description                                                                                |
 | ------------------------------------- | ------------------------------------------------------------------------------------------ |
@@ -171,7 +169,3 @@ The graphql-backend for development is located at https://profiili-api.test.kuva
 ## Learn More
 
 To learn more about specific choices in this repository, you can browse the [docs](/docs).
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

@@ -56,7 +56,6 @@ describe('<WithAuthCheck /> ', () => {
 
   it('renders a load-indicator while waiting for user data.', async () => {
     vi.spyOn(authService, 'getAuthenticatedUser').mockRejectedValue(null);
-
     await act(async () => {
       const { waitForElement } = await renderTestSuite();
       await waitForElement({ testId: 'load-indicator' });
@@ -65,7 +64,6 @@ describe('<WithAuthCheck /> ', () => {
 
   it('redirects to /login when user is not authenticated.', async () => {
     vi.spyOn(authService, 'getAuthenticatedUser').mockRejectedValue(null);
-
     await act(async () => {
       await renderTestSuite();
       await waitFor(() => {
@@ -77,18 +75,13 @@ describe('<WithAuthCheck /> ', () => {
       });
     });
   });
-
   it('renders the child component when user is authenticated. User is passed as a prop.', async () => {
     vi.spyOn(authService, 'getAuthenticatedUser').mockResolvedValue(mockedUser);
-
     await act(async () => {
       const { waitForElement, getElement } = await renderTestSuite();
-
       await waitForElement({ testId: authenticatedUserTestId });
-
       const userAccessToken = getElement({ testId: authenticatedUserTestId })
         ?.innerHTML;
-
       expect(userAccessToken).toBe(mockedUser.access_token);
     });
   });

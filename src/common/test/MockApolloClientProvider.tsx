@@ -140,7 +140,6 @@ export function MockApolloClientProvider({
         payload ? (payload.variables as UpdateMyProfileVariables) : undefined
       )
     );
-
     if ((response as ErrorReturnType).error) {
       return Promise.reject({
         body: JSON.stringify({

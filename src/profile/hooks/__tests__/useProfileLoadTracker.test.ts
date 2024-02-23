@@ -86,7 +86,6 @@ describe('useProfileLoader.ts ', () => {
     const loadingPromise = new Promise(resolve => {
       setTimeout(() => {
         updateMockUseProfileQueryResult({ loading: true });
-
         resolve(true);
       }, timeoutInMs);
     });
@@ -97,7 +96,6 @@ describe('useProfileLoader.ts ', () => {
           error,
           loading: false,
         });
-
         resolve(true);
       }, timeoutInMs * 2);
     });
@@ -114,9 +112,7 @@ describe('useProfileLoader.ts ', () => {
 
       if (currentHookProps.isProfileLoadComplete() === false) {
         renderHookResult.rerender();
-
         advanceTimers();
-
         throw new Error('Profile load is not complete');
       }
     });
@@ -133,21 +129,15 @@ describe('useProfileLoader.ts ', () => {
     addAllowedGraphQLError: boolean;
   }) => {
     const renderHookResult = await initTests();
-
     const result = profileExist
       ? { data: loadSuccess ? getMyProfile() : undefined }
       : { data: { myProfile: null } };
-
     const errorObj = addAllowedGraphQLError
       ? createApolloErrorWithAllowedPermissionError()
       : (({} as unknown) as ApolloError);
-
     const error = loadSuccess ? undefined : errorObj;
-
     mockProfileLoadProcess({ ...result, error });
-
     await waitForProfileLoadToEnd(renderHookResult);
-
     return { renderHookResult };
   };
 
@@ -222,13 +212,10 @@ describe('useProfileLoader.ts ', () => {
           profileExist: true,
           addAllowedGraphQLError: true,
         });
-
         const currentHookProps = renderHookResult.result.current;
-
         expect(currentHookProps.hasExistingProfile()).toBeTruthy();
         expect(currentHookProps.didProfileLoadFail()).toBeFalsy();
         expect(currentHookProps.isProfileLoadComplete()).toBeTruthy();
-
         expect(fetchProfileMock).toHaveBeenCalledTimes(1);
       });
     });

@@ -88,7 +88,6 @@ describe('<EmailEditor /> ', () => {
     responses.length = 0;
     mockedAmr = suomifiAmr;
   });
-
   afterEach(() => {
     cleanComponentMocks();
   });

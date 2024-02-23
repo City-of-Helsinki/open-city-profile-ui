@@ -9,6 +9,7 @@
     "@digitak/esrun": "^3.2.26",
     "@react-aria/visually-hidden": "^3.2.1",
     "@sentry/browser": "^6.19.7",
+    "@sinonjs/fake-timers": "^8.1.0",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^12.1.4",
@@ -23,6 +24,7 @@
     "@types/react-dom": "16.9.2",
     "@types/react-helmet": "^6.0.0",
     "@types/react-router-dom": "^5.1.0",
+    "@types/sinonjs__fake-timers": "^8.1.0",
     "@types/uuid": "^8.0.0",
     "@types/validator": "^13.1.4",
     "@types/yup": "^0.26.24",
@@ -72,6 +74,7 @@
     "validator": "^13.7.0",
     "vite": "^5.1.3",
     "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-graphql-loader": "^3.0.1",
     "vite-plugin-node-polyfills": "^0.21.0",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.3.1",
@@ -80,11 +83,10 @@
     "yup": "^0.32.5"
   },
   "scripts": {
-    "start": "yarn clear-babel-cache && npm run update-runtime-env && vite",
-    "dev": "yarn clear-babel-cache && NODE_ENV=development npm run update-runtime-env && vite",
-    "build": "tsc && vite build",
-    "preview": "yarn clear-babel-cache && npm run update-runtime-env && vite preview",
-    "test": "cross-env NODE_ENV=test npm run update-runtime-env && vitest",
+    "start": "yarn clear-babel-cache && yarn update-runtime-env && vite",
+    "build": "yarn typecheck && vite build",
+    "preview": "yarn clear-babel-cache && yarn update-runtime-env && vite preview",
+    "test": "cross-env NODE_ENV=test yarn update-runtime-env && vitest",
     "ci": "cross-env CI=true yarn test --coverage",
     "lint": "eslint --ext js,ts,tsx src",
     "codegen": "apollo client:codegen ./src/graphql/generatedTypes.ts --outputFlat --includes=./src/**/*.graphql --target=typescript --endpoint=https://profile-api.dev.hel.ninja/graphql/ --useReadOnlyTypes --addTypename",
@@ -92,7 +94,8 @@
     "update-runtime-env": "esrun --tsconfig=./scripts/tsconfig.json scripts/update-runtime-env.ts",
     "update-country-calling-codes": "esrun --tsconfig=./scripts/tsconfig.json scripts/update-country-calling-codes.ts",
     "clear-babel-cache": "rm -rf ./node_modules/.cache/@babel",
-    "typecheck": "tsc --skipLibCheck --noEmit --project tsconfig.json"
+    "typecheck": "tsc --skipLibCheck --noEmit --project tsconfig.json",
+    "postinstall": "yarn update-runtime-env"
   },
   "browserslist": {
     "production": [
@@ -107,14 +110,11 @@
     ]
   },
   "devDependencies": {
-    "@sinonjs/fake-timers": "^8.1.0",
-    "@types/sinonjs__fake-timers": "^8.1.0",
     "@vitest/coverage-istanbul": "^1.3.1",
     "apollo": "^2.34.0",
     "cross-env": "^7.0.3",
     "helsinki-utils": "City-of-Helsinki/helsinki-utils-js#0.1.0",
-    "jsdom": "^24.0.0",
-    "vite-plugin-graphql-loader": "^3.0.1"
+    "jsdom": "^24.0.0"
   },
   "resolutions": {
     "@apollo/federation": "0.38.1",

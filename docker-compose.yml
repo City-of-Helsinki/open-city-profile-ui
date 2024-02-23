@@ -7,6 +7,10 @@ services:
     build:
       context: .
       target: ${DOCKER_TARGET:-development}
+    env_file:
+      - .env
+      - .env.development
+      - .env.local
     volumes:
       - '.:/app'
       - '/app/node_modules'

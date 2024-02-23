@@ -25,7 +25,6 @@ describe('downloadAsFile.ts', () => {
       getAction: () => runner.getByType(downloadAsFileAction.type) as Action,
       getFileData: (): Blob | undefined => {
         const calls = getMockCalls(mockSaveAs);
-
         const lastCallArgs = calls[calls.length - 1];
         return lastCallArgs[0];
       },
@@ -37,7 +36,6 @@ describe('downloadAsFile.ts', () => {
     global.URL.revokeObjectURL = vi.fn();
 
     const { runner, getAction } = initTests();
-
     const [, result] = await to(getAction().executor(getAction(), runner));
 
     expect(result).toBe(true);
@@ -50,14 +48,11 @@ describe('downloadAsFile.ts', () => {
   it('File is created from stored data ', async () => {
     global.URL.createObjectURL = vi.fn(() => 'https://test.com');
     global.URL.revokeObjectURL = vi.fn();
-
     const { runner, getAction, getFileData } = initTests();
 
     await to(getAction().executor(getAction(), runner));
-
     const data = getFileData() as Blob;
     // data.text() does not exist in jsDom so cannot compare contents.
-
     expect(data.size).toBe(
       new Blob([(storedData.downloadMyProfile as unknown) as BlobPart]).size
     );

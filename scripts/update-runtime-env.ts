@@ -4,21 +4,26 @@ import * as path from 'path';
 import fs from 'fs';
 import util from 'util';
 
+const USE_TEST_ENV = process.env.NODE_ENV === 'test';
+
 /* @ts-ignore */
 import.meta.env = {};
 
 dotenv.config({
   processEnv: import.meta.env,
-  path: [`.env.${process.env.NODE_ENV}`, '.env'],
+  ...(USE_TEST_ENV
+    ? { path: ['.env', '.env.test'] }
+    : { path: ['.env', `.env.${process.env.NODE_ENV}`, '.env.local'] }),
+  override: true,
 });
 
 // react-scipts config requires ENV to be set
-const defaultNodeEnv = process.env.NODE_ENV ? 'test' : 'development';
+const defaultNodeEnv = USE_TEST_ENV ? 'test' : 'development';
+
+import.meta.env.NODE_ENV = process.env.NODE_ENV || defaultNodeEnv;
+
 // Prevent collision is app is running while tests are started
-
-const configFile = process.env.TEST ? 'test-env-config.js' : 'env-config.js';
-
-import.meta.env.NODE_ENV = import.meta.env.NODE_ENV || defaultNodeEnv;
+const configFile = USE_TEST_ENV ? 'test-env-config.js' : 'env-config.js';
 
 const configurationFile: string = path.join(
   __dirname,

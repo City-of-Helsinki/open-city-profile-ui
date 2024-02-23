@@ -78,7 +78,7 @@ describe(`http-poller`, () => {
   const advanceFromTimerEndToLoadEnd = async () => {
     await advanceOneInterval();
     await advanceOneInterval();
-    // https://stackoverflow.com/questions/52177631/vi-timer-and-promise-dont-work-well-settimeout-and-async-function
+    // https://stackoverflow.com/questions/52177631/jest-timer-and-promise-dont-work-well-settimeout-and-async-function
     await new Promise(resolve => setImmediate(resolve));
   };
   const advanceFromStartTimerToLoadEnd = async () => {
