@@ -24,7 +24,10 @@ import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
 import useProfile from '../../../auth/useProfile';
-import { hasTunnistusSuomiFiAmr } from '../profileInformation/authenticationProviderUtil';
+import {
+  hasHelsinkiAccountAMR,
+  hasTunnistusSuomiFiAmr,
+} from '../profileInformation/authenticationProviderUtil';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 import AddButton from '../addButton/AddButton';
 
@@ -55,7 +58,8 @@ function EmailEditor(): React.ReactElement | null {
   const formFields = getFormFields(dataType);
   const ariaLabels = createActionAriaLabels(dataType, email, t);
   const { profile } = useProfile();
-  const willSendEmailVerificationCode = hasTunnistusSuomiFiAmr(profile);
+  const willSendEmailVerificationCode =
+    hasTunnistusSuomiFiAmr(profile) || hasHelsinkiAccountAMR(profile);
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     EmailValue
   >(t, true);
