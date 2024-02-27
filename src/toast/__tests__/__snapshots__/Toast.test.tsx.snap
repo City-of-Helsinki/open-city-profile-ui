@@ -8,10 +8,10 @@ exports[`Toast > should render correct toast 1`] = `
         id="toast-root"
       >
         <div
-          class="_toast-container_4ca617"
+          class="toast-container"
         >
           <div
-            class="_notification_067b98"
+            class="notification"
           >
             <section
               aria-label="Notification"
@@ -46,7 +46,7 @@ exports[`Toast > should render correct toast 1`] = `
                   class="Notification-module_body__9BSAD notification_hds-notification__body__3cobH"
                 >
                   <div
-                    class="_message-wrapper_067b98"
+                    class="message-wrapper"
                   >
                     notification.defaultErrorText
                   </div>
@@ -81,7 +81,7 @@ exports[`Toast > should render correct toast 1`] = `
     }
   >
     <div
-      className="_toast-container_4ca617"
+      className="toast-container"
     >
       <Toast
         hidden={false}
@@ -98,7 +98,7 @@ exports[`Toast > should render correct toast 1`] = `
           type="error"
         >
           <div
-            className="_notification_067b98"
+            className="notification"
           >
             <ForwardRef
               closeButtonLabelText="notification.closeButtonText"
@@ -159,7 +159,7 @@ exports[`Toast > should render correct toast 1`] = `
                         className="Notification-module_body__9BSAD notification_hds-notification__body__3cobH"
                       >
                         <div
-                          className="_message-wrapper_067b98"
+                          className="message-wrapper"
                         >
                           notification.defaultErrorText
                         </div>

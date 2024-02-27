@@ -4,13 +4,13 @@ exports[`<AuthenticationProviderInformation />  > renders correctly when AMR is 
 <AuthenticationProviderInformation>
   <ProfileSection>
     <section
-      className="_content-box_56bee9 _profile-section_4e7a14"
+      className="content-box profile-section"
     >
       <div
-        className="_flex-box-columns_31c5b6"
+        className="flex-box-columns"
       >
         <div
-          className="_editor-description-container_31c5b6"
+          className="editor-description-container"
         >
           <h2>
             profileInformation.authenticationMethod
@@ -29,13 +29,13 @@ exports[`<AuthenticationProviderInformation />  > renders correctly when AMR is 
 <AuthenticationProviderInformation>
   <ProfileSection>
     <section
-      className="_content-box_56bee9 _profile-section_4e7a14"
+      className="content-box profile-section"
     >
       <div
-        className="_flex-box-columns_31c5b6"
+        className="flex-box-columns"
       >
         <div
-          className="_editor-description-container_31c5b6"
+          className="editor-description-container"
         >
           <h2>
             profileInformation.authenticationMethod
