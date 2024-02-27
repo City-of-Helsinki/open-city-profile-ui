@@ -20,7 +20,7 @@ dotenv.config({
   override: true,
 });
 
-// Prevent collision is app is running while tests are started
+// Prevent collision if app is running while tests are started
 const configFile = USE_TEST_ENV ? 'test-env-config.js' : 'env-config.js';
 
 const configurationFile: string = path.join(
