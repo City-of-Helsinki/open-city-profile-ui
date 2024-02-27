@@ -8,7 +8,7 @@ import {
 import * as Sentry from '@sentry/browser';
 import HttpStatusCode from 'http-status-typed';
 import i18n from 'i18next';
-import to from 'await-to-js';
+import { to } from 'await-to-js';
 
 import pickProfileApiToken from './pickProfileApiToken';
 import createHttpPoller, { HttpPoller } from './http-poller';

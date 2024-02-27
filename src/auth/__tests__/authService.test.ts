@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import to from 'await-to-js';
+import { to } from 'await-to-js';
 import { waitFor } from '@testing-library/react';
 import { User } from 'oidc-client';
 
 import authService, { API_TOKEN } from '../authService';
 import {
   getHttpPollerMockData,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   enableActualHttpPoller,
 } from '../__mocks__/http-poller';
 import i18n from '../../common/test/testi18nInit';
 import mockWindowLocation from '../../common/test/mockWindowLocation';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as HttpPoller from '../http-poller';
 
 describe('authService', () => {
   const userManager = authService.userManager;
@@ -376,81 +373,98 @@ describe('authService', () => {
     });
   });
 
-  // describe(`Api tokens are fetched again after user tokens are renewed.
-  //           After silent renew completes, the _userLoaded event is raised and...`, () => {
-  //   beforeEach(() => {
-  //     fetchMock.resetMocks();
-  //     mockFetchApiToken();
-  //     vi.useFakeTimers();
-  //   });
+  describe(`Api tokens are fetched again after user tokens are renewed.
+            After silent renew completes, the _userLoaded event is raised and...`, () => {
+    beforeEach(() => {
+      fetchMock.resetMocks();
+      mockFetchApiToken();
+      vi.useFakeTimers();
+    });
 
-  //   afterEach(() => {
-  //     vi.useRealTimers();
-  //   });
+    afterEach(() => {
+      vi.useRealTimers();
+    });
 
-  //   beforeAll(() => {
-  //     enableActualHttpPoller(HttpPoller);
-  //   });
+    beforeAll(async () => {
+      const poller = await vi.importActual<typeof import('../http-poller')>(
+        '../http-poller'
+      );
 
-  //   const defaultApiTokenPollIntervalInMs = 500;
-  //   const requestCompletionInMs = defaultApiTokenPollIntervalInMs + 1;
+      enableActualHttpPoller(poller);
+    });
 
-  //   it('fetchApiToken is called and new token is stored when fetch is successful', async () => {
-  //     const { sessionUser } = setSession({
-  //       validUser: true,
-  //       validApiToken: true,
-  //     });
-  //     sessionStorage.setItem(API_TOKEN, 'old token to be replaced');
+    const defaultApiTokenPollIntervalInMs = 500;
+    const requestCompletionInMs = defaultApiTokenPollIntervalInMs + 1;
 
-  //     const fetcApiTokenSpy = vi.spyOn(authService, 'fetchApiToken');
+    it('fetchApiToken is called and new token is stored when fetch is successful', async () => {
+      const { sessionUser } = setSession({
+        validUser: true,
+        validApiToken: true,
+      });
+      sessionStorage.setItem(API_TOKEN, 'old token to be replaced');
 
-  //     // @ts-ignore
-  //     await userManager.events._userLoaded.raise(sessionUser);
-  //     expect(fetcApiTokenSpy).toHaveBeenCalledTimes(1);
-  //     vi.advanceTimersByTime(requestCompletionInMs);
-  //     await waitFor(() => {
-  //       expect(fetcApiTokenSpy).toHaveBeenCalledTimes(1);
-  //       expect(sessionStorage.getItem(API_TOKEN)).toEqual(apiToken);
-  //     });
-  //   });
-  // eslint-disable-next-line max-len
-  //   it('fetchApiToken calls are retried until maxRetries is reached. Then authService.logout() is called', async () => {
-  //     const { sessionUser } = setSession({
-  //       validUser: true,
-  //       validApiToken: true,
-  //     });
-  //     const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
-  //     const logoutSpy = vi
-  //       .spyOn(authService, 'logout')
-  //       .mockResolvedValue(undefined);
+      const fetcApiTokenSpy = vi
+        .spyOn(authService, 'fetchApiToken')
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        .mockImplementationOnce((user: User) => {
+          sessionStorage.setItem(API_TOKEN, apiToken);
 
-  //     const fetcApiTokenSpy = vi
-  //       .spyOn(authService, 'fetchApiToken')
-  //       .mockImplementation(() => Promise.reject(new Error('Failed')));
+          return Promise.resolve(undefined);
+        });
 
-  //     // @ts-ignore
-  //     await userManager.events._userLoaded.raise(sessionUser);
-  //     expect(fetcApiTokenSpy).toHaveBeenCalledTimes(1);
-  //     vi.advanceTimersByTime(requestCompletionInMs);
-  //     await waitFor(() => {
-  //       expect(fetcApiTokenSpy).toHaveBeenCalledTimes(2);
-  //     });
-  //     vi.advanceTimersByTime(requestCompletionInMs);
-  //     await waitFor(() => {
-  //       expect(fetcApiTokenSpy).toHaveBeenCalledTimes(3);
-  //     });
-  //     vi.advanceTimersByTime(requestCompletionInMs);
-  //     await waitFor(() => {
-  //       expect(fetcApiTokenSpy).toHaveBeenCalledTimes(4);
-  //     });
-  //     vi.advanceTimersByTime(requestCompletionInMs);
-  //     await waitFor(() => {
-  //       expect(setItemSpy).not.toHaveBeenCalled();
-  //       expect(fetcApiTokenSpy).toHaveBeenCalledTimes(5);
-  //       expect(logoutSpy).toHaveBeenCalled();
-  //     });
-  //   });
-  // });
+      // @ts-ignore
+      await userManager.events._userLoaded.raise(sessionUser);
+      expect(fetcApiTokenSpy).toHaveBeenCalledTimes(1);
+      vi.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(fetcApiTokenSpy).toHaveBeenCalledTimes(1);
+        expect(sessionStorage.getItem(API_TOKEN)).toEqual(apiToken);
+      });
+    });
+    it('fetchApiToken calls are retried until maxRetries is reached. Then authService.logout() is called', async () => {
+      const { sessionUser } = setSession({
+        validUser: true,
+        validApiToken: true,
+      });
+      const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+      const logoutSpy = vi
+        .spyOn(authService, 'logout')
+        .mockResolvedValue(undefined);
+
+      let fetchApiTokenCallCount = 0;
+
+      const fetchApiTokenSpy = vi
+        .spyOn(authService, 'fetchApiToken')
+        .mockImplementation(() => {
+          fetchApiTokenCallCount += 1;
+          if (fetchApiTokenCallCount <= 5) {
+            return Promise.reject(new Error('Failed'));
+          } else {
+            return Promise.resolve(undefined);
+          }
+        });
+
+      // @ts-ignore
+      await userManager.events._userLoaded.raise(sessionUser);
+
+      const retries = [1, 2, 3, 4, 5];
+
+      for (const retry in retries) {
+        vi.advanceTimersByTime(requestCompletionInMs);
+
+        await waitFor(() => {
+          expect(fetchApiTokenSpy).toHaveBeenCalledTimes(parseInt(retry) + 1);
+        });
+      }
+
+      vi.advanceTimersByTime(requestCompletionInMs);
+      await waitFor(() => {
+        expect(setItemSpy).not.toHaveBeenCalled();
+        expect(fetchApiTokenSpy).toHaveBeenCalledTimes(5);
+        expect(logoutSpy).toHaveBeenCalled();
+      });
+    });
+  });
 
   describe('getAuthenticatedUser ', () => {
     it('should resolve to the user value when user is valid', async () => {
@@ -490,15 +504,20 @@ describe('authService', () => {
       await to(authService.getAuthenticatedUser());
       expect(mockHttpPoller.start).toHaveBeenCalledTimes(0);
     });
-    // it('should start in endLogin', async () => {
-    //   const { sessionUser } = setSession({
-    //     validUser: true,
-    //     validApiToken: true,
-    //   });
-    //   spyAndMockSigninRedirect(sessionUser);
-    //   await authService.endLogin();
-    //   expect(mockHttpPoller.start).toHaveBeenCalledTimes(1);
-    // });
+    it('should start in endLogin', async () => {
+      mockFetchApiToken();
+
+      const { sessionUser } = setSession({
+        validUser: true,
+        validApiToken: true,
+      });
+
+      spyAndMockSigninRedirect(sessionUser);
+
+      await authService.endLogin();
+
+      expect(mockHttpPoller.start).toHaveBeenCalledTimes(1);
+    });
     it('should stop when user is unloaded', async () => {
       // @ts-ignore
       await userManager.events._userUnloaded.raise();
