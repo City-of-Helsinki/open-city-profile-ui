@@ -39,3 +39,7 @@ export function getAmrStatic(profile: Profile | null): AMRStatic | null {
 export function hasTunnistusSuomiFiAmr(profile: Profile | null): boolean {
   return getAmrFromProfileData(profile) === tunnistusSuomifiAMR;
 }
+
+export function hasHelsinkiAccountAMR(profile: Profile | null): boolean {
+  return getAmrFromProfileData(profile) === config.helsinkiAccountAMR;
+}
