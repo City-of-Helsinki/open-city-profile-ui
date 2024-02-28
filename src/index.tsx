@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 
 import './index.css';
 import BrowserApp from './BrowserApp';
@@ -13,15 +13,12 @@ declare global {
   }
 }
 
-const ENVS_WITH_SENTRY = ['staging', 'production'];
-
-if (
-  window._env_.REACT_APP_ENVIRONMENT &&
-  ENVS_WITH_SENTRY.includes(window._env_.REACT_APP_ENVIRONMENT)
-) {
+if (window._env_.REACT_APP_ENVIRONMENT) {
   Sentry.init({
     dsn: window._env_.REACT_APP_SENTRY_DSN,
     environment: window._env_.REACT_APP_ENVIRONMENT,
+    integrations: [Sentry.browserTracingIntegration()],
+    tracesSampleRate: 1.0,
   });
 }
 

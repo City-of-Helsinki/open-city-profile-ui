@@ -12,8 +12,8 @@ import { exposeProfileContext } from '../../../common/test/exposeHooksForTesting
 
 const mockSentyCaptureException = vi.fn();
 
-vi.mock('@sentry/browser', async () => {
-  const module = await vi.importActual('@sentry/browser');
+vi.mock('@sentry/react', async () => {
+  const module = await vi.importActual('@sentry/react');
 
   return {
     ...module,

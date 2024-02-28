@@ -2,7 +2,7 @@ import React from 'react';
 import { User } from 'oidc-client';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/client';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import classNames from 'classnames';
 

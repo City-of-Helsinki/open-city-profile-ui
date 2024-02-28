@@ -5,7 +5,7 @@ import {
   Log,
   WebStorageStateStore,
 } from 'oidc-client';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import HttpStatusCode from 'http-status-typed';
 import i18n from 'i18next';
 import { to } from 'await-to-js';

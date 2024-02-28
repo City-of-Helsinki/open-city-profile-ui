@@ -1,5 +1,5 @@
 import { ApolloError } from '@apollo/client';
-import { captureException } from '@sentry/browser';
+import { captureException } from '@sentry/react';
 
 export default function reportErrorsToSentry(error: Error | ApolloError): void {
   const errorArray = (error as ApolloError).graphQLErrors;
