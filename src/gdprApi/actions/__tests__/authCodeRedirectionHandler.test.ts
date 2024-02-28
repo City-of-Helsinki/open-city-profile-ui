@@ -12,16 +12,21 @@ import {
   tunnistamoRedirectionInitializationAction,
   keycloakRedirectionInitializationAction,
 } from '../authCodeRedirectionInitialization';
-import { getMockCalls } from '../../../common/test/jestMockHelper';
+import { getMockCalls } from '../../../common/test/mockHelper';
 import { getGdprQueryScopesAction } from '../getGdprScopes';
 import { AuthorizationUrlParams } from '../utils';
 
-const mockDelayRedirection = jest.fn();
-jest.mock('../utils', () => ({
-  __esModule: true,
-  ...jest.requireActual('../utils'),
-  delayRedirection: (...args: unknown[]) => mockDelayRedirection(args),
-}));
+const mockDelayRedirection = vi.fn();
+
+vi.mock('../utils', async () => {
+  const module = await vi.importActual('../utils');
+
+  return {
+    __esModule: true,
+    ...module,
+    delayRedirection: (...args: unknown[]) => mockDelayRedirection(args),
+  };
+});
 
 describe('authCodeRedirectionHandler.ts', () => {
   const tunnistamoRedirectionProps = {
@@ -96,8 +101,8 @@ describe('authCodeRedirectionHandler.ts', () => {
     url.includes('redirect_uri=');
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
   it('Resolves to true when redirection to given oidc server has started', async () => {
     const {

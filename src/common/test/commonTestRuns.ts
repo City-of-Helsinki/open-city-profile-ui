@@ -1,4 +1,4 @@
-import fetchMock, { FetchMock } from 'jest-fetch-mock';
+import { FetchMock } from 'vitest-fetch-mock';
 import { TFunction } from 'react-i18next';
 
 import { UpdateMyProfileVariables } from '../../graphql/generatedTypes';

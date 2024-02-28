@@ -14,17 +14,23 @@ import { AuthorizationUrlParams } from '../utils';
 
 const mockTunnistamoEndPoint = 'tunnistamo.hel.ninja';
 const mockKeycloakEndPoint = 'keycloak.hel.ninja';
-jest.mock('../../../auth/authService', () => ({
-  __esModule: true,
-  ...jest.requireActual('../../../auth/authService'),
-  default: {
-    userManager: {
-      metadataService: {
-        getAuthorizationEndpoint: () => Promise.resolve(mockTunnistamoEndPoint),
+
+vi.mock('../../../auth/authService', async () => {
+  const module = await vi.importActual('../../../auth/authService');
+
+  return {
+    __esModule: true,
+    ...module,
+    default: {
+      userManager: {
+        metadataService: {
+          getAuthorizationEndpoint: () =>
+            Promise.resolve(mockTunnistamoEndPoint),
+        },
       },
     },
-  },
-}));
+  };
+});
 
 describe('authCodeRedirectionInitialization.ts', () => {
   const initTests = ({
@@ -75,8 +81,8 @@ describe('authCodeRedirectionInitialization.ts', () => {
     (result as AuthorizationUrlParams).state.length >= minStateLength;
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
   it('Resolves oidc authorization url and state for the query for given oidc server', async () => {
     const { runner, getTunnistamoAction, getKeycloadAction } = initTests();

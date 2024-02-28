@@ -1,4 +1,3 @@
-import fetchMock from 'jest-fetch-mock';
 import { waitFor } from '@testing-library/react';
 import to from 'await-to-js';
 
@@ -48,8 +47,8 @@ describe('utils.ts', () => {
   afterEach(() => {
     mockedWindowControls.reset();
     fetchMock.resetMocks();
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
   describe('getActionResultAndErrorMessage()', () => {
     it('returns result and error message of given action', async () => {
@@ -106,7 +105,7 @@ describe('utils.ts', () => {
       ).toBeFalsy();
     });
   });
-  describe(`isAuthCodeActionNeeded() returns true is auth code is needed for Tunnistamo/Keycloak related action. 
+  describe(`isAuthCodeActionNeeded() returns true is auth code is needed for Tunnistamo/Keycloak related action.
             Uses isTunnistamoAuthCodeAction() to define which scopes to check.
             Uses getGrprScopes as a source for scopes`, () => {
     const initAuthCodeTests = ({
@@ -213,7 +212,7 @@ describe('utils.ts', () => {
     });
   });
   describe('rejectExecutorWithStartPageRedirection()', () => {
-    it(`creates a rejected promise with a redirection path to the start page path 
+    it(`creates a rejected promise with a redirection path to the start page path
         and an error message in the error.message`, async () => {
       const path = '/startPage';
       const queue = createQueueController(

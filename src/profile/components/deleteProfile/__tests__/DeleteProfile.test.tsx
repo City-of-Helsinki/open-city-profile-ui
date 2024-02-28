@@ -33,13 +33,13 @@ import { defaultRedirectionCatcherActionType } from '../../../../gdprApi/actions
 import { createNextActionParams } from '../../../../gdprApi/actions/utils';
 import { tunnistamoAuthCodeRedirectionAction } from '../../../../gdprApi/actions/authCodeRedirectionHandler';
 
-jest.mock('../../../../gdprApi/actions/queues');
+vi.mock('../../../../gdprApi/actions/queues');
 
 describe('<DeleteProfile /> ', () => {
   const mockedWindowControls = mockWindowLocation();
   let responseCounter = -1;
   const serviceConnections = getMyProfileWithServiceConnections();
-  const queryVariableTracker = jest.fn();
+  const queryVariableTracker = vi.fn();
   let showComponent: React.Dispatch<React.SetStateAction<boolean>>;
 
   const ComponentRendererWithForceUpdate = (): React.ReactElement => {
@@ -94,11 +94,11 @@ describe('<DeleteProfile /> ', () => {
   afterEach(() => {
     mockedWindowControls.reset();
     cleanComponentMocks();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  const onCompleted = jest.fn();
-  const onError = jest.fn();
+  const onCompleted = vi.fn();
+  const onError = vi.fn();
 
   const authCodeQueueProps: AuthCodeQueuesProps = {
     queueName: 'deleteProfile',
@@ -174,7 +174,7 @@ describe('<DeleteProfile /> ', () => {
     });
   });
 
-  it(`When service connection load fails, an error notification is shown with a reload button. 
+  it(`When service connection load fails, an error notification is shown with a reload button.
           After successful reload, the queue is started.`, async () => {
     initTestQueue(
       getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
@@ -213,7 +213,7 @@ describe('<DeleteProfile /> ', () => {
       });
     });
   });
-  it(`When deletion fails with unsuccessful and successful service deletions, 
+  it(`When deletion fails with unsuccessful and successful service deletions,
       a list of successful and failed services is shown.`, async () => {
     initQueueAndLocationForResume({
       results: {

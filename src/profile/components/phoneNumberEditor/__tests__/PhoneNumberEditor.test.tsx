@@ -293,8 +293,8 @@ describe('<PhoneNumberEditor /> ', () => {
     });
   });
 
-  it(`sends updated data and returns to view mode when saved. 
-    Shows save notifications. 
+  it(`sends updated data and returns to view mode when saved.
+    Shows save notifications.
     Focus is returned to edit button`, async () => {
     await act(async () => {
       const testTools = await initTests();
@@ -345,7 +345,7 @@ describe('<PhoneNumberEditor /> ', () => {
     });
   });
 
-  it(`When there is no phonenumber, the add button is rendered and an number can be added. 
+  it(`When there is no phonenumber, the add button is rendered and an number can be added.
       Add button is not shown after it has been clicked and number is saved.`, async () => {
     await act(async () => {
       const testTools = await initTests(profileWithoutPhones);
@@ -360,7 +360,7 @@ describe('<PhoneNumberEditor /> ', () => {
     });
   });
 
-  it(`When removing an phonenumber, a confirmation modal is shown. 
+  it(`When removing an phonenumber, a confirmation modal is shown.
       Remove error is handled and shown.
       When removal is complete, add button is shown and a text about no phones.`, async () => {
     await act(async () => {

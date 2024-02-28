@@ -30,11 +30,16 @@ type UseProfileQueryReturnType = ReturnType<
 
 describe('useProfileLoader.ts ', () => {
   let mockUseProfileQueryResult: UseProfileQueryReturnType;
-  const fetchProfileMock = jest.fn();
-  const refetchProfileMock = jest.fn();
   const successfulProfileLoadData = { data: getMyProfile() };
+  const fetchProfileMock = vi
+    .fn()
+    .mockImplementation(async () => Promise.resolve());
+  const refetchProfileMock = vi
+    .fn()
+    .mockImplementation(async () => Promise.resolve(successfulProfileLoadData));
+
   const timeoutInMs = 60;
-  const advanceTimers = () => jest.advanceTimersByTime(timeoutInMs + 1);
+  const advanceTimers = () => vi.advanceTimersByTime(timeoutInMs + 1);
 
   // Mocking the useProfile hook. It is used by ProfileContext, which is used by useProfileLoadTracker
   // Results from fetch() and refetch() are not used, only changes in the profile context.
@@ -43,14 +48,8 @@ describe('useProfileLoader.ts ', () => {
     data: undefined,
     loading: false,
     error: undefined,
-    fetch: async () => {
-      fetchProfileMock();
-      return Promise.resolve();
-    },
-    refetch: async () => {
-      refetchProfileMock();
-      return Promise.resolve(successfulProfileLoadData);
-    },
+    fetch: fetchProfileMock,
+    refetch: refetchProfileMock,
   });
 
   // Update mockUseProfileQueryResult returned from useProfile hook (mocked)
@@ -110,9 +109,10 @@ describe('useProfileLoader.ts ', () => {
   const waitForProfileLoadToEnd = async (renderHookResult: RenderResult) =>
     waitFor(async () => {
       const currentHookProps = renderHookResult.result.current;
+
       if (currentHookProps.isProfileLoadComplete() === false) {
-        advanceTimers();
         renderHookResult.rerender();
+        advanceTimers();
         throw new Error('Profile load is not complete');
       }
     });
@@ -143,22 +143,25 @@ describe('useProfileLoader.ts ', () => {
 
   beforeEach(() => {
     mockUseProfileQueryResult = createUseProfileQueryResultMock();
-    jest
-      .spyOn(profileQueryModule, 'useProfileQuery')
-      .mockImplementation(() => mockUseProfileQueryResult);
-    jest.useFakeTimers();
+
+    vi.spyOn(profileQueryModule, 'useProfileQuery').mockImplementation(
+      () => mockUseProfileQueryResult
+    );
+
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
     cleanComponentMocks();
-    jest.resetAllMocks();
+
+    vi.resetAllMocks();
     // to end all possibly existing timeouts
-    jest.advanceTimersByTime(timeoutInMs * 10);
-    jest.useRealTimers();
+    vi.advanceTimersByTime(timeoutInMs * 10);
+    vi.useRealTimers();
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe('useProfileLoader() hook tracks changes in profile context.', () => {
@@ -217,10 +220,10 @@ describe('useProfileLoader.ts ', () => {
       });
     });
 
-    it(`When profile load is successful, but profile does not exist, 
-        - hook.hasExistingProfile() returns false
-        - hook.didProfileLoadFail() returns false
-        - hook.isProfileLoadComplete() returns true`, async () => {
+    it(`When profile load is successful, but profile does not exist,
+          - hook.hasExistingProfile() returns false
+          - hook.didProfileLoadFail() returns false
+          - hook.isProfileLoadComplete() returns true`, async () => {
       await act(async () => {
         const { renderHookResult } = await proceedToProfileLoadCompleteState({
           loadSuccess: true,
@@ -236,9 +239,9 @@ describe('useProfileLoader.ts ', () => {
     });
 
     it(`When profile load fails
-        - hook.hasExistingProfile() returns false
-        - hook.didProfileLoadFail() returns true
-        - hook.isProfileLoadComplete() returns true`, async () => {
+          - hook.hasExistingProfile() returns false
+          - hook.didProfileLoadFail() returns true
+          - hook.isProfileLoadComplete() returns true`, async () => {
       await act(async () => {
         const { renderHookResult } = await proceedToProfileLoadCompleteState({
           loadSuccess: false,
@@ -254,8 +257,8 @@ describe('useProfileLoader.ts ', () => {
     });
 
     it(`Hook provides a reloadProfile() function for refetching profile when
-        - load fails
-        - profile is fetched after it is created for first time.`, async () => {
+          - load fails
+          - profile is fetched after it is created for first time.`, async () => {
       await act(async () => {
         const { renderHookResult } = await proceedToProfileLoadCompleteState({
           loadSuccess: false,

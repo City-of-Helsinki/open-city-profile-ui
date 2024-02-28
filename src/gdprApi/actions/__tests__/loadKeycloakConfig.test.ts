@@ -1,5 +1,4 @@
 import to from 'await-to-js';
-import fetchMock from 'jest-fetch-mock';
 
 import { getGdprQueryScopesAction } from '../getGdprScopes';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
@@ -60,8 +59,8 @@ describe('loadKeycloakConfig.ts', () => {
   };
   afterEach(() => {
     fetchMock.resetMocks();
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
   it('Fetches open-id configuration and returns authorization_endpoint', async () => {
     const { runner, action } = initTests();

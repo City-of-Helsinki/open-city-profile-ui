@@ -14,7 +14,7 @@ import {
 import { TestResponse } from './http-poller.test';
 
 describe(`http-poller-with-promises.ts`, () => {
-  const pollFunctionMockCallback = jest.fn();
+  const pollFunctionMockCallback = vi.fn();
   const successfulResponse: TestResponse = {
     status: HttpStatusCode.OK,
     data: 'success',
@@ -60,25 +60,25 @@ describe(`http-poller-with-promises.ts`, () => {
   const mockHttpPoller = getHttpPollerMockData();
 
   afterEach(() => {
-    jest.resetAllMocks();
-    jest.useRealTimers();
+    vi.resetAllMocks();
+    vi.useRealTimers();
     mockHttpPoller.start.mockReset();
     mockHttpPoller.stop.mockReset();
     removeActualHttpPoller();
   });
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     isResolved = false;
     isRejected = false;
   });
-  beforeAll(() => {
-    enableActualHttpPoller(jest.requireActual('../http-poller'));
+  beforeAll(async () => {
+    enableActualHttpPoller(await vi.importActual('../http-poller'));
   });
   afterAll(() => {
     disableActualHttpPoller();
   });
   const advanceOneInterval = async () => {
-    jest.advanceTimersByTime(pollIntervalInMs);
+    vi.advanceTimersByTime(pollIntervalInMs);
   };
   const testCallbackCount = async ({
     assumedCallCount,
@@ -110,7 +110,7 @@ describe(`http-poller-with-promises.ts`, () => {
     expect(mockHttpPoller.start).toHaveBeenCalledTimes(0);
     expect(response).toEqual(successfulResponse);
   });
-  it(`If first request fails, http-poller is started. 
+  it(`If first request fails, http-poller is started.
       Promise is resolved, when request is successful.
       New attempts are not made after that. Successful response is returned.`, async () => {
     const promise = createAPoller(responsesWithErrorForbiddenSuccess);
@@ -139,9 +139,9 @@ describe(`http-poller-with-promises.ts`, () => {
       assumedState: 'resolved',
     });
   });
-  it(`maxRetries sets maximum number retries. 
-      When maxRetries is reached, the promise is rejected 
-      and new attempts are not made after that 
+  it(`maxRetries sets maximum number retries.
+      When maxRetries is reached, the promise is rejected
+      and new attempts are not made after that
       An error is returned.`, async () => {
     const promise = createAPoller(responsesWithErrorForbiddenSuccess, {
       maxRetries: 1,

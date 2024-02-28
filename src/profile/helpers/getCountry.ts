@@ -7,5 +7,8 @@ export default function getCountry(
   countryCode: AddressNode['countryCode'] | undefined,
   lang: string
 ): string {
-  return countries.getName(countryCode || 'FI', getLanguageCode(lang));
+  return countries.getName(
+    countryCode || 'FI',
+    getLanguageCode(lang)
+  ) as string;
 }

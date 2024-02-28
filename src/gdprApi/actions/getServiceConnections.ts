@@ -1,4 +1,3 @@
-import { loader } from 'graphql.macro';
 import to from 'await-to-js';
 
 import graphqlClient from '../../graphql/client';
@@ -15,10 +14,7 @@ import {
 } from '../../common/actionQueue/actionQueue';
 import { getActionResultAndErrorMessage } from './utils';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
-
-const GDPR_SERVICE_CONNECTIONS = loader(
-  '../graphql/GdprServiceConnectionsQuery.graphql'
-);
+import GDPR_SERVICE_CONNECTIONS from '../graphql/GdprServiceConnectionsQuery.graphql';
 
 const serviceConnectionsType = 'serviceConnections';
 

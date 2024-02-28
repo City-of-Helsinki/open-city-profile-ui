@@ -1,4 +1,3 @@
-import fetchMock from 'jest-fetch-mock';
 import to from 'await-to-js';
 import { waitFor } from '@testing-library/react';
 
@@ -8,7 +7,7 @@ import {
   tunnistamoAuthCodeParserAction,
   keycloakAuthCodeParserAction,
 } from '../authCodeParser';
-import { getMockCalls } from '../../../common/test/jestMockHelper';
+import { getMockCalls } from '../../../common/test/mockHelper';
 import { getServiceConnectionDeleteResult } from '../../../common/test/serviceConnectionDeleteMocking';
 import {
   createDeleteServiceConnectionAction,
@@ -21,7 +20,7 @@ import {
 type ActionResults = ReturnType<typeof getDeleteServiceConnectionResultOrError>;
 
 describe('deleteServiceConnection.ts', () => {
-  const queryTracker = jest.fn();
+  const queryTracker = vi.fn();
   const keycloakAuthCode = 'keycloak-auth-code';
   const tunnistamoAuthCode = 'tunnistamo-auth-code';
   const serviceName = 'test-Service';
@@ -93,8 +92,8 @@ describe('deleteServiceConnection.ts', () => {
 
   afterEach(() => {
     fetchMock.resetMocks();
-    jest.resetAllMocks();
-    jest.restoreAllMocks();
+    vi.resetAllMocks();
+    vi.restoreAllMocks();
   });
   describe('The executor', () => {
     it('Runs the mutation', async () => {

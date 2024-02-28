@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, RouteChildrenProps } from 'react-router-dom';
 
 import {
   mountWithProvider,
@@ -10,24 +10,30 @@ import OidcCallback from '../OidcCallback';
 
 const mockedDefaultProps = {
   history: {
-    replace: jest.fn(),
+    replace: vi.fn(),
   },
 };
 
-const getWrapper = props =>
+const getWrapper = () =>
   mountWithProvider(
     <BrowserRouter>
-      <OidcCallback {...mockedDefaultProps} {...props} />
+      <OidcCallback
+        {...((mockedDefaultProps as unknown) as RouteChildrenProps)}
+      />
     </BrowserRouter>
   );
 
 const getHistoryReplaceCallArgument = () =>
   mockedDefaultProps.history.replace.mock.calls[0][0];
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn().mockImplementation(() => mockedDefaultProps.history),
-}));
+vi.mock('react-router-dom', async () => {
+  const module = await vi.importActual('react-router-dom');
+
+  return {
+    ...module,
+    useHistory: vi.fn().mockImplementation(() => mockedDefaultProps.history),
+  };
+});
 
 describe('<OidcCallback />', () => {
   afterEach(() => {
@@ -35,9 +41,9 @@ describe('<OidcCallback />', () => {
   });
 
   it('as a user I want to see an error message about incorrect device time, because only I can fix it', async () => {
-    jest
-      .spyOn(authService, 'endLogin')
-      .mockRejectedValue(new Error('iat is in the future'));
+    vi.spyOn(authService, 'endLogin').mockRejectedValue(
+      new Error('iat is in the future')
+    );
 
     const wrapper = getWrapper();
 
@@ -52,13 +58,9 @@ describe('<OidcCallback />', () => {
 
   // eslint-disable-next-line max-len
   it('as a user I want to be informed when I deny permissions, because the application is unusable due to my choice', async () => {
-    jest
-      .spyOn(authService, 'endLogin')
-      .mockRejectedValue(
-        new Error(
-          'The resource owner or authorization server denied the request'
-        )
-      );
+    vi.spyOn(authService, 'endLogin').mockRejectedValue(
+      new Error('The resource owner or authorization server denied the request')
+    );
 
     const wrapper = getWrapper();
 
@@ -73,9 +75,7 @@ describe('<OidcCallback />', () => {
 
   describe('implementation details', () => {
     it('should call authService.endLogin', async () => {
-      const authServiceEndLoginSpy = jest
-        .spyOn(authService, 'endLogin')
-        .mockResolvedValue();
+      const authServiceEndLoginSpy = vi.spyOn(authService, 'endLogin');
 
       const wrapper = getWrapper();
 
@@ -85,7 +85,7 @@ describe('<OidcCallback />', () => {
     });
 
     it('should redirect user after successful login', async () => {
-      jest.spyOn(authService, 'endLogin').mockResolvedValue();
+      vi.spyOn(authService, 'endLogin');
 
       const wrapper = getWrapper();
 

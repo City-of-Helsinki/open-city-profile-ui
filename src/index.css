@@ -1,6 +1,6 @@
-@import '~hds-core/lib/base.css';
+@import 'hds-core/lib/base.css';
 /* Imports hds design tokens as CSS variables */
-@import '~hds-design-tokens/lib/all.min.css';
+@import 'hds-design-tokens/lib/all.min.css';
 
 @font-face {
   font-family: 'HelsinkiGrotesk';

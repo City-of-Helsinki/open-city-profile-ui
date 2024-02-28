@@ -1,4 +1,3 @@
-import { loader } from 'graphql.macro';
 import to from 'await-to-js';
 
 import {
@@ -25,8 +24,7 @@ import parseDeleteProfileResult, {
 } from '../../profile/helpers/parseDeleteProfileResult';
 import { convertStringToTranslationLanguage } from '../../profile/helpers/createServiceConnectionsQueryVariables';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
-
-const DELETE_PROFILE = loader('../graphql/GdprDeleteMyProfileMutation.graphql');
+import DELETE_PROFILE from '../graphql/GdprDeleteMyProfileMutation.graphql';
 
 export const deleteProfileType = 'deleteProfile';
 

@@ -1,4 +1,3 @@
-import fetchMock from 'jest-fetch-mock';
 import to from 'await-to-js';
 import { waitFor } from '@testing-library/react';
 
@@ -8,7 +7,7 @@ import {
   tunnistamoAuthCodeParserAction,
   keycloakAuthCodeParserAction,
 } from '../authCodeParser';
-import { getMockCalls } from '../../../common/test/jestMockHelper';
+import { getMockCalls } from '../../../common/test/mockHelper';
 import {
   createDeleteProfileAction,
   deleteProfileType,
@@ -18,7 +17,7 @@ import { getDeleteMyProfileMutationResult } from '../../../common/test/getDelete
 import { DeleteResultLists } from '../../../profile/helpers/parseDeleteProfileResult';
 
 describe('deleteProfile.ts', () => {
-  const queryTracker = jest.fn();
+  const queryTracker = vi.fn();
   const keycloakAuthCode = 'keycloak-auth-code';
   const tunnistamoAuthCode = 'tunnistamo-auth-code';
   const language = 'AF';
@@ -87,8 +86,8 @@ describe('deleteProfile.ts', () => {
 
   afterEach(() => {
     fetchMock.resetMocks();
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
   describe('The executor', () => {
     it('Runs the mutation and returns two arrays', async () => {

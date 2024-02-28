@@ -34,7 +34,7 @@ describe('<Profile />', () => {
   };
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     cleanup();
     resetApolloMocks();
   });

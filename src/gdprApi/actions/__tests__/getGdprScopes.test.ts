@@ -79,11 +79,11 @@ describe('getGdprScopes.ts', () => {
     };
   };
   afterEach(() => {
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
   describe('getGdprQueryScopesAction', () => {
-    it(`Picks gdpr query scopes from service connections. 
+    it(`Picks gdpr query scopes from service connections.
         Scopes are grouped as "keycloakScopes" and "tunnistamoScopes".`, async () => {
       const { getResultAndError } = await initTests();
 
@@ -126,7 +126,7 @@ describe('getGdprScopes.ts', () => {
     });
   });
   describe('getGdprDeleteScopesAction', () => {
-    it(`Picks gdpr delete scopes from service connections. 
+    it(`Picks gdpr delete scopes from service connections.
         Scopes are grouped as "keycloakScopes" and "tunnistamoScopes".`, async () => {
       const { getResultAndError } = await initTests({
         scopeType: 'delete',
@@ -142,7 +142,7 @@ describe('getGdprScopes.ts', () => {
     });
   });
 
-  describe(`getFetchedScopes() helper gets scopes from the queue. 
+  describe(`getFetchedScopes() helper gets scopes from the queue.
             If searches for getGdprQueryScopesAction and getGdprDeleteScopesAction.`, () => {
     it(`If getGdprQueryScopesAction action is found, query scopes are returned. `, async () => {
       const { runner } = await initTests();
@@ -159,7 +159,7 @@ describe('getGdprScopes.ts', () => {
       });
     });
   });
-  describe(`isKeycloakAuthorisationCodeNeeded() and isTunnistamoAuthorisationCodeNeeded() 
+  describe(`isKeycloakAuthorisationCodeNeeded() and isTunnistamoAuthorisationCodeNeeded()
             Checks from scopes, if authorization code is needed from either oidc servers.`, () => {
     const updateServiceConnectionsResult = (
       controller: QueueController,

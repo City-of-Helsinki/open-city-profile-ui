@@ -1,4 +1,3 @@
-import { loader } from 'graphql.macro';
 import to from 'await-to-js';
 
 import {
@@ -18,10 +17,7 @@ import {
   getStoredTunnistamoAuthCode,
 } from './authCodeParser';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
-
-const DOWNLOAD_MY_PROFILE = loader(
-  '../../profile/graphql/DownloadMyProfileQuery.graphql'
-);
+import DOWNLOAD_MY_PROFILE from '../../profile/graphql/DownloadMyProfileQuery.graphql';
 
 const downloadDataType = 'downloadData';
 

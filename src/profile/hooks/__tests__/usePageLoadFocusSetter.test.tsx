@@ -38,11 +38,15 @@ type TestScenario = typeof scenarios[number];
 
 let mockHistory: ReturnType<typeof createMemoryHistory>;
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn().mockImplementation(() => mockHistory),
-  useLocation: jest.fn().mockImplementation(() => mockHistory.location),
-}));
+vi.mock('react-router-dom', async () => {
+  const module = await vi.importActual('react-router-dom');
+
+  return {
+    ...module,
+    useHistory: vi.fn().mockImplementation(() => mockHistory),
+    useLocation: vi.fn().mockImplementation(() => mockHistory.location),
+  };
+});
 
 describe('usePageLoadFocusSetter.ts ', () => {
   const pathIndicatorTestId = 'current-path';
@@ -52,7 +56,7 @@ describe('usePageLoadFocusSetter.ts ', () => {
   const getElementTestId = (path: string) =>
     `element-for-${stripBackLashes(path)}`;
 
-  const focusTracker = jest.fn();
+  const focusTracker = vi.fn();
   const onElemenFocus = (source: TestScenario) => {
     focusTracker(source);
   };
@@ -228,7 +232,7 @@ describe('usePageLoadFocusSetter.ts ', () => {
       });
     });
 
-    it(`Targeted element is h1, if element with a certain className is not found. 
+    it(`Targeted element is h1, if element with a certain className is not found.
         Tabindex="-1" is added to a non-focusable element.
         In this test it is a h1 element.`, async () => {
       await act(async () => {
@@ -259,7 +263,7 @@ describe('usePageLoadFocusSetter.ts ', () => {
     });
   });
   describe('Does not set focus ', () => {
-    it(`if history has no internal page load. 
+    it(`if history has no internal page load.
         History is initialized with a route.
         Route is not changed.`, async () => {
       await act(async () => {

@@ -25,7 +25,7 @@ export interface Profile {
   sub: string;
 }
 
-interface ProfileState {
+export interface ProfileState {
   profile: Profile | null;
   loading: boolean;
   error: Error | null;

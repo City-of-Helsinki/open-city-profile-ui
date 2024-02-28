@@ -22,7 +22,7 @@ describe('<DeleteProfileError /> ', () => {
     getDeleteMyProfileMutationResult(['', 'errorCode'])
   );
 
-  const onClose = jest.fn();
+  const onClose = vi.fn();
   const t = i18n.getFixedT('fi');
 
   const renderAndReturnHelpers = (error?: Props['error']) =>
@@ -30,7 +30,9 @@ describe('<DeleteProfileError /> ', () => {
       render(<DeleteProfileError onClose={onClose} error={error} />)
     );
 
-  beforeEach(() => jest.resetAllMocks());
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
 
   it('Renders modal when error is defined', async () => {
     const { findById } = renderAndReturnHelpers(basicError);

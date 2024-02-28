@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/client';
 import * as Sentry from '@sentry/browser';
 import { Button, LoadingSpinner, Notification } from 'hds-react';
@@ -21,10 +20,7 @@ import ServiceConnection from './ServiceConnection';
 import ServiceConnectionRemover from './ServiceConnectionRemover';
 import { getStoredQueueData } from '../../../common/actionQueue/actionQueueStorage';
 import { authCodeQueuesStorageKey } from '../../../gdprApi/useAuthCodeQueues';
-
-const SERVICE_CONNECTIONS = loader(
-  '../../graphql/ServiceConnectionsQuery.graphql'
-);
+import SERVICE_CONNECTIONS from '../../graphql/ServiceConnectionsQuery.graphql';
 
 function ServiceConnections(): React.ReactElement {
   const [deletingServiceName, setSeletingServiceName] = useState<

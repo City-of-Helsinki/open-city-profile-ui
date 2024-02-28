@@ -72,7 +72,7 @@ function FormikDropdown(props: Props): React.ReactElement {
     multiselect: false,
     value: currentOption || selectedOption,
     // eslint-disable-next-line no-undef
-    virtualized: process.env.NODE_ENV !== 'test' && virtualized,
+    virtualized: import.meta.env.NODE_ENV !== 'test' && virtualized,
     getA11yStatusMessage: selectionProps =>
       selectionProps.selectedItem
         ? t('profileInformation.ariaSelectedOption', {

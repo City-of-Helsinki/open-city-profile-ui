@@ -24,23 +24,23 @@ ENV PATH=$PATH:/app/.npm-global/bin
 ENV YARN_VERSION 1.22.19
 RUN yarn policies set-version $YARN_VERSION
 
-# Copy package.json and package-lock.json/yarn.lock files
-COPY package.json yarn.lock /app/
 RUN chown -R default:root /app
+
+USER default
+
+# Copy package.json and package-lock.json/yarn.lock files
+COPY --chown=default:root package.json yarn.lock /app/
+COPY --chown=default:root ./scripts /app/scripts
+COPY --chown=default:root ./public /app/public
 
 # Install npm dependencies
 ENV PATH /app/node_modules/.bin:$PATH
 
-USER default
-
 RUN yarn config set network-timeout 300000
 RUN yarn && yarn cache clean --force
 
-COPY .eslintrc.json .eslintignore tsconfig.json .prettierrc.json .env* /app/
-COPY ./src /app/src
-COPY ./scripts /app/scripts
-COPY ./public /app/public
-
+COPY --chown=default:root index.html vite.config.mts .eslintrc.json .eslintignore tsconfig.json .prettierrc.json .env* /app/
+COPY --chown=default:root ./src /app/src
 # =============================
 FROM appbase as development
 # =============================

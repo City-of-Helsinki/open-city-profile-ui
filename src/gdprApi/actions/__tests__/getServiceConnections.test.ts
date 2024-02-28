@@ -1,4 +1,3 @@
-import fetchMock from 'jest-fetch-mock';
 import to from 'await-to-js';
 
 import {
@@ -51,8 +50,8 @@ describe('getServiceConnections.ts', () => {
   };
   afterEach(() => {
     fetchMock.resetMocks();
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
   describe('The executor', () => {
     it('Fetches serviceConnections', async () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<AuthenticationProviderInformation />  renders correctly when AMR is helsinkiAccountAMR should render helsinki account information as expected based on config 1`] = `
+exports[`<AuthenticationProviderInformation />  > renders correctly when AMR is helsinkiAccountAMR > should render helsinki account information as expected based on config 1`] = `
 <AuthenticationProviderInformation>
   <ProfileSection>
     <section
@@ -25,7 +25,7 @@ exports[`<AuthenticationProviderInformation />  renders correctly when AMR is he
 </AuthenticationProviderInformation>
 `;
 
-exports[`<AuthenticationProviderInformation />  renders correctly when AMR is tunnistusSuomifiAMR should render suomi.fi information as expected based on config 1`] = `
+exports[`<AuthenticationProviderInformation />  > renders correctly when AMR is tunnistusSuomifiAMR > should render suomi.fi information as expected based on config 1`] = `
 <AuthenticationProviderInformation>
   <ProfileSection>
     <section

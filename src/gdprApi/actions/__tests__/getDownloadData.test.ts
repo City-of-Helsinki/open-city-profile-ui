@@ -1,4 +1,3 @@
-import fetchMock from 'jest-fetch-mock';
 import to from 'await-to-js';
 import { waitFor } from '@testing-library/react';
 
@@ -12,10 +11,10 @@ import {
   tunnistamoAuthCodeParserAction,
   keycloakAuthCodeParserAction,
 } from '../authCodeParser';
-import { getMockCalls } from '../../../common/test/jestMockHelper';
+import { getMockCalls } from '../../../common/test/mockHelper';
 
 describe('getDownloadData.ts', () => {
-  const queryTracker = jest.fn();
+  const queryTracker = vi.fn();
   const successfulResponse = { variable1: 'variable1' };
   const keycloakAuthCode = 'keycloak-auth-code';
   const tunnistamoAuthCode = 'tunnistamo-auth-code';
@@ -80,8 +79,8 @@ describe('getDownloadData.ts', () => {
   };
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
     fetchMock.resetMocks();
   });
   describe('The executor', () => {

@@ -30,11 +30,11 @@ import { defaultRedirectionCatcherActionType } from '../../../../gdprApi/actions
 import { createNextActionParams } from '../../../../gdprApi/actions/utils';
 import { deleteServiceConnectionType } from '../../../../gdprApi/actions/deleteServiceConnection';
 
-jest.mock('../../../../gdprApi/actions/queues');
+vi.mock('../../../../gdprApi/actions/queues');
 
 describe('<ServiceConnectionRemover /> ', () => {
-  const onDeleteTracker = jest.fn();
-  const onAbortTracker = jest.fn();
+  const onDeleteTracker = vi.fn();
+  const onAbortTracker = vi.fn();
   const mockedWindowControls = mockWindowLocation();
 
   const defaultServiceConnectionData = getServiceConnectionData(
@@ -68,7 +68,7 @@ describe('<ServiceConnectionRemover /> ', () => {
 
   const renderTestSuite = (service: ServiceConnectionData) =>
     renderComponentWithMocksAndContexts(
-      jest.fn(),
+      vi.fn(),
       <TestingComponent service={service} />
     );
 
@@ -99,8 +99,8 @@ describe('<ServiceConnectionRemover /> ', () => {
   afterEach(async () => {
     mockedWindowControls.reset();
     cleanComponentMocks();
-    jest.clearAllMocks();
-    jest.resetAllMocks();
+    vi.clearAllMocks();
+    vi.resetAllMocks();
   });
 
   const initTests = async (
@@ -108,7 +108,7 @@ describe('<ServiceConnectionRemover /> ', () => {
   ): Promise<TestTools> =>
     renderTestSuite(service || defaultServiceConnectionData);
 
-  it(`Renders the confirmation modal on initial render. 
+  it(`Renders the confirmation modal on initial render.
       Close button closes it and calls the onAbort callback`, async () => {
     await act(async () => {
       const { clickElement, waitForElement } = await initTests();
@@ -135,7 +135,7 @@ describe('<ServiceConnectionRemover /> ', () => {
       await waitForElement(getTestId('loadIndicator'));
     });
   });
-  it(`If deletion succeeds, a success text is shown in the modal and 
+  it(`If deletion succeeds, a success text is shown in the modal and
       onDelete-callback is called when ok-button is pressed .`, async () => {
     initQueueAndLocationForResume();
 
@@ -181,7 +181,7 @@ describe('<ServiceConnectionRemover /> ', () => {
       });
     });
   });
-  it(`If deletion query succeeds, but result indicates removal was unsuccessful, 
+  it(`If deletion query succeeds, but result indicates removal was unsuccessful,
       a forbidden message is shown`, async () => {
     initQueueAndLocationForResume({
       overrides: [

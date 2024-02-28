@@ -42,14 +42,14 @@ describe('<CreateProfile />', () => {
       <React.Fragment>
         <CreateProfile
           tunnistamoUser={tunnistamoUser}
-          onProfileCreated={jest.fn()}
+          onProfileCreated={vi.fn()}
         />
       </React.Fragment>
     );
   };
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     cleanup();
     resetApolloMocks();
   });
@@ -85,7 +85,7 @@ describe('<CreateProfile />', () => {
       await waitForElement({ id: 'create-profile-lastName-error' });
     });
   });
-  it(`Setting a phone number without a country calling code shows an error after submit. 
+  it(`Setting a phone number without a country calling code shows an error after submit.
       Setting a country calling code removes the error`, async () => {
     await act(async () => {
       const testTools = await renderTestSuite();

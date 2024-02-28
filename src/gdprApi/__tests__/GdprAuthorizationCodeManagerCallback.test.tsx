@@ -20,26 +20,30 @@ import {
 import { tunnistamoAuthCodeParserAction } from '../actions/authCodeParser';
 import { tunnistamoAuthCodeCallbackUrlAction } from '../actions/authCodeCallbackUrlDetector';
 import { loadKeycloakConfigAction } from '../actions/loadKeycloakConfig';
-import { getMockCallArgs } from '../../common/test/jestMockHelper';
+import { getMockCallArgs } from '../../common/test/mockHelper';
 import mockWindowLocation from '../../common/test/mockWindowLocation';
 
-const mockHistoryTracker = jest.fn();
+const mockHistoryTracker = vi.fn();
 
-jest.mock('react-router', () => ({
-  ...jest.requireActual('react-router'),
-  useHistory: () => ({
-    push: mockHistoryTracker,
-    replace: mockHistoryTracker,
-  }),
-}));
+vi.mock('react-router', async () => {
+  const module = await vi.importActual('react-router');
 
-jest.mock('../actions/queues');
+  return {
+    ...module,
+    useHistory: () => ({
+      push: mockHistoryTracker,
+      replace: mockHistoryTracker,
+    }),
+  };
+});
+
+vi.mock('../actions/queues');
 
 describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
   const mockedWindowControls = mockWindowLocation();
 
-  const onCompleted = jest.fn();
-  const onError = jest.fn();
+  const onCompleted = vi.fn();
+  const onError = vi.fn();
 
   const startPagePath = '/start-page';
 
@@ -56,7 +60,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
 
   const initTests = async () =>
     renderComponentWithMocksAndContexts(
-      jest.fn(),
+      vi.fn(),
       <GdprAuthorizationCodeManagerCallback />
     );
 
@@ -66,7 +70,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
   afterEach(() => {
     mockedWindowControls.reset();
     cleanComponentMocks();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   beforeEach(() => {
@@ -84,7 +88,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       });
     });
   });
-  it(`Queue is not resumed when next action is not resumable. 
+  it(`Queue is not resumed when next action is not resumable.
           User is redirected to the start or error page`, async () => {
     initTestQueue(
       getScenarioWhereNextPhaseIsResumeCallback({

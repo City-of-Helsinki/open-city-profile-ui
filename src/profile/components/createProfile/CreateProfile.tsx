@@ -2,7 +2,6 @@ import React from 'react';
 import { User } from 'oidc-client';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/client';
-import { loader } from 'graphql.macro';
 import * as Sentry from '@sentry/browser';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import classNames from 'classnames';
@@ -20,8 +19,7 @@ import ProfileSection from '../../../common/profileSection/ProfileSection';
 import useToast from '../../../toast/useToast';
 import Explanation from '../../../common/explanation/Explanation';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
-
-const CREATE_PROFILE = loader('../../graphql/CreateMyProfile.graphql');
+import CREATE_PROFILE from '../../graphql/CreateMyProfile.graphql';
 
 type Props = {
   tunnistamoUser: User;

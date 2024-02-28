@@ -15,8 +15,8 @@ import i18n from '../../../../common/test/testi18nInit';
 import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
 
 // mock children, so they wont make queries
-jest.mock('../../deleteProfile/DeleteProfile');
-jest.mock('../../downloadData/DownloadData');
+vi.mock('../../deleteProfile/DeleteProfile');
+vi.mock('../../downloadData/DownloadData');
 
 const history = createMemoryHistory({ initialEntries: ['/'] });
 describe('<ViewProfile /> ', () => {

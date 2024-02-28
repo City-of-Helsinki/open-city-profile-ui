@@ -40,7 +40,7 @@ Missing country codes compared to the official ITU: https://www.itu.int/oth/T020
 */
 import * as path from 'path';
 
-import to from 'await-to-js';
+import { to } from 'await-to-js';
 import countries from 'i18n-iso-countries';
 
 const CountryCodePropKey = 'ISO3166-1-Alpha-2';
@@ -212,8 +212,8 @@ function mergeDataSets(
       isSubRegionWithMatchingCountryCallingCode(countryAlpha2Code, subRegions)
     ) {
       console.log(
-        ` ### Removed ${countryAlpha2Code}! 
-          ### It is a sub-region of ${subRegions[countryAlpha2Code].parentAlpha2Code} 
+        ` ### Removed ${countryAlpha2Code}!
+          ### It is a sub-region of ${subRegions[countryAlpha2Code].parentAlpha2Code}
           ### and calling codes also match.`
       );
       return result;

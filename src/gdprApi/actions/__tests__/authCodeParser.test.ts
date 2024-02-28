@@ -96,8 +96,8 @@ describe('authCodeParser.ts', () => {
 
   afterEach(() => {
     mockedWindowControls.reset();
-    jest.restoreAllMocks();
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
   describe('tunnistamoAuthCodeParserAction and keycloakAuthCodeParserAction parse the code from the return url', () => {
     it('Resolves code if the stored state matches the one in the callback url', async () => {

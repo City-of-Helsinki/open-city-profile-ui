@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/react';
 
-import { getMockCalls } from '../../test/jestMockHelper';
+import { getMockCalls } from '../../test/mockHelper';
 import {
   Action,
   ActionExecutor,
@@ -38,7 +38,7 @@ describe('actionQueueRunner', () => {
   };
   type LoggedAction = Action | ActionSourceForTesting | ActionProps;
   // holds all tracking data
-  const tracker = jest.fn();
+  const tracker = vi.fn();
 
   // track when an action is executed, started, completed or an error is logged.
   const track = (trackingType: TrackingType, actionType: ActionType) => {

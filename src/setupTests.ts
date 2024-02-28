@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-console */
 import Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
-import { enableFetchMocks } from 'jest-fetch-mock';
 import './common/test/testi18nInit';
+import createFetchMock from 'vitest-fetch-mock';
+import { vi } from 'vitest';
 
-enableFetchMocks();
+import '@testing-library/jest-dom/vitest';
 
 // Load generated runtime configuration to be available in tests
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -11,15 +14,33 @@ require('../public/test-env-config');
 
 configure({ adapter: new Adapter() });
 
-((global as unknown) as Window).scrollTo = jest.fn();
+window.scrollTo = vi.fn<any>();
 
-jest.mock('react-router', () => ({
-  ...jest.requireActual('react-router'),
-  useLocation: () => ({
-    pathname: '/',
-  }),
-}));
+const fetchMocker = createFetchMock(vi);
+fetchMocker.enableMocks();
 
-jest.mock('./auth/http-poller');
+vi.mock('react-router-dom', async () => {
+  const module = await vi.importActual('react-router-dom');
 
-global.HTMLElement.prototype.scrollIntoView = jest.fn();
+  return {
+    ...module,
+    useLocation: () => ({
+      pathname: '/',
+    }),
+  };
+});
+
+vi.mock('./auth/http-poller');
+
+global.HTMLElement.prototype.scrollIntoView = vi.fn();
+
+const originalError = console.error.bind(console.error);
+
+console.error = (msg: any, ...optionalParams: any[]) => {
+  const msgStr = msg.toString();
+
+  return (
+    !msgStr.includes('Could not parse CSS stylesheet') &&
+    originalError(msg, ...optionalParams)
+  );
+};

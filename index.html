@@ -8,13 +8,14 @@
       name="description"
       content="Rekisteröitymällä Helsingin kaupungin uusiin palveluihin, sinulle luodaan Helsinki-profiili, jonka kautta näet vaivattomasti tietosi, joita sinusta keräämme sekä palvelut joihin olet tunnistautunut."
     />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <script src="%PUBLIC_URL%/env-config.js"></script>
+    <link rel="manifest" href="/manifest.json" />
+    <script type="module" src="/env-config.js"></script>
     <title>Profiili</title>
   </head>
   <body class="text-body">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <div id="toast-root"></div>
+    <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>

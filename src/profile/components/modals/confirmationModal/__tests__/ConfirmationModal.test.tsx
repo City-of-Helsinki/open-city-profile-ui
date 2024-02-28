@@ -19,8 +19,8 @@ describe('<ConfirmationModal /> ', () => {
     confirm: 'confirmation-modal-confirm-button',
     cancel: 'confirmation-modal-cancel-button',
   };
-  const onClose = jest.fn();
-  const onConfirm = jest.fn();
+  const onClose = vi.fn();
+  const onConfirm = vi.fn();
   const t = i18n.getFixedT('fi');
 
   const renderModal = ({ content, title }: RenderProps) =>
@@ -38,7 +38,9 @@ describe('<ConfirmationModal /> ', () => {
   const renderAndReturnHelpers = (props: RenderProps) =>
     createDomHelpersWithTesting(renderModal(props));
 
-  beforeEach(() => jest.resetAllMocks());
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
 
   it('Renders title when defined', async () => {
     const props = { title: 'THIS_IS_TITLE' };

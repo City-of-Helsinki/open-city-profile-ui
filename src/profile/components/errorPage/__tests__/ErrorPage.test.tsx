@@ -17,10 +17,14 @@ const mockUseLocationValue = {
   state: null,
 };
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn().mockImplementation(() => mockUseLocationValue),
-}));
+vi.mock('react-router-dom', async () => {
+  const module = await vi.importActual('react-router-dom');
+
+  return {
+    ...module,
+    useLocation: vi.fn().mockImplementation(() => mockUseLocationValue),
+  };
+});
 
 describe('<ErrorPage /> ', () => {
   const t = i18n.getFixedT('fi');
@@ -78,13 +82,9 @@ describe('<ErrorPage /> ', () => {
     return '';
   };
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
-  it(`renders 
+  it(`renders
       - generic title
-      - generic message  
+      - generic message
       - the login button
       - the frontpage button
       when location.search is has no affecting params`, async () => {
@@ -96,13 +96,13 @@ describe('<ErrorPage /> ', () => {
     );
     expect(getErrorsFromElementAndParamsMatch({})).toBe('');
   });
-  it(`renders 
+  it(`renders
       - given title
-      - generic message  
+      - generic message
       - the login button
       - the frontpage button
-      when location.search is has 
-      - a title 
+      when location.search is has
+      - a title
       and no other affecting params`, async () => {
     const title = 'test_title';
     mockUseLocationValue.search = `title=${title}`;
@@ -113,14 +113,14 @@ describe('<ErrorPage /> ', () => {
     );
     expect(getErrorsFromElementAndParamsMatch({ title })).toBe('');
   });
-  it(`renders 
+  it(`renders
       - given title
-      - given message  
+      - given message
       - the login button
       - the frontpage button
-      when location.search has 
-      - a title 
-      - a message 
+      when location.search has
+      - a title
+      - a message
       and no other affecting params`, async () => {
     const title = 'test_title';
     const message = 'test_message';
@@ -132,15 +132,15 @@ describe('<ErrorPage /> ', () => {
     );
     expect(getErrorsFromElementAndParamsMatch({ title, message })).toBe('');
   });
-  it(`renders 
+  it(`renders
       - given title
-      - given message  
+      - given message
       - no login button
       - the frontpage button
-      when location.search has 
+      when location.search has
       - a title
-      - a message 
-      - hideLoginButton with a value 
+      - a message
+      - hideLoginButton with a value
       and hideFrontPageLink is not set`, async () => {
     const title = 'test_title';
     const message = 'test_message';
@@ -159,15 +159,15 @@ describe('<ErrorPage /> ', () => {
       })
     ).toBe('');
   });
-  it(`renders 
+  it(`renders
       - given title
-      - given message  
+      - given message
       - no login button
       - no frontpage button
-      when location.search has 
+      when location.search has
       - a title
-      - a message 
-      - hideLoginButton with a value 
+      - a message
+      - hideLoginButton with a value
       - hideFrontPageLink with a value`, async () => {
     const title = 'test_title';
     const message = 'test_message';
@@ -191,15 +191,15 @@ describe('<ErrorPage /> ', () => {
       })
     ).toBe('');
   });
-  it(`renders 
+  it(`renders
       - generic title
-      - generic message  
+      - generic message
       - no login button
       - the frontpage button
       when location.search has no other affecting params, but user is authenticated`, async () => {
     mockUseLocationValue.search = '';
 
-    jest.spyOn(authService, 'isAuthenticated').mockReturnValue(true);
+    vi.spyOn(authService, 'isAuthenticated').mockReturnValue(true);
 
     result = render(
       <MemoryRouter>
@@ -226,7 +226,7 @@ describe('<ErrorPage /> ', () => {
     const content = {
       title: 'title in content',
       message: 'message in content',
-      hideLoginButton: false,
+      hideLoginButton: true,
       hideFrontPageLink: false,
     };
 

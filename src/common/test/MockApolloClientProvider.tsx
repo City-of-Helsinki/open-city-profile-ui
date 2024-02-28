@@ -1,7 +1,6 @@
 import React from 'react';
 import { ApolloError, ApolloProvider } from '@apollo/client';
 import { ExecutionResult, GraphQLError } from 'graphql';
-import fetchMock from 'jest-fetch-mock';
 
 import graphqlClient from '../../graphql/client';
 import {
@@ -19,7 +18,6 @@ import {
   GdprDeleteMyServiceDataMutationVariables,
   GdprDeleteMyServiceDataMutation_deleteMyServiceData,
 } from '../../graphql/generatedTypes';
-
 export type MockedResponse = {
   profileData?: ProfileData | null;
   createMyProfile?: ProfileInput;

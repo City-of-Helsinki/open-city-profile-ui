@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { ContentSource } from 'hds-react';
 import { MemoryRouter } from 'react-router';
+import { Mock } from 'vitest';
 
 import CookieConsentPage from '../CookieConsentPage';
 import MockCookieModal, {
@@ -13,15 +14,19 @@ import MockCookieModal, {
 } from '../__mocks__/CookieModalAndPage';
 import { trackingCookieId } from '../cookieContentSource';
 
-jest.mock('hds-react', () => ({
-  ...jest.requireActual('hds-react'),
-  CookiePage: (props: { contentSource: ContentSource }) => (
-    <MockCookieModal contentSource={props.contentSource} />
-  ),
-}));
+vi.mock('hds-react', async () => {
+  const module = await vi.importActual('hds-react');
+
+  return {
+    ...module,
+    CookiePage: (props: { contentSource: ContentSource }) => (
+      <MockCookieModal contentSource={props.contentSource} />
+    ),
+  };
+});
 
 describe('CookieConsentPage', () => {
-  const pushTracker = jest.fn();
+  const pushTracker = vi.fn();
   const initialEnv = window._env_.REACT_APP_ENVIRONMENT;
   const renderComponent = () =>
     render(
@@ -30,7 +35,7 @@ describe('CookieConsentPage', () => {
       </MemoryRouter>
     );
   beforeAll(() => {
-    ((global.window as unknown) as { _paq: { push: jest.Mock } })._paq = {
+    ((global.window as unknown) as { _paq: { push: Mock } })._paq = {
       push: pushTracker,
     };
     window._env_.REACT_APP_ENVIRONMENT = 'production';

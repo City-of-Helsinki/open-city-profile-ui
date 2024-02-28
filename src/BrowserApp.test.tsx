@@ -1,13 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Mock } from 'vitest';
 
 import BrowserApp from './BrowserApp';
-import { getMockCallArgs } from './common/test/jestMockHelper';
+import { getMockCallArgs } from './common/test/mockHelper';
 
 describe('BrowserApp', () => {
-  const pushTracker = jest.fn();
+  const pushTracker = vi.fn();
   beforeAll(() => {
-    ((global.window as unknown) as { _paq: { push: jest.Mock } })._paq = {
+    ((global.window as unknown) as { _paq: { push: Mock } })._paq = {
       push: pushTracker,
     };
   });

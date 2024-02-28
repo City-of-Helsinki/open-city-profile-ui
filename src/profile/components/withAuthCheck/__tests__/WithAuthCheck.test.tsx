@@ -1,6 +1,5 @@
 import React from 'react';
 import { act, waitFor } from '@testing-library/react';
-import { User } from 'oidc-client';
 
 import { renderComponentWithMocksAndContexts } from '../../../../common/test/testingLibraryTools';
 import WithAuthCheck, { WithAuthCheckChildProps } from '../WithAuthCheck';
@@ -10,18 +9,22 @@ import authService from '../../../../auth/authService';
 import { getLinkRedirectState } from '../../../hooks/useHistoryListener';
 
 const mockedHistory = {
-  push: jest.fn(),
+  push: vi.fn(),
 };
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn().mockImplementation(() => mockedHistory),
-}));
+vi.mock('react-router-dom', async () => {
+  const module = await vi.importActual('react-router-dom');
+
+  return {
+    ...module,
+    useHistory: vi.fn().mockImplementation(() => mockedHistory),
+  };
+});
 
 describe('<WithAuthCheck /> ', () => {
   const mockedUser = mockUserCreator();
   const timeoutInMs = 60;
-  const getAuthenticatedUserMock = jest.fn();
+
   const authenticatedUserTestId = 'authenticated-user';
 
   const TestComponent = (props: WithAuthCheckChildProps) => (
@@ -36,37 +39,23 @@ describe('<WithAuthCheck /> ', () => {
       <WithAuthCheckAndTestComponent />
     );
 
-  const mockAuthenticationProcess = (success = true) => {
-    const authPromise: Promise<User | null> = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        success ? resolve(mockedUser) : reject(null);
-      }, timeoutInMs);
-    });
-    jest.spyOn(authService, 'getAuthenticatedUser').mockImplementation(() => {
-      getAuthenticatedUserMock();
-      return authPromise;
-    });
-    return authPromise;
-  };
-
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    getAuthenticatedUserMock.mockReset();
     mockedHistory.push.mockReset();
     // to end all possibly existing timeouts
-    jest.advanceTimersByTime(timeoutInMs * 10);
-    jest.useRealTimers();
+    vi.advanceTimersByTime(timeoutInMs * 10);
+    vi.useRealTimers();
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('renders a load-indicator while waiting for user data.', async () => {
-    mockAuthenticationProcess(false);
+    vi.spyOn(authService, 'getAuthenticatedUser').mockRejectedValue(null);
     await act(async () => {
       const { waitForElement } = await renderTestSuite();
       await waitForElement({ testId: 'load-indicator' });
@@ -74,7 +63,7 @@ describe('<WithAuthCheck /> ', () => {
   });
 
   it('redirects to /login when user is not authenticated.', async () => {
-    mockAuthenticationProcess(false);
+    vi.spyOn(authService, 'getAuthenticatedUser').mockRejectedValue(null);
     await act(async () => {
       await renderTestSuite();
       await waitFor(() => {
@@ -87,7 +76,7 @@ describe('<WithAuthCheck /> ', () => {
     });
   });
   it('renders the child component when user is authenticated. User is passed as a prop.', async () => {
-    mockAuthenticationProcess(true);
+    vi.spyOn(authService, 'getAuthenticatedUser').mockResolvedValue(mockedUser);
     await act(async () => {
       const { waitForElement, getElement } = await renderTestSuite();
       await waitForElement({ testId: authenticatedUserTestId });

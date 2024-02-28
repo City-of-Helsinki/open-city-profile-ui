@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ApolloError, useLazyQuery } from '@apollo/client';
-import { loader } from 'graphql.macro';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
 import { Button, Notification } from 'hds-react';
@@ -28,10 +27,7 @@ import useAuthCodeQueues, {
 import config from '../../../config';
 import { getDeleteProfileResult } from '../../../gdprApi/actions/deleteProfile';
 import reportErrorsToSentry from '../../../common/sentry/reportErrorsToSentry';
-
-const SERVICE_CONNECTIONS = loader(
-  '../../graphql/ServiceConnectionsQuery.graphql'
-);
+import SERVICE_CONNECTIONS from '../../graphql/ServiceConnectionsQuery.graphql';
 
 function DeleteProfile(): React.ReactElement {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
