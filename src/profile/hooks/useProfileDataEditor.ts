@@ -98,7 +98,7 @@ export function useProfileDataEditor({
     // update is not triggered here
     // to keep editData and profile data in sync
     // update is done in useEffect() when new profile data is detected
-    return Promise.resolve(success as UpdateResult);
+    return Promise.resolve(success);
   };
 
   const save: ProfileDataEditorReturnType['save'] = async (item, newValue) => {
