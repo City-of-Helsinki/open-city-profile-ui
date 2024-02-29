@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ApolloError, useLazyQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { Button, Notification } from 'hds-react';
 import { useHistory } from 'react-router';
 import { useMatomo } from '@datapunt/matomo-tracker-react';

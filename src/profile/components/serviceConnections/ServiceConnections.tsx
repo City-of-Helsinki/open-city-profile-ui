@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { Button, LoadingSpinner, Notification } from 'hds-react';
 import classNames from 'classnames';
 

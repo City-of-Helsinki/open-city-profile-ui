@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { LoadingSpinner } from 'hds-react';
 
 import authService from '../../authService';
