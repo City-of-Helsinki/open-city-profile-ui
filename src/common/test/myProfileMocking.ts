@@ -334,7 +334,9 @@ export function cloneProfileAndProvideManipulationFunctions(
       if (!targetEdge) {
         throw Error('Cannot edit edge');
       }
-      Object.assign(targetEdge.node, node);
+      if (targetEdge.node) {
+        Object.assign(targetEdge.node, node);
+      }
       return this;
     },
     setBasicData(basicData) {
