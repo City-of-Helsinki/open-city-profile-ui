@@ -76,19 +76,20 @@ Fetches country calling codes and generates src/i18n/countryCallingCodes.json fi
 
 ## Environment variables
 
-| Name                                  | Description                                                                                |
-| ------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `REACT_APP_HELSINKI_ACCOUNT_AMR`      | Authentication method reference for Helsinki account. </br> **default:** `helsinki_tunnus` |
-| `REACT_APP_OIDC_AUTHORITY`            | This is the URL to tunnistamo.                                                             |
-| `REACT_APP_OIDC_CLIENT_ID`            | ID of the client that has to be configured in tunnistamo.                                  |
-| `REACT_APP_OIDC_SCOPE`                | Which scopes the app requires.                                                             |
-| `REACT_APP_PROFILE_AUDIENCE`          | Name of the api-token that client uses profile-api with.                                   |
-| `REACT_APP_PROFILE_BE_GDPR_CLIENT_ID` | Client id used when getting gdpr authentication token for connected services               |
-| `REACT_APP_PROFILE_GRAPHQL`           | URL to the profile graphql.                                                                |
-| `REACT_APP_SENTRY_DSN`                | Sentry public dns-key.                                                                     |
-| `REACT_APP_OIDC_RESPONSE_TYPE`        | Which response type to require.                                                            |
-| `REACT_APP_KEYCLOAK_GDPR_CLIENT_ID`   | Client id for getting auth codes from keycloak                                             |
-| `REACT_APP_KEYCLOAK_AUTHORITY`        | Url to Keycloak. The openid config is fetched from this url                                |
+| Name                                  | Description                                                                                                     |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `REACT_APP_HELSINKI_ACCOUNT_AMR`      | Authentication method reference for Helsinki account. </br> **default:** `helsinki_tunnus`                      |
+| `REACT_APP_OIDC_AUTHORITY`            | This is the URL to tunnistamo.                                                                                  |
+| `REACT_APP_OIDC_CLIENT_ID`            | ID of the client that has to be configured in tunnistamo.                                                       |
+| `REACT_APP_OIDC_SCOPE`                | Which scopes the app requires.                                                                                  |
+| `REACT_APP_PROFILE_AUDIENCE`          | Name of the api-token that client uses profile-api with.                                                        |
+| `REACT_APP_PROFILE_BE_GDPR_CLIENT_ID` | Client id used when getting gdpr authentication token for connected services                                    |
+| `REACT_APP_PROFILE_GRAPHQL`           | URL to the profile graphql.                                                                                     |
+| `REACT_APP_SENTRY_DSN`                | Sentry public dns-key. Both REACT_APP_SENTRY_DSN and REACT_APP_ENVIRONMENT has to be set to send error reports. |
+| `REACT_APP_ENVIRONMENT`               | App environment.                                                                                                |
+| `REACT_APP_OIDC_RESPONSE_TYPE`        | Which response type to require.                                                                                 |
+| `REACT_APP_KEYCLOAK_GDPR_CLIENT_ID`   | Client id for getting auth codes from keycloak                                                                  |
+| `REACT_APP_KEYCLOAK_AUTHORITY`        | Url to Keycloak. The openid config is fetched from this url                                                     |
 
 ## Setting up local development environment with Docker
 
