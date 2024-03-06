@@ -107,7 +107,7 @@ exports[`Toast > should render correct toast 1`] = `
               onClose={[Function]}
               type="error"
             >
-              <da
+              <Qo
                 visuallyHidden={false}
               >
                 <Animated(section)
@@ -128,7 +128,7 @@ exports[`Toast > should render correct toast 1`] = `
                         className="Notification-module_label__1bhNu notification_hds-notification__label__2t1lR"
                         role="heading"
                       >
-                        <pe
+                        <J
                           aria-hidden={true}
                           className="Notification-module_icon__1ans7 notification_hds-icon__29HQM"
                         >
@@ -148,12 +148,12 @@ exports[`Toast > should render correct toast 1`] = `
                               fillRule="evenodd"
                             />
                           </svg>
-                        </pe>
-                        <da
+                        </J>
+                        <Qo
                           visuallyHidden={false}
                         >
                           test title
-                        </da>
+                        </Qo>
                       </div>
                       <div
                         className="Notification-module_body__9BSAD notification_hds-notification__body__3cobH"
@@ -172,7 +172,7 @@ exports[`Toast > should render correct toast 1`] = `
                       title="notification.closeButtonText"
                       type="button"
                     >
-                      <ce
+                      <P
                         aria-hidden={true}
                       >
                         <svg
@@ -191,11 +191,11 @@ exports[`Toast > should render correct toast 1`] = `
                             fillRule="evenodd"
                           />
                         </svg>
-                      </ce>
+                      </P>
                     </button>
                   </section>
                 </Animated(section)>
-              </da>
+              </Qo>
             </ForwardRef>
           </div>
         </NotificationComponent>
