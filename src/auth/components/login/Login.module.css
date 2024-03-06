@@ -1,7 +1,6 @@
 .wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: row;
   flex: 1;
   background-color: var(--color-black-ultra-light);
@@ -9,11 +8,10 @@
 
 .content.content {
   text-align: center;
-  justify-content: center;
   align-items: center;
   max-width: var(--breakpoint-m);
   padding-top: var(--common-top-spacing);
-  padding-bottom: var(--spacing-layout-l);
+  padding-bottom: var(--spacing-layout-2-xl);
 }
 
 .content h1 {

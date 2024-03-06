@@ -1,23 +1,6 @@
-.logo {
-  background-color: var(--color-black);
-  background-size: contain;
-  height: 80px;
-}
-
-.logo-fi {
-  width: 174.21px;
-  -webkit-mask: url('../svg/HelsinkiLogoFi.svg') no-repeat;
-  mask: url('../svg/HelsinkiLogoFi.svg') no-repeat;
-}
-
-.logo-sv {
-  width: 230px;
-  -webkit-mask: url('../svg/HelsinkiLogoSv.svg') no-repeat;
-  mask: url('../svg/HelsinkiLogoSv.svg') no-repeat;
-}
 
 .logoWrapper {
-  margin-top: var(--spacing-layout-l);
+  margin-top: 3.75rem;
   height: 80px;
 }
 
