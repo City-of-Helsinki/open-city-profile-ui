@@ -1,7 +1,7 @@
 import { FetchMock } from 'vitest-fetch-mock';
 import { TFunction } from 'react-i18next';
 
-import { UpdateMyProfileVariables } from '../../graphql/generatedTypes';
+import { UpdateMyProfileMutationVariables } from '../../graphql/generatedTypes';
 import { ProfileData } from '../../graphql/typings';
 import { EditDataType, EditDataValue } from '../../profile/helpers/editData';
 import { MockedResponse } from './MockApolloClientProvider';
@@ -58,7 +58,7 @@ export type CommonTestSuite = {
   valueSetter?: (testTools: TestTools, source: DataSource) => Promise<void>;
   responses?: MockedResponse[];
   notificationMessages?: NotificationMessages;
-  sentDataPicker?: (variables: UpdateMyProfileVariables) => DataSource;
+  sentDataPicker?: (variables: UpdateMyProfileMutationVariables) => DataSource;
   selectors: Selectors;
 };
 
@@ -369,7 +369,7 @@ async function verifySentData({ formData, sentDataPicker }: TestSuite) {
     throw new Error('Sent data body not found');
   }
   const sentData = JSON.parse(body.toString()) as {
-    variables: UpdateMyProfileVariables;
+    variables: UpdateMyProfileMutationVariables;
   };
   const pickedSentData = sentDataPicker(sentData.variables);
   expect(pickedSentData).toMatchObject(formData as DataSource);

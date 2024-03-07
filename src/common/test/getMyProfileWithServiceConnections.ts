@@ -1,6 +1,6 @@
 import {
-  GdprServiceConnectionsQuery_myProfile_serviceConnections,
-  GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service,
+  GdprServiceConnectionsQueryMyProfileServiceConnectionsFragment,
+  GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment,
 } from '../../graphql/generatedTypes';
 import {
   Mutable,
@@ -87,10 +87,10 @@ export default function getMyProfileWithServiceConnections(
   };
   if (addGdprQueryServiceData) {
     const connections = (data.myProfile
-      .serviceConnections as unknown) as GdprServiceConnectionsQuery_myProfile_serviceConnections;
+      .serviceConnections as unknown) as GdprServiceConnectionsQueryMyProfileServiceConnectionsFragment;
     connections.edges.forEach(edge => {
       const service = edge?.node?.service as Mutable<
-        GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service
+        GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment
       >;
       if (service) {
         const serviceData = (service as unknown) as Service;

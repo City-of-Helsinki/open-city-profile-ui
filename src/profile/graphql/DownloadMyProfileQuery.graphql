@@ -1,4 +1,4 @@
-query DownloadMyProfileQuery(
+query DownloadMyProfile(
   $authorizationCode: String!
   $authorizationCodeKeycloak: String
 ) {

@@ -1,8 +1,8 @@
 import { getServiceConnectionsServices } from '../../gdprApi/utils';
 import {
   GdprDeleteMyProfileMutation,
-  GdprDeleteMyProfileMutation_deleteMyProfile_results,
-  GdprDeleteMyProfileMutation_deleteMyProfile_results_errors,
+  GdprDeleteMyProfileMutationDeleteMyProfileResultsFragment,
+  GdprDeleteMyProfileMutationDeleteMyProfileResultsErrorsFragment,
 } from '../../graphql/generatedTypes';
 import { Service } from '../../graphql/typings';
 import getMyProfileWithServiceConnections from './getMyProfileWithServiceConnections';
@@ -11,7 +11,7 @@ export function getDeleteMyProfileMutationResult(errorCodes?: string[]) {
   const mockServices = getServiceConnectionsServices<Service>(
     getMyProfileWithServiceConnections()
   );
-  const results: GdprDeleteMyProfileMutation_deleteMyProfile_results[] = mockServices.map(
+  const results: GdprDeleteMyProfileMutationDeleteMyProfileResultsFragment[] = mockServices.map(
     (service, index) => {
       const errors =
         errorCodes && errorCodes[index]
@@ -20,7 +20,7 @@ export function getDeleteMyProfileMutationResult(errorCodes?: string[]) {
                 __typename: 'ServiceConnectionDeletionError',
                 code: errorCodes[index],
               },
-            ] as GdprDeleteMyProfileMutation_deleteMyProfile_results_errors[])
+            ] as GdprDeleteMyProfileMutationDeleteMyProfileResultsErrorsFragment[])
           : [];
       return {
         __typename: 'ServiceConnectionDeletionResult',

@@ -1,11 +1,11 @@
 import {
   GdprDeleteMyServiceDataMutation,
-  GdprDeleteMyServiceDataMutation_deleteMyServiceData_result,
+  GdprDeleteMyServiceDataMutationFragment,
 } from '../../graphql/generatedTypes';
 
 export function getServiceConnectionDeleteResult(errorCodes?: string[]) {
   const success = !errorCodes;
-  const errors: GdprDeleteMyServiceDataMutation_deleteMyServiceData_result['errors'] = errorCodes
+  const errors: GdprDeleteMyServiceDataMutationFragment['errors'] = errorCodes
     ? errorCodes.map(code => ({
         __typename: 'ServiceConnectionDeletionError',
         code,

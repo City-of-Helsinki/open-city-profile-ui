@@ -1,59 +1,59 @@
 import {
   MyProfileQuery,
-  MyProfileQuery_myProfile_verifiedPersonalInformation,
-  MyProfileQuery_myProfile,
-  MyProfileQuery_myProfile_addresses,
-  MyProfileQuery_myProfile_addresses_edges,
-  MyProfileQuery_myProfile_addresses_edges_node,
-  MyProfileQuery_myProfile_emails,
-  MyProfileQuery_myProfile_emails_edges,
-  MyProfileQuery_myProfile_emails_edges_node,
-  MyProfileQuery_myProfile_phones,
-  MyProfileQuery_myProfile_phones_edges,
-  MyProfileQuery_myProfile_phones_edges_node,
-  UpdateMyProfile,
-  UpdateMyProfile_updateMyProfile_profile,
+  MyProfileQueryVerifiedPersonalInformationFragment,
+  MyProfileQueryFragment,
+  MyProfileQueryAddressesFragment,
+  MyProfileQueryAddressesEdgesFragment,
+  MyProfileQueryAddressesEdgesNodeFragment,
+  MyProfileQueryEmailsFragment,
+  MyProfileQueryEmailsEdgesFragment,
+  MyProfileQueryEmailsEdgesNodeFragment,
+  MyProfileQueryPhonesFragment,
+  MyProfileQueryPhonesEdgesFragment,
+  MyProfileQueryPhonesEdgesNodeFragment,
+  UpdateMyProfileMutation,
+  UpdateMyProfileMutationFragment,
   ProfileInput as ProfileInputInterface,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress,
-  MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress,
+  MyProfileQueryVerifiedPersonalInformationPermanentForeignAddressFragment,
+  MyProfileQueryVerifiedPersonalInformationPermanentAddressFragment,
   ServiceConnectionsQuery,
-  ServiceConnectionsQuery_myProfile_serviceConnections_edges_node,
-  ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service,
-  ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node,
+  ServiceConnectionsQueryEdgesNodeFragment,
+  ServiceConnectionsQueryEdgesNodeServiceFragment,
+  ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesNodeFragment,
   GdprServiceConnectionsQuery,
-  MyProfileQuery_myProfile_primaryAddress,
-  MyProfileQuery_myProfile_primaryEmail,
-  MyProfileQuery_myProfile_primaryPhone,
-  ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges,
+  MyProfileQueryPrimaryAddressFragment,
+  MyProfileQueryPrimaryEmailFragment,
+  MyProfileQueryPrimaryPhoneFragment,
+  ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesFragment,
   ServiceConnectionsQueryVariables as ServiceConnectionsQueryVars,
-  GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service,
+  GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment,
 } from './generatedTypes';
 
 export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
 
 export type ProfileRoot = MyProfileQuery;
-export type ProfileData = MyProfileQuery_myProfile;
+export type ProfileData = MyProfileQueryFragment;
 
-export type UpdateProfileRoot = UpdateMyProfile;
-export type UpdateProfileData = UpdateMyProfile_updateMyProfile_profile;
+export type UpdateProfileRoot = UpdateMyProfileMutation;
+export type UpdateProfileData = UpdateMyProfileMutationFragment;
 
-export type VerifiedPersonalInformation = MyProfileQuery_myProfile_verifiedPersonalInformation;
+export type VerifiedPersonalInformation = MyProfileQueryVerifiedPersonalInformationFragment;
 
-export type Addresses = MyProfileQuery_myProfile_addresses;
-export type AddressEdge = MyProfileQuery_myProfile_addresses_edges;
-export type AddressNode = MyProfileQuery_myProfile_addresses_edges_node;
+export type Addresses = MyProfileQueryAddressesFragment;
+export type AddressEdge = MyProfileQueryAddressesEdgesFragment;
+export type AddressNode = MyProfileQueryAddressesEdgesNodeFragment;
 
-export type Emails = MyProfileQuery_myProfile_emails;
-export type EmailEdge = MyProfileQuery_myProfile_emails_edges;
-export type EmailNode = MyProfileQuery_myProfile_emails_edges_node;
+export type Emails = MyProfileQueryEmailsFragment;
+export type EmailEdge = MyProfileQueryEmailsEdgesFragment;
+export type EmailNode = MyProfileQueryEmailsEdgesNodeFragment;
 
-export type Phones = MyProfileQuery_myProfile_phones;
-export type PhoneEdge = MyProfileQuery_myProfile_phones_edges;
-export type PhoneNode = MyProfileQuery_myProfile_phones_edges_node;
+export type Phones = MyProfileQueryPhonesFragment;
+export type PhoneEdge = MyProfileQueryPhonesEdgesFragment;
+export type PhoneNode = MyProfileQueryPhonesEdgesNodeFragment;
 
-export type PrimaryAddress = MyProfileQuery_myProfile_primaryAddress;
-export type PrimaryEmail = MyProfileQuery_myProfile_primaryEmail;
-export type PrimaryPhone = MyProfileQuery_myProfile_primaryPhone;
+export type PrimaryAddress = MyProfileQueryPrimaryAddressFragment;
+export type PrimaryEmail = MyProfileQueryPrimaryEmailFragment;
+export type PrimaryPhone = MyProfileQueryPrimaryPhoneFragment;
 
 export type InsertableEdge = AddressEdge | EmailEdge | PhoneEdge;
 export type InsertableNode = AddressNode | EmailNode | PhoneNode;
@@ -72,19 +72,20 @@ export type MutablePhones = Mutable<Phones> & {
 
 export type ProfileInput = ProfileInputInterface;
 
-export type PermanentForeignAddress = MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress;
-export type PermanentAddress = MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress;
+export type PermanentForeignAddress = MyProfileQueryVerifiedPersonalInformationPermanentForeignAddressFragment;
+export type PermanentAddress = MyProfileQueryVerifiedPersonalInformationPermanentAddressFragment;
 
 export type ServiceConnectionsRoot = ServiceConnectionsQuery;
-export type ServiceConnectionsNode = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node;
-export type Service = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
+export type ServiceConnectionsNode = ServiceConnectionsQueryEdgesNodeFragment;
+export type Service = ServiceConnectionsQueryEdgesNodeServiceFragment;
 export type ServiceConnectionsQueryVariables = ServiceConnectionsQueryVars;
 // eslint-disable-next-line max-len
-export type ServiceAllowedFieldsNode = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node;
+export type ServiceAllowedFieldsNode = ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesNodeFragment;
 // eslint-disable-next-line max-len
-export type ServiceAllowedFieldsEdge = ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges;
+export type ServiceAllowedFieldsEdge = ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesFragment;
 export type GdprServiceConnectionsRoot = GdprServiceConnectionsQuery;
-export type GdprServiceConnectionService = GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
+// eslint-disable-next-line max-len
+export type GdprServiceConnectionService = GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment;
 
 export {
   PhoneType,

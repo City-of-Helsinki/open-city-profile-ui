@@ -6,7 +6,7 @@ import {
   CreatePhoneInput,
   UpdateAddressInput,
   UpdateEmailInput,
-  UpdateMyProfileVariables,
+  UpdateMyProfileMutationVariables,
   UpdatePhoneInput,
 } from '../../graphql/generatedTypes';
 import {
@@ -48,7 +48,7 @@ type PhoneInputs = {
 type CreatePartialProfileUpdateData = (
   formValues: Partial<FormValues>,
   profile?: ProfileRoot
-) => UpdateMyProfileVariables;
+) => UpdateMyProfileMutationVariables;
 
 const getPrimaryValue = (primary: Primary, profile?: ProfileRoot) => {
   const primaryValue = profile?.myProfile && profile.myProfile[primary];

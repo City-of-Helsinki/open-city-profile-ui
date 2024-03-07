@@ -10,13 +10,13 @@ import {
   UpdateProfileData,
 } from '../../graphql/typings';
 import {
-  UpdateMyProfileVariables,
+  UpdateMyProfileMutationVariables,
   ProfileInput,
   GdprDeleteMyProfileMutationVariables,
-  GdprDeleteMyProfileMutation_deleteMyProfile,
+  GdprDeleteMyProfileMutationDeleteMyProfileFragment,
   DownloadMyProfileQueryVariables,
   GdprDeleteMyServiceDataMutationVariables,
-  GdprDeleteMyServiceDataMutation_deleteMyServiceData,
+  GdprDeleteMyServiceDataMutationFragment,
 } from '../../graphql/generatedTypes';
 export type MockedResponse = {
   profileData?: ProfileData | null;
@@ -25,16 +25,16 @@ export type MockedResponse = {
   profileDataWithServiceConnections?: ServiceConnectionsRoot;
   errorType?: 'networkError' | 'graphQLError';
   withAllowedPermissionError?: boolean;
-  deleteMyProfile?: null | Partial<GdprDeleteMyProfileMutation_deleteMyProfile>;
-  deleteMyServiceData?: null | Partial<
-    GdprDeleteMyServiceDataMutation_deleteMyServiceData
+  deleteMyProfile?: null | Partial<
+    GdprDeleteMyProfileMutationDeleteMyProfileFragment
   >;
+  deleteMyServiceData?: null | Partial<GdprDeleteMyServiceDataMutationFragment>;
   downloadMyProfile?: null | unknown;
 };
 
 export type ResponseProvider = (
   variables?:
-    | UpdateMyProfileVariables
+    | UpdateMyProfileMutationVariables
     | ServiceConnectionsQueryVariables
     | GdprDeleteMyProfileMutationVariables
     | DownloadMyProfileQueryVariables
@@ -137,7 +137,9 @@ export function MockApolloClientProvider({
     const payload = await req.json();
     const response = createMockedProfileResponse(
       responseProvider(
-        payload ? (payload.variables as UpdateMyProfileVariables) : undefined
+        payload
+          ? (payload.variables as UpdateMyProfileMutationVariables)
+          : undefined
       )
     );
     if ((response as ErrorReturnType).error) {
@@ -160,5 +162,5 @@ export const createApolloErrorWithAllowedPermissionError = (): ApolloError =>
 
 export function resetApolloMocks(): void {
   fetchMock.resetMocks();
-  graphqlClient.resetStore();
+  graphqlClient.clearStore();
 }

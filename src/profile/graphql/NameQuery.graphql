@@ -1,4 +1,4 @@
-query NameQuery {
+query Name {
   myProfile {
     firstName
     lastName

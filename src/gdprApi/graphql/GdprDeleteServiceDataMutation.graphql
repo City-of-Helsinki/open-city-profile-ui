@@ -1,0 +1,14 @@
+fragment GdprDeleteMyServiceDataMutation on ServiceConnectionDeletionResult {
+  success
+  errors {
+    code
+  }
+}
+
+mutation GdprDeleteMyServiceData($input: DeleteMyServiceDataMutationInput!) {
+  deleteMyServiceData(input: $input) {
+    result {
+      ...GdprDeleteMyServiceDataMutation
+    }
+  }
+}
