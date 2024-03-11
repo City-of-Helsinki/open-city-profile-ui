@@ -347,7 +347,7 @@ describe('<AddressEditor /> ', () => {
     });
   });
 
-  it(`When there is no address, the add button is rendered and an address can be added. 
+  it(`When there is no address, the add button is rendered and an address can be added.
       Add button is not shown after it has been clicked and address is saved.`, async () => {
     await act(async () => {
       const testTools = await initTests(profileWithoutAddresses);
@@ -365,7 +365,7 @@ describe('<AddressEditor /> ', () => {
     });
   });
 
-  it(`When removing an address, a confirmation modal is shown. 
+  it(`When removing an address, a confirmation modal is shown.
       Remove error is handled and shown.
       When removal is complete, add button is shown and a text about no addresses.`, async () => {
     await act(async () => {

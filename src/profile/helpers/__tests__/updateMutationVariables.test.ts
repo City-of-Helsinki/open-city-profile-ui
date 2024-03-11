@@ -4,10 +4,10 @@ import {
   AddressType,
   EmailType,
   Language,
-  UpdateMyProfileVariables,
-  MyProfileQuery_myProfile_addresses_edges_node as Address,
-  MyProfileQuery_myProfile_emails_edges_node as Email,
-  MyProfileQuery_myProfile_phones_edges_node as Phone,
+  UpdateMyProfileMutationVariables,
+  MyProfileQueryAddressesEdgesNodeFragment as Address,
+  MyProfileQueryEmailsEdgesNodeFragment as Email,
+  MyProfileQueryPhonesEdgesNodeFragment as Phone,
   PhoneType,
 } from '../../../graphql/generatedTypes';
 import { updateMutationVariables } from '../updateMutationVariables';
@@ -146,7 +146,7 @@ describe('Update variables for basic data (names) are formed correctly', () => {
   });
 
   it('Variables in update data match formValues even if not changed', () => {
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       formValues,
       myProfile
     );
@@ -159,7 +159,7 @@ describe('Update variables for basic data (names) are formed correctly', () => {
       nickname: 'test-nickname',
       lastName: 'test-lastName',
     };
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       newData,
       myProfile
     );
@@ -190,7 +190,7 @@ describe('Update variable for language is formed correctly', () => {
   });
 
   it('Variable in update data match formValues even if not changed', () => {
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       formValues,
       myProfile
     );
@@ -201,7 +201,7 @@ describe('Update variable for language is formed correctly', () => {
     const newData = {
       language: Language.SWEDISH,
     };
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       newData,
       myProfile
     );
@@ -217,7 +217,7 @@ describe('MultiItemArrays are formed correctly', () => {
   });
 
   it('Names and language do not exist in update variables when not in formValues', () => {
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       formValues,
       myProfile
     );
@@ -228,7 +228,7 @@ describe('MultiItemArrays are formed correctly', () => {
   });
 
   it('add arrays are formed correctly with new data', () => {
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       formValues,
       myProfile
     );
@@ -247,7 +247,7 @@ describe('MultiItemArrays are formed correctly', () => {
   });
 
   it('add arrays are empty when using existing data', () => {
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       {
         ...formValues,
         addresses: [primaryAddress, updatedSecondaryAddress],
@@ -263,7 +263,7 @@ describe('MultiItemArrays are formed correctly', () => {
   });
 
   it('update arrays are formed correctly with updated data objects', () => {
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       formValues,
       myProfile
     );
@@ -279,7 +279,7 @@ describe('MultiItemArrays are formed correctly', () => {
   });
 
   it('update arrays are empty when using unchanged or new data', () => {
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       {
         ...formValues,
         addresses: [primaryAddress, newAddress],
@@ -295,7 +295,7 @@ describe('MultiItemArrays are formed correctly', () => {
   });
 
   it('remove arrays are formed correctly with existing data', () => {
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       { ...formValues, addresses: [], emails: [], phones: [] },
       myProfile
     );
@@ -314,7 +314,7 @@ describe('MultiItemArrays are formed correctly', () => {
   });
 
   it('remove arrays do not exists when data is not changed', () => {
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       formValues,
       myProfile
     );
@@ -337,7 +337,7 @@ describe('Full profile can be updated ', () => {
   });
 
   it('Variables include all formValues or corresponding update property', () => {
-    const variables: UpdateMyProfileVariables = updateMutationVariables(
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       formValues,
       myProfile
     );

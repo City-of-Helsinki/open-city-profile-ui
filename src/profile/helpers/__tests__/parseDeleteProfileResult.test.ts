@@ -1,5 +1,5 @@
 import { getDeleteMyProfileMutationResult } from '../../../common/test/getDeleteMyProfileMutationResult';
-import { GdprDeleteMyProfileMutation_deleteMyProfile } from '../../../graphql/generatedTypes';
+import { GdprDeleteMyProfileMutationDeleteMyProfileFragment } from '../../../graphql/generatedTypes';
 import { AnyObject } from '../../../graphql/typings';
 import parseDeleteProfileResult from '../parseDeleteProfileResult';
 
@@ -29,7 +29,7 @@ describe('parseDeleteProfileResult', () => {
   });
   it('If result or result.service does not exist, the result is in "failures"-array', () => {
     const profileResult = getDeleteMyProfileMutationResult();
-    const results = (profileResult.deleteMyProfile as GdprDeleteMyProfileMutation_deleteMyProfile)
+    const results = (profileResult.deleteMyProfile as GdprDeleteMyProfileMutationDeleteMyProfileFragment)
       .results;
 
     (results[0] as unknown) = null;

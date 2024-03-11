@@ -16,7 +16,7 @@ import {
   cloneProfileAndProvideManipulationFunctions,
   ManipulationFunctions,
 } from '../../../common/test/myProfileMocking';
-import { UpdateMyProfileVariables } from '../../../graphql/generatedTypes';
+import { UpdateMyProfileMutationVariables } from '../../../graphql/generatedTypes';
 import { Language, ProfileData, ProfileRoot } from '../../../graphql/typings';
 import getAddressesFromNode from '../../helpers/getAddressesFromNode';
 import getEmailsFromNode from '../../helpers/getEmailsFromNode';
@@ -25,7 +25,7 @@ import { MutationReturnType } from '../useProfileMutations';
 import { exposeProfileMutationsHook } from '../../../common/test/exposeHooksForTesting';
 
 describe('useProfileMutations.ts ', () => {
-  const updateVariables: (UpdateMyProfileVariables | undefined)[] = [];
+  const updateVariables: (UpdateMyProfileMutationVariables | undefined)[] = [];
   const responses: MockedResponse[] = [];
   let profileManipulator: ManipulationFunctions;
   afterEach(() => {
@@ -34,7 +34,7 @@ describe('useProfileMutations.ts ', () => {
     updateVariables.length = 0;
   });
   const responseProvider: ResponseProvider = variables => {
-    updateVariables.push(variables as UpdateMyProfileVariables);
+    updateVariables.push(variables as UpdateMyProfileMutationVariables);
     return responses.shift() as MockedResponse;
   };
 

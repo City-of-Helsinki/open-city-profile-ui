@@ -1,0 +1,28 @@
+overwrite: true
+schema: 'https://profile-api.dev.hel.ninja/graphql/'
+documents: ['./src/**/*.graphql']
+config:
+  # typescript
+  avoidOptionals:
+    field: true
+  declarationKind: 'interface'
+  immutableTypes: true
+  nonOptionalTypename: true
+  namingConvention: 'keep'
+  onlyOperationTypes: true
+
+  # typescript-operations
+  dedupeOperationSuffix: true
+  preResolveTypes: true
+  skipTypeNameForRoot: true
+generates:
+  ./src/graphql/generatedTypes.ts:
+    plugins:
+      - add:
+          content:
+            - '/* tslint:disable */'
+            - '/* eslint-disable */'
+            - '// @generated'
+            - '// This file was automatically generated and should not be edited.'
+      - 'typescript'
+      - 'typescript-operations'

@@ -11,15 +11,15 @@ import CreateProfileForm, {
 } from '../createProfileForm/CreateProfileForm';
 import styles from './CreateProfile.module.css';
 import {
-  CreateMyProfile as CreateMyProfileRoot,
-  CreateMyProfileVariables,
+  CreateMyProfileMutation as CreateMyProfileRoot,
+  CreateMyProfileMutationVariables,
 } from '../../../graphql/generatedTypes';
 import { EmailType, Language, PhoneType } from '../../../graphql/typings';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import useToast from '../../../toast/useToast';
 import Explanation from '../../../common/explanation/Explanation';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
-import CREATE_PROFILE from '../../graphql/CreateMyProfile.graphql';
+import CREATE_PROFILE from '../../graphql/CreateMyProfileMutation.graphql';
 
 type Props = {
   tunnistamoUser: User;
@@ -34,12 +34,12 @@ function CreateProfile({
   const { trackEvent } = useMatomo();
   const [createProfile, { loading }] = useMutation<
     CreateMyProfileRoot,
-    CreateMyProfileVariables
+    CreateMyProfileMutationVariables
   >(CREATE_PROFILE);
   const { createToast } = useToast();
 
   const handleOnValues = (formValues: FormValues) => {
-    const variables: CreateMyProfileVariables = {
+    const variables: CreateMyProfileMutationVariables = {
       input: {
         profile: {
           firstName: formValues.firstName,

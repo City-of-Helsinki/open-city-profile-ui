@@ -2,979 +2,560 @@
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: GdprDeleteMyProfileMutation
-// ====================================================
-
-export interface GdprDeleteMyProfileMutation_deleteMyProfile_results_errors {
-  readonly __typename: "ServiceConnectionDeletionError";
-  readonly code: string;
-}
-
-export interface GdprDeleteMyProfileMutation_deleteMyProfile_results_service {
-  readonly __typename: "ServiceNode";
-  readonly name: string;
-  readonly title: string | null;
-}
-
-export interface GdprDeleteMyProfileMutation_deleteMyProfile_results {
-  readonly __typename: "ServiceConnectionDeletionResult";
-  /**
-   * Was the data removed or not. Or can the data be removed if the request was a dry-run request
-   */
-  readonly success: boolean;
-  /**
-   * Errors if the deletion was not successful or the deletion is not possible
-   */
-  readonly errors: ReadonlyArray<GdprDeleteMyProfileMutation_deleteMyProfile_results_errors>;
-  /**
-   * The service from where this result is from
-   */
-  readonly service: GdprDeleteMyProfileMutation_deleteMyProfile_results_service;
-}
-
-export interface GdprDeleteMyProfileMutation_deleteMyProfile {
-  readonly __typename: "DeleteMyProfileMutationPayload";
-  readonly results: ReadonlyArray<GdprDeleteMyProfileMutation_deleteMyProfile_results>;
-}
-
-export interface GdprDeleteMyProfileMutation {
-  /**
-   * Deletes the data of the profile which is linked to the currently authenticated user.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
-   * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing a connected service.
-   * * `CONNECTED_SERVICE_DELETION_NOT_ALLOWED_ERROR`: The profile deletion is disallowed by one or more connected services.
-   * * `CONNECTED_SERVICE_DELETION_FAILED_ERROR`: The profile deletion failed for one or more connected services.
-   */
-  readonly deleteMyProfile: GdprDeleteMyProfileMutation_deleteMyProfile | null;
-}
-
-export interface GdprDeleteMyProfileMutationVariables {
-  readonly input: DeleteMyProfileMutationInput;
-  readonly language: TranslationLanguage;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: GdprDeleteMyServiceDataMutation
-// ====================================================
-
-export interface GdprDeleteMyServiceDataMutation_deleteMyServiceData_result_errors {
-  readonly __typename: "ServiceConnectionDeletionError";
-  readonly code: string;
-}
-
-export interface GdprDeleteMyServiceDataMutation_deleteMyServiceData_result {
-  readonly __typename: "ServiceConnectionDeletionResult";
-  /**
-   * Was the data removed or not. Or can the data be removed if the request was a dry-run request
-   */
-  readonly success: boolean;
-  /**
-   * Errors if the deletion was not successful or the deletion is not possible
-   */
-  readonly errors: ReadonlyArray<GdprDeleteMyServiceDataMutation_deleteMyServiceData_result_errors>;
-}
-
-export interface GdprDeleteMyServiceDataMutation_deleteMyServiceData {
-  readonly __typename: "DeleteMyServiceDataMutationPayload";
-  readonly result: GdprDeleteMyServiceDataMutation_deleteMyServiceData_result;
-}
-
-export interface GdprDeleteMyServiceDataMutation {
-  /**
-   * Deletes the data of the profile which is linked to the currently authenticated user from one connected service.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `PROFILE_DOES_NOT_EXIST_ERROR`: Returned if there is no profile linked to the currently authenticated user.
-   * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing the service.
-   * * `SERVICE_CONNECTION_DOES_NOT_EXIST_ERROR`: The user is not connected to the service.
-   */
-  readonly deleteMyServiceData: GdprDeleteMyServiceDataMutation_deleteMyServiceData | null;
-}
-
-export interface GdprDeleteMyServiceDataMutationVariables {
-  readonly input: DeleteMyServiceDataMutationInput;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GdprServiceConnectionsQuery
-// ====================================================
-
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
-  readonly __typename: "ServiceNode";
-  readonly name: string;
-  /**
-   * GDPR API query operation scope
-   */
-  readonly gdprQueryScope: string;
-  /**
-   * GDPR API delete operation scope
-   */
-  readonly gdprDeleteScope: string;
-  /**
-   * If this service accepts only Keycloak API tokens
-   */
-  readonly isPureKeycloak: boolean;
-}
-
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
-  readonly __typename: "ServiceConnectionType";
-  readonly service: GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
-}
-
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections_edges {
-  readonly __typename: "ServiceConnectionTypeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node | null;
-}
-
-export interface GdprServiceConnectionsQuery_myProfile_serviceConnections {
-  readonly __typename: "ServiceConnectionTypeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(GdprServiceConnectionsQuery_myProfile_serviceConnections_edges | null)>;
-}
-
-export interface GdprServiceConnectionsQuery_myProfile {
-  readonly __typename: "ProfileNode";
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  /**
-   * List of the profile's connected services.
-   */
-  readonly serviceConnections: GdprServiceConnectionsQuery_myProfile_serviceConnections | null;
-}
-
-export interface GdprServiceConnectionsQuery {
-  /**
-   * Get the profile belonging to the currently authenticated user.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `TODO`
-   */
-  readonly myProfile: GdprServiceConnectionsQuery_myProfile | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: CreateMyProfile
-// ====================================================
-
-export interface CreateMyProfile_createMyProfile_profile {
-  readonly __typename: "ProfileNode";
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-}
-
-export interface CreateMyProfile_createMyProfile {
-  readonly __typename: "CreateMyProfileMutationPayload";
-  readonly profile: CreateMyProfile_createMyProfile_profile | null;
-}
-
-export interface CreateMyProfile {
-  /**
-   * Creates a new profile based on the given data. The new profile is linked to the currently authenticated user.
-   * 
-   * One or several of the following is possible to add:
-   * 
-   * * Email
-   * * Address
-   * * Phone
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `TODO`
-   */
-  readonly createMyProfile: CreateMyProfile_createMyProfile | null;
-}
-
-export interface CreateMyProfileVariables {
-  readonly input: CreateMyProfileMutationInput;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: DownloadMyProfileQuery
-// ====================================================
-
-export interface DownloadMyProfileQuery {
-  /**
-   * Get the user information stored in the profile and its connected services as machine readable JSON.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `CONNECTED_SERVICE_DATA_QUERY_FAILED_ERROR`: Querying data from a connected service was not possible or failed.
-   * * `MISSING_GDPR_API_TOKEN_ERROR`: No API token available for accessing a connected service.
-   */
-  readonly downloadMyProfile: any | null;
-}
-
-export interface DownloadMyProfileQueryVariables {
-  readonly authorizationCode: string;
-  readonly authorizationCodeKeycloak?: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: MyProfileQuery
-// ====================================================
-
-export interface MyProfileQuery_myProfile_primaryAddress {
-  readonly __typename: "AddressNode";
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly primary: boolean;
-  readonly address: string;
-  readonly postalCode: string;
-  readonly city: string;
-  readonly countryCode: string;
-  readonly addressType: AddressType | null;
-}
-
-export interface MyProfileQuery_myProfile_addresses_edges_node {
-  readonly __typename: "AddressNode";
-  readonly primary: boolean;
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly address: string;
-  readonly postalCode: string;
-  readonly city: string;
-  readonly countryCode: string;
-  readonly addressType: AddressType | null;
-}
-
-export interface MyProfileQuery_myProfile_addresses_edges {
-  readonly __typename: "AddressNodeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: MyProfileQuery_myProfile_addresses_edges_node | null;
-}
-
-export interface MyProfileQuery_myProfile_addresses {
-  readonly __typename: "AddressNodeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(MyProfileQuery_myProfile_addresses_edges | null)>;
-}
-
-export interface MyProfileQuery_myProfile_primaryEmail {
-  readonly __typename: "EmailNode";
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly email: string;
-  readonly primary: boolean;
-  readonly emailType: EmailType | null;
-}
-
-export interface MyProfileQuery_myProfile_emails_edges_node {
-  readonly __typename: "EmailNode";
-  readonly primary: boolean;
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly email: string;
-  readonly emailType: EmailType | null;
-}
-
-export interface MyProfileQuery_myProfile_emails_edges {
-  readonly __typename: "EmailNodeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: MyProfileQuery_myProfile_emails_edges_node | null;
-}
-
-export interface MyProfileQuery_myProfile_emails {
-  readonly __typename: "EmailNodeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(MyProfileQuery_myProfile_emails_edges | null)>;
-}
-
-export interface MyProfileQuery_myProfile_primaryPhone {
-  readonly __typename: "PhoneNode";
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly phone: string;
-  readonly primary: boolean;
-  readonly phoneType: PhoneType | null;
-}
-
-export interface MyProfileQuery_myProfile_phones_edges_node {
-  readonly __typename: "PhoneNode";
-  readonly primary: boolean;
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly phone: string;
-  readonly phoneType: PhoneType | null;
-}
-
-export interface MyProfileQuery_myProfile_phones_edges {
-  readonly __typename: "PhoneNodeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: MyProfileQuery_myProfile_phones_edges_node | null;
-}
-
-export interface MyProfileQuery_myProfile_phones {
-  readonly __typename: "PhoneNodeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(MyProfileQuery_myProfile_phones_edges | null)>;
-}
-
-export interface MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress {
-  readonly __typename: "VerifiedPersonalInformationAddressNode";
-  /**
-   * Street address with possible house number etc.
-   */
-  readonly streetAddress: string;
-  /**
-   * Postal code.
-   */
-  readonly postalCode: string;
-  /**
-   * Post office.
-   */
-  readonly postOffice: string;
-}
-
-export interface MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress {
-  readonly __typename: "VerifiedPersonalInformationForeignAddressNode";
-  /**
-   * Street address or whatever is the _first part_ of the address.
-   */
-  readonly streetAddress: string;
-  /**
-   * Additional address information, perhaps town, county, state, country etc.
-   */
-  readonly additionalAddress: string;
-  /**
-   * An ISO 3166-1 country code.
-   */
-  readonly countryCode: string;
-}
-
-export interface MyProfileQuery_myProfile_verifiedPersonalInformation {
-  readonly __typename: "VerifiedPersonalInformationNode";
-  /**
-   * First name(s).
-   */
-  readonly firstName: string;
-  /**
-   * Last name.
-   */
-  readonly lastName: string;
-  /**
-   * The name the person is called with.
-   */
-  readonly givenName: string;
-  readonly nationalIdentificationNumber: string;
-  /**
-   * Official municipality of residence in Finland as a free form text.
-   */
-  readonly municipalityOfResidence: string;
-  /**
-   * Official municipality of residence in Finland as an official number.
-   */
-  readonly municipalityOfResidenceNumber: string;
-  /**
-   * The permanent residency address in Finland.
-   */
-  readonly permanentAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_permanentAddress | null;
-  /**
-   * The temporary foreign (i.e. not in Finland) residency address.
-   */
-  readonly permanentForeignAddress: MyProfileQuery_myProfile_verifiedPersonalInformation_permanentForeignAddress | null;
-}
-
-export interface MyProfileQuery_myProfile {
-  readonly __typename: "ProfileNode";
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly nickname: string;
-  readonly language: Language | null;
-  /**
-   * Convenience field for the address which is marked as primary.
-   */
-  readonly primaryAddress: MyProfileQuery_myProfile_primaryAddress | null;
-  /**
-   * List of addresses of the profile.
-   */
-  readonly addresses: MyProfileQuery_myProfile_addresses | null;
-  /**
-   * Convenience field for the email which is marked as primary.
-   */
-  readonly primaryEmail: MyProfileQuery_myProfile_primaryEmail | null;
-  /**
-   * List of email addresses of the profile.
-   */
-  readonly emails: MyProfileQuery_myProfile_emails | null;
-  /**
-   * Convenience field for the phone which is marked as primary.
-   */
-  readonly primaryPhone: MyProfileQuery_myProfile_primaryPhone | null;
-  /**
-   * List of phone numbers of the profile.
-   */
-  readonly phones: MyProfileQuery_myProfile_phones | null;
-  /**
-   * Personal information that has been verified to be true. Can result into `PERMISSION_DENIED_ERROR` if the requester has no required privileges to access this information.
-   */
-  readonly verifiedPersonalInformation: MyProfileQuery_myProfile_verifiedPersonalInformation | null;
-}
-
-export interface MyProfileQuery {
-  /**
-   * Get the profile belonging to the currently authenticated user.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `TODO`
-   */
-  readonly myProfile: MyProfileQuery_myProfile | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: NameQuery
-// ====================================================
-
-export interface NameQuery_myProfile {
-  readonly __typename: "ProfileNode";
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly nickname: string;
-}
-
-export interface NameQuery {
-  /**
-   * Get the profile belonging to the currently authenticated user.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `TODO`
-   */
-  readonly myProfile: NameQuery_myProfile | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: ServiceConnectionsQuery
-// ====================================================
-
-export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node {
-  readonly __typename: "AllowedDataFieldNode";
-  readonly fieldName: string;
-  readonly label: string | null;
-}
-
-export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges {
-  readonly __typename: "AllowedDataFieldNodeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges_node | null;
-}
-
-export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields {
-  readonly __typename: "AllowedDataFieldNodeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields_edges | null)>;
-}
-
-export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service {
-  readonly __typename: "ServiceNode";
-  readonly name: string;
-  readonly title: string | null;
-  readonly description: string | null;
-  readonly allowedDataFields: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service_allowedDataFields;
-  /**
-   * If this service accepts only Keycloak API tokens
-   */
-  readonly isPureKeycloak: boolean;
-}
-
-export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges_node {
-  readonly __typename: "ServiceConnectionType";
-  readonly service: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node_service;
-  readonly createdAt: any;
-}
-
-export interface ServiceConnectionsQuery_myProfile_serviceConnections_edges {
-  readonly __typename: "ServiceConnectionTypeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: ServiceConnectionsQuery_myProfile_serviceConnections_edges_node | null;
-}
-
-export interface ServiceConnectionsQuery_myProfile_serviceConnections {
-  readonly __typename: "ServiceConnectionTypeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(ServiceConnectionsQuery_myProfile_serviceConnections_edges | null)>;
-}
-
-export interface ServiceConnectionsQuery_myProfile {
-  readonly __typename: "ProfileNode";
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  /**
-   * List of the profile's connected services.
-   */
-  readonly serviceConnections: ServiceConnectionsQuery_myProfile_serviceConnections | null;
-}
-
-export interface ServiceConnectionsQuery {
-  /**
-   * Get the profile belonging to the currently authenticated user.
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `TODO`
-   */
-  readonly myProfile: ServiceConnectionsQuery_myProfile | null;
-}
-
-export interface ServiceConnectionsQueryVariables {
-  readonly language: TranslationLanguage;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: UpdateMyProfile
-// ====================================================
-
-export interface UpdateMyProfile_updateMyProfile_profile_primaryAddress {
-  readonly __typename: "AddressNode";
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly primary: boolean;
-  readonly address: string;
-  readonly postalCode: string;
-  readonly city: string;
-  readonly countryCode: string;
-  readonly addressType: AddressType | null;
-}
-
-export interface UpdateMyProfile_updateMyProfile_profile_addresses_edges_node {
-  readonly __typename: "AddressNode";
-  readonly primary: boolean;
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly address: string;
-  readonly postalCode: string;
-  readonly city: string;
-  readonly countryCode: string;
-  readonly addressType: AddressType | null;
-}
-
-export interface UpdateMyProfile_updateMyProfile_profile_addresses_edges {
-  readonly __typename: "AddressNodeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: UpdateMyProfile_updateMyProfile_profile_addresses_edges_node | null;
-}
-
-export interface UpdateMyProfile_updateMyProfile_profile_addresses {
-  readonly __typename: "AddressNodeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(UpdateMyProfile_updateMyProfile_profile_addresses_edges | null)>;
-}
-
-export interface UpdateMyProfile_updateMyProfile_profile_primaryEmail {
-  readonly __typename: "EmailNode";
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly email: string;
-  readonly primary: boolean;
-  readonly emailType: EmailType | null;
-}
-
-export interface UpdateMyProfile_updateMyProfile_profile_emails_edges_node {
-  readonly __typename: "EmailNode";
-  readonly primary: boolean;
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly email: string;
-  readonly emailType: EmailType | null;
-}
-
-export interface UpdateMyProfile_updateMyProfile_profile_emails_edges {
-  readonly __typename: "EmailNodeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: UpdateMyProfile_updateMyProfile_profile_emails_edges_node | null;
+export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+/** All built-in and custom scalars, mapped to their actual values */
+export interface Scalars {
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
+  JSONString: { input: any; output: any; }
+  UUID: { input: any; output: any; }
+  _Any: { input: any; output: any; }
+}
+
+export interface AddServiceConnectionMutationInput {
+  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  readonly serviceConnection: ServiceConnectionInput;
 }
-
-export interface UpdateMyProfile_updateMyProfile_profile_emails {
-  readonly __typename: "EmailNodeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(UpdateMyProfile_updateMyProfile_profile_emails_edges | null)>;
-}
-
-export interface UpdateMyProfile_updateMyProfile_profile_primaryPhone {
-  readonly __typename: "PhoneNode";
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly phone: string;
-  readonly primary: boolean;
-  readonly phoneType: PhoneType | null;
-}
-
-export interface UpdateMyProfile_updateMyProfile_profile_phones_edges_node {
-  readonly __typename: "PhoneNode";
-  readonly primary: boolean;
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly phone: string;
-  readonly phoneType: PhoneType | null;
-}
-
-export interface UpdateMyProfile_updateMyProfile_profile_phones_edges {
-  readonly __typename: "PhoneNodeEdge";
-  /**
-   * The item at the end of the edge
-   */
-  readonly node: UpdateMyProfile_updateMyProfile_profile_phones_edges_node | null;
-}
-
-export interface UpdateMyProfile_updateMyProfile_profile_phones {
-  readonly __typename: "PhoneNodeConnection";
-  /**
-   * Contains the nodes in this connection.
-   */
-  readonly edges: ReadonlyArray<(UpdateMyProfile_updateMyProfile_profile_phones_edges | null)>;
-}
-
-export interface UpdateMyProfile_updateMyProfile_profile {
-  readonly __typename: "ProfileNode";
-  /**
-   * The ID of the object
-   */
-  readonly id: string;
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly nickname: string;
-  readonly language: Language | null;
-  /**
-   * Convenience field for the address which is marked as primary.
-   */
-  readonly primaryAddress: UpdateMyProfile_updateMyProfile_profile_primaryAddress | null;
-  /**
-   * List of addresses of the profile.
-   */
-  readonly addresses: UpdateMyProfile_updateMyProfile_profile_addresses | null;
-  /**
-   * Convenience field for the email which is marked as primary.
-   */
-  readonly primaryEmail: UpdateMyProfile_updateMyProfile_profile_primaryEmail | null;
-  /**
-   * List of email addresses of the profile.
-   */
-  readonly emails: UpdateMyProfile_updateMyProfile_profile_emails | null;
-  /**
-   * Convenience field for the phone which is marked as primary.
-   */
-  readonly primaryPhone: UpdateMyProfile_updateMyProfile_profile_primaryPhone | null;
-  /**
-   * List of phone numbers of the profile.
-   */
-  readonly phones: UpdateMyProfile_updateMyProfile_profile_phones | null;
-}
-
-export interface UpdateMyProfile_updateMyProfile {
-  readonly __typename: "UpdateMyProfileMutationPayload";
-  readonly profile: UpdateMyProfile_updateMyProfile_profile | null;
-}
-
-export interface UpdateMyProfile {
-  /**
-   * Updates the profile which is linked to the currently authenticated user based on the given data.
-   * 
-   * One or several of the following is possible to add, modify or remove:
-   * 
-   * * Email
-   * * Address
-   * * Phone
-   * 
-   * Requires authentication.
-   * 
-   * Possible error codes:
-   * 
-   * * `PROFILE_MUST_HAVE_PRIMARY_EMAIL`: If trying to get rid of the profile's primary email.
-   * * `DATA_CONFLICT_ERROR`: Could not update with the provided data because it would cause a conflict.
-   */
-  readonly updateMyProfile: UpdateMyProfile_updateMyProfile | null;
-}
-
-export interface UpdateMyProfileVariables {
-  readonly input: UpdateMyProfileMutationInput;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-//==============================================================
-// START Enums and Input Objects
-//==============================================================
 
 export enum AddressType {
-  HOME = "HOME",
-  NONE = "NONE",
-  OTHER = "OTHER",
-  WORK = "WORK",
+  /** Home address */
+  HOME = 'HOME',
+  NONE = 'NONE',
+  /** Other address */
+  OTHER = 'OTHER',
+  /** Work address */
+  WORK = 'WORK'
 }
 
-/**
- * An enumeration.
- */
+export interface ClaimProfileMutationInput {
+  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  readonly profile?: InputMaybe<ProfileInput>;
+  readonly token: Scalars['UUID']['input'];
+}
+
+/** An enumeration. */
 export enum ContactMethod {
-  EMAIL = "EMAIL",
-  SMS = "SMS",
-}
-
-export enum EmailType {
-  NONE = "NONE",
-  OTHER = "OTHER",
-  PERSONAL = "PERSONAL",
-  WORK = "WORK",
-}
-
-/**
- * An enumeration.
- */
-export enum Language {
-  ENGLISH = "ENGLISH",
-  FINNISH = "FINNISH",
-  SWEDISH = "SWEDISH",
-}
-
-export enum PhoneType {
-  HOME = "HOME",
-  MOBILE = "MOBILE",
-  NONE = "NONE",
-  OTHER = "OTHER",
-  WORK = "WORK",
-}
-
-/**
- * An enumeration.
- */
-export enum TranslationLanguage {
-  EN = "EN",
-  FI = "FI",
-  SV = "SV",
+  EMAIL = 'EMAIL',
+  SMS = 'SMS'
 }
 
 export interface CreateAddressInput {
-  readonly countryCode?: string | null;
-  readonly primary?: boolean | null;
-  readonly address: string;
-  readonly postalCode: string;
-  readonly city: string;
+  /** Street address. Maximum length is 128 characters. */
+  readonly address: Scalars['String']['input'];
+  /** Address type. */
   readonly addressType: AddressType;
+  /** City. Maximum length is 64 characters. */
+  readonly city: Scalars['String']['input'];
+  /** An ISO 3166 alpha-2 country code. */
+  readonly countryCode?: InputMaybe<Scalars['String']['input']>;
+  /** Postal code. Maximum length is 32 characters. */
+  readonly postalCode: Scalars['String']['input'];
+  /** Is this primary address. */
+  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface CreateEmailInput {
-  readonly primary?: boolean | null;
-  readonly email: string;
+  /** Email address. */
+  readonly email: Scalars['String']['input'];
+  /** Email address type. */
   readonly emailType: EmailType;
+  /** Is this primary mail address. */
+  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface CreateMyProfileMutationInput {
+  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
   readonly profile: ProfileInput;
-  readonly clientMutationId?: string | null;
+}
+
+export interface CreateMyProfileTemporaryReadAccessTokenMutationInput {
+  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
+}
+
+export interface CreateOrUpdateProfileWithVerifiedPersonalInformationMutationInput {
+  readonly profile: ProfileWithVerifiedPersonalInformationInput;
+  /** Connect the profile to the service identified by this client id. */
+  readonly serviceClientId?: InputMaybe<Scalars['String']['input']>;
+  /** The **user id** of the user the Profile is or will be associated with. */
+  readonly userId: Scalars['UUID']['input'];
+}
+
+export interface CreateOrUpdateUserProfileMutationInput {
+  readonly profile: ProfileWithVerifiedPersonalInformationInput;
+  /** Connect the profile to the service identified by this client id. */
+  readonly serviceClientId?: InputMaybe<Scalars['String']['input']>;
+  /** The **user id** of the user the Profile is or will be associated with. */
+  readonly userId: Scalars['UUID']['input'];
 }
 
 export interface CreatePhoneInput {
-  readonly primary?: boolean | null;
-  readonly phone: string;
+  /** Phone number. Must not be empty. */
+  readonly phone: Scalars['String']['input'];
+  /** Phone number type. */
   readonly phoneType: PhoneType;
-}
-
-export interface DeleteMyProfileMutationInput {
-  readonly authorizationCode: string;
-  readonly authorizationCodeKeycloak?: string | null;
-  readonly dryRun?: boolean | null;
-  readonly clientMutationId?: string | null;
-}
-
-export interface DeleteMyServiceDataMutationInput {
-  readonly authorizationCode: string;
-  readonly authorizationCodeKeycloak?: string | null;
-  readonly serviceName: string;
-  readonly dryRun?: boolean | null;
+  /** Is this primary phone number. */
+  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 /**
  * The following fields are deprecated:
- * 
+ *
  * * `image`
- * 
+ * * `update_emails`
+ * * `remove_emails`
+ * * `update_phones`
+ * * `remove_phones`
+ * * `update_addresses`
+ * * `remove_addresses`
+ *
+ * There's no replacement for these.
+ */
+export interface CreateProfileInput {
+  /** Add addresses to profile. */
+  readonly addAddresses?: InputMaybe<ReadonlyArray<InputMaybe<CreateAddressInput>>>;
+  /** Add emails to profile. */
+  readonly addEmails?: InputMaybe<ReadonlyArray<InputMaybe<CreateEmailInput>>>;
+  /** Add phone numbers to profile. */
+  readonly addPhones?: InputMaybe<ReadonlyArray<InputMaybe<CreatePhoneInput>>>;
+  /** Contact method. */
+  readonly contactMethod?: InputMaybe<ContactMethod>;
+  /** First name. Maximum length is 255 characters. */
+  readonly firstName?: InputMaybe<Scalars['String']['input']>;
+  /** **DEPRECATED**. Any input is ignored. */
+  readonly image?: InputMaybe<Scalars['String']['input']>;
+  /** Language. */
+  readonly language?: InputMaybe<Language>;
+  /** Last name. Maximum length is 255 characters. */
+  readonly lastName?: InputMaybe<Scalars['String']['input']>;
+  /** Nickname. Maximum length is 32 characters. */
+  readonly nickname?: InputMaybe<Scalars['String']['input']>;
+  /** **DEPRECATED**. Any input is ignored. */
+  readonly removeAddresses?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  /** **DEPRECATED**. Any input is ignored. */
+  readonly removeEmails?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  /** **DEPRECATED**. Any input is ignored. */
+  readonly removePhones?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  readonly sensitivedata?: InputMaybe<SensitiveDataFields>;
+  /** **DEPRECATED**. Any input is ignored. */
+  readonly updateAddresses?: InputMaybe<ReadonlyArray<InputMaybe<UpdateAddressInput>>>;
+  /** **DEPRECATED**. Any input is ignored. */
+  readonly updateEmails?: InputMaybe<ReadonlyArray<InputMaybe<UpdateEmailInput>>>;
+  /** **DEPRECATED**. Any input is ignored. */
+  readonly updatePhones?: InputMaybe<ReadonlyArray<InputMaybe<UpdatePhoneInput>>>;
+}
+
+export interface CreateProfileMutationInput {
+  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  readonly profile: CreateProfileInput;
+  /** **OBSOLETE**: doesn't do anything. Requester's service is determined by authentication. */
+  readonly serviceType?: InputMaybe<ServiceType>;
+}
+
+export interface DeleteMyProfileMutationInput {
+  /** OAuth/OIDC authorization code from Tunnistamo. When obtaining the code, it is required to use service and operation specific GDPR API scopes. */
+  readonly authorizationCode: Scalars['String']['input'];
+  /** OAuth/OIDC authorization code from Keycloak */
+  readonly authorizationCodeKeycloak?: InputMaybe<Scalars['String']['input']>;
+  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** Can be used to see if the profile can be removed. Default is False. */
+  readonly dryRun?: InputMaybe<Scalars['Boolean']['input']>;
+}
+
+export interface DeleteMyServiceDataMutationInput {
+  /** OAuth/OIDC authorization code from Tunnistamo. When obtaining the code, it is required to use service and operation specific GDPR API scopes. */
+  readonly authorizationCode: Scalars['String']['input'];
+  /** OAuth/OIDC authorization code from Keycloak */
+  readonly authorizationCodeKeycloak?: InputMaybe<Scalars['String']['input']>;
+  /** Can be used to see if the date can be removed from the service. Default is False. */
+  readonly dryRun?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The name of the service the data should be removed from */
+  readonly serviceName: Scalars['String']['input'];
+}
+
+export interface EmailInput {
+  /** The email address. */
+  readonly email: Scalars['String']['input'];
+  /** Sets whether the primary email address has been verified. If not given, defaults to False. */
+  readonly verified?: InputMaybe<Scalars['Boolean']['input']>;
+}
+
+export enum EmailType {
+  NONE = 'NONE',
+  /** Other email */
+  OTHER = 'OTHER',
+  /** Personal email */
+  PERSONAL = 'PERSONAL',
+  /** Work email */
+  WORK = 'WORK'
+}
+
+/** An enumeration. */
+export enum Language {
+  ENGLISH = 'ENGLISH',
+  FINNISH = 'FINNISH',
+  SWEDISH = 'SWEDISH'
+}
+
+export enum PhoneType {
+  /** Home phone */
+  HOME = 'HOME',
+  /** Mobile phone */
+  MOBILE = 'MOBILE',
+  NONE = 'NONE',
+  /** Other phone */
+  OTHER = 'OTHER',
+  /** Work phone */
+  WORK = 'WORK'
+}
+
+/**
+ * The following fields are deprecated:
+ *
+ * * `image`
+ *
  * There's no replacement for these.
  */
 export interface ProfileInput {
-  readonly firstName?: string | null;
-  readonly lastName?: string | null;
-  readonly nickname?: string | null;
-  readonly image?: string | null;
-  readonly language?: Language | null;
-  readonly contactMethod?: ContactMethod | null;
-  readonly addEmails?: ReadonlyArray<(CreateEmailInput | null)> | null;
-  readonly addPhones?: ReadonlyArray<(CreatePhoneInput | null)> | null;
-  readonly addAddresses?: ReadonlyArray<(CreateAddressInput | null)> | null;
-  readonly sensitivedata?: SensitiveDataFields | null;
-  readonly updateEmails?: ReadonlyArray<(UpdateEmailInput | null)> | null;
-  readonly removeEmails?: ReadonlyArray<(string | null)> | null;
-  readonly updatePhones?: ReadonlyArray<(UpdatePhoneInput | null)> | null;
-  readonly removePhones?: ReadonlyArray<(string | null)> | null;
-  readonly updateAddresses?: ReadonlyArray<(UpdateAddressInput | null)> | null;
-  readonly removeAddresses?: ReadonlyArray<(string | null)> | null;
+  /** Add addresses to profile. */
+  readonly addAddresses?: InputMaybe<ReadonlyArray<InputMaybe<CreateAddressInput>>>;
+  /** Add emails to profile. */
+  readonly addEmails?: InputMaybe<ReadonlyArray<InputMaybe<CreateEmailInput>>>;
+  /** Add phone numbers to profile. */
+  readonly addPhones?: InputMaybe<ReadonlyArray<InputMaybe<CreatePhoneInput>>>;
+  /** Contact method. */
+  readonly contactMethod?: InputMaybe<ContactMethod>;
+  /** First name. Maximum length is 255 characters. */
+  readonly firstName?: InputMaybe<Scalars['String']['input']>;
+  /** **DEPRECATED**. Any input is ignored. */
+  readonly image?: InputMaybe<Scalars['String']['input']>;
+  /** Language. */
+  readonly language?: InputMaybe<Language>;
+  /** Last name. Maximum length is 255 characters. */
+  readonly lastName?: InputMaybe<Scalars['String']['input']>;
+  /** Nickname. Maximum length is 32 characters. */
+  readonly nickname?: InputMaybe<Scalars['String']['input']>;
+  /** Remove addresses from profile. */
+  readonly removeAddresses?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  /** Remove emails from profile. */
+  readonly removeEmails?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  /** Remove phone numbers from profile. */
+  readonly removePhones?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  readonly sensitivedata?: InputMaybe<SensitiveDataFields>;
+  /** Update profile addresses. */
+  readonly updateAddresses?: InputMaybe<ReadonlyArray<InputMaybe<UpdateAddressInput>>>;
+  /** Update profile emails. */
+  readonly updateEmails?: InputMaybe<ReadonlyArray<InputMaybe<UpdateEmailInput>>>;
+  /** Update profile phone numbers. */
+  readonly updatePhones?: InputMaybe<ReadonlyArray<InputMaybe<UpdatePhoneInput>>>;
+}
+
+export interface ProfileWithVerifiedPersonalInformationInput {
+  /** First name. */
+  readonly firstName?: InputMaybe<Scalars['String']['input']>;
+  /** Last name. */
+  readonly lastName?: InputMaybe<Scalars['String']['input']>;
+  /** Sets the profile's primary email address. */
+  readonly primaryEmail?: InputMaybe<EmailInput>;
+  readonly verifiedPersonalInformation?: InputMaybe<VerifiedPersonalInformationInput>;
 }
 
 export interface SensitiveDataFields {
-  readonly ssn?: string | null;
+  /** Finnish personal identity code. */
+  readonly ssn?: InputMaybe<Scalars['String']['input']>;
+}
+
+export interface ServiceConnectionInput {
+  readonly enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  /** **OBSOLETE**: doesn't do anything. Requester's service is determined by authentication. */
+  readonly service?: InputMaybe<ServiceInput>;
+}
+
+export interface ServiceInput {
+  readonly type?: InputMaybe<ServiceType>;
+}
+
+export enum ServiceType {
+  /**
+   * Berth
+   * @deprecated The whole ServiceType enum is deprecated and shouldn't be used anymore. There are different replacements in various places, depending on how this type was used.
+   */
+  BERTH = 'BERTH',
+  /**
+   * Godchildren of Culture
+   * @deprecated The whole ServiceType enum is deprecated and shouldn't be used anymore. There are different replacements in various places, depending on how this type was used.
+   */
+  GODCHILDREN_OF_CULTURE = 'GODCHILDREN_OF_CULTURE',
+  /**
+   * Helsinki My Data
+   * @deprecated The whole ServiceType enum is deprecated and shouldn't be used anymore. There are different replacements in various places, depending on how this type was used.
+   */
+  HKI_MY_DATA = 'HKI_MY_DATA',
+  /**
+   * Youth Membership
+   * @deprecated The whole ServiceType enum is deprecated and shouldn't be used anymore. There are different replacements in various places, depending on how this type was used.
+   */
+  YOUTH_MEMBERSHIP = 'YOUTH_MEMBERSHIP'
+}
+
+/** An enumeration. */
+export enum TranslationLanguage {
+  EN = 'EN',
+  FI = 'FI',
+  SV = 'SV'
 }
 
 export interface UpdateAddressInput {
-  readonly countryCode?: string | null;
-  readonly primary?: boolean | null;
-  readonly id: string;
-  readonly address?: string | null;
-  readonly postalCode?: string | null;
-  readonly city?: string | null;
-  readonly addressType?: AddressType | null;
+  /** Street address. Maximum length is 128 characters. */
+  readonly address?: InputMaybe<Scalars['String']['input']>;
+  /** Address type. */
+  readonly addressType?: InputMaybe<AddressType>;
+  /** City. Maximum length is 64 characters. */
+  readonly city?: InputMaybe<Scalars['String']['input']>;
+  /** An ISO 3166 alpha-2 country code. */
+  readonly countryCode?: InputMaybe<Scalars['String']['input']>;
+  readonly id: Scalars['ID']['input'];
+  /** Postal code. Maximum length is 32 characters. */
+  readonly postalCode?: InputMaybe<Scalars['String']['input']>;
+  /** Is this primary address. */
+  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface UpdateEmailInput {
-  readonly primary?: boolean | null;
-  readonly id: string;
-  readonly email?: string | null;
-  readonly emailType?: EmailType | null;
+  /** Email address. */
+  readonly email?: InputMaybe<Scalars['String']['input']>;
+  /** Email address type. */
+  readonly emailType?: InputMaybe<EmailType>;
+  readonly id: Scalars['ID']['input'];
+  /** Is this primary mail address. */
+  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface UpdateMyProfileMutationInput {
+  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
   readonly profile: ProfileInput;
-  readonly clientMutationId?: string | null;
 }
 
 export interface UpdatePhoneInput {
-  readonly primary?: boolean | null;
-  readonly id: string;
-  readonly phone?: string | null;
-  readonly phoneType?: PhoneType | null;
+  readonly id: Scalars['ID']['input'];
+  /** Phone number. If provided, must not be empty. */
+  readonly phone?: InputMaybe<Scalars['String']['input']>;
+  /** Phone number type. */
+  readonly phoneType?: InputMaybe<PhoneType>;
+  /** Is this primary phone number. */
+  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
-//==============================================================
-// END Enums and Input Objects
-//==============================================================
+/**
+ * The following fields are deprecated:
+ *
+ * * `image`
+ *
+ * There's no replacement for these.
+ */
+export interface UpdateProfileInput {
+  /** Add addresses to profile. */
+  readonly addAddresses?: InputMaybe<ReadonlyArray<InputMaybe<CreateAddressInput>>>;
+  /** Add emails to profile. */
+  readonly addEmails?: InputMaybe<ReadonlyArray<InputMaybe<CreateEmailInput>>>;
+  /** Add phone numbers to profile. */
+  readonly addPhones?: InputMaybe<ReadonlyArray<InputMaybe<CreatePhoneInput>>>;
+  /** Contact method. */
+  readonly contactMethod?: InputMaybe<ContactMethod>;
+  /** First name. Maximum length is 255 characters. */
+  readonly firstName?: InputMaybe<Scalars['String']['input']>;
+  readonly id: Scalars['ID']['input'];
+  /** **DEPRECATED**. Any input is ignored. */
+  readonly image?: InputMaybe<Scalars['String']['input']>;
+  /** Language. */
+  readonly language?: InputMaybe<Language>;
+  /** Last name. Maximum length is 255 characters. */
+  readonly lastName?: InputMaybe<Scalars['String']['input']>;
+  /** Nickname. Maximum length is 32 characters. */
+  readonly nickname?: InputMaybe<Scalars['String']['input']>;
+  /** Remove addresses from profile. */
+  readonly removeAddresses?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  /** Remove emails from profile. */
+  readonly removeEmails?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  /** Remove phone numbers from profile. */
+  readonly removePhones?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  readonly sensitivedata?: InputMaybe<SensitiveDataFields>;
+  /** Update profile addresses. */
+  readonly updateAddresses?: InputMaybe<ReadonlyArray<InputMaybe<UpdateAddressInput>>>;
+  /** Update profile emails. */
+  readonly updateEmails?: InputMaybe<ReadonlyArray<InputMaybe<UpdateEmailInput>>>;
+  /** Update profile phone numbers. */
+  readonly updatePhones?: InputMaybe<ReadonlyArray<InputMaybe<UpdatePhoneInput>>>;
+}
+
+export interface UpdateProfileMutationInput {
+  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  readonly profile: UpdateProfileInput;
+  /** **OBSOLETE**: doesn't do anything. Requester's service is determined by authentication. */
+  readonly serviceType?: InputMaybe<ServiceType>;
+}
+
+export interface VerifiedPersonalInformationAddressInput {
+  /** Post office. Max length 100 characters. */
+  readonly postOffice?: InputMaybe<Scalars['String']['input']>;
+  /** Finnish postal code, exactly five digits. */
+  readonly postalCode?: InputMaybe<Scalars['String']['input']>;
+  /** Street address with possible house number etc. Max length 100 characters. */
+  readonly streetAddress?: InputMaybe<Scalars['String']['input']>;
+}
+
+export interface VerifiedPersonalInformationForeignAddressInput {
+  /** Additional address information, perhaps town, county, state, country etc. Max length 100 characters. */
+  readonly additionalAddress?: InputMaybe<Scalars['String']['input']>;
+  /** An ISO 3166-1 country code. */
+  readonly countryCode?: InputMaybe<Scalars['String']['input']>;
+  /** Street address or whatever is the _first part_ of the address. Max length 100 characters. */
+  readonly streetAddress?: InputMaybe<Scalars['String']['input']>;
+}
+
+export interface VerifiedPersonalInformationInput {
+  /** First name(s). Max length 100 characters. */
+  readonly firstName?: InputMaybe<Scalars['String']['input']>;
+  /** The name the person is called with. Max length 100 characters. */
+  readonly givenName?: InputMaybe<Scalars['String']['input']>;
+  /** Last name. Max length 100 characters. */
+  readonly lastName?: InputMaybe<Scalars['String']['input']>;
+  /** Official municipality of residence in Finland as a free form text. Max length 100 characters. */
+  readonly municipalityOfResidence?: InputMaybe<Scalars['String']['input']>;
+  /** Official municipality of residence in Finland as an official number, exactly three digits. */
+  readonly municipalityOfResidenceNumber?: InputMaybe<Scalars['String']['input']>;
+  /** Finnish personal identity code. */
+  readonly nationalIdentificationNumber?: InputMaybe<Scalars['String']['input']>;
+  /** The permanent residency address in Finland. */
+  readonly permanentAddress?: InputMaybe<VerifiedPersonalInformationAddressInput>;
+  /** The temporary foreign (i.e. not in Finland) residency address. */
+  readonly permanentForeignAddress?: InputMaybe<VerifiedPersonalInformationForeignAddressInput>;
+  /** The temporary residency address in Finland. */
+  readonly temporaryAddress?: InputMaybe<VerifiedPersonalInformationAddressInput>;
+}
+
+export type GdprDeleteMyProfileMutationDeleteMyProfileResultsErrorsFragment = { readonly __typename: 'ServiceConnectionDeletionError', readonly code: string };
+
+export type GdprDeleteMyProfileMutationDeleteMyProfileResultsFragment = { readonly __typename: 'ServiceConnectionDeletionResult', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError', readonly code: string }>, readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null } };
+
+export type GdprDeleteMyProfileMutationDeleteMyProfileFragment = { readonly __typename: 'DeleteMyProfileMutationPayload', readonly results: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionResult', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError', readonly code: string }>, readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null } }> };
+
+export type GdprDeleteMyProfileMutationVariables = Exact<{
+  input: DeleteMyProfileMutationInput;
+  language: TranslationLanguage;
+}>;
+
+
+export type GdprDeleteMyProfileMutation = { readonly deleteMyProfile: { readonly __typename: 'DeleteMyProfileMutationPayload', readonly results: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionResult', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError', readonly code: string }>, readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null } }> } | null };
+
+export type GdprDeleteMyServiceDataMutationFragment = { readonly __typename: 'ServiceConnectionDeletionResult', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError', readonly code: string }> };
+
+export type GdprDeleteMyServiceDataMutationVariables = Exact<{
+  input: DeleteMyServiceDataMutationInput;
+}>;
+
+
+export type GdprDeleteMyServiceDataMutation = { readonly deleteMyServiceData: { readonly __typename: 'DeleteMyServiceDataMutationPayload', readonly result: { readonly __typename: 'ServiceConnectionDeletionResult', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError', readonly code: string }> } } | null };
+
+export type GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment = { readonly __typename: 'ServiceNode', readonly name: string, readonly gdprQueryScope: string, readonly gdprDeleteScope: string, readonly isPureKeycloak: boolean };
+
+export type GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeFragment = { readonly __typename: 'ServiceConnectionType', readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly gdprQueryScope: string, readonly gdprDeleteScope: string, readonly isPureKeycloak: boolean } };
+
+export type GdprServiceConnectionsQueryMyProfileServiceConnectionsFragment = { readonly __typename: 'ServiceConnectionTypeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'ServiceConnectionTypeEdge', readonly node: { readonly __typename: 'ServiceConnectionType', readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly gdprQueryScope: string, readonly gdprDeleteScope: string, readonly isPureKeycloak: boolean } } | null } | null> };
+
+export type GdprServiceConnectionsQueryMyProfileFragment = { readonly __typename: 'ProfileNode', readonly id: string, readonly serviceConnections: { readonly __typename: 'ServiceConnectionTypeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'ServiceConnectionTypeEdge', readonly node: { readonly __typename: 'ServiceConnectionType', readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly gdprQueryScope: string, readonly gdprDeleteScope: string, readonly isPureKeycloak: boolean } } | null } | null> } | null };
+
+export type GdprServiceConnectionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GdprServiceConnectionsQuery = { readonly myProfile: { readonly __typename: 'ProfileNode', readonly id: string, readonly serviceConnections: { readonly __typename: 'ServiceConnectionTypeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'ServiceConnectionTypeEdge', readonly node: { readonly __typename: 'ServiceConnectionType', readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly gdprQueryScope: string, readonly gdprDeleteScope: string, readonly isPureKeycloak: boolean } } | null } | null> } | null } | null };
+
+export type CreateMyProfileMutationVariables = Exact<{
+  input: CreateMyProfileMutationInput;
+}>;
+
+
+export type CreateMyProfileMutation = { readonly createMyProfile: { readonly __typename: 'CreateMyProfileMutationPayload', readonly profile: { readonly __typename: 'ProfileNode', readonly id: string } | null } | null };
+
+export type DownloadMyProfileQueryVariables = Exact<{
+  authorizationCode: Scalars['String']['input'];
+  authorizationCodeKeycloak?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type DownloadMyProfileQuery = { readonly downloadMyProfile: any | null };
+
+export type MyProfileQueryVerifiedPersonalInformationPermanentForeignAddressFragment = { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string };
+
+export type MyProfileQueryVerifiedPersonalInformationPermanentAddressFragment = { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string };
+
+export type MyProfileQueryVerifiedPersonalInformationFragment = { readonly __typename: 'VerifiedPersonalInformationNode', readonly firstName: string, readonly lastName: string, readonly givenName: string, readonly nationalIdentificationNumber: string, readonly municipalityOfResidence: string, readonly municipalityOfResidenceNumber: string, readonly permanentAddress: { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string } | null, readonly permanentForeignAddress: { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string } | null };
+
+export type MyProfileQueryPrimaryAddressFragment = { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null };
+
+export type MyProfileQueryPrimaryEmailFragment = { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null };
+
+export type MyProfileQueryPrimaryPhoneFragment = { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null };
+
+export type MyProfileQueryAddressesEdgesNodeFragment = { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null };
+
+export type MyProfileQueryEmailsEdgesNodeFragment = { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null };
+
+export type MyProfileQueryPhonesEdgesNodeFragment = { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null };
+
+export type MyProfileQueryAddressesEdgesFragment = { readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null };
+
+export type MyProfileQueryEmailsEdgesFragment = { readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null };
+
+export type MyProfileQueryPhonesEdgesFragment = { readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null };
+
+export type MyProfileQueryAddressesFragment = { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> };
+
+export type MyProfileQueryEmailsFragment = { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> };
+
+export type MyProfileQueryPhonesFragment = { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> };
+
+export type MyProfileQueryFragment = { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null, readonly verifiedPersonalInformation: { readonly __typename: 'VerifiedPersonalInformationNode', readonly firstName: string, readonly lastName: string, readonly givenName: string, readonly nationalIdentificationNumber: string, readonly municipalityOfResidence: string, readonly municipalityOfResidenceNumber: string, readonly permanentAddress: { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string } | null, readonly permanentForeignAddress: { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string } | null } | null };
+
+export type MyProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyProfileQuery = { readonly myProfile: { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null, readonly verifiedPersonalInformation: { readonly __typename: 'VerifiedPersonalInformationNode', readonly firstName: string, readonly lastName: string, readonly givenName: string, readonly nationalIdentificationNumber: string, readonly municipalityOfResidence: string, readonly municipalityOfResidenceNumber: string, readonly permanentAddress: { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string } | null, readonly permanentForeignAddress: { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string } | null } | null } | null };
+
+export type NameQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NameQuery = { readonly myProfile: { readonly __typename: 'ProfileNode', readonly firstName: string, readonly lastName: string, readonly nickname: string } | null };
+
+export type ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesNodeFragment = { readonly __typename: 'AllowedDataFieldNode', readonly fieldName: string, readonly label: string | null };
+
+export type ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesFragment = { readonly __typename: 'AllowedDataFieldNodeEdge', readonly node: { readonly __typename: 'AllowedDataFieldNode', readonly fieldName: string, readonly label: string | null } | null };
+
+export type ServiceConnectionsQueryEdgesNodeServiceFragment = { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null, readonly description: string | null, readonly isPureKeycloak: boolean, readonly allowedDataFields: { readonly __typename: 'AllowedDataFieldNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AllowedDataFieldNodeEdge', readonly node: { readonly __typename: 'AllowedDataFieldNode', readonly fieldName: string, readonly label: string | null } | null } | null> } };
+
+export type ServiceConnectionsQueryEdgesNodeFragment = { readonly __typename: 'ServiceConnectionType', readonly createdAt: any, readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null, readonly description: string | null, readonly isPureKeycloak: boolean, readonly allowedDataFields: { readonly __typename: 'AllowedDataFieldNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AllowedDataFieldNodeEdge', readonly node: { readonly __typename: 'AllowedDataFieldNode', readonly fieldName: string, readonly label: string | null } | null } | null> } } };
+
+export type ServiceConnectionsQueryVariables = Exact<{
+  language: TranslationLanguage;
+}>;
+
+
+export type ServiceConnectionsQuery = { readonly myProfile: { readonly __typename: 'ProfileNode', readonly id: string, readonly serviceConnections: { readonly __typename: 'ServiceConnectionTypeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'ServiceConnectionTypeEdge', readonly node: { readonly __typename: 'ServiceConnectionType', readonly createdAt: any, readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null, readonly description: string | null, readonly isPureKeycloak: boolean, readonly allowedDataFields: { readonly __typename: 'AllowedDataFieldNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AllowedDataFieldNodeEdge', readonly node: { readonly __typename: 'AllowedDataFieldNode', readonly fieldName: string, readonly label: string | null } | null } | null> } } } | null } | null> } | null } | null };
+
+export type UpdateMyProfileMutationFragment = { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null };
+
+export type UpdateMyProfileMutationVariables = Exact<{
+  input: UpdateMyProfileMutationInput;
+}>;
+
+
+export type UpdateMyProfileMutation = { readonly updateMyProfile: { readonly __typename: 'UpdateMyProfileMutationPayload', readonly profile: { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null } | null } | null };

@@ -1,9 +1,9 @@
 import getMyProfileWithServiceConnections from '../../common/test/getMyProfileWithServiceConnections';
 import {
   GdprServiceConnectionsQuery,
-  GdprServiceConnectionsQuery_myProfile,
-  GdprServiceConnectionsQuery_myProfile_serviceConnections,
-  GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node,
+  GdprServiceConnectionsQueryMyProfileFragment,
+  GdprServiceConnectionsQueryMyProfileServiceConnectionsFragment,
+  GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeFragment,
 } from '../../graphql/generatedTypes';
 import { GdprServiceConnectionService, Mutable } from '../../graphql/typings';
 import {
@@ -26,16 +26,16 @@ const createProfileWithCustomServiceConnections = (
   const clone = JSON.parse(
     JSON.stringify(targetProfile)
   ) as GdprServiceConnectionsQuery;
-  const serviceConnections = (clone.myProfile as GdprServiceConnectionsQuery_myProfile)
+  const serviceConnections = (clone.myProfile as GdprServiceConnectionsQueryMyProfileFragment)
     .serviceConnections as Mutable<
-    GdprServiceConnectionsQuery_myProfile_serviceConnections
+    GdprServiceConnectionsQueryMyProfileServiceConnectionsFragment
   >;
   serviceConnections.edges = customServices.map(service => ({
     __typename: 'ServiceConnectionTypeEdge',
     node: {
       __typename: 'ServiceConnectionType',
       service,
-    } as GdprServiceConnectionsQuery_myProfile_serviceConnections_edges_node,
+    } as GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeFragment,
   }));
   return clone;
 };

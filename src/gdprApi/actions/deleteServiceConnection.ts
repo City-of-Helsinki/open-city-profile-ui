@@ -19,7 +19,7 @@ import {
   getStoredTunnistamoAuthCode,
 } from './authCodeParser';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
-import DELETE_SERVICE_DATA from '../graphql/GdprDeleteServiceData.graphql';
+import DELETE_SERVICE_DATA from '../graphql/GdprDeleteServiceDataMutation.graphql';
 
 export const deleteServiceConnectionType = 'deleteServiceConnection';
 

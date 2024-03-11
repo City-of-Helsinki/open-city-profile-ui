@@ -28,5 +28,7 @@
   },
   "include": [
     "src",
+    "codegen.ts",
+    "vite.config.mts"
   ]
 }

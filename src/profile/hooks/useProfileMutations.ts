@@ -7,7 +7,7 @@ import {
 import { useContext } from 'react';
 import { Modifiers } from '@apollo/client/cache/core/types/common';
 
-import { UpdateMyProfileVariables } from '../../graphql/generatedTypes';
+import { UpdateMyProfileMutationVariables } from '../../graphql/generatedTypes';
 import {
   ProfileRoot,
   UpdateProfileRoot,
@@ -22,7 +22,7 @@ import {
 } from '../helpers/editData';
 import { updateMutationVariables } from '../helpers/updateMutationVariables';
 import { ProfileContext, ProfileContextData } from '../context/ProfileContext';
-import UPDATE_PROFILE from '../../profile/graphql/UpdateMyProfile.graphql';
+import UPDATE_PROFILE from '../../profile/graphql/UpdateMyProfileMutation.graphql';
 import MY_PROFILE from '../../profile/graphql/MyProfileQuery.graphql';
 
 export type QueryResult = FetchResult<ProfileRoot, AnyObject, AnyObject>;
@@ -121,7 +121,7 @@ export function useProfileMutations({
   const { data: profileData, updateProfileData } = useContext(ProfileContext);
   const [updateProfile] = useMutation<
     UpdateProfileRoot,
-    UpdateMyProfileVariables
+    UpdateMyProfileMutationVariables
   >(UPDATE_PROFILE, {
     update: (cache, result) =>
       updateCache(cache, result, dataType, profileData, updateProfileData),
