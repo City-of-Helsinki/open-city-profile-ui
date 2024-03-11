@@ -182,13 +182,13 @@ function EmailEditor(): React.ReactElement | null {
           )}
         </div>
       </div>
-      {!showVerifyEmailInfo && (
-        <EditingNotifications content={content} dataType={dataType} />
-      )}
+
+      <EditingNotifications content={content} dataType={dataType} />
+
       {showVerifyEmailInfo && (
         <div className={styles['notification-wrapper']}>
           <Notification
-            type={'info'}
+            type={'alert'}
             label={t('profileInformation.verifyEmailTitle')}
             dataTestId={'verify-email-notification'}
           >
