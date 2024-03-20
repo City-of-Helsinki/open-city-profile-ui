@@ -1,0 +1,11 @@
+{
+  "bootstrap-sha": "11929ca9eeea5602737b8cce4ed6489eea1340a1",
+  "sequential-calls": true,
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "open-city-profile-ui"
+    }
+  },
+  "plugins": ["sentence-case"]
+}
