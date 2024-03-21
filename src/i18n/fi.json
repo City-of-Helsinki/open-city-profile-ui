@@ -38,15 +38,16 @@
   "deleteProfile": {
     "accept": "Ymmärrän, mitä tietojeni poistaminen tarkoittaa ja haluan jatkaa.",
     "delete": "Poista omat tiedot",
-    "explanation": "Halutessasi voit poistaa Helsinki-profiilisi ja kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Helsinki-profiiliisi yhdistettyjä asiointipalveluja käyttääksesi on luotava uusi Helsinki-profiili.<br/><br/>Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta.<br/><br/>Jos olet käyttänyt kirjautumisessa ulkopuolisen palveluntarjoajan tiliä (esim. Google tai Facebook), kyseistä tiliä ei poisteta.",
+    "explanation": "Halutessasi voit poistaa Helsinki-profiilisi ja kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Onkin suositeltavaa ladata omat tietosi talteen ennen profiilin ja omien tietojesi poistoa. <br/><br/>Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta.<br/><br/>Jos olet käyttänyt kirjautumisessa ulkopuolisen palveluntarjoajan tiliä (esim. Google tai Facebook), kyseistä tiliä ei poisteta. <br/>Voidaksesi jatkossa käyttää Helsingin kaupungin asiointipalveluja, sinun on luotava uusi Helsinki-profiili.",
     "title": "Haluatko poistaa omat tietosi?",
     "loadingServices": "Haetaan profiiliin yhdistettyjä palveluita",
     "deleteSuccessful": "Helsinki-profiili ja kaikki sinusta tallentamamme tiedot on poistettu onnistuneesti!",
-    "deleteFailed": "Jostain syystä poisto ei onnistunut. Kokeile hetken kuluttua uudelleen!"
+    "deleteFailed": "Jostain syystä poisto ei onnistunut. Kokeile hetken kuluttua uudelleen!",
+    "deleteInfoforLightAuthentication": "You have services linked to your profile for which you have used strong identification. Please log out and log in again using Suomi.fi-authentication to delete your data. "
   },
   "deleteProfileModal": {
     "delete": "Poista omat tiedot",
-    "explanation": "Jatkamalla menetät kaikki tallennetut tietosi etkä voi enää käyttää seuraavia Helsingin kaupungin palveluita:",
+    "explanation": "Jatkamalla menetät kaikki tallennetut tietosi etkä voi enää käyttää seuraavia Helsingin kaupungin palveluita:<br/>On suositeltavaa ladata omat tietosi palvelusta ennen tietojen poistoa. Voit ladata tietosi yhdellä kerralla kaikista palveluista <linkToMyInformation>Omat tiedot -välilehdellä</linkToMyInformation>.",
     "noServiceExplanation": "Jatkamalla menetät kaikki tallennetut tietosi.",
     "title": "Haluatko varmasti poistaa kaikki tietosi?",
     "notAllowed": "Et voi poistaa profiiliasi, koska jokin sitä käyttävistä palveluista tarvitsee tietojasi esimerkiksi laskutukseen.",
@@ -55,12 +56,14 @@
     "deleteServiceFromPage": "Voit poistaa tiedot näistä palveluista <linkToServices>{{linkToServicesText}}</linkToServices> -sivulta.",
     "unableToDeleteServices": "Emme voi poistaa tietoja näistä palveluista esimerkiksi asioinnin tilan tai säilytysajan vuoksi.",
     "contactServiceToDelete": "Jos haluat silti poistaa tiedot, ole suoraan yhteydessä <linkToExternalServiceList>kyseiseen palveluun</linkToExternalServiceList> ja yritä profiilin poistoa sen jälkeen uudestaan.",
-    "urlToServiceList": "https://www.hel.fi/search/services"
+    "urlToServiceList": "https://www.hel.fi/search/services",
+    "explanationforLightAuthentication": "Voit poistaa tietoja tästä palvelusta vain, jos olet vahvasti tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista tietojen poistamiseksi. "
   },
   "downloadData": {
     "button": "Lataa omat tiedot",
     "panelText": "Voit ladata kaikki sinuun liittyvät tiedot tästä tiedostona. Tiedosto pitää sisällään kaikki sinusta Helsinki-profiiliin tallennetut tiedot sekä tiedot kaikista siihen liitetyistä asiointipalveluista.",
-    "panelTitle": "Haluatko ladata omat tietosi?"
+    "panelTitle": "Haluatko ladata omat tietosi?",
+    "extrapanelTextforLightAuthentication": "Profiilissasi on yhdistettynä palveluita joihin olet käyttänyt vahvaa tunnistautumista.Kirjaudu ulos ja takaisin sisään Suomi.fi-tunnistautuen ladataksesi tiedot."
   },
   "expandingPanel": {
     "closeButtonText": "Sulje",
@@ -68,6 +71,7 @@
     "showInformation": "Näytä tiedot"
   },
   "footer": {
+    "about": "Tietoa Helsinki-profiilista",
     "accessibility": "Saavutettavuusseloste",
     "copyright": "Tekijänoikeus {{year}}",
     "feedback": "Anna palautetta",
@@ -255,6 +259,7 @@
   "openInNewTabAriaLabel": "Avautuu uudessa välilehdessä.",
   "openInExternalDomainAriaLabel": "Siirtyy toiseen sivustoon.",
   "accessibilityStatement": "Saavutettavuusseloste",
+  "aboutPage": "Tietoa Helsinki-profiilista",
   "cityOfHelsinki": "Helsingin kaupunki",
   "pageNotFoundTitle": "Sivua ei löytynyt",
   "pageNotFoundText": "Tarkista URL-osoitteen oikeinkirjoitus (tarkista isot ja pienet kirjaimet sekä välimerkit). Tai palaa edelliselle sivulle napsauttamalla selaimen Edellinen-painiketta. Voit mennä myös etusivulle alla olevasta linkistä.",
@@ -273,5 +278,8 @@
     "mainText": "Tämä sivusto käyttää välttämättömiä evästeitä sivun perustoimintojen ja suorituskyvyn varmistamiseksi. Lisäksi käytämme kohdennusevästeitä analytiikkaa varten.",
     "trackingCookieDescription": "Eväste kerää tietoa kävijän liikkeistä sivustolla.",
     "consentStorageDescription": "Evästeeseen tallennetaan suostumus tilastointievästeisiin."
+  },
+  "changeProfilePassword ": {
+    "explanationForStrongAuthentication": "Voit vaihtaa salasanan vain, jos olet vahvasti tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista vaihtaaksesi salasanasi."
   }
 }

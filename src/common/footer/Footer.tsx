@@ -78,6 +78,7 @@ const Footer = () => {
           to={config.cookiePagePath}
           label={t('cookies.pageName')}
         />
+        <HDSFooter.Link as={Link} to="/about" label={t('footer.about')} />
       </HDSFooter.Base>
     </HDSFooter>
   );

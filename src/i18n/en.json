@@ -38,15 +38,16 @@
   "deleteProfile": {
     "accept": "I understand what deleting my data means and wish to proceed.",
     "delete": "Delete my information",
-    "explanation": "If you want to, you can delete your Helsinki profile and all the data we have stored. Once deleted, the data cannot be restored. A new Helsinki profile must be created to use the e-services associated with your Helsinki profile.<br/><br/>After the deletion, you will be automatically logged out of this service.<br/><br/>If you have logged in using a third-party service provider account (e.g. Google or Facebook), that account will not be deleted.",
+    "explanation": "If you want to, you can delete your Helsinki profile and all the data we have stored. Once deleted, the data cannot be restored. It is therefore advisable to download your own data before deleting your profile and your own data. <br/><br/>After the deletion, you will be automatically logged out of this service.<br/><br/>If you have logged in using a third-party service provider account (e.g. Google or Facebook), that account will not be deleted. <br/>In order to use City of Helsinki services in the future, you will need to create a new Helsinki profile.",
     "title": "Do you want to delete your information?",
     "loadingServices": "Searching for services connected to the profile",
     "deleteSuccessful": "The Helsinki profile and all the data we hold on you have been deleted successfully!",
-    "deleteFailed": "The deletion failed for some reason. Please try again after a while!"
+    "deleteFailed": "The deletion failed for some reason. Please try again after a while!",
+    "deleteInfoforLightAuthentication": "You have services linked to your profile for which you have used strong identification. Please log out and log in again using Suomi.fi-authentication to delete your data. "
   },
   "deleteProfileModal": {
     "delete": "Delete my information",
-    "explanation": "By continuing you will lose all of your stored data and you can no longer use the following City of Helsinki services:",
+    "explanation": "By continuing you will lose all of your stored data and you can no longer use the following City of Helsinki services:<br/>It is recommended that you download your own data from the service before deleting it. You can download your data from all services in one go from the <linkToMyInformation>My Information tab</linkToMyInformation>.",
     "noServiceExplanation": "By continuing you will lose all of your stored data.",
     "title": "Are you sure you want to delete your information?",
     "notAllowed": "You cannot delete your profile because one of the services using it needs your information, for example, for invoicing.",
@@ -55,12 +56,14 @@
     "deleteServiceFromPage": "You can delete the data from these services via the <linkToServices>{{linkToServicesText}}</linkToServices> page.",
     "unableToDeleteServices": "We cannot delete data from these services, for example due to the transaction status or storage time.",
     "contactServiceToDelete": "If you still want to delete the data, please contact <linkToExternalServiceList >the service</linkToExternalServiceList> directly and then retry deleting the profile.",
-    "urlToServiceList": "https://www.hel.fi/search/services"
+    "urlToServiceList": "https://www.hel.fi/search/services",
+    "explanationforLightAuthentication": "You can only delete data from this service if you are strongly identified. Please log out and log in again using Suomi.fi-identification to delete your data. "
   },
   "downloadData": {
     "button": "Download my information",
     "panelText": "Here you can download a file containing all the data related to you. The file contains all the data about you stored in the Helsinki profile and information about all the associated e-services.",
-    "panelTitle": "Do you want to download your information?"
+    "panelTitle": "Do you want to download your information?",
+    "extrapanelTextforLightAuthentication": "You have services linked to your profile for which you have used strong identification. Please log out and log back in with Suomi.fi-authentication to download your data."
   },
   "expandingPanel": {
     "closeButtonText": "Close",
@@ -68,6 +71,7 @@
     "showInformation": "Show information"
   },
   "footer": {
+    "about": "About Helsinki profile",
     "accessibility": "Accessibility document",
     "copyright": "Copyright {{year}}",
     "feedback": "Give feedback",
@@ -255,6 +259,7 @@
   "openInNewTabAriaLabel": "Opens in a new tab.",
   "openInExternalDomainAriaLabel": "Goes to another site.",
   "accessibilityStatement": "Accessibility Statement",
+  "aboutPage": "About Helsinki profile",
   "cityOfHelsinki": "City of Helsinki",
   "pageNotFoundTitle": "Page not found",
   "pageNotFoundText": "Check the spelling of the URL (upper and lower case letters and punctuation marks). Or click the Back button on your browser to return to the previous page. You can also go to the front page via the link below.",
@@ -273,5 +278,8 @@
     "mainText": "This website uses required cookies to ensure the basic functionality and performance. In addition, we use targeting cookies to perform analytics.",
     "trackingCookieDescription": "This cookie is used to store a few details about the user such as the unique visitor ID.",
     "consentStorageDescription": "Cookie stores consent for using analytics cookies."
+  },
+  "changeProfilePassword ": {
+    "explanationForStrongAuthentication": "You can only change your password if you are strongly identified. Log out and log in again using Suomi.fi-authentication to change your password."
   }
 }
