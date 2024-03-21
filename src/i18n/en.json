@@ -68,6 +68,7 @@
     "showInformation": "Show information"
   },
   "footer": {
+    "about": "About Helsinki profile",
     "accessibility": "Accessibility document",
     "copyright": "Copyright {{year}}",
     "feedback": "Give feedback",
