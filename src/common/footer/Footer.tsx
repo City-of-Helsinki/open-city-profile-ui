@@ -33,6 +33,7 @@ const Footer = () => {
       title={t('appName')}
     >
       <HDSFooter.Utilities>
+        <HDSFooter.Link as={Link} to="/about" label={t('footer.about')} />
         <HDSFooter.Link
           aria-label={createAriaLabel(t('footer.contactUs'))}
           external

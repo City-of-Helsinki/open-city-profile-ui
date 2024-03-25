@@ -68,6 +68,7 @@
     "showInformation": "Näytä tiedot"
   },
   "footer": {
+    "about": "Tietoa Helsinki-profiilista",
     "accessibility": "Saavutettavuusseloste",
     "copyright": "Tekijänoikeus {{year}}",
     "feedback": "Anna palautetta",

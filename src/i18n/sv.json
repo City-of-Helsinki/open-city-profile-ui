@@ -68,6 +68,7 @@
     "showInformation": "Visa information"
   },
   "footer": {
+    "about": "Om Helsingfors-profilen",
     "accessibility": "Tillgänglighetsdokument",
     "copyright": "Upphovsrätt {{year}}",
     "feedback": "Ge feedback",
