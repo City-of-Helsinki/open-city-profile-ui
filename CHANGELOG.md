@@ -3,6 +3,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.7.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.6.0...open-city-profile-ui-v1.7.0) (2024-04-04)
+
+
+### Features
+
+* About page HP-2259 ([22a5a66](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/22a5a66fccef286da370ad8b6c9aa74b56f89b3f))
+
+
+### Bug Fixes
+
+* Page title ([22a5a66](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/22a5a66fccef286da370ad8b6c9aa74b56f89b3f))
+* Pr comments ([22a5a66](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/22a5a66fccef286da370ad8b6c9aa74b56f89b3f))
+* Text href ([22a5a66](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/22a5a66fccef286da370ad8b6c9aa74b56f89b3f))
+* Update lang files ([22a5a66](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/22a5a66fccef286da370ad8b6c9aa74b56f89b3f))
+
 ## [1.6.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.5.1...open-city-profile-ui-v1.6.0) (2024-03-25)
 
 
