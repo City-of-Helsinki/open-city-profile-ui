@@ -76,6 +76,8 @@ COPY --from=staticbuilder /app/build /usr/share/nginx/html
 
 # Copy nginx config
 COPY .prod/nginx.conf  /etc/nginx/nginx.conf
+RUN mkdir /etc/nginx/env
+COPY .prod/nginx_env.conf  /etc/nginx/env/
 
 WORKDIR /usr/share/nginx/html
 
