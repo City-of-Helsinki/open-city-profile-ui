@@ -1,5 +1,6 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'hds-react';
 
 import { ServiceConnectionsRoot } from '../../../../graphql/typings';
 import getServiceConnectionData from '../../../helpers/getServiceConnectionData';
@@ -12,9 +13,17 @@ function DeleteProfileContent({ data }: Props): React.ReactElement | null {
   const { t } = useTranslation();
   const servicesArray = getServiceConnectionData(data);
   const description =
-    data?.myProfile?.serviceConnections?.edges?.length !== 0
-      ? t('deleteProfileModal.explanation')
-      : t('deleteProfileModal.noServiceExplanation');
+    data?.myProfile?.serviceConnections?.edges?.length !== 0 ? (
+      <Trans
+        i18nKey="deleteProfileModal.explanation"
+        components={{
+          linkToMyInformation: <Link href={'/'}>{''}</Link>,
+        }}
+      />
+    ) : (
+      t('deleteProfileModal.noServiceExplanation')
+    );
+
   return (
     <>
       <p>{description}</p>

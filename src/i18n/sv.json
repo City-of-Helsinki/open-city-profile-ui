@@ -38,15 +38,16 @@
   "deleteProfile": {
     "accept": "Jag förstår vad att radera min information betyder och vill fortsätta.",
     "delete": "Radera min information",
-    "explanation": "Om du vill, kan du ta bort din Helsingforsprofil och alla uppgifter som vi har sparat om dig. Uppgifterna kan inte återställas efter att de har tagits bort. För att använda de e-tjänster som är anslutna till din Helsingforsprofil måste du skapa en ny Helsingforsprofil.<br/><br/>Efter borttagningen av profilen blir du automatiskt utloggad från denna tjänst.<br/><br/>Om du har loggat in med ett konto hos en utomstående tjänsteleverantör (t.ex. Google eller Facebook), raderas inte kontot i fråga.",
+    "explanation": "Om du vill, kan du ta bort din Helsingforsprofil och alla uppgifter som vi har sparat om dig. Uppgifterna kan inte återställas efter att de har tagits bort. Vi rekommenderar därför att du laddar ner dina egna data innan du raderar din profil och dina egna data. <br/><br/>Efter borttagningen av profilen blir du automatiskt utloggad från denna tjänst.<br/><br/>Om du har loggat in med ett konto hos en utomstående tjänsteleverantör (t.ex. Google eller Facebook), raderas inte kontot i fråga. <br/>För att kunna använda Helsingfors stads tjänster i framtiden måste du skapa en ny Helsingforsprofil.",
     "title": "Vill du radera din information?",
     "loadingServices": "Söker efter tjänster som är kopplade till profilen",
     "deleteSuccessful": "Helsingforsprofilen och alla uppgifter som vi har sparat om dig har tagits bort på ett lyckat sätt.",
-    "deleteFailed": "Av någon anledning lyckades borttagningen inte. Försök på nytt om en stund!"
+    "deleteFailed": "Av någon anledning lyckades borttagningen inte. Försök på nytt om en stund!",
+    "deleteInfoforLightAuthentication": "Du har tjänster kopplade till din Helsingforsprofil för vilka du har använt stark autentisering. Logga ut och logga in igen med Suomi.fi-autentisering för att radera dina uppgifter."
   },
   "deleteProfileModal": {
     "delete": "Radera min information",
-    "explanation": "Genom att fortsätta kommer du att förlora alla dina lagrade information och du kan inte längre använda följande Helsingfors stads tjänster:",
+    "explanation": "Genom att fortsätta kommer du att förlora alla dina lagrade information och du kan inte längre använda följande Helsingfors stads tjänster:<br/>Vi rekommenderar att du laddar ner dina egna data från tjänsten innan du raderar dem. Du kan ladda ner dina data från alla tjänster på en gång från fliken <linkToMyInformation>Min information</<linkToMyInformation>.",
     "noServiceExplanation": "Genom att fortsätta kommer du att förlora alla dina lagrade information.",
     "title": "Är du säker på att du vill radera din information?",
     "notAllowed": "Du kan inte ta bort din profil eftersom någon av tjänsterna som används behöver dina uppgifter till exempel för fakturering.",
@@ -55,12 +56,14 @@
     "deleteServiceFromPage": "Du kan ta bort uppgifterna från dessa tjänster på sidan <linkToServices>{{linkToServicesText}}</linkToServices>.",
     "unableToDeleteServices": "Vi kan inte radera data från dessa tjänster, till exempel på grund av transaktionsstatus eller lagringstid.",
     "contactServiceToDelete": "Om du ändå vill ta bort uppgifterna, kontakta <linkToExternalServiceList>tjänsten</linkToExternalServiceList> i fråga direkt och försök därefter att ta bort profilen på nytt.",
-    "urlToServiceList": "https://www.hel.fi/sok/tjanster"
+    "urlToServiceList": "https://www.hel.fi/sok/tjanster",
+    "explanationforLightAuthentication": "Du kan bara radera data från den här tjänsten om du är starkt identifierad. Logga ut och logga in igen med Suomi.fi-autentisering för att radera dina uppgifter."
   },
   "downloadData": {
     "button": "Ladda ner min information",
     "panelText": "Du kan ladda ner alla uppgifter om dig i en fil här. Filen innehåller alla uppgifter som sparats om dig i Helsingforsprofilen och uppgifter om alla e-tjänster som anslutits till den.",
-    "panelTitle": "Vill du ladda ner din information?"
+    "panelTitle": "Vill du ladda ner din information?",
+    "extrapanelTextforLightAuthentication": "Du har tjänster kopplade till din Helsingforsprofil för vilka du har använt stark autentisering. Logga ut och logga in igen med Suomi.fi-autentisering för att ladda ner dina data."
   },
   "expandingPanel": {
     "closeButtonText": "Stäng",
@@ -68,6 +71,7 @@
     "showInformation": "Visa information"
   },
   "footer": {
+    "about": "Om Helsingfors-profilen",
     "accessibility": "Tillgänglighetsdokument",
     "copyright": "Upphovsrätt {{year}}",
     "feedback": "Ge feedback",
@@ -255,6 +259,7 @@
   "openInNewTabAriaLabel": "Öppnas i en ny flik.",
   "openInExternalDomainAriaLabel": "Gå till en annan webbplats.",
   "accessibilityStatement": "Tillgänglighetsutlåtande",
+  "aboutPage": "Om Helsingfors-profilen",
   "cityOfHelsinki": "Helsingfors stad",
   "pageNotFoundTitle": "Vi kunde inte hitta webbplatsen.",
   "pageNotFoundText": "Kontrollera att URL-adressen är rätt skriven (kontrollera stora och små bokstäver och skiljetecken). Eller gå tillbaka till föregående sida genom att klicka på tangenten Föregående i webbläsaren. Du kan också gå tillbaka till första sidan via länken här nedan.",
@@ -273,5 +278,8 @@
     "mainText": "Denna webbplats använder nödvändiga kakor för att säkerställa basfunktionerna och prestandan. Dessutom använder vi inriktningskakor för analys.",
     "trackingCookieDescription": "Statistiksystemets kaka samlar information om hur webbplatsen används.",
     "consentStorageDescription": "Kakan lagrar samtycke för användning av statistikkakorna."
+  },
+  "changeProfilePassword ": {
+    "explanationForStrongAuthentication": "Du kan bara ändra ditt lösenord om du är starkt identifierad. Logga ut och logga in igen med Suomi.fi-autentisering för att ändra ditt lösenord."
   }
 }
