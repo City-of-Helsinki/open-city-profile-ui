@@ -9,6 +9,8 @@ import CheckedLabel from '../../../common/checkedLabel/CheckedLabel';
 import getAllowedDataFieldsFromService from '../../helpers/getAllowedDataFieldsFromService';
 import styles from './ServiceConnections.module.css';
 import encodeServiceName from '../../helpers/encodeServiceName';
+import useProfile from '../../../auth/useProfile';
+import { hasHelsinkiAccountAMR } from '../profileInformation/authenticationProviderUtil';
 
 function ServiceConnection({
   service,
@@ -27,7 +29,8 @@ function ServiceConnection({
     return `${day}, ${t('serviceConnections.clock')} ${time}`;
   };
 
-  const conflictingAuthentication = true;
+  const { profile } = useProfile();
+  const conflictingAuthentication = hasHelsinkiAccountAMR(profile);
 
   const encodedServiceName = encodeServiceName(service);
 

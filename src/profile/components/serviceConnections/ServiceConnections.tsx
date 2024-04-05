@@ -40,6 +40,7 @@ function ServiceConnections(): React.ReactElement {
       Sentry.captureException(loadError);
     },
   });
+
   const ContentWrapper = ({
     children,
   }: {

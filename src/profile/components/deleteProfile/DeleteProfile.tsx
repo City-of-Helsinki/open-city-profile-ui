@@ -28,6 +28,8 @@ import config from '../../../config';
 import { getDeleteProfileResult } from '../../../gdprApi/actions/deleteProfile';
 import reportErrorsToSentry from '../../../common/sentry/reportErrorsToSentry';
 import SERVICE_CONNECTIONS from '../../graphql/ServiceConnectionsQuery.graphql';
+import useProfile from '../../../auth/useProfile';
+import { hasHelsinkiAccountAMR } from '../profileInformation/authenticationProviderUtil';
 
 function DeleteProfile(): React.ReactElement {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -47,6 +49,8 @@ function DeleteProfile(): React.ReactElement {
   const [resultError, setResultError] = useState<
     ApolloError | Error | undefined | DeleteResultLists
   >(undefined);
+  const { profile } = useProfile();
+
   const onCompleted: AuthCodeQueuesProps['onCompleted'] = useCallback(
     controller => {
       const { failures, successful } = getDeleteProfileResult(controller) || {
@@ -182,7 +186,7 @@ function DeleteProfile(): React.ReactElement {
       <LoadIndicator text={t('deleteProfile.loadingServices')} />
     );
 
-  const conflictingAuthentication = true;
+  const conflictingAuthentication = hasHelsinkiAccountAMR(profile);
 
   if (isDeletingProfile) {
     return (
