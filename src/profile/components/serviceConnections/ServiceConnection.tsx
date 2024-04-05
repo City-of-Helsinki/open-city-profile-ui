@@ -27,6 +27,8 @@ function ServiceConnection({
     return `${day}, ${t('serviceConnections.clock')} ${time}`;
   };
 
+  const conflictingAuthentication = true;
+
   const encodedServiceName = encodeServiceName(service);
 
   return (
@@ -35,6 +37,7 @@ function ServiceConnection({
         title={service.title || ''}
         showInformationText
         initiallyOpen={isActive}
+        showAlert={conflictingAuthentication}
       >
         <p>{service.description}</p>
         <div
@@ -59,6 +62,7 @@ function ServiceConnection({
           </p>
         </div>
         <Button
+          disabled={conflictingAuthentication}
           onClick={() => onDeletion(service)}
           data-testid={`delete-service-connection-${encodedServiceName}-button`}
         >

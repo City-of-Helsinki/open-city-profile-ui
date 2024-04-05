@@ -182,6 +182,8 @@ function DeleteProfile(): React.ReactElement {
       <LoadIndicator text={t('deleteProfile.loadingServices')} />
     );
 
+  const conflictingAuthentication = true;
+
   if (isDeletingProfile) {
     return (
       <div data-testid={'deleting-profile'}>
@@ -205,6 +207,7 @@ function DeleteProfile(): React.ReactElement {
             <LoadStateIndicator />
           ) : (
             <Button
+              disabled={conflictingAuthentication}
               type="button"
               onClick={handleDeleteClick}
               id={removeButtonId}
@@ -212,6 +215,11 @@ function DeleteProfile(): React.ReactElement {
               {t('deleteProfile.delete')}
             </Button>
           )}
+          <Notification type="error" label="Error" size="small">
+            Profiilissasi on yhdistettynä palveluita joihin olet käyttänyt
+            vahvaa tunnistatumista. Kirjaudu ulos ja takaisin sisään käyttäen
+            Suomi.fi-tunnistatumista tietojen poistamiseksi.
+          </Notification>
           <ConfirmationModal
             isOpen={showConfirmationModal}
             onClose={handleConfirmationModal}

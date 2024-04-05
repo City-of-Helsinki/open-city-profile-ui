@@ -9,6 +9,7 @@ import {
   Card,
   IconAngleDown,
   IconAngleUp,
+  Notification,
   useAccordion,
 } from 'hds-react';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +25,7 @@ type Props = PropsWithChildren<{
   scrollIntoViewOnMount?: boolean;
   onChange?: (isOpen: boolean) => void;
   dataTestId?: string;
+  showAlert?: boolean;
 }>;
 
 function ExpandingPanel({
@@ -33,6 +35,7 @@ function ExpandingPanel({
   scrollIntoViewOnMount,
   title,
   dataTestId,
+  showAlert = false,
   onChange,
 }: Props): React.ReactElement {
   const container = useRef<HTMLDivElement | null>(null);
@@ -97,16 +100,30 @@ function ExpandingPanel({
         {children}
       </Card>
       {isOpen && (
-        <div className={styles['close-button-container']}>
-          <Button
-            title={title}
-            variant={'supplementary'}
-            iconRight={<Icon aria-hidden />}
-            {...buttonProps}
-          >
-            {t('expandingPanel.closeButtonText')}
-          </Button>
-        </div>
+        <>
+          <div className={styles['close-button-container']}>
+            <Button
+              title={title}
+              variant={'supplementary'}
+              iconRight={<Icon aria-hidden />}
+              {...buttonProps}
+            >
+              {t('expandingPanel.closeButtonText')}
+            </Button>
+          </div>
+          {showAlert && (
+            <Notification
+              className={styles.alert}
+              type="error"
+              label="Error"
+              size="small"
+            >
+              Voi poistaa tietoja tästä palvelusta vain, jos olet vahvasti
+              tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen
+              Suomi.fi-tunnistatumista tietojen poistamiseksi.
+            </Notification>
+          )}
+        </>
       )}
     </div>
   );

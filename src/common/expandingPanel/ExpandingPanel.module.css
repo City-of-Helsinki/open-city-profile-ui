@@ -38,6 +38,10 @@
   justify-content: flex-end;
 }
 
+.alert {
+  margin-top: var(--spacing-m);
+}
+
 @media (max-width: 767.98px) {
   .right-side-information {
     position: absolute;
