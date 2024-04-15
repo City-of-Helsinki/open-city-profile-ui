@@ -41,17 +41,17 @@ export const formFieldsByDataType: FormFieldsByDataType = {
   'basic-data': {
     firstName: {
       required: true,
-      max: 255,
+      max: 150,
       translationKey: 'profileForm.firstName',
     },
     nickname: {
       required: false,
-      max: 64,
+      max: 32,
       translationKey: 'profileForm.nickname',
     },
     lastName: {
       required: true,
-      max: 255,
+      max: 150,
       translationKey: 'profileForm.lastName',
     },
   },
