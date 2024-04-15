@@ -14,6 +14,7 @@ import {
   deleteServiceConnectionType,
   getDeleteServiceConnectionResultOrError,
   isForbiddenResult,
+  isInsufficientLoaResult,
   isSuccessResult,
 } from '../deleteServiceConnection';
 
@@ -29,12 +30,14 @@ describe('deleteServiceConnection.ts', () => {
     returnForbidden,
     returnError,
     returnNoData,
+    returnInsufficientLoa,
   }: {
     noKeycloadAuthCode?: boolean;
     noTunnistamoAuthCode?: boolean;
     returnForbidden?: boolean;
     returnError?: boolean;
     returnNoData?: boolean;
+    returnInsufficientLoa?: boolean;
   } = {}) => {
     fetchMock.mockIf(/.*\/graphql\/.*$/, async (req: Request) => {
       const payload = await req.json();
@@ -53,6 +56,13 @@ describe('deleteServiceConnection.ts', () => {
         return Promise.reject({
           body: JSON.stringify({
             message: 'Error',
+          }),
+        });
+      }
+      if (returnInsufficientLoa === true) {
+        return Promise.reject({
+          body: JSON.stringify({
+            message: 'insufficientLoa',
           }),
         });
       }
@@ -162,6 +172,19 @@ describe('deleteServiceConnection.ts', () => {
         isForbiddenResult(({ errorMessage } as unknown) as ActionResults)
       ).toBeFalsy();
       expect(isSuccessResult({ result } as ActionResults)).toBeFalsy();
+    });
+    it('Insufficient loa returns error', async () => {
+      const { runner, getAction } = initTests({
+        returnInsufficientLoa: true,
+        returnNoData: true,
+      });
+      const [errorMessage] = await to(
+        getAction().executor(getAction(), runner)
+      );
+
+      expect(
+        isInsufficientLoaResult(({ errorMessage } as unknown) as ActionResults)
+      ).toBeTruthy();
     });
     it('Result should not be stored to sessionStorage', async () => {
       const { getAction } = initTests();

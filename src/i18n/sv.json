@@ -43,6 +43,7 @@
     "loadingServices": "Söker efter tjänster som är kopplade till profilen",
     "deleteSuccessful": "Helsingforsprofilen och alla uppgifter som vi har sparat om dig har tagits bort på ett lyckat sätt.",
     "deleteFailed": "Av någon anledning lyckades borttagningen inte. Försök på nytt om en stund!",
+    "deleteInsufficientLoa": "Profiilissasi on yhdistettyjä palveluita joihin olet käyttänyt vahvaa tunnistautumista. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista tietojen poistamiseksi.",
     "deleteInfoforLightAuthentication": "Du har tjänster kopplade till din Helsingforsprofil för vilka du har använt stark autentisering. Logga ut och logga in igen med Suomi.fi-autentisering för att radera dina uppgifter."
   },
   "deleteProfileModal": {
@@ -231,6 +232,7 @@
     "connectionRemovalVerification": "Om du fortsätter, förlorar du alla uppgifter som du sparat i tjänsten {{serviceName}} och du kan inte längre använda tjänsten förrän du registrerar dig i tjänsten på nytt.",
     "connectionRemovalSuccess": "Alla uppgifter som vi sparat i tjänsten {{serviceName}} har tagits bort på ett lyckat sätt!",
     "connectionRemovalForbidden": "Vi kan inte radera data från denna tjänst, till exempel på grund av transaktionsstatus eller lagringstid.",
+    "connectionInsufficientLoa": "Voit poistaa tietoja tästä palvelusta vain, jos olet vahvasti tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista tietojen poistamiseksi.",
     "connectionRemovalVerificationTitle": "Är du säker på att du vill radera data",
     "connectionRemovalVerificationButtonText": "Radera data",
     "connectionRemovalError": "Raderingen misslyckades av någon anledning. Försök igen senare!",

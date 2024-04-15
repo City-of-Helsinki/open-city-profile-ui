@@ -25,14 +25,27 @@ import parseDeleteProfileResult, {
 import { convertStringToTranslationLanguage } from '../../profile/helpers/createServiceConnectionsQueryVariables';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
 import DELETE_PROFILE from '../graphql/GdprDeleteMyProfileMutation.graphql';
+import parseGraphQLError from '../../profile/helpers/parseGraphQLError';
 
 export const deleteProfileType = 'deleteProfile';
 
-export const getDeleteProfileResult = (queueController: QueueController) =>
-  getActionResultAndErrorMessage<DeleteResultLists>(
+type DeleteProfileResult = keyof typeof resultTypes;
+
+const resultTypes = {
+  insufficientLoa: 'insufficientLoa',
+} as const;
+
+export const getDeleteProfileResultOrError = (
+  queueController: QueueController
+) =>
+  getActionResultAndErrorMessage<DeleteResultLists | DeleteProfileResult>(
     deleteProfileType,
     queueController
-  ).result;
+  );
+
+export const isInsufficientLoaResult = (
+  resultOrError: ReturnType<typeof getDeleteProfileResultOrError>
+) => resultOrError.errorMessage === resultTypes.insufficientLoa;
 
 const deleteProfileExecutor: ActionExecutor = async (
   action,
@@ -66,6 +79,11 @@ const deleteProfileExecutor: ActionExecutor = async (
   );
   if (error) {
     reportErrorsToSentry(error);
+
+    if (parseGraphQLError(error).isInsufficientLoaError) {
+      return Promise.reject(resultTypes.insufficientLoa);
+    }
+
     return Promise.reject(error);
   }
   if (!result || !result.data) {

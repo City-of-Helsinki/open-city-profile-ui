@@ -6,7 +6,10 @@ import useAuthCodeQueues, {
   AuthCodeQueuesProps,
 } from '../../../gdprApi/useAuthCodeQueues';
 import config from '../../../config';
-import { isForbiddenResult } from '../../../gdprApi/actions/deleteServiceConnection';
+import {
+  isForbiddenResult,
+  isInsufficientLoaResult,
+} from '../../../gdprApi/actions/deleteServiceConnection';
 
 export const STATUS_NONE = 0;
 export const STATUS_PENDING_CONFIRMATION = 1;
@@ -16,6 +19,7 @@ export const STATUS_DELETE_FORBIDDEN = 4;
 export const STATUS_DONE = 5;
 export const STATUS_ACKNOWLEDGED = 6;
 export const STATUS_CLOSED = 7;
+export const STATUS_INSUFFICIENT_LOA = 8;
 
 export type DeletionStatus =
   | typeof STATUS_NONE
@@ -25,7 +29,8 @@ export type DeletionStatus =
   | typeof STATUS_DELETE_FORBIDDEN
   | typeof STATUS_DONE
   | typeof STATUS_CLOSED
-  | typeof STATUS_ACKNOWLEDGED;
+  | typeof STATUS_ACKNOWLEDGED
+  | typeof STATUS_INSUFFICIENT_LOA;
 
 function ServiceConnectionRemover(props: {
   service: ServiceConnectionData;
@@ -65,9 +70,15 @@ function ServiceConnectionRemover(props: {
 
   const getModalStatus = () => {
     if (hasError) {
-      return isForbiddenResult({ errorMessage, result: undefined })
-        ? STATUS_DELETE_FORBIDDEN
-        : STATUS_ERROR;
+      if (isForbiddenResult({ errorMessage, result: undefined })) {
+        return STATUS_DELETE_FORBIDDEN;
+      }
+
+      if (isInsufficientLoaResult({ errorMessage, result: undefined })) {
+        return STATUS_INSUFFICIENT_LOA;
+      }
+
+      return STATUS_ERROR;
     }
 
     if (isLoading) {

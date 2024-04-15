@@ -6,6 +6,7 @@ import { ApolloError } from '@apollo/client';
 import { getModalProps } from '../getModalProps';
 import { DeleteResultLists } from '../../../helpers/parseDeleteProfileResult';
 import DeleteFailureList from '../../deleteProfile/DeleteFailureList';
+import { isInsufficientLoaResult } from '../../../../gdprApi/actions/deleteProfile';
 
 export type Props = {
   error?: ApolloError | Error | DeleteResultLists;
@@ -23,6 +24,10 @@ function DeleteProfileError({
   }
   const failureList = (error as DeleteResultLists).failures || [];
   const errorIsListOfServices = !!failureList.length;
+  const errorIsInsufficientLoa = isInsufficientLoaResult({
+    errorMessage: (error as Error).message,
+    result: undefined,
+  });
   const id = 'delete-profile-error-modal';
   const closeButtonText = t('notification.closeButtonText');
   const {
@@ -59,6 +64,10 @@ function DeleteProfileError({
       <Dialog.Content>
         {errorIsListOfServices ? (
           <DeleteFailureList {...(error as DeleteResultLists)} />
+        ) : errorIsInsufficientLoa ? (
+          <p id={descriptionId} data-testid={'delete-profile-insufficient-loa'}>
+            {t('deleteProfile.deleteInsufficientLoa')}
+          </p>
         ) : (
           <p id={descriptionId} data-testid={'delete-profile-generic-error'}>
             {t('deleteProfile.deleteFailed')}
