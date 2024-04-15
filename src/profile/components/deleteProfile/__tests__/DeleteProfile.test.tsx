@@ -32,6 +32,7 @@ import { getServiceConnectionsAction } from '../../../../gdprApi/actions/getServ
 import { defaultRedirectionCatcherActionType } from '../../../../gdprApi/actions/redirectionHandlers';
 import { createNextActionParams } from '../../../../gdprApi/actions/utils';
 import { tunnistamoAuthCodeRedirectionAction } from '../../../../gdprApi/actions/authCodeRedirectionHandler';
+import { deleteProfileType } from '../../../../gdprApi/actions/deleteProfile';
 
 vi.mock('../../../../gdprApi/actions/queues');
 
@@ -84,6 +85,11 @@ describe('<DeleteProfile /> ', () => {
   const errorDescriptionSelector: ElementSelector = {
     testId: 'delete-profile-generic-error',
   };
+
+  const errorLoaDescriptionSelector: ElementSelector = {
+    testId: 'delete-profile-insufficient-loa',
+  };
+
   const serviceConnectionsPageLinkSelector: ElementSelector = {
     testId: 'delete-profile-service-connections-page-link',
   };
@@ -234,6 +240,24 @@ describe('<DeleteProfile /> ', () => {
       const testTools = await initTests(1);
       const { waitForElement } = testTools;
       await waitForElement(errorDescriptionSelector);
+    });
+  });
+  it(`When deletion fails because of insufficient loa, error message is shown`, async () => {
+    initQueueAndLocationForResume({
+      error: true,
+      overrides: [
+        {
+          type: deleteProfileType,
+          rejectValue: new Error('insufficientLoa'),
+        },
+      ],
+    });
+
+    await act(async () => {
+      const testTools = await initTests(1);
+      const { waitForElement } = testTools;
+
+      await waitForElement(errorLoaDescriptionSelector);
     });
   });
 });

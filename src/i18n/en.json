@@ -43,6 +43,7 @@
     "loadingServices": "Searching for services connected to the profile",
     "deleteSuccessful": "The Helsinki profile and all the data we hold on you have been deleted successfully!",
     "deleteFailed": "The deletion failed for some reason. Please try again after a while!",
+    "deleteInsufficientLoa": "Profiilissasi on yhdistettyjä palveluita joihin olet käyttänyt vahvaa tunnistautumista. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista tietojen poistamiseksi.",
     "deleteInfoforLightAuthentication": "You have services linked to your profile for which you have used strong identification. Please log out and log in again using Suomi.fi-authentication to delete your data. "
   },
   "deleteProfileModal": {
@@ -231,6 +232,7 @@
     "connectionRemovalVerification": "By continuing, you will lose all the data stored in the {{serviceName}} service and will no longer be able to use the service until you re-register to the service.",
     "connectionRemovalSuccess": "All the data we had stored in the {{serviceName}} service has been deleted successfully!",
     "connectionRemovalForbidden": "We cannot delete data from this service, for example due to the transaction status or storage time.",
+    "connectionInsufficientLoa": "Voit poistaa tietoja tästä palvelusta vain, jos olet vahvasti tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista tietojen poistamiseksi.",
     "connectionRemovalVerificationTitle": "Are you sure you want to delete your data?",
     "connectionRemovalVerificationButtonText": "Delete data",
     "connectionRemovalError": "For some reason, the deletion was not successful. Please, try again later!",

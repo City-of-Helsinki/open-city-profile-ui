@@ -48,6 +48,8 @@ describe('<ServiceConnectionRemover /> ', () => {
     loadIndicator: 'service-connection-delete-load-indicator',
   };
 
+  const ERROR_MODAL_TITLE_TEXT = 'notification.removeError';
+
   const t = i18n.getFixedT('fi');
 
   const getTestId = (key: keyof typeof testIds): ElementSelector => ({
@@ -171,7 +173,7 @@ describe('<ServiceConnectionRemover /> ', () => {
       );
 
       await waitForElement(getTestId('loadIndicator'));
-      await waitForElement({ text: t('notification.removeError') });
+      await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
       await waitForElement({
         text: t('serviceConnections.connectionRemovalError'),
       });
@@ -198,13 +200,35 @@ describe('<ServiceConnectionRemover /> ', () => {
         defaultServiceConnectionData
       );
 
-      await waitForElement({ text: t('notification.removeError') });
+      await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
       await waitForElement({
         text: t('serviceConnections.connectionRemovalForbidden'),
       });
       await clickElement(getTestId('cancelButton'));
       await waitFor(async () => {
         expect(onAbortTracker).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
+
+  it(`If deletion query succeeds, but result indicates user has insufficient loa,
+      a error message is shown`, async () => {
+    initQueueAndLocationForResume({
+      overrides: [
+        {
+          type: deleteServiceConnectionType,
+          rejectValue: 'insufficientLoa',
+          resolveValue: undefined,
+        },
+      ],
+    });
+
+    await act(async () => {
+      const { waitForElement } = await initTests(defaultServiceConnectionData);
+
+      await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
+      await waitForElement({
+        text: t('serviceConnections.connectionInsufficientLoa'),
       });
     });
   });

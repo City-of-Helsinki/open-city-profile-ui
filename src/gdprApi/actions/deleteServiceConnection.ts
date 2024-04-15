@@ -20,6 +20,7 @@ import {
 } from './authCodeParser';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
 import DELETE_SERVICE_DATA from '../graphql/GdprDeleteServiceDataMutation.graphql';
+import parseGraphQLError from '../../profile/helpers/parseGraphQLError';
 
 export const deleteServiceConnectionType = 'deleteServiceConnection';
 
@@ -30,6 +31,7 @@ const resultTypes = {
   forbidden: 'forbidden',
   queryError: 'queryError',
   noAuthCodes: 'noAuthCodes',
+  insufficientLoa: 'insufficientLoa',
 } as const;
 
 export const getDeleteServiceConnectionResultOrError = (
@@ -43,6 +45,10 @@ export const getDeleteServiceConnectionResultOrError = (
 export const isForbiddenResult = (
   resultOrError: ReturnType<typeof getDeleteServiceConnectionResultOrError>
 ) => resultOrError.errorMessage === resultTypes.forbidden;
+
+export const isInsufficientLoaResult = (
+  resultOrError: ReturnType<typeof getDeleteServiceConnectionResultOrError>
+) => resultOrError.errorMessage === resultTypes.insufficientLoa;
 
 export const isSuccessResult = (
   resultOrError: ReturnType<typeof getDeleteServiceConnectionResultOrError>
@@ -78,8 +84,14 @@ const deleteServiceConnectionExecutor: ActionExecutor = async (
       },
     })
   );
+
   if (error) {
     reportErrorsToSentry(error);
+
+    if (parseGraphQLError(error).isInsufficientLoaError) {
+      return Promise.reject(resultTypes.insufficientLoa);
+    }
+
     return Promise.reject(resultTypes.queryError);
   }
 

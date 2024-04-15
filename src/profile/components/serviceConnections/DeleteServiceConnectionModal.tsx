@@ -12,6 +12,7 @@ import {
   STATUS_ERROR,
   STATUS_LOADING,
   STATUS_PENDING_CONFIRMATION,
+  STATUS_INSUFFICIENT_LOA,
 } from './ServiceConnectionRemover';
 
 function DeleteServiceConnectionModal(props: {
@@ -24,13 +25,17 @@ function DeleteServiceConnectionModal(props: {
   const { t } = useTranslation();
 
   const cannotDelete = status === STATUS_DELETE_FORBIDDEN;
-  const hasError = status === STATUS_ERROR || cannotDelete;
+  const isInsufficientLoa = status === STATUS_INSUFFICIENT_LOA;
+  const isError = cannotDelete || isInsufficientLoa;
+  const hasError = status === STATUS_ERROR || isError;
   const isLoading = status === STATUS_LOADING;
   const isDone = status === STATUS_DONE;
   const isPendingUserConfirmation = status === STATUS_PENDING_CONFIRMATION;
   const isFinished = isDone || hasError;
+
   const shouldShowModal =
-    isLoading || cannotDelete || isPendingUserConfirmation || isFinished;
+    isLoading || isError || isPendingUserConfirmation || isFinished;
+
   const getModalTitle = () => {
     if (hasError) {
       return t('notification.removeError');
@@ -105,6 +110,15 @@ function DeleteServiceConnectionModal(props: {
           </>
         );
       }
+
+      if (isInsufficientLoa) {
+        return (
+          <p data-testid="service-connection-insufficient-load-text">
+            {t('serviceConnections.connectionInsufficientLoa')}
+          </p>
+        );
+      }
+
       return (
         <p data-testid="service-connection-delete-failed-text">
           {t('serviceConnections.connectionRemovalError')}
