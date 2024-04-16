@@ -35,6 +35,7 @@ function ServiceConnection({
         title={service.title || ''}
         showInformationText
         initiallyOpen={isActive}
+        dataTestId={encodedServiceName}
       >
         <p>{service.description}</p>
         <div

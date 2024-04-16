@@ -47,6 +47,12 @@ describe('<ServiceConnection /> ', () => {
     querySelector: `button[title="${service.title}"]`,
   });
 
+  const getSecondaryExpandableSelector = (
+    service: ServiceConnectionData
+  ): ElementSelector => ({
+    testId: `${encodeServiceName(service)}-secondary-toggle-button`,
+  });
+
   const TestingComponent = ({
     service,
     isActive,
@@ -132,6 +138,58 @@ describe('<ServiceConnection /> ', () => {
       await waitForElement(
         getServiceInformationSelector(defaultServiceConnectionData)
       );
+    });
+  });
+  it(`Clicking secondary close button should close accordion and focus on primary button`, async () => {
+    await act(async () => {
+      const { clickElement, waitForElement, getElement } = await initTests(
+        defaultServiceConnectionData,
+        true
+      );
+
+      await waitForElement(
+        getServiceInformationSelector(defaultServiceConnectionData)
+      );
+      await waitForElement(
+        getSecondaryExpandableSelector(defaultServiceConnectionData)
+      );
+
+      await clickElement(
+        getSecondaryExpandableSelector(defaultServiceConnectionData)
+      );
+
+      await waitFor(async () => {
+        expect(
+          getElement(getExpandableSelector(defaultServiceConnectionData))
+        ).toHaveFocus();
+      });
+    });
+  });
+
+  it(`Keydown on secondary close button should close accordion and focus on primary button`, async () => {
+    await act(async () => {
+      const {
+        keydownEnterElement,
+        waitForElement,
+        getElement,
+      } = await initTests(defaultServiceConnectionData, true);
+
+      await waitForElement(
+        getServiceInformationSelector(defaultServiceConnectionData)
+      );
+      await waitForElement(
+        getSecondaryExpandableSelector(defaultServiceConnectionData)
+      );
+
+      await keydownEnterElement(
+        getSecondaryExpandableSelector(defaultServiceConnectionData)
+      );
+
+      await waitFor(async () => {
+        expect(
+          getElement(getExpandableSelector(defaultServiceConnectionData))
+        ).toHaveFocus();
+      });
     });
   });
   it(`Clicking the remove button calls the onDeletion() with service data`, async () => {

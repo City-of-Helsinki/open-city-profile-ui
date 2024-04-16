@@ -52,6 +52,9 @@ export type TestTools = RenderResult & {
   ) => Promise<string | undefined>;
   fetch: () => Promise<void>;
   clickElement: (selector: ElementSelector) => Promise<HTMLElement | null>;
+  keydownEnterElement: (
+    selector: ElementSelector
+  ) => Promise<HTMLElement | null>;
   submit: (props?: {
     waitForOnSaveNotification?: WaitForElementAndValueProps;
     waitForAfterSaveNotification?: WaitForElementAndValueProps;
@@ -241,6 +244,18 @@ export const renderComponentWithMocksAndContexts = async (
     return Promise.resolve(button);
   };
 
+  const keydownEnterElement: TestTools['keydownEnterElement'] = async selector => {
+    const button = getElement(selector);
+
+    await waitFor(() => {
+      fireEvent.keyDown(button as Element, {
+        key: 'Enter',
+        charCode: 13,
+      });
+    });
+    return Promise.resolve(button);
+  };
+
   const isDisabled: TestTools['isDisabled'] = element =>
     !!element && element.getAttribute('disabled') !== null;
 
@@ -349,6 +364,7 @@ export const renderComponentWithMocksAndContexts = async (
     getTextOrInputValue,
     fetch,
     clickElement,
+    keydownEnterElement,
     submit,
     isDisabled,
     setInputValue,

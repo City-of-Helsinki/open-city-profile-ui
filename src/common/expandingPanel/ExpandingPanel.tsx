@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useLayoutEffect,
   useRef,
+  useState,
 } from 'react';
 import {
   Button,
@@ -35,22 +36,19 @@ function ExpandingPanel({
   dataTestId,
   onChange,
 }: Props): React.ReactElement {
-  const container = useRef<HTMLDivElement | null>(null);
+  const [beforeCloseButtonClick, setBeforeCloseButtonClick] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
   const { t } = useTranslation();
-
-  const handleContainerRef = (ref: HTMLDivElement) => {
-    // If ref is not saved yet we are about in the first render.
-    // In that case we can scroll this element into view.
-    if (!container.current && scrollIntoViewOnMount && ref) {
-      ref.scrollIntoView();
-    }
-
-    container.current = ref;
-  };
-
   const { isOpen, buttonProps, contentProps, openAccordion } = useAccordion({
     initiallyOpen,
   });
+
+  const container = useRef<HTMLDivElement | null>(null);
+  const titleButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   useLayoutEffect(() => {
     if (initiallyOpen && isOpen !== initiallyOpen) {
@@ -63,6 +61,42 @@ function ExpandingPanel({
       onChange(isOpen);
     }
   }, [isOpen, onChange]);
+
+  useEffect(() => {
+    if (!hasMounted) {
+      return undefined;
+    }
+
+    const timer = setTimeout(() => {
+      if (titleButtonRef.current) {
+        titleButtonRef.current.focus();
+      }
+
+      if (beforeCloseButtonClick === true) {
+        setBeforeCloseButtonClick(false);
+        buttonProps.onClick();
+      }
+    }, 50);
+
+    // eslint-disable-next-line consistent-return
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [beforeCloseButtonClick]);
+
+  const handleContainerRef = (ref: HTMLDivElement) => {
+    // If ref is not saved yet we are about in the first render.
+    // In that case we can scroll this element into view.
+    if (!container.current && scrollIntoViewOnMount && ref) {
+      ref.scrollIntoView();
+    }
+
+    container.current = ref;
+  };
+
+  const onCloseButtonActivate = () => {
+    setBeforeCloseButtonClick(true);
+  };
+
   const Icon = isOpen ? IconAngleUp : IconAngleDown;
   const buttonText = isOpen
     ? t('expandingPanel.hideInformation')
@@ -70,6 +104,10 @@ function ExpandingPanel({
   const buttonTestId = dataTestId
     ? { 'data-testid': `${dataTestId}-toggle-button` }
     : null;
+  const secondaryButtonTestId = dataTestId
+    ? { 'data-testid': `${dataTestId}-secondary-toggle-button` }
+    : null;
+
   return (
     <div
       className={classNames(commonStyles['content-box'], styles['container'])}
@@ -79,6 +117,7 @@ function ExpandingPanel({
         <h2>{title}</h2>
         <div className={styles['right-side-information']}>
           <Button
+            ref={titleButtonRef}
             title={title}
             variant={'supplementary'}
             iconRight={<Icon aria-hidden />}
@@ -103,6 +142,15 @@ function ExpandingPanel({
             variant={'supplementary'}
             iconRight={<Icon aria-hidden />}
             {...buttonProps}
+            {...secondaryButtonTestId}
+            onKeyDown={event => {
+              if (event.key === 'Enter') {
+                onCloseButtonActivate();
+              }
+            }}
+            onClick={() => {
+              onCloseButtonActivate();
+            }}
           >
             {t('expandingPanel.closeButtonText')}
           </Button>
