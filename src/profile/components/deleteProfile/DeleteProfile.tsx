@@ -216,6 +216,7 @@ function DeleteProfile(): React.ReactElement {
             </Button>
           )}
           <ConfirmationModal
+            variant="danger"
             isOpen={showConfirmationModal}
             onClose={handleConfirmationModal}
             onConfirm={handleProfileDelete}

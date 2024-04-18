@@ -1,6 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, IconAlertCircle, Dialog, DialogProps } from 'hds-react';
+import {
+  Button,
+  IconAlertCircle,
+  Dialog,
+  DialogProps,
+  DialogVariant,
+  IconTrash,
+  IconError,
+} from 'hds-react';
 
 import { getModalProps } from '../getModalProps';
 
@@ -9,6 +17,8 @@ export type Props = {
   onClose: () => void;
   onConfirm: () => void;
   title?: string;
+  variant?: DialogVariant;
+  hasError?: boolean;
   content?: React.FC<unknown> | string;
   actionButtonText?: string;
   closeButtonText?: string;
@@ -20,6 +30,8 @@ function ConfirmationModal({
   onClose,
   onConfirm,
   title,
+  variant = 'primary',
+  hasError,
   content,
   actionButtonText,
   closeButtonText,
@@ -51,6 +63,7 @@ function ConfirmationModal({
   return (
     <Dialog
       id={id}
+      variant={variant}
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
       isOpen={isOpen}
@@ -62,7 +75,13 @@ function ConfirmationModal({
         <Dialog.Header
           id={titleId}
           title={title}
-          iconLeft={<IconAlertCircle aria-hidden="true" />}
+          iconLeft={
+            hasError ? (
+              <IconError color="var(--color-error)" aria-hidden="true" />
+            ) : (
+              <IconAlertCircle aria-hidden="true" />
+            )
+          }
         />
       )}
       {content && (
@@ -74,21 +93,26 @@ function ConfirmationModal({
       )}
       {!preventClosing && (actionButtonText || closeButtonText) && (
         <Dialog.ActionButtons>
-          {actionButtonText && (
-            <Button
-              onClick={onConfirm}
-              data-testid="confirmation-modal-confirm-button"
-            >
-              {actionButtonText}
-            </Button>
-          )}
           {closeButtonText !== '' && closeButtonLabelText && (
             <Button
+              theme="black"
               variant="secondary"
               onClick={onClose}
               data-testid="confirmation-modal-cancel-button"
             >
               {closeButtonLabelText}
+            </Button>
+          )}
+          {actionButtonText && (
+            <Button
+              variant={variant}
+              iconLeft={
+                variant === 'danger' && <IconTrash aria-hidden="true" />
+              }
+              onClick={onConfirm}
+              data-testid="confirmation-modal-confirm-button"
+            >
+              {actionButtonText}
             </Button>
           )}
         </Dialog.ActionButtons>
