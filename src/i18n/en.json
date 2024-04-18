@@ -234,7 +234,7 @@
     "connectionRemovalVerificationButtonText": "Delete data",
     "connectionRemovalError": "For some reason, the deletion was not successful. Please, try again later!",
     "contactServiceToDelete": "If you still want to delete the data, please contact <linkToExternalServiceList >the service</linkToExternalServiceList> directly and then retry deleting the data.",
-    "explanationforLightAuthentication": "You can only delete data from this service if you are strongly identified. Please log out and log in again using Suomi.fi-identification to delete your data. "
+    "explanationforLightAuthentication": "You can only delete data from this service if you are strongly identified. Please log out and log in again using Suomi.fi-identification to delete your data."
   },
   "skipToContent": "Skip to content",
   "validation": {

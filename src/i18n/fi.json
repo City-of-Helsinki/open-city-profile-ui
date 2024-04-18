@@ -234,7 +234,7 @@
     "connectionRemovalVerificationButtonText": "Poista tiedot",
     "connectionRemovalError": "Jostain syystä poisto ei onnistunut. Yritä hetken kuluttua uudelleen!",
     "contactServiceToDelete": "Jos haluat silti poistaa tiedot, ole suoraan yhteydessä <linkToExternalServiceList>kyseiseen palveluun</linkToExternalServiceList> ja yritä tietojen poistoa sen jälkeen uudestaan.",
-    "explanationforLightAuthentication": "Voit poistaa tietoja tästä palvelusta vain, jos olet vahvasti tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista tietojen poistamiseksi. "
+    "explanationforLightAuthentication": "Voit poistaa tietoja tästä palvelusta vain, jos olet vahvasti tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista tietojen poistamiseksi."
   },
   "skipToContent": "Siirry suoraan sisältöön",
   "validation": {

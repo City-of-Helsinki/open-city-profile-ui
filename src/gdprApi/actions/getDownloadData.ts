@@ -18,12 +18,27 @@ import {
 } from './authCodeParser';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
 import DOWNLOAD_MY_PROFILE from '../../profile/graphql/DownloadMyProfileQuery.graphql';
+import parseGraphQLError from '../../profile/helpers/parseGraphQLError';
 
 const downloadDataType = 'downloadData';
 
-export const getDownloadDataResult = (queueController: QueueController) =>
-  getActionResultAndErrorMessage<unknown>(downloadDataType, queueController)
-    .result;
+type DownloadDataResult = keyof typeof resultTypes;
+
+const resultTypes = {
+  insufficientLoa: 'insufficientLoa',
+} as const;
+
+export const getDownloadDataResultOrError = (
+  queueController: QueueController
+) =>
+  getActionResultAndErrorMessage<DownloadDataResult | unknown>(
+    downloadDataType,
+    queueController
+  );
+
+export const isInsufficientLoaResult = (
+  resultOrError: ReturnType<typeof getDownloadDataResultOrError>
+) => resultOrError.errorMessage === resultTypes.insufficientLoa;
 
 const getDownloadDataExecutor: ActionExecutor = async (
   action,
@@ -51,6 +66,11 @@ const getDownloadDataExecutor: ActionExecutor = async (
   );
   if (error) {
     reportErrorsToSentry(error);
+
+    if (parseGraphQLError(error).isInsufficientLoaError) {
+      return Promise.reject(resultTypes.insufficientLoa);
+    }
+
     return Promise.reject(error);
   }
   if (!result || !result.data) {

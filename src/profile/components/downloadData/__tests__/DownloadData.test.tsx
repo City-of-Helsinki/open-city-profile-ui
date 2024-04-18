@@ -65,6 +65,10 @@ describe('<DownloadData /> ', () => {
     testId: 'download-profile-error',
   };
 
+  const insufficientLoaErrorNotification: ElementSelector = {
+    testId: 'download-profile-insufficient-loa-error',
+  };
+
   afterEach(() => {
     mockedWindowControls.reset();
     cleanComponentMocks();
@@ -109,6 +113,26 @@ describe('<DownloadData /> ', () => {
       const { clickElement, waitForElement } = await initTests();
       await clickElement(submitButton);
       await waitForElement(errorNotification);
+    });
+  });
+
+  it(`When insufficient loa, an error is shown.`, async () => {
+    initTestQueue(
+      getScenarioForScopes({
+        autoTrigger: true,
+        overrides: [
+          {
+            type: getGdprQueryScopesAction.type,
+            resolveValue: undefined,
+            rejectValue: new Error('insufficientLoa'),
+          },
+        ],
+      })
+    );
+    await act(async () => {
+      const { clickElement, waitForElement } = await initTests();
+      await clickElement(submitButton);
+      await waitForElement(insufficientLoaErrorNotification);
     });
   });
 });
