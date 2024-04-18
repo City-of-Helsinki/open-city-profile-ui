@@ -148,6 +148,8 @@ function DeleteServiceConnectionModal(props: {
   }
   return (
     <ConfirmationModal
+      variant="danger"
+      hasError={hasError}
       isOpen={shouldShowModal}
       onClose={onCloseConfirmationModal}
       onConfirm={onConfirmConfirmationModal}
