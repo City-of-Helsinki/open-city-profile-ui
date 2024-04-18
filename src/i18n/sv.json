@@ -38,12 +38,11 @@
   "deleteProfile": {
     "accept": "Jag förstår vad att radera min information betyder och vill fortsätta.",
     "delete": "Radera min information",
-    "explanation": "Om du vill, kan du ta bort din Helsingforsprofil och alla uppgifter som vi har sparat om dig. Uppgifterna kan inte återställas efter att de har tagits bort. Vi rekommenderar därför att du laddar ner dina egna data innan du raderar din profil och dina egna data. <br/><br/>Efter borttagningen av profilen blir du automatiskt utloggad från denna tjänst.<br/><br/>Om du har loggat in med ett konto hos en utomstående tjänsteleverantör (t.ex. Google eller Facebook), raderas inte kontot i fråga. <br/>För att kunna använda Helsingfors stads tjänster i framtiden måste du skapa en ny Helsingforsprofil.",
+    "explanation": "Om du vill kan du radera din Helsingforsprofil och all information som vi har om dig. När dina uppgifter har raderats kan de inte återställas.  Vi rekommenderar därför att du laddar ner dina egna data innan du raderar din profil och dina egna data. <br/><br/>Efter borttagningen av profilen blir du automatiskt utloggad från denna tjänst.<br/><br/>Om du har loggat in med ett konto hos en utomstående tjänsteleverantör (t.ex. Google eller Facebook), raderas inte kontot i fråga. <br/>För att kunna använda Helsingfors stads tjänster i framtiden måste du skapa en ny Helsingforsprofil.",
     "title": "Vill du radera din information?",
     "loadingServices": "Söker efter tjänster som är kopplade till profilen",
     "deleteSuccessful": "Helsingforsprofilen och alla uppgifter som vi har sparat om dig har tagits bort på ett lyckat sätt.",
     "deleteFailed": "Av någon anledning lyckades borttagningen inte. Försök på nytt om en stund!",
-    "deleteInsufficientLoa": "Profiilissasi on yhdistettyjä palveluita joihin olet käyttänyt vahvaa tunnistautumista. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista tietojen poistamiseksi.",
     "deleteInfoforLightAuthentication": "Du har tjänster kopplade till din Helsingforsprofil för vilka du har använt stark autentisering. Logga ut och logga in igen med Suomi.fi-autentisering för att radera dina uppgifter."
   },
   "deleteProfileModal": {
@@ -57,8 +56,7 @@
     "deleteServiceFromPage": "Du kan ta bort uppgifterna från dessa tjänster på sidan <linkToServices>{{linkToServicesText}}</linkToServices>.",
     "unableToDeleteServices": "Vi kan inte radera data från dessa tjänster, till exempel på grund av transaktionsstatus eller lagringstid.",
     "contactServiceToDelete": "Om du ändå vill ta bort uppgifterna, kontakta <linkToExternalServiceList>tjänsten</linkToExternalServiceList> i fråga direkt och försök därefter att ta bort profilen på nytt.",
-    "urlToServiceList": "https://www.hel.fi/sok/tjanster",
-    "explanationforLightAuthentication": "Du kan bara radera data från den här tjänsten om du är starkt identifierad. Logga ut och logga in igen med Suomi.fi-autentisering för att radera dina uppgifter."
+    "urlToServiceList": "https://www.hel.fi/sok/tjanster"
   },
   "downloadData": {
     "button": "Ladda ner min information",
@@ -72,7 +70,7 @@
     "showInformation": "Visa information"
   },
   "footer": {
-    "about": "Om Helsingfors-profilen",
+    "about": "Om Helsingforsprofilen",
     "accessibility": "Tillgänglighetsdokument",
     "copyright": "Upphovsrätt {{year}}",
     "feedback": "Ge feedback",
@@ -98,7 +96,7 @@
   },
   "loading": "Laddar...",
   "login": {
-    "description": "Genom att logga in på de nya Helsingfors stadstjänster skapas en Helsingforsprofil för dig. Här kan du enkelt hitta din profilinformation och se alla tjänster du har loggat in med den.",
+    "description": "Genom att logga in på de nya Helsingfors stadstjänster skapas Helsingforsprofilen för dig. Här kan du enkelt hitta din profilinformation och se alla tjänster du har loggat in med den.",
     "login": "Logga in",
     "title": "Din profilinformation på en adress!"
   },
@@ -174,7 +172,7 @@
   },
   "profileInformation": {
     "address": "Adress",
-    "addressDescription": "Du har själv lagt dessa uppgifter till Helsingforsprofilen eller någon annan av Helsingfors stads e-tjänster. Vi använder denna adressuppgift när du har använt enkel identifiering, det vill säga någon annan än Suomi.fi-identifiering. Om du vill kan du ta bort uppgifterna från Helsingforsprofilen, varvid de också raderas från de övriga e-tjänsterna. Ta inte bort uppgifter om du har ett pågående ärende.",
+    "addressDescription": "Du har själv lagt dessa uppgifter till Helsingforsprofilen eller någon annan av Helsingfors stads e-tjänster. Vi använder denna adressuppgift när du har använt enkel identifiering, det vill säga någon annan än Suomi.fi-identifiering. Om du vill kan du radera uppgifterna från Helsingforsprofilen, varvid de också raderas från de övriga e-tjänsterna. Radera inte uppgifter om du har ett pågående ärende.",
     "addressDescriptionNoWeakAddress": "Du har inte lagt till någon annan adress. Vi använder den andra adressuppgiften när du har använt enkel identifiering, det vill säga någon annan än Suomi.fi-identifiering.",
     "addressDescriptionNoAddress": "Du har inte lagt till en adress. Vi använder denna adressuppgift när du har använt enkel identifiering, det vill säga någon annan än Suomi.fi-identifiering.",
     "addressTitleWhenHasVerifiedData": "Annan adress",
@@ -185,7 +183,7 @@
     "ariaShowOptions": "Visa alternativ",
     "ariaSelectedOption": "{{value}} har valts",
     "ariaNoSelectedItemForLabel": "{{label}} har inte valts",
-    "deleteProfile": "Radera profil",
+    "deleteProfile": "Radera profilen",
     "description": "Uppgifterna som sparats i Helsingforsprofilen används i Helsingfors stads e-tjänster. Närmare information hittar du på <linkToServices>{{linkToServicesText}} sidan</linkToServices>.",
     "downloadData": "Ladda ner min information",
     "email": "Epost",
@@ -197,7 +195,7 @@
     "authenticationMethod": "Autentiseringsmetod",
     "permanentAddress": "Stadigvarande adress",
     "permanentForeignAddress": "Stadigvarande utländsk adress",
-    "verifiedDataInformation": "Du ser de officiella uppgifterna endast när du loggat in med stark identifiering, det vill säga Suomi-fi-identifieringen. Uppgifterna har hämtats från det officiella Befolkningsdatasystemet och de kan inte tas bort via Helsingforsprofilen. Du kan se uppgifterna om dig i befolkningsdatasystemet <suomiFiLink>i webbtjänsten suomi.fi</suomiFiLink>.",
+    "verifiedDataInformation": "Du ser de officiella uppgifterna endast när du loggat in med stark identifiering, det vill säga Suomi-fi-identifieringen. Uppgifterna har hämtats från det officiella befolkningsdatasystemet och kan inte redigeras via Helsingforsprofilen. Du kan se uppgifterna om dig i befolkningsdatasystemet <suomiFiLink>i webbtjänsten suomi.fi</suomiFiLink>.",
     "verifiedDataInformationLink": "https://www.suomi.fi/",
     "verifiedData": "Verifierad uppgift",
     "verifiedBasicData": "Officiella uppgifter",
@@ -232,11 +230,11 @@
     "connectionRemovalVerification": "Om du fortsätter, förlorar du alla uppgifter som du sparat i tjänsten {{serviceName}} och du kan inte längre använda tjänsten förrän du registrerar dig i tjänsten på nytt.",
     "connectionRemovalSuccess": "Alla uppgifter som vi sparat i tjänsten {{serviceName}} har tagits bort på ett lyckat sätt!",
     "connectionRemovalForbidden": "Vi kan inte radera data från denna tjänst, till exempel på grund av transaktionsstatus eller lagringstid.",
-    "connectionInsufficientLoa": "Voit poistaa tietoja tästä palvelusta vain, jos olet vahvasti tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista tietojen poistamiseksi.",
     "connectionRemovalVerificationTitle": "Är du säker på att du vill radera data",
     "connectionRemovalVerificationButtonText": "Radera data",
     "connectionRemovalError": "Raderingen misslyckades av någon anledning. Försök igen senare!",
-    "contactServiceToDelete": "Om du ändå vill ta bort uppgifterna, kontakta <linkToExternalServiceList>tjänsten</linkToExternalServiceList> och försök att radera uppgifterna igen efteråt."
+    "contactServiceToDelete": "Om du ändå vill ta bort uppgifterna, kontakta <linkToExternalServiceList>tjänsten</linkToExternalServiceList> och försök att radera uppgifterna igen efteråt.",
+    "explanationforLightAuthentication": "Du kan bara radera data från den här tjänsten om du är starkt identifierad. Logga ut och logga in igen med Suomi.fi-autentisering för att radera dina uppgifter."
   },
   "skipToContent": "Hoppa till innehåll",
   "validation": {
@@ -261,7 +259,7 @@
   "openInNewTabAriaLabel": "Öppnas i en ny flik.",
   "openInExternalDomainAriaLabel": "Gå till en annan webbplats.",
   "accessibilityStatement": "Tillgänglighetsutlåtande",
-  "aboutPage": "Om Helsingfors-profilen",
+  "aboutPage": "Om Helsingforsprofilen",
   "cityOfHelsinki": "Helsingfors stad",
   "pageNotFoundTitle": "Vi kunde inte hitta webbplatsen.",
   "pageNotFoundText": "Kontrollera att URL-adressen är rätt skriven (kontrollera stora och små bokstäver och skiljetecken). Eller gå tillbaka till föregående sida genom att klicka på tangenten Föregående i webbläsaren. Du kan också gå tillbaka till första sidan via länken här nedan.",

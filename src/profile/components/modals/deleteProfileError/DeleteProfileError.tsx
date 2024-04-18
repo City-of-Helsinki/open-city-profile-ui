@@ -66,7 +66,7 @@ function DeleteProfileError({
           <DeleteFailureList {...(error as DeleteResultLists)} />
         ) : errorIsInsufficientLoa ? (
           <p id={descriptionId} data-testid={'delete-profile-insufficient-loa'}>
-            {t('deleteProfile.deleteInsufficientLoa')}
+            {t('deleteProfile.deleteInfoforLightAuthentication')}
           </p>
         ) : (
           <p id={descriptionId} data-testid={'delete-profile-generic-error'}>

@@ -114,7 +114,7 @@ function DeleteServiceConnectionModal(props: {
       if (isInsufficientLoa) {
         return (
           <p data-testid="service-connection-insufficient-load-text">
-            {t('serviceConnections.connectionInsufficientLoa')}
+            {t('serviceConnections.explanationforLightAuthentication')}
           </p>
         );
       }

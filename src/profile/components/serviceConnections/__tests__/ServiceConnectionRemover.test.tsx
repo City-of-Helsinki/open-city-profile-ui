@@ -228,7 +228,7 @@ describe('<ServiceConnectionRemover /> ', () => {
 
       await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
       await waitForElement({
-        text: t('serviceConnections.connectionInsufficientLoa'),
+        text: t('serviceConnections.explanationforLightAuthentication'),
       });
     });
   });
