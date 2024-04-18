@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Notification } from 'hds-react';
 
@@ -6,10 +6,22 @@ import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import contentStyles from '../../../common/cssHelpers/content.module.css';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { useScrollIntoView } from '../../hooks/useScrollIntoView';
-import useAuthCodeQueues from '../../../gdprApi/useAuthCodeQueues';
+import useAuthCodeQueues, {
+  AuthCodeQueuesProps,
+} from '../../../gdprApi/useAuthCodeQueues';
 import config from '../../../config';
+import { isInsufficientLoaResult } from '../../../gdprApi/actions/getDownloadData';
 
 function DownloadData(): React.ReactElement {
+  const [errorMessage, setErrorMessage] = useState<string>();
+
+  const onError: AuthCodeQueuesProps['onError'] = useCallback(controller => {
+    const failed = controller.getFailed();
+    const message = (failed && failed.errorMessage) || 'unknown';
+
+    setErrorMessage(message);
+  }, []);
+
   const {
     startOrRestart,
     canStart,
@@ -21,6 +33,7 @@ function DownloadData(): React.ReactElement {
   } = useAuthCodeQueues({
     startPagePath: config.downloadPath,
     queueName: 'downloadProfile',
+    onError,
   });
   const canUserDoSomething = canStart() || shouldRestart();
   const { t } = useTranslation();
@@ -41,13 +54,26 @@ function DownloadData(): React.ReactElement {
       </div>
       <div className={commonFormStyles['uneditable-box-content']}>
         <div className={contentStyles['common-child-vertical-spacing']}>
-          {hasError && (
-            <Notification
-              label={t('notification.defaultErrorText')}
-              type={'error'}
-              dataTestId="download-profile-error"
-            ></Notification>
-          )}
+          {hasError &&
+            (isInsufficientLoaResult({ errorMessage, result: undefined }) ? (
+              <Notification
+                size="small"
+                label={t('downloadData.extrapanelTextforLightAuthentication')}
+                type={'error'}
+                dataTestId="download-profile-insufficient-loa-error"
+              >
+                {t('downloadData.extrapanelTextforLightAuthentication')}
+              </Notification>
+            ) : (
+              <Notification
+                size="small"
+                label=" "
+                type={'error'}
+                dataTestId="download-profile-error"
+              >
+                {t('notification.defaultErrorText')}
+              </Notification>
+            ))}
           <Button
             onClick={onDownloadClick}
             disabled={!canUserDoSomething}

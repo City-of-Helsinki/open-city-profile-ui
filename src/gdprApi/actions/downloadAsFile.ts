@@ -4,7 +4,7 @@ import {
   ActionExecutor,
   ActionProps,
 } from '../../common/actionQueue/actionQueue';
-import { getDownloadDataResult } from './getDownloadData';
+import { getDownloadDataResultOrError } from './getDownloadData';
 
 const downloadAsFile = 'downloadAsFile';
 
@@ -12,7 +12,7 @@ const downloadAsFileExecutor: ActionExecutor = async (
   action,
   queueController
 ) => {
-  const data = getDownloadDataResult(queueController);
+  const data = getDownloadDataResultOrError(queueController).result;
   if (!data) {
     return Promise.reject('No profile data');
   } else {
