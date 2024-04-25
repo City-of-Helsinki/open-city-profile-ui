@@ -14,7 +14,7 @@ import {
 } from '../../common/actionQueue/actionQueue';
 import { getActionResultAndErrorMessage } from './utils';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
-import GDPR_SERVICE_CONNECTIONS from '../graphql/GdprServiceConnectionsQuery.graphql';
+import { GDPR_SERVICE_CONNECTIONS } from '../graphql/GdprServiceConnectionsQuery';
 
 const serviceConnectionsType = 'serviceConnections';
 

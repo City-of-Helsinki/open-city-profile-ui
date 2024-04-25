@@ -17,7 +17,7 @@ import {
   getStoredTunnistamoAuthCode,
 } from './authCodeParser';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
-import DOWNLOAD_MY_PROFILE from '../../profile/graphql/DownloadMyProfileQuery.graphql';
+import { DOWNLOAD_MY_PROFILE } from '../../profile/graphql/DownloadMyProfileQuery';
 import parseGraphQLError from '../../profile/helpers/parseGraphQLError';
 
 const downloadDataType = 'downloadData';

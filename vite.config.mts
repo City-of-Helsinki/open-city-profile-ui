@@ -1,13 +1,11 @@
-import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react-swc';
 import eslint from 'vite-plugin-eslint';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
-import graphqlLoader from 'vite-plugin-graphql-loader';
+import { UserConfig, defineConfig } from 'vitest/config';
 
 export default defineConfig({
   base: '/',
   envPrefix: 'REACT_APP_',
-  plugins: [react(), nodePolyfills(), graphqlLoader(), eslint()],
+  plugins: [react(), eslint()] as UserConfig['plugins'],
   build: {
     outDir: './build',
     emptyOutDir: true,
