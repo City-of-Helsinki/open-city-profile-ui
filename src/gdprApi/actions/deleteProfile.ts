@@ -24,7 +24,7 @@ import parseDeleteProfileResult, {
 } from '../../profile/helpers/parseDeleteProfileResult';
 import { convertStringToTranslationLanguage } from '../../profile/helpers/createServiceConnectionsQueryVariables';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
-import DELETE_PROFILE from '../graphql/GdprDeleteMyProfileMutation.graphql';
+import { DELETE_PROFILE } from '../graphql/GdprDeleteMyProfileMutation';
 import parseGraphQLError from '../../profile/helpers/parseGraphQLError';
 
 export const deleteProfileType = 'deleteProfile';

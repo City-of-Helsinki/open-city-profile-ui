@@ -22,8 +22,8 @@ import {
 } from '../helpers/editData';
 import { updateMutationVariables } from '../helpers/updateMutationVariables';
 import { ProfileContext, ProfileContextData } from '../context/ProfileContext';
-import UPDATE_PROFILE from '../../profile/graphql/UpdateMyProfileMutation.graphql';
-import MY_PROFILE from '../../profile/graphql/MyProfileQuery.graphql';
+import { UPDATE_PROFILE } from '../../profile/graphql/UpdateMyProfileMutation';
+import { MY_PROFILE } from '../../profile/graphql/MyProfileQuery';
 
 export type QueryResult = FetchResult<ProfileRoot, AnyObject, AnyObject>;
 export type UpdateResult = FetchResult<UpdateProfileRoot>;

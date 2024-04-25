@@ -1,7 +1,0 @@
-query Name {
-  myProfile {
-    firstName
-    lastName
-    nickname
-  }
-}

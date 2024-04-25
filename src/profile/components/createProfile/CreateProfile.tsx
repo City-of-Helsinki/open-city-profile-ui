@@ -19,7 +19,7 @@ import ProfileSection from '../../../common/profileSection/ProfileSection';
 import useToast from '../../../toast/useToast';
 import Explanation from '../../../common/explanation/Explanation';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
-import CREATE_PROFILE from '../../graphql/CreateMyProfileMutation.graphql';
+import { CREATE_PROFILE } from '../../graphql/CreateMyProfileMutation';
 
 type Props = {
   tunnistamoUser: User;

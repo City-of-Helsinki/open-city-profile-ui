@@ -4,7 +4,7 @@ import { useMemoizedFn } from 'ahooks';
 import _ from 'lodash';
 
 import { ProfileRoot } from '../../graphql/typings';
-import MY_PROFILE from '../graphql/MyProfileQuery.graphql';
+import { MY_PROFILE } from '../graphql/MyProfileQuery';
 
 export type QueryResult = FetchResult<ProfileRoot>;
 

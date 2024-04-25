@@ -27,7 +27,7 @@ import useAuthCodeQueues, {
 import config from '../../../config';
 import { getDeleteProfileResultOrError } from '../../../gdprApi/actions/deleteProfile';
 import reportErrorsToSentry from '../../../common/sentry/reportErrorsToSentry';
-import SERVICE_CONNECTIONS from '../../graphql/ServiceConnectionsQuery.graphql';
+import { SERVICE_CONNECTIONS } from '../../graphql/ServiceConnectionsQuery';
 
 function DeleteProfile(): React.ReactElement {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);

@@ -9,6 +9,7 @@ import { disableTrackingCookiesUntilConsentGiven } from './common/helpers/tracki
 
 function BrowserApp(): React.ReactElement {
   disableTrackingCookiesUntilConsentGiven();
+
   return (
     <I18nextProvider i18n={i18n}>
       <BrowserRouter>

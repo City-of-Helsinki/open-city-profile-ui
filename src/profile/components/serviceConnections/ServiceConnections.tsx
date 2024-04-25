@@ -20,7 +20,7 @@ import ServiceConnection from './ServiceConnection';
 import ServiceConnectionRemover from './ServiceConnectionRemover';
 import { getStoredQueueData } from '../../../common/actionQueue/actionQueueStorage';
 import { authCodeQueuesStorageKey } from '../../../gdprApi/useAuthCodeQueues';
-import SERVICE_CONNECTIONS from '../../graphql/ServiceConnectionsQuery.graphql';
+import { SERVICE_CONNECTIONS } from '../../graphql/ServiceConnectionsQuery';
 
 function ServiceConnections(): React.ReactElement {
   const [deletingServiceName, setSeletingServiceName] = useState<
