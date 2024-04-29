@@ -1,5 +1,5 @@
 import { FetchMock } from 'vitest-fetch-mock';
-import { TFunction } from 'react-i18next';
+import { TFunction } from 'i18next';
 
 import { UpdateMyProfileMutationVariables } from '../../graphql/generatedTypes';
 import { ProfileData } from '../../graphql/typings';

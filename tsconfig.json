@@ -25,6 +25,11 @@
       "vitest/globals",
       "vitest-fetch-mock/types/index"
     ],
+    "paths": {
+      "react": [
+        "./node_modules/@types/react"
+      ]
+    }
   },
   "include": [
     "src",

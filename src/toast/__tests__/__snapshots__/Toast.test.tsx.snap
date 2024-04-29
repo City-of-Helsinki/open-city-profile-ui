@@ -107,7 +107,7 @@ exports[`Toast > should render correct toast 1`] = `
               onClose={[Function]}
               type="error"
             >
-              <Qo
+              <Jo
                 visuallyHidden={false}
               >
                 <Animated(section)
@@ -128,7 +128,7 @@ exports[`Toast > should render correct toast 1`] = `
                         className="Notification-module_label__1bhNu notification_hds-notification__label__2t1lR"
                         role="heading"
                       >
-                        <J
+                        <q
                           aria-hidden={true}
                           className="Notification-module_icon__1ans7 notification_hds-icon__29HQM"
                         >
@@ -148,12 +148,12 @@ exports[`Toast > should render correct toast 1`] = `
                               fillRule="evenodd"
                             />
                           </svg>
-                        </J>
-                        <Qo
+                        </q>
+                        <Jo
                           visuallyHidden={false}
                         >
                           test title
-                        </Qo>
+                        </Jo>
                       </div>
                       <div
                         className="Notification-module_body__9BSAD notification_hds-notification__body__3cobH"
@@ -195,7 +195,7 @@ exports[`Toast > should render correct toast 1`] = `
                     </button>
                   </section>
                 </Animated(section)>
-              </Qo>
+              </Jo>
             </ForwardRef>
           </div>
         </NotificationComponent>

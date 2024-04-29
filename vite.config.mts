@@ -1,11 +1,12 @@
+import { UserConfig, defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react-swc';
 import eslint from 'vite-plugin-eslint';
-import { UserConfig, defineConfig } from 'vitest/config';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 export default defineConfig({
   base: '/',
   envPrefix: 'REACT_APP_',
-  plugins: [react(), eslint()] as UserConfig['plugins'],
+  plugins: [react(), nodePolyfills(), eslint()] as UserConfig['plugins'],
   build: {
     outDir: './build',
     emptyOutDir: true,

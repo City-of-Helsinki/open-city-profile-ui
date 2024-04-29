@@ -1,5 +1,5 @@
 import { ContentSource } from 'hds-react';
-import { TFunction } from 'react-i18next';
+import { TFunction } from 'i18next';
 
 export const trackingCookieId = 'matomo';
 
