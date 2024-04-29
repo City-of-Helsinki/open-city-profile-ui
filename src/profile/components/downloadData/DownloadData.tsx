@@ -11,16 +11,20 @@ import useAuthCodeQueues, {
 } from '../../../gdprApi/useAuthCodeQueues';
 import config from '../../../config';
 import { isInsufficientLoaResult } from '../../../gdprApi/actions/getDownloadData';
+import { QueueController } from '../../../common/actionQueue/actionQueue';
 
 function DownloadData(): React.ReactElement {
   const [errorMessage, setErrorMessage] = useState<string>();
 
-  const onError: AuthCodeQueuesProps['onError'] = useCallback(controller => {
-    const failed = controller.getFailed();
-    const message = (failed && failed.errorMessage) || 'unknown';
+  const onError: AuthCodeQueuesProps['onError'] = useCallback(
+    (controller: QueueController) => {
+      const failed = controller.getFailed();
+      const message = (failed && failed.errorMessage) || 'unknown';
 
-    setErrorMessage(message);
-  }, []);
+      setErrorMessage(message);
+    },
+    []
+  );
 
   const {
     startOrRestart,

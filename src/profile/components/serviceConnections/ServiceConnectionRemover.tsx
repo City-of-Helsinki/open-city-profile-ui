@@ -10,6 +10,7 @@ import {
   isForbiddenResult,
   isInsufficientLoaResult,
 } from '../../../gdprApi/actions/deleteServiceConnection';
+import { QueueController } from '../../../common/actionQueue/actionQueue';
 
 export const STATUS_NONE = 0;
 export const STATUS_PENDING_CONFIRMATION = 1;
@@ -39,11 +40,14 @@ function ServiceConnectionRemover(props: {
 }): React.ReactElement | null {
   const [errorMessage, setErrorMessage] = useState<string>();
   const { service, onDeletion, onAbort } = props;
-  const onError: AuthCodeQueuesProps['onError'] = useCallback(controller => {
-    const failed = controller.getFailed();
-    const message = (failed && failed.errorMessage) || 'unknown';
-    setErrorMessage(message);
-  }, []);
+  const onError: AuthCodeQueuesProps['onError'] = useCallback(
+    (controller: QueueController) => {
+      const failed = controller.getFailed();
+      const message = (failed && failed.errorMessage) || 'unknown';
+      setErrorMessage(message);
+    },
+    []
+  );
   const {
     isLoading,
     startOrRestart,

@@ -28,6 +28,7 @@ import config from '../../../config';
 import { getDeleteProfileResultOrError } from '../../../gdprApi/actions/deleteProfile';
 import reportErrorsToSentry from '../../../common/sentry/reportErrorsToSentry';
 import { SERVICE_CONNECTIONS } from '../../graphql/ServiceConnectionsQuery';
+import { QueueController } from '../../../common/actionQueue/actionQueue';
 
 function DeleteProfile(): React.ReactElement {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -64,15 +65,18 @@ function DeleteProfile(): React.ReactElement {
     },
     [history, trackEvent]
   );
-  const onError: AuthCodeQueuesProps['onError'] = useCallback(controller => {
-    const failed = controller.getFailed();
-    const error = new Error(failed ? failed.errorMessage : 'Unknown error');
+  const onError: AuthCodeQueuesProps['onError'] = useCallback(
+    (controller: QueueController) => {
+      const failed = controller.getFailed();
+      const error = new Error(failed ? failed.errorMessage : 'Unknown error');
 
-    if (error) {
-      Sentry.captureException(error);
-    }
-    setResultError(error);
-  }, []);
+      if (error) {
+        Sentry.captureException(error);
+      }
+      setResultError(error);
+    },
+    []
+  );
 
   const {
     startOrRestart,

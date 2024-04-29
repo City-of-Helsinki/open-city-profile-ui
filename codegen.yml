@@ -15,10 +15,6 @@ config:
   dedupeOperationSuffix: true
   preResolveTypes: true
   skipTypeNameForRoot: true
-
-  #typescript-react-apollo
-  withHooks: true
-  withComponent: false
 generates:
   ./src/graphql/generatedTypes.ts:
     plugins:
@@ -30,4 +26,3 @@ generates:
             - '// This file was automatically generated and should not be edited.'
       - 'typescript'
       - 'typescript-operations'
-      - 'typescript-react-apollo'
