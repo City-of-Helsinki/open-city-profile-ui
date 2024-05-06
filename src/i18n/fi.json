@@ -59,7 +59,7 @@
     "urlToServiceList": "https://www.hel.fi/search/services"
   },
   "downloadData": {
-    "button": "Lataa omat tiedot",
+    "button": "Lataa omat tiedot (.json)",
     "panelText": "Voit ladata kaikki sinuun liittyvät tiedot tästä tiedostona. Tiedosto pitää sisällään kaikki sinusta Helsinki-profiiliin tallennetut tiedot sekä tiedot kaikista siihen liitetyistä asiointipalveluista.",
     "panelTitle": "Haluatko ladata omat tietosi?",
     "extrapanelTextforLightAuthentication": "Profiilissasi on yhdistettynä palveluita joihin olet käyttänyt vahvaa tunnistautumista. Kirjaudu ulos ja takaisin sisään Suomi.fi-tunnistautuen ladataksesi tiedot."
@@ -185,7 +185,7 @@
     "ariaNoSelectedItemForLabel": "{{label}} ei ole valittuna",
     "deleteProfile": "Poista omat tietosi",
     "description": "Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <linkToServices>{{linkToServicesText}} sivulta</linkToServices>.",
-    "downloadData": "Lataa omat tietosi",
+    "downloadData": "Lataa omat tietosi (.json)",
     "email": "Sähköpostiosoite",
     "name": "Nimi",
     "personalData": "Henkilötiedot",

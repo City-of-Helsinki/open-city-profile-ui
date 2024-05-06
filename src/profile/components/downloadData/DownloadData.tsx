@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Notification } from 'hds-react';
+import { Button, Notification, IconDownload } from 'hds-react';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import contentStyles from '../../../common/cssHelpers/content.module.css';
@@ -79,6 +79,7 @@ function DownloadData(): React.ReactElement {
               </Notification>
             ))}
           <Button
+            iconLeft={<IconDownload />}
             onClick={onDownloadClick}
             disabled={!canUserDoSomething}
             id="download-profile-button"
