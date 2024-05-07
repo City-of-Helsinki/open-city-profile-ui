@@ -59,7 +59,7 @@
     "urlToServiceList": "https://www.hel.fi/sok/tjanster"
   },
   "downloadData": {
-    "button": "Ladda ner min information",
+    "button": "Ladda ner min information (.json)",
     "panelText": "Du kan ladda ner alla uppgifter om dig i en fil här. Filen innehåller alla uppgifter som sparats om dig i Helsingforsprofilen och uppgifter om alla e-tjänster som anslutits till den.",
     "panelTitle": "Vill du ladda ner din information?",
     "extrapanelTextforLightAuthentication": "Du har tjänster kopplade till din Helsingforsprofil för vilka du har använt stark autentisering. Logga ut och logga in igen med Suomi.fi-autentisering för att ladda ner dina data."

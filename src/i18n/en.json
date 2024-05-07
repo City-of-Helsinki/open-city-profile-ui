@@ -43,7 +43,7 @@
     "loadingServices": "Searching for services connected to the profile",
     "deleteSuccessful": "The Helsinki profile and all the data we hold on you have been deleted successfully!",
     "deleteFailed": "The deletion failed for some reason. Please try again after a while!",
-    "deleteInfoforLightAuthentication": "You have services linked to your profile for which you have used strong identification. Please log out and log in again using Suomi.fi-authentication to delete your data. "
+    "deleteInfoforLightAuthentication": "You have services linked to your profile for which you have used strong identification. Please log out and log in again using Suomi.fi-authentication to delete your data."
   },
   "deleteProfileModal": {
     "delete": "Delete my information",
@@ -59,7 +59,7 @@
     "urlToServiceList": "https://www.hel.fi/search/services"
   },
   "downloadData": {
-    "button": "Download my information",
+    "button": "Download my information (.json)",
     "panelText": "Here you can download a file containing all the data related to you. The file contains all the data about you stored in the Helsinki profile and information about all the associated e-services.",
     "panelTitle": "Do you want to download your information?",
     "extrapanelTextforLightAuthentication": "You have services linked to your profile for which you have used strong identification. Please log out and log back in with Suomi.fi-authentication to download your data."
