@@ -11,7 +11,7 @@ export interface ToastContextType {
 const ToastContext = createContext<ToastContextType>({
   createToast: (): string => '',
   hideToast: () => {
-    // pass
+    // pass - some zero effect change here
   },
   deleteToast: () => {
     // pass
