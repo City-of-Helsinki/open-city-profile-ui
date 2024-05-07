@@ -37,6 +37,23 @@ Scripts generates first environment variables to `public/env-config.js` with `sc
 actual used variables when running the app. App is not using default `process.env` way to refer of variables but
 `window._env_` object.
 
+### `yarn test:e2e`
+
+Runs end-to-end tests using [Playwright](https://playwright.dev).
+
+It is recommended to run these tests to ensure the overall functionality and user experience of the application.
+
+The tests use the following environment variables to configure the URLs of different components or services that they interact with:
+
+    LINKED_EVENTS_URL
+    PROFILE_URL
+    PROFILE_API_URL
+    EXAMPLE_APP_URL
+    TUNNISTAMO_URL
+    TUNNISTUS_URL
+
+Please ensure these environment variables are correctly set in your environment before running the tests.
+
 ### `yarn build`
 
 Builds the app for production to the `build` folder.<br />
