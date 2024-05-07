@@ -10,6 +10,8 @@ public/test-env-config.js
 
 # testing
 /coverage
+/report
+/test-results
 
 # production
 /build
