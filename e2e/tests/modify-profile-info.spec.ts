@@ -4,6 +4,8 @@ import { loginToProfileWithSuomiFi } from '../utils/utils';
 
 const TEST_SSN = '210281-9988';
 
+test.describe.configure({ mode: 'serial' });
+
 test.beforeEach(async ({ page }) => {
   await loginToProfileWithSuomiFi(page, TEST_SSN);
 });

@@ -8,6 +8,8 @@ import {
 
 const TEST_SSN = '241298-999N';
 
+test.describe.configure({ mode: 'serial' });
+
 test.describe('Example app tests', () => {
   test.beforeEach(async ({ page }) => {
     await loginToExampleApp(page, TEST_SSN);

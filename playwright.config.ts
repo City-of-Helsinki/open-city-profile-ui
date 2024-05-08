@@ -12,8 +12,6 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
 
-  workers: 1,
-
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['junit', { outputFile: 'report/e2e-junit-results.xml' }],

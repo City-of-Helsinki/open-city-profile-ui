@@ -14,6 +14,8 @@ import {
   PROFILE_URL,
 } from '../utils/constants';
 
+test.describe.configure({ mode: 'serial' });
+
 const mailbox = new Mailbox();
 
 test.beforeAll(async ({ browser }) => {

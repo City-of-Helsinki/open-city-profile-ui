@@ -5,6 +5,8 @@ import { PROFILE_URL } from '../utils/constants';
 
 const TEST_SSN = '081172-998T';
 
+test.describe.configure({ mode: 'serial' });
+
 test.beforeEach(async ({ page }) => {
   await page.goto(PROFILE_URL);
 });
