@@ -12,8 +12,9 @@ type Props = {
 function LabeledValue({ label, value, testId }: Props): React.ReactElement {
   const labelTestId = testId ? { 'data-testid': `${testId}-label` } : null;
   const valueTestId = testId ? { 'data-testid': `${testId}-value` } : null;
+
   return (
-    <div className={styles['wrapper']}>
+    <div className={styles['wrapper']} {...(!value && { 'aria-hidden': true })}>
       <strong className={styles['label']} {...labelTestId}>
         {label}
       </strong>
