@@ -103,8 +103,10 @@ describe('<BasicData /> ', () => {
     });
   };
 
-  const initTests = async (): Promise<TestTools> => {
-    responses.push({ profileData: initialProfile });
+  const initTests = async (
+    profileData = initialProfile
+  ): Promise<TestTools> => {
+    responses.push({ profileData });
     const testTools = await renderTestSuite();
     await testTools.fetch();
     return Promise.resolve(testTools);
@@ -204,6 +206,19 @@ describe('<BasicData /> ', () => {
         },
         testRuns
       );
+    });
+  });
+
+  it('empty value should have aria-hidden true in parent', async () => {
+    await act(async () => {
+      const testTools = await initTests({ ...initialProfile, nickname: '' });
+      const { findByTestId } = testTools;
+
+      expect(
+        (
+          await findByTestId(`${basicDataType}-nickname-label`)
+        ).parentElement?.getAttribute('aria-hidden')
+      ).toEqual('true');
     });
   });
 });
