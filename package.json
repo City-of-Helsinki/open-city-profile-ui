@@ -85,7 +85,6 @@
     "build": "yarn typecheck && vite build",
     "preview": "yarn clear-babel-cache && yarn update-runtime-env && vite preview",
     "test": "cross-env NODE_ENV=test yarn update-runtime-env && vitest",
-    "test:e2e": "npx playwright test",
     "ci": "cross-env CI=true yarn test --coverage",
     "lint": "eslint --ext js,ts,tsx src",
     "codegen": "graphql-codegen --config codegen.yml",
