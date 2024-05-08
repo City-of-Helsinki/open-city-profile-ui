@@ -33,5 +33,6 @@ export default defineConfig({
       include: ['src/**/*'],
       provider: 'istanbul',
     },
+    exclude: ['e2e/**'],
   },
 });
