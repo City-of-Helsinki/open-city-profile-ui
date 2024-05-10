@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.9.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.8.0...open-city-profile-ui-v1.9.0) (2024-05-10)
+
+
+### Features
+
+* Profile data hide empty values from screenreaders HP-2309 ([abd48c7](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/abd48c7d4e392dbd10047260255c9d1b0af253f0))
+* Remove vite-plugin-graphql-loader HP-2410 ([a732953](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/a7329532b1b207fb3a034b94c2002b73b80e1593))
+* Update download my data button ([#341](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/341)) ([e5f4fdd](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/e5f4fdd3c6ab1863824b970cb9546f5778ae13f4))
+* Upgrade react-i18next HP-2410 ([f6a1fde](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/f6a1fde44a902c06e4553783e92279d3151e8b42))
+
 ## [1.8.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.7.0...open-city-profile-ui-v1.8.0) (2024-04-25)
 
 
