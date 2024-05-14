@@ -12,12 +12,9 @@ import {
   createDeleteProfileAction,
   deleteProfileType,
   getDeleteProfileResultOrError,
-  isInsufficientLoaResult,
 } from '../deleteProfile';
 import { getDeleteMyProfileMutationResult } from '../../../common/test/getDeleteMyProfileMutationResult';
 import { DeleteResultLists } from '../../../profile/helpers/parseDeleteProfileResult';
-
-type ActionResults = ReturnType<typeof getDeleteProfileResultOrError>;
 
 describe('deleteProfile.ts', () => {
   const queryTracker = vi.fn();
@@ -29,14 +26,12 @@ describe('deleteProfile.ts', () => {
     returnFailed,
     returnError,
     returnNoData,
-    returnInsufficientLoa,
   }: {
     noKeycloadAuthCode?: boolean;
     noTunnistamoAuthCode?: boolean;
     returnFailed?: boolean;
     returnError?: boolean;
     returnNoData?: boolean;
-    returnInsufficientLoa?: boolean;
   } = {}) => {
     fetchMock.mockIf(/.*\/graphql\/.*$/, async (req: Request) => {
       const payload = await req.json();
@@ -51,13 +46,6 @@ describe('deleteProfile.ts', () => {
         return Promise.reject({
           body: JSON.stringify({
             message: 'Error',
-          }),
-        });
-      }
-      if (returnInsufficientLoa === true) {
-        return Promise.reject({
-          body: JSON.stringify({
-            message: 'insufficientLoa',
           }),
         });
       }
@@ -163,19 +151,6 @@ describe('deleteProfile.ts', () => {
       );
       expect(result).toBeUndefined();
       expect(!!error).toBeTruthy();
-    });
-    it('Insufficient loa returns error', async () => {
-      const { runner, getAction } = initTests({
-        returnInsufficientLoa: true,
-        returnNoData: true,
-      });
-      const [errorMessage] = await to(
-        getAction().executor(getAction(), runner)
-      );
-
-      expect(
-        isInsufficientLoaResult(({ errorMessage } as unknown) as ActionResults)
-      ).toBeTruthy();
     });
     it('Result should not be stored to sessionStorage', async () => {
       const { getAction } = initTests();

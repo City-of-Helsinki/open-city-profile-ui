@@ -24,7 +24,7 @@ function parseGraphQLError(error: ApolloError | Error): ParsingResult {
     return { isAllowedError: false, isInsufficientLoaError: true };
   }
 
-  return { isAllowedError: false, isInsufficientLoaError: true };
+  return { isAllowedError: false, isInsufficientLoaError: false };
 }
 
 export default parseGraphQLError;
