@@ -4,7 +4,6 @@ import { waitFor } from '@testing-library/react';
 import {
   getDownloadDataAction,
   getDownloadDataResultOrError,
-  isInsufficientLoaResult,
 } from '../getDownloadData';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import { Action, getOption } from '../../../common/actionQueue/actionQueue';
@@ -13,8 +12,6 @@ import {
   keycloakAuthCodeParserAction,
 } from '../authCodeParser';
 import { getMockCalls } from '../../../common/test/mockHelper';
-
-type ActionResults = ReturnType<typeof getDownloadDataResultOrError>;
 
 describe('getDownloadData.ts', () => {
   const queryTracker = vi.fn();
@@ -25,13 +22,11 @@ describe('getDownloadData.ts', () => {
     noKeycloadAuthCode,
     returnNoData,
     returnError,
-    returnInsufficientLoa,
   }: {
     noKeycloadAuthCode?: boolean;
     noTunnistamoAuthCode?: boolean;
     returnNoData?: boolean;
     returnError?: boolean;
-    returnInsufficientLoa?: boolean;
   } = {}) => {
     fetchMock.mockIf(/.*\/graphql\/.*$/, async (req: Request) => {
       const payload = await req.json();
@@ -46,13 +41,6 @@ describe('getDownloadData.ts', () => {
         return Promise.reject({
           body: JSON.stringify({
             message: 'Error',
-          }),
-        });
-      }
-      if (returnInsufficientLoa === true) {
-        return Promise.reject({
-          body: JSON.stringify({
-            message: 'insufficientLoa',
           }),
         });
       }
@@ -127,21 +115,6 @@ describe('getDownloadData.ts', () => {
       const { runner, getAction } = initTests({ returnError: true });
       const [error] = await to(getAction().executor(getAction(), runner));
       expect(error).toBeDefined();
-    });
-    it('Insufficient loa returns error', async () => {
-      const { runner, getAction } = initTests({
-        returnInsufficientLoa: true,
-        returnNoData: true,
-      });
-      const [errorMessage] = await to(
-        getAction().executor(getAction(), runner)
-      );
-
-      expect(
-        isInsufficientLoaResult(({
-          errorMessage,
-        } as unknown) as ActionResults)
-      ).toBeTruthy();
     });
     it('Result should not be stored to sessionStorage', async () => {
       const { getAction } = initTests();
