@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.9.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.9.0...open-city-profile-ui-v1.9.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* ParseGraphQLError default should return falsy props HP-2435 ([6e0426b](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/6e0426b73aba8bf4798857f7f1704d30ed516b01))
+
 ## [1.9.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.8.0...open-city-profile-ui-v1.9.0) (2024-05-10)
 
 
