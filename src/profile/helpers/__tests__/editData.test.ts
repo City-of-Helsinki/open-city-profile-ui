@@ -163,6 +163,20 @@ describe('editData.ts ', () => {
     return { myProfile: modifiedMyProfile };
   };
 
+  const getProfileWithNodes = (
+    dataType: Extract<EditDataType, 'addresses' | 'phones' | 'emails'>
+  ): ProfileRoot => {
+    const profileManipulator = cloneProfileAndProvideManipulationFunctions(
+      myProfile.myProfile as ProfileData
+    );
+
+    const modifiedMyProfile = profileManipulator.getProfile();
+    expect(
+      getNodesByDataType(dataType, { myProfile: modifiedMyProfile })
+    ).toHaveLength(2);
+    return { myProfile: modifiedMyProfile };
+  };
+
   allDataTypes.forEach(dataType => {
     it(`Picks correct data from myProfile when dataType is ${dataType}`, () => {
       const { getEditData } = createEditorForDataType(myProfile, dataType);
@@ -435,6 +449,32 @@ describe('editData.ts ', () => {
         });
         const updatedItems = editor.getEditData();
         expect(updatedItems).toHaveLength(0);
+      });
+
+      it(`removing all ${dataType} items when the visible one is removed`, () => {
+        const profileDataWithNodes = getProfileWithNodes(dataType);
+        const editor = createEditorForDataType(profileDataWithNodes, dataType);
+        const items = editor.getEditData();
+        // there are two items
+        expect(items).toHaveLength(2);
+
+        const testIndex = 0;
+        // item to remove
+        const removeItem = items[testIndex];
+        // removeItem() returns new formValues
+        const saveData = editor.removeItem(removeItem) as FormValues;
+        // old item is not removed, just marked by setting item.saving = 'remove'
+        const editDataWithRemovedItem = editor.getEditData();
+        const updatedItem = editDataWithRemovedItem[testIndex];
+        expect(updatedItem.saving).toEqual('remove');
+        const secondItem = editDataWithRemovedItem[1];
+        // also the second item is marked for removal
+        // this is for clearing legacy cases when user can have multiple addresses and phones
+        expect(secondItem.saving).toEqual('remove');
+        // original item is not mutated
+        expect(removeItem.saving).toBeUndefined();
+        // the one item was removed
+        expect(saveData[dataType]).toHaveLength(0);
       });
 
       it(`removes new ${dataType} item. 
