@@ -1,51 +1,47 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`<AuthenticationProviderInformation />  > renders correctly when AMR is helsinkiAccountAMR > should render helsinki account information as expected based on config 1`] = `
-<AuthenticationProviderInformation>
-  <ProfileSection>
-    <section
-      className="content-box profile-section"
+<div>
+  <section
+    class="content-box profile-section"
+  >
+    <div
+      class="flex-box-columns"
     >
       <div
-        className="flex-box-columns"
+        class="editor-description-container"
       >
-        <div
-          className="editor-description-container"
-        >
-          <h2>
-            profileInformation.authenticationMethod
-          </h2>
-          <span>
-            identityProvider.helsinkiAccount
-          </span>
-        </div>
+        <h2>
+          profileInformation.authenticationMethod
+        </h2>
+        <span>
+          identityProvider.helsinkiAccount
+        </span>
       </div>
-    </section>
-  </ProfileSection>
-</AuthenticationProviderInformation>
+    </div>
+  </section>
+</div>
 `;
 
 exports[`<AuthenticationProviderInformation />  > renders correctly when AMR is tunnistusSuomifiAMR > should render suomi.fi information as expected based on config 1`] = `
-<AuthenticationProviderInformation>
-  <ProfileSection>
-    <section
-      className="content-box profile-section"
+<div>
+  <section
+    class="content-box profile-section"
+  >
+    <div
+      class="flex-box-columns"
     >
       <div
-        className="flex-box-columns"
+        class="editor-description-container"
       >
-        <div
-          className="editor-description-container"
-        >
-          <h2>
-            profileInformation.authenticationMethod
-          </h2>
-          <span>
-            identityProvider.tunnistusSuomifi
-          </span>
-        </div>
+        <h2>
+          profileInformation.authenticationMethod
+        </h2>
+        <span>
+          identityProvider.tunnistusSuomifi
+        </span>
       </div>
-    </section>
-  </ProfileSection>
-</AuthenticationProviderInformation>
+    </div>
+  </section>
+</div>
 `;
