@@ -1,8 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import enzymeToJson from 'enzyme-to-json';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import { updateWrapper } from '../../common/test/testUtils';
 import ToastProvider from '../ToastProvider';
 import useToast from '../useToast';
 import { Toast } from '../types';
@@ -32,7 +31,7 @@ describe('Toast', () => {
     toast,
   };
   const getWrapper = () =>
-    mount(
+    render(
       <ToastProvider>
         <TestInvoker {...defaultProps} />
       </ToastProvider>
@@ -50,11 +49,12 @@ describe('Toast', () => {
   });
 
   it('should render correct toast', async () => {
-    const wrapper = getWrapper();
+    const { getByRole } = getWrapper();
 
-    wrapper.find('#create').simulate('click');
-    await updateWrapper(wrapper);
+    const user = userEvent.setup();
 
-    expect(enzymeToJson(wrapper)).toMatchSnapshot();
+    await user.click(getByRole('button'));
+
+    expect(await screen.findByText('test title')).toBeInTheDocument();
   });
 });

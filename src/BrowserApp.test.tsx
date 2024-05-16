@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { Mock } from 'vitest';
 
 import BrowserApp from './BrowserApp';
@@ -12,9 +12,28 @@ describe('BrowserApp', () => {
       push: pushTracker,
     };
   });
+
+  beforeEach(() => {
+    global.ResizeObserver = vi.fn().mockImplementation(() => ({
+      observe: vi.fn(),
+      unobserve: vi.fn(),
+      disconnect: vi.fn(),
+    }));
+  });
+
   it('renders without crashing and commands tracker to wait for consent', () => {
-    shallow(<BrowserApp />);
+    render(<BrowserApp />);
+
     const calls = getMockCallArgs(pushTracker) as string[];
-    expect(calls).toEqual([['requireCookieConsent'], ['requireConsent']]);
+
+    expect(calls).toEqual([
+      ['requireCookieConsent'],
+      ['requireConsent'],
+      ['forgetCookieConsentGiven'],
+      ['forgetConsentGiven'],
+      ['setCustomUrl', 'http://localhost:3000/'],
+      ['setDocumentTitle', 'Profiili - Profiili'],
+      ['trackPageView'],
+    ]);
   });
 });

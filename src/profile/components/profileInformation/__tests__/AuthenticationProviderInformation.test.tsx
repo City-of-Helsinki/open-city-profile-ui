@@ -1,6 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import enzymeToJson from 'enzyme-to-json';
+import { render } from '@testing-library/react';
 
 import AuthenticationProviderInformation from '../AuthenticationProviderInformation';
 import { mockProfileCreator } from '../../../../common/test/userMocking';
@@ -20,7 +19,7 @@ describe('<AuthenticationProviderInformation /> ', () => {
   const defaultProps = {};
 
   const getWrapper = () =>
-    mount(<AuthenticationProviderInformation {...defaultProps} />);
+    render(<AuthenticationProviderInformation {...defaultProps} />);
 
   describe('renders correctly when AMR is helsinkiAccountAMR', () => {
     beforeAll(() => {
@@ -36,8 +35,8 @@ describe('<AuthenticationProviderInformation /> ', () => {
         () => 'helsinkiAccount' as useProfile.AMRStatic
       );
 
-      const wrapper = getWrapper();
-      expect(enzymeToJson(wrapper)).toMatchSnapshot();
+      const { container } = getWrapper();
+      expect(container).toMatchSnapshot();
     });
   });
   describe('renders correctly when AMR is tunnistusSuomifiAMR', () => {
@@ -46,8 +45,8 @@ describe('<AuthenticationProviderInformation /> ', () => {
         () => 'tunnistusSuomifi' as useProfile.AMRStatic
       );
 
-      const wrapper = getWrapper();
-      expect(enzymeToJson(wrapper)).toMatchSnapshot();
+      const { container } = getWrapper();
+      expect(container).toMatchSnapshot();
     });
   });
 });

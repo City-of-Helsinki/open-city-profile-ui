@@ -1,10 +1,7 @@
 import React from 'react';
 import { BrowserRouter, RouteChildrenProps } from 'react-router-dom';
+import { act, render } from '@testing-library/react';
 
-import {
-  mountWithProvider,
-  updateWrapper,
-} from '../../../../common/test/testUtils';
 import authService from '../../../authService';
 import OidcCallback from '../OidcCallback';
 
@@ -14,8 +11,8 @@ const mockedDefaultProps = {
   },
 };
 
-const getWrapper = () =>
-  mountWithProvider(
+const renderComponent = () =>
+  render(
     <BrowserRouter>
       <OidcCallback
         {...((mockedDefaultProps as unknown) as RouteChildrenProps)}
@@ -45,9 +42,11 @@ describe('<OidcCallback />', () => {
       new Error('iat is in the future')
     );
 
-    const wrapper = getWrapper();
+    renderComponent();
 
-    await updateWrapper(wrapper);
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    });
 
     expect(
       getHistoryReplaceCallArgument().includes(
@@ -62,9 +61,12 @@ describe('<OidcCallback />', () => {
       new Error('The resource owner or authorization server denied the request')
     );
 
-    const wrapper = getWrapper();
+    // const wrapper = renderComponent();
+    renderComponent();
 
-    await updateWrapper(wrapper);
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    });
 
     expect(
       getHistoryReplaceCallArgument().includes(
@@ -77,9 +79,11 @@ describe('<OidcCallback />', () => {
     it('should call authService.endLogin', async () => {
       const authServiceEndLoginSpy = vi.spyOn(authService, 'endLogin');
 
-      const wrapper = getWrapper();
+      renderComponent();
 
-      await updateWrapper(wrapper);
+      await act(async () => {
+        await new Promise(resolve => setTimeout(resolve, 0));
+      });
 
       expect(authServiceEndLoginSpy).toHaveBeenCalled();
     });
@@ -87,9 +91,11 @@ describe('<OidcCallback />', () => {
     it('should redirect user after successful login', async () => {
       vi.spyOn(authService, 'endLogin');
 
-      const wrapper = getWrapper();
+      renderComponent();
 
-      await updateWrapper(wrapper);
+      await act(async () => {
+        await new Promise(resolve => setTimeout(resolve, 0));
+      });
 
       expect(mockedDefaultProps.history.replace).toHaveBeenCalledTimes(1);
     });

@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
-import Adapter from 'enzyme-adapter-react-16';
-import { configure } from 'enzyme';
 import './common/test/testi18nInit';
 import createFetchMock from 'vitest-fetch-mock';
 import { vi } from 'vitest';
@@ -11,8 +9,6 @@ import '@testing-library/jest-dom/vitest';
 // Load generated runtime configuration to be available in tests
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 require('../public/test-env-config');
-
-configure({ adapter: new Adapter() });
 
 window.scrollTo = vi.fn<any>();
 
