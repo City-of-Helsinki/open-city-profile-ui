@@ -119,6 +119,7 @@ describe('useProfileLoader.ts ', () => {
 
   // Function for advancing straight to point where
   // profile loading is complete (success / failure)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const proceedToProfileLoadCompleteState = async ({
     loadSuccess,
     profileExist,

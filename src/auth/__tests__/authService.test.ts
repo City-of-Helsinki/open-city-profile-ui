@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { to } from 'await-to-js';
 import { waitFor } from '@testing-library/react';
-import { User } from 'oidc-client';
+import { User } from 'oidc-client-ts';
 
 import authService, { API_TOKEN } from '../authService';
 import {
@@ -188,7 +188,7 @@ describe('authService', () => {
 
   describe('login', () => {
     const defaultSigninParams = {
-      data: { path: '/' },
+      state: { path: '/' },
       ui_locales: 'fi',
     };
     it('should call signinRedirect from oidc with the provided path', async () => {
@@ -199,7 +199,7 @@ describe('authService', () => {
 
       expect(signinRedirect).toHaveBeenNthCalledWith(1, {
         ...defaultSigninParams,
-        data: { path },
+        state: { path },
       });
     });
     it('should reflect i18n language changes in the login url', async () => {
@@ -295,6 +295,8 @@ describe('authService', () => {
 
   describe('logout', () => {
     it('should call signoutRedirect from oidc. Ui_locales is found in extraQueryParams', () => {
+      spyAndMockSignoutRedirect();
+
       const signoutRedirect = vi.spyOn(userManager, 'signoutRedirect');
       i18n.changeLanguage('sv');
       authService.logout();

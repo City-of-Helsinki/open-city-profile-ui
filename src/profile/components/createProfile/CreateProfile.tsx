@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from 'oidc-client';
+import { User } from 'oidc-client-ts';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/client';
 import * as Sentry from '@sentry/react';

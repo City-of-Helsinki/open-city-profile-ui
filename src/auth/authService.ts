@@ -4,7 +4,7 @@ import {
   UserManagerSettings,
   Log,
   WebStorageStateStore,
-} from 'oidc-client';
+} from 'oidc-client-ts';
 import * as Sentry from '@sentry/react';
 import HttpStatusCode from 'http-status-typed';
 import i18n from 'i18next';
@@ -39,6 +39,9 @@ export class AuthService {
   constructor() {
     const settings: UserManagerSettings = {
       automaticSilentRenew: true,
+      validateSubOnSilentRenew: false,
+      includeIdTokenInSilentRenew: false,
+      monitorSession: true,
       userStore: new WebStorageStateStore({ store: window.sessionStorage }),
       authority: window._env_.REACT_APP_OIDC_AUTHORITY,
       client_id: window._env_.REACT_APP_OIDC_CLIENT_ID,
@@ -55,8 +58,8 @@ export class AuthService {
 
     // Show oidc debugging info in the console only while developing
     if (window._env_.NODE_ENV === 'development') {
-      Log.logger = console;
-      Log.level = Log.INFO;
+      Log.setLogger(console);
+      Log.setLevel(Log.INFO);
     }
 
     // User Manager instance
@@ -174,7 +177,10 @@ export class AuthService {
   public async login(path = '/'): Promise<void> {
     let success = true;
     await this.userManager
-      .signinRedirect({ data: { path }, ui_locales: i18n.language })
+      .signinRedirect({
+        state: { path },
+        ui_locales: i18n.language,
+      })
       .catch(error => {
         success = false;
         if (error.message !== 'Network Error') {
@@ -202,7 +208,7 @@ export class AuthService {
     return user;
   }
 
-  public renewToken(): Promise<User> {
+  public renewToken(): Promise<User | null> {
     return this.userManager.signinSilent();
   }
 
