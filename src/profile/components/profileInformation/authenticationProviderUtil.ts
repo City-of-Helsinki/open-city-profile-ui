@@ -6,7 +6,7 @@ import {
 import config from '../../../config';
 
 function getAmrFromProfileData(profile: Profile | null): string | undefined {
-  return profile && profile.amr ? profile.amr[0] : '';
+  return profile && Array.isArray(profile.amr) ? profile.amr[0] : '';
 }
 
 export function getAmrStatic(profile: Profile | null): AMRStatic | null {
