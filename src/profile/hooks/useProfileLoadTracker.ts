@@ -79,6 +79,8 @@ export function useProfileLoadTracker(): useProfileLoaderHookReturnType {
   const statusRef = useRef<Status>(STATUS_WAITING);
 
   const updateStatus = useCallback((updatedStatus?: Status): Status => {
+    console.log('Updating status to', updatedStatus);
+
     if (!updatedStatus) {
       return statusRef.current;
     }
@@ -87,10 +89,13 @@ export function useProfileLoadTracker(): useProfileLoaderHookReturnType {
   }, []);
 
   const newStatus = resolveChangedStatus(statusRef.current, profileContext);
+
   updateStatus(newStatus);
 
   useEffect(() => {
+    console.log('Effect running with newStatus', newStatus);
     if (shouldLoad(newStatus)) {
+      console.log('Starting to load');
       updateStatus(STATUS_LOADING);
       profileContext.fetch();
     }
