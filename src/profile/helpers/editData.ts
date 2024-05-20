@@ -324,12 +324,10 @@ function setAllItemsToRemoveAndCloneList(
     throw new Error('Item not found in updateAllItemsAndCloneList() ');
   }
 
-  const newList = _.cloneDeep(allItems).map(element => ({
+  return _.cloneDeep(allItems).map(element => ({
     ...element,
     saving: 'remove' as SaveType,
   }));
-
-  return newList;
 }
 
 function createFormValues(
