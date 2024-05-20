@@ -315,6 +315,21 @@ function updateItemAndCloneList(
   return newList;
 }
 
+function setAllItemsToRemoveAndCloneList(
+  allItems: EditData[],
+  item: EditData
+): EditData[] {
+  const index = findItemIndex(allItems, item.id);
+  if (index < 0) {
+    throw new Error('Item not found in updateAllItemsAndCloneList() ');
+  }
+
+  return _.cloneDeep(allItems).map(element => ({
+    ...element,
+    saving: 'remove' as SaveType,
+  }));
+}
+
 function createFormValues(
   allItems: EditData[],
   dataType: EditDataType,
@@ -674,12 +689,8 @@ export function createEditorForDataType(
         allItems = clone;
         return null;
       }
-      allItems = updateItemAndCloneList(
-        allItems,
-        targetItem,
-        targetItem.value,
-        'remove'
-      );
+      // Remove all items from list because there can be only one address or phone number
+      allItems = setAllItemsToRemoveAndCloneList(allItems, targetItem);
       return createFormValues(allItems, dataType);
     },
     setPrimary: targetRef => {
