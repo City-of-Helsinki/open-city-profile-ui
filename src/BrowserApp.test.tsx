@@ -31,9 +31,6 @@ describe('BrowserApp', () => {
       ['requireConsent'],
       ['forgetCookieConsentGiven'],
       ['forgetConsentGiven'],
-      ['setCustomUrl', 'http://localhost:3000/'],
-      ['setDocumentTitle', 'Profiili - Profiili'],
-      ['trackPageView'],
     ]);
   });
 });

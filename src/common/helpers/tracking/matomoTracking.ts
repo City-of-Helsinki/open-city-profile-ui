@@ -59,8 +59,14 @@ export function handleCookieConsentChange(
   }
 }
 
-export function useTrackingInstance(): ReturnType<typeof createInstance> {
+export function useTrackingInstance():
+  | ReturnType<typeof createInstance>
+  | undefined {
   return useMemo(() => {
+    if (import.meta.env.REACT_APP_MATOMO_ENABLED !== 'true') {
+      return undefined;
+    }
+
     // matomo.js is not loaded, if window._paq.length > 0
     // so clearing it before creating the instance.
     // events are pushed back below
