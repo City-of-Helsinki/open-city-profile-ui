@@ -6,6 +6,7 @@ import countries from 'i18n-iso-countries';
 import fi from 'i18n-iso-countries/langs/fi.json';
 import en from 'i18n-iso-countries/langs/en.json';
 import sv from 'i18n-iso-countries/langs/sv.json';
+import { MatomoInstance } from '@datapunt/matomo-tracker-react/lib/types';
 
 import graphqlClient from './graphql/client';
 import Login from './auth/components/login/Login';
@@ -36,7 +37,7 @@ function App(): React.ReactElement {
   return (
     <ApolloProvider client={graphqlClient}>
       <ToastProvider>
-        <MatomoProvider value={instance}>
+        <MatomoProvider value={instance as MatomoInstance}>
           <ProfileProvider>
             <Switch>
               <Route path="/callback" component={OidcCallback} />

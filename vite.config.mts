@@ -33,6 +33,5 @@ export default defineConfig({
       include: ['src/**/*'],
       provider: 'istanbul',
     },
-    testTimeout: 1000000,
   },
 });

@@ -61,7 +61,6 @@ describe('<OidcCallback />', () => {
       new Error('The resource owner or authorization server denied the request')
     );
 
-    // const wrapper = renderComponent();
     renderComponent();
 
     await act(async () => {
