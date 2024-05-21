@@ -2,8 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { Mock } from 'vitest';
 
-import BrowserApp from './BrowserApp';
-import { getMockCallArgs } from './common/test/mockHelper';
+import BrowserApp from '../BrowserApp';
+import { getMockCallArgs } from '../common/test/mockHelper';
 
 describe('BrowserApp', () => {
   const pushTracker = vi.fn();
