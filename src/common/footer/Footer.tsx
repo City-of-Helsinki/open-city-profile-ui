@@ -79,6 +79,11 @@ const Footer = () => {
           label={t('cookies.pageName')}
         />
         <HDSFooter.Link as={Link} to="/about" label={t('footer.about')} />
+        <HDSFooter.Link
+          as={Link}
+          to="/guide"
+          label={'Helsinki-profiilin käyttöohje'}
+        />
       </HDSFooter.Base>
     </HDSFooter>
   );

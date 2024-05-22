@@ -16,6 +16,7 @@ import { Provider as ProfileProvider } from './profile/context/ProfileContext';
 import ProfileDeleted from './profile/components/profileDeleted/ProfileDeleted';
 import ErrorPage from './profile/components/errorPage/ErrorPage';
 import AboutPage from './aboutPage/AboutPage';
+import UserGuide from './userGuide/UserGuide';
 import AccessibilityStatement from './accessibilityStatement/AccessibilityStatement';
 import GdprAuthorizationCodeManagerCallback from './gdprApi/GdprAuthorizationCodeManagerCallback';
 import ToastProvider from './toast/ToastProvider';
@@ -52,6 +53,9 @@ function App(): React.ReactElement {
               </Route>
               <Route path="/about" exact>
                 <AboutPage />
+              </Route>
+              <Route path="/guide" exact>
+                <UserGuide />
               </Route>
               <Route path="/accessibility" exact>
                 <AccessibilityStatement />
