@@ -119,6 +119,7 @@
     "jsdom": "^24.0.0"
   },
   "resolutions": {
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "braces": "^3.0.3"
   }
 }
