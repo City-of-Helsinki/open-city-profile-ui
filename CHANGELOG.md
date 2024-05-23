@@ -3,6 +3,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.10.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.9.1...open-city-profile-ui-v1.10.0) (2024-05-23)
+
+
+### Features
+
+* Remove all adresses/phonenumbers when one is removed HP-2338 ([#349](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/349)) ([17d6d5d](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/17d6d5d17636c66bf4ab3aeca8bd5460bf8bc43f))
+
+
+### Bug Fixes
+
+* Fixing useProfileLoadTracker tests HP-2436 ([2fcc8db](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/2fcc8db6d66f71aa4d83fa5aab70fe3f2249530c))
+
+
+### Dependencies
+
+* Patch braces to 3.0.3 via resolutions HP-2436 ([893a14d](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/893a14d48d4bc2651eca8e132364c13817392527))
+* Patch micromatch to 4.0.6 via resolutions HP-2436 ([d9ac02c](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/d9ac02cbbd9d00cc18d6d576f9ae7e2c8c78cf3a))
+* Remove deprecated packages HP-2436 ([4735110](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/4735110cea213fca9d493c7f03dd7e7d5d88d63d))
+* Replace oidc-client with oidc-client-ts@2.4.0 HP-2436 ([8397a05](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/8397a05247e95236c9b81dc7f5d405de5783dc17))
+* Upgrade hds-core hds-design-tokens hds-react to 3.8.0 HP-2436 ([ec44d1a](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/ec44d1aa941435c4456192a3eb6a41556abf8de9))
+* Upgrade vite to 5.2.11 HP-2436 ([c748e9a](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/c748e9aff5ee2a44ee08a2e4e13f901f365123c5))
+
 ## [1.9.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.9.0...open-city-profile-ui-v1.9.1) (2024-05-15)
 
 
