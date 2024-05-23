@@ -37,9 +37,7 @@ import FocusableH1 from '../common/focusableH1/FocusableH1';
 function UserGuideSv(): ReactElement {
   return (
     <Fragment>
-      <FocusableH1>Helsinki profile user guide</FocusableH1>
-
-      <h1>Helsingforsprofilens hjälp</h1>
+      <FocusableH1>Helsingforsprofilens hjälp</FocusableH1>
 
       <p>
         Helsingforsprofilen är kundprofilen för en medborgare som använder
@@ -51,62 +49,69 @@ function UserGuideSv(): ReactElement {
         används för identifiering i olika digitala applikationer:
       </p>
 
-      <p>med suomi.fi-autentisering, till exempel med dina bankuppgifter</p>
+      <ul>
+        <li>med suomi.fi-autentisering, till exempel med dina bankuppgifter</li>
 
-      <p>
-        med kombinationen av e-postadress och lösenord för Helsingfors ID,
-        Google- eller Yle-ID
-      </p>
+        <li>
+          med kombinationen av e-postadress och lösenord för Helsingfors ID,
+          Google- eller Yle-ID
+        </li>
+      </ul>
 
-      <p>
-        <a href="#_Identifiering_till_tjänsten">Identifiering till tjänsten</a>
-      </p>
+      <ul>
+        <li>
+          <a href="#_Identifiering_till_tjänsten">
+            Identifiering till tjänsten
+          </a>
+        </li>
+        <ul>
+          <li>
+            <a href="#_Suomi.fi_identifiering">Suomi.fi identifiering</a>
+          </li>
 
-      <p>
-        <a href="#_Suomi.fi_identifiering">Suomi.fi identifiering</a>
-      </p>
+          <li>
+            <a href="#_Identifiering_via_e-post">
+              Identifiering via e-post och lösenord
+            </a>
+          </li>
+        </ul>
+        <li>
+          <a href="#_Kombinera_identifieringsmetoder">
+            Kombinera identifieringsmetoder
+          </a>
+        </li>
 
-      <p>
-        <a href="#_Identifiering_via_e-post">
-          Identifiering via e-post och lösenord
-        </a>
-      </p>
+        <li>
+          <a href="#_Glömt_lösenord">Glömt lösenord</a>
+        </li>
 
-      <p>
-        <a href="#_Kombinera_identifieringsmetoder">
-          Kombinera identifieringsmetoder
-        </a>
-      </p>
+        <li>
+          <a href="#_Problem_med_identifiering">Problem med identifieringen</a>
+        </li>
 
-      <p>
-        <a href="#_Glömt_lösenord">Glömt lösenord</a>
-      </p>
+        <li>
+          <a href="#_Visa_och_redigera">
+            Visa och redigera dina egna uppgifter
+          </a>
+        </li>
 
-      <p>
-        <a href="#_Problem_med_identifiering">Problem med identifieringen</a>
-      </p>
+        <li>
+          <a href="#_Olika_tjänsters_bearbetning">
+            Olika tjänsters bearbetning av dina uppgifter
+          </a>
+        </li>
 
-      <p>
-        <a href="#_Visa_och_redigera">Visa och redigera dina egna uppgifter</a>
-      </p>
+        <li>
+          <a href="#_Ladda_ner_din">Ladda ner din information</a>
+        </li>
 
-      <p>
-        <a href="#_Olika_tjänsters_bearbetning">
-          Olika tjänsters bearbetning av dina uppgifter
-        </a>
-      </p>
-
-      <p>
-        <a href="#_Ladda_ner_din">Ladda ner din information</a>
-      </p>
-
-      <p>
-        <a href="#_Radera_dina_uppgifter">
-          Radera dina uppgifter från en enda tjänst eller från hela din
-          Helsingforsprofil
-        </a>{' '}
-      </p>
-
+        <li>
+          <a href="#_Radera_dina_uppgifter">
+            Radera dina uppgifter från en enda tjänst eller från hela din
+            Helsingforsprofil
+          </a>{' '}
+        </li>
+      </ul>
       <h2 id="_Identifiering_till_tjänsten">Identifiering till tjänsten</h2>
 
       <p>
@@ -140,6 +145,9 @@ function UserGuideSv(): ReactElement {
           src={image001}
           alt="I autentiseringsfönstret väljer du suomi.fi-identifikation."
         />
+      </p>
+
+      <p>
         <img
           width={403}
           height={252}
@@ -161,9 +169,15 @@ function UserGuideSv(): ReactElement {
           src={image003}
           alt="Välj ditt bank- eller mobilkonto som autentiseringsalternativ på suomi.fi.&#10;"
         />
+      </p>
+
+      <p>
         Efter autentiseringen ska du kontrollera att de uppgifter du använder är
         korrekta. Om du hittar fel i uppgifterna ska de korrigeras i
         Befolkningsregistercentralens tjänst.
+      </p>
+
+      <p>
         <img
           width={467}
           height={324}
@@ -208,13 +222,20 @@ function UserGuideSv(): ReactElement {
           bekräftelsemeddelandet från din e-post. I annat fall kommer systemet
           att anta att du har avbrutit autentiseringsprocessen.
         </b>
+      </p>
+
+      <p>
         <img
           width={482}
           height={323}
           src={image006}
           alt="E-postmeddelandet innehåller en 6-siffrig verifieringskod för att bekräfta att e-postadressen är äkta."
         />
-        Ange numret i rutan på skärmen.
+      </p>
+
+      <p>Ange numret i rutan på skärmen.</p>
+
+      <p>
         <img
           width={433}
           height={520}
@@ -262,10 +283,11 @@ function UserGuideSv(): ReactElement {
 
       <p>De andra autentiseringsalternativen för Helsingforsprofilen är</p>
 
-      <p>Helsinki ID, dvs. en kombination av e-post och lösenord</p>
+      <ul>
+        <li>Helsinki ID, dvs. en kombination av e-post och lösenord</li>
 
-      <p>Google- eller Yle-ID kommer att fasas ut 2024</p>
-
+        <li>Google- eller Yle-ID kommer att fasas ut 2024</li>
+      </ul>
       <p>
         <img
           width={349}
@@ -329,18 +351,17 @@ function UserGuideSv(): ReactElement {
       </p>
 
       <p>
-        <b>
-          <img
-            width={482}
-            height={323}
-            src={image006}
-            alt="E-postmeddelandet innehåller en 6-siffrig verifieringskod för att bekräfta att e-postadressen är äkta."
-          />
-        </b>
+        <img
+          width={482}
+          height={323}
+          src={image006}
+          alt="E-postmeddelandet innehåller en 6-siffrig verifieringskod för att bekräfta att e-postadressen är äkta."
+        />
       </p>
 
+      <p>Ange numret i rutan på skärmen.</p>
+
       <p>
-        Ange numret i rutan på skärmen.
         <img
           width={433}
           height={520}
@@ -505,12 +526,13 @@ function UserGuideSv(): ReactElement {
         och redigera dina uppgifter och hur de används av tjänsterna:
       </p>
 
-      <p>Du kan lägga till ett telefonnummer.</p>
+      <ul>
+        <li>Du kan lägga till ett telefonnummer.</li>
 
-      <p>Du kan ändra din e-postadress.</p>
+        <li>Du kan ändra din e-postadress.</li>
 
-      <p>Du kan lägga till din adressinformation.</p>
-
+        <li>Du kan lägga till din adressinformation.</li>
+      </ul>
       <p>
         De officiella uppgifterna läggs till i din profil och syns endast när du
         autentiserar dig med suomi.fi. Uppdateringen av uppgifterna görs i
@@ -546,6 +568,9 @@ function UserGuideSv(): ReactElement {
         att klicka på knappen Lägg till, eller på knappen Redigera om
         informationen redan finns. Tryck på knappen Spara för att spara
         uppgifterna i databasen.
+      </p>
+
+      <p>
         <img
           width={482}
           height={348}
@@ -718,6 +743,9 @@ function UserGuideSv(): ReactElement {
       <p>
         Efter att du har raderat din Helsingforsprofil kan du alltid skapa en ny
         profil vid behov, men alla tidigare uppgifter försvinner.
+      </p>
+
+      <p>
         <img
           width={482}
           height={140}

@@ -36,9 +36,7 @@ import FocusableH1 from '../common/focusableH1/FocusableH1';
 function UserGuideEn(): ReactElement {
   return (
     <Fragment>
-      <FocusableH1>Helsinki profile user guide</FocusableH1>
-
-      <p>Helsinki profile guide</p>
+      <FocusableH1>Helsinki profile guide</FocusableH1>
 
       <p>
         The Helsinki profile is the customer profile of a citizen using the
@@ -51,59 +49,67 @@ function UserGuideEn(): ReactElement {
         authentication to the different digital applications:
       </p>
 
-      <p>using suomi.fi authentication, for example with your bank details</p>
+      <ul>
+        <li>
+          using suomi.fi authentication, for example with your bank details
+        </li>
 
-      <p>
-        using the email address + password combination of the Helsinki ID,
-        Google or Yle IDs
-      </p>
+        <li>
+          using the email address + password combination of the Helsinki ID,
+          Google or Yle IDs
+        </li>
+      </ul>
 
-      <p>
-        <a href="#_Identify_to_the">Identify to the service</a>
-      </p>
+      <ul>
+        <li>
+          <a href="#_Identify_to_the">Identify to the service</a>
+        </li>
+        <ul>
+          <li>
+            <a href="#_Suomi.fi_identification">Suomi.fi identification</a>
+          </li>
 
-      <p>
-        <a href="#_Suomi.fi_identification">Suomi.fi identification</a>
-      </p>
+          <li>
+            <a href="#_Email_and_password">Email and password identification</a>
+          </li>
+        </ul>
+        <li>
+          <a href="#_Combining_identification_methods">
+            Combining identification methods
+          </a>
+        </li>
 
-      <p>
-        <a href="#_Email_and_password">Email and password identification</a>
-      </p>
+        <li>
+          <Link href="#_Forgotten_password">Forgotten password</Link>
+        </li>
 
-      <p>
-        <a href="#_Combining_identification_methods">
-          Combining identification methods
-        </a>
-      </p>
+        <li>
+          <a href="#_Problem_with_identification">
+            Problem with identification
+          </a>
+        </li>
 
-      <p>
-        <Link href="#_Forgotten_password">Forgotten password</Link>
-      </p>
+        <li>
+          <a href="#_Viewing_and_editing">Viewing and editing your own data</a>
+        </li>
 
-      <p>
-        <a href="#_Problem_with_identification">Problem with identification</a>
-      </p>
+        <li>
+          <a href="#_Processing_of_your">
+            Processing of your data by different services
+          </a>
+        </li>
 
-      <p>
-        <a href="#_Viewing_and_editing">Viewing and editing your own data</a>
-      </p>
+        <li>
+          <a href="#_Download_your_information">Download your information</a>
+        </li>
 
-      <p>
-        <a href="#_Processing_of_your">
-          Processing of your data by different services
-        </a>
-      </p>
-
-      <p>
-        <a href="#_Download_your_information">Download your information</a>
-      </p>
-
-      <p>
-        <a href="#_Deleting_your_information">
-          Deleting your information from a single service or from your entire
-          Helsinki profile
-        </a>
-      </p>
+        <li>
+          <a href="#_Deleting_your_information">
+            Deleting your information from a single service or from your entire
+            Helsinki profile
+          </a>
+        </li>
+      </ul>
 
       <h2 id="_Identify_to_the">Identify to the service</h2>
 
@@ -156,12 +162,14 @@ function UserGuideEn(): ReactElement {
         After selecting the Suomi.fi login, the user will be presented with
         different login options. The options are the same as for other
         government services offering strong authentication.
-        <img
-          src={image003}
-          width={482}
-          height={397}
-          alt="Choose your bank or mobile account as your suomi.fi authentication option."
-        />
+      </p>
+      <img
+        src={image003}
+        width={482}
+        height={397}
+        alt="Choose your bank or mobile account as your suomi.fi authentication option."
+      />
+      <p>
         After authentication, check that the information you are using is
         correct. If you find any errors in the data, they must be corrected in
         the Population Register Centre&apos;s service.
@@ -215,39 +223,33 @@ function UserGuideEn(): ReactElement {
           system will assume that you have interrupted the authentication
           process.
         </b>
-
-        <img
-          src={image006}
-          width={482}
-          height={323}
-          alt="The email contains a 6-digit verification code to confirm that the email address is genuine."
-        />
       </p>
-
-      <p>
-        Enter the number in the box on the screen.
-        <img
-          src={image007}
-          width={427}
-          height={499}
-          alt="The 6-digit number of the email must be entered in the verification code field in the browser window."
-        />
-      </p>
-
+      <img
+        src={image006}
+        width={482}
+        height={323}
+        alt="The email contains a 6-digit verification code to confirm that the email address is genuine."
+      />
+      <p>Enter the number in the box on the screen.</p>
+      <img
+        src={image007}
+        width={427}
+        height={499}
+        alt="The 6-digit number of the email must be entered in the verification code field in the browser window."
+      />
       <p>
         After confirming the email, you will still need to give your consent to
         the use of your data. Without consent, Helsinki profile cannot be
         created and the services cannot use your data.
-        <img
-          src={image008}
-          width={216}
-          height={508}
-          alt={`Before you can use the service you want or before you can create 
+      </p>
+      <img
+        src={image008}
+        width={216}
+        height={508}
+        alt={`Before you can use the service you want or before you can create 
             Helsinki profile, you must give your consent to the use of your data. 
             Without consent, your data cannot be used and therefore no profile can be created.`}
-        />
-      </p>
-
+      />
       <p>
         You will then have Helsinki profile, and your suomi.fi login details
         will be saved in your profile. Different services use your data in
@@ -273,10 +275,11 @@ function UserGuideEn(): ReactElement {
 
       <p>The other authentication options for the Helsinki profile are</p>
 
-      <p>Helsinki ID, i.e. a combination of email and password</p>
+      <ul>
+        <li>Helsinki ID, i.e. a combination of email and password</li>
 
-      <p>the Google or Yle ID will be phased out in 2024</p>
-
+        <li>the Google or Yle ID will be phased out in 2024</li>
+      </ul>
       <p>
         <img
           src={image009}
@@ -337,25 +340,20 @@ function UserGuideEn(): ReactElement {
           system will assume that you have interrupted the authentication
           process.
         </b>
-
-        <img
-          src={image006}
-          width={482}
-          height={323}
-          alt="The email contains a 6-digit verification code to confirm that the email address is genuine."
-        />
       </p>
-
-      <p>
-        Enter the number in the box on the screen.
-        <img
-          src={image007}
-          width={427}
-          height={499}
-          alt="The 6-digit number of the email must be entered in the verification code field in the browser window."
-        />
-      </p>
-
+      <img
+        src={image006}
+        width={482}
+        height={323}
+        alt="The email contains a 6-digit verification code to confirm that the email address is genuine."
+      />
+      <p>Enter the number in the box on the screen.</p>
+      <img
+        src={image007}
+        width={427}
+        height={499}
+        alt="The 6-digit number of the email must be entered in the verification code field in the browser window."
+      />
       <p>
         After confirming the email, you will still need to give your consent to
         the use of your data. Without consent, a Helsinki profile cannot be
@@ -412,20 +410,21 @@ function UserGuideEn(): ReactElement {
         link. You may also have &quot;forgotten&quot; your password because you
         have previously logged in to the service using suomi.fi, in which case
         you didn&apos;t have to create a password.
+      </p>
+      <img
+        src={image011}
+        width={325}
+        height={493}
+        alt="In the login window, click on the I forgot my password link."
+      />
+      <p>
         <img
-          src={image011}
-          width={325}
-          height={493}
-          alt="In the login window, click on the I forgot my password link."
+          src={image012}
+          width={328}
+          height={324}
+          alt="Enter your email address in the box that appears to receive a password renewal link in your email."
         />
       </p>
-
-      <img
-        src={image012}
-        width={328}
-        height={324}
-        alt="Enter your email address in the box that appears to receive a password renewal link in your email."
-      />
       <img
         src={image013}
         width={284}
@@ -505,13 +504,13 @@ function UserGuideEn(): ReactElement {
         <a href="https://profiili.hel.fi">https://profiili.hel.fi</a>
         you can view and edit your data and how it is used by the services:
       </p>
+      <ul>
+        <li>You can add a phone number.</li>
 
-      <p>You can add a phone number.</p>
+        <li>change your email address.</li>
 
-      <p>change your email address.</p>
-
-      <p>add your address information.</p>
-
+        <li>add your address information.</li>
+      </ul>
       <p>
         The official information will be added to your profile and will only be
         visible when you authenticate with suomi.fi. Updating this information
@@ -521,6 +520,9 @@ function UserGuideEn(): ReactElement {
       <p>
         If you update your name data in your Helsinki profile, the next time you
         authenticate with suomi.fi, the official data will be updated.
+      </p>
+
+      <p>
         <img
           src={image018}
           width={481}
@@ -537,9 +539,15 @@ function UserGuideEn(): ReactElement {
           height={295}
           alt="In your Helsinki profile, in the My information section, you can update the basic data yourself."
         />
+      </p>
+
+      <p>
         You can add or change the information you have entered yourself by
         clicking on the Add button, or the Edit button if the information
         already exists. Press the Save button to save the data in the database.
+      </p>
+
+      <p>
         <img
           src={image020}
           width={482}
@@ -552,6 +560,9 @@ function UserGuideEn(): ReactElement {
         In the Helsinki profile, the language of communication section
         determines the language in which, for example, emails from the service
         will be sent.
+      </p>
+
+      <p>
         <img
           src={image021}
           width={482}

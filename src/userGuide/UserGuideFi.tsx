@@ -36,9 +36,7 @@ import FocusableH1 from '../common/focusableH1/FocusableH1';
 function UserGuideFi(): ReactElement {
   return (
     <Fragment>
-      <FocusableH1>Tietoa Helsinki-profiilista</FocusableH1>
-
-      <h1>Helsinki-profiilin ohje</h1>
+      <FocusableH1>Helsinki-profiilin ohje</FocusableH1>
 
       <p>
         Helsinki-profiili on kaupungin digitaalisia asiointipalveluja käyttävän
@@ -50,63 +48,68 @@ function UserGuideFi(): ReactElement {
         avulla eri digitaalisiin sovelluksiin tunnistautuminen tapahtuu:
       </p>
 
-      <p>suomi.fi-tunnistautumista käyttäen esimerkiksi pankkitunnuksilla</p>
+      <ul>
+        <li>
+          suomi.fi-tunnistautumista käyttäen esimerkiksi pankkitunnuksilla
+        </li>
+        <li>
+          Helsinki-tunnuksen sähköpostiosoite+salasana-yhdistelmällä, Google-
+          tai Yle-tunnuksilla
+        </li>
+      </ul>
 
-      <p>
-        Helsinki-tunnuksen sähköpostiosoite+salasana-yhdistelmällä, Google- tai
-        Yle-tunnuksilla
-      </p>
+      <ul>
+        <li>
+          <a href="#_Palveluun_kirjautuminen">Palveluun tunnistautuminen</a>
+        </li>
+        <ul>
+          <li>
+            {' '}
+            <a href="#_Suomi.fi-tunnistautuminen">Suomi.fi-tunnistautuminen</a>
+          </li>
 
-      <p>
-        <a href="#_Palveluun_kirjautuminen">Palveluun tunnistautuminen</a>
-      </p>
+          <li>
+            {' '}
+            <a href="#_Helsinki-tunnuksen_käyttö">Helsinki-tunnus</a>
+          </li>
+        </ul>
 
-      <p>
-        {' '}
-        <a href="#_Suomi.fi-tunnistautuminen">Suomi.fi-tunnistautuminen</a>
-      </p>
+        <li>
+          <a href="#_Eri_tunnistautumistapojen_yhdistämi">
+            Tunnistautumistapojen yhdistäminen
+          </a>
+        </li>
 
-      <p>
-        {' '}
-        <a href="#_Helsinki-tunnuksen_käyttö">Helsinki-tunnus</a>
-      </p>
+        <li>
+          <a href="#_Unohtunut_salasana">Unohtunut salasana</a>
+        </li>
 
-      <p>
-        <a href="#_Eri_tunnistautumistapojen_yhdistämi">
-          Tunnistautumistapojen yhdistäminen
-        </a>
-      </p>
+        <li>
+          <a href="#_Ongelma_kirjautumisessa">Ongelma tunnistautumisessa</a>
+        </li>
 
-      <p>
-        <a href="#_Salasanan_unohtaminen">Unohtunut salasana</a>
-      </p>
+        <li>
+          <a href="#_Omien_tietojen_katselu">
+            Omien tietojesi katselu ja muokkaaminen
+          </a>
+        </li>
 
-      <p>
-        <a href="#_Ongelma_kirjautumisessa">Ongelma tunnistautumisessa</a>
-      </p>
+        <li>
+          <a href="#_Tietojesi_käsittely_eri">
+            Tietojesi käsittely eri palveluissa
+          </a>
+        </li>
 
-      <p>
-        <a href="#_Omien_tietojen_katselu">
-          Omien tietojesi katselu ja muokkaaminen
-        </a>
-      </p>
+        <li>
+          <a href="#_Tietojen_lataaminen">Tietojesi lataaminen</a>
+        </li>
 
-      <p>
-        <a href="#_Tietojesi_käsittely_eri">
-          Tietojesi käsittely eri palveluissa
-        </a>
-      </p>
-
-      <p>
-        <a href="#_Tietojen_lataaminen">Tietojesi lataaminen</a>
-      </p>
-
-      <p>
-        <a href="#_Tietojen_poisto">
-          Tietojesi poisto palveluista ja Helsinki-profiilista
-        </a>
-      </p>
-
+        <li>
+          <a href="#_Tietojen_poisto">
+            Tietojesi poisto palveluista ja Helsinki-profiilista
+          </a>
+        </li>
+      </ul>
       <h2 id="_Palveluun_kirjautuminen">Palveluun tunnistautuminen</h2>
 
       <p>
@@ -225,27 +228,27 @@ function UserGuideFi(): ReactElement {
         />
       </p>
 
-      <p>
-        Syötä numero ruudulla näkyvään kenttään.{' '}
-        <img
-          width={433}
-          height={508}
-          src={image007}
-          alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
-        />
-      </p>
+      <p>Syötä numero ruudulla näkyvään kenttään.</p>
+
+      <img
+        width={433}
+        height={508}
+        src={image007}
+        alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
+      />
 
       <p>
         Sähköpostin vahvistamisen jälkeen sinun pitää vielä antaa suostumus
         tietojesi käyttöön. Ilman suostumusta Helsinki-profiilia ei voida luoda,
         eivätkä palvelut voi käyttää tietojasi.{' '}
-        <img
-          width={217}
-          height={491}
-          src={image008}
-          alt="Ennen kuin voit käyttää haluaamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. &#10;Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
-        />
       </p>
+
+      <img
+        width={217}
+        height={491}
+        src={image008}
+        alt="Ennen kuin voit käyttää haluaamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. &#10;Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
+      />
 
       <p>
         Tämän jälkeen sinulle syntyy Helsinki-profiili, ja
@@ -273,18 +276,17 @@ function UserGuideFi(): ReactElement {
       </h3>
 
       <p>Helsinki-profiilin muut tunnistautumisen vaihtoehdot ovat </p>
+      <ul>
+        <li>Helsinki-tunnus eli sähköposti ja salasana -yhdistelmä</li>
 
-      <p>Helsinki-tunnus eli sähköposti ja salasana -yhdistelmä</p>
-
-      <p>
-        vuoden 2024 aikana Google- tai Yle-tunnus poistuvat käytöstä
-        <img
-          width={332}
-          height={492}
-          src={image009}
-          alt="Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili -painiketta."
-        />
-      </p>
+        <li>vuoden 2024 aikana Google- tai Yle-tunnus poistuvat käytöstä</li>
+      </ul>
+      <img
+        width={332}
+        height={492}
+        src={image009}
+        alt="Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili -painiketta."
+      />
 
       <p>
         Sinulta kysytään sähköpostiosoite, johon lähetetään vahvistusviesti
@@ -295,7 +297,7 @@ function UserGuideFi(): ReactElement {
         Jos olet jo aiemmin luonut Helsinki-profiilin suomi.fi-tunnistautuen,
         voit luoda profiilille salasanan klikkaamalla Olen unohtanut salasanani
         -linkkiä. Salasanan luomisesta on enemmän{' '}
-        <a href="#_Unohtunut_salasana_1">Unohtunut salasana</a> -kohdassa
+        <a href="#_Unohtunut_salasana">Unohtunut salasana</a> -kohdassa
       </p>
 
       <p>
@@ -337,15 +339,13 @@ function UserGuideFi(): ReactElement {
         />
       </p>
 
-      <p>
-        Syötä numero ruudulla näkyvään kenttään.{' '}
-        <img
-          width={433}
-          height={508}
-          src={image007}
-          alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
-        />
-      </p>
+      <p>Syötä numero ruudulla näkyvään kenttään.</p>
+      <img
+        width={433}
+        height={508}
+        src={image007}
+        alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
+      />
 
       <p>
         Sähköpostin vahvistamisen jälkeen sinun pitää vielä antaa suostumus
@@ -395,21 +395,20 @@ function UserGuideFi(): ReactElement {
         <a href="#_Unohtunut_salasana">Unohtunut salasana</a>.
       </p>
 
-      <h2 id="_Salasanan_unohtaminen">Unohtunut salasana</h2>
+      <h2 id="_Unohtunut_salasana">Unohtunut salasana</h2>
 
       <p>
         Jos et muista salasanaasi, voit luoda uuden kirjautumisikkunassa
         <i>Olen unohtanut salasanani</i> -linkistä. Salasanan ”unohtuminen” voi
         myös johtua siitä, että olet aiemmilla kerroilla kirjautunut palveluun
         suomi.fi-tunnistautuen, jolloin salasanaa ei ole tarvittu.
-        <img
-          width={327}
-          height={490}
-          src={image011}
-          alt="Klikkaa kirjautumisikkunassa Olen unohtanut salasanani -linkkiä."
-        />
       </p>
-
+      <img
+        width={327}
+        height={490}
+        src={image011}
+        alt="Klikkaa kirjautumisikkunassa Olen unohtanut salasanani -linkkiä."
+      />
       <p>
         <img
           width={322}
@@ -495,13 +494,13 @@ function UserGuideFi(): ReactElement {
         <a href="https://profiili.hel.fi">https://profiili.hel.fi</a> voit
         katsella ja muokata omia tietojasi ja miten palvelut niitä käyttävät:
       </p>
+      <ul>
+        <li>Voit lisätä puhelinnumeron.</li>
 
-      <p>Voit lisätä puhelinnumeron.</p>
+        <li>Vaihtaa sähköpostiosoitteen.</li>
 
-      <p>Vaihtaa sähköpostiosoitteen.</p>
-
-      <p>Lisätä osoitetiedot.</p>
-
+        <li>Lisätä osoitetiedot.</li>
+      </ul>
       <p>
         Viralliset tiedot tulevat profiiliin ja näkyvät vain
         suomi.fi-tunnistautuen. Näiden tietojen päivittäminen tehdään
@@ -510,15 +509,14 @@ function UserGuideFi(): ReactElement {
 
       <p>
         Jos päivität nimitietosi Helsinki-profiilissa, niin seuraavalla
-        suomi.fi-tunnistautumiskerralla viralliset tiedot päivittävät ne.{' '}
-        <img
-          width={482}
-          height={328}
-          src={image018}
-          alt="Helsinki-profiilissa Omat tiedot -osiossa Viralliset tiedot tulevat suoraan väestörekisterikeskuksesta ja niiden päivittäminen tehdään myös siellä."
-        />
+        suomi.fi-tunnistautumiskerralla viralliset tiedot päivittävät ne.
       </p>
-
+      <img
+        width={482}
+        height={328}
+        src={image018}
+        alt="Helsinki-profiilissa Omat tiedot -osiossa Viralliset tiedot tulevat suoraan väestörekisterikeskuksesta ja niiden päivittäminen tehdään myös siellä."
+      />
       <p>
         <img
           width={482}
