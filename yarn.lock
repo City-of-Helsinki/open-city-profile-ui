@@ -5788,17 +5788,17 @@ hasown@^2.0.0, hasown@^2.0.1, hasown@^2.0.2:
   dependencies:
     function-bind "^1.1.2"
 
-hds-core@3.8.0, hds-core@^3.6.0:
+hds-core@3.8.0, hds-core@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-3.8.0.tgz#39003a0c129de767239fc1f904d89b6424edc9a1"
   integrity sha512-T0+/tkyT5WCbGYHnSFXZeBE4wRu4PjD29njb2ANfiYFwlQfdkLGx4hCod0bjFb9kde/RktRwhXadwOwpmVg3dA==
 
-hds-design-tokens@^3.6.0:
+hds-design-tokens@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-3.8.0.tgz#ae015e1147c17667ca7efd941e1367ed19dee80c"
   integrity sha512-WMC7yavB9acCYkUmr8z2kqjEc+P0h27C1rQ6P4jYmV9XrJpctS8FBzyCb1/CNVP1D6klBrj3KwF5b1zWJGl+yA==
 
-hds-react@^3.6.0:
+hds-react@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-3.8.0.tgz#03f65f744f0192af7097846f447621b62fd52681"
   integrity sha512-nb8c2eUcLdFRvGg+pnyaUZbBm8V5cfDp20emHQQWxbMmo+R3aj6Azc8tM02fjkSkqr/+oqL6xvz2AIxbIDqkqA==
