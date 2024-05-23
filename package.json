@@ -120,6 +120,7 @@
   },
   "resolutions": {
     "node-fetch": "^2.6.7",
-    "braces": "^3.0.3"
+    "braces": "^3.0.3",
+    "micromatch": "^4.0.6"
   }
 }
