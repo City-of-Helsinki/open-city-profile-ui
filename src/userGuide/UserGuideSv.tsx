@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
 import React, { Fragment, ReactElement } from 'react';
+import { Button, IconDownload } from 'hds-react';
+import { useTranslation } from 'react-i18next';
 
 import image001 from './assets/01-sisaankirjautuminen-sv.png';
 import image002 from './assets/02-sisaankirjautuminen-tunnistamo-sv.png';
@@ -35,9 +37,22 @@ import { Link } from '../common/copyOfHDSLink/Link';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 function UserGuideSv(): ReactElement {
+  const { t } = useTranslation();
+
   return (
     <Fragment>
       <FocusableH1>Helsingforsprofilens hjälp</FocusableH1>
+
+      <Button
+        iconLeft={<IconDownload />}
+        role="link"
+        onClick={() => {
+          window.open('/guidesv.pdf');
+        }}
+        id="download-guide-button"
+      >
+        {t('downloadData.button')}
+      </Button>
 
       <p>
         Helsingforsprofilen är kundprofilen för en medborgare som använder
