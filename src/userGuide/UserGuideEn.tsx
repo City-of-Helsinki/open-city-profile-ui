@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement } from 'react';
-import { Button, IconDownload } from 'hds-react';
+import { Button, IconDownload, Link } from 'hds-react';
 
 import image001 from './assets/01-sisaankirjautuminen-en.png';
 import image002 from './assets/02-sisaankirjautuminen-tunnistamo-en.png';
@@ -31,7 +31,6 @@ import image027 from './assets/30-tietojen-poisto-palvelusta-pop-up-en.png';
 import image028 from './assets/31-tietojen-poisto-palvelusta-pop-up-varmistusviesti-en.png';
 import image029 from './assets/32-tietojen-poisto-en.png';
 import image030 from './assets/33-tietojen-poisto-popup-en.png';
-import { Link } from '../common/copyOfHDSLink/Link';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 function UserGuideEn(): ReactElement {
@@ -50,9 +49,9 @@ function UserGuideEn(): ReactElement {
         Download userguide A
       </Button>
 
-      <a href="/guidesv.pdf" download="user-guide.pdf">
-        Download userguide B
-      </a>
+      <Link href="/guidesv.pdf" download="user-guide.pdf" useButtonStyles>
+        Download guide (.pdf)
+      </Link>
 
       <p>
         The Helsinki profile is the customer profile of a citizen using the
