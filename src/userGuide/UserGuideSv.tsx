@@ -51,8 +51,12 @@ function UserGuideSv(): ReactElement {
         }}
         id="download-guide-button"
       >
-        {t('downloadData.button')}
+        Download userguide A
       </Button>
+
+      <a href="/guidesv.pdf" download="user-guide.pdf">
+        Download userguide B
+      </a>
 
       <p>
         Helsingforsprofilen är kundprofilen för en medborgare som använder

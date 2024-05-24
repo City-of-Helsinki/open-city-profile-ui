@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import React, { Fragment, ReactElement } from 'react';
+import { Button, IconDownload } from 'hds-react';
 
 import image001 from './assets/01-sisaankirjautuminen.png';
 import image002 from './assets/02-sisaankirjautuminen-tunnistamo.png';
@@ -37,6 +38,21 @@ function UserGuideFi(): ReactElement {
   return (
     <Fragment>
       <FocusableH1>Helsinki-profiilin ohje</FocusableH1>
+
+      <Button
+        iconLeft={<IconDownload />}
+        role="link"
+        onClick={() => {
+          window.open('/guidesv.pdf');
+        }}
+        id="download-guide-button"
+      >
+        Download userguide A
+      </Button>
+
+      <a href="/guidesv.pdf" download="user-guide.pdf">
+        Download userguide B
+      </a>
 
       <p>
         Helsinki-profiili on kaupungin digitaalisia asiointipalveluja käyttävän

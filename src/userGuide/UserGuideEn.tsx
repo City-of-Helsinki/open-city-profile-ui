@@ -1,4 +1,5 @@
 import React, { Fragment, ReactElement } from 'react';
+import { Button, IconDownload } from 'hds-react';
 
 import image001 from './assets/01-sisaankirjautuminen-en.png';
 import image002 from './assets/02-sisaankirjautuminen-tunnistamo-en.png';
@@ -37,6 +38,21 @@ function UserGuideEn(): ReactElement {
   return (
     <Fragment>
       <FocusableH1>Helsinki profile guide</FocusableH1>
+
+      <Button
+        iconLeft={<IconDownload />}
+        role="link"
+        onClick={() => {
+          window.open('/guidesv.pdf');
+        }}
+        id="download-guide-button"
+      >
+        Download userguide A
+      </Button>
+
+      <a href="/guidesv.pdf" download="user-guide.pdf">
+        Download userguide B
+      </a>
 
       <p>
         The Helsinki profile is the customer profile of a citizen using the
