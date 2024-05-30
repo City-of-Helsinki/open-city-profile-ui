@@ -53,8 +53,13 @@ test('Login and logout - English', async ({ page }) => {
 
 test('Login with YLE account', async ({ page }) => {
   const YLE_ACCOUNT_NAME = 'Emeritus Tarmo';
-  const YLE_ACCOUNT_EMAIL = 'tarmotestaaja007@gmail.com';
-  const YLE_ACCOUNT_PASSWORD = '1qaz2wsx3edc';
+  const YLE_ACCOUNT_EMAIL = process.env.YLE_TEST_USER_EMAIL || null;
+  const YLE_ACCOUNT_PASSWORD = process.env.YLE_TEST_USER_PASSWORD || null;
+
+  if (!YLE_ACCOUNT_EMAIL || !YLE_ACCOUNT_PASSWORD) {
+    test.skip(true, 'YLE account credentials not provided');
+    return;
+  }
 
   await clickLoginButton(page);
   await page.getByRole('link', { name: 'Yle Tunnus' }).click();
