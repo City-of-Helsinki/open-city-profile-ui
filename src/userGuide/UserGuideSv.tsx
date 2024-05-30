@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, { Fragment, ReactElement } from 'react';
-import { Button, IconDownload } from 'hds-react';
+import { Button, IconDownload, Link } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 
 import image001 from './assets/01-sisaankirjautuminen-sv.png';
@@ -19,7 +19,7 @@ import image013 from './assets/16-salasanan-vaihtopyynto-sv.png';
 import image014 from './assets/17-salasanan-vaihtoviesti-sv.png';
 import image015 from './assets/18-uusi-salasana-sv.png';
 import image016 from './assets/19-yhteensopimaton-kirjautuminen-sv.png';
-import image017 from './assets/20-kirjautumislogout.png';
+import image017 from './assets/20-kirjautumislogout-sv.png';
 import image018 from './assets/21-omat-tiedot-sv.png';
 import image019 from './assets/22-omat-nimitiedot-sv.png';
 import image020 from './assets/23-omat-yhteystiedot-sv.png';
@@ -33,7 +33,6 @@ import image027 from './assets/30-tietojen-poisto-palvelusta-pop-up-sv.png';
 import image028 from './assets/31-tietojen-poisto-palvelusta-pop-up-varmistusviesti-sv.png';
 import image029 from './assets/32-tietojen-poisto-sv.png';
 import image030 from './assets/33-tietojen-poisto-popup-sv.png';
-import { Link } from '../common/copyOfHDSLink/Link';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 function UserGuideSv(): ReactElement {
@@ -43,20 +42,9 @@ function UserGuideSv(): ReactElement {
     <Fragment>
       <FocusableH1>Helsingforsprofilens hjälp</FocusableH1>
 
-      <Button
-        iconLeft={<IconDownload />}
-        role="link"
-        onClick={() => {
-          window.open('/guidesv.pdf');
-        }}
-        id="download-guide-button"
-      >
-        Download userguide A
-      </Button>
-
-      <a href="/guidesv.pdf" download="user-guide.pdf">
-        Download userguide B
-      </a>
+      <Link href="/guidesv.pdf" download="user-guide.pdf" useButtonStyles>
+        Ladda ner utskrivbar version (.pdf)
+      </Link>
 
       <p>
         Helsingforsprofilen är kundprofilen för en medborgare som använder

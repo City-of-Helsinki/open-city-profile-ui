@@ -1,5 +1,12 @@
+/* eslint-disable max-len */
 import React, { Fragment, ReactElement } from 'react';
-import { Button, IconDownload, Link } from 'hds-react';
+import {
+  Accordion,
+  AccordionProps,
+  Button,
+  IconDownload,
+  Link,
+} from 'hds-react';
 
 import image001 from './assets/01-sisaankirjautuminen-en.png';
 import image002 from './assets/02-sisaankirjautuminen-tunnistamo-en.png';
@@ -17,7 +24,7 @@ import image013 from './assets/16-salasanan-vaihtopyynto-en.png';
 import image014 from './assets/17-salasanan-vaihtoviesti-en.png';
 import image015 from './assets/18-uusi-salasana-en.png';
 import image016 from './assets/19-yhteensopimaton-kirjautuminen-en.png';
-import image017 from './assets/20-kirjautumislogout.png';
+import image017 from './assets/20-kirjautumislogout-en.png';
 import image018 from './assets/21-omat-tiedot-en.png';
 import image019 from './assets/22-omat-nimitiedot-en.png';
 import image020 from './assets/23-omat-yhteystiedot-en.png';
@@ -34,24 +41,28 @@ import image030 from './assets/33-tietojen-poisto-popup-en.png';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 function UserGuideEn(): ReactElement {
+  const accordionStyle = {
+    maxWidth: '800px',
+    borderTop: 0,
+    borderBottom: 1,
+    border: 'solid 1px #ffffff',
+  };
+
+  const theme = {
+    '--background-color': '#F2F2F2',
+  };
+
+  const accordionProps: AccordionProps = {
+    style: accordionStyle,
+    size: 'l',
+    card: true,
+    language: 'en',
+    theme,
+  };
+
   return (
     <Fragment>
       <FocusableH1>Helsinki profile guide</FocusableH1>
-
-      <Button
-        iconLeft={<IconDownload />}
-        role="link"
-        onClick={() => {
-          window.open('/guidesv.pdf');
-        }}
-        id="download-guide-button"
-      >
-        Download userguide A
-      </Button>
-
-      <Link href="/guidesv.pdf" download="user-guide.pdf" useButtonStyles>
-        Download guide (.pdf)
-      </Link>
 
       <p>
         The Helsinki profile is the customer profile of a citizen using the
@@ -64,67 +75,9 @@ function UserGuideEn(): ReactElement {
         authentication to the different digital applications:
       </p>
 
-      <ul>
-        <li>
-          using suomi.fi authentication, for example with your bank details
-        </li>
-
-        <li>
-          using the email address + password combination of the Helsinki ID,
-          Google or Yle IDs
-        </li>
-      </ul>
-
-      <ul>
-        <li>
-          <a href="#_Identify_to_the">Identify to the service</a>
-        </li>
-        <ul>
-          <li>
-            <a href="#_Suomi.fi_identification">Suomi.fi identification</a>
-          </li>
-
-          <li>
-            <a href="#_Email_and_password">Email and password identification</a>
-          </li>
-        </ul>
-        <li>
-          <a href="#_Combining_identification_methods">
-            Combining identification methods
-          </a>
-        </li>
-
-        <li>
-          <Link href="#_Forgotten_password">Forgotten password</Link>
-        </li>
-
-        <li>
-          <a href="#_Problem_with_identification">
-            Problem with identification
-          </a>
-        </li>
-
-        <li>
-          <a href="#_Viewing_and_editing">Viewing and editing your own data</a>
-        </li>
-
-        <li>
-          <a href="#_Processing_of_your">
-            Processing of your data by different services
-          </a>
-        </li>
-
-        <li>
-          <a href="#_Download_your_information">Download your information</a>
-        </li>
-
-        <li>
-          <a href="#_Deleting_your_information">
-            Deleting your information from a single service or from your entire
-            Helsinki profile
-          </a>
-        </li>
-      </ul>
+      <Link href="/guidesv.pdf" download="user-guide.pdf" useButtonStyles>
+        Download printable version (.pdf)
+      </Link>
 
       <h2 id="_Identify_to_the">Identify to the service</h2>
 
@@ -133,473 +86,494 @@ function UserGuideEn(): ReactElement {
         City of Helsinki&rsquo;s services, where the Helsinki profile acts as a
         proxy for personal or contact information.
       </p>
-
       <p>
         The first time you log in, you will be asked to create a Helsinki
         profile. At the same time, you will be asked to give your consent to the
         use of the data required by that service.
       </p>
-
       <p>
         You can identify yourself to the service either by authenticating with
         suomi.fi, for example with your bank details, or by using an e-mail and
         a password.
       </p>
 
-      <h3 id="_Suomi.fi_identification">Suomi.fi identification</h3>
+      <Accordion
+        id="_Suomi.fi_identification"
+        heading="Suomi.fi identification"
+        {...accordionProps}
+      >
+        <p>
+          After pressing the Login link in the Service, the user is presented
+          with a screen offering various login options, where the suomi.fi login
+          is selected. The view of the login options varies from one service to
+          another.
+        </p>
 
-      <p>
-        After pressing the Login link in the Service, the user is presented with
-        a screen offering various login options, where the suomi.fi login is
-        selected. The view of the login options varies from one service to
-        another.
-      </p>
+        <p>
+          <img
+            width={217}
+            height={399}
+            src={image001}
+            alt="In the authentication window, select suomi.fi identification."
+          />
+        </p>
 
-      <p>
+        <p>
+          <img
+            src={image002}
+            width={405}
+            height={250}
+            alt="In the authentication window, select suomi.fi identification."
+          />
+        </p>
+
+        <p>
+          After selecting the Suomi.fi login, the user will be presented with
+          different login options. The options are the same as for other
+          government services offering strong authentication.
+        </p>
         <img
-          width={217}
-          height={399}
-          src={image001}
-          alt="In the authentication window, select suomi.fi identification."
+          src={image003}
+          width={482}
+          height={397}
+          alt="Choose your bank or mobile account as your suomi.fi authentication option."
         />
-      </p>
+        <p>
+          After authentication, check that the information you are using is
+          correct. If you find any errors in the data, they must be corrected in
+          the Population Register Centre&apos;s service.
+        </p>
 
-      <p>
-        <img
-          src={image002}
-          width={405}
-          height={250}
-          alt="In the authentication window, select suomi.fi identification."
-        />
-      </p>
+        <p>
+          <img
+            src={image004}
+            width={425}
+            height={325}
+            alt="Check that your details are correct when you switch back to the City of Helsinki service."
+          />
+        </p>
 
-      <p>
-        After selecting the Suomi.fi login, the user will be presented with
-        different login options. The options are the same as for other
-        government services offering strong authentication.
-      </p>
-      <img
-        src={image003}
-        width={482}
-        height={397}
-        alt="Choose your bank or mobile account as your suomi.fi authentication option."
-      />
-      <p>
-        After authentication, check that the information you are using is
-        correct. If you find any errors in the data, they must be corrected in
-        the Population Register Centre&apos;s service.
-      </p>
+        <p>
+          After authentication, you will be asked for your email address, which
+          you will need to confirm.
+        </p>
 
-      <p>
-        <img
-          src={image004}
-          width={425}
-          height={325}
-          alt="Check that your details are correct when you switch back to the City of Helsinki service."
-        />
-      </p>
+        <p>
+          If you have already created Helsinki profile with an email address and
+          password, you can use the same email address. In this case, the
+          different authentication methods will be combined, and you will be
+          able to see all the services you use at once.{' '}
+          <b>
+            Please note, however, that you will not be able to unlink them
+            later.
+          </b>
+        </p>
 
-      <p>
-        After authentication, you will be asked for your email address, which
-        you will need to confirm.
-      </p>
-
-      <p>
-        If you have already created Helsinki profile with an email address and
-        password, you can use the same email address. In this case, the
-        different authentication methods will be combined, and you will be able
-        to see all the services you use at once.{' '}
-        <b>
-          Please note, however, that you will not be able to unlink them later.
-        </b>
-      </p>
-
-      <p>
-        <img
-          src={image005}
-          width={389}
-          height={481}
-          alt={`Your email address will serve as your login to City of Helsinki services. 
+        <p>
+          <img
+            src={image005}
+            width={389}
+            height={481}
+            alt={`Your email address will serve as your login to City of Helsinki services. 
             By using the same email address for both the suomi.fi login and the Helsinki ID, 
             you will have one Helsinki profile. The merge cannot be unmerged later.`}
+          />
+        </p>
+
+        <p>
+          To confirm your email, you will receive a 6-digit code to the email
+          address you provided. If the message does not arrive in your inbox
+          almost immediately, check your spam folder.
+        </p>
+
+        <p>
+          <b>
+            Do not close the browser window of your Helsinki profile when you
+            retrieve the confirmation message from your email. Otherwise, the
+            system will assume that you have interrupted the authentication
+            process.
+          </b>
+        </p>
+        <img
+          src={image006}
+          width={482}
+          height={323}
+          alt="The email contains a 6-digit verification code to confirm that the email address is genuine."
         />
-      </p>
-
-      <p>
-        To confirm your email, you will receive a 6-digit code to the email
-        address you provided. If the message does not arrive in your inbox
-        almost immediately, check your spam folder.
-      </p>
-
-      <p>
-        <b>
-          Do not close the browser window of your Helsinki profile when you
-          retrieve the confirmation message from your email. Otherwise, the
-          system will assume that you have interrupted the authentication
-          process.
-        </b>
-      </p>
-      <img
-        src={image006}
-        width={482}
-        height={323}
-        alt="The email contains a 6-digit verification code to confirm that the email address is genuine."
-      />
-      <p>Enter the number in the box on the screen.</p>
-      <img
-        src={image007}
-        width={427}
-        height={499}
-        alt="The 6-digit number of the email must be entered in the verification code field in the browser window."
-      />
-      <p>
-        After confirming the email, you will still need to give your consent to
-        the use of your data. Without consent, Helsinki profile cannot be
-        created and the services cannot use your data.
-      </p>
-      <img
-        src={image008}
-        width={216}
-        height={508}
-        alt={`Before you can use the service you want or before you can create 
+        <p>Enter the number in the box on the screen.</p>
+        <img
+          src={image007}
+          width={427}
+          height={499}
+          alt="The 6-digit number of the email must be entered in the verification code field in the browser window."
+        />
+        <p>
+          After confirming the email, you will still need to give your consent
+          to the use of your data. Without consent, Helsinki profile cannot be
+          created and the services cannot use your data.
+        </p>
+        <img
+          src={image008}
+          width={216}
+          height={508}
+          alt={`Before you can use the service you want or before you can create 
             Helsinki profile, you must give your consent to the use of your data. 
             Without consent, your data cannot be used and therefore no profile can be created.`}
-      />
-      <p>
-        You will then have Helsinki profile, and your suomi.fi login details
-        will be saved in your profile. Different services use your data in
-        different ways, but they will always tell you how they use it when you
-        first log in. The information is also always available in your Helsinki
-        profile.
-      </p>
-
-      <p>
-        After creating your Helsinki profile, you will be logged in to the
-        service where you started the sign-up process. You can access your
-        Helsinki profile at{' '}
-        <a href="https://profiili.hel.fi">https://profiili.hel.fi</a>.
-      </p>
-
-      <p>
-        The next time you log in to the same service, you simply select
-        suomi.fi, the authentication option of your choice and you are inside
-        the service.
-      </p>
-
-      <h3 id="_Email_and_password">Email and password identification</h3>
-
-      <p>The other authentication options for the Helsinki profile are</p>
-
-      <ul>
-        <li>Helsinki ID, i.e. a combination of email and password</li>
-
-        <li>the Google or Yle ID will be phased out in 2024</li>
-      </ul>
-      <p>
-        <img
-          src={image009}
-          width={325}
-          height={493}
-          alt={`The Helsinki ID consists of an email and password combination 
-            by clicking on the Create a new Helsinki profile button.`}
         />
-      </p>
+        <p>
+          You will then have Helsinki profile, and your suomi.fi login details
+          will be saved in your profile. Different services use your data in
+          different ways, but they will always tell you how they use it when you
+          first log in. The information is also always available in your
+          Helsinki profile.
+        </p>
 
-      <p>
-        You will be asked for your email address, to which a confirmation
-        message will be sent to verify the authenticity of the address.
-      </p>
+        <p>
+          After creating your Helsinki profile, you will be logged in to the
+          service where you started the sign-up process. You can access your
+          Helsinki profile at{' '}
+          <a href="https://profiili.hel.fi">https://profiili.hel.fi</a>.
+        </p>
 
-      <p>
-        If you have already created Helsinki profile using suomi.fi
-        authentication, you can create a password for your profile by clicking
-        on the I have forgotten my password link.
-      </p>
+        <p>
+          The next time you log in to the same service, you simply select
+          suomi.fi, the authentication option of your choice and you are inside
+          the service.
+        </p>
+      </Accordion>
 
-      <p>
-        For more information on creating a password, see
-        <a href="#_Forgotten_password">Forgotten password</a>.
-      </p>
+      <Accordion
+        id="_Email_and_password"
+        heading="Email and password identification"
+        {...accordionProps}
+      >
+        <h3 id="_Email_and_password">Email and password identification</h3>
 
-      <p>
-        In this case, both the services requiring suomi.fi authentication and
-        email password authentication can be found in the same Helsinki profile
-        and you can manage all your information in one view.{' '}
-        <b>
-          Please note, however, that you will not be able to cancel the merge
-          later.
-        </b>
-      </p>
+        <p>The other authentication options for the Helsinki profile are</p>
 
-      <p>
-        <img
-          src={image005}
-          width={389}
-          height={481}
-          alt={`Your email address will serve as your login to City of Helsinki services. 
+        <ul>
+          <li>Helsinki ID, i.e. a combination of email and password</li>
+
+          <li>the Google or Yle ID will be phased out in 2024</li>
+        </ul>
+        <p>
+          <img
+            src={image009}
+            width={325}
+            height={493}
+            alt={`The Helsinki ID consists of an email and password combination 
+            by clicking on the Create a new Helsinki profile button.`}
+          />
+        </p>
+
+        <p>
+          You will be asked for your email address, to which a confirmation
+          message will be sent to verify the authenticity of the address.
+        </p>
+
+        <p>
+          If you have already created Helsinki profile using suomi.fi
+          authentication, you can create a password for your profile by clicking
+          on the I have forgotten my password link.
+        </p>
+
+        <p>
+          For more information on creating a password, see
+          <a href="#_Forgotten_password">Forgotten password</a>.
+        </p>
+
+        <p>
+          In this case, both the services requiring suomi.fi authentication and
+          email password authentication can be found in the same Helsinki
+          profile and you can manage all your information in one view.{' '}
+          <b>
+            Please note, however, that you will not be able to cancel the merge
+            later.
+          </b>
+        </p>
+
+        <p>
+          <img
+            src={image005}
+            width={389}
+            height={481}
+            alt={`Your email address will serve as your login to City of Helsinki services. 
             By using the same email address for both the suomi.fi login and the Helsinki ID, 
             you will have one Helsinki profile. The merge cannot be unmerged later.`}
-        />
-      </p>
+          />
+        </p>
 
-      <p>
-        To confirm your email, you will receive a 6-digit code to the email
-        address you provided. If the message does not arrive in your inbox
-        almost immediately, check your spam folder.
-      </p>
+        <p>
+          To confirm your email, you will receive a 6-digit code to the email
+          address you provided. If the message does not arrive in your inbox
+          almost immediately, check your spam folder.
+        </p>
 
-      <p>
-        <b>
-          Do not close the browser window of your Helsinki profile when you
-          retrieve the confirmation message from your email. Otherwise, the
-          system will assume that you have interrupted the authentication
-          process.
-        </b>
-      </p>
-      <img
-        src={image006}
-        width={482}
-        height={323}
-        alt="The email contains a 6-digit verification code to confirm that the email address is genuine."
-      />
-      <p>Enter the number in the box on the screen.</p>
-      <img
-        src={image007}
-        width={427}
-        height={499}
-        alt="The 6-digit number of the email must be entered in the verification code field in the browser window."
-      />
-      <p>
-        After confirming the email, you will still need to give your consent to
-        the use of your data. Without consent, a Helsinki profile cannot be
-        created and the services cannot use your data.
-      </p>
-
-      <p>
-        After entering the 6-digit verification code, please fill in your name,
-        enter your password and give your consent to the use of your data. The
-        password must contain at least 12 characters, upper and lower case
-        letters, numbers and special characters.{' '}
-      </p>
-
-      <p>
+        <p>
+          <b>
+            Do not close the browser window of your Helsinki profile when you
+            retrieve the confirmation message from your email. Otherwise, the
+            system will assume that you have interrupted the authentication
+            process.
+          </b>
+        </p>
         <img
-          src={image010}
-          width={218}
-          height={409}
-          alt={`When you create Helsinki profile, you still have to fill in 
+          src={image006}
+          width={482}
+          height={323}
+          alt="The email contains a 6-digit verification code to confirm that the email address is genuine."
+        />
+        <p>Enter the number in the box on the screen.</p>
+        <img
+          src={image007}
+          width={427}
+          height={499}
+          alt="The 6-digit number of the email must be entered in the verification code field in the browser window."
+        />
+        <p>
+          After confirming the email, you will still need to give your consent
+          to the use of your data. Without consent, a Helsinki profile cannot be
+          created and the services cannot use your data.
+        </p>
+
+        <p>
+          After entering the 6-digit verification code, please fill in your
+          name, enter your password and give your consent to the use of your
+          data. The password must contain at least 12 characters, upper and
+          lower case letters, numbers and special characters.{' '}
+        </p>
+
+        <p>
+          <img
+            src={image010}
+            width={218}
+            height={409}
+            alt={`When you create Helsinki profile, you still have to fill in 
             your name and password. &#10;You will also need to give your consent 
             for your data to be used in order to create Helsinki profile.`}
-        />
-      </p>
+          />
+        </p>
 
-      <p>
-        Now you have Helsinki profile. The Helsinki ID you need to authenticate
-        to the services is this email address/password combination.
-      </p>
+        <p>
+          Now you have Helsinki profile. The Helsinki ID you need to
+          authenticate to the services is this email address/password
+          combination.
+        </p>
+      </Accordion>
 
-      <h2 id="_Combining_identification_methods">
-        Combining identification methods
-      </h2>
+      <Accordion
+        id="_Combining_identification_methods"
+        heading="Combining identification methods"
+        {...accordionProps}
+      >
+        <p>
+          If you wish, you can combine different authentication methods into a
+          single Helsinki profile, allowing you to view and manage all your data
+          and services at once. This can be done by first creating a Helsinki ID
+          with an email address/password combination and then using the same
+          email address for the first suomi.fi authentication.
+        </p>
 
-      <p>
-        If you wish, you can combine different authentication methods into a
-        single Helsinki profile, allowing you to view and manage all your data
-        and services at once. This can be done by first creating a Helsinki ID
-        with an email address/password combination and then using the same email
-        address for the first suomi.fi authentication.
-      </p>
+        <p>
+          If your Helsinki profile was created with a suomi.fi authentication,
+          you can click on the <i>I forgot my password</i> link in the login
+          screen. See the <a href="#_Forgotten_password">Forgotten password</a>
+          section below for instructions on how to do this.
+        </p>
+      </Accordion>
 
-      <p>
-        If your Helsinki profile was created with a suomi.fi authentication, you
-        can click on the <i>I forgot my password</i> link in the login screen.
-        See the <a href="#_Forgotten_password">Forgotten password</a>
-        section below for instructions on how to do this.
-      </p>
-
-      <h2 id="_Forgotten_password">Forgotten password</h2>
-
-      <p>
-        If you can&apos;t remember your password, you can create a new one in
-        the login window using the <i>I forgot my password</i>
-        link. You may also have &quot;forgotten&quot; your password because you
-        have previously logged in to the service using suomi.fi, in which case
-        you didn&apos;t have to create a password.
-      </p>
-      <img
-        src={image011}
-        width={325}
-        height={493}
-        alt="In the login window, click on the I forgot my password link."
-      />
-      <p>
+      <Accordion
+        id="_Forgotten_password"
+        heading="Forgotten password"
+        {...accordionProps}
+      >
+        <p>
+          If you can&apos;t remember your password, you can create a new one in
+          the login window using the <i>I forgot my password</i>
+          link. You may also have &quot;forgotten&quot; your password because
+          you have previously logged in to the service using suomi.fi, in which
+          case you didn&apos;t have to create a password.
+        </p>
         <img
-          src={image012}
-          width={328}
-          height={324}
-          alt="Enter your email address in the box that appears to receive a password renewal link in your email."
-        />
-      </p>
-      <img
-        src={image013}
-        width={284}
-        height={505}
-        alt="You will be informed that an email will be sent to you to renew your password."
-      />
-
-      <p>
-        Once you have entered your email, you will receive a link to enter a new
-        password in your email. The link will be valid for 30 minutes.
-      </p>
-
-      <p>
-        <img
-          src={image014}
-          width={482}
-          height={308}
-          alt={`In the email you receive, there will be a link to enter a new password. 
-            The link will be valid for 30 minutes.`}
-        />
-      </p>
-
-      <p>
-        The password must be at least 12 characters long. It must use both upper
-        and lower case letters, numbers and special characters.
-      </p>
-
-      <p>
-        <img
-          src={image015}
+          src={image011}
           width={325}
-          height={337}
-          alt={`In the password change window, you must enter the same password twice. 
+          height={493}
+          alt="In the login window, click on the I forgot my password link."
+        />
+        <p>
+          <img
+            src={image012}
+            width={328}
+            height={324}
+            alt="Enter your email address in the box that appears to receive a password renewal link in your email."
+          />
+        </p>
+        <img
+          src={image013}
+          width={284}
+          height={505}
+          alt="You will be informed that an email will be sent to you to renew your password."
+        />
+
+        <p>
+          Once you have entered your email, you will receive a link to enter a
+          new password in your email. The link will be valid for 30 minutes.
+        </p>
+
+        <p>
+          <img
+            src={image014}
+            width={482}
+            height={308}
+            alt={`In the email you receive, there will be a link to enter a new password. 
+            The link will be valid for 30 minutes.`}
+          />
+        </p>
+
+        <p>
+          The password must be at least 12 characters long. It must use both
+          upper and lower case letters, numbers and special characters.
+        </p>
+
+        <p>
+          <img
+            src={image015}
+            width={325}
+            height={337}
+            alt={`In the password change window, you must enter the same password twice. 
             The password must be at least 12 characters long. The password must contain 
             both upper and lower case letters, numbers and special characters.`}
-        />
-      </p>
+          />
+        </p>
+      </Accordion>
 
-      <h2 id="_Problem_with_identification">Problem with identification</h2>
+      <Accordion
+        id="_Problem_with_identification"
+        heading="Problem with identification"
+        {...accordionProps}
+      >
+        <p>
+          When you move from one service to another, the way you authenticate
+          may be different for each service. For example, you were logged in to
+          the first service with your Helsinki ID, i.e. a combination of email
+          and password, but the second service requires you to authenticate with
+          suomi.fi. In this case, you will receive a message saying that the
+          authentication method is not compatible. You will need to log out from
+          the previous service in order to log in to the new service. Two
+          different authentication methods cannot be open at the same time.
+        </p>
 
-      <p>
-        When you move from one service to another, the way you authenticate may
-        be different for each service. For example, you were logged in to the
-        first service with your Helsinki ID, i.e. a combination of email and
-        password, but the second service requires you to authenticate with
-        suomi.fi. In this case, you will receive a message saying that the
-        authentication method is not compatible. You will need to log out from
-        the previous service in order to log in to the new service. Two
-        different authentication methods cannot be open at the same time.
-      </p>
-
-      <p>
-        <img
-          src={image016}
-          width={388}
-          height={333}
-          alt={`An incompatible login method means for example that you have logged 
+        <p>
+          <img
+            src={image016}
+            width={388}
+            height={333}
+            alt={`An incompatible login method means for example that you have logged 
             in to one service with an email/password combination and you move on to 
             the next service, which requires a suomi.fi authentication. In this case, 
             you need to log out of the first service in order to authenticate to the new service.`}
-        />
-      </p>
+          />
+        </p>
 
-      <p>
-        <img
-          src={image017}
-          width={433}
-          height={345}
-          alt="Confirm the logout from a previous service."
-        />
-      </p>
+        <p>
+          <img
+            src={image017}
+            width={433}
+            height={345}
+            alt="Confirm the logout from a previous service."
+          />
+        </p>
 
-      <h2 id="_Viewing_and_editing">Viewing and editing your own data</h2>
+        <h2 id="_Viewing_and_editing">Viewing and editing your own data</h2>
 
-      <p>
-        By authenticating to your Helsinki profile at
-        <a href="https://profiili.hel.fi">https://profiili.hel.fi</a>
-        you can view and edit your data and how it is used by the services:
-      </p>
-      <ul>
-        <li>You can add a phone number.</li>
+        <p>
+          By authenticating to your Helsinki profile at
+          <a href="https://profiili.hel.fi">https://profiili.hel.fi</a>
+          you can view and edit your data and how it is used by the services:
+        </p>
+        <ul>
+          <li>You can add a phone number.</li>
 
-        <li>change your email address.</li>
+          <li>change your email address.</li>
 
-        <li>add your address information.</li>
-      </ul>
-      <p>
-        The official information will be added to your profile and will only be
-        visible when you authenticate with suomi.fi. Updating this information
-        is done in the Population Register Centre service.
-      </p>
+          <li>add your address information.</li>
+        </ul>
+        <p>
+          The official information will be added to your profile and will only
+          be visible when you authenticate with suomi.fi. Updating this
+          information is done in the Population Register Centre service.
+        </p>
 
-      <p>
-        If you update your name data in your Helsinki profile, the next time you
-        authenticate with suomi.fi, the official data will be updated.
-      </p>
+        <p>
+          If you update your name data in your Helsinki profile, the next time
+          you authenticate with suomi.fi, the official data will be updated.
+        </p>
 
-      <p>
-        <img
-          src={image018}
-          width={481}
-          height={323}
-          alt={`In the My Information section of the Helsinki profile, official information 
+        <p>
+          <img
+            src={image018}
+            width={481}
+            height={323}
+            alt={`In the My Information section of the Helsinki profile, official information 
             comes directly from the Population Register Centre and is updated there as well.`}
-        />
-      </p>
+          />
+        </p>
 
-      <p>
-        <img
-          src={image019}
-          width={482}
-          height={295}
-          alt="In your Helsinki profile, in the My information section, you can update the basic data yourself."
-        />
-      </p>
+        <p>
+          <img
+            src={image019}
+            width={482}
+            height={295}
+            alt="In your Helsinki profile, in the My information section, you can update the basic data yourself."
+          />
+        </p>
 
-      <p>
-        You can add or change the information you have entered yourself by
-        clicking on the Add button, or the Edit button if the information
-        already exists. Press the Save button to save the data in the database.
-      </p>
+        <p>
+          You can add or change the information you have entered yourself by
+          clicking on the Add button, or the Edit button if the information
+          already exists. Press the Save button to save the data in the
+          database.
+        </p>
 
-      <p>
-        <img
-          src={image020}
-          width={482}
-          height={346}
-          alt="You can add and edit your other address details, your phone number and your email address."
-        />
-      </p>
+        <p>
+          <img
+            src={image020}
+            width={482}
+            height={346}
+            alt="You can add and edit your other address details, your phone number and your email address."
+          />
+        </p>
 
-      <p>
-        In the Helsinki profile, the language of communication section
-        determines the language in which, for example, emails from the service
-        will be sent.
-      </p>
+        <p>
+          In the Helsinki profile, the language of communication section
+          determines the language in which, for example, emails from the service
+          will be sent.
+        </p>
 
-      <p>
-        <img
-          src={image021}
-          width={482}
-          height={115}
-          alt="The language of communication determines the language in which you receive messages from the service."
-        />
-      </p>
+        <p>
+          <img
+            src={image021}
+            width={482}
+            height={115}
+            alt="The language of communication determines the language in which you receive messages from the service."
+          />
+        </p>
 
-      <p>
-        You can also see how you are authenticated to your Helsinki profile.
-      </p>
+        <p>
+          You can also see how you are authenticated to your Helsinki profile.
+        </p>
 
-      <p>
-        <img
-          src={image022}
-          width={482}
-          height={72}
-          alt={`On the My information section of your Helsinki profile, the authentication 
+        <p>
+          <img
+            src={image022}
+            width={482}
+            height={72}
+            alt={`On the My information section of your Helsinki profile, the authentication 
             method tells you how you are logged in to the service, i.e. suomi.fi authentication 
             or an email/password combination, i.e. the Helsinki ID.`}
-        />
-      </p>
+          />
+        </p>
+      </Accordion>
 
       <h2 id="_Processing_of_your">
         Processing of your data by different services
