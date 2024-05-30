@@ -81,8 +81,8 @@ export class Mailbox {
   }
 
   async getValidationCode() {
-    const mail_body = await this.fetchEmailBody();
-    const match = mail_body.match(/<b>(\d+)<\/b>/);
+    const emailBody = await this.fetchEmailBody();
+    const match = emailBody.match(/<b>(\d+)<\/b>/);
 
     if (match) {
       this.validationCode = match[1];
