@@ -1,4 +1,4 @@
-import { UserConfig, defineConfig } from 'vitest/config';
+import { configDefaults, UserConfig, defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react-swc';
 import eslint from 'vite-plugin-eslint';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
@@ -33,5 +33,6 @@ export default defineConfig({
       include: ['src/**/*'],
       provider: 'istanbul',
     },
+    exclude: [...configDefaults.exclude, 'e2e/**']
   },
 });
