@@ -45,11 +45,12 @@ function UserGuideFi(): ReactElement {
         palveluihin. Profiilissa käyttäjä voi hallinnoida omia tietojaan ja
         niiden näkyvyyttä eri palvelussa.
       </p>
-      <Link href="/guidesv.pdf" download="user-guide.pdf" useButtonStyles>
-        <IconDownload /> Download printable version (.pdf)
-      </Link>
-      <Link href="/guidesv.pdf" download="user-guide.pdf" useButtonStyles>
-        Download printable version (.pdf)
+      <Link
+        href="/Helsinki-profiili-ohjeet.pdf"
+        download="Helsinki-profiili-ohjeet.pdf"
+        useButtonStyles
+      >
+        Lataa tulostus versio (.pdf)
       </Link>
       <ul>
         <li>

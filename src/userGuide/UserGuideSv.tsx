@@ -37,109 +37,59 @@ function UserGuideSv(): ReactElement {
   return (
     <Fragment>
       <FocusableH1>Helsingforsprofilens hjälp</FocusableH1>
-
-      <Link href="/guidesv.pdf" download="user-guide.pdf" useButtonStyles>
-        Ladda ner utskrivbar version (.pdf)
-      </Link>
-
       <p>
         Helsingforsprofilen är kundprofilen för en medborgare som använder
         stadens digitala tjänster. Den är det primära autentiseringsmedlet för
         stadens digitala tjänster. Helsingforsprofilen samlar kundens person-
         och kontaktuppgifter samt länkar till stadens olika tjänster på ett och
         samma ställe. Med hjälp av profilen kan användaren hantera sina egna
-        uppgifter och deras synlighet i olika tjänster. Helsingforsprofilen
-        används för identifiering i olika digitala applikationer:
+        uppgifter och deras synlighet i olika tjänster.
       </p>
-
-      <ul>
-        <li>med suomi.fi-autentisering, till exempel med dina bankuppgifter</li>
-
-        <li>
-          med kombinationen av e-postadress och lösenord för Helsingfors ID,
-          Google- eller Yle-ID
-        </li>
-      </ul>
-
+      <Link
+        href="/Helsingforsprofilens-hjalp.pdf"
+        download="Helsingforsprofilens-hjalp.pdf"
+        useButtonStyles
+      >
+        Ladda ner utskrivbar version (.pdf)
+      </Link>
       <ul>
         <li>
-          <a href="#_Identifiering_till_tjänsten">
-            Identifiering till tjänsten
-          </a>
+          <a href="#_Create_a_Helsinki_profile">Skapa en Helsingforsprofilen</a>
         </li>
-        <ul>
-          <li>
-            <a href="#_Suomi.fi_identifiering">Suomi.fi identifiering</a>
-          </li>
-
-          <li>
-            <a href="#_Identifiering_via_e-post">
-              Identifiering via e-post och lösenord
-            </a>
-          </li>
-        </ul>
         <li>
-          <a href="#_Kombinera_identifieringsmetoder">
-            Kombinera identifieringsmetoder
-          </a>
+          <a href="#_Login">Logga in</a>
         </li>
-
         <li>
-          <a href="#_Glömt_lösenord">Glömt lösenord</a>
-        </li>
-
-        <li>
-          <a href="#_Problem_med_identifiering">Problem med identifieringen</a>
-        </li>
-
-        <li>
-          <a href="#_Visa_och_redigera">
+          <a href="#_viewing_and_editing">
             Visa och redigera dina egna uppgifter
           </a>
         </li>
-
         <li>
-          <a href="#_Olika_tjänsters_bearbetning">
-            Olika tjänsters bearbetning av dina uppgifter
-          </a>
-        </li>
-
-        <li>
-          <a href="#_Ladda_ner_din">Ladda ner din information</a>
-        </li>
-
-        <li>
-          <a href="#_Radera_dina_uppgifter">
-            Radera dina uppgifter från en enda tjänst eller från hela din
-            Helsingforsprofil
-          </a>{' '}
+          <a href="#_Deleting_your_information">Radering av uppgifter</a>
         </li>
       </ul>
-
-      <h2 id="_Identifiering_till_tjänsten">Identifiering till tjänsten</h2>
-
+      <h2 id="_Create_a_Helsinki_profile">Skapa en Helsingforsprofilen</h2>
       <p>
-        Det vanligaste sättet att använda Helsingforsprofilen är att logga in på
-        en av Helsingfors stads tjänster, där Helsingforsprofilen fungerar som
-        en proxy för person- eller kontaktinformation.
+        Helsingfors-profilen används för att logga in i Helsingfors stads
+        tjänster. Första gången du loggar in blir du ombedd att skapa en
+        Helsingforsprofilen och ge ditt samtycke till att de uppgifter som
+        tjänsten kräver får användas.
       </p>
-
       <p>
-        Första gången du loggar in blir du ombedd att skapa Helsingforsprofilen.
-        Samtidigt ombeds du ge ditt samtycke till användningen av de uppgifter
-        som tjänsten kräver.
+        Du kan också skapa en Helsingforsprofil på{' '}
+        <a href="https://profiili.hel.fi">https://profiili.hel.fi</a>.
       </p>
-
       <p>
-        Du kan identifiera dig i tjänsten antingen genom att använda suomi.fi,
-        t.ex. dina bankuppgifter, eller genom att använda en e-postadress och
-        ett lösenord.{' '}
+        Du kan skapa en Helsingforsprofilen med din suomi.fi-identifikation
+        eller med din e-post och ditt lösenord. Du kan också logga in i
+        Helsingfors stads digitala tjänster med Google eller Yle Konto, som tas
+        ur bruk 2024.
       </p>
-
       <UserGuideAccordion
         id="_Suomi.fi_identifiering"
         heading="Suomi.fi identifiering"
       >
+        <h4>Val av autentisering</h4>
         <p>
           Efter att ha tryckt på länken Logga in i kundtjänsten visas en skärm
           med olika inloggningsalternativ, där inloggningen till suomi.fi väljs.
@@ -158,17 +108,12 @@ function UserGuideSv(): ReactElement {
           />
         </p>
 
+        <h4>Identifiering i tjänsten suomi.fi</h4>
+
         <p>
           Efter att ha valt Suomi.fi-inloggning presenteras användaren med olika
           inloggningsalternativ. Alternativen är desamma som för andra
           myndighetstjänster som erbjuder stark autentisering.
-        </p>
-
-        <p>
-          <UserGuideImage
-            src={image003}
-            alt="Välj ditt bank- eller mobilkonto som autentiseringsalternativ på suomi.fi."
-          />
         </p>
 
         <p>
@@ -179,10 +124,19 @@ function UserGuideSv(): ReactElement {
 
         <p>
           <UserGuideImage
+            src={image003}
+            alt="Välj ditt bank- eller mobilkonto som autentiseringsalternativ på suomi.fi."
+          />
+        </p>
+
+        <p>
+          <UserGuideImage
             src={image004}
             alt="När du byter tillbaka till Helsingfors stads tjänst, kontrollera att dina uppgifter är korrekta."
           />
         </p>
+
+        <h4>Verifiering av e-postadress</h4>
 
         <p>
           Efter autentiseringen kommer du att bli ombedd att ange din
@@ -197,13 +151,6 @@ function UserGuideSv(): ReactElement {
           <b>
             Observera dock att du inte kommer att kunna koppla bort dem senare.
           </b>
-        </p>
-
-        <p>
-          <UserGuideImage
-            src={image005}
-            alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att använda samma e-postadress för både suomi.fi-autentiseringen och Helsingfors ID får du en Helsingfors-profil. Sammanslagningen kan inte tas bort senare."
-          />
         </p>
 
         <p>
@@ -222,12 +169,17 @@ function UserGuideSv(): ReactElement {
 
         <p>
           <UserGuideImage
+            src={image005}
+            alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att använda samma e-postadress för både suomi.fi-autentiseringen och Helsingfors ID får du en Helsingfors-profil. Sammanslagningen kan inte tas bort senare."
+          />
+        </p>
+
+        <p>
+          <UserGuideImage
             src={image006}
             alt="E-postmeddelandet innehåller en 6-siffrig verifieringskod för att bekräfta att e-postadressen är äkta."
           />
         </p>
-
-        <p>Ange numret i rutan på skärmen.</p>
 
         <p>
           <UserGuideImage
@@ -236,15 +188,13 @@ function UserGuideSv(): ReactElement {
           />
         </p>
 
+        <h4>Skapa en Helsingforsprofilen</h4>
+
         <p>
           När du har bekräftat e-postmeddelandet måste du fortfarande ge ditt
           samtycke till att dina uppgifter används. Utan samtycke kan
           Helsingforsprofilen inte skapas och tjänsterna kan inte använda dina
           uppgifter.
-          <UserGuideImage
-            src={image008}
-            alt="Innan du kan använda den tjänst du vill ha eller innan du kan skapa Helsingforsprofilen måste du ge ditt samtycke till att dina uppgifter används. Utan samtycke kan dina uppgifter inte användas och därför kan ingen profil skapas."
-          />
         </p>
 
         <p>
@@ -266,25 +216,31 @@ function UserGuideSv(): ReactElement {
           Nästa gång du loggar in på samma tjänst väljer du bara suomi.fi, det
           autentiseringsalternativ du valt och du är inne i tjänsten.
         </p>
+
+        <UserGuideImage
+          src={image008}
+          alt="Innan du kan använda den tjänst du vill ha eller innan du kan skapa Helsingforsprofilen måste du ge ditt samtycke till att dina uppgifter används. Utan samtycke kan dina uppgifter inte användas och därför kan ingen profil skapas."
+        />
       </UserGuideAccordion>
-
       <UserGuideAccordion
-        id="_Identifiering_via_e-post"
-        heading="Identifiering via e-post och lösenord"
+        id="_Identifiering_av_e-post"
+        heading="Identifiering av e-post"
       >
-        <p>De andra autentiseringsalternativen för Helsingforsprofilen är</p>
-
-        <ul>
-          <li>Helsinki ID, dvs. en kombination av e-post och lösenord</li>
-
-          <li>Google- eller Yle-ID kommer att fasas ut 2024</li>
-        </ul>
+        <h4>Val av autentisering</h4>
+        <p>
+          När du har tryckt på länken Logga in i kundtjänsten ser du olika
+          inloggningsalternativ, där du kan välja Skapa Helsingforsprofil.
+          Visningen av inloggningsalternativen varierar från en tjänst till en
+          annan.
+        </p>
         <p>
           <UserGuideImage
             src={image009}
             alt="Helsingfors ID består av en kombination av e-post och lösenord genom att klicka på knappen Skapa ny Helsingforsprofilen."
           />
         </p>
+
+        <h4>Verifiering av e-postadress</h4>
 
         <p>
           Du kommer att bli ombedd att ange din e-postadress, till vilken ett
@@ -295,29 +251,15 @@ function UserGuideSv(): ReactElement {
         <p>
           Om du redan har skapat Helsingforsprofilen med suomi.fi-autentisering,
           kan du skapa ett lösenord för din profil genom att klicka på länken
-          Jag har glömt mitt lösenord.{' '}
-        </p>
-
-        <p>
-          Mer information om hur du skapar ett lösenord finns under{' '}
-          <a href="#_Glömt_lösenord">Glömt lösenord</a>.
-        </p>
-
-        <p>
-          I det här fallet finns både de tjänster som kräver
+          Jag har glömt mitt lösenord. Mer information om hur du skapar ett
+          lösenord finns under <a href="#_Glömt_lösenord">Glömt lösenord</a>. I
+          det här fallet finns både de tjänster som kräver
           suomi.fi-autentisering och inloggning med e-postlösenord i samma
           Helsingforsprofilen och du kan hantera all din information i en vy.{' '}
           <b>
             Observera dock att du inte kommer att kunna avbryta sammanslagningen
             senare.
           </b>
-        </p>
-
-        <p>
-          <UserGuideImage
-            src={image005}
-            alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att använda samma e-postadress för både suomi.fi-autentiseringen och Helsingfors ID får du en Helsingfors-profil. Sammanslagningen kan inte tas bort senare."
-          />
         </p>
 
         <p>
@@ -339,12 +281,17 @@ function UserGuideSv(): ReactElement {
 
         <p>
           <UserGuideImage
+            src={image005}
+            alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att använda samma e-postadress för både suomi.fi-autentiseringen och Helsingfors ID får du en Helsingfors-profil. Sammanslagningen kan inte tas bort senare."
+          />
+        </p>
+
+        <p>
+          <UserGuideImage
             src={image006}
             alt="E-postmeddelandet innehåller en 6-siffrig verifieringskod för att bekräfta att e-postadressen är äkta."
           />
         </p>
-
-        <p>Ange numret i rutan på skärmen.</p>
 
         <p>
           <UserGuideImage
@@ -353,21 +300,24 @@ function UserGuideSv(): ReactElement {
           />
         </p>
 
+        <h4>Skapa en Helsingforsprofilen</h4>
+
         <p>
-          När du har bekräftat e-postmeddelandet måste du fortfarande ge ditt
-          samtycke till att dina uppgifter används. Utan samtycke kan
-          Helsingforsprofilen inte skapas och tjänsterna kan inte använda dina
-          uppgifter.
+          När du har bekräftat e-postmeddelandet fyller du i ditt namn och
+          lösenord. Ditt lösenord måste vara minst 12 tecken långt och innehålla
+          stora och små bokstäver, siffror och specialtecken.
         </p>
 
         <p>
-          Efter att ha angett den 6-siffriga verifieringskoden, fyll i ditt
-          namn, ange ditt lösenord och samtycka till att använda dina uppgifter.{' '}
+          Bekräfta att du samtycker till användningen av dina uppgifter. Utan
+          ditt samtycke kan din Helsingforsprofil inte skapas och dina uppgifter
+          kan inte användas av tjänsterna.
         </p>
 
         <p>
-          Lösenordet måste innehålla minst 12 tecken, stora och små bokstäver,
-          nummer och specialtecken.
+          Nu har du Helsingforsprofilen. Det Helsingfors-ID du behöver för att
+          autentisera dig till tjänsterna är denna kombination av e-postadress
+          och lösenord.
         </p>
 
         <p>
@@ -376,14 +326,7 @@ function UserGuideSv(): ReactElement {
             alt="När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste också ge ditt samtycke till att dina uppgifter används för att skapa Helsingforsprofilen."
           />
         </p>
-
-        <p>
-          Nu har du Helsingforsprofilen. Det Helsingfors-ID du behöver för att
-          autentisera dig till tjänsterna är denna kombination av e-postadress
-          och lösenord.
-        </p>
       </UserGuideAccordion>
-
       <UserGuideAccordion
         id="_Kombinera_identifieringsmetoder"
         heading="Kombinera identifieringsmetoder"
@@ -403,7 +346,13 @@ function UserGuideSv(): ReactElement {
           avsnittet <a href="#_Glömt_lösenord">Glömt lösenord</a> nedan.
         </p>
       </UserGuideAccordion>
-
+      <h2 id="_Login">Logga in</h2>
+      <p>
+        Med din Helsingforsprofil kan du logga in på alla Helsingfors stads
+        digitala tjänster. Du kan logga in med suomi.fi-inloggningen eller med
+        den e-postadress och det lösenord som du angav när du skapade din
+        profil.
+      </p>
       <UserGuideAccordion id="_Glömt_lösenord" heading="Glömt lösenord">
         <p>
           Om du inte kommer ihåg ditt lösenord kan du skapa ett nytt i
@@ -411,6 +360,17 @@ function UserGuideSv(): ReactElement {
           <i>Jag har glömt mitt lösenord</i>. Du kan också ha &quot;glömt&quot;
           ditt lösenord eftersom du tidigare har loggat in i tjänsten via
           suomi.fi autentisering och då inte behövt ange ett lösenord.
+        </p>
+
+        <p>
+          När du har angett din e-postadress kommer du att få en länk för att
+          ange ett nytt lösenord i din e-post. Länken kommer att vara giltig i
+          30 minuter.
+        </p>
+
+        <p>
+          Lösenordet måste vara minst 12 tecken långt. Det måste innehålla både
+          stora och små bokstäver, nummer och specialtecken.
         </p>
 
         <UserGuideImage
@@ -433,21 +393,10 @@ function UserGuideSv(): ReactElement {
         </p>
 
         <p>
-          När du har angett din e-postadress kommer du att få en länk för att
-          ange ett nytt lösenord i din e-post. Länken kommer att vara giltig i
-          30 minuter.
-        </p>
-
-        <p>
           <UserGuideImage
             src={image014}
             alt="I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken kommer att vara giltig i 30 minuter."
           />
-        </p>
-
-        <p>
-          Lösenordet måste vara minst 12 tecken långt. Det måste innehålla både
-          stora och små bokstäver, nummer och specialtecken.
         </p>
 
         <p>
@@ -457,7 +406,6 @@ function UserGuideSv(): ReactElement {
           />
         </p>
       </UserGuideAccordion>
-
       <UserGuideAccordion
         id="_Problem_med_identifiering"
         heading="Problem med identifiering"
@@ -488,23 +436,17 @@ function UserGuideSv(): ReactElement {
         </p>
       </UserGuideAccordion>
 
+      <h2 id="_viewing_and_editing">Visa och redigera dina egna uppgifter</h2>
+      <p>
+        Genom att logga in på din Helsingforsprofil på{' '}
+        <a href="https://profiili.hel.fi">https://profiili.hel.fi</a>
+        kan du se och redigera dina uppgifter och hur de används av tjänsterna.
+      </p>
+
       <UserGuideAccordion
-        id="_Visa_och_redigera"
-        heading="Visa och redigera dina egna uppgifter"
+        id="_Redigera_profilinformation"
+        heading="Redigera profilinformation"
       >
-        <p>
-          Genom att logga in på din Helsingforsprofil på
-          <a href="https://profiili.hel.fi">https://profiili.hel.fi</a> kan du
-          se och redigera dina uppgifter och hur de används av tjänsterna:
-        </p>
-
-        <ul>
-          <li>Du kan lägga till ett telefonnummer.</li>
-
-          <li>Du kan ändra din e-postadress.</li>
-
-          <li>Du kan lägga till din adressinformation.</li>
-        </ul>
         <p>
           De officiella uppgifterna läggs till i din profil och syns endast när
           du autentiserar dig med suomi.fi. Uppdateringen av uppgifterna görs i
@@ -512,9 +454,24 @@ function UserGuideSv(): ReactElement {
         </p>
 
         <p>
-          Om du uppdaterar dina namnuppgifter i din Helsingforsprofil, kommer de
-          officiella uppgifterna att uppdateras nästa gång du autentiserar dig
-          in med suomi.fi.
+          I avsnittet Personuppgifter i din Helsingforsprofil kan du lägga till
+          ett telefonnummer, ändra din e-postadress och lägga till
+          adressuppgifter. Om du uppdaterar dina namnuppgifter i din
+          Helsingforsprofil, kommer de officiella uppgifterna att uppdateras
+          nästa gång du autentiserar dig in med suomi.fi.
+        </p>
+
+        <p>
+          Du kan lägga till eller ändra information som du själv har lagt in
+          genom att klicka på knappen Lägg till, eller på knappen Redigera om
+          informationen redan finns. Tryck på knappen Spara för att spara
+          uppgifterna i databasen.
+        </p>
+
+        <p>
+          I Helsingforsprofilen bestämmer avsnittet om tjänstens kontaktspråk på
+          vilket språk t.ex. e-post från tjänsten ska skickas. Du kan också se
+          hur du är autentiserad dig på din Helsingforsprofil.
         </p>
 
         <p>
@@ -532,46 +489,15 @@ function UserGuideSv(): ReactElement {
         </p>
 
         <p>
-          Du kan lägga till eller ändra information som du själv har lagt in
-          genom att klicka på knappen Lägg till, eller på knappen Redigera om
-          informationen redan finns. Tryck på knappen Spara för att spara
-          uppgifterna i databasen.
-        </p>
-
-        <p>
           <UserGuideImage
             src={image023}
-            alt="Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress."
-          />
-        </p>
-
-        <p>
-          I Helsingfors-profilen bestämmer avsnittet om tjänstens kontakspråk på
-          vilket språk t.ex. e-post från tjänsten ska skickas.
-        </p>
-
-        <p>
-          <UserGuideImage
-            src={image023}
-            alt="Tjänstens kontakspråk avgör på vilket språk du tar emot meddelanden från tjänsten."
-          />
-        </p>
-
-        <p>
-          Du kan också se hur du är autentiserad dig på din Helsingforsprofil.
-        </p>
-
-        <p>
-          <UserGuideImage
-            src={image023}
-            alt="På avsnittet Min information i din Helsingforsprofil anger autentiseringsmetoden hur du är inloggad i tjänsten, dvs. suomi.fi-autentisering eller en kombination av e-post och lösenord, dvs. Helsingfors-ID."
+            alt="Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress. Tjänstens kontaktspråk avgör på vilket språk du tar emot meddelanden från tjänsten. Den autentiseringsmetoden hur du är inloggad i tjänsten, dvs. suomi.fi-autentisering eller en kombination av e-post och lösenord, dvs. Helsingfors-ID."
           />
         </p>
       </UserGuideAccordion>
-
       <UserGuideAccordion
         id="_Olika_tjänsters_bearbetning"
-        heading=" Olika tjänsters bearbetning av dina uppgifter"
+        heading="Olika tjänsters bearbetning av dina uppgifter"
       >
         <p>
           Tjänsterna kommer att använda de uppgifter som hanteras av
@@ -581,26 +507,26 @@ function UserGuideSv(): ReactElement {
         </p>
 
         <p>
-          <UserGuideImage
-            src={image023}
-            alt="När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina tjänster i din Helsingforsprofil."
-          />
-        </p>
-
-        <p>
           I din Helsingforsprofil kan du kontrollera denna information senare
           och, om du vill, radera dina uppgifter från tjänsten. Det är inte
           möjligt att radera dina uppgifter om du befinner dig mitt i
           serviceprocessen. Det är också tillrådligt att{' '}
           <a href="#_Ladda_ner_din">ladda ner dina egna information</a> innan du
           raderar dem.
+        </p>
+
+        <p>
           <UserGuideImage
             src={image024}
-            alt="I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad dig på och vilka data de använder. Du kan också radera dina uppgifter från enskilda tjänster."
+            alt="När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina tjänster i din Helsingforsprofil."
           />
         </p>
-      </UserGuideAccordion>
 
+        <UserGuideImage
+          src={image025}
+          alt="I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad dig på och vilka data de använder. Du kan också radera dina uppgifter från enskilda tjänster."
+        />
+      </UserGuideAccordion>
       <UserGuideAccordion
         id="_Ladda_ner_din"
         heading="Ladda ner din information"
@@ -623,25 +549,26 @@ function UserGuideSv(): ReactElement {
 
         <p>
           <UserGuideImage
-            src={image025}
+            src={image026}
             alt="I avsnittet Min information i din Helsingforsprofil kan du ladda ner din information för alla tjänster som en json-fil."
           />
         </p>
       </UserGuideAccordion>
 
+      <h2 id="_Deleting_your_information">Radering av uppgifter</h2>
+      <p>
+        Du kan radera dina uppgifter antingen för enskilda tjänster eller för
+        hela din profil. Vid radering kommer alla dina uppgifter från tjänsten
+        att raderas eller anonymiseras om tjänsten till exempel är skyldig
+        enligt lag att behålla dem. Du kommer dock inte att ha tillgång till
+        uppgifterna efter raderingen och de kommer inte att kunna kopplas till
+        dig.
+      </p>
+
       <UserGuideAccordion
         id="_Radera_dina_uppgifter"
-        heading="Radera dina uppgifter från en enda tjänst eller från hela din Helsingforsprofil"
+        heading="Radering av uppgifter från en och samma tjänst"
       >
-        <p>
-          Du kan radera dina uppgifter antingen för enskilda tjänster eller för
-          hela din profil. När du väljer den tjänst som du vill radera på
-          avsnittet Dina tjänster, visas ett popup-fönster som bekräftar
-          raderingen. Vid radering kommer alla dina uppgifter från tjänsten att
-          raderas eller anonymiseras om tjänsten till exempel är skyldig enligt
-          lag att behålla dem.{' '}
-        </p>
-
         <p>
           Om du har kombinerat din suomi.fi-autentisering och inloggning med
           e-postadress och lösenord i samma Helsingforsprofil, måste du radera
@@ -649,31 +576,29 @@ function UserGuideSv(): ReactElement {
         </p>
 
         <p>
-          Du kommer dock inte att ha tillgång till uppgifterna efter raderingen
-          och de kommer inte att kunna kopplas till dig.
+          När du väljer den tjänst som du vill ta bort på fliken Dina tjänster
+          får du ett popup-meddelande som bekräftar borttagningen.
         </p>
 
         <p>
           <UserGuideImage
-            src={image026}
+            src={image027}
             alt="Du kan radera dina uppgifter i din Helsingforsprofil för en enskild tjänst i avsnittet Dina tjänster."
           />
         </p>
 
         <p>
           <UserGuideImage
-            src={image027}
+            src={image028}
             alt='När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett popup-bekräftelsemeddelande på skärmen för att förhindra oavsiktlig radering av dina uppgifter.'
           />
         </p>
+      </UserGuideAccordion>
 
-        <p>
-          <UserGuideImage
-            src={image028}
-            alt="Du kommer att få ett bekräftelsemeddelande om att uppgifterna har tagits bort från tjänsten."
-          />
-        </p>
-
+      <UserGuideAccordion
+        id="_Radera_din_Helsingforsprofil"
+        heading="Radera din Helsingforsprofil"
+      >
         <p>
           Om du vill radera hela din Helsingforsprofil kan du göra det genom att
           trycka på knappen <i>Radera min information</i>. Du kommer då att se
