@@ -213,6 +213,26 @@ exports[`User guide > renders AboutPage without errors 1`] = `
               href="/Helsinki-profiili-ohjeet.pdf"
             >
               <span
+                aria-hidden="true"
+                class="Link-module_iconLeft__3j0X3 link_hds-icon-left__1aufP"
+              >
+                <svg
+                  aria-hidden="true"
+                  aria-label="download"
+                  class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M5 15V20H19V15H21V22H3V15H5ZM13 2V14L16 11L17.5 12.5L12 18L6.5 12.5L8 11L11 14V2H13Z"
+                    fill="currentColor"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+              <span
                 class="Link-module_buttonLabel__EFeWo button_hds-button__label__3Mm25"
               >
                 Helsinki-profiilin ohje (.pdf)

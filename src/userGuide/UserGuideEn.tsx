@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, { Fragment, ReactElement } from 'react';
-import { Link } from 'hds-react';
+import { IconDownload, Link } from 'hds-react';
 
 import UserGuideAccordion from './UserGuideAccordion';
 import UserGuideImage from './UserGuideImage';
@@ -61,6 +61,7 @@ function UserGuideEn(): ReactElement {
         href="/Helsinki-profile-userguide.pdf"
         download="Helsinki-profile-userguide.pdf"
         useButtonStyles
+        iconLeft={<IconDownload />}
       >
         Helsinki profile guide (.pdf)
       </Link>

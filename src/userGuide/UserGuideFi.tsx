@@ -59,6 +59,7 @@ function UserGuideFi(): ReactElement {
       <Link
         href="/Helsinki-profiili-ohjeet.pdf"
         download="Helsinki-profiili-ohjeet.pdf"
+        iconLeft={<IconDownload />}
         useButtonStyles
       >
         Helsinki-profiilin ohje (.pdf)
