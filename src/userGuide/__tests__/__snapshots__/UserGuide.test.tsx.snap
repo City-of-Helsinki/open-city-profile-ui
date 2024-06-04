@@ -215,39 +215,71 @@ exports[`User guide > renders AboutPage without errors 1`] = `
               <span
                 class="Link-module_buttonLabel__EFeWo button_hds-button__label__3Mm25"
               >
-                Lataa tulostus versio (.pdf)
+                Helsinki-profiilin ohje (.pdf)
               </span>
             </a>
-            <ul>
-              <li>
-                <a
-                  href="#_Helsinki_profiilin_luonti"
+            <div
+              class="table-of-contents"
+            >
+              <div
+                class="table-of-contents__container"
+              >
+                <h2
+                  class="table-of-contents__title"
                 >
-                  Helsinki-profiilin luonti
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#_Kirjautuminen"
+                  Tällä sivulla
+                </h2>
+                <nav
+                  class="table-of-contents__content"
+                  id="helfi-toc-table-of-contents-list"
                 >
-                  Kirjautuminen
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#_Omien_tietojen_katselu"
-                >
-                  Omien tietojen katselu ja muokkaaminen
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#_Tietojen_poisto"
-                >
-                  Tietojen poisto
-                </a>
-              </li>
-            </ul>
+                  <ul
+                    class="table-of-contents__list"
+                  >
+                    <li
+                      class="table-of-contents__item"
+                    >
+                      <a
+                        class="table-of-contents__link"
+                        href="#_Helsinki_profiilin_luonti"
+                      >
+                        Helsinki-profiilin luonti
+                      </a>
+                    </li>
+                    <li
+                      class="table-of-contents__item"
+                    >
+                      <a
+                        class="table-of-contents__link"
+                        href="#_Kirjautuminen"
+                      >
+                        Kirjautuminen
+                      </a>
+                    </li>
+                    <li
+                      class="table-of-contents__item"
+                    >
+                      <a
+                        class="table-of-contents__link"
+                        href="#_Omien_tietojen_katselu"
+                      >
+                        Omien tietojen katselu ja muokkaaminen
+                      </a>
+                    </li>
+                    <li
+                      class="table-of-contents__item"
+                    >
+                      <a
+                        class="table-of-contents__link"
+                        href="#_Tietojen_poisto"
+                      >
+                        Tietojen poisto
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
             <h2
               id="_Helsinki_profiilin_luonti"
             >
@@ -278,7 +310,7 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 class="Accordion-module_accordionHeader__3_uK7"
               >
                 <div
-                  aria-level="2"
+                  aria-level="3"
                   id="_Suomi.fi-tunnistautuminen-heading"
                   role="heading"
                 >
@@ -507,7 +539,7 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 class="Accordion-module_accordionHeader__3_uK7"
               >
                 <div
-                  aria-level="2"
+                  aria-level="3"
                   id="_Helsinki-tunnuksen_käyttö-heading"
                   role="heading"
                 >
@@ -684,7 +716,7 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 class="Accordion-module_accordionHeader__3_uK7"
               >
                 <div
-                  aria-level="2"
+                  aria-level="3"
                   id="_Tunnistautumistapojen_yhdistäminen-heading"
                   role="heading"
                 >
@@ -793,7 +825,7 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 class="Accordion-module_accordionHeader__3_uK7"
               >
                 <div
-                  aria-level="2"
+                  aria-level="3"
                   id="_Unohtunut_salasana-heading"
                   role="heading"
                 >
@@ -946,7 +978,7 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 class="Accordion-module_accordionHeader__3_uK7"
               >
                 <div
-                  aria-level="2"
+                  aria-level="3"
                   id="_Ongelma_kirjautumisessa-heading"
                   role="heading"
                 >
@@ -1070,7 +1102,7 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 class="Accordion-module_accordionHeader__3_uK7"
               >
                 <div
-                  aria-level="2"
+                  aria-level="3"
                   id="_Profiili_tietojen_muokkaaminen-heading"
                   role="heading"
                 >
@@ -1197,7 +1229,7 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 class="Accordion-module_accordionHeader__3_uK7"
               >
                 <div
-                  aria-level="2"
+                  aria-level="3"
                   id="_Tietojen_käsittely_eri-heading"
                   role="heading"
                 >
@@ -1316,7 +1348,7 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 class="Accordion-module_accordionHeader__3_uK7"
               >
                 <div
-                  aria-level="2"
+                  aria-level="3"
                   id="_Tietojen_lataaminen-heading"
                   role="heading"
                 >
@@ -1429,7 +1461,7 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 class="Accordion-module_accordionHeader__3_uK7"
               >
                 <div
-                  aria-level="2"
+                  aria-level="3"
                   id="_Tietojen_poisto-heading"
                   role="heading"
                 >
@@ -1541,7 +1573,7 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 class="Accordion-module_accordionHeader__3_uK7"
               >
                 <div
-                  aria-level="2"
+                  aria-level="3"
                   id="_Profiilin_poisto-heading"
                   role="heading"
                 >

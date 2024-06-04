@@ -4,6 +4,7 @@ import { IconDownload, Link } from 'hds-react';
 
 import UserGuideAccordion from './UserGuideAccordion';
 import UserGuideImage from './UserGuideImage';
+import UserGuideNav from './nav/Nav';
 import image001 from './assets/01-sisaankirjautuminen.png';
 import image002 from './assets/02-sisaankirjautuminen-tunnistamo.png';
 import image003 from './assets/03-vahvan-valinta.png';
@@ -33,6 +34,16 @@ import image029 from './assets/29-tietojen-poisto.png';
 import image030 from './assets/30-tietojen-poisto-popup.png';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
+const tableOfContents = [
+  { title: 'Helsinki-profiilin luonti', href: '#_Helsinki_profiilin_luonti' },
+  { title: 'Kirjautuminen', href: '#_Kirjautuminen' },
+  {
+    title: 'Omien tietojen katselu ja muokkaaminen',
+    href: '#_Omien_tietojen_katselu',
+  },
+  { title: 'Tietojen poisto', href: '#_Tietojen_poisto' },
+];
+
 function UserGuideFi(): ReactElement {
   return (
     <Fragment>
@@ -50,24 +61,11 @@ function UserGuideFi(): ReactElement {
         download="Helsinki-profiili-ohjeet.pdf"
         useButtonStyles
       >
-        Lataa tulostus versio (.pdf)
+        Helsinki-profiilin ohje (.pdf)
       </Link>
-      <ul>
-        <li>
-          <a href="#_Helsinki_profiilin_luonti">Helsinki-profiilin luonti</a>
-        </li>
-        <li>
-          <a href="#_Kirjautuminen">Kirjautuminen</a>
-        </li>
-        <li>
-          <a href="#_Omien_tietojen_katselu">
-            Omien tietojen katselu ja muokkaaminen
-          </a>
-        </li>
-        <li>
-          <a href="#_Tietojen_poisto">Tietojen poisto</a>
-        </li>
-      </ul>
+
+      <UserGuideNav items={tableOfContents} heading="Tällä sivulla" />
+
       <h2 id="_Helsinki_profiilin_luonti">Helsinki-profiilin luonti</h2>
       <p>
         Helsinki-profiilia käytetään kirjautumalla Helsingin kaupungin

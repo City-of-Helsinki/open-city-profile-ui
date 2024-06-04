@@ -4,6 +4,7 @@ import { Link } from 'hds-react';
 
 import UserGuideAccordion from './UserGuideAccordion';
 import UserGuideImage from './UserGuideImage';
+import UserGuideNav from './nav/Nav';
 import image001 from './assets/01-sisaankirjautuminen-en.png';
 import image002 from './assets/02-sisaankirjautuminen-tunnistamo-en.png';
 import image003 from './assets/03-vahvan-valinta-en.png';
@@ -34,6 +35,16 @@ import image030 from './assets/30-tietojen-poisto-popup-en.png';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 function UserGuideEn(): ReactElement {
+  const tableOfContents = [
+    { title: 'Create a Helsinki profile', href: '#_Create_a_Helsinki_profile' },
+    { title: 'Login', href: '#_Login' },
+    {
+      title: 'Viewing and editing your own data',
+      href: '#_viewing_and_editing',
+    },
+    { title: 'Deleting your information', href: '#_Deleting_your_information' },
+  ];
+
   return (
     <Fragment>
       <FocusableH1>Helsinki profile guide</FocusableH1>
@@ -51,23 +62,10 @@ function UserGuideEn(): ReactElement {
         download="Helsinki-profile-userguide.pdf"
         useButtonStyles
       >
-        Download printable version (.pdf)
+        Helsinki profile guide (.pdf)
       </Link>
 
-      <ul>
-        <li>
-          <a href="#_Create_a_Helsinki_profile">Create a Helsinki profile</a>
-        </li>
-        <li>
-          <a href="#_Login">Login</a>
-        </li>
-        <li>
-          <a href="#_viewing_and_editing">Viewing and editing your own data</a>
-        </li>
-        <li>
-          <a href="#_Deleting_your_information">Deleting your information</a>
-        </li>
-      </ul>
+      <UserGuideNav items={tableOfContents} heading="On this site" />
 
       <h2 id="_Create_a_Helsinki_profile">Create a Helsinki profile</h2>
       <p>

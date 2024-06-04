@@ -1,0 +1,131 @@
+.table-of-contents {
+    max-width: 1296px;
+    margin-top: 32px;
+}
+
+@media(min-width: 768px) {
+    .table-of-contents {
+        max-width:1328px
+    }
+}
+
+.table-of-contents:not(:first-child) {
+    margin-top: 32px
+}
+
+@media(min-width: 992px) {
+    .table-of-contents:not(:first-child) {
+        margin-top:64px
+    }
+}
+/**
+
+@media(min-width: 768px) {
+    .table-of-contents {
+        padding-left:16px;
+        padding-right: 16px;
+        margin-left: auto;
+        margin-right: auto
+    }
+}
+
+
+@media(min-width: 768px)and (min-width:768px) {
+    .table-of-contents {
+        padding-left:32px;
+        padding-right: 32px
+    }
+}
+*/
+
+
+.table-of-contents+* {
+    margin-top: 32px
+}
+
+@media(min-width: 992px) {
+    .table-of-contents+* {
+        margin-top:64px
+    }
+}
+
+.table-of-contents__container {
+    background-color: #f7f7f8;
+    border-left: 8px solid #0000BF;
+    max-width: 908px;
+    padding: 32px 24px
+}
+
+.table-of-contents__title {
+    --line-height: 1.3333333333;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.3333333333;
+    line-height: var(--line-height);
+    margin-bottom: 0;
+    margin-top: 0
+}
+
+@media(min-width: 992px) {
+    .table-of-contents__title {
+        --line-height:1;
+        font-size: 2rem;
+        font-weight: 400
+    }
+}
+
+.table-of-contents__title+.table-of-contents__content {
+    padding-top: 16px
+}
+
+@media(min-width: 992px) {
+    .table-of-contents__title+.table-of-contents__content {
+        padding-top:24px
+    }
+}
+
+.table-of-contents__list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0
+}
+
+.table-of-contents__list>.table-of-contents__item~.table-of-contents__item {
+    padding-top: 16px
+}
+
+.table-of-contents__link {
+    --line-height: 1.5;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5;
+    line-height: var(--line-height);
+    display: inline-block;
+    position: relative;
+    -webkit-text-decoration: underline;
+    text-decoration: underline
+}
+
+.table-of-contents__link:focus {
+    outline: none
+}
+
+.table-of-contents__link:focus::after {
+    box-shadow: 0 0 0 3px #000;
+    content: "";
+    display: block;
+    height: 100%;
+    left: -4px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: calc(100% + 8px)
+}
+
+.table-of-contents__js {
+    display: none
+}
+
+.table-of-contents__js[data-js=true] {
+    display: block
+}

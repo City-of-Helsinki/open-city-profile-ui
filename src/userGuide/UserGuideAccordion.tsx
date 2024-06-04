@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Accordion, AccordionProps } from 'hds-react';
 
-interface MyComponentProps {
+interface UserGuideAccordionProps {
   children: ReactNode;
   heading: string;
   id: string;
@@ -11,7 +11,7 @@ function UserGuideAccordion({
   children,
   id,
   heading,
-}: MyComponentProps): React.ReactElement {
+}: UserGuideAccordionProps): React.ReactElement {
   const accordionStyle = {
     maxWidth: '800px',
     borderTop: 0,
@@ -32,7 +32,7 @@ function UserGuideAccordion({
   };
 
   return (
-    <Accordion id={id} heading={heading} {...accordionProps}>
+    <Accordion headingLevel={3} id={id} heading={heading} {...accordionProps}>
       {children}
     </Accordion>
   );

@@ -4,6 +4,7 @@ import { Link } from 'hds-react';
 
 import UserGuideAccordion from './UserGuideAccordion';
 import UserGuideImage from './UserGuideImage';
+import UserGuideNav from './nav/Nav';
 import image001 from './assets/01-sisaankirjautuminen-sv.png';
 import image002 from './assets/02-sisaankirjautuminen-tunnistamo-sv.png';
 import image003 from './assets/03-vahvan-valinta-sv.png';
@@ -34,6 +35,25 @@ import image030 from './assets/30-tietojen-poisto-popup-sv.png';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 function UserGuideSv(): ReactElement {
+  const tableOfContents = [
+    {
+      title: 'Skapa en Helsingforsprofilen',
+      href: '#_Create_a_Helsinki_profile',
+    },
+    {
+      title: 'Logga in',
+      href: '#_Login',
+    },
+    {
+      title: 'Visa och redigera dina egna uppgifter',
+      href: '#_viewing_and_editing',
+    },
+    {
+      title: 'Radering av uppgifter',
+      href: '#_Deleting_your_information',
+    },
+  ];
+
   return (
     <Fragment>
       <FocusableH1>Helsingforsprofilens hjälp</FocusableH1>
@@ -50,24 +70,11 @@ function UserGuideSv(): ReactElement {
         download="Helsingforsprofilens-hjalp.pdf"
         useButtonStyles
       >
-        Ladda ner utskrivbar version (.pdf)
+        Helsingforsprofilens hjälp (.pdf)
       </Link>
-      <ul>
-        <li>
-          <a href="#_Create_a_Helsinki_profile">Skapa en Helsingforsprofilen</a>
-        </li>
-        <li>
-          <a href="#_Login">Logga in</a>
-        </li>
-        <li>
-          <a href="#_viewing_and_editing">
-            Visa och redigera dina egna uppgifter
-          </a>
-        </li>
-        <li>
-          <a href="#_Deleting_your_information">Radering av uppgifter</a>
-        </li>
-      </ul>
+
+      <UserGuideNav items={tableOfContents} heading="På den här sidan" />
+
       <h2 id="_Create_a_Helsinki_profile">Skapa en Helsingforsprofilen</h2>
       <p>
         Helsingfors-profilen används för att logga in i Helsingfors stads
