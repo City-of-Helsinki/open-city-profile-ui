@@ -204,15 +204,16 @@ exports[`User guide > renders AboutPage without errors 1`] = `
             >
               Helsinki-profiilin ohje
             </h1>
-            <button
-              class="Button-module_button__1msFE button_hds-button__2A0je Button-module_primary__2LfKB button_hds-button--primary__2NVvO"
-              id="download-guide-button"
-              role="link"
-              type="button"
+            <p>
+              Helsinki-profiili on kaupungin digitaalisia asiointipalveluja käyttävän kaupunkilaisen asiakasprofiili. Se on ensisijainen tunnistautumistapa kaupungin digitaalisiin palveluihin. Helsinki-profiili kokoaa yhteen paikkaan asiakkaan henkilö- ja yhteystiedot sekä yhteydet eri kaupungin palveluihin. Profiilissa käyttäjä voi hallinnoida omia tietojaan ja niiden näkyvyyttä eri palvelussa.
+            </p>
+            <a
+              class="Link-module_button__1hPh3 button_hds-button__3eV18 button_hds-button--primary__YFEUq"
+              download="user-guide.pdf"
+              href="/guidesv.pdf"
             >
-              <div
-                aria-hidden="true"
-                class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+              <span
+                class="Link-module_buttonLabel__EFeWo button_hds-button__label__3Mm25"
               >
                 <svg
                   aria-hidden="true"
@@ -229,221 +230,60 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                     fill-rule="evenodd"
                   />
                 </svg>
-              </div>
-              <span
-                class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
-              >
-                Download userguide A
+                 Download printable version (.pdf)
               </span>
-            </button>
+            </a>
             <a
+              class="Link-module_button__1hPh3 button_hds-button__3eV18 button_hds-button--primary__YFEUq"
               download="user-guide.pdf"
               href="/guidesv.pdf"
             >
-              Download userguide B
+              <span
+                class="Link-module_buttonLabel__EFeWo button_hds-button__label__3Mm25"
+              >
+                Download printable version (.pdf)
+              </span>
             </a>
-            <p>
-              Helsinki-profiili on kaupungin digitaalisia asiointipalveluja käyttävän kaupunkilaisen asiakasprofiili. Se on ensisijainen tunnistautumistapa kaupungin digitaalisiin palveluihin. Helsinki-profiili kokoaa yhteen paikkaan asiakkaan henkilö- ja yhteystiedot sekä yhteydet eri kaupungin palveluihin.  Profiilissa käyttäjä voi hallinnoida omia tietojaan ja niiden näkyvyyttä eri palvelussa. Helsinki-profiiliin ja sen avulla eri digitaalisiin sovelluksiin tunnistautuminen tapahtuu:
-            </p>
-            <ul>
-              <li>
-                suomi.fi-tunnistautumista käyttäen esimerkiksi pankkitunnuksilla
-              </li>
-              <li>
-                Helsinki-tunnuksen sähköpostiosoite+salasana-yhdistelmällä, Google- tai Yle-tunnuksilla
-              </li>
-            </ul>
             <ul>
               <li>
                 <a
-                  href="#_Palveluun_kirjautuminen"
+                  href="#_Helsinki_profiilin_luonti"
                 >
-                  Palveluun tunnistautuminen
-                </a>
-              </li>
-              <ul>
-                <li>
-                   
-                  <a
-                    href="#_Suomi.fi-tunnistautuminen"
-                  >
-                    Suomi.fi-tunnistautuminen
-                  </a>
-                </li>
-                <li>
-                   
-                  <a
-                    href="#_Helsinki-tunnuksen_käyttö"
-                  >
-                    Helsinki-tunnus
-                  </a>
-                </li>
-              </ul>
-              <li>
-                <a
-                  href="#_Eri_tunnistautumistapojen_yhdistämi"
-                >
-                  Tunnistautumistapojen yhdistäminen
+                  Helsinki-profiilin luonti
                 </a>
               </li>
               <li>
                 <a
-                  href="#_Unohtunut_salasana"
+                  href="#_Kirjautuminen"
                 >
-                  Unohtunut salasana
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#_Ongelma_kirjautumisessa"
-                >
-                  Ongelma tunnistautumisessa
+                  Kirjautuminen
                 </a>
               </li>
               <li>
                 <a
                   href="#_Omien_tietojen_katselu"
                 >
-                  Omien tietojesi katselu ja muokkaaminen
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#_Tietojesi_käsittely_eri"
-                >
-                  Tietojesi käsittely eri palveluissa
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#_Tietojen_lataaminen"
-                >
-                  Tietojesi lataaminen
+                  Omien tietojen katselu ja muokkaaminen
                 </a>
               </li>
               <li>
                 <a
                   href="#_Tietojen_poisto"
                 >
-                  Tietojesi poisto palveluista ja Helsinki-profiilista
+                  Tietojen poisto
                 </a>
               </li>
             </ul>
             <h2
-              id="_Palveluun_kirjautuminen"
+              id="_Helsinki_profiilin_luonti"
             >
-              Palveluun tunnistautuminen
+              Helsinki-profiilin luonti
             </h2>
             <p>
-              Yleisin tapa hyödyntää Helsinki-profiilia on kirjautua johonkin Helsingin kaupungin asiointipalveluun, jolloin Helsinki-profiili toimii henkilö- tai yhteystietojen välittäjänä.
+              Helsinki-profiilia käytetään kirjautumalla Helsingin kaupungin asiointipalveluihin. Ensimmäisellä kirjautumiskerralla sinua pyydetään luomaan Helsinki-profiili ja antamaan suostumus palvelun tarvitsemien tietojen käyttöön.
             </p>
             <p>
-              Ensimmäisellä kirjautumiskerralla sinua pyydetään luomaan Helsinki-profiili. Samalla sinua pyydetään antamaan suostumus kyseisen palvelun tarvitsemien tietojen käyttöön.
-               
-            </p>
-            <p>
-              Tunnistautuminen asiointipalveluun tapahtuu joko suomi.fi-tunnistautuen, esimerkiksi pankkitunnuksilla, tai sähköpostilla ja salasanalla.
-               
-            </p>
-            <h3
-              id="_Suomi.fi-tunnistautuminen"
-            >
-              Suomi.fi-tunnistautuminen
-            </h3>
-            <p>
-              Asiointipalvelussa Kirjaudu-linkin painamisen jälkeen käyttäjä saa erilaisia kirjautumisvaihtoja tarjoavan näkymän, jossa valitaan suomi.fi-tunnistautuminen. Kirjautumisvaihtoehtojen näkymä vaihtelee eri asiointipalveluissa.
-            </p>
-            <p>
-              <img
-                alt="Tunnistautumisikkunassa valitaan suomi.fi-tunnistautuminen."
-                height="397"
-                src="/src/userGuide/assets/01-sisaankirjautuminen.png"
-                width="217"
-              />
-            </p>
-            <p>
-              <img
-                alt="Tunnistautumisikkunassa valitaan suomi.fi-tunnistautuminen."
-                height="251"
-                src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo.png"
-                width="404"
-              />
-            </p>
-            <p>
-              Suomi.fi-tunnistautumisen valinnan jälkeen käyttäjä saa ruudulleen erilaisia tunnistautumistapoja. Vaihtoehdot ovat samat kuin muissakin julkishallinnon vahvaa tunnistautumista tarjoavissa palveluissa.
-            </p>
-            <p>
-              <img
-                alt="Valitse oma pankkisi tai mobiilivarmenne suomi.fi-tunnistautumisvaihtoehtona."
-                height="388"
-                src="/src/userGuide/assets/03-vahvan-valinta.png"
-                width="482"
-              />
-            </p>
-            <p>
-              Tunnistautumisen jälkeen tarkista, että käytettävät tiedot ovat oikein. Mikäli havaitset tiedoissa virheitä, ne tulee korjata väestörekisterikeskuksen palvelussa.
-              <img
-                alt="Tarkista, että tietosi ovat oikein siirtyessäsi, kun siirryt takaisin Helsingin kaupungin palveluun."
-                height="259"
-                src="/src/userGuide/assets/04-vahvat-tiedot.png"
-                width="482"
-              />
-            </p>
-            <p>
-              Tunnistautumisen jälkeen sinulta kysytään sähköpostiosoite, joka pitää vahvistaa.
-            </p>
-            <p>
-              Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla. Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
-            </p>
-            <p>
-              <img
-                alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
-                height="475"
-                src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
-                width="391"
-              />
-            </p>
-            <p>
-              Sähköpostin vahvistamiseksi saat 6-numeroisen koodin antamaasi sähköpostiosoitteeseen. Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista roskaposti-kansiosi.
-            </p>
-            <p>
-              <b>
-                Älä sulje Helsinki-profiilin selainikkunaa, kun haet vahvistusviestin sähköpostistasi. Muuten järjestelmä olettaa sinun keskeyttäneen tunnistautumisprosessin.
-              </b>
-            </p>
-            <p>
-              <img
-                alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
-                height="323"
-                src="/src/userGuide/assets/06-11-sahkopostin-vahvistuskoodi.png"
-                width="482"
-              />
-            </p>
-            <p>
-              Syötä numero ruudulla näkyvään kenttään.
-            </p>
-            <img
-              alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
-              height="508"
-              src="/src/userGuide/assets/07-12-sahkopostin-vahvistus.png"
-              width="433"
-            />
-            <p>
-              Sähköpostin vahvistamisen jälkeen sinun pitää vielä antaa suostumus tietojesi käyttöön. Ilman suostumusta Helsinki-profiilia ei voida luoda, eivätkä palvelut voi käyttää tietojasi.
-               
-            </p>
-            <img
-              alt="Ennen kuin voit käyttää haluaamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. 
-Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
-              height="491"
-              src="/src/userGuide/assets/08-profiilin-luominen.png"
-              width="217"
-            />
-            <p>
-              Tämän jälkeen sinulle syntyy Helsinki-profiili, ja suomi.fi-tunnistautumisen tiedot tallentuvat profiiliin. Eri asiointipalvelut hyödyntävät tietojasi eri tavalla, mutta ne kerrotaan aina ensimmäisellä kirjautumiskerralla. Tiedot löytyvät myös aina Helsinki-profiilista.
-            </p>
-            <p>
-              Helsinki-profiilin luomisen jälkeen olet tunnistautuneena siinä palvelussa, josta aloitit kirjautumisprosessin. Helsinki-profiiliin pääset osoitteessa
+              Voit myös luoda Helsinki-profiilin osoitteessa
                
               <a
                 href="https://profiili.hel.fi"
@@ -453,202 +293,785 @@ Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
               .
             </p>
             <p>
-              Tunnistautuessasi samaan palveluun seuraavalla kerralla valitset vain suomi.fi-tunnistautumisen, haluamasi tunnistautumisvaihtoehdon ja olet sisällä palvelussa.
-               
+              Helsinki-profiilin voit luoda käyttäen suomi.fi-tunnistautumista tai sähköpostia ja salasanaa. Helsingin kaupungin digitaalisiin palveluihin voi myös kirjautua Google- tai Yle -tunnuksilla, jotka poistuvat käytöstä vuoden 2024 aikana.
             </p>
-            <h3
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-1"
+              id="_Suomi.fi-tunnistautuminen"
+              style="max-width: 800px; border: 1px solid #ffffff;"
+            >
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
+              >
+                <div
+                  aria-level="2"
+                  id="_Suomi.fi-tunnistautuminen-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Suomi.fi-tunnistautuminen-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Suomi.fi-tunnistautuminen
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Suomi.fi-tunnistautuminen-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Suomi.fi-tunnistautuminen-content"
+                role="region"
+                style="display: none;"
+              >
+                <h4>
+                  Tunnistautumisen valinta
+                </h4>
+                <p>
+                  Asiointipalvelussa Kirjaudu-linkin painamisen jälkeen käyttäjä saa erilaisia kirjautumisvaihtoja tarjoavan näkymän, jossa valitaan suomi.fi-tunnistautuminen. Kirjautumisvaihtoehtojen näkymä vaihtelee eri asiointipalveluissa.
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Tunnistautumisikkunassa valitaan suomi.fi-tunnistautuminen."
+                      src="/src/userGuide/assets/01-sisaankirjautuminen.png"
+                    />
+                    <i>
+                      Tunnistautumisikkunassa valitaan suomi.fi-tunnistautuminen.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Tunnistautumistavaksi valitaan suomi.fi-tunnistautuminen."
+                      src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo.png"
+                    />
+                    <i>
+                      Tunnistautumistavaksi valitaan suomi.fi-tunnistautuminen.
+                    </i>
+                  </p>
+                </p>
+                <h4>
+                  Tunnistautuminen suomi.fi-palvelussa
+                </h4>
+                <p>
+                  Suomi.fi-tunnistautumisen valinnan jälkeen käyttäjä saa ruudulleen erilaisia tunnistautumistapoja. Vaihtoehdot ovat samat kuin muissakin julkishallinnon vahvaa tunnistautumista tarjoavissa palveluissa.
+                </p>
+                <p>
+                  Tunnistautumisen jälkeen tarkista, että käytettävät tiedot ovat oikein. Mikäli havaitset tiedoissa virheitä, ne tulee korjata väestörekisterikeskuksen palvelussa.
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Valitse oma pankkisi tai mobiilivarmenne suomi.fi-tunnistautumisvaihtoehtona."
+                      src="/src/userGuide/assets/03-vahvan-valinta.png"
+                    />
+                    <i>
+                      Valitse oma pankkisi tai mobiilivarmenne suomi.fi-tunnistautumisvaihtoehtona.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Tarkista, että tietosi ovat oikein siirtyessäsi, kun siirryt takaisin Helsingin kaupungin palveluun."
+                      src="/src/userGuide/assets/04-vahvat-tiedot.png"
+                    />
+                    <i>
+                      Tarkista, että tietosi ovat oikein siirtyessäsi, kun siirryt takaisin Helsingin kaupungin palveluun.
+                    </i>
+                  </p>
+                </p>
+                <h4>
+                  Sähköpostiosoitteen vahvistus
+                </h4>
+                <p>
+                  Tunnistautumisen jälkeen sinulta kysytään sähköpostiosoite. Sähköpostiosoitteeseen lähetetään vahvistusviesti osoitteen aitouden varmistamiseksi.
+                </p>
+                <p>
+                  Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla.
+                  <b>
+                     Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
+                  </b>
+                </p>
+                <p>
+                  Sähköpostin vahvistamiseksi saat 6-numeroisen koodin antamaasi sähköpostiosoitteeseen. Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista roskaposti-kansiosi.
+                </p>
+                <p>
+                  <b>
+                    Älä sulje Helsinki-profiilin selainikkunaa, kun haet vahvistusviestin sähköpostistasi. Muuten järjestelmä olettaa sinun keskeyttäneen tunnistautumisprosessin.
+                  </b>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
+                      src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
+                    />
+                    <i>
+                      Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
+                      src="/src/userGuide/assets/06-11-sahkopostin-vahvistuskoodi.png"
+                    />
+                    <i>
+                      Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
+                      src="/src/userGuide/assets/07-12-sahkopostin-vahvistus.png"
+                    />
+                    <i>
+                      Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään.
+                    </i>
+                  </p>
+                </p>
+                <h4>
+                  Helsinki-profiilin luonti
+                </h4>
+                <p>
+                  Sähköpostin vahvistamisen jälkeen sinun pitää vielä antaa suostumus tietojesi käyttöön. Ilman suostumusta Helsinki-profiilia ei voida luoda, eivätkä palvelut voi käyttää tietojasi.
+                </p>
+                <p>
+                  Tämän jälkeen sinulle syntyy Helsinki-profiili, ja suomi.fi-tunnistautumisen tiedot tallentuvat profiiliin. Eri asiointipalvelut hyödyntävät tietojasi eri tavalla, mutta ne kerrotaan aina ensimmäisellä kirjautumiskerralla. Tiedot löytyvät myös aina Helsinki-profiilista.
+                </p>
+                <p>
+                  Helsinki-profiilin luomisen jälkeen olet tunnistautuneena siinä palvelussa, josta aloitit kirjautumisprosessin. Helsinki-profiiliin pääset osoitteessa
+                   
+                  <a
+                    href="https://profiili.hel.fi"
+                  >
+                    https://profiili.hel.fi
+                  </a>
+                  .
+                </p>
+                <p>
+                  Kun kirjaudut seuraavan kerran samaan palveluun, valitse vain valitsemasi tunnistautumisvaihtoehdoksi suomi.fi ja pääset palveluun.
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Ennen kuin voit käyttää haluaamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
+                      src="/src/userGuide/assets/08-profiilin-luominen.png"
+                    />
+                    <i>
+                      Ennen kuin voit käyttää haluaamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia.
+                    </i>
+                  </p>
+                </p>
+                <button
+                  aria-label="Close Suomi.fi-tunnistautuminen"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Suomi.fi-tunnistautuminen-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Close
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-2"
               id="_Helsinki-tunnuksen_käyttö"
+              style="max-width: 800px; border: 1px solid #ffffff;"
             >
-              Sähköposti ja salasana -tunnistautuminen
-            </h3>
-            <p>
-              Helsinki-profiilin muut tunnistautumisen vaihtoehdot ovat 
-            </p>
-            <ul>
-              <li>
-                Helsinki-tunnus eli sähköposti ja salasana -yhdistelmä
-              </li>
-              <li>
-                vuoden 2024 aikana Google- tai Yle-tunnus poistuvat käytöstä
-              </li>
-            </ul>
-            <img
-              alt="Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili -painiketta."
-              height="492"
-              src="/src/userGuide/assets/09-helsinki-tunnus-luonti.png"
-              width="332"
-            />
-            <p>
-              Sinulta kysytään sähköpostiosoite, johon lähetetään vahvistusviesti osoitteen aitouden varmistamiseksi.
-            </p>
-            <p>
-              Jos olet jo aiemmin luonut Helsinki-profiilin suomi.fi-tunnistautuen, voit luoda profiilille salasanan klikkaamalla Olen unohtanut salasanani -linkkiä. Salasanan luomisesta on enemmän
-               
-              <a
-                href="#_Unohtunut_salasana"
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
               >
-                Unohtunut salasana
-              </a>
-               -kohdassa
-            </p>
-            <p>
-              Tällöin sekä suomi.fi-tunnistautumista että sähköposti-salasana-tunnistautumista vaativat palvelut löytyvät samasta Helsinki-profiilista ja voit hallinnoida kaikkia tietoja yhdessä näkymässä. Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
-            </p>
-            <p>
-              <img
-                alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
-                height="475"
-                src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
-                width="391"
-              />
-            </p>
-            <p>
-              Sähköpostin vahvistamiseksi saat 6-numeroisen koodin antamaasi sähköpostiosoitteeseen. Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista roskaposti-kansiosi.
-            </p>
-            <p>
-              <b>
-                Älä sulje Helsinki-profiilin selainikkunaa, kun haet vahvistusviestin sähköpostistasi. Muuten järjestelmä olettaa sinun keskeyttäneen tunnistautumisprosessin.
-              </b>
-            </p>
-            <p>
-              <img
-                alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
-                height="323"
-                src="/src/userGuide/assets/06-11-sahkopostin-vahvistuskoodi.png"
-                width="482"
-              />
-            </p>
-            <p>
-              Syötä numero ruudulla näkyvään kenttään.
-            </p>
-            <img
-              alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
-              height="508"
-              src="/src/userGuide/assets/07-12-sahkopostin-vahvistus.png"
-              width="433"
-            />
-            <p>
-              Sähköpostin vahvistamisen jälkeen sinun pitää vielä antaa suostumus tietojesi käyttöön. Ilman suostumusta Helsinki-profiilia ei voida luoda, eivätkä palvelut voi käyttää tietojasi.
-               
-            </p>
-            <p>
-              6-numeroisen varmistuskoodin syöttämisen jälkeen täytä nimitietosi, anna salasana sekä suostumus tietojesi käyttöön. Salasanassa pitää olla vähintään 12 merkkiä, pieniä ja isoja kirjaimia, numeroita sekä erikoismerkkejä.
-            </p>
-            <p>
-              <img
-                alt="Helsink-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. 
-Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
-                height="403"
-                src="/src/userGuide/assets/13-helsinki-tunnus-teko.png"
-                width="215"
-              />
-            </p>
-            <p>
-              Nyt sinulle on luotu Helsinki-profiili. Palveluihin tunnistautumiseen tarvitsemasi Helsinki-tunnus on tämä sähköpostiosoite-salasana-yhdistelmä.
-            </p>
-            <h2
-              id="_Eri_tunnistautumistapojen_yhdistämi"
+                <div
+                  aria-level="2"
+                  id="_Helsinki-tunnuksen_käyttö-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Helsinki-tunnuksen_käyttö-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Sähköposti-tunnistautuminen
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Helsinki-tunnuksen_käyttö-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Helsinki-tunnuksen_käyttö-content"
+                role="region"
+                style="display: none;"
+              >
+                <h4>
+                  Tunnistautumisen valinta
+                </h4>
+                <p>
+                  Asiointipalvelussa Kirjaudu-linkin painamisen jälkeen näet erilaisia kirjautumisvaihtoehtoja, joista valitaan Luo Helsinki-profiili. Kirjautumisvaihtoehtojen näkymä vaihtelee eri asiointipalveluissa.
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili -painiketta."
+                      src="/src/userGuide/assets/09-helsinki-tunnus-luonti.png"
+                    />
+                    <i>
+                      Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili -painiketta.
+                    </i>
+                  </p>
+                </p>
+                <h4>
+                  Sähköpostiosoitteen vahvistus
+                </h4>
+                <p>
+                  Tunnistautumisen jälkeen sinulta kysytään sähköpostiosoite. Sähköpostiosoitteeseen lähetetään vahvistusviesti osoitteen aitouden varmistamiseksi.
+                </p>
+                <p>
+                  Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla.
+                  <b>
+                     Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
+                  </b>
+                </p>
+                <p>
+                  Sähköpostin vahvistamiseksi saat 6-numeroisen koodin antamaasi sähköpostiosoitteeseen. Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista roskaposti-kansiosi.
+                </p>
+                <p>
+                  <b>
+                    Älä sulje Helsinki-profiilin selainikkunaa, kun haet vahvistusviestin sähköpostistasi. Muuten järjestelmä olettaa sinun keskeyttäneen tunnistautumisprosessin.
+                  </b>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
+                      src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
+                    />
+                    <i>
+                      Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
+                      src="/src/userGuide/assets/06-11-sahkopostin-vahvistuskoodi.png"
+                    />
+                    <i>
+                      Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
+                      src="/src/userGuide/assets/07-12-sahkopostin-vahvistus.png"
+                    />
+                    <i>
+                      Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään.
+                    </i>
+                  </p>
+                </p>
+                <h4>
+                  Helsinki-profiilin luonti
+                </h4>
+                <p>
+                  Sähköpostin vahvistamisen jälkeen täytä nimitietosi ja anna salasana. Salasanassa pitää olla vähintään 12 merkkiä, pieniä ja isoja kirjaimia, numeroita sekä erikoismerkkejä.
+                </p>
+                <p>
+                  Vahvista vielä suostumus tietojesi käyttöön. Ilman suostumusta Helsinki-profiilia ei voida luoda, eivätkä palvelut voi käyttää tietojasi.
+                </p>
+                <p>
+                  Nyt sinulle on luotu Helsinki-profiili. Palveluihin tunnistautumiseen tarvitsemasi Helsinki-tunnus on tämä sähköpostiosoite-salasana-yhdistelmä.
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Helsink-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
+                      src="/src/userGuide/assets/13-helsinki-tunnus-teko.png"
+                    />
+                    <i>
+                      Helsink-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda.
+                    </i>
+                  </p>
+                </p>
+                <button
+                  aria-label="Close Sähköposti-tunnistautuminen"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Helsinki-tunnuksen_käyttö-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Close
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-3"
+              id="_Tunnistautumistapojen_yhdistäminen"
+              style="max-width: 800px; border: 1px solid #ffffff;"
             >
-              Tunnistautumistapojen yhdistäminen
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
+              >
+                <div
+                  aria-level="2"
+                  id="_Tunnistautumistapojen_yhdistäminen-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Tunnistautumistapojen_yhdistäminen-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Tunnistautumistapojen yhdistäminen
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Tunnistautumistapojen_yhdistäminen-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Tunnistautumistapojen_yhdistäminen-content"
+                role="region"
+                style="display: none;"
+              >
+                <p>
+                  Voit halutessasi yhdistää eri tunnistautumistavat yhdeksi Helsinki-profiiliksi, jolloin voit tarkastella ja hallinnoida kaikkia tietojasi ja hyödyntämiäsi palveluja kerralla. Tämä onnistuu tekemällä ensin Helsinki-tunnus sähköpostiosoite-salasana-yhdistelmällä ja käyttämällä sitten samaa sähköpostiosoitetta ensimmäisellä suomi.fi-tunnistautumisella.
+                </p>
+                <p>
+                  Jos Helsinki-profiili on luotu suomi.fi-tunnistautumisella, sisäänkirjautumisnäkymässä voi klikata
+                   
+                  <i>
+                    Olen unohtanut salasanani
+                  </i>
+                   -linkkiä. Tästä ohjeet seuraavassa osiossa 
+                  <a
+                    href="#_Unohtunut_salasana"
+                  >
+                    Unohtunut salasana
+                  </a>
+                  .
+                </p>
+                <button
+                  aria-label="Close Tunnistautumistapojen yhdistäminen"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Tunnistautumistapojen_yhdistäminen-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Close
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <h2
+              id="_Kirjautuminen"
+            >
+              Kirjautuminen
             </h2>
             <p>
-              Voit halutessasi yhdistää eri tunnistautumistavat yhdeksi Helsinki-profiiliksi, jolloin voit tarkastella ja hallinnoida kaikkia tietojasi ja hyödyntämiäsi palveluja kerralla. Tämä onnistuu tekemällä ensin Helsinki-tunnus sähköpostiosoite-salasana-yhdistelmällä ja käyttämällä sitten samaa sähköpostiosoitetta ensimmäisellä suomi.fi-tunnistautumisella.
+              Helsinki-profiililla voit kirjautua kaikkiin Helsingin kaupungin digitaalisiin palveluihin. Kirjautumisen voit tehdä käyttämää suomi.fi-tunnistautumista tai profiilin luomisen yhteydessä antamasi sähköpostiosoitteen ja salasanan.
             </p>
-            <p>
-              Jos Helsinki-profiili on luotu suomi.fi-tunnistautumisella, sisäänkirjautumisnäkymässä voi klikata 
-              <i>
-                Olen unohtanut salasanani
-              </i>
-               
-              -linkkiä. Tästä ohjeet seuraavassa osiossa
-               
-              <a
-                href="#_Unohtunut_salasana"
-              >
-                Unohtunut salasana
-              </a>
-              .
-            </p>
-            <h2
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-4"
               id="_Unohtunut_salasana"
+              style="max-width: 800px; border: 1px solid #ffffff;"
             >
-              Unohtunut salasana
-            </h2>
-            <p>
-              Jos et muista salasanaasi, voit luoda uuden kirjautumisikkunassa
-              <i>
-                Olen unohtanut salasanani
-              </i>
-               -linkistä. Salasanan ”unohtuminen” voi myös johtua siitä, että olet aiemmilla kerroilla kirjautunut palveluun suomi.fi-tunnistautuen, jolloin salasanaa ei ole tarvittu.
-            </p>
-            <img
-              alt="Klikkaa kirjautumisikkunassa Olen unohtanut salasanani -linkkiä."
-              height="490"
-              src="/src/userGuide/assets/14-salasanan-unohdus.png"
-              width="327"
-            />
-            <p>
-              <img
-                alt="Syötä sähköpostiosoitteesi avautuvaan kenttään, jotta saat salasanan uusimislinkin sähköpostiisi."
-                height="359"
-                src="/src/userGuide/assets/15-sahkoposti-salasanalle.png"
-                width="322"
-              />
-            </p>
-            <p>
-              <img
-                alt="Saat tiedon, että sinulle lähetetään sähköpostiviesti salasanan uusimista varten."
-                height="505"
-                src="/src/userGuide/assets/16-salasanan-vaihtopyynto.png"
-                width="284"
-              />
-            </p>
-            <p>
-              Sähköpostin antamisen jälkeen saat sähköpostiisi linkin uuden salasanan antamiseen. Linkki on voimassa 30 minuuttia.
-            </p>
-            <p>
-              <img
-                alt="Saamassasi sähköpostiviestissä on linkki uuden salasanan antamista varten. Linkki on voimassa 30 minuuttia. "
-                height="285"
-                src="/src/userGuide/assets/17-salasanan-vaihtoviesti.png"
-                width="482"
-              />
-            </p>
-            <p>
-              Salasanan pitää olla vähintään 12 merkkiä pitkä. Siinä pitää käyttää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.
-            </p>
-            <p>
-              <img
-                alt="Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä."
-                height="331"
-                src="/src/userGuide/assets/18-uusi-salasana.png"
-                width="323"
-              />
-            </p>
-            <h2
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
+              >
+                <div
+                  aria-level="2"
+                  id="_Unohtunut_salasana-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Unohtunut_salasana-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Unohtunut salasana
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Unohtunut_salasana-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Unohtunut_salasana-content"
+                role="region"
+                style="display: none;"
+              >
+                <p>
+                  Jos et muista salasanaasi, voit luoda uuden kirjautumisikkunassa
+                   
+                  <i>
+                    Olen unohtanut salasanani
+                  </i>
+                   -linkistä. Salasanan ”unohtuminen” voi myös johtua siitä, että olet aiemmilla kerroilla kirjautunut palveluun suomi.fi-tunnistautuen, jolloin salasanaa ei ole luotu.
+                </p>
+                <p>
+                  Sähköpostin antamisen jälkeen saat sähköpostiisi linkin uuden salasanan antamiseen. Linkki on voimassa 30 minuuttia.
+                </p>
+                <p>
+                  Salasanan pitää olla vähintään 12 merkkiä pitkä. Siinä pitää käyttää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Klikkaa kirjautumisikkunassa Olen unohtanut salasanani -linkkiä."
+                      src="/src/userGuide/assets/14-salasanan-unohdus.png"
+                    />
+                    <i>
+                      Klikkaa kirjautumisikkunassa Olen unohtanut salasanani -linkkiä.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Syötä sähköpostiosoitteesi avautuvaan kenttään, jotta saat salasanan uusimislinkin sähköpostiisi."
+                      src="/src/userGuide/assets/15-sahkoposti-salasanalle.png"
+                    />
+                    <i>
+                      Syötä sähköpostiosoitteesi avautuvaan kenttään, jotta saat salasanan uusimislinkin sähköpostiisi.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Saat tiedon, että sinulle lähetetään sähköpostiviesti salasanan uusimista varten."
+                      src="/src/userGuide/assets/16-salasanan-vaihtopyynto.png"
+                    />
+                    <i>
+                      Saat tiedon, että sinulle lähetetään sähköpostiviesti salasanan uusimista varten.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Saamassasi sähköpostiviestissä on linkki uuden salasanan antamista varten. Linkki on voimassa 30 minuuttia. "
+                      src="/src/userGuide/assets/17-salasanan-vaihtoviesti.png"
+                    />
+                    <i>
+                      Saamassasi sähköpostiviestissä on linkki uuden salasanan antamista varten. Linkki on voimassa 30 minuuttia. 
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä."
+                      src="/src/userGuide/assets/18-uusi-salasana.png"
+                    />
+                    <i>
+                      Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.
+                    </i>
+                  </p>
+                </p>
+                <button
+                  aria-label="Close Unohtunut salasana"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Unohtunut_salasana-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Close
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-5"
               id="_Ongelma_kirjautumisessa"
+              style="max-width: 800px; border: 1px solid #ffffff;"
             >
-              Ongelma tunnistautumisessa
-            </h2>
-            <p>
-              Kun siirryt palvelusta toiseen, tunnistautumistapa voi olla erilainen eri palveluissa. Esimerkiksi olit kirjautuneena ensimmäiseen palveluun Helsinki-tunnuksella eli sähköpostin ja salasanan yhdistelmällä, mutta toinen palvelu tarvitsee suomi.fi-tunnistautumisen. Tällöin saat ilmoituksen, ettei tunnistautumistapa ole yhteensopiva. Sinun tulee kirjautua ulos aiemmasta palvelusta, jotta voit tunnistautua uuteen palveluun. Kahta eri tunnistautumistapaa ei voi olla yhtaikaa avoinna.
-            </p>
-            <p>
-              <img
-                alt="Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun."
-                height="435"
-                src="/src/userGuide/assets/19-yhteensopimaton-kirjautuminen.png"
-                width="435"
-              />
-            </p>
-            <p>
-              <img
-                alt="Vahvista uloskirjautuminen aiemmasta palvelusta."
-                height="345"
-                src="/src/userGuide/assets/20-kirjautumislogout.png"
-                width="433"
-              />
-            </p>
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
+              >
+                <div
+                  aria-level="2"
+                  id="_Ongelma_kirjautumisessa-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Ongelma_kirjautumisessa-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Ongelma kirjautumisessa
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Ongelma_kirjautumisessa-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Ongelma_kirjautumisessa-content"
+                role="region"
+                style="display: none;"
+              >
+                <p>
+                  Kun siirryt palvelusta toiseen, tunnistautumistapa voi olla erilainen eri palveluissa. Esimerkiksi olit kirjautuneena ensimmäiseen palveluun Helsinki-tunnuksella eli sähköpostin ja salasanan yhdistelmällä, mutta toinen palvelu tarvitsee suomi.fi-tunnistautumisen. Tällöin saat ilmoituksen, ettei tunnistautumistapa ole yhteensopiva. Sinun tulee kirjautua ulos aiemmasta palvelusta, jotta voit tunnistautua uuteen palveluun. Kahta eri tunnistautumistapaa ei voi olla yhtaikaa avoinna.
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun."
+                      src="/src/userGuide/assets/19-yhteensopimaton-kirjautuminen.png"
+                    />
+                    <i>
+                      Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Vahvista uloskirjautuminen aiemmasta palvelusta."
+                      src="/src/userGuide/assets/20-kirjautumislogout.png"
+                    />
+                    <i>
+                      Vahvista uloskirjautuminen aiemmasta palvelusta.
+                    </i>
+                  </p>
+                </p>
+                <button
+                  aria-label="Close Ongelma kirjautumisessa"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Ongelma_kirjautumisessa-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Close
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
             <h2
               id="_Omien_tietojen_katselu"
             >
@@ -662,207 +1085,603 @@ Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profii
               >
                 https://profiili.hel.fi
               </a>
-               voit katsella ja muokata omia tietojasi ja miten palvelut niitä käyttävät:
+               voit katsella ja muokata omia tietojasi ja miten palvelut niitä käyttävät.
             </p>
-            <ul>
-              <li>
-                Voit lisätä puhelinnumeron.
-              </li>
-              <li>
-                Vaihtaa sähköpostiosoitteen.
-              </li>
-              <li>
-                Lisätä osoitetiedot.
-              </li>
-            </ul>
-            <p>
-              Viralliset tiedot tulevat profiiliin ja näkyvät vain suomi.fi-tunnistautuen. Näiden tietojen päivittäminen tehdään väestörekisterikeskuksen palvelussa.
-               
-            </p>
-            <p>
-              Jos päivität nimitietosi Helsinki-profiilissa, niin seuraavalla suomi.fi-tunnistautumiskerralla viralliset tiedot päivittävät ne.
-            </p>
-            <img
-              alt="Helsinki-profiilissa Omat tiedot -osiossa Viralliset tiedot tulevat suoraan väestörekisterikeskuksesta ja niiden päivittäminen tehdään myös siellä."
-              height="328"
-              src="/src/userGuide/assets/21-omat-tiedot.png"
-              width="482"
-            />
-            <p>
-              <img
-                alt="Helsinki-profiilissa Omat tiedot -osiossa Perustiedot ovat itse päivitettävissä."
-                height="289"
-                src="/src/userGuide/assets/22-omat-nimitiedot.png"
-                width="482"
-              />
-            </p>
-            <p>
-              Voit lisätä tai muuttaa itse syöttämiäsi tietoja Lisää-painikkeella tai Muokkaa-painikkeella, jos tiedot ovat jo olemassa. Tallenna-painiketta painamalla tiedot tallentuvat tietokantaan.
-               
-            </p>
-            <p>
-              <img
-                alt="Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi."
-                height="327"
-                src="/src/userGuide/assets/23-omat-yhteystiedot.png"
-                width="482"
-              />
-            </p>
-            <p>
-              Helsinki-profiilissa asiointikieli-kohta määrittää, millä kielellä esimerkiksi palvelun sähköpostit tulevat.
-               
-            </p>
-            <p>
-              <img
-                alt="Asiointikieli määrittää, millä kielellä saat viestejä palvelusta."
-                height="116"
-                src="/src/userGuide/assets/24-asiointikieli.png"
-                width="482"
-              />
-            </p>
-            <p>
-              Näet myös miten olet tunnistautunut Helsinki-profiiliin.
-              <img
-                alt="Helsinki-profiilin Omat tiedot -välilehdellä Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli suomi.fi-tunnistautuminen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella."
-                height="76"
-                src="/src/userGuide/assets/25-kirjautumistapa.png"
-                width="482"
-              />
-            </p>
-            <h2
-              id="_Tietojesi_käsittely_eri"
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-6"
+              id="_Profiili_tietojen_muokkaaminen"
+              style="max-width: 800px; border: 1px solid #ffffff;"
             >
-              Tietojesi käsittely eri palveluissa
-            </h2>
-            <p>
-              Palvelut hyödyntävät Helsinki-profiilin hallinnoimia tietoja ilmoittamallaan tavalla. Tunnistautumalla ensimmäisen kerran palveluun, näet mitä tietoja palvelu hyödyntää.
-            </p>
-            <p>
-              <img
-                alt="Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. 
-Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä."
-                height="463"
-                src="/src/userGuide/assets/26-olemassa-olevan-profiilin-kirjautuminen.png"
-                width="435"
-              />
-            </p>
-            <p>
-              Helsinki-profiilissa voit tarkistaa myöhemmin nämä tiedot sekä halutessasi poistaa tietosi palvelusta. Poisto ei ole mahdollista, jos asiointi on kesken palvelussa. On myös suositeltavaa
-               
-              <a
-                href="#_Tietojen_lataaminen"
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
               >
-                ladata omat tiedot talteen
-              </a>
-               ennen poistoa.
-            </p>
-            <p>
-              <img
-                alt="Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä tietojasi ne käyttävät. 
-Voit myös poistaa tietosi yksittäisistä palveluista."
-                height="455"
-                src="/src/userGuide/assets/27-kayttamasi-palvelut.png"
-                width="482"
-              />
-            </p>
-            <h2
+                <div
+                  aria-level="2"
+                  id="_Profiili_tietojen_muokkaaminen-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Profiili_tietojen_muokkaaminen-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Profiili-tietojen muokkaaminen
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Profiili_tietojen_muokkaaminen-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Profiili_tietojen_muokkaaminen-content"
+                role="region"
+                style="display: none;"
+              >
+                <p>
+                  Viralliset tiedot tulevat profiiliin ja näkyvät vain suomi.fi-tunnistautuen. Näiden tietojen päivittäminen tehdään väestörekisterikeskuksen palvelussa.
+                </p>
+                <p>
+                  Helsinki-profiilin omissa tiedoissa voit lisätä puhelinnumeron, vaihtaa sähköpostiosoitteen ja lisätä osoitetiedot. Jos vaihdat nimitietosi Helsinki-profiilissa, niin seuraavalla suomi.fi-tunnistautumiskerralla viralliset tiedot päivittävät ne.
+                </p>
+                <p>
+                  Voit lisätä tai muuttaa itse syöttämiäsi tietoja Lisää-painikkeella tai Muokkaa-painikkeella. Tiedot tallentuvat tietokantaan Tallenna-painikkeella.
+                </p>
+                <p>
+                  Helsinki-profiilin asiointikieli-kohta määrittää, millä kielellä esimerkiksi palvelun sähköpostit lähetetään. Näet myös, miten olet tunnistautunut Helsinki-profiiliin.
+                </p>
+                <p>
+                  <img
+                    alt="Helsinki-profiilissa Omat tiedot -osiossa Viralliset tiedot tulevat suoraan väestörekisterikeskuksesta ja niiden päivittäminen tehdään myös siellä."
+                    src="/src/userGuide/assets/21-omat-tiedot.png"
+                  />
+                  <i>
+                    Helsinki-profiilissa Omat tiedot -osiossa Viralliset tiedot tulevat suoraan väestörekisterikeskuksesta ja niiden päivittäminen tehdään myös siellä.
+                  </i>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Helsinki-profiilissa Omat tiedot -osiossa Perustiedot ovat itse päivitettävissä."
+                      src="/src/userGuide/assets/22-omat-nimitiedot.png"
+                    />
+                    <i>
+                      Helsinki-profiilissa Omat tiedot -osiossa Perustiedot ovat itse päivitettävissä.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi."
+                      src="/src/userGuide/assets/23-omat-yhteystiedot.png"
+                    />
+                    <i>
+                      Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi.
+                    </i>
+                  </p>
+                </p>
+                <button
+                  aria-label="Close Profiili-tietojen muokkaaminen"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Profiili_tietojen_muokkaaminen-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Close
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-7"
+              id="_Tietojen_käsittely_eri"
+              style="max-width: 800px; border: 1px solid #ffffff;"
+            >
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
+              >
+                <div
+                  aria-level="2"
+                  id="_Tietojen_käsittely_eri-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Tietojen_käsittely_eri-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Tietojen käsittely eri palveluissa
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Tietojen_käsittely_eri-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Tietojen_käsittely_eri-content"
+                role="region"
+                style="display: none;"
+              >
+                <p>
+                  Palvelut hyödyntävät Helsinki-profiilin hallinnoimia tietoja ilmoittamallaan tavalla. Tunnistautumalla ensimmäisen kerran palveluun, näet mitä tietoja palvelu hyödyntää.
+                </p>
+                <p>
+                  Helsinki-profiilissa voit tarkistaa myöhemmin nämä tiedot sekä halutessasi poistaa tietosi palvelusta. Poisto ei ole mahdollista, jos asiointi on kesken palvelussa. On myös suositeltavaa
+                   
+                  <a
+                    href="#_Tietojen_lataaminen"
+                  >
+                    ladata omat tiedot talteen
+                  </a>
+                   ennen poistoa.
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä."
+                      src="/src/userGuide/assets/24-olemassa-olevan-profiilin-kirjautuminen.png"
+                    />
+                    <i>
+                      Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista."
+                      src="/src/userGuide/assets/25-kayttamasi-palvelut.png"
+                    />
+                    <i>
+                      Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista.
+                    </i>
+                  </p>
+                </p>
+                <button
+                  aria-label="Close Tietojen käsittely eri palveluissa"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Tietojen_käsittely_eri-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Close
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-8"
               id="_Tietojen_lataaminen"
+              style="max-width: 800px; border: 1px solid #ffffff;"
             >
-              Tietojesi lataaminen
-            </h2>
-            <p>
-              Voit myös ladata eri palveluihin tallentamasi tiedot yhtenä json-tiedostona. Lisää tietoa
-               
-              <a
-                href="https://fi.wikipedia.org/wiki/JSON"
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
               >
-                json-tiedostomuodosta Wikipediassa (linkki avautuu uuteen ikkunaan)
-              </a>
-              .
-              <br />
-              Jos olet yhdistänyt suomi.fi-tunnistautumisen ja sähköpostiosoite+salasana-kirjautumisen samaan Helsinki-profiiliin, tietojen lataus pitää tehdä suomi.fi-tunnistautuneena.
-              <br />
-              <img
-                alt="Helsinki-profiilin Omat tiedot -osiossa voit ladata tietosi kaikista palveluista json-tiedostona."
-                height="107"
-                src="/src/userGuide/assets/28-tietojen-lataus.png"
-                width="482"
-              />
-            </p>
+                <div
+                  aria-level="2"
+                  id="_Tietojen_lataaminen-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Tietojen_lataaminen-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Tietojesi lataaminen
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Tietojen_lataaminen-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Tietojen_lataaminen-content"
+                role="region"
+                style="display: none;"
+              >
+                <p>
+                  Voit myös ladata eri palveluihin tallentamasi tiedot yhtenä json-tiedostona. Lisää tietoa
+                   
+                  <a
+                    href="https://fi.wikipedia.org/wiki/JSON"
+                  >
+                    json-tiedostomuodosta Wikipediassa (linkki avautuu uuteen ikkunaan)
+                  </a>
+                  . Jos olet yhdistänyt suomi.fi-tunnistautumisen ja sähköpostiosoite+salasana-kirjautumisen samaan Helsinki-profiiliin, tietojen lataus pitää tehdä suomi.fi-tunnistautuneena.
+                  <p>
+                    <p>
+                      <img
+                        alt="Helsinki-profiilin Omat tiedot -osiossa voit ladata tietosi kaikista palveluista json-tiedostona."
+                        src="/src/userGuide/assets/26-tietojen-lataus.png"
+                      />
+                      <i>
+                        Helsinki-profiilin Omat tiedot -osiossa voit ladata tietosi kaikista palveluista json-tiedostona.
+                      </i>
+                    </p>
+                  </p>
+                </p>
+                <button
+                  aria-label="Close Tietojesi lataaminen"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Tietojen_lataaminen-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Close
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
             <h2
               id="_Tietojen_poisto"
             >
-              Tietojesi poisto yksittäisestä palvelusta tai koko Helsinki-profiilista
+              Tietojen poisto
             </h2>
             <p>
               Voit poistaa tietosi joko yksittäisistä palveluista tai koko profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan tai anonymisoidaan, jos palvelu esim. lakisääteisenä joutuu niitä säilyttämään. Sinulla ei kuitenkaan ole poiston jälkeen pääsyä tietoihin, eikä niitä ole yhdistettävissä sinuun.
-               
             </p>
-            <p>
-              Jos olet yhdistänyt suomi.fi-tunnistautumisen ja sähköpostiosoite+salasana-kirjautumisen samaan Helsinki-profiiliin, palvelun poistaminen pitää tehdä suomi.fi-tunnistautuneena.
-            </p>
-            <p>
-              <img
-                alt="Voit poistaa tietosi Helsinki-profiilissa yksittäisen palvelun kohdalla Käyttämäsi palvelut -osiossa."
-                height="240"
-                src="/src/userGuide/assets/29-tietojen-poisto-palvelusta.png"
-                width="482"
-              />
-            </p>
-            <p>
-              Kun valitset poistettavan palvelun Käyttämäsi palvelut -välilehdellä, saat pop-up-ikkunaan vahvistusviestin poistosta.
-               
-            </p>
-            <p>
-              <img
-                alt="Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä pop-up-vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa."
-                height="239"
-                src="/src/userGuide/assets/30-tietojen-poisto-palvelusta-pop-up.png"
-                width="482"
-              />
-            </p>
-            <p>
-              <img
-                alt="Saat ruudulle vielä vahvistusviestin, että tiedot on poistettu kyseisestä palvelusta."
-                height="193"
-                src="/src/userGuide/assets/31-tietojen-poisto-palvelusta-pop-up-varmistusviesti.png"
-                width="421"
-              />
-            </p>
-            <p>
-              Jos haluat poistaa koko Helsinki-profiilin, voit tehdä sen Poista omat tiedot -näppäintä painamalla. Tämän jälkeen ruudulle tulee pop-up-ikkuna, jossa vielä varmistetaan, että haluat poistaa tietosi. Vahvistamalla pyynnön kaikki tiedot poistetaan profiilista sekä kaikista asiointipalveluista, jos mitään asiointia ei ole kesken.
-            </p>
-            <p>
-              Jotkin lakisääteiset asiointipalvelut voivat edellyttää tietojen säilyttämistä määräajan tai pysyvästi. Asioinnista ja asiointipalvelusta riippuen tiedot voidaan anonymisoida joissakin tapauksissa. Jos lakisääteisen palvelun pitää säilyttää tiedot, tällöin profiilia tai kyseisen palvelun käyttöoikeutta tietoihin ei voida poistaa.
-            </p>
-            <p>
-              Jos olet yhdistänyt suomi.fi-tunnistautumisen ja sähköpostiosoite+salasana-kirjautumisen samaan Helsinki-profiiliin, profiilin poisto pitää tehdä suomi.fi-tunnistautuneena.
-            </p>
-            <p>
-              Helsinki-profiilin poistamisen jälkeen voit aina tarvittaessa tehdä uuden profiilin, mutta kaikki aiemmat tiedot on menetetty.
-            </p>
-            <p>
-              <img
-                alt="Helsinki-profiilin Omat tiedot -osiossa on painike Poista omat tiedot, jolla voit poistaa koko Helsinki-profiilin ja eri palveluissa käytetyt tietosi."
-                height="146"
-                src="/src/userGuide/assets/32-tietojen-poisto.png"
-                width="482"
-              />
-            </p>
-            <p>
-              <img
-                alt="Ruudulle tulee vielä varmistusviesti pop-up-ikkunaan, jotta tietoja ei poisteta vahingossa."
-                height="173"
-                src="/src/userGuide/assets/33-tietojen-poisto-popup.png"
-                width="391"
-              />
-            </p>
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-9"
+              id="_Tietojen_poisto"
+              style="max-width: 800px; border: 1px solid #ffffff;"
+            >
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
+              >
+                <div
+                  aria-level="2"
+                  id="_Tietojen_poisto-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Tietojen_poisto-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Tietojesi poisto yksittäisestä palvelusta
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Tietojen_poisto-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Tietojen_poisto-content"
+                role="region"
+                style="display: none;"
+              >
+                <p>
+                  Jos olet yhdistänyt suomi.fi-tunnistautumisen ja sähköpostiosoite+salasana-kirjautumisen samaan Helsinki-profiiliin, palvelun poistaminen pitää tehdä suomi.fi-tunnistautuneena.
+                </p>
+                <p>
+                  Kun valitset poistettavan palvelun Käyttämäsi palvelut -välilehdellä, saat pop-up-ikkunaan vahvistusviestin poistosta.
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Voit poistaa tietosi Helsinki-profiilissa yksittäisen palvelun kohdalla Käyttämäsi palvelut -osiossa."
+                      src="/src/userGuide/assets/27-tietojen-poisto-palvelusta.png"
+                    />
+                    <i>
+                      Voit poistaa tietosi Helsinki-profiilissa yksittäisen palvelun kohdalla Käyttämäsi palvelut -osiossa.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä pop-up-vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa."
+                      src="/src/userGuide/assets/28-tietojen-poisto-palvelusta-pop-up.png"
+                    />
+                    <i>
+                      Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä pop-up-vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa.
+                    </i>
+                  </p>
+                </p>
+                <button
+                  aria-label="Close Tietojesi poisto yksittäisestä palvelusta"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Tietojen_poisto-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Close
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-10"
+              id="_Profiilin_poisto"
+              style="max-width: 800px; border: 1px solid #ffffff;"
+            >
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
+              >
+                <div
+                  aria-level="2"
+                  id="_Profiilin_poisto-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Profiilin_poisto-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Helsinki-profiilin poisto
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Profiilin_poisto-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Profiilin_poisto-content"
+                role="region"
+                style="display: none;"
+              >
+                <p>
+                  Jos haluat poistaa koko Helsinki-profiilin, voit tehdä sen Poista omat tiedot -näppäintä painamalla. Tämän jälkeen ruudulle tulee pop-up-ikkuna, jossa vielä varmistetaan, että haluat poistaa tietosi. Vahvistamalla pyynnön kaikki tiedot poistetaan profiilista sekä kaikista asiointipalveluista, jos mitään asiointia ei ole kesken.
+                </p>
+                <p>
+                  Jotkin lakisääteiset asiointipalvelut voivat edellyttää tietojen säilyttämistä määräajan tai pysyvästi. Asioinnista ja asiointipalvelusta riippuen tiedot voidaan anonymisoida joissakin tapauksissa. Jos lakisääteisen palvelun pitää säilyttää tiedot, tällöin profiilia tai kyseisen palvelun käyttöoikeutta tietoihin ei voida poistaa.
+                </p>
+                <p>
+                  Jos olet yhdistänyt suomi.fi-tunnistautumisen ja sähköpostiosoite+salasana-kirjautumisen samaan Helsinki-profiiliin, profiilin poisto pitää tehdä suomi.fi-tunnistautuneena.
+                </p>
+                <p>
+                  Helsinki-profiilin poistamisen jälkeen voit aina tarvittaessa tehdä uuden profiilin, mutta kaikki aiemmat tiedot on menetetty.
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Helsinki-profiilin Omat tiedot -osiossa on painike Poista omat tiedot, jolla voit poistaa koko Helsinki-profiilin ja eri palveluissa käytetyt tietosi."
+                      src="/src/userGuide/assets/29-tietojen-poisto.png"
+                    />
+                    <i>
+                      Helsinki-profiilin Omat tiedot -osiossa on painike Poista omat tiedot, jolla voit poistaa koko Helsinki-profiilin ja eri palveluissa käytetyt tietosi.
+                    </i>
+                  </p>
+                </p>
+                <p>
+                  <p>
+                    <img
+                      alt="Ruudulle tulee vielä varmistusviesti pop-up-ikkunaan, jotta tietoja ei poisteta vahingossa."
+                      src="/src/userGuide/assets/30-tietojen-poisto-popup.png"
+                    />
+                    <i>
+                      Ruudulle tulee vielä varmistusviesti pop-up-ikkunaan, jotta tietoja ei poisteta vahingossa.
+                    </i>
+                  </p>
+                </p>
+                <button
+                  aria-label="Close Helsinki-profiilin poisto"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Profiilin_poisto-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Close
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </main>
     <footer
-      class="Footer-module_footer__1aD3T custom-theme-1"
+      class="Footer-module_footer__1aD3T custom-theme-11"
     >
       <div
         class="Koros-module_koros__1r3rg Footer-module_koros__Orx_W"
@@ -877,7 +1696,7 @@ Voit myös poistaa tietosi yksittäisistä palveluista."
           <defs>
             <pattern
               height="85"
-              id="koros_basic-2"
+              id="koros_basic-12"
               patternUnits="userSpaceOnUse"
               width="96"
               x="0"
@@ -890,7 +1709,7 @@ Voit myös poistaa tietosi yksittäisistä palveluista."
             </pattern>
           </defs>
           <rect
-            fill="url(#koros_basic-2)"
+            fill="url(#koros_basic-12)"
             height="85"
             style="shape-rendering: crispEdges;"
             width="100%"

@@ -20,6 +20,14 @@
   margin: var(--spacing-layout-2-xs) 0;
 }
 
-ul {
-  margin-top: 0;
+
+.inner-content img {
+  border: solid 2px #000000;
+  max-width: 600px;
+  width: 100%;
+}
+
+.inner-content i {
+color: var(--color-black-90);
+display: block;
 }

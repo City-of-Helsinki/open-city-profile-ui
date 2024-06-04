@@ -1,13 +1,9 @@
 /* eslint-disable max-len */
 import React, { Fragment, ReactElement } from 'react';
-import {
-  Accordion,
-  AccordionProps,
-  Button,
-  IconDownload,
-  Link,
-} from 'hds-react';
+import { Link } from 'hds-react';
 
+import UserGuideAccordion from './UserGuideAccordion';
+import UserGuideImage from './UserGuideImage';
 import image001 from './assets/01-sisaankirjautuminen-en.png';
 import image002 from './assets/02-sisaankirjautuminen-tunnistamo-en.png';
 import image003 from './assets/03-vahvan-valinta-en.png';
@@ -27,43 +23,20 @@ import image016 from './assets/19-yhteensopimaton-kirjautuminen-en.png';
 import image017 from './assets/20-kirjautumislogout-en.png';
 import image018 from './assets/21-omat-tiedot-en.png';
 import image019 from './assets/22-omat-nimitiedot-en.png';
-import image020 from './assets/23-omat-yhteystiedot-en.png';
-import image021 from './assets/24-asiointikieli-en.png';
-import image022 from './assets/25-kirjautumistapa-en.png';
-import image023 from './assets/26-olemassa-olevan-profiilin-kirjautuminen-en.png';
-import image024 from './assets/27-kayttamasi-palvelut-en.png';
-import image025 from './assets/28-tietojen-lataus-en.png';
-import image026 from './assets/29-tietojen-poisto-palvelusta-en.png';
-import image027 from './assets/30-tietojen-poisto-palvelusta-pop-up-en.png';
-import image028 from './assets/31-tietojen-poisto-palvelusta-pop-up-varmistusviesti-en.png';
-import image029 from './assets/32-tietojen-poisto-en.png';
-import image030 from './assets/33-tietojen-poisto-popup-en.png';
+import image023 from './assets/23-omat-yhteystiedot-en.png';
+import image024 from './assets/24-olemassa-olevan-profiilin-kirjautuminen-en.png';
+import image025 from './assets/25-kayttamasi-palvelut-en.png';
+import image026 from './assets/26-tietojen-lataus-en.png';
+import image027 from './assets/27-tietojen-poisto-palvelusta-en.png';
+import image028 from './assets/28-tietojen-poisto-palvelusta-pop-up-en.png';
+import image029 from './assets/29-tietojen-poisto-en.png';
+import image030 from './assets/30-tietojen-poisto-popup-en.png';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 function UserGuideEn(): ReactElement {
-  const accordionStyle = {
-    maxWidth: '800px',
-    borderTop: 0,
-    borderBottom: 1,
-    border: 'solid 1px #ffffff',
-  };
-
-  const theme = {
-    '--background-color': '#F2F2F2',
-  };
-
-  const accordionProps: AccordionProps = {
-    style: accordionStyle,
-    size: 'l',
-    card: true,
-    language: 'en',
-    theme,
-  };
-
   return (
     <Fragment>
       <FocusableH1>Helsinki profile guide</FocusableH1>
-
       <p>
         The Helsinki profile is the customer profile of a citizen using the
         city&apos;s digital services. It is the primary means of identification
@@ -74,13 +47,10 @@ function UserGuideEn(): ReactElement {
         services. The Helsinki profile is used for identification and
         authentication to the different digital applications:
       </p>
-
       <Link href="/guidesv.pdf" download="user-guide.pdf" useButtonStyles>
         Download printable version (.pdf)
       </Link>
-
       <h2 id="_Identify_to_the">Identify to the service</h2>
-
       <p>
         The most common way to use a Helsinki profile is to log in to one of the
         City of Helsinki&rsquo;s services, where the Helsinki profile acts as a
@@ -96,11 +66,10 @@ function UserGuideEn(): ReactElement {
         suomi.fi, for example with your bank details, or by using an e-mail and
         a password.
       </p>
-
-      <Accordion
+      hep
+      <UserGuideAccordion
         id="_Suomi.fi_identification"
         heading="Suomi.fi identification"
-        {...accordionProps}
       >
         <p>
           After pressing the Login link in the Service, the user is presented
@@ -110,19 +79,16 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
-            width={217}
-            height={399}
+          <UserGuideImage
             src={image001}
             alt="In the authentication window, select suomi.fi identification."
           />
+          <i>In the authentication window, select suomi.fi identification.</i>
         </p>
 
         <p>
-          <img
+          <UserGuideImage
             src={image002}
-            width={405}
-            height={250}
             alt="In the authentication window, select suomi.fi identification."
           />
         </p>
@@ -132,10 +98,8 @@ function UserGuideEn(): ReactElement {
           different login options. The options are the same as for other
           government services offering strong authentication.
         </p>
-        <img
+        <UserGuideImage
           src={image003}
-          width={482}
-          height={397}
           alt="Choose your bank or mobile account as your suomi.fi authentication option."
         />
         <p>
@@ -145,10 +109,8 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
+          <UserGuideImage
             src={image004}
-            width={425}
-            height={325}
             alt="Check that your details are correct when you switch back to the City of Helsinki service."
           />
         </p>
@@ -170,10 +132,8 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
+          <UserGuideImage
             src={image005}
-            width={389}
-            height={481}
             alt={`Your email address will serve as your login to City of Helsinki services. 
             By using the same email address for both the suomi.fi login and the Helsinki ID, 
             you will have one Helsinki profile. The merge cannot be unmerged later.`}
@@ -194,17 +154,13 @@ function UserGuideEn(): ReactElement {
             process.
           </b>
         </p>
-        <img
+        <UserGuideImage
           src={image006}
-          width={482}
-          height={323}
           alt="The email contains a 6-digit verification code to confirm that the email address is genuine."
         />
         <p>Enter the number in the box on the screen.</p>
-        <img
+        <UserGuideImage
           src={image007}
-          width={427}
-          height={499}
           alt="The 6-digit number of the email must be entered in the verification code field in the browser window."
         />
         <p>
@@ -212,10 +168,8 @@ function UserGuideEn(): ReactElement {
           to the use of your data. Without consent, Helsinki profile cannot be
           created and the services cannot use your data.
         </p>
-        <img
+        <UserGuideImage
           src={image008}
-          width={216}
-          height={508}
           alt={`Before you can use the service you want or before you can create 
             Helsinki profile, you must give your consent to the use of your data. 
             Without consent, your data cannot be used and therefore no profile can be created.`}
@@ -240,15 +194,11 @@ function UserGuideEn(): ReactElement {
           suomi.fi, the authentication option of your choice and you are inside
           the service.
         </p>
-      </Accordion>
-
-      <Accordion
+      </UserGuideAccordion>
+      <UserGuideAccordion
         id="_Email_and_password"
         heading="Email and password identification"
-        {...accordionProps}
       >
-        <h3 id="_Email_and_password">Email and password identification</h3>
-
         <p>The other authentication options for the Helsinki profile are</p>
 
         <ul>
@@ -257,10 +207,8 @@ function UserGuideEn(): ReactElement {
           <li>the Google or Yle ID will be phased out in 2024</li>
         </ul>
         <p>
-          <img
+          <UserGuideImage
             src={image009}
-            width={325}
-            height={493}
             alt={`The Helsinki ID consists of an email and password combination 
             by clicking on the Create a new Helsinki profile button.`}
           />
@@ -293,10 +241,8 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
+          <UserGuideImage
             src={image005}
-            width={389}
-            height={481}
             alt={`Your email address will serve as your login to City of Helsinki services. 
             By using the same email address for both the suomi.fi login and the Helsinki ID, 
             you will have one Helsinki profile. The merge cannot be unmerged later.`}
@@ -317,17 +263,13 @@ function UserGuideEn(): ReactElement {
             process.
           </b>
         </p>
-        <img
+        <UserGuideImage
           src={image006}
-          width={482}
-          height={323}
           alt="The email contains a 6-digit verification code to confirm that the email address is genuine."
         />
         <p>Enter the number in the box on the screen.</p>
-        <img
+        <UserGuideImage
           src={image007}
-          width={427}
-          height={499}
           alt="The 6-digit number of the email must be entered in the verification code field in the browser window."
         />
         <p>
@@ -344,12 +286,10 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
+          <UserGuideImage
             src={image010}
-            width={218}
-            height={409}
             alt={`When you create Helsinki profile, you still have to fill in 
-            your name and password. &#10;You will also need to give your consent 
+            your name and password. You will also need to give your consent 
             for your data to be used in order to create Helsinki profile.`}
           />
         </p>
@@ -359,12 +299,10 @@ function UserGuideEn(): ReactElement {
           authenticate to the services is this email address/password
           combination.
         </p>
-      </Accordion>
-
-      <Accordion
+      </UserGuideAccordion>
+      <UserGuideAccordion
         id="_Combining_identification_methods"
         heading="Combining identification methods"
-        {...accordionProps}
       >
         <p>
           If you wish, you can combine different authentication methods into a
@@ -380,13 +318,8 @@ function UserGuideEn(): ReactElement {
           screen. See the <a href="#_Forgotten_password">Forgotten password</a>
           section below for instructions on how to do this.
         </p>
-      </Accordion>
-
-      <Accordion
-        id="_Forgotten_password"
-        heading="Forgotten password"
-        {...accordionProps}
-      >
+      </UserGuideAccordion>
+      <UserGuideAccordion id="_Forgotten_password" heading="Forgotten password">
         <p>
           If you can&apos;t remember your password, you can create a new one in
           the login window using the <i>I forgot my password</i>
@@ -394,24 +327,18 @@ function UserGuideEn(): ReactElement {
           you have previously logged in to the service using suomi.fi, in which
           case you didn&apos;t have to create a password.
         </p>
-        <img
+        <UserGuideImage
           src={image011}
-          width={325}
-          height={493}
           alt="In the login window, click on the I forgot my password link."
         />
         <p>
-          <img
+          <UserGuideImage
             src={image012}
-            width={328}
-            height={324}
             alt="Enter your email address in the box that appears to receive a password renewal link in your email."
           />
         </p>
-        <img
+        <UserGuideImage
           src={image013}
-          width={284}
-          height={505}
           alt="You will be informed that an email will be sent to you to renew your password."
         />
 
@@ -421,10 +348,8 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
+          <UserGuideImage
             src={image014}
-            width={482}
-            height={308}
             alt={`In the email you receive, there will be a link to enter a new password. 
             The link will be valid for 30 minutes.`}
           />
@@ -436,21 +361,17 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
+          <UserGuideImage
             src={image015}
-            width={325}
-            height={337}
             alt={`In the password change window, you must enter the same password twice. 
             The password must be at least 12 characters long. The password must contain 
             both upper and lower case letters, numbers and special characters.`}
           />
         </p>
-      </Accordion>
-
-      <Accordion
+      </UserGuideAccordion>
+      <UserGuideAccordion
         id="_Problem_with_identification"
         heading="Problem with identification"
-        {...accordionProps}
       >
         <p>
           When you move from one service to another, the way you authenticate
@@ -464,10 +385,8 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
+          <UserGuideImage
             src={image016}
-            width={388}
-            height={333}
             alt={`An incompatible login method means for example that you have logged 
             in to one service with an email/password combination and you move on to 
             the next service, which requires a suomi.fi authentication. In this case, 
@@ -476,16 +395,16 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
+          <UserGuideImage
             src={image017}
-            width={433}
-            height={345}
             alt="Confirm the logout from a previous service."
           />
         </p>
-
-        <h2 id="_Viewing_and_editing">Viewing and editing your own data</h2>
-
+      </UserGuideAccordion>
+      <UserGuideAccordion
+        id="_Viewing_and_editing"
+        heading="Viewing and editing your own data"
+      >
         <p>
           By authenticating to your Helsinki profile at
           <a href="https://profiili.hel.fi">https://profiili.hel.fi</a>
@@ -510,20 +429,16 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
+          <UserGuideImage
             src={image018}
-            width={481}
-            height={323}
             alt={`In the My Information section of the Helsinki profile, official information 
             comes directly from the Population Register Centre and is updated there as well.`}
           />
         </p>
 
         <p>
-          <img
+          <UserGuideImage
             src={image019}
-            width={482}
-            height={295}
             alt="In your Helsinki profile, in the My information section, you can update the basic data yourself."
           />
         </p>
@@ -536,10 +451,8 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
-            src={image020}
-            width={482}
-            height={346}
+          <UserGuideImage
+            src={image023}
             alt="You can add and edit your other address details, your phone number and your email address."
           />
         </p>
@@ -551,10 +464,8 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
-            src={image021}
-            width={482}
-            height={115}
+          <UserGuideImage
+            src={image023}
             alt="The language of communication determines the language in which you receive messages from the service."
           />
         </p>
@@ -564,179 +475,151 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          <img
-            src={image022}
-            width={482}
-            height={72}
+          <UserGuideImage
+            src={image023}
             alt={`On the My information section of your Helsinki profile, the authentication 
             method tells you how you are logged in to the service, i.e. suomi.fi authentication 
             or an email/password combination, i.e. the Helsinki ID.`}
           />
         </p>
-      </Accordion>
-
-      <h2 id="_Processing_of_your">
-        Processing of your data by different services
-      </h2>
-
-      <p>
-        The services will use the data managed by the Helsinki Profile as
-        indicated. The first time you authenticate to a service, you can see
-        what information the service uses.
-      </p>
-
-      <p>
-        <img
-          src={image023}
-          width={432}
-          height={452}
-          alt={`When you authenticate to the new service, you will be asked to 
-            consent to the use of your data required by the service. &#10;You can 
+      </UserGuideAccordion>
+      <UserGuideAccordion
+        id="_Processing_of_your"
+        heading="Processing of your data by different services"
+      >
+        <p>
+          The services will use the data managed by the Helsinki Profile as
+          indicated. The first time you authenticate to a service, you can see
+          what information the service uses.
+        </p>
+        <p>
+          <UserGuideImage
+            src={image023}
+            alt={`When you authenticate to the new service, you will be asked to 
+            consent to the use of your data required by the service. You can 
             later return to this information on the Your services section of your Helsinki profile.`}
-        />
-      </p>
-
-      <p>
-        In your Helsinki profile, you can check this information later and, if
-        you wish, delete your data from the service. It is not possible to
-        delete your data if your service process has not been completed. It is
-        also advisable to{' '}
-        <a href="#_Download_your_information">download your own information</a>{' '}
-        before deleting it.
-        <img
-          src={image024}
-          width={482}
-          height={472}
-          alt={`In the Your services used section of your Helsinki profile, you can 
-            see all the services you are authenticated to and what data they use. &#10;
+          />
+        </p>
+        <p>
+          In your Helsinki profile, you can check this information later and, if
+          you wish, delete your data from the service. It is not possible to
+          delete your data if your service process has not been completed. It is
+          also advisable to{' '}
+          <a href="#_Download_your_information">
+            download your own information
+          </a>{' '}
+          before deleting it.
+          <UserGuideImage
+            src={image024}
+            alt={`In the Your services used section of your Helsinki profile, you can 
+            see all the services you are authenticated to and what data they use. 
             You can also delete your data from individual services.`}
-        />
-      </p>
-
-      <h2 id="_Download_your_information">Download your information</h2>
-
-      <p>
-        You can also download the data you have stored in different services as
-        a single json file. For more information on{' '}
-        <a href="https://fi.wikipedia.org/wiki/JSON">
-          the
-          <u>json file format, see Wikipedia (link opens in a new window)</u>
-        </a>
-        .
-      </p>
-
-      <p>
-        If you have combined the suomi.fi authentication and the email
-        address+password login in the same Helsinki profile, the data download
-        must be done with the suomi.fi authentication.
-      </p>
-
-      <p>
-        <img
-          src={image025}
-          width={482}
-          height={107}
-          alt={`In the My information section of your Helsinki profile, 
+          />
+        </p>
+      </UserGuideAccordion>
+      <UserGuideAccordion
+        id="_Download_your_information"
+        heading="Download your information"
+      >
+        <p>
+          You can also download the data you have stored in different services
+          as a single json file. For more information on{' '}
+          <a href="https://fi.wikipedia.org/wiki/JSON">
+            the
+            <u>json file format, see Wikipedia (link opens in a new window)</u>
+          </a>
+          .
+        </p>
+        <p>
+          If you have combined the suomi.fi authentication and the email
+          address+password login in the same Helsinki profile, the data download
+          must be done with the suomi.fi authentication.
+        </p>
+        <p>
+          <UserGuideImage
+            src={image025}
+            alt={`In the My information section of your Helsinki profile, 
             you can download your data for all services as a json file.`}
-        />
-      </p>
-
-      <h2 id="_Deleting_your_information">
-        Deleting your information from a single service or from your entire
-        Helsinki profile{' '}
-      </h2>
-
-      <p>
-        You can delete your data either for individual services or for your
-        entire profile. When you select the service you want to delete on the
-        Your services section, there will be a pop-up window with a confirmation
-        message about the deletion. Upon deletion, all your data from the
-        service will be deleted or anonymised if, for example, the service is
-        required by law to retain it. However, you will not have access to the
-        data after deletion nor will it be linked to you.
-      </p>
-
-      <p>
-        If you have combined your suomi.fi authentication and email
-        address+password login in the same Helsinki profile, you must delete the
-        service while authenticated with suomi.fi.
-      </p>
-
-      <p>
-        <img
-          src={image026}
-          width={482}
-          height={237}
-          alt={`You can delete your data in your Helsinki profile for an individual 
+          />
+        </p>
+      </UserGuideAccordion>
+      <UserGuideAccordion
+        id="_Deleting_your_information"
+        heading="Deleting your information from a single service or from your entire Helsinki profile"
+      >
+        <p>
+          You can delete your data either for individual services or for your
+          entire profile. When you select the service you want to delete on the
+          Your services section, there will be a pop-up window with a
+          confirmation message about the deletion. Upon deletion, all your data
+          from the service will be deleted or anonymised if, for example, the
+          service is required by law to retain it. However, you will not have
+          access to the data after deletion nor will it be linked to you.
+        </p>
+        <p>
+          If you have combined your suomi.fi authentication and email
+          address+password login in the same Helsinki profile, you must delete
+          the service while authenticated with suomi.fi.
+        </p>
+        <p>
+          <UserGuideImage
+            src={image026}
+            alt={`You can delete your data in your Helsinki profile for an individual 
             service in the Your services section.`}
-        />
-      </p>
-
-      <p>
-        <img
-          src={image027}
-          width={481}
-          height={233}
-          alt={`After clicking on the "Delete your data from this service" button, you will 
+          />
+        </p>
+        <p>
+          <UserGuideImage
+            src={image027}
+            alt={`After clicking on the "Delete your data from this service" button, you will 
             receive a pop-up confirmation message on the screen to prevent accidental deletion.`}
-        />
-      </p>
-
-      <p>
-        <img
-          src={image028}
-          width={448}
-          height={245}
-          alt="You will receive a confirmation message that the data has been removed from the service."
-        />
-      </p>
-
-      <p>
-        If you want to delete your entire Helsinki profile, you can do so by
-        pressing the <i>Delete my information</i> button. You will then see a
-        pop-up window where you will be asked to confirm that you want to delete
-        your information. After confirming the request, all data will be deleted
-        from the profile and from all services, if no service is pending.
-      </p>
-
-      <p>
-        Some statutory services may require data to be retained for a limited or
-        permanent period. Depending on the transaction and the service, data may
-        be anonymized in some cases. If a statutory service is required to
-        retain data, the profile or the data used by that service cannot be
-        deleted.
-      </p>
-
-      <p>
-        If you have combined the suomi.fi authentication and the email
-        address+password login in the same Helsinki profile, you must delete the
-        profile while authenticated with suomi.fi.
-      </p>
-
-      <p>
-        After deleting your Helsinki profile, you can always create a new
-        profile, if necessary, but all previous data will be lost.
-      </p>
-      <img
-        src={image029}
-        width={481}
-        height={139}
-        alt={`
+          />
+        </p>
+        <p>
+          <UserGuideImage
+            src={image028}
+            alt="You will receive a confirmation message that the data has been removed from the service."
+          />
+        </p>
+        <p>
+          If you want to delete your entire Helsinki profile, you can do so by
+          pressing the <i>Delete my information</i> button. You will then see a
+          pop-up window where you will be asked to confirm that you want to
+          delete your information. After confirming the request, all data will
+          be deleted from the profile and from all services, if no service is
+          pending.
+        </p>
+        <p>
+          Some statutory services may require data to be retained for a limited
+          or permanent period. Depending on the transaction and the service,
+          data may be anonymized in some cases. If a statutory service is
+          required to retain data, the profile or the data used by that service
+          cannot be deleted.
+        </p>
+        <p>
+          If you have combined the suomi.fi authentication and the email
+          address+password login in the same Helsinki profile, you must delete
+          the profile while authenticated with suomi.fi.
+        </p>
+        <p>
+          After deleting your Helsinki profile, you can always create a new
+          profile, if necessary, but all previous data will be lost.
+        </p>
+        <UserGuideImage
+          src={image029}
+          alt={`
             In the My information section of your Helsinki profile, there is a Delete my 
             information button that allows you to delete your entire Helsinki profile
              and your information used in different services.`}
-      />
-
-      <p>
-        <img
-          id="Kuva 1"
-          src={image030}
-          width={390}
-          height={226}
-          alt={`A confirmation message is also displayed in a pop-up window 
-            to prevent accidental deletion of the data.`}
         />
-      </p>
+        <p>
+          <UserGuideImage
+            src={image030}
+            alt={`A confirmation message is also displayed in a pop-up window 
+            to prevent accidental deletion of the data.`}
+          />
+        </p>
+      </UserGuideAccordion>
     </Fragment>
   );
 }
