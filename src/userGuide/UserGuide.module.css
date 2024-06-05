@@ -20,24 +20,49 @@
   margin: var(--spacing-layout-2-xs) 0;
 }
 
+.inner-content p.summary {
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .inner-content {
+    padding: 0;
+  }
+
+  .content {
+    padding-top: 0;
+    margin-top: 0
+  }
+}
+
 .inner-content img {
-  border: solid 2px #000000;
+  border: solid 2px var(--color-black);
   max-width: 600px;
   width: 100%;
 }
 
-a.download-link:not(:disabled) {
-  border: solid 2px black;
-  background-color: white;
-  color: black;
+.inner-content p.image-text {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
-a.download-link:not(:disabled):active {
-  border: solid 2px black;
+a.download-link:not(:disabled) {
+  border: solid 2px var(--color-black);
   background-color: white;
-  color: black;
+  color: var(--color-black);
+  margin-top: var(--spacing-layout-xs);
+}
+
+a.download-link:not(:disabled):active:hover {
+  border: solid 2px var(--color-black);
+  background-color: #00005E26;
+  color: var(--color-black-100);
+}
+
+a.download-link:not(:disabled):hover {
+  background-color: #00005E26;
 }
 
 a.download-link:not(:disabled) span:first-of-type {
-  margin-left: 16px;;
+  margin-left: var(--spacing-layout-2-xs);
 }

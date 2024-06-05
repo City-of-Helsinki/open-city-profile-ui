@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { Accordion, AccordionProps } from 'hds-react';
 
 import styles from './UserGuide.module.css';
-
+import { useMobile } from '../profile/hooks/useMobile';
 interface UserGuideAccordionProps {
   children: ReactNode;
   heading: string;
@@ -14,6 +14,8 @@ function UserGuideAccordion({
   id,
   heading,
 }: UserGuideAccordionProps): React.ReactElement {
+  const isMobile = useMobile();
+
   const accordionStyle = {
     maxWidth: '800px',
     borderTop: 0,
@@ -27,7 +29,7 @@ function UserGuideAccordion({
 
   const accordionProps: AccordionProps = {
     style: accordionStyle,
-    size: 'l',
+    size: isMobile ? 's' : 'l',
     card: true,
     language: 'en',
     theme,

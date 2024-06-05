@@ -35,21 +35,21 @@ import image029 from './assets/29-tietojen-poisto-en.png';
 import image030 from './assets/30-tietojen-poisto-popup-en.png';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
-function UserGuideEn(): ReactElement {
-  const tableOfContents = [
-    { title: 'Create a Helsinki profile', href: '#_Create_a_Helsinki_profile' },
-    { title: 'Login', href: '#_Login' },
-    {
-      title: 'Viewing and editing your own data',
-      href: '#_viewing_and_editing',
-    },
-    { title: 'Deleting your information', href: '#_Deleting_your_information' },
-  ];
+const tableOfContents = [
+  { title: 'Create a Helsinki profile', href: '#_Create_a_Helsinki_profile' },
+  { title: 'Login', href: '#_Login' },
+  {
+    title: 'Viewing and editing your own data',
+    href: '#_viewing_and_editing',
+  },
+  { title: 'Deleting your information', href: '#_Deleting_your_information' },
+];
 
+function UserGuideEn(): ReactElement {
   return (
     <Fragment>
       <FocusableH1>Helsinki profile guide</FocusableH1>
-      <p>
+      <p className={styles['summary']}>
         The Helsinki profile is the customer profile of a citizen using the
         city&apos;s digital services. It is the primary means of identification
         for the City&apos;s digital services. The Helsinki Profile brings
