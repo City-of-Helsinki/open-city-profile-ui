@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.10.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.10.0...open-city-profile-ui-v1.10.1) (2024-06-05)
+
+
+### Bug Fixes
+
+* Revert react and react-dom to 16.13.1 ([b255319](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/b2553191562e82ee5ca79b29e470c6e2d4f54273))
+
 ## [1.10.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.9.1...open-city-profile-ui-v1.10.0) (2024-05-23)
 
 
