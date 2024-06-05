@@ -508,11 +508,11 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Ennen kuin voit käyttää haluaamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
+                      alt="Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
                       src="/src/userGuide/assets/08-profiilin-luominen.png"
                     />
                     <i>
-                      Ennen kuin voit käyttää haluaamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia.
+                      Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia.
                     </i>
                   </p>
                 </p>
@@ -685,11 +685,11 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Helsink-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
+                      alt="Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
                       src="/src/userGuide/assets/13-helsinki-tunnus-teko.png"
                     />
                     <i>
-                      Helsink-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda.
+                      Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda.
                     </i>
                   </p>
                 </p>

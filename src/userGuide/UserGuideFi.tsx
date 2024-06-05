@@ -220,7 +220,7 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image008}
-            alt="Ennen kuin voit käyttää haluaamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
+            alt="Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
           />
         </p>
       </UserGuideAccordion>
@@ -304,7 +304,7 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image010}
-            alt="Helsink-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
+            alt="Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
           />
         </p>
       </UserGuideAccordion>
