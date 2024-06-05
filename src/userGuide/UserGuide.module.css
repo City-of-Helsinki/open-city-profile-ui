@@ -31,3 +31,18 @@
   display: block;
 }
 
+a.download-link:not(:disabled) {
+  border: solid 2px black;
+  background-color: white;
+  color: black;
+}
+
+a.download-link:not(:disabled):active {
+  border: solid 2px black;
+  background-color: white;
+  color: black;
+}
+
+a.download-link:not(:disabled) span:first-of-type {
+  margin-left: 16px;;
+}

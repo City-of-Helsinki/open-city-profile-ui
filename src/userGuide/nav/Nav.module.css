@@ -103,7 +103,8 @@
     display: inline-block;
     position: relative;
     -webkit-text-decoration: underline;
-    text-decoration: underline
+    text-decoration: underline;
+    color: black;
 }
 
 .table-of-contents__link:focus {

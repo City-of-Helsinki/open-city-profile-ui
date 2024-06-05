@@ -2,6 +2,7 @@
 import React, { Fragment, ReactElement } from 'react';
 import { IconDownload, Link } from 'hds-react';
 
+import styles from './UserGuide.module.css';
 import UserGuideAccordion from './UserGuideAccordion';
 import UserGuideImage from './UserGuideImage';
 import UserGuideNav from './nav/Nav';
@@ -57,6 +58,7 @@ function UserGuideFi(): ReactElement {
         niiden näkyvyyttä eri palvelussa.
       </p>
       <Link
+        className={styles['download-link']}
         href="/Helsinki-profiili-ohjeet.pdf"
         download="Helsinki-profiili-ohjeet.pdf"
         iconLeft={<IconDownload />}

@@ -2,6 +2,7 @@
 import React, { Fragment, ReactElement } from 'react';
 import { IconDownload, Link } from 'hds-react';
 
+import styles from './UserGuide.module.css';
 import UserGuideAccordion from './UserGuideAccordion';
 import UserGuideImage from './UserGuideImage';
 import UserGuideNav from './nav/Nav';
@@ -60,6 +61,7 @@ function UserGuideEn(): ReactElement {
       <Link
         href="/Helsinki-profile-userguide.pdf"
         download="Helsinki-profile-userguide.pdf"
+        className={styles['download-link']}
         useButtonStyles
         iconLeft={<IconDownload />}
       >
