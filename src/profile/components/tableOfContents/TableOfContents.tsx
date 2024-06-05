@@ -1,14 +1,16 @@
 import React from 'react';
-import classNames from 'classnames';
 
-import styles from './Nav.module.css';
+import styles from './TableOfContents.module.css';
 
-interface MyProps {
+interface TableOfContentsProps {
   heading: string;
   items: Array<{ title: string; href: string }>;
 }
 
-function UserGuideNav({ heading, items }: MyProps): React.ReactElement {
+function TableOfContents({
+  heading,
+  items,
+}: TableOfContentsProps): React.ReactElement {
   return (
     <div className={styles['table-of-contents']}>
       <div className={styles['table-of-contents__container']}>
@@ -36,4 +38,4 @@ function UserGuideNav({ heading, items }: MyProps): React.ReactElement {
   );
 }
 
-export default UserGuideNav;
+export default TableOfContents;

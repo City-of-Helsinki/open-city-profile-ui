@@ -5,7 +5,7 @@ import { IconDownload, Link } from 'hds-react';
 import styles from './UserGuide.module.css';
 import UserGuideAccordion from './UserGuideAccordion';
 import UserGuideImage from './UserGuideImage';
-import UserGuideNav from './nav/Nav';
+import TableOfContents from '../profile/components/tableOfContents/TableOfContents';
 import image001 from './assets/01-sisaankirjautuminen-en.png';
 import image002 from './assets/02-sisaankirjautuminen-tunnistamo-en.png';
 import image003 from './assets/03-vahvan-valinta-en.png';
@@ -68,7 +68,7 @@ function UserGuideEn(): ReactElement {
         Helsinki profile guide (.pdf)
       </Link>
 
-      <UserGuideNav items={tableOfContents} heading="On this site" />
+      <TableOfContents items={tableOfContents} heading="On this site" />
 
       <h2 id="_Create_a_Helsinki_profile">Create a Helsinki profile</h2>
       <p>

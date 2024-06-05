@@ -5,7 +5,7 @@ import { IconDownload, Link } from 'hds-react';
 import styles from './UserGuide.module.css';
 import UserGuideAccordion from './UserGuideAccordion';
 import UserGuideImage from './UserGuideImage';
-import UserGuideNav from './nav/Nav';
+import TableOfContents from '../profile/components/tableOfContents/TableOfContents';
 import image001 from './assets/01-sisaankirjautuminen-sv.png';
 import image002 from './assets/02-sisaankirjautuminen-tunnistamo-sv.png';
 import image003 from './assets/03-vahvan-valinta-sv.png';
@@ -76,7 +76,7 @@ function UserGuideSv(): ReactElement {
         Helsingforsprofilens hjälp (.pdf)
       </Link>
 
-      <UserGuideNav items={tableOfContents} heading="På den här sidan" />
+      <TableOfContents items={tableOfContents} heading="På den här sidan" />
 
       <h2 id="_Create_a_Helsinki_profile">Skapa en Helsingforsprofilen</h2>
       <p>
