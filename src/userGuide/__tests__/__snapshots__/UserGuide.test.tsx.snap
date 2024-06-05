@@ -461,13 +461,15 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
+                      alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
+  suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
                       src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
+                      Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
+  suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
                     </p>
                   </p>
                 </p>
@@ -522,13 +524,15 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
+                      alt="Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa 
+            suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
                       src="/src/userGuide/assets/08-profiilin-luominen.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia.
+                      Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa 
+            suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia.
                     </p>
                   </p>
                 </p>
@@ -658,13 +662,15 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
+                      alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
+  suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
                       src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
+                      Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
+  suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
                     </p>
                   </p>
                 </p>
@@ -709,13 +715,15 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
+                      alt="Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa 
+            salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
                       src="/src/userGuide/assets/13-helsinki-tunnus-teko.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda.
+                      Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa 
+            salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda.
                     </p>
                   </p>
                 </p>
@@ -981,13 +989,15 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä."
+                      alt="Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla 
+            vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä."
                       src="/src/userGuide/assets/18-uusi-salasana.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.
+                      Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla 
+            vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.
                     </p>
                   </p>
                 </p>
@@ -1081,13 +1091,19 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun."
+                      alt="Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun 
+            sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin 
+            suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi 
+            kirjautua uuteen palveluun."
                       src="/src/userGuide/assets/19-yhteensopimaton-kirjautuminen.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun.
+                      Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun 
+            sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin 
+            suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi 
+            kirjautua uuteen palveluun.
                     </p>
                   </p>
                 </p>
@@ -1352,26 +1368,30 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä."
+                      alt="Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. 
+            Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä."
                       src="/src/userGuide/assets/24-olemassa-olevan-profiilin-kirjautuminen.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä.
+                      Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. 
+            Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä.
                     </p>
                   </p>
                 </p>
                 <p>
                   <p>
                     <img
-                      alt="Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista."
+                      alt="Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä 
+            tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista."
                       src="/src/userGuide/assets/25-kayttamasi-palvelut.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista.
+                      Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä 
+            tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista.
                     </p>
                   </p>
                 </p>

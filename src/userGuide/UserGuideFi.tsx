@@ -45,8 +45,8 @@ const tableOfContents = [
   { title: 'Tietojen poisto', href: '#_Tietojen_poisto' },
 ];
 
-const altText05 =
-  'Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.';
+const altText05 = `Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
+  suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.`;
 
 function UserGuideFi(): ReactElement {
   return (
@@ -220,7 +220,8 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image008}
-            alt="Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
+            alt={`Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa 
+            suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia.`}
           />
         </p>
       </UserGuideAccordion>
@@ -301,7 +302,8 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image010}
-            alt="Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
+            alt={`Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa 
+            salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda.`}
           />
         </p>
       </UserGuideAccordion>
@@ -379,7 +381,8 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image015}
-            alt="Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä."
+            alt={`Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla 
+            vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.`}
           />
         </p>
       </UserGuideAccordion>
@@ -400,7 +403,10 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image016}
-            alt="Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun."
+            alt={`Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun 
+            sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin 
+            suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi 
+            kirjautua uuteen palveluun.`}
           />
         </p>
 
@@ -484,14 +490,16 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image024}
-            alt="Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä."
+            alt={`Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. 
+            Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä.`}
           />
         </p>
 
         <p>
           <UserGuideImage
             src={image025}
-            alt="Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista."
+            alt={`Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä 
+            tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista.`}
           />
         </p>
       </UserGuideAccordion>
