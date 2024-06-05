@@ -208,7 +208,7 @@ exports[`User guide > renders AboutPage without errors 1`] = `
               Helsinki-profiili on kaupungin digitaalisia asiointipalveluja käyttävän kaupunkilaisen asiakasprofiili. Se on ensisijainen tunnistautumistapa kaupungin digitaalisiin palveluihin. Helsinki-profiili kokoaa yhteen paikkaan asiakkaan henkilö- ja yhteystiedot sekä yhteydet eri kaupungin palveluihin. Profiilissa käyttäjä voi hallinnoida omia tietojaan ja niiden näkyvyyttä eri palvelussa.
             </p>
             <a
-              class="Link-module_button__1hPh3 button_hds-button__3eV18 button_hds-button--primary__YFEUq"
+              class="Link-module_button__1hPh3 button_hds-button__3eV18 button_hds-button--primary__YFEUq download-link"
               download="Helsinki-profiili-ohjeet.pdf"
               href="/Helsinki-profiili-ohjeet.pdf"
             >
