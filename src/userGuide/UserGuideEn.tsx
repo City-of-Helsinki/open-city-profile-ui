@@ -106,7 +106,6 @@ function UserGuideEn(): ReactElement {
             src={image001}
             alt="In the authentication window, select suomi.fi identification."
           />
-          <i>In the authentication window, select suomi.fi identification.</i>
         </p>
 
         <p>
@@ -547,7 +546,7 @@ function UserGuideEn(): ReactElement {
           You can also download the data you have stored in different services
           as a single json file. For more information on{' '}
           <a href="https://fi.wikipedia.org/wiki/JSON">
-            the
+            the{' '}
             <u>json file format, see Wikipedia (link opens in a new window)</u>
           </a>
           .

@@ -383,9 +383,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Tunnistautumisikkunassa valitaan suomi.fi-tunnistautuminen."
                       src="/src/userGuide/assets/01-sisaankirjautuminen.png"
                     />
-                    <i>
+                    <p>
                       Tunnistautumisikkunassa valitaan suomi.fi-tunnistautuminen.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -394,9 +394,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Tunnistautumistavaksi valitaan suomi.fi-tunnistautuminen."
                       src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo.png"
                     />
-                    <i>
+                    <p>
                       Tunnistautumistavaksi valitaan suomi.fi-tunnistautuminen.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <h4>
@@ -414,9 +414,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Valitse oma pankkisi tai mobiilivarmenne suomi.fi-tunnistautumisvaihtoehtona."
                       src="/src/userGuide/assets/03-vahvan-valinta.png"
                     />
-                    <i>
+                    <p>
                       Valitse oma pankkisi tai mobiilivarmenne suomi.fi-tunnistautumisvaihtoehtona.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -425,9 +425,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Tarkista, että tietosi ovat oikein siirtyessäsi, kun siirryt takaisin Helsingin kaupungin palveluun."
                       src="/src/userGuide/assets/04-vahvat-tiedot.png"
                     />
-                    <i>
+                    <p>
                       Tarkista, että tietosi ovat oikein siirtyessäsi, kun siirryt takaisin Helsingin kaupungin palveluun.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <h4>
@@ -456,9 +456,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
                       src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
                     />
-                    <i>
+                    <p>
                       Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -467,9 +467,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
                       src="/src/userGuide/assets/06-11-sahkopostin-vahvistuskoodi.png"
                     />
-                    <i>
+                    <p>
                       Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -478,9 +478,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
                       src="/src/userGuide/assets/07-12-sahkopostin-vahvistus.png"
                     />
-                    <i>
+                    <p>
                       Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <h4>
@@ -511,9 +511,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
                       src="/src/userGuide/assets/08-profiilin-luominen.png"
                     />
-                    <i>
+                    <p>
                       Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <button
@@ -612,9 +612,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili -painiketta."
                       src="/src/userGuide/assets/09-helsinki-tunnus-luonti.png"
                     />
-                    <i>
+                    <p>
                       Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili -painiketta.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <h4>
@@ -643,9 +643,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
                       src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
                     />
-                    <i>
+                    <p>
                       Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -654,9 +654,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
                       src="/src/userGuide/assets/06-11-sahkopostin-vahvistuskoodi.png"
                     />
-                    <i>
+                    <p>
                       Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -665,9 +665,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
                       src="/src/userGuide/assets/07-12-sahkopostin-vahvistus.png"
                     />
-                    <i>
+                    <p>
                       Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <h4>
@@ -688,9 +688,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
                       src="/src/userGuide/assets/13-helsinki-tunnus-teko.png"
                     />
-                    <i>
+                    <p>
                       Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <button
@@ -906,9 +906,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Klikkaa kirjautumisikkunassa Olen unohtanut salasanani -linkkiä."
                       src="/src/userGuide/assets/14-salasanan-unohdus.png"
                     />
-                    <i>
+                    <p>
                       Klikkaa kirjautumisikkunassa Olen unohtanut salasanani -linkkiä.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -917,9 +917,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Syötä sähköpostiosoitteesi avautuvaan kenttään, jotta saat salasanan uusimislinkin sähköpostiisi."
                       src="/src/userGuide/assets/15-sahkoposti-salasanalle.png"
                     />
-                    <i>
+                    <p>
                       Syötä sähköpostiosoitteesi avautuvaan kenttään, jotta saat salasanan uusimislinkin sähköpostiisi.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -928,9 +928,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Saat tiedon, että sinulle lähetetään sähköpostiviesti salasanan uusimista varten."
                       src="/src/userGuide/assets/16-salasanan-vaihtopyynto.png"
                     />
-                    <i>
+                    <p>
                       Saat tiedon, että sinulle lähetetään sähköpostiviesti salasanan uusimista varten.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -939,9 +939,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Saamassasi sähköpostiviestissä on linkki uuden salasanan antamista varten. Linkki on voimassa 30 minuuttia. "
                       src="/src/userGuide/assets/17-salasanan-vaihtoviesti.png"
                     />
-                    <i>
+                    <p>
                       Saamassasi sähköpostiviestissä on linkki uuden salasanan antamista varten. Linkki on voimassa 30 minuuttia. 
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -950,9 +950,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä."
                       src="/src/userGuide/assets/18-uusi-salasana.png"
                     />
-                    <i>
+                    <p>
                       Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <button
@@ -1048,9 +1048,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun."
                       src="/src/userGuide/assets/19-yhteensopimaton-kirjautuminen.png"
                     />
-                    <i>
+                    <p>
                       Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -1059,9 +1059,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Vahvista uloskirjautuminen aiemmasta palvelusta."
                       src="/src/userGuide/assets/20-kirjautumislogout.png"
                     />
-                    <i>
+                    <p>
                       Vahvista uloskirjautuminen aiemmasta palvelusta.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <button
@@ -1180,9 +1180,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                     alt="Helsinki-profiilissa Omat tiedot -osiossa Viralliset tiedot tulevat suoraan väestörekisterikeskuksesta ja niiden päivittäminen tehdään myös siellä."
                     src="/src/userGuide/assets/21-omat-tiedot.png"
                   />
-                  <i>
+                  <p>
                     Helsinki-profiilissa Omat tiedot -osiossa Viralliset tiedot tulevat suoraan väestörekisterikeskuksesta ja niiden päivittäminen tehdään myös siellä.
-                  </i>
+                  </p>
                 </p>
                 <p>
                   <p>
@@ -1190,9 +1190,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Helsinki-profiilissa Omat tiedot -osiossa Perustiedot ovat itse päivitettävissä."
                       src="/src/userGuide/assets/22-omat-nimitiedot.png"
                     />
-                    <i>
+                    <p>
                       Helsinki-profiilissa Omat tiedot -osiossa Perustiedot ovat itse päivitettävissä.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -1201,9 +1201,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi."
                       src="/src/userGuide/assets/23-omat-yhteystiedot.png"
                     />
-                    <i>
+                    <p>
                       Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <button
@@ -1309,9 +1309,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä."
                       src="/src/userGuide/assets/24-olemassa-olevan-profiilin-kirjautuminen.png"
                     />
-                    <i>
+                    <p>
                       Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -1320,9 +1320,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista."
                       src="/src/userGuide/assets/25-kayttamasi-palvelut.png"
                     />
-                    <i>
+                    <p>
                       Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <button
@@ -1424,9 +1424,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                         alt="Helsinki-profiilin Omat tiedot -osiossa voit ladata tietosi kaikista palveluista json-tiedostona."
                         src="/src/userGuide/assets/26-tietojen-lataus.png"
                       />
-                      <i>
+                      <p>
                         Helsinki-profiilin Omat tiedot -osiossa voit ladata tietosi kaikista palveluista json-tiedostona.
-                      </i>
+                      </p>
                     </p>
                   </p>
                 </p>
@@ -1534,9 +1534,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Voit poistaa tietosi Helsinki-profiilissa yksittäisen palvelun kohdalla Käyttämäsi palvelut -osiossa."
                       src="/src/userGuide/assets/27-tietojen-poisto-palvelusta.png"
                     />
-                    <i>
+                    <p>
                       Voit poistaa tietosi Helsinki-profiilissa yksittäisen palvelun kohdalla Käyttämäsi palvelut -osiossa.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -1545,9 +1545,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä pop-up-vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa."
                       src="/src/userGuide/assets/28-tietojen-poisto-palvelusta-pop-up.png"
                     />
-                    <i>
+                    <p>
                       Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä pop-up-vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <button
@@ -1652,9 +1652,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Helsinki-profiilin Omat tiedot -osiossa on painike Poista omat tiedot, jolla voit poistaa koko Helsinki-profiilin ja eri palveluissa käytetyt tietosi."
                       src="/src/userGuide/assets/29-tietojen-poisto.png"
                     />
-                    <i>
+                    <p>
                       Helsinki-profiilin Omat tiedot -osiossa on painike Poista omat tiedot, jolla voit poistaa koko Helsinki-profiilin ja eri palveluissa käytetyt tietosi.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <p>
@@ -1663,9 +1663,9 @@ exports[`User guide > renders AboutPage without errors 1`] = `
                       alt="Ruudulle tulee vielä varmistusviesti pop-up-ikkunaan, jotta tietoja ei poisteta vahingossa."
                       src="/src/userGuide/assets/30-tietojen-poisto-popup.png"
                     />
-                    <i>
+                    <p>
                       Ruudulle tulee vielä varmistusviesti pop-up-ikkunaan, jotta tietoja ei poisteta vahingossa.
-                    </i>
+                    </p>
                   </p>
                 </p>
                 <button

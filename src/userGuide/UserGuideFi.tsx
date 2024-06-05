@@ -45,6 +45,9 @@ const tableOfContents = [
   { title: 'Tietojen poisto', href: '#_Tietojen_poisto' },
 ];
 
+const altText05 =
+  'Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.';
+
 function UserGuideFi(): ReactElement {
   return (
     <Fragment>
@@ -170,10 +173,7 @@ function UserGuideFi(): ReactElement {
         </p>
 
         <p>
-          <UserGuideImage
-            src={image005}
-            alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
-          />
+          <UserGuideImage src={image005} alt={altText05} />
         </p>
 
         <p>
@@ -267,10 +267,7 @@ function UserGuideFi(): ReactElement {
           </b>
         </p>
         <p>
-          <UserGuideImage
-            src={image005}
-            alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
-          />
+          <UserGuideImage src={image005} alt={altText05} />
         </p>
         <p>
           <UserGuideImage

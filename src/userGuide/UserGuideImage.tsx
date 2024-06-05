@@ -9,7 +9,7 @@ function UserGuideImage({ src, alt }: ImageProps): React.ReactElement {
   return (
     <p>
       <img src={src} alt={alt} />
-      <i>{alt}</i>
+      <p>{alt}</p>
     </p>
   );
 }
