@@ -159,9 +159,10 @@ function UserGuideFi(): ReactElement {
         </p>
 
         <p>
-          Sähköpostin vahvistamiseksi saat 6-numeroisen koodin antamaasi
-          sähköpostiosoitteeseen. Jos viesti ei tule sähköpostiisi lähes
-          välittömästi, tarkista roskaposti-kansiosi.
+          Sähköpostin vahvistamiseksi saat antamaasi sähköpostiosoitteeseen
+          6-numeroisen koodin, joka tulee syöttää ruudulla näkyvään kenttään.
+          Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista
+          roskaposti-kansiosi.
         </p>
 
         <p>
@@ -244,21 +245,25 @@ function UserGuideFi(): ReactElement {
         </p>
         <h4>Sähköpostiosoitteen vahvistus</h4>
         <p>
-          Tunnistautumisen jälkeen sinulta kysytään sähköpostiosoite.
-          Sähköpostiosoitteeseen lähetetään vahvistusviesti osoitteen aitouden
-          varmistamiseksi.
+          Profiilin luomisen yhteydessä sinulta pyydetään sähköpostiosoite, joka
+          toimii myös käyttäjätunnuksenasi. Sähköpostiosoitteeseen lähetetään
+          vahvistusviesti osoitteen aitouden varmistamiseksi.
         </p>
         <p>
-          Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja
-          salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri
-          tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi
-          palvelujen tiedot kerralla.
+          Jos olet jo aiemmin luonut Helsinki-profiilin suomi.fi-tunnistautuen,
+          voit luoda profiilille salasanan klikkaamalla Olen unohtanut
+          salasanani -linkkiä. Salasanan luomisesta on enemmän{' '}
+          <a href="#_Unohtunut_salasana"> Unohtunut salasana</a> -kohdassa.
+          Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien
+          käyttämiesi palvelujen tiedot kerralla. Huomaa kuitenkin, ettei
+          yhdistämistä voi perua myöhemmin.
           <b> Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.</b>
         </p>
         <p>
-          Sähköpostin vahvistamiseksi saat 6-numeroisen koodin antamaasi
-          sähköpostiosoitteeseen. Jos viesti ei tule sähköpostiisi lähes
-          välittömästi, tarkista roskaposti-kansiosi.
+          Sähköpostin vahvistamiseksi saat antamaasi sähköpostiosoitteeseen
+          6-numeroisen koodin, joka tulee syöttää ruudulla näkyvään kenttään.
+          Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista
+          roskaposti-kansiosi.
         </p>
         <p>
           <b>

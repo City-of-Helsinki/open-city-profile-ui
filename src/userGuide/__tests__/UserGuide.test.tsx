@@ -24,7 +24,7 @@ describe('User guide', () => {
       </I18nextProvider>
     );
   };
-  test('renders AboutPage without errors', () => {
+  test('renders UserGuide without errors', () => {
     const { container } = render(<UserGuide />);
     expect(container).toBeTruthy();
     expect(container).toMatchSnapshot();

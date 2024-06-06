@@ -296,16 +296,16 @@ function UserGuideSv(): ReactElement {
         <p>
           <UserGuideImage
             src={image005}
-            alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
+            alt={`Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
             använda samma e-postadress för både suomi.fi-autentiseringen och Helsingfors ID får du en 
-            Helsingfors-profil. Sammanslagningen kan inte tas bort senare."
+            Helsingfors-profil. Sammanslagningen kan inte tas bort senare.`}
           />
         </p>
 
         <p>
           <UserGuideImage
             src={image006}
-            alt="E-postmeddelandet innehåller en 6-siffrig verifieringskod för att bekräfta att e-postadressen är äkta."
+            alt={`E-postmeddelandet innehåller en 6-siffrig verifieringskod för att bekräfta att e-postadressen är äkta.`}
           />
         </p>
 
@@ -339,8 +339,8 @@ function UserGuideSv(): ReactElement {
         <p>
           <UserGuideImage
             src={image010}
-            alt="När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste 
-            också ge ditt samtycke till att dina uppgifter används för att skapa Helsingforsprofilen."
+            alt={`När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste 
+            också ge ditt samtycke till att dina uppgifter används för att skapa Helsingforsprofilen.`}
           />
         </p>
       </UserGuideAccordion>
@@ -412,16 +412,16 @@ function UserGuideSv(): ReactElement {
         <p>
           <UserGuideImage
             src={image014}
-            alt="I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken 
-            kommer att vara giltig i 30 minuter."
+            alt={`I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken 
+            kommer att vara giltig i 30 minuter.`}
           />
         </p>
 
         <p>
           <UserGuideImage
             src={image015}
-            alt="I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst 
-            12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, nummer och specialtecken."
+            alt={`I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst 
+            12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, nummer och specialtecken.`}
           />
         </p>
       </UserGuideAccordion>
@@ -443,9 +443,9 @@ function UserGuideSv(): ReactElement {
         <p>
           <UserGuideImage
             src={image016}
-            alt="En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en 
+            alt={`En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en 
             kombination av e-post och lösenord och går vidare till nästa tjänst, som kräver en suomi.fi-autentisering. 
-            I detta fall måste du logga ut från den första tjänsten för att kunna autentisera dig till den nya tjänsten."
+            I detta fall måste du logga ut från den första tjänsten för att kunna autentisera dig till den nya tjänsten.`}
           />
         </p>
 
@@ -498,8 +498,8 @@ function UserGuideSv(): ReactElement {
         <p>
           <UserGuideImage
             src={image018}
-            alt="I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från 
-            Befolkningsregistercentralen och uppdateras också där."
+            alt={`I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från 
+            Befolkningsregistercentralen och uppdateras också där.`}
           />
         </p>
 
@@ -513,10 +513,10 @@ function UserGuideSv(): ReactElement {
         <p>
           <UserGuideImage
             src={image023}
-            alt="Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress. 
+            alt={`Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress. 
             Tjänstens kontaktspråk avgör på vilket språk du tar emot meddelanden från tjänsten. Den 
             autentiseringsmetoden hur du är inloggad i tjänsten, dvs. suomi.fi-autentisering eller en kombination 
-            av e-post och lösenord, dvs. Helsingfors-ID."
+            av e-post och lösenord, dvs. Helsingfors-ID.`}
           />
         </p>
       </UserGuideAccordion>
@@ -543,16 +543,16 @@ function UserGuideSv(): ReactElement {
         <p>
           <UserGuideImage
             src={image024}
-            alt="När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av 
+            alt={`När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av 
             dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina 
-            tjänster i din Helsingforsprofil."
+            tjänster i din Helsingforsprofil.`}
           />
         </p>
 
         <UserGuideImage
           src={image025}
-          alt="I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad 
-          dig på och vilka data de använder. Du kan också radera dina uppgifter från enskilda tjänster."
+          alt={`I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad 
+          dig på och vilka data de använder. Du kan också radera dina uppgifter från enskilda tjänster.`}
         />
       </UserGuideAccordion>
       <UserGuideAccordion
@@ -618,8 +618,8 @@ function UserGuideSv(): ReactElement {
         <p>
           <UserGuideImage
             src={image028}
-            alt='När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett 
-            popup-bekräftelsemeddelande på skärmen för att förhindra oavsiktlig radering av dina uppgifter.'
+            alt={`När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett 
+            popup-bekräftelsemeddelande på skärmen för att förhindra oavsiktlig radering av dina uppgifter.`}
           />
         </p>
       </UserGuideAccordion>
@@ -658,15 +658,15 @@ function UserGuideSv(): ReactElement {
         <p>
           <UserGuideImage
             src={image029}
-            alt="I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken 
-            du kan radera hela din Helsingforsprofil och den information som du har använt i olika tjänster."
+            alt={`I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken 
+            du kan radera hela din Helsingforsprofil och den information som du har använt i olika tjänster.`}
           />
         </p>
 
         <p>
           <UserGuideImage
             src={image030}
-            alt="Ett bekräftelsemeddelande visas också i ett popup-fönster för att förhindra oavsiktlig radering av data."
+            alt={`Ett bekräftelsemeddelande visas också i ett popup-fönster för att förhindra oavsiktlig radering av data.`}
           />
         </p>
       </UserGuideAccordion>
