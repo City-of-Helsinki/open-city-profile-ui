@@ -42,6 +42,7 @@ export class AuthService {
       validateSubOnSilentRenew: false,
       includeIdTokenInSilentRenew: false,
       monitorSession: true,
+      filterProtocolClaims: false,
       userStore: new WebStorageStateStore({ store: window.sessionStorage }),
       authority: window._env_.REACT_APP_OIDC_AUTHORITY,
       client_id: window._env_.REACT_APP_OIDC_CLIENT_ID,
