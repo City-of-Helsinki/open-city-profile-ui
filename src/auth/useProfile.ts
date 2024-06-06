@@ -1,4 +1,4 @@
-import { User, UserProfile } from 'oidc-client-ts';
+import { User } from 'oidc-client-ts';
 import React from 'react';
 
 import authService from './authService';
@@ -14,7 +14,7 @@ export type AMRStatic =
   | 'tunnistusSuomifi';
 
 export interface Profile {
-  amr: NonNullable<UserProfile['amr']>;
+  amr: NonNullable<User['profile']['amr']>;
   auth_time: number;
   email: string;
   email_verified: boolean;
