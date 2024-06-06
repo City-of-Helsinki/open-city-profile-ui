@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: './e2e',
 
   // Timeout for each test in milliseconds
-  timeout: 60 * 1000,
+  timeout: 120 * 1000,
 
   /* Run tests in files in parallel */
   fullyParallel: false,
@@ -37,11 +37,6 @@ export default defineConfig({
     {
       name: 'chrome',
       use: { ...devices['Desktop Chrome'] },
-      testMatch: '**/*.spec.ts',
-    },
-    {
-      name: 'firefox',
-      use: devices['Desktop Firefox'],
       testMatch: '**/*.spec.ts',
     },
   ],

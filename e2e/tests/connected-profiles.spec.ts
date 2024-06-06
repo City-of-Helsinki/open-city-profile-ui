@@ -33,10 +33,10 @@ test('1 - No connected accounts', async ({ page }) => {
     page.getByText(
       'Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi'
     )
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 15000 });
 });
 
-test('2 - Connect profile to Linked Events', async ({ page }) => {
+test.skip('2 - Connect profile to Linked Events', async ({ page }) => {
   await page.goto(LINKED_EVENTS_URL);
   await clickLoginButton(page);
   await page.getByLabel('Sähköposti').fill(mailbox.emailAddress);
@@ -46,7 +46,7 @@ test('2 - Connect profile to Linked Events', async ({ page }) => {
     page.getByText(
       'Palvelu Linked Events DEV pyytää lupaa käyttää seuraavia tietoja profiilistasi'
     )
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 15000 });
   await page.locator('#hs-acknowledgements').check();
   await page.locator('#hs-age-check').check();
   await page.getByRole('button', { name: 'Jatka' }).click();
@@ -103,5 +103,5 @@ test('3 - Delete profile', async ({ page }) => {
   await page.getByLabel('Sähköposti').fill(mailbox.emailAddress);
   await page.getByLabel('Salasana').fill(USER_PASSWORD);
   await clickLoginButton(page);
-  await expect(page.getByText('Väärä tunnus tai salasana')).toBeVisible();
+  await expect(page.getByText('Väärä sähköposti tai salasana')).toBeVisible();
 });

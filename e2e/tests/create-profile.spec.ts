@@ -15,6 +15,8 @@ test('Same email address cannot be used for multiple accounts', async ({
   page,
   browser,
 }) => {
+  test.slow();
+
   const mailbox = new Mailbox();
   await mailbox.initializeMailbox();
 

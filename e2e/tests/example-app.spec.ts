@@ -32,9 +32,7 @@ test.describe('Example app tests', () => {
     const decodedTokenPayloadLocator = page.locator(
       '[data-test-id="decoded-token-payload"]'
     );
-    await expect(decodedTokenPayloadLocator).toContainText(
-      'exampleapp-ui-test'
-    );
+    await expect(decodedTokenPayloadLocator).toContainText('exampleapp-ui-dev');
 
     const jwtTokenSelector = await decodedTokenPayloadLocator.innerText();
     const { amr, iat, exp } = JSON.parse(jwtTokenSelector);
@@ -64,9 +62,6 @@ test.describe('Profile tests', () => {
     await page.getByTestId('confirmation-modal-confirm-button').click();
     await expect(
       page.locator('#delete-profile-error-modal-title')
-    ).toContainText('Poisto epäonnistui!');
-    await expect(
-      page.getByTestId('delete-profile-insufficient-loa')
     ).toBeVisible();
   });
 

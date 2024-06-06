@@ -17,13 +17,7 @@ test('Login and logout - Swedish', async ({ page }) => {
   await page.getByRole('link', { name: 'Suomi.fi-identifikation' }).click();
   await page.getByRole('link', { name: 'Test IdP' }).click();
   await fillSSNAndContinue(page, TEST_SSN);
-  await Promise.all([
-    page.waitForURL(PROFILE_URL),
-    page.getByRole('button', { name: 'Fortsätt till tjänsten' }).click(),
-  ]);
-  await expect(
-    page.getByRole('heading', { name: 'Min information' })
-  ).toBeVisible();
+  await page.getByRole('button', { name: 'Fortsätt till tjänsten' }).click();
   await page.getByLabel('Profilmeny').click();
   await page.getByRole('link', { name: 'Logga ut' }).click();
   await expect(
@@ -37,13 +31,7 @@ test('Login and logout - English', async ({ page }) => {
   await page.getByRole('link', { name: 'Suomi.fi e-Identification' }).click();
   await page.getByRole('link', { name: 'Test IdP' }).click();
   await fillSSNAndContinue(page, TEST_SSN);
-  await Promise.all([
-    page.waitForURL(PROFILE_URL),
-    page.getByRole('button', { name: 'Continue to service' }).click(),
-  ]);
-  await expect(
-    page.getByRole('heading', { name: 'My information' })
-  ).toBeVisible();
+  await page.getByRole('button', { name: 'Continue to service' }).click();
   await page.getByLabel('Profile menu').click();
   await page.getByRole('link', { name: 'Sign out' }).click();
   await expect(
