@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { Fragment, ReactElement } from 'react';
 import { IconDownload, Link } from 'hds-react';
 
@@ -495,7 +494,10 @@ function UserGuideEn(): ReactElement {
         <p>
           <UserGuideImage
             src={image023}
-            alt="You can add and edit your other address details, your phone number and your email address. The language of communication determines the language in which you receive messages from the service. The authentication method tells you how you are logged in to the service, i.e. suomi.fi authentication or an email/password combination, i.e. the Helsinki ID."
+            alt={`You can add and edit your other address details, your phone number and your email address. The 
+            language of communication determines the language in which you receive messages from the service. 
+            The authentication method tells you how you are logged in to the service, i.e. suomi.fi authentication 
+            or an email/password combination, i.e. the Helsinki ID."`}
           />
         </p>
       </UserGuideAccordion>

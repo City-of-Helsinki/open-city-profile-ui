@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Accordion, AccordionProps } from 'hds-react';
 
-import styles from './UserGuide.module.css';
 import { useMobile } from '../profile/hooks/useMobile';
 interface UserGuideAccordionProps {
   children: ReactNode;
