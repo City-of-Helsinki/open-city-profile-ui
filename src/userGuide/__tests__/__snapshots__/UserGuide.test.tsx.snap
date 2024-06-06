@@ -205,7 +205,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               Helsinki-profiilin ohje
             </h1>
             <p>
-              Helsinki-profiili on kaupungin digitaalisia asiointipalveluja käyttävän kaupunkilaisen asiakasprofiili. Se on ensisijainen tunnistautumistapa kaupungin digitaalisiin palveluihin. Helsinki-profiili kokoaa yhteen paikkaan asiakkaan henkilö- ja yhteystiedot sekä yhteydet eri kaupungin palveluihin. Profiilissa käyttäjä voi hallinnoida omia tietojaan ja niiden näkyvyyttä eri palvelussa.
+              Helsinki-profiili on kaupungin digitaalisten asiointipalvelujen käyttäjän asiakasprofiili, joka toimii ensisijaisena tunnistautumistapana kaupungin palveluihin. Profiili kokoaa yhteen paikkaan käyttäjän henkilö- ja yhteystiedot sekä yhteydet eri kaupungin palveluihin. Profiilissa voit hallinnoida omia tietojasi ja niiden näkyvyyttä eri palveluissa.
             </p>
             <a
               class="Link-module_button__1hPh3 button_hds-button__3eV18 button_hds-button--primary__YFEUq download-link"
@@ -375,12 +375,13 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   Tunnistautumisen valinta
                 </h4>
                 <p>
-                  Asiointipalvelussa Kirjaudu-linkin painamisen jälkeen käyttäjä saa erilaisia kirjautumisvaihtoja tarjoavan näkymän, jossa valitaan suomi.fi-tunnistautuminen. Kirjautumisvaihtoehtojen näkymä vaihtelee eri asiointipalveluissa.
+                  Asiointipalvelussa Kirjaudu-linkin painamisen jälkeen näet erilaisia kirjautumisvaihtoehtoja, joista valitaan suomi.fi-tunnistautuminen. Kirjautumisvaihtoehtojen näkymä vaihtelee eri asiointipalveluissa.
                 </p>
                 <p>
                   <p>
                     <img
                       alt="Tunnistautumisikkunassa valitaan suomi.fi-tunnistautuminen."
+                      loading="lazy"
                       src="/src/userGuide/assets/01-sisaankirjautuminen.png"
                     />
                     <p
@@ -394,6 +395,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Tunnistautumistavaksi valitaan suomi.fi-tunnistautuminen."
+                      loading="lazy"
                       src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo.png"
                     />
                     <p
@@ -416,6 +418,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Valitse oma pankkisi tai mobiilivarmenne suomi.fi-tunnistautumisvaihtoehtona."
+                      loading="lazy"
                       src="/src/userGuide/assets/03-vahvan-valinta.png"
                     />
                     <p
@@ -429,6 +432,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Tarkista, että tietosi ovat oikein siirtyessäsi, kun siirryt takaisin Helsingin kaupungin palveluun."
+                      loading="lazy"
                       src="/src/userGuide/assets/04-vahvat-tiedot.png"
                     />
                     <p
@@ -463,6 +467,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <img
                       alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
   suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
+                      loading="lazy"
                       src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
                     />
                     <p
@@ -477,6 +482,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
+                      loading="lazy"
                       src="/src/userGuide/assets/06-11-sahkopostin-vahvistuskoodi.png"
                     />
                     <p
@@ -490,6 +496,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
+                      loading="lazy"
                       src="/src/userGuide/assets/07-12-sahkopostin-vahvistus.png"
                     />
                     <p
@@ -526,6 +533,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <img
                       alt="Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa 
             suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
+                      loading="lazy"
                       src="/src/userGuide/assets/08-profiilin-luominen.png"
                     />
                     <p
@@ -537,7 +545,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </p>
                 </p>
                 <button
-                  aria-label="Close Suomi.fi-tunnistautuminen"
+                  aria-label="Sulje Suomi.fi-tunnistautuminen"
                   class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                   data-testid="_Suomi.fi-tunnistautuminen-closeButton"
                   type="button"
@@ -545,7 +553,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <span
                     class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
                   >
-                    Close
+                    Sulje
                   </span>
                   <div
                     aria-hidden="true"
@@ -630,6 +638,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili -painiketta."
+                      loading="lazy"
                       src="/src/userGuide/assets/09-helsinki-tunnus-luonti.png"
                     />
                     <p
@@ -671,6 +680,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <img
                       alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
   suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
+                      loading="lazy"
                       src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
                     />
                     <p
@@ -685,6 +695,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
+                      loading="lazy"
                       src="/src/userGuide/assets/06-11-sahkopostin-vahvistuskoodi.png"
                     />
                     <p
@@ -698,6 +709,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
+                      loading="lazy"
                       src="/src/userGuide/assets/07-12-sahkopostin-vahvistus.png"
                     />
                     <p
@@ -724,6 +736,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <img
                       alt="Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa 
             salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
+                      loading="lazy"
                       src="/src/userGuide/assets/13-helsinki-tunnus-teko.png"
                     />
                     <p
@@ -735,7 +748,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </p>
                 </p>
                 <button
-                  aria-label="Close Sähköposti-tunnistautuminen"
+                  aria-label="Sulje Sähköposti-tunnistautuminen"
                   class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                   data-testid="_Helsinki-tunnuksen_käyttö-closeButton"
                   type="button"
@@ -743,7 +756,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <span
                     class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
                   >
-                    Close
+                    Sulje
                   </span>
                   <div
                     aria-hidden="true"
@@ -836,7 +849,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   .
                 </p>
                 <button
-                  aria-label="Close Tunnistautumistapojen yhdistäminen"
+                  aria-label="Sulje Tunnistautumistapojen yhdistäminen"
                   class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                   data-testid="_Tunnistautumistapojen_yhdistäminen-closeButton"
                   type="button"
@@ -844,7 +857,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <span
                     class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
                   >
-                    Close
+                    Sulje
                   </span>
                   <div
                     aria-hidden="true"
@@ -945,6 +958,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Klikkaa kirjautumisikkunassa Olen unohtanut salasanani -linkkiä."
+                      loading="lazy"
                       src="/src/userGuide/assets/14-salasanan-unohdus.png"
                     />
                     <p
@@ -958,6 +972,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Syötä sähköpostiosoitteesi avautuvaan kenttään, jotta saat salasanan uusimislinkin sähköpostiisi."
+                      loading="lazy"
                       src="/src/userGuide/assets/15-sahkoposti-salasanalle.png"
                     />
                     <p
@@ -971,6 +986,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Saat tiedon, että sinulle lähetetään sähköpostiviesti salasanan uusimista varten."
+                      loading="lazy"
                       src="/src/userGuide/assets/16-salasanan-vaihtopyynto.png"
                     />
                     <p
@@ -984,6 +1000,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Saamassasi sähköpostiviestissä on linkki uuden salasanan antamista varten. Linkki on voimassa 30 minuuttia. "
+                      loading="lazy"
                       src="/src/userGuide/assets/17-salasanan-vaihtoviesti.png"
                     />
                     <p
@@ -998,6 +1015,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <img
                       alt="Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla 
             vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä."
+                      loading="lazy"
                       src="/src/userGuide/assets/18-uusi-salasana.png"
                     />
                     <p
@@ -1009,7 +1027,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </p>
                 </p>
                 <button
-                  aria-label="Close Unohtunut salasana"
+                  aria-label="Sulje Unohtunut salasana"
                   class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                   data-testid="_Unohtunut_salasana-closeButton"
                   type="button"
@@ -1017,7 +1035,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <span
                     class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
                   >
-                    Close
+                    Sulje
                   </span>
                   <div
                     aria-hidden="true"
@@ -1102,6 +1120,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin 
             suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi 
             kirjautua uuteen palveluun."
+                      loading="lazy"
                       src="/src/userGuide/assets/19-yhteensopimaton-kirjautuminen.png"
                     />
                     <p
@@ -1118,6 +1137,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Vahvista uloskirjautuminen aiemmasta palvelusta."
+                      loading="lazy"
                       src="/src/userGuide/assets/20-kirjautumislogout.png"
                     />
                     <p
@@ -1128,7 +1148,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </p>
                 </p>
                 <button
-                  aria-label="Close Ongelma kirjautumisessa"
+                  aria-label="Sulje Ongelma kirjautumisessa"
                   class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                   data-testid="_Ongelma_kirjautumisessa-closeButton"
                   type="button"
@@ -1136,7 +1156,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <span
                     class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
                   >
-                    Close
+                    Sulje
                   </span>
                   <div
                     aria-hidden="true"
@@ -1174,7 +1194,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               >
                 https://profiili.hel.fi
               </a>
-               voit katsella ja muokata omia tietojasi ja miten palvelut niitä käyttävät.
+              voit katsella ja muokata omia tietojasi ja sitä, miten palvelut niitä käyttävät.
             </p>
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-6"
@@ -1241,6 +1261,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <img
                     alt="Helsinki-profiilissa Omat tiedot -osiossa Viralliset tiedot tulevat suoraan väestörekisterikeskuksesta ja niiden päivittäminen tehdään myös siellä."
+                    loading="lazy"
                     src="/src/userGuide/assets/21-omat-tiedot.png"
                   />
                   <p
@@ -1253,6 +1274,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Helsinki-profiilissa Omat tiedot -osiossa Perustiedot ovat itse päivitettävissä."
+                      loading="lazy"
                       src="/src/userGuide/assets/22-omat-nimitiedot.png"
                     />
                     <p
@@ -1265,18 +1287,23 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi."
+                      alt="Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi. Asiointikieli määrittää, millä
+            kielellä saat viestejä palvelusta. Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli 
+            suomi.fitunnistautuen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella."
+                      loading="lazy"
                       src="/src/userGuide/assets/23-omat-yhteystiedot.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi.
+                      Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi. Asiointikieli määrittää, millä
+            kielellä saat viestejä palvelusta. Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli 
+            suomi.fitunnistautuen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella.
                     </p>
                   </p>
                 </p>
                 <button
-                  aria-label="Close Profiili-tietojen muokkaaminen"
+                  aria-label="Sulje Profiili-tietojen muokkaaminen"
                   class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                   data-testid="_Profiili_tietojen_muokkaaminen-closeButton"
                   type="button"
@@ -1284,7 +1311,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <span
                     class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
                   >
-                    Close
+                    Sulje
                   </span>
                   <div
                     aria-hidden="true"
@@ -1377,6 +1404,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <img
                       alt="Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. 
             Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä."
+                      loading="lazy"
                       src="/src/userGuide/assets/24-olemassa-olevan-profiilin-kirjautuminen.png"
                     />
                     <p
@@ -1392,6 +1420,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <img
                       alt="Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä 
             tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista."
+                      loading="lazy"
                       src="/src/userGuide/assets/25-kayttamasi-palvelut.png"
                     />
                     <p
@@ -1403,7 +1432,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </p>
                 </p>
                 <button
-                  aria-label="Close Tietojen käsittely eri palveluissa"
+                  aria-label="Sulje Tietojen käsittely eri palveluissa"
                   class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                   data-testid="_Tietojen_käsittely_eri-closeButton"
                   type="button"
@@ -1411,7 +1440,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <span
                     class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
                   >
-                    Close
+                    Sulje
                   </span>
                   <div
                     aria-hidden="true"
@@ -1499,6 +1528,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <p>
                       <img
                         alt="Helsinki-profiilin Omat tiedot -osiossa voit ladata tietosi kaikista palveluista json-tiedostona."
+                        loading="lazy"
                         src="/src/userGuide/assets/26-tietojen-lataus.png"
                       />
                       <p
@@ -1510,7 +1540,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </p>
                 </p>
                 <button
-                  aria-label="Close Tietojesi lataaminen"
+                  aria-label="Sulje Tietojesi lataaminen"
                   class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                   data-testid="_Tietojen_lataaminen-closeButton"
                   type="button"
@@ -1518,7 +1548,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <span
                     class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
                   >
-                    Close
+                    Sulje
                   </span>
                   <div
                     aria-hidden="true"
@@ -1611,6 +1641,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Voit poistaa tietosi Helsinki-profiilissa yksittäisen palvelun kohdalla Käyttämäsi palvelut -osiossa."
+                      loading="lazy"
                       src="/src/userGuide/assets/27-tietojen-poisto-palvelusta.png"
                     />
                     <p
@@ -1624,6 +1655,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä pop-up-vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa."
+                      loading="lazy"
                       src="/src/userGuide/assets/28-tietojen-poisto-palvelusta-pop-up.png"
                     />
                     <p
@@ -1634,7 +1666,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </p>
                 </p>
                 <button
-                  aria-label="Close Tietojesi poisto yksittäisestä palvelusta"
+                  aria-label="Sulje Tietojesi poisto yksittäisestä palvelusta"
                   class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                   data-testid="_Tietojen_poisto-closeButton"
                   type="button"
@@ -1642,7 +1674,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <span
                     class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
                   >
-                    Close
+                    Sulje
                   </span>
                   <div
                     aria-hidden="true"
@@ -1718,13 +1750,13 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 style="display: none;"
               >
                 <p>
-                  Jos haluat poistaa koko Helsinki-profiilin, voit tehdä sen Poista omat tiedot -näppäintä painamalla. Tämän jälkeen ruudulle tulee pop-up-ikkuna, jossa vielä varmistetaan, että haluat poistaa tietosi. Vahvistamalla pyynnön kaikki tiedot poistetaan profiilista sekä kaikista asiointipalveluista, jos mitään asiointia ei ole kesken.
+                  Jos haluat poistaa koko Helsinki-profiilin, voit tehdä sen Poista omat tiedot -näppäintä painamalla. Tämän jälkeen sinulta vielä varmistetaan, että haluat poistaa tietosi. Vahvistamalla pyynnön kaikki tiedot poistetaan profiilista sekä kaikista asiointipalveluista, jos mitään asiointia ei ole kesken.
                 </p>
                 <p>
-                  Jotkin lakisääteiset asiointipalvelut voivat edellyttää tietojen säilyttämistä määräajan tai pysyvästi. Asioinnista ja asiointipalvelusta riippuen tiedot voidaan anonymisoida joissakin tapauksissa. Jos lakisääteisen palvelun pitää säilyttää tiedot, tällöin profiilia tai kyseisen palvelun käyttöoikeutta tietoihin ei voida poistaa.
+                  Jotkin lakisääteiset asiointipalvelut voivat edellyttää tietojen säilyttämistä määräajan tai pysyvästi. Asioinnista ja asiointipalvelusta riippuen tiedot voidaan joissakin tapauksissa anonymisoida. Jos lakisääteisen palvelun pitää säilyttää tiedot, tällöin profiilia tai kyseisen palvelun käyttöoikeutta tietoihin ei voida poistaa.
                 </p>
                 <p>
-                  Jos olet yhdistänyt suomi.fi-tunnistautumisen ja sähköpostiosoite+salasana-kirjautumisen samaan Helsinki-profiiliin, profiilin poisto pitää tehdä suomi.fi-tunnistautuneena.
+                  Jos olet yhdistänyt suomi.fi-tunnistautumisen ja sähköpostiosoite+salasana -kirjautumisen samaan Helsinki-profiiliin, profiilin poisto pitää tehdä suomi.fi-tunnistautuneena.
                 </p>
                 <p>
                   Helsinki-profiilin poistamisen jälkeen voit aina tarvittaessa tehdä uuden profiilin, mutta kaikki aiemmat tiedot on menetetty.
@@ -1733,6 +1765,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Helsinki-profiilin Omat tiedot -osiossa on painike Poista omat tiedot, jolla voit poistaa koko Helsinki-profiilin ja eri palveluissa käytetyt tietosi."
+                      loading="lazy"
                       src="/src/userGuide/assets/29-tietojen-poisto.png"
                     />
                     <p
@@ -1746,6 +1779,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <p>
                     <img
                       alt="Ruudulle tulee vielä varmistusviesti pop-up-ikkunaan, jotta tietoja ei poisteta vahingossa."
+                      loading="lazy"
                       src="/src/userGuide/assets/30-tietojen-poisto-popup.png"
                     />
                     <p
@@ -1756,7 +1790,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </p>
                 </p>
                 <button
-                  aria-label="Close Helsinki-profiilin poisto"
+                  aria-label="Sulje Helsinki-profiilin poisto"
                   class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                   data-testid="_Profiilin_poisto-closeButton"
                   type="button"
@@ -1764,7 +1798,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <span
                     class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
                   >
-                    Close
+                    Sulje
                   </span>
                   <div
                     aria-hidden="true"

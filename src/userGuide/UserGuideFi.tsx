@@ -48,17 +48,19 @@ const tableOfContents = [
 const altText05 = `Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
   suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.`;
 
+const lang = 'fi';
+
 function UserGuideFi(): ReactElement {
   return (
     <Fragment>
       <FocusableH1>Helsinki-profiilin ohje</FocusableH1>
       <p>
-        Helsinki-profiili on kaupungin digitaalisia asiointipalveluja käyttävän
-        kaupunkilaisen asiakasprofiili. Se on ensisijainen tunnistautumistapa
-        kaupungin digitaalisiin palveluihin. Helsinki-profiili kokoaa yhteen
-        paikkaan asiakkaan henkilö- ja yhteystiedot sekä yhteydet eri kaupungin
-        palveluihin. Profiilissa käyttäjä voi hallinnoida omia tietojaan ja
-        niiden näkyvyyttä eri palvelussa.
+        Helsinki-profiili on kaupungin digitaalisten asiointipalvelujen
+        käyttäjän asiakasprofiili, joka toimii ensisijaisena
+        tunnistautumistapana kaupungin palveluihin. Profiili kokoaa yhteen
+        paikkaan käyttäjän henkilö- ja yhteystiedot sekä yhteydet eri kaupungin
+        palveluihin. Profiilissa voit hallinnoida omia tietojasi ja niiden
+        näkyvyyttä eri palveluissa.
       </p>
       <Link
         className={styles['download-link']}
@@ -90,15 +92,15 @@ function UserGuideFi(): ReactElement {
         käytöstä vuoden 2024 aikana.
       </p>
       <UserGuideAccordion
+        language={lang}
         id="_Suomi.fi-tunnistautuminen"
         heading="Suomi.fi-tunnistautuminen"
       >
         <h4>Tunnistautumisen valinta</h4>
         <p>
-          Asiointipalvelussa Kirjaudu-linkin painamisen jälkeen käyttäjä saa
-          erilaisia kirjautumisvaihtoja tarjoavan näkymän, jossa valitaan
-          suomi.fi-tunnistautuminen. Kirjautumisvaihtoehtojen näkymä vaihtelee
-          eri asiointipalveluissa.
+          Asiointipalvelussa Kirjaudu-linkin painamisen jälkeen näet erilaisia
+          kirjautumisvaihtoehtoja, joista valitaan suomi.fi-tunnistautuminen.
+          Kirjautumisvaihtoehtojen näkymä vaihtelee eri asiointipalveluissa.
         </p>
 
         <p>
@@ -227,6 +229,7 @@ function UserGuideFi(): ReactElement {
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Helsinki-tunnuksen_käyttö"
         heading="Sähköposti-tunnistautuminen"
       >
@@ -313,6 +316,7 @@ function UserGuideFi(): ReactElement {
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Tunnistautumistapojen_yhdistäminen"
         heading="Tunnistautumistapojen yhdistäminen"
       >
@@ -339,7 +343,11 @@ function UserGuideFi(): ReactElement {
         suomi.fi-tunnistautumista tai profiilin luomisen yhteydessä antamasi
         sähköpostiosoitteen ja salasanan.
       </p>
-      <UserGuideAccordion id="_Unohtunut_salasana" heading="Unohtunut salasana">
+      <UserGuideAccordion
+        language={lang}
+        id="_Unohtunut_salasana"
+        heading="Unohtunut salasana"
+      >
         <p>
           Jos et muista salasanaasi, voit luoda uuden kirjautumisikkunassa{' '}
           <i>Olen unohtanut salasanani</i> -linkistä. Salasanan ”unohtuminen”
@@ -392,6 +400,7 @@ function UserGuideFi(): ReactElement {
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Ongelma_kirjautumisessa"
         heading="Ongelma kirjautumisessa"
       >
@@ -427,10 +436,12 @@ function UserGuideFi(): ReactElement {
       </h2>
       <p>
         Kirjautumalla Helsinki-profiiliin osoitteessa{' '}
-        <a href="https://profiili.hel.fi">https://profiili.hel.fi</a> voit
-        katsella ja muokata omia tietojasi ja miten palvelut niitä käyttävät.
+        <a href="https://profiili.hel.fi">https://profiili.hel.fi</a>
+        voit katsella ja muokata omia tietojasi ja sitä, miten palvelut niitä
+        käyttävät.
       </p>
       <UserGuideAccordion
+        language={lang}
         id="_Profiili_tietojen_muokkaaminen"
         heading="Profiili-tietojen muokkaaminen"
       >
@@ -470,11 +481,14 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image023}
-            alt="Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi."
+            alt={`Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi. Asiointikieli määrittää, millä
+            kielellä saat viestejä palvelusta. Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli 
+            suomi.fitunnistautuen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella.`}
           />
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Tietojen_käsittely_eri"
         heading="Tietojen käsittely eri palveluissa"
       >
@@ -509,6 +523,7 @@ function UserGuideFi(): ReactElement {
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Tietojen_lataaminen"
         heading="Tietojesi lataaminen"
       >
@@ -538,6 +553,7 @@ function UserGuideFi(): ReactElement {
         yhdistettävissä sinuun.
       </p>
       <UserGuideAccordion
+        language={lang}
         id="_Tietojen_poisto"
         heading="Tietojesi poisto yksittäisestä palvelusta"
       >
@@ -567,29 +583,30 @@ function UserGuideFi(): ReactElement {
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Profiilin_poisto"
         heading="Helsinki-profiilin poisto"
       >
         <p>
           Jos haluat poistaa koko Helsinki-profiilin, voit tehdä sen Poista omat
-          tiedot -näppäintä painamalla. Tämän jälkeen ruudulle tulee
-          pop-up-ikkuna, jossa vielä varmistetaan, että haluat poistaa tietosi.
-          Vahvistamalla pyynnön kaikki tiedot poistetaan profiilista sekä
-          kaikista asiointipalveluista, jos mitään asiointia ei ole kesken.
+          tiedot -näppäintä painamalla. Tämän jälkeen sinulta vielä
+          varmistetaan, että haluat poistaa tietosi. Vahvistamalla pyynnön
+          kaikki tiedot poistetaan profiilista sekä kaikista
+          asiointipalveluista, jos mitään asiointia ei ole kesken.
         </p>
 
         <p>
           Jotkin lakisääteiset asiointipalvelut voivat edellyttää tietojen
           säilyttämistä määräajan tai pysyvästi. Asioinnista ja
-          asiointipalvelusta riippuen tiedot voidaan anonymisoida joissakin
-          tapauksissa. Jos lakisääteisen palvelun pitää säilyttää tiedot,
+          asiointipalvelusta riippuen tiedot voidaan joissakin tapauksissa
+          anonymisoida. Jos lakisääteisen palvelun pitää säilyttää tiedot,
           tällöin profiilia tai kyseisen palvelun käyttöoikeutta tietoihin ei
           voida poistaa.
         </p>
 
         <p>
           Jos olet yhdistänyt suomi.fi-tunnistautumisen ja
-          sähköpostiosoite+salasana-kirjautumisen samaan Helsinki-profiiliin,
+          sähköpostiosoite+salasana -kirjautumisen samaan Helsinki-profiiliin,
           profiilin poisto pitää tehdä suomi.fi-tunnistautuneena.
         </p>
 

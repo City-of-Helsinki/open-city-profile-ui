@@ -1,77 +1,77 @@
 .table-of-contents {
     max-width: 1296px;
-    margin-top: 32px;
+    margin-top: var(--spacing-l);
 }
 
 @media(min-width: 768px) {
     .table-of-contents {
-        max-width:1328px
+        max-width: 1328px;
     }
 }
 
 .table-of-contents:not(:first-child) {
-    margin-top: 32px
+    margin-top: var(--spacing-l);
 }
 
 @media(min-width: 992px) {
     .table-of-contents:not(:first-child) {
-        margin-top:64px
+        margin-top: var(--spacing-4-xl);
     }
 }
 
 .table-of-contents+* {
-    margin-top: 32px
+    margin-top: var(--spacing-l);
 }
 
 @media(min-width: 992px) {
     .table-of-contents+* {
-        margin-top:64px
+        margin-top: var(--spacing-4-xl);
     }
 }
 
 .table-of-contents__container {
-    background-color: #f7f7f8;
-    border-left: 8px solid #0000BF;
+    background-color: var(--color-silver-light);
+    border-left: var(--spacing-2-xs) solid var(--color-bus);
     max-width: 908px;
-    padding: 32px 24px
+    padding: var(--spacing-l) var(--spacing-m);
 }
 
 .table-of-contents__title {
-    --line-height: 1.3333333333;
+    --line-height: var(--lineheight-m);
     font-size: 1.5rem;
     font-weight: 500;
-    line-height: 1.3333333333;
+    line-height: var(--lineheight-m);
     line-height: var(--line-height);
     margin-bottom: 0;
-    margin-top: 0
+    margin-top: 0;
 }
 
 @media(min-width: 992px) {
     .table-of-contents__title {
         --line-height:1;
         font-size: 2rem;
-        font-weight: 400
+        font-weight: 400;
     }
 }
 
 .table-of-contents__title+.table-of-contents__content {
-    padding-top: 16px
+    padding-top: var(--spacing-s);
 }
 
 @media(min-width: 992px) {
     .table-of-contents__title+.table-of-contents__content {
-        padding-top:24px
+        padding-top: var(--spacing-m);
     }
 }
 
 .table-of-contents__list {
     list-style-type: none;
     margin: 0;
-    padding: 0
+    padding: 0;
 }
 
 .table-of-contents__list>.table-of-contents__item~.table-of-contents__item {
-    padding-top: 16px
+    padding-top: var(--spacing-s);
 }
 
 .table-of-contents__link {
@@ -84,15 +84,15 @@
     position: relative;
     -webkit-text-decoration: underline;
     text-decoration: underline;
-    color: black;
+    color: var(--color-black);
 }
 
 .table-of-contents__link:focus {
-    outline: none
+    outline: none;
 }
 
 .table-of-contents__link:focus::after {
-    box-shadow: 0 0 0 3px #000;
+    box-shadow: 0 0 0 3px var(--color-black);
     content: "";
     display: block;
     height: 100%;
@@ -104,9 +104,9 @@
 }
 
 .table-of-contents__js {
-    display: none
+    display: none;
 }
 
 .table-of-contents__js[data-js=true] {
-    display: block
+    display: block;
 }

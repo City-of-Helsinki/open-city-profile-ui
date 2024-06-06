@@ -44,6 +44,8 @@ const tableOfContents = [
   { title: 'Deleting your information', href: '#_Deleting_your_information' },
 ];
 
+const lang = 'en';
+
 function UserGuideEn(): ReactElement {
   return (
     <Fragment>
@@ -90,6 +92,7 @@ function UserGuideEn(): ReactElement {
       <UserGuideAccordion
         id="_Suomi.fi_identification"
         heading="Suomi.fi identification"
+        language={lang}
       >
         <h4>Choice of authentication</h4>
 
@@ -143,8 +146,9 @@ function UserGuideEn(): ReactElement {
         <h4>Email address verification</h4>
 
         <p>
-          After authentication, you will be asked for your email address, which
-          you will need to confirm.
+          After authentication, you will be asked for your email address. A
+          confirmation message will be sent to the email address to verify the
+          authenticity of the address.
         </p>
 
         <p>
@@ -230,6 +234,7 @@ function UserGuideEn(): ReactElement {
       <UserGuideAccordion
         id="_Email_identification"
         heading="Email identification"
+        language={lang}
       >
         <h4>Choice of authentication</h4>
         <p>
@@ -333,6 +338,7 @@ function UserGuideEn(): ReactElement {
       <UserGuideAccordion
         id="_Combining_identification_methods"
         heading="Combining identification methods"
+        language={lang}
       >
         <p>
           If you wish, you can combine different authentication methods into a
@@ -358,7 +364,11 @@ function UserGuideEn(): ReactElement {
         profile.
       </p>
 
-      <UserGuideAccordion id="_Forgotten_password" heading="Forgotten password">
+      <UserGuideAccordion
+        language={lang}
+        id="_Forgotten_password"
+        heading="Forgotten password"
+      >
         <p>
           If you can&apos;t remember your password, you can create a new one in
           the login window using the <i>I forgot my password</i>
@@ -410,6 +420,7 @@ function UserGuideEn(): ReactElement {
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Problem_with_identification"
         heading="Problem with identification"
       >
@@ -449,6 +460,7 @@ function UserGuideEn(): ReactElement {
         view and edit your data and how it is used by the services.
       </p>
       <UserGuideAccordion
+        language={lang}
         id="_Editing_profile_information"
         heading="Editing profile information"
       >
@@ -497,11 +509,12 @@ function UserGuideEn(): ReactElement {
             alt={`You can add and edit your other address details, your phone number and your email address. The 
             language of communication determines the language in which you receive messages from the service. 
             The authentication method tells you how you are logged in to the service, i.e. suomi.fi authentication 
-            or an email/password combination, i.e. the Helsinki ID."`}
+            or an email/password combination, i.e. the Helsinki ID.`}
           />
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Processing_of_your"
         heading="Processing of your data by different services"
       >
@@ -541,6 +554,7 @@ function UserGuideEn(): ReactElement {
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Download_your_information"
         heading="Download your information"
       >
@@ -562,7 +576,7 @@ function UserGuideEn(): ReactElement {
           <UserGuideImage
             src={image026}
             alt={`In the My information section of your Helsinki profile, 
-            you can download your data for all services as a json file.`}
+            you can download your data for all services as a Json file.`}
           />
         </p>
       </UserGuideAccordion>
@@ -577,6 +591,7 @@ function UserGuideEn(): ReactElement {
       </p>
 
       <UserGuideAccordion
+        language={lang}
         id="_Deleting_your_information"
         heading="Deleting your information from a single service"
       >
@@ -607,6 +622,7 @@ function UserGuideEn(): ReactElement {
       </UserGuideAccordion>
 
       <UserGuideAccordion
+        language={lang}
         id="_Deleting_your_Helsinki_profile"
         heading="Deleting your Helsinki profile"
       >

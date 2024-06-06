@@ -10,7 +10,7 @@ interface ImageProps {
 function UserGuideImage({ src, alt }: ImageProps): React.ReactElement {
   return (
     <p>
-      <img src={src} alt={alt} />
+      <img src={src} alt={alt} loading="lazy" />
       <p className={styles['image-text']}>{alt}</p>
     </p>
   );

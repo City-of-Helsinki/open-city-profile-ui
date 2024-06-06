@@ -35,26 +35,28 @@ import image029 from './assets/29-tietojen-poisto-sv.png';
 import image030 from './assets/30-tietojen-poisto-popup-sv.png';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
-function UserGuideSv(): ReactElement {
-  const tableOfContents = [
-    {
-      title: 'Skapa en Helsingforsprofilen',
-      href: '#_Create_a_Helsinki_profile',
-    },
-    {
-      title: 'Logga in',
-      href: '#_Login',
-    },
-    {
-      title: 'Visa och redigera dina egna uppgifter',
-      href: '#_viewing_and_editing',
-    },
-    {
-      title: 'Radering av uppgifter',
-      href: '#_Deleting_your_information',
-    },
-  ];
+const tableOfContents = [
+  {
+    title: 'Skapa en Helsingforsprofilen',
+    href: '#_Create_a_Helsinki_profile',
+  },
+  {
+    title: 'Logga in',
+    href: '#_Login',
+  },
+  {
+    title: 'Visa och redigera dina egna uppgifter',
+    href: '#_viewing_and_editing',
+  },
+  {
+    title: 'Radering av uppgifter',
+    href: '#_Deleting_your_information',
+  },
+];
 
+const lang = 'sv';
+
+function UserGuideSv(): ReactElement {
   return (
     <Fragment>
       <FocusableH1>Helsingforsprofilens hjälp</FocusableH1>
@@ -96,6 +98,7 @@ function UserGuideSv(): ReactElement {
         ur bruk 2024.
       </p>
       <UserGuideAccordion
+        language={lang}
         id="_Suomi.fi_identifiering"
         heading="Suomi.fi identifiering"
       >
@@ -150,14 +153,15 @@ function UserGuideSv(): ReactElement {
 
         <p>
           Efter autentiseringen kommer du att bli ombedd att ange din
-          e-postadress, som du måste bekräfta.
+          e-postadress. Ett bekräftelsemeddelande skickas till e-postadressen
+          för att verifiera att adressen är äkta.
         </p>
 
         <p>
-          Om du redan har skapat Helsingforsprofilen med en e-postadress och ett
-          lösenord kan du använda samma e-postadress. I så fall kombineras de
-          olika autentiseringsmetoderna och du kan se alla tjänster du använder
-          på en gång.{' '}
+          För att validera din e-post får du en sexsiffrig kod för den
+          e-postadress du angav, som du måste ange i fältet på skärmen. I så
+          fall kombineras de olika autentiseringsmetoderna och du kan se alla
+          tjänster du använder på en gång.{' '}
           <b>
             Observera dock att du inte kommer att kunna koppla bort dem senare.
           </b>
@@ -182,7 +186,7 @@ function UserGuideSv(): ReactElement {
             src={image005}
             alt={`Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
             använda samma e-postadress för både suomi.fi-autentiseringen och Helsingfors ID får du en 
-            Helsingfors-profil. Sammanslagningen kan inte tas bort senare."`}
+            Helsingfors-profil. Sammanslagningen kan inte tas bort senare.`}
           />
         </p>
 
@@ -237,6 +241,7 @@ function UserGuideSv(): ReactElement {
         />
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Identifiering_av_e-post"
         heading="Identifiering av e-post"
       >
@@ -266,10 +271,10 @@ function UserGuideSv(): ReactElement {
           Om du redan har skapat Helsingforsprofilen med suomi.fi-autentisering,
           kan du skapa ett lösenord för din profil genom att klicka på länken
           Jag har glömt mitt lösenord. Mer information om hur du skapar ett
-          lösenord finns under <a href="#_Glömt_lösenord">Glömt lösenord</a>. I
-          det här fallet finns både de tjänster som kräver
-          suomi.fi-autentisering och inloggning med e-postlösenord i samma
-          Helsingforsprofilen och du kan hantera all din information i en vy.{' '}
+          lösenord finns under <a href="#_Glömt_lösenord">Glömt lösenord</a>. De
+          olika autentiseringsmetoderna kommer sedan att slås samman och du
+          kommer att kunna se all information om alla de tjänster du använder på
+          en gång.{' '}
           <b>
             Observera dock att du inte kommer att kunna avbryta sammanslagningen
             senare.
@@ -345,6 +350,7 @@ function UserGuideSv(): ReactElement {
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Kombinera_identifieringsmetoder"
         heading="Kombinera identifieringsmetoder"
       >
@@ -370,7 +376,11 @@ function UserGuideSv(): ReactElement {
         den e-postadress och det lösenord som du angav när du skapade din
         profil.
       </p>
-      <UserGuideAccordion id="_Glömt_lösenord" heading="Glömt lösenord">
+      <UserGuideAccordion
+        language={lang}
+        id="_Glömt_lösenord"
+        heading="Glömt lösenord"
+      >
         <p>
           Om du inte kommer ihåg ditt lösenord kan du skapa ett nytt i
           inloggningsfönstret genom att klicka på länken{' '}
@@ -426,18 +436,19 @@ function UserGuideSv(): ReactElement {
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Problem_med_identifiering"
         heading="Problem med identifiering"
       >
         <p>
           När du flyttar från en tjänst till en annan kan autentiseringen vara
-          olika för de olika tjänsterna. Du loggade in på den första tjänsten
-          med ditt Helsinki ID, dvs. en kombination av e-post och lösenord, men
-          den andra tjänsten kräver att du identifierar dig med suomi.fi. I så
-          fall får du ett meddelande om att autentiseringsmetoden inte är
-          kompatibel. Du måste logga ut från den tidigare tjänsten för att
-          autentisera dig i den nya tjänsten. Två olika autentiseringsmetoder
-          kan inte vara öppna samtidigt.
+          olika för de olika tjänsterna. Du loggade t.ex. in på den första
+          tjänsten med ditt Helsingforsprofil, dvs. en kombination av e-post och
+          lösenord, men den andra tjänsten kräver att du identifierar dig med
+          suomi.fi. I så fall får du ett meddelande om att autentiseringsmetoden
+          inte är kompatibel. Du måste logga ut från den tidigare tjänsten för
+          att autentisera dig i den nya tjänsten. Två olika
+          autentiseringsmetoder kan inte vara öppna samtidigt.
         </p>
 
         <p>
@@ -465,6 +476,7 @@ function UserGuideSv(): ReactElement {
       </p>
 
       <UserGuideAccordion
+        language={lang}
         id="_Redigera_profilinformation"
         heading="Redigera profilinformation"
       >
@@ -521,6 +533,7 @@ function UserGuideSv(): ReactElement {
         </p>
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Olika_tjänsters_bearbetning"
         heading="Olika tjänsters bearbetning av dina uppgifter"
       >
@@ -556,6 +569,7 @@ function UserGuideSv(): ReactElement {
         />
       </UserGuideAccordion>
       <UserGuideAccordion
+        language={lang}
         id="_Ladda_ner_din"
         heading="Ladda ner din information"
       >
@@ -594,6 +608,7 @@ function UserGuideSv(): ReactElement {
       </p>
 
       <UserGuideAccordion
+        language={lang}
         id="_Radera_dina_uppgifter"
         heading="Radering av uppgifter från en och samma tjänst"
       >
@@ -625,6 +640,7 @@ function UserGuideSv(): ReactElement {
       </UserGuideAccordion>
 
       <UserGuideAccordion
+        language={lang}
         id="_Radera_din_Helsingforsprofil"
         heading="Radera din Helsingforsprofil"
       >
