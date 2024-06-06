@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.10.2](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.10.1...open-city-profile-ui-v1.10.2) (2024-06-06)
+
+
+### Bug Fixes
+
+* Oidc don't filter protocol claims HP-2463 ([912db76](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/912db76179086810f19a22fff46ac8b9d40865b5))
+
 ## [1.10.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.10.0...open-city-profile-ui-v1.10.1) (2024-06-05)
 
 
