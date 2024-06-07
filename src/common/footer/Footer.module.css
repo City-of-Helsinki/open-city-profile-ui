@@ -1,0 +1,26 @@
+.utility-group a {
+  text-decoration: underline;
+}
+
+.utility-group-heading {
+  margin: 0;
+}
+
+.utility-group-heading:focus {
+  outline: none !important;
+}
+
+.utility-group-heading:hover:not(:focus) {
+  cursor: inherit;
+  text-decoration: none !important;
+}
+
+.contacts-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link-with-icon svg {
+  margin-right: var(--spacing-3-xs);
+}
