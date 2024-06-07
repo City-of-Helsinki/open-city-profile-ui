@@ -97,7 +97,7 @@
   },
   "loading": "Loading...",
   "login": {
-    "description": "By signing in to the new Helsinki city services, a Helsinki profile is created for you. Here you can easily find your profile information and see all the services you have signed in with it. ",
+    "description": "A Helsinki profile will be created for you when you log in to City of Helsinki services. Through your profile, you can view and manage your data and how it is used in different services.",
     "login": "Log in",
     "title": "Your profile information in one address!"
   },

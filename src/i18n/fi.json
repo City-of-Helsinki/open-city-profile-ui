@@ -97,7 +97,7 @@
   },
   "loading": "Ladataan...",
   "login": {
-    "description": "Rekisteröitymällä Helsingin kaupungin uusiin palveluihin, sinulle luodaan Helsinki-profiili, jonka kautta näet vaivattomasti tietosi, joita sinusta keräämme sekä palvelut joihin olet tunnistautunut. ",
+    "description": "Sinulle luodaan Helsinki-profiili, kun tunnistaudut Helsingin kaupungin uusiin palveluihin. Profiilin kautta voit tarkastella ja hallinnoida omia tietojasi ja niiden käyttöä eri palveluissa.",
     "login": "Kirjaudu sisään",
     "title": "Profiilitietosi yhdessä osoitteessa! "
   },

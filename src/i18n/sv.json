@@ -97,7 +97,7 @@
   },
   "loading": "Laddar...",
   "login": {
-    "description": "Genom att logga in på de nya Helsingfors stadstjänster skapas Helsingforsprofilen för dig. Här kan du enkelt hitta din profilinformation och se alla tjänster du har loggat in med den.",
+    "description": "Du får en Helsingforsprofil när du loggar in i Helsingfors stads nya tjänster. Via din profil kan du se och hantera dina uppgifter och hur de används i olika tjänster.",
     "login": "Logga in",
     "title": "Din profilinformation på en adress!"
   },
