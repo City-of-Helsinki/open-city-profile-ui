@@ -115,7 +115,5 @@ export const createProfile = async (page: Page, mailbox: Mailbox) => {
   await page.locator('#hs-register-acknowledgements').click();
   await page.locator('#hs-register-age-check').click();
   await page.locator('input[value="Luo profiili"]').click();
-  await expect(page.getByLabel('Profiilivalikko')).toBeVisible({
-    timeout: 15000,
-  });
+  await expect(page.getByLabel('Profiilivalikko')).toBeVisible();
 };

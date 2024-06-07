@@ -45,7 +45,7 @@ test('Login with YLE account', async ({ page }) => {
   const YLE_ACCOUNT_PASSWORD = process.env.YLE_TEST_USER_PASSWORD || null;
 
   if (!YLE_ACCOUNT_EMAIL || !YLE_ACCOUNT_PASSWORD) {
-    test.skip(true, 'YLE account credentials not provided!');
+    test.skip(true, 'YLE account credentials not provided');
     return;
   }
 

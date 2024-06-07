@@ -33,7 +33,7 @@ test('1 - No connected accounts', async ({ page }) => {
     page.getByText(
       'Sinulla ei tällä hetkellä ole palveluita liitettynä profiiliisi'
     )
-  ).toBeVisible({ timeout: 15000 });
+  ).toBeVisible();
 });
 
 test.skip('2 - Connect profile to Linked Events', async ({ page }) => {
@@ -46,7 +46,7 @@ test.skip('2 - Connect profile to Linked Events', async ({ page }) => {
     page.getByText(
       'Palvelu Linked Events DEV pyytää lupaa käyttää seuraavia tietoja profiilistasi'
     )
-  ).toBeVisible({ timeout: 15000 });
+  ).toBeVisible();
   await page.locator('#hs-acknowledgements').check();
   await page.locator('#hs-age-check').check();
   await page.getByRole('button', { name: 'Jatka' }).click();

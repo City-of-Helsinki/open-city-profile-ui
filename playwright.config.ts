@@ -6,6 +6,11 @@ export default defineConfig({
   // Timeout for each test in milliseconds
   timeout: 120 * 1000,
 
+  // Configuration for the expect assertion library
+  expect: {
+    timeout: 15000,
+  },
+
   /* Run tests in files in parallel */
   fullyParallel: false,
 
