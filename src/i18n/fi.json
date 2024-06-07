@@ -79,7 +79,8 @@
     "reserveRights": "Kaikki oikeudet pidätetään",
     "contactUs": "Ota yhteyttä",
     "contactUsLink": "https://www.hel.fi/fi/paatoksenteko-ja-hallinto/ota-yhteytta-helsingin-kaupunkiin",
-    "backToTop": "Sivun alkuun"
+    "backToTop": "Sivun alkuun",
+    "userGuide": "Helsinki-profiilin ohje"
   },
   "helsinkiLogo": "Helsinki-logo",
   "landmarks": {
@@ -96,7 +97,7 @@
   },
   "loading": "Ladataan...",
   "login": {
-    "description": "Rekisteröitymällä Helsingin kaupungin uusiin palveluihin, sinulle luodaan Helsinki-profiili, jonka kautta näet vaivattomasti tietosi, joita sinusta keräämme sekä palvelut joihin olet tunnistautunut. ",
+    "description": "Sinulle luodaan Helsinki-profiili, kun tunnistaudut Helsingin kaupungin uusiin palveluihin. Profiilin kautta voit tarkastella ja hallinnoida omia tietojasi ja niiden käyttöä eri palveluissa.",
     "login": "Kirjaudu sisään",
     "title": "Profiilitietosi yhdessä osoitteessa! "
   },
@@ -281,5 +282,6 @@
   },
   "changeProfilePassword ": {
     "explanationForStrongAuthentication": "Voit vaihtaa salasanan vain, jos olet vahvasti tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista vaihtaaksesi salasanasi."
-  }
+  },
+  "userGuide": "Helsinki-profiilin ohje"
 }
