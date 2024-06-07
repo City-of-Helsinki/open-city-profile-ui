@@ -282,5 +282,6 @@
   },
   "changeProfilePassword ": {
     "explanationForStrongAuthentication": "Voit vaihtaa salasanan vain, jos olet vahvasti tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista vaihtaaksesi salasanasi."
-  }
+  },
+  "userGuide": "Helsinki-profiilin ohje"
 }

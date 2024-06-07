@@ -282,5 +282,6 @@
   },
   "changeProfilePassword ": {
     "explanationForStrongAuthentication": "Du kan bara ändra ditt lösenord om du är starkt identifierad. Logga ut och logga in igen med Suomi.fi-autentisering för att ändra ditt lösenord."
-  }
+  },
+  "userGuide": "Helsingforsprofilens hjälp"
 }
