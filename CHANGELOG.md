@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.11.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.10.2...open-city-profile-ui-v1.11.0) (2024-06-07)
+
+
+### Features
+
+* Add user guide HP-2322 ([#352](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/352)) ([e6dc4b6](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/e6dc4b68715e0670d1d281c406b87d16a72b2ebb))
+* Footer add Helsinki profile support information HP-2459 ([04a1954](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/04a19542a640c231af35ca401e986485052ddcec))
+
+
+### Bug Fixes
+
+* Remove guide link from footer base HP-2459 ([87cf386](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/87cf38697b45603a808a187f125695bd9d6fa486))
+
 ## [1.10.2](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.10.1...open-city-profile-ui-v1.10.2) (2024-06-06)
 
 
