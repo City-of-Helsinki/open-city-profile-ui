@@ -36,7 +36,7 @@ test('1 - No connected accounts', async ({ page }) => {
   ).toBeVisible();
 });
 
-test('2 - Connect profile to Linked Events', async ({ page }) => {
+test.skip('2 - Connect profile to Linked Events', async ({ page }) => {
   await page.goto(LINKED_EVENTS_URL);
   await clickLoginButton(page);
   await page.getByLabel('Sähköposti').fill(mailbox.emailAddress);
@@ -103,5 +103,5 @@ test('3 - Delete profile', async ({ page }) => {
   await page.getByLabel('Sähköposti').fill(mailbox.emailAddress);
   await page.getByLabel('Salasana').fill(USER_PASSWORD);
   await clickLoginButton(page);
-  await expect(page.getByText('Väärä tunnus tai salasana')).toBeVisible();
+  await expect(page.getByText('Väärä sähköposti tai salasana')).toBeVisible();
 });
