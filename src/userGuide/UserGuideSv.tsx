@@ -363,6 +363,12 @@ function UserGuideSv(): ReactElement {
         </p>
 
         <p>
+          <b>
+            Observera dock att du inte kommer att kunna koppla bort dem senare.
+          </b>
+        </p>
+
+        <p>
           Om din Helsingforsprofil skapades med en suomi.fi-autentisering kan du
           klicka på länken <i>Jag har glömt mitt lösenord</i>
           på inloggningsskärmen. För instruktioner om hur du gör detta, se

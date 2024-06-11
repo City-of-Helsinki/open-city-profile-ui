@@ -450,8 +450,9 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 </p>
                 <p>
                   Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla.
+                   
                   <b>
-                     Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
+                    Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
                   </b>
                 </p>
                 <p>
@@ -662,9 +663,10 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   >
                      Unohtunut salasana
                   </a>
-                   -kohdassa. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla. Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
+                   -kohdassa. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla.
+                   
                   <b>
-                     Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
+                    Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
                   </b>
                 </p>
                 <p>
@@ -833,6 +835,11 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               >
                 <p>
                   Voit halutessasi yhdistää eri tunnistautumistavat yhdeksi Helsinki-profiiliksi, jolloin voit tarkastella ja hallinnoida kaikkia tietojasi ja hyödyntämiäsi palveluja kerralla. Tämä onnistuu tekemällä ensin Helsinki-tunnus sähköpostiosoite-salasana-yhdistelmällä ja käyttämällä sitten samaa sähköpostiosoitetta ensimmäisellä suomi.fi-tunnistautumisella.
+                </p>
+                <p>
+                  <b>
+                    Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
+                  </b>
                 </p>
                 <p>
                   Jos Helsinki-profiili on luotu suomi.fi-tunnistautumisella, sisäänkirjautumisnäkymässä voi klikata

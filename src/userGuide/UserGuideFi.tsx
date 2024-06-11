@@ -156,8 +156,8 @@ function UserGuideFi(): ReactElement {
           Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja
           salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri
           tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi
-          palvelujen tiedot kerralla.
-          <b> Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.</b>
+          palvelujen tiedot kerralla.{' '}
+          <b>Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.</b>
         </p>
 
         <p>
@@ -258,9 +258,8 @@ function UserGuideFi(): ReactElement {
           salasanani -linkkiä. Salasanan luomisesta on enemmän{' '}
           <a href="#_Unohtunut_salasana"> Unohtunut salasana</a> -kohdassa.
           Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien
-          käyttämiesi palvelujen tiedot kerralla. Huomaa kuitenkin, ettei
-          yhdistämistä voi perua myöhemmin.
-          <b> Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.</b>
+          käyttämiesi palvelujen tiedot kerralla.{' '}
+          <b>Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.</b>
         </p>
         <p>
           Sähköpostin vahvistamiseksi saat antamaasi sähköpostiosoitteeseen
@@ -328,7 +327,9 @@ function UserGuideFi(): ReactElement {
           käyttämällä sitten samaa sähköpostiosoitetta ensimmäisellä
           suomi.fi-tunnistautumisella.
         </p>
-
+        <p>
+          <b>Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.</b>
+        </p>
         <p>
           Jos Helsinki-profiili on luotu suomi.fi-tunnistautumisella,
           sisäänkirjautumisnäkymässä voi klikata{' '}

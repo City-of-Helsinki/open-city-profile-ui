@@ -349,6 +349,13 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
+          <b>
+            Please note, however, that you will not be able to unlink them
+            later.
+          </b>
+        </p>
+
+        <p>
           If your Helsinki profile was created with a suomi.fi authentication,
           you can click on the <i>I forgot my password</i> link in the login
           screen. See the <a href="#_Forgotten_password">Forgotten password</a>{' '}
