@@ -8,147 +8,90 @@ function AccessibilityStatementSv(): React.ReactElement {
     <Fragment>
       <FocusableH1>Tillgänglighets­utlåtande</FocusableH1>
       <p>
-        Detta tillgänglighetsutlåtande gäller Helsingfors stads webbplats
-        Helsingfors-profli. Webbplatsens adress är https://profiili.hel.fi.
+        Detta tillgänglighetsutlåtande gäller webbservicen Helsingfors profil
+        (https//profiili.hel.fi). Helsingfors stad har ansvar för webbservicen.
+        Detta utlåtande beskriver hur tillgänglig webbservicen är och hur du kan
+        ge oss respons om dess tillgänglighet.
       </p>
 
-      <h2>Stadens mål</h2>
+      <h2>Hur tillgänglig är denna webbservice?</h2>
       <p>
-        När det gäller tillgänglighet till digitala tjänster har Helsingfors
-        stad som mål att uppnå minst nivå AA eller bättre enligt
-        WCAG-anvisningarna, om det är rimligt.
+        Enligt lagen om tillhandahållande av digitala tjänster ska webbplatser
+        för den offentliga förvaltningen vara tillgängliga, vilket betyder att
+        alla ska ha lika möjligheter att använda dem.
       </p>
 
-      <h2>Fullgörandestatus</h2>
       <p>
-        Denna webbplats uppfyller de kritiska tillgänglighetskraven som lagen
-        ställer.
+        Den här webbservicen uppfyller helt och hållet de
+        tillgänglighetskriterier som lagen förutsätter (WCAG-kriterierna 2.1,
+        nivå A och AA).
       </p>
 
-      <h2>Utarbetande av tillgänglighetsutlåtande</h2>
-      <p>Detta utlåtande upprättades den 5 april 2022.</p>
+      <h3>Utvärdering av tillgängligheten</h3>
 
-      <h3>Bedömning av tillgänglighet</h3>
       <p>
-        Vid bedömning av tillgänglighet har vi följt Helsingfors stads
-        arbetsanvisning och metoder som strävar efter att säkerställa
-        webbplatsens tillgänglighet i alla arbetsfaser.
+        I utvärderingen av tillgängligheten har man följt Helsingfors stads
+        arbetsordning och metoder som syftar till att säkerställa tjänstens
+        tillgänglighet i alla arbetsmoment.
       </p>
       <p>
-        Tillgängligheten är kontrollerad genom revision av en extern expert samt
-        genom egen utvärdering.
+        Tillgängligheten har kontrollerats genom utvärdering av en utomstående
+        sakkunnig samt genom självvärdering. Tillgängligheten har kontrollerats
+        med hjälp av automatisk tillgänglighetskontroll samt manuell kontroll av
+        webbservicen och dess innehåll.
       </p>
       <p>
-        Tillgängligheten är kontrollerad med hjälp av automatisk
-        tillgänglighetskontroll samt manuell kontroll av webbplatsen och
-        innehållet. Automatisk granskning av tillgängligheten har utförts med
-        det automatiska testningsverktyget och webbläsartillägget Siteimprove.
+        De brister som identifierades i tillgänglighetsgranskningen har
+        åtgärdats senast 21.05.2024.
       </p>
-      <p>Den externa expertrevisionen har utförts av Siteimprove.</p>
+      <p>Den externa expertgranskningen har utförts av Unicus Oy.</p>
 
-      <h3>Uppdatering av tillgänglighetsutlåtande</h3>
+      <h2>Har du upptäckt brister i tillgängligheten?</h2>
       <p>
-        Webbplatsens tillgänglighet kontrolleras genom kontinuerlig tillsyn när
-        tekniken eller innehållet förändras, samt granskning med regelbundna
-        intervall. Detta utlåtande uppdateras i samband med ändringar av
-        webbplatsen samt granskningar av tillgänglighet.
-      </p>
-
-      <h2>Återkoppling och kontaktuppgifter</h2>
-      <p>
-        Stadskansliet
-        <br />
-        Helsingfors
-      </p>
-
-      <h3>Anmälan om ej tillgängligt innehåll</h3>
-      <p>
-        Om användaren upplever att kraven på tillgänglighet ändå inte uppfylls
-        kan detta anmälas per e-post{' '}
-        <a href="mailto:helsinki.palaute@hel.fi">helsinki.palaute@hel.fi</a>{' '}
-        eller med responsformulär på{' '}
-        <Link
-          href="https://www.hel.fi/helsinki/sv/stad-och-forvaltning/delta/feedback"
-          external
-          openInNewTab
-        >
-          www.hel.fi/feedback
+        Vi försöker hela tiden förbättra webbservicens tillgänglighet. Ta
+        kontakt med oss om du upptäcker brister i tillgängligheten som inte har
+        beskrivits på den här sidan eller om innehållet du behöver inte är
+        tillgängligt.
+        <Link href="https://palautteet.hel.fi/sv/" external openInNewTab>
+          Ge respons med den här responsblanketten.
         </Link>
-        .
       </p>
 
-      <h3>Begäran om uppgifter i tillgänglig form</h3>
+      <h2>Tillgänglighetstillsyn</h2>
       <p>
-        Om användaren inte upplever sig få webbplatsens innehåll i tillgänglig
-        form, kan användaren begära denna information per e-post{' '}
-        <a href="mailto:helsinki.palaute@hel.fi">helsinki.palaute@hel.fi</a>{' '}
-        eller med responsformulär på{' '}
-        <Link
-          href="https://www.hel.fi/helsinki/sv/stad-och-forvaltning/delta/feedback"
-          external
-          openInNewTab
-        >
-          www.hel.fi/feedback
-        </Link>{' '}
-        . Vår strävan är att svara på förfrågan inom rimlig tid.
-      </p>
-
-      <h2>Rättsskydd för tillgänglighet, Verkställighetsförfarande</h2>
-      <p>
-        Om en person upplever att svar inte har erhållits på hans eller hennes
-        anmälan eller förfrågan, eller om svaret inte är tillfredsställande, kan
-        ärendet anmälas till regionförvaltningsverket i Södra Finland. På
-        webbplatsen för regionförvaltningsverket i Södra Finland finns
-        detaljerad information om hur ärendet behandlas.
+        Regionförvaltningsverket i Södra Finland övervakar att
+        tillgänglighetskraven följs. Om du är missnöjd med svaret eller om du
+        inte fått något svar inom två veckor, kan du göra en anmälan till
+        Regionförvaltningsverket i Södra Finland. Regionförvaltningsverket i
+        Södra Finland meddelar detaljerat på sin webbplats hur man går till väga
+        för att lämna in en anmälan och hur den handläggs.
       </p>
       <p>
-        <strong>Regionförvaltningsverket i Södra Finland</strong>
-        <br />
+        Regionförvaltningsverket i Södra Finland
         <br />
         Enheten för tillgänglighetstillsyn
-        <br />
-        <Link href="https://www.tillganglighetskrav.fi" external openInNewTab>
-          www.tillganglighetskrav.fi
-        </Link>
-        <br />
+        <br /> E-post:{' '}
         <a href="mailto:webbtillganglighet@rfv.fi">webbtillganglighet@rfv.fi</a>
         <br />
         Telefonväxel: <a href="tel:0295 016 000">0295 016 000</a>
         <br />
-        Öppet: må-fr kl. 8.00-16.15
+        <Link href="https://www.tillganglighetskrav.fi" external openInNewTab>
+          www.tillganglighetskrav.fi
+        </Link>
       </p>
 
-      <h2>Helsingfors stad och tillgänglighet</h2>
+      <h2>Uppgifter om tillgänglighetsutlåtandet</h2>
+      <p>Webbplatsen har publicerats 30.11.2022. </p>
+      <p>Utlåtandet har upprättats 20.03.2024. </p>
+      <p>Utlåtandet har uppdaterats senast 21.05.2024. </p>
       <p>
-        Helsingfors stad har som mål att vara en tillgänglig stad för alla.
-        Stadens mål är att det ska vara så lätt som möjligt för alla stadsbor
-        att röra sig och verka i Helsingfors och att alla innehåll och tjänster
-        ska vara tillgängliga för alla.
-      </p>
-      <p>
-        Staden främjar tillgängligheten för digitala tjänster genom att
-        förenhetliga publiceringsarbetet och ordna utbildning om tillgänglighet
-        för sin personal.
-      </p>
-      <p>
-        Tillgänglighetsnivån för webbplatser följs upp kontinuerligt när
-        webbplatserna underhålls. Observerade brister hanteras omedelbart. Vår
-        strävan är att genomföra nödvändiga ändringar så snabbt som möjligt.
-      </p>
-
-      <h3>Handikappade och hjälpmedelsanvändare</h3>
-      <p>
-        Staden erbjuder rådgivning och stöd för handikappade och
-        hjälpmedelsanvändare. Stöd kan fås på de rådgivningssidor som anges på
-        stadens sidor och på telefonrådgivningen.
-      </p>
-
-      <h2>Godkännande av tillgänglighetsutlåtande</h2>
-      <p>Detta utlåtande godkändes den 5 april 2022</p>
-      <p>
-        Stadskansliet
-        <br />
-        Helsingfors
+        <Link
+          href="https://www.finlex.fi/sv/laki/alkup/2019/20190306"
+          external
+          openInNewTab
+        >
+          Lagen om tillhandahållande av digitala tjänster (306/2019)
+        </Link>
       </p>
     </Fragment>
   );
