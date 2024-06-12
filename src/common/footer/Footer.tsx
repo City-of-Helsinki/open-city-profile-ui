@@ -100,7 +100,7 @@ const Footer = () => {
           <Logo
             src={logoSrcFromLanguage}
             size="medium"
-            alt="Helsingin kaupunki"
+            alt={t('cityOfHelsinki')}
           />
         }
         logoHref={logoHref}
