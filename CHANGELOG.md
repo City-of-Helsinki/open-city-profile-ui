@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.12.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.11.1...open-city-profile-ui-v1.12.0) (2024-06-12)
+
+
+### Features
+
+* Update accessibility document ([#363](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/363)) ([6445eaa](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/6445eaa3d94dea5b7b2b4742364dc0d74536bda9))
+
 ## [1.11.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.11.0...open-city-profile-ui-v1.11.1) (2024-06-11)
 
 
