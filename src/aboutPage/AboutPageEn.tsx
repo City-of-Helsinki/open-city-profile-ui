@@ -8,18 +8,18 @@ function AboutPageEn(): ReactElement {
     <Fragment>
       <FocusableH1>About Helsinki profile</FocusableH1>
       <p>
-        The Helsinki Profile is a user ID and storage service for personal and
+        The Helsinki profile is a user ID and storage service for personal and
         contact information. It brings together the customer&apos;s personal
         data and contacts with different city services in one place.
       </p>
       <p>
-        The Helsinki Profile and its authentication to various digital
+        You may use the Helsinki profile and its authentication to various digital
         applications
       </p>
       <ul>
         <li>strongly via suomi.fi authentication</li>
         <li>
-          light by using the Helsinki ID email address + password combination
+          lighty by using the Helsinki ID email address and password combination.
         </li>
       </ul>
       <p>
@@ -44,7 +44,7 @@ function AboutPageEn(): ReactElement {
       </p>
       <p>
         As official personal data, the Helsinki profile stores the basic
-        information about the Customer obtained through Suomi.fi from the
+        information about the customer obtained through Suomi.fi from the
         Population Information System, which includes
       </p>
       <ul>
@@ -54,7 +54,7 @@ function AboutPageEn(): ReactElement {
         <li>Municipality of the residence</li>
       </ul>
       <p>
-        The official information is also displayed in the Helsinki Profile for
+        The official information is also displayed in the Helsinki profile for
         users who are strongly identified. The customer can change their data
         using the official process for changing personal data in the Population
         Information System. This is not possible in the Helsinki profile.
@@ -97,39 +97,41 @@ function AboutPageEn(): ReactElement {
       </ul>
       <p>The email address is verified with a confirmation message.</p>
       <p>
-        The user will always be asked for consent to use their Helsinki Profile
+        The user will always be asked for consent to use their Helsinki profile
         data when joining a new service. These consents are displayed in the
-        &quot;Your Services&quot; section of the Helsinki Profile interface.
+        &quot;Your Services&quot; section of the Helsinki profile interface.
         Consent can be withdrawn at any time.
       </p>
       <p>
         Users can edit the personal information they provide in their profile.
         They can also manage the use of their own data between different
-        services. They can download their data from different services or delete
-        their data from one or all services, for example by deleting their
-        entire profile.
+        services. Users can download their data from different services 
+        as well as delete their data from one or all services. By deleting 
+        their entire profile, users will also delete all of their data from 
+        all of the services. Deleting data from individual services can be 
+        done in the profile’s settings.
       </p>
       <h2>Data Protection</h2>
       <p>
-        The data is stored in the Helsinki Profile database, from where it is
+        The data is stored in the Helsinki profile database, from where it is
         transferred to various services based on the customer&apos;s consent. In
         the Helsinki profile, admin users can view and edit the data provided by
         the user. There are between 3 and 7 such users.
       </p>
       <p>
         In addition, members of the development team can access the database to
-        develop the Helsinki Profile and to troubleshoot problems.
+        develop the Helsinki profile and to troubleshoot problems.
       </p>
       <p>All activities are logged.</p>
       <p>
         Personal data, including personal identification number, may be
-        transferred from the API of the Helsinki profile to other services, if
+        transferred from the API of the Helsinki profile to other services if
         this information is needed by the service in question. This is done with
         the user&apos;s consent and the processing of this data is described in
         the privacy policy and terms of use of the service concerned.
       </p>
       <p>
-        The Helsinki Profile service is hosted on the City of Helsinki&apos;s
+        The Helsinki profile service is hosted on the City of Helsinki&apos;s
         Azure cloud, with servers located in Ireland. They are not mirrored to
         other Azure locations. Backups are stored in Azure in the same region as
         the servers themselves. No personal data is processed outside Helsinki.
