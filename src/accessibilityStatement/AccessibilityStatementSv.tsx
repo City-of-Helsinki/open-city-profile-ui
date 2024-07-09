@@ -52,8 +52,8 @@ function AccessibilityStatementSv(): React.ReactElement {
         kontakt med oss om du upptäcker brister i tillgängligheten som inte har
         beskrivits på den här sidan eller om innehållet du behöver inte är
         tillgängligt.
-        <Link href="https://palautteet.hel.fi/sv/" external openInNewTab>
-           Ge respons med den här responsblanketten.
+        <Link href="https://palautteet.hel.fi/sv/" external openInNewTab> 
+          Ge respons med den här responsblanketten.
         </Link>
       </p>
 
