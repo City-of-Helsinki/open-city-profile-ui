@@ -19,7 +19,7 @@ function AboutPageEn(): ReactElement {
       <ul>
         <li>strongly via suomi.fi authentication</li>
         <li>
-          lighty by using the Helsinki ID email address and password combination.
+          lightly by using the Helsinki ID email address and password combination.
         </li>
       </ul>
       <p>
