@@ -13,8 +13,7 @@ function AboutPageEn(): ReactElement {
         data and contacts with different city services in one place.
       </p>
       <p>
-        You may use the Helsinki profile and its authentication to various digital
-        applications
+        You may use the Helsinki profile and its authentication to various digital applications
       </p>
       <ul>
         <li>strongly via suomi.fi authentication</li>
