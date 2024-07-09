@@ -48,7 +48,7 @@ function AccessibilityStatementFi(): ReactElement {
         meihin yhteyttä, jos löydät saavutettavuuspuutteita, joita ei ole
         kuvattu tällä sivulla, tai tarvitsemasi aineisto ei ole saavutettavaa.
         <Link href="https://palautteet.hel.fi/fi" external openInNewTab>
-          Anna palautetta palautelomakkeella.
+           Anna palautetta palautelomakkeella.
         </Link>
       </p>
       <h2>Saavutettavuuden valvonta</h2>
