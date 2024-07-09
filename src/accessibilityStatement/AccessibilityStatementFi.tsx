@@ -8,11 +8,11 @@ function AccessibilityStatementFi(): ReactElement {
     <Fragment>
       <FocusableH1>Helsinki-profiilin saavutettavuusseloste</FocusableH1>
       <p>
-        Tämä saavutettavuusseloste koskee Helsingin kaupungin Helsinki-profiili-verkkopalvelua
-        (https://profiili.hel.fi). Verkkopalvelusta vastaa
-        Helsingin kaupunki. Tässä selosteessa kerrotaan, kuinka saavutettava
-        verkkopalvelu on ja miten voit antaa meille palautetta
-        saavutettavuudesta.
+        Tämä saavutettavuusseloste koskee Helsingin kaupungin
+        Helsinki-profiili-verkkopalvelua (https://profiili.hel.fi).
+        Verkkopalvelusta vastaa Helsingin kaupunki. Tässä selosteessa kerrotaan,
+        kuinka saavutettava verkkopalvelu on ja miten voit antaa meille
+        palautetta saavutettavuudesta.
       </p>
       <h2>Kuinka saavutettava tämä verkkopalvelu on?</h2>
       <p>
@@ -48,7 +48,7 @@ function AccessibilityStatementFi(): ReactElement {
         meihin yhteyttä, jos löydät saavutettavuuspuutteita, joita ei ole
         kuvattu tällä sivulla, tai tarvitsemasi aineisto ei ole saavutettavaa.
         <Link href="https://palautteet.hel.fi/fi" external openInNewTab>
-           Anna palautetta palautelomakkeella.
+          Anna palautetta palautelomakkeella.
         </Link>
       </p>
       <h2>Saavutettavuuden valvonta</h2>

@@ -19,7 +19,8 @@ function AboutPageFi(): ReactElement {
       <ul>
         <li>vahvasti Suomi.fi-tunnistautumista käyttäen</li>
         <li>
-          kevyesti Helsinki-tunnuksen sähköpostiosoite ja salasana -yhdistelmällä.
+          kevyesti Helsinki-tunnuksen sähköpostiosoite ja salasana
+          -yhdistelmällä.
         </li>
       </ul>
       <p>
@@ -69,9 +70,9 @@ function AboutPageFi(): ReactElement {
       </p>
       <p>
         Vahvan tunnistautumisen käytölle pitää olla aina lakisääteiset
-        perusteet, eli sitä ei voida kaikissa tapauksissa
-        edellyttää. Kevyt tunnistautuminen voidaan
-        kuitenkin tarjota vapaaehtoisena tunnistautumistapana.
+        perusteet, eli sitä ei voida kaikissa tapauksissa edellyttää. Kevyt
+        tunnistautuminen voidaan kuitenkin tarjota vapaaehtoisena
+        tunnistautumistapana.
       </p>
       <h2>Kevyt tunnistautuminen</h2>
       <p>
