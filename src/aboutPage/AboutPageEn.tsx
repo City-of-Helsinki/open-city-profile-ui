@@ -14,12 +14,10 @@ function AboutPageEn(): ReactElement {
       </p>
       <p>
         You may use the Helsinki profile and its authentication to various digital applications
-      </p>
+    	</p>
       <ul>
         <li>strongly via suomi.fi authentication</li>
-        <li>
-          lightly by using the Helsinki ID email address and password combination.
-        </li>
+        <li>lightly by using the Helsinki ID email address and password combination.</li>
       </ul>
       <p>
         The use of the Helsinki profile and the data stored in it is mainly
@@ -105,10 +103,7 @@ function AboutPageEn(): ReactElement {
         Users can edit the personal information they provide in their profile.
         They can also manage the use of their own data between different
         services. Users can download their data from different services 
-        as well as delete their data from one or all services. By deleting 
-        their entire profile, users will also delete all of their data from 
-        all of the services. Deleting data from individual services can be 
-        done in the profile’s settings.
+        as well as delete their data from one or all services. By deleting their entire profile, users will also delete all of their data from all of the services. Deleting data from individual services can be done in the profile’s settings.
       </p>
       <h2>Data Protection</h2>
       <p>
