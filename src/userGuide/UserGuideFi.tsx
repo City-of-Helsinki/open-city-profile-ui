@@ -141,7 +141,7 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image004}
-            alt="Tarkista, että tietosi ovat oikein siirtyessäsi, kun siirryt takaisin Helsingin kaupungin palveluun."
+            alt="Tarkista, että tietosi ovat oikein, kun siirryt takaisin Helsingin kaupungin palveluun."
           />
         </p>
 
