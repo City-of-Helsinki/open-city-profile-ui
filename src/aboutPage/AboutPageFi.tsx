@@ -69,13 +69,13 @@ function AboutPageFi(): ReactElement {
       </p>
       <p>
         Vahvan tunnistautumisen käytölle pitää olla aina lakisääteiset
-        perusteet, eli palvelua käytettäessä sitä ei voida kaikissa tapauksissa
-        sitä ei voida henkilöltä edellyttää. Kevyt tunnistautuminen voidaan
+        perusteet, eli sitä ei voida kaikissa tapauksissa
+        edellyttää. Kevyt tunnistautuminen voidaan
         kuitenkin tarjota vapaaehtoisena tunnistautumistapana.
       </p>
       <h2>Kevyt tunnistautuminen</h2>
       <p>
-        Tunnistautumisessa kevyt tarkoittaa sitä, että henkilötietoja ei ole
+        Tunnistautumisessa kevyt tarkoittaa sitä, että henkilötietoja ei olla
         mitään virallista tapaa hyödyntäen vahvistettu. Kevyen tunnistautumisen
         keinona profiilissa on käyttäjän varmennettu sähköpostiosoite sekä
         salasana.
