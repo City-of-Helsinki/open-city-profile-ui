@@ -9,7 +9,7 @@ function AccessibilityStatementSv(): React.ReactElement {
       <FocusableH1>Tillgänglighets­utlåtande</FocusableH1>
       <p>
         Detta tillgänglighetsutlåtande gäller webbservicen Helsingfors profil
-        (https//profiili.hel.fi). Helsingfors stad har ansvar för webbservicen.
+        (https://profiili.hel.fi). Helsingfors stad har ansvar för webbservicen.
         Detta utlåtande beskriver hur tillgänglig webbservicen är och hur du kan
         ge oss respons om dess tillgänglighet.
       </p>
@@ -53,7 +53,7 @@ function AccessibilityStatementSv(): React.ReactElement {
         beskrivits på den här sidan eller om innehållet du behöver inte är
         tillgängligt.
         <Link href="https://palautteet.hel.fi/sv/" external openInNewTab>
-          Ge respons med den här responsblanketten.
+           Ge respons med den här responsblanketten.
         </Link>
       </p>
 
