@@ -17,9 +17,10 @@ function AboutPageSv(): ReactElement {
         applikationer:{' '}
       </p>
       <ul>
-        <li>stark användning av suomi.fi-autentisering</li>
+        <li>stark användning av Suomi.fi-autentisering</li>
         <li>
-          lätt användning av kombinationen e-postadress+lösenord för Helsinki ID{' '}
+          lätt användning av kombinationen e-postadress och lösenord för
+          Helsinki ID{' '}
         </li>
       </ul>
       <p>
@@ -63,7 +64,7 @@ function AboutPageSv(): ReactElement {
       <p>
         Officiella personuppgifter uppdateras från Finlands
         befolkningsdatasystem till Helsingforsprofilen vid varje inloggning på
-        suomi.fi.
+        Suomi.fi.
       </p>
       <p>
         Kunden ger sitt samtycke till att de olika digitala tjänsterna får

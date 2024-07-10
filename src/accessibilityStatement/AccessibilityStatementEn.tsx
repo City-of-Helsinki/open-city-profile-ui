@@ -20,7 +20,7 @@ function AccessibilityStatementEn(): ReactElement {
         equal opportunity to use websites.
       </p>
       <p>
-        This webservice is fully complaint with all of the statutorily mandated
+        This webservice is fully compliant with all of the statutorily mandated
         accessibility requirements (WCAG criteria 2.1, A and AA standards).
       </p>
       <h3>Accessibility assessment</h3>
