@@ -53,11 +53,11 @@ function UserGuideEn(): ReactElement {
       <p className={styles['summary']}>
         The Helsinki profile is the customer profile of a citizen using the
         city&apos;s digital services. It is the primary means of identification
-        for the City&apos;s digital services. The Helsinki Profile brings
-        together in one place the customer&apos;s personal and contact
-        information and links to different city services. The profile allows
-        users to manage their own data and its visibility across different
-        services.
+        for the City&apos;s digital services. The Helsinki profile brings
+        together the customer&apos;s personal information and contact
+        information, as well as links to different city services, in one place.
+        The profile allows users to manage their own data and its visibility
+        across different services.
       </p>
       <Link
         href="/Helsinki-profile-userguide.pdf"
@@ -83,10 +83,10 @@ function UserGuideEn(): ReactElement {
         <a href="https://profiili.hel.fi">https://profiili.hel.fi</a>
       </p>
       <p>
-        You can create a Helsinki profile using your suomi.fi e-Identification
-        or your email and password. You can also log in to the City of Helsinkis
-        digital services using Google or Yle IDs, which will be phased out in
-        2024.
+        You can create a Helsinki profile using your Suomi.fi e-Identification
+        or your email and password. You can also log in to the City of
+        Helsinki&apos;s digital services using Google or Yle IDs, which will be
+        phased out in 2024.
       </p>
 
       <UserGuideAccordion
@@ -97,8 +97,8 @@ function UserGuideEn(): ReactElement {
         <h4>Choice of authentication</h4>
 
         <p>
-          After pressing the Login link in the Service, the user is presented
-          with a screen offering various login options, where the suomi.fi login
+          After pressing the Login link in the service, the user is presented
+          with a screen offering various login options, where the Suomi.fi login
           is selected. The view of the login options varies from one service to
           another.
         </p>
@@ -106,18 +106,18 @@ function UserGuideEn(): ReactElement {
         <p>
           <UserGuideImage
             src={image001}
-            alt="In the authentication window, select suomi.fi identification."
+            alt="In the authentication window, select Suomi.fi identification."
           />
         </p>
 
         <p>
           <UserGuideImage
             src={image002}
-            alt="In the authentication window, select suomi.fi identification."
+            alt="In the authentication window, select Suomi.fi identification."
           />
         </p>
 
-        <h4>Identification in the suomi.fi service</h4>
+        <h4>Identification in the Suomi.fi service</h4>
 
         <p>
           After selecting the Suomi.fi login, the user will be presented with
@@ -133,7 +133,7 @@ function UserGuideEn(): ReactElement {
 
         <UserGuideImage
           src={image003}
-          alt="Choose your bank or mobile account as your suomi.fi authentication option."
+          alt="Choose your bank or mobile account as your Suomi.fi authentication option."
         />
 
         <p>
@@ -181,7 +181,7 @@ function UserGuideEn(): ReactElement {
           <UserGuideImage
             src={image005}
             alt={`Your email address will serve as your login to City of Helsinki services. 
-            By using the same email address for both the suomi.fi login and the Helsinki ID, 
+            By using the same email address for both the Suomi.fi login and the Helsinki ID, 
             you will have one Helsinki profile. The merge cannot be unmerged later.`}
           />
         </p>
@@ -199,12 +199,12 @@ function UserGuideEn(): ReactElement {
         <h4>Create a Helsinki profile</h4>
         <p>
           After confirming the email, you will still need to give your consent
-          to the use of your data. Without consent, Helsinki profile cannot be
-          created and the services cannot use your data.
+          to the use of your data. Without your consent, a Helsinki profile
+          cannot be created, and the services cannot use your data.
         </p>
 
         <p>
-          You will then have Helsinki profile, and your suomi.fi login details
+          You will then have a Helsinki profile, and your Suomi.fi login details
           will be saved in your profile. Different services use your data in
           different ways, but they will always tell you how they use it when you
           first log in. The information is also always available in your
@@ -220,15 +220,13 @@ function UserGuideEn(): ReactElement {
 
         <p>
           The next time you log in to the same service, you simply select
-          suomi.fi, the authentication option of your choice and you are inside
+          Suomi.fi, the authentication option of your choice, and you are inside
           the service.
         </p>
 
         <UserGuideImage
           src={image008}
-          alt={`Before you can use the service you want or before you can create 
-            Helsinki profile, you must give your consent to the use of your data. 
-            Without consent, your data cannot be used and therefore no profile can be created.`}
+          alt={`Before you can use the service you want or before you can create your Helsinki profile, you must give your consent to the use of your data. Without consent, your data cannot be used and therefore no profile can be created.`}
         />
       </UserGuideAccordion>
       <UserGuideAccordion
@@ -238,8 +236,8 @@ function UserGuideEn(): ReactElement {
       >
         <h4>Choice of authentication</h4>
         <p>
-          After pressing the Log in link in the Customer Service, you will see
-          different login options, from which you can choose Create Helsinki
+          After pressing the log in link on the digital service site, you will
+          see different login options, from which you can choose Create Helsinki
           profile. The view of the login options varies from one service to
           another.
         </p>
@@ -247,8 +245,7 @@ function UserGuideEn(): ReactElement {
         <p>
           <UserGuideImage
             src={image009}
-            alt={`The Helsinki ID consists of an email and password combination 
-            by clicking on the Create a new Helsinki profile button.`}
+            alt={`The Helsinki ID consists of an email and password combination, which will be created by clicking on the Create a new Helsinki profile button.`}
           />
         </p>
 
@@ -261,13 +258,13 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          If you have already created Helsinki profile using suomi.fi
+          If you have already created Helsinki profile using Suomi.fi
           authentication, you can create a password for your profile by clicking
-          on the I have forgotten my password link. For more information on
-          creating a password, see{' '}
+          on the <i>I have forgotten my password</i> link. For more information
+          on creating a password, see{' '}
           <a href="#_Forgotten_password">Forgotten password</a>. In this case,
-          both the services requiring suomi.fi authentication and email password
-          authentication can be found in the same Helsinki profile and you can
+          both the services requiring Suomi.fi authentication and email password
+          authentication can be found in the same Helsinki profile, and you can
           manage all your information in one view.{' '}
           <b>
             Please note, however, that you will not be able to cancel the merge
@@ -294,7 +291,7 @@ function UserGuideEn(): ReactElement {
           <UserGuideImage
             src={image005}
             alt={`Your email address will serve as your login to City of Helsinki services. 
-            By using the same email address for both the suomi.fi login and the Helsinki ID, 
+            By using the same email address for both the Suomi.fi login and the Helsinki ID, 
             you will have one Helsinki profile. The merge cannot be unmerged later.`}
           />
         </p>
@@ -312,8 +309,8 @@ function UserGuideEn(): ReactElement {
         <h4>Create a Helsinki profile</h4>
         <p>
           After confirming the email, please fill in your name and password.
-          Your password must be at least 12 characters long, including upper-
-          and lower-case letters, numbers and special characters.
+          Your password must be at least 12 characters long, and include upper
+          and lowercase letters, numbers and special characters.
         </p>
         <p>
           Confirm that you agree to the use of your data. Without your consent,
@@ -329,7 +326,7 @@ function UserGuideEn(): ReactElement {
         <p>
           <UserGuideImage
             src={image010}
-            alt={`When you create Helsinki profile, you still have to fill in 
+            alt={`When you create a Helsinki profile, you still have to fill in 
             your name and password. You will also need to give your consent 
             for your data to be used in order to create Helsinki profile.`}
           />
@@ -345,7 +342,7 @@ function UserGuideEn(): ReactElement {
           single Helsinki profile, allowing you to view and manage all your data
           and services at once. This can be done by first creating a Helsinki ID
           with an email address/password combination and then using the same
-          email address for the first suomi.fi authentication.
+          email address for the first Suomi.fi authentication.
         </p>
 
         <p>
@@ -356,17 +353,17 @@ function UserGuideEn(): ReactElement {
         </p>
 
         <p>
-          If your Helsinki profile was created with a suomi.fi authentication,
-          you can click on the <i>I forgot my password</i> link in the login
-          screen. See the <a href="#_Forgotten_password">Forgotten password</a>{' '}
-          section below for instructions on how to do this.
+          If your Helsinki profile was created with Suomi.fi authentication, you
+          can click on the <i>I forgot my password</i> link in the login screen.
+          See the <a href="#_Forgotten_password">Forgotten password</a> section
+          below for instructions on how to do this.
         </p>
       </UserGuideAccordion>
 
       <h2 id="_Login">Login</h2>
       <p>
         With your Helsinki profile, you can log in to the digital services of
-        the City of Helsinki. You can log in using the suomi.fi e-Identification
+        the City of Helsinki. You can log in using the Suomi.fi e-Identification
         or the email address and password you provided when creating your
         profile.
       </p>
@@ -380,7 +377,7 @@ function UserGuideEn(): ReactElement {
           If you can&apos;t remember your password, you can create a new one in
           the login window using the <i>I forgot my password</i>
           link. You may also have &quot;forgotten&quot; your password because
-          you have previously logged in to the service using suomi.fi, in which
+          you have previously logged in to the service using Suomi.fi, in which
           case you didn&apos;t have to create a password.
         </p>
 
@@ -420,7 +417,7 @@ function UserGuideEn(): ReactElement {
         <p>
           <UserGuideImage
             src={image015}
-            alt={`In the password change window, you must enter the same password twice. 
+            alt={`In the update password window, you must enter the same password twice. 
             The password must be at least 12 characters long. The password must contain 
             both upper and lower case letters, numbers and special characters.`}
           />
@@ -436,7 +433,7 @@ function UserGuideEn(): ReactElement {
           may be different for each service. For example, you were logged in to
           the first service with your Helsinki ID, i.e. a combination of email
           and password, but the second service requires you to authenticate with
-          suomi.fi. In this case, you will receive a message saying that the
+          Suomi.fi. In this case, you will receive a message saying that the
           authentication method is not compatible. You will need to log out from
           the previous service in order to log in to the new service. Two
           different authentication methods cannot be open at the same time.
@@ -445,9 +442,9 @@ function UserGuideEn(): ReactElement {
         <p>
           <UserGuideImage
             src={image016}
-            alt={`An incompatible login method means for example that you have logged 
-            in to one service with an email/password combination and you move on to 
-            the next service, which requires a suomi.fi authentication. In this case, 
+            alt={`An incompatible login method means, for example, that you have logged 
+            in to one service with an email/password combination and you have moved on to 
+            the next service, which requires a Suomi.fi authentication. In this case, 
             you need to log out of the first service in order to authenticate to the new service.`}
           />
         </p>
@@ -473,20 +470,22 @@ function UserGuideEn(): ReactElement {
       >
         <p>
           The official information will be added to your profile and will only
-          be visible when you authenticate with suomi.fi. Updating this
+          be visible when you authenticate with Suomi.fi. Updating this
           information is done in the Population Register Centre service.
         </p>
         <p>
-          In the My information -section of your Helsinki profile, you can add a
-          phone number, change your email address and add address information.
-          If you change your name information in your Helsinki profile, the next
-          time you log in to suomi.fi, the official information will update it.
+          In the <i>My information</i> -section of your Helsinki profile, you
+          can add a phone number, change your email address, and add address
+          information. If you change your name information in your Helsinki
+          profile, the next time you log in using Suomi.fi, your information
+          will be updated according to the information available in the
+          Population Register Centre.
         </p>
         <p>
           You can add or change the information you have entered yourself by
-          clicking on the Add button, or the Edit button if the information
-          already exists. Press the Save button to save the data in the
-          database.
+          clicking on the <i>Add</i> button, or the <i>Edit</i> button if the
+          information already exists. Press the <i>Save</i> button to save the
+          data in the database.
         </p>
         <p>
           In the Helsinki profile, the language of communication section
@@ -506,7 +505,7 @@ function UserGuideEn(): ReactElement {
         <p>
           <UserGuideImage
             src={image019}
-            alt="In your Helsinki profile, in the My information section, you can update the basic data yourself."
+            alt="In the My information section of your Helsinki profile, you can update the basic data yourself."
           />
         </p>
 
@@ -515,7 +514,7 @@ function UserGuideEn(): ReactElement {
             src={image023}
             alt={`You can add and edit your other address details, your phone number and your email address. The 
             language of communication determines the language in which you receive messages from the service. 
-            The authentication method tells you how you are logged in to the service, i.e. suomi.fi authentication 
+            The authentication method tells you how you are logged in to the service, i.e. Suomi.fi authentication 
             or an email/password combination, i.e. the Helsinki ID.`}
           />
         </p>
@@ -526,7 +525,7 @@ function UserGuideEn(): ReactElement {
         heading="Processing of your data by different services"
       >
         <p>
-          The services will use the data managed by the Helsinki Profile as
+          The services will use the data managed by the Helsinki profile as
           indicated. The first time you authenticate to a service, you can see
           what information the service uses.
         </p>
@@ -546,8 +545,7 @@ function UserGuideEn(): ReactElement {
           <UserGuideImage
             src={image024}
             alt={`When you authenticate to the new service, you will be asked to 
-            consent to the use of your data required by the service. You can 
-            later return to this information on the Your services section of your Helsinki profile.`}
+            consent to the use of your data required by the service. You can return to this information later on the Your services section of your Helsinki profile.`}
           />
         </p>
 
@@ -567,23 +565,23 @@ function UserGuideEn(): ReactElement {
       >
         <p>
           You can also download the data you have stored in different services
-          as a single json file. For more information on{' '}
+          as a single JSON file. For more information on{' '}
           <a href="https://fi.wikipedia.org/wiki/JSON">
             the{' '}
-            <u>json file format, see Wikipedia (link opens in a new window)</u>
+            <u>JSON file format, see Wikipedia (link opens in a new window)</u>
           </a>
           .
         </p>
         <p>
-          If you have combined the suomi.fi authentication and the email
-          address+password login in the same Helsinki profile, the data download
-          must be done with the suomi.fi authentication.
+          If you have combined the Suomi.fi authentication and the email address
+          / password login in the same Helsinki profile, the data download must
+          be done with the Suomi.fi authentication.
         </p>
         <p>
           <UserGuideImage
             src={image026}
             alt={`In the My information section of your Helsinki profile, 
-            you can download your data for all services as a Json file.`}
+            you can download your data for all services as a JSON file.`}
           />
         </p>
       </UserGuideAccordion>
@@ -603,9 +601,9 @@ function UserGuideEn(): ReactElement {
         heading="Deleting your information from a single service"
       >
         <p>
-          If you have combined your suomi.fi authentication and email
-          address+password login in the same Helsinki profile, you must delete
-          the service while authenticated with suomi.fi.
+          If you have combined your Suomi.fi authentication and email address /
+          password login in the same Helsinki profile, you must delete the
+          service while authenticated with Suomi.fi.
         </p>
 
         <p>
@@ -649,9 +647,9 @@ function UserGuideEn(): ReactElement {
           cannot be deleted.
         </p>
         <p>
-          If you have combined the suomi.fi authentication and the email
-          address+password login in the same Helsinki profile, you must delete
-          the profile while authenticated with suomi.fi.
+          If you have combined the Suomi.fi authentication and the email address
+          / password login in the same Helsinki profile, you must delete the
+          profile while authenticated with Suomi.fi.
         </p>
         <p>
           After deleting your Helsinki profile, you can always create a new
