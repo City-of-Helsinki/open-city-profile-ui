@@ -53,7 +53,6 @@ function AccessibilityStatementSv(): React.ReactElement {
         beskrivits på den här sidan eller om innehållet du behöver inte är
         tillgängligt.
         <Link href="https://palautteet.hel.fi/sv/" external openInNewTab>
-          {' '}
           Ge respons med den här responsblanketten.
         </Link>
       </p>
