@@ -46,7 +46,7 @@ const tableOfContents = [
 ];
 
 const altText05 = `Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
-  suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.`;
+  Suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.`;
 
 const lang = 'fi';
 
@@ -117,7 +117,7 @@ function UserGuideFi(): ReactElement {
           />
         </p>
 
-        <h4>Tunnistautuminen suomi.fi-palvelussa</h4>
+        <h4>Tunnistautuminen Suomi.fi-palvelussa</h4>
 
         <p>
           Suomi.fi-tunnistautumisen valinnan jälkeen käyttäjä saa ruudulleen
@@ -162,7 +162,7 @@ function UserGuideFi(): ReactElement {
 
         <p>
           Sähköpostin vahvistamiseksi saat antamaasi sähköpostiosoitteeseen
-          6-numeroisen koodin. Syötä tämä koodi ruudulla näkyvään kenttään. Jos
+          6-numeroisen koodin. Syötä koodi ruudulla näkyvään kenttään. Jos
           viesti ei tule sähköpostiisi lähes välittömästi, tarkista
           roskapostikansiosi.
         </p>
@@ -224,7 +224,7 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image008}
-            alt={`Ennen kuin voit käyttää haluamaasi palvelua tai luoda Helsinki-profiilin, sinun pitää antaa suostumus tietojesi käyttöön. Ilman suostumusta tietojasi ei voida käyttää eikä profiilia voida luoda.`}
+            alt="Ennen kuin voit käyttää haluamaasi palvelua tai luoda Helsinki-profiilin, sinun pitää antaa suostumus tietojesi käyttöön. Ilman suostumusta tietojasi ei voida käyttää eikä profiilia voida luoda."
           />
         </p>
       </UserGuideAccordion>
@@ -418,7 +418,7 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image016}
-            alt={`Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin Suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun.`}
+            alt="Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin Suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun."
           />
         </p>
 
@@ -480,7 +480,7 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image023}
-            alt={`Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi. Asiointikieli määrittää, millä kielellä saat viestejä palvelusta. Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli Suomi.fi-tunnistautuen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella.`}
+            alt="Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi. Asiointikieli määrittää, millä kielellä saat viestejä palvelusta. Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli Suomi.fi-tunnistautuen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella."
           />
         </p>
       </UserGuideAccordion>
