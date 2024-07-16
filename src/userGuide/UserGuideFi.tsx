@@ -545,11 +545,10 @@ function UserGuideFi(): ReactElement {
       <h2 id="_Tietojen_poisto">Tietojen poisto</h2>
       <p>
         Voit poistaa tietosi yksittäisistä palveluista tai halutessasi koko
-        profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan.
-        Jos palvelu joutuu esim. lakisääteisistä syistä säilyttämään
-        tietoja, tiedot anonymisoidaan poiston sijaan. Sinulla ei
-        kuitenkaan ole poiston jälkeen pääsyä
-        tietoihin, eikä niitä voi yhdistää sinuun.
+        profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan. Jos
+        palvelu joutuu esim. lakisääteisistä syistä säilyttämään tietoja, tiedot
+        anonymisoidaan poiston sijaan. Sinulla ei kuitenkaan ole poiston jälkeen
+        pääsyä tietoihin, eikä niitä voi yhdistää sinuun.
       </p>
       <UserGuideAccordion
         language={lang}
