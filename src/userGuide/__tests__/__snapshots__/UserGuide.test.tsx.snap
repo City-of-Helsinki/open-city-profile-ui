@@ -668,7 +668,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </b>
                 </p>
                 <p>
-                  Sähköpostin vahvistamiseksi saat antamaasi sähköpostiosoitteeseen 6-numeroisen koodin. Syötä tämä koodi ruudulla näkyvään kenttään. Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista roskapostikansiosi.
+                  Sähköpostin vahvistamiseksi saat antamaasi sähköpostiosoitteeseen 6-numeroisen koodin. Syötä koodi ruudulla näkyvään kenttään. Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista roskapostikansiosi.
                 </p>
                 <p>
                   <b>
@@ -832,7 +832,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 style="display: none;"
               >
                 <p>
-                  Voit halutessasi yhdistää eri tunnistautumistavat yhdeksi Helsinki-profiiliksi, jolloin voit tarkastella ja hallinnoida kaikkia tietojasi ja hyödyntämiäsi palveluja kerralla. Yhdistääksesi tunnistautumistavat, luo ensin Helsinki-tunnus sähköpostiosoite-salasana-yhdistelmällä. Käytä sitten samaa sähköpostiosoitetta, kun kirjaudut ensimmäistä kertaa käyttäen Suomi.fi-tunnistautumista.
+                  Voit halutessasi yhdistää eri tunnistautumistavat yhdeksi Helsinki-profiiliksi, jolloin voit tarkastella ja hallinnoida kaikkia tietojasi ja hyödyntämiäsi palveluja kerralla. Tämä onnistuu tekemällä ensin Helsinki-tunnus sähköpostiosoite-salasana-yhdistelmällä. Käytä sitten samaa sähköpostiosoitetta, kun kirjaudut ensimmäistä kertaa käyttäen Suomi.fi-tunnistautumista.
                 </p>
                 <p>
                   <b>
@@ -1382,7 +1382,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 style="display: none;"
               >
                 <p>
-                  Palvelut hyödyntävät Helsinki-profiilin hallinnoimia tietoja ilmoittamallaan tavalla. Kirjautumalla ensimmäisen kerran palveluun, näet mitä tietoja palvelu hyödyntää.
+                  Palvelut hyödyntävät Helsinki-profiilin hallinnoimia tietoja ilmoittamallaan tavalla. Kirjautumalla ensimmäisen kerran palveluun näet mitä tietoja palvelu hyödyntää.
                 </p>
                 <p>
                   Helsinki-profiilissa voit tarkistaa myöhemmin nämä tiedot sekä halutessasi poistaa tietosi palvelusta. Poisto ei ole mahdollista, jos asiointi on kesken palvelussa. On myös suositeltavaa
@@ -1574,7 +1574,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               Tietojen poisto
             </h2>
             <p>
-              Voit poistaa tietosi yksittäisistä palveluista tai halutessasi koko profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan tai anonymisoidaan, jos palvelu esim. lakisääteisenä joutuu niitä säilyttämään. Sinulla ei kuitenkaan ole poiston jälkeen pääsyä tietoihin, eikä niitä ole yhdistettävissä sinuun.
+              Voit poistaa tietosi yksittäisistä palveluista tai halutessasi koko profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan. Jos palvelu joutuu esim. lakisääteisistä syistä säilyttämään tietoja, tiedot anonymisoidaan poiston sijaan. Sinulla ei kuitenkaan ole poiston jälkeen pääsyä tietoihin, eikä niitä voi yhdistää sinuun.
             </p>
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-9"
