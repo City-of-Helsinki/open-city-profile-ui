@@ -322,10 +322,11 @@ function UserGuideFi(): ReactElement {
         <p>
           Voit halutessasi yhdistää eri tunnistautumistavat yhdeksi
           Helsinki-profiiliksi, jolloin voit tarkastella ja hallinnoida kaikkia
-          tietojasi ja hyödyntämiäsi palveluja kerralla. Tämä onnistuu tekemällä
-          ensin Helsinki-tunnus sähköpostiosoite-salasana-yhdistelmällä. Käytä
-          sitten samaa sähköpostiosoitetta, kun kirjaudut ensimmäistä kertaa
-          Suomi.fi-tunnistautuen.
+          tietojasi ja hyödyntämiäsi palveluja kerralla. Yhdistääksesi
+          tunnistautumistavat, luo ensin Helsinki-tunnus
+          sähköpostiosoite-salasana-yhdistelmällä. Käytä sitten samaa
+          sähköpostiosoitetta, kun kirjaudut ensimmäistä kertaa käyttäen
+          Suomi.fi-tunnistautumista.
         </p>
         <p>
           <b>Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.</b>
