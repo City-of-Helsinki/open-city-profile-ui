@@ -45,7 +45,7 @@ const tableOfContents = [
   { title: 'Tietojen poisto', href: '#_Tietojen_poisto' },
 ];
 
-const altText05 = `Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
+const altText05 = `Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä
   Suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.`;
 
 const lang = 'fi';
@@ -263,7 +263,7 @@ function UserGuideFi(): ReactElement {
         </p>
         <p>
           Sähköpostin vahvistamiseksi saat antamaasi sähköpostiosoitteeseen
-          6-numeroisen koodin. Syötä tämä koodi ruudulla näkyvään kenttään. Jos
+          6-numeroisen koodin. Syötä koodi ruudulla näkyvään kenttään. Jos
           viesti ei tule sähköpostiisi lähes välittömästi, tarkista
           roskapostikansiosi.
         </p>
@@ -309,7 +309,7 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image010}
-            alt={`Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa 
+            alt={`Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa
             salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda.`}
           />
         </p>
@@ -395,7 +395,7 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image015}
-            alt={`Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla 
+            alt={`Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla
             vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.`}
           />
         </p>
@@ -492,7 +492,7 @@ function UserGuideFi(): ReactElement {
       >
         <p>
           Palvelut hyödyntävät Helsinki-profiilin hallinnoimia tietoja
-          ilmoittamallaan tavalla. Kirjautumalla ensimmäisen kerran palveluun,
+          ilmoittamallaan tavalla. Kirjautumalla ensimmäisen kerran palveluun
           näet mitä tietoja palvelu hyödyntää.
         </p>
 
@@ -507,7 +507,7 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image024}
-            alt={`Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. 
+            alt={`Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön.
             Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä.`}
           />
         </p>
@@ -515,7 +515,7 @@ function UserGuideFi(): ReactElement {
         <p>
           <UserGuideImage
             src={image025}
-            alt={`Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä 
+            alt={`Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä
             tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista.`}
           />
         </p>
@@ -545,10 +545,11 @@ function UserGuideFi(): ReactElement {
       <h2 id="_Tietojen_poisto">Tietojen poisto</h2>
       <p>
         Voit poistaa tietosi yksittäisistä palveluista tai halutessasi koko
-        profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan tai
-        anonymisoidaan, jos palvelu esim. lakisääteisenä joutuu niitä
-        säilyttämään. Sinulla ei kuitenkaan ole poiston jälkeen pääsyä
-        tietoihin, eikä niitä ole yhdistettävissä sinuun.
+        profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan.
+        Jos palvelu joutuu esim. lakisääteisistä syistä säilyttämään
+        tietoja, tiedot anonymisoidaan poiston sijaan. Sinulla ei
+        kuitenkaan ole poiston jälkeen pääsyä
+        tietoihin, eikä niitä voi yhdistää sinuun.
       </p>
       <UserGuideAccordion
         language={lang}
