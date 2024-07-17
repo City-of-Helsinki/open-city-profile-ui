@@ -319,7 +319,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               .
             </p>
             <p>
-              Helsinki-profiilin voit luoda käyttäen suomi.fi-tunnistautumista tai sähköpostia ja salasanaa. Helsingin kaupungin digitaalisiin palveluihin voi myös kirjautua Google- tai Yle -tunnuksilla, jotka poistuvat käytöstä vuoden 2024 aikana.
+              Helsinki-profiilin voit luoda käyttäen Suomi.fi-tunnistautumista tai sähköpostia ja salasanaa. Helsingin kaupungin digitaalisiin palveluihin voi myös kirjautua Google- tai Yle-tunnuksilla, jotka poistuvat käytöstä vuoden 2024 aikana.
             </p>
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-1"
@@ -375,38 +375,38 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   Tunnistautumisen valinta
                 </h4>
                 <p>
-                  Asiointipalvelussa Kirjaudu-linkin painamisen jälkeen näet erilaisia kirjautumisvaihtoehtoja, joista valitaan suomi.fi-tunnistautuminen. Kirjautumisvaihtoehtojen näkymä vaihtelee eri asiointipalveluissa.
+                  Asiointipalvelussa Kirjaudu-linkin painamisen jälkeen näet erilaisia kirjautumisvaihtoehtoja, joista valitaan Suomi.fi-tunnistautuminen. Kirjautumisvaihtoehtojen näkymä vaihtelee eri asiointipalveluissa.
                 </p>
                 <p>
                   <p>
                     <img
-                      alt="Tunnistautumisikkunassa valitaan suomi.fi-tunnistautuminen."
+                      alt="Tunnistautumisikkunassa valitaan Suomi.fi-tunnistautuminen."
                       loading="lazy"
                       src="/src/userGuide/assets/01-sisaankirjautuminen.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Tunnistautumisikkunassa valitaan suomi.fi-tunnistautuminen.
+                      Tunnistautumisikkunassa valitaan Suomi.fi-tunnistautuminen.
                     </p>
                   </p>
                 </p>
                 <p>
                   <p>
                     <img
-                      alt="Tunnistautumistavaksi valitaan suomi.fi-tunnistautuminen."
+                      alt="Tunnistautumistavaksi valitaan Suomi.fi-tunnistautuminen."
                       loading="lazy"
                       src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Tunnistautumistavaksi valitaan suomi.fi-tunnistautuminen.
+                      Tunnistautumistavaksi valitaan Suomi.fi-tunnistautuminen.
                     </p>
                   </p>
                 </p>
                 <h4>
-                  Tunnistautuminen suomi.fi-palvelussa
+                  Tunnistautuminen Suomi.fi-palvelussa
                 </h4>
                 <p>
                   Suomi.fi-tunnistautumisen valinnan jälkeen käyttäjä saa ruudulleen erilaisia tunnistautumistapoja. Vaihtoehdot ovat samat kuin muissakin julkishallinnon vahvaa tunnistautumista tarjoavissa palveluissa.
@@ -417,28 +417,28 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Valitse oma pankkisi tai mobiilivarmenne suomi.fi-tunnistautumisvaihtoehtona."
+                      alt="Valitse oma pankkisi tai mobiilivarmenne Suomi.fi-tunnistautumisvaihtoehtona."
                       loading="lazy"
                       src="/src/userGuide/assets/03-vahvan-valinta.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Valitse oma pankkisi tai mobiilivarmenne suomi.fi-tunnistautumisvaihtoehtona.
+                      Valitse oma pankkisi tai mobiilivarmenne Suomi.fi-tunnistautumisvaihtoehtona.
                     </p>
                   </p>
                 </p>
                 <p>
                   <p>
                     <img
-                      alt="Tarkista, että tietosi ovat oikein siirtyessäsi, kun siirryt takaisin Helsingin kaupungin palveluun."
+                      alt="Tarkista, että tietosi ovat oikein, kun siirryt takaisin Helsingin kaupungin palveluun."
                       loading="lazy"
                       src="/src/userGuide/assets/04-vahvat-tiedot.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Tarkista, että tietosi ovat oikein siirtyessäsi, kun siirryt takaisin Helsingin kaupungin palveluun.
+                      Tarkista, että tietosi ovat oikein, kun siirryt takaisin Helsingin kaupungin palveluun.
                     </p>
                   </p>
                 </p>
@@ -456,7 +456,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </b>
                 </p>
                 <p>
-                  Sähköpostin vahvistamiseksi saat antamaasi sähköpostiosoitteeseen 6-numeroisen koodin, joka tulee syöttää ruudulla näkyvään kenttään. Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista roskaposti-kansiosi.
+                  Sähköpostin vahvistamiseksi saat antamaasi sähköpostiosoitteeseen 6-numeroisen koodin. Syötä koodi ruudulla näkyvään kenttään. Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista roskapostikansiosi.
                 </p>
                 <p>
                   <b>
@@ -466,16 +466,16 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
-  suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
+                      alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä
+  Suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
                       loading="lazy"
                       src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
-  suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
+                      Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä
+  Suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
                     </p>
                   </p>
                 </p>
@@ -511,10 +511,10 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   Helsinki-profiilin luonti
                 </h4>
                 <p>
-                  Sähköpostin vahvistamisen jälkeen sinun pitää vielä antaa suostumus tietojesi käyttöön. Ilman suostumusta Helsinki-profiilia ei voida luoda, eivätkä palvelut voi käyttää tietojasi.
+                  Sähköpostin vahvistamisen jälkeen sinun pitää vielä tarkistaa tietosi ja antaa suostumus tietojesi käyttöön. Ilman suostumusta Helsinki-profiilia ei voida luoda, eivätkä palvelut voi käyttää tietojasi.
                 </p>
                 <p>
-                  Tämän jälkeen sinulle syntyy Helsinki-profiili, ja suomi.fi-tunnistautumisen tiedot tallentuvat profiiliin. Eri asiointipalvelut hyödyntävät tietojasi eri tavalla, mutta ne kerrotaan aina ensimmäisellä kirjautumiskerralla. Tiedot löytyvät myös aina Helsinki-profiilista.
+                  Tämän jälkeen sinulle syntyy Helsinki-profiili ja Suomi.fi-tunnistautumisen tiedot tallentuvat profiiliin. Eri asiointipalvelut hyödyntävät tietojasi eri tavoin, mutta nämä tiedot kerrotaan aina ensimmäisellä kirjautumiskerralla. Tiedot löytyvät myös aina Helsinki-profiilista.
                 </p>
                 <p>
                   Helsinki-profiilin luomisen jälkeen olet tunnistautuneena siinä palvelussa, josta aloitit kirjautumisprosessin. Helsinki-profiiliin pääset osoitteessa
@@ -527,21 +527,19 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   .
                 </p>
                 <p>
-                  Kun kirjaudut seuraavan kerran samaan palveluun, valitse vain valitsemasi tunnistautumisvaihtoehdoksi suomi.fi ja pääset palveluun.
+                  Kun kirjaudut seuraavan kerran samaan palveluun, valitse tunnistautumisvaihtoehdoksi Suomi.fi.
                 </p>
                 <p>
                   <p>
                     <img
-                      alt="Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa 
-            suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia."
+                      alt="Ennen kuin voit käyttää haluamaasi palvelua tai luoda Helsinki-profiilin, sinun pitää antaa suostumus tietojesi käyttöön. Ilman suostumusta tietojasi ei voida käyttää eikä profiilia voida luoda."
                       loading="lazy"
                       src="/src/userGuide/assets/08-profiilin-luominen.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Ennen kuin voit käyttää haluamaasi palvelua tai ennen Helsinki-profiilin syntymistä, sinun pitää antaa 
-            suostumus tietojesi käytölle. Ilman suostumusta tietojasi ei voida käyttää eikä siten luoda profiilia.
+                      Ennen kuin voit käyttää haluamaasi palvelua tai luoda Helsinki-profiilin, sinun pitää antaa suostumus tietojesi käyttöön. Ilman suostumusta tietojasi ei voida käyttää eikä profiilia voida luoda.
                     </p>
                   </p>
                 </p>
@@ -638,14 +636,14 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili -painiketta."
+                      alt="Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili-painiketta."
                       loading="lazy"
                       src="/src/userGuide/assets/09-helsinki-tunnus-luonti.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili -painiketta.
+                      Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili-painiketta.
                     </p>
                   </p>
                 </p>
@@ -656,7 +654,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   Profiilin luomisen yhteydessä sinulta pyydetään sähköpostiosoite, joka toimii myös käyttäjätunnuksenasi. Sähköpostiosoitteeseen lähetetään vahvistusviesti osoitteen aitouden varmistamiseksi.
                 </p>
                 <p>
-                  Jos olet jo aiemmin luonut Helsinki-profiilin suomi.fi-tunnistautuen, voit luoda profiilille salasanan klikkaamalla Olen unohtanut salasanani -linkkiä. Salasanan luomisesta on enemmän
+                  Jos olet jo aiemmin luonut Helsinki-profiilin Suomi.fi-tunnistautuen, voit luoda profiilille salasanan klikkaamalla Olen unohtanut salasanani -linkkiä. Salasanan luomisesta on enemmän
                    
                   <a
                     href="#_Unohtunut_salasana"
@@ -670,7 +668,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </b>
                 </p>
                 <p>
-                  Sähköpostin vahvistamiseksi saat antamaasi sähköpostiosoitteeseen 6-numeroisen koodin, joka tulee syöttää ruudulla näkyvään kenttään. Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista roskaposti-kansiosi.
+                  Sähköpostin vahvistamiseksi saat antamaasi sähköpostiosoitteeseen 6-numeroisen koodin. Syötä koodi ruudulla näkyvään kenttään. Jos viesti ei tule sähköpostiisi lähes välittömästi, tarkista roskapostikansiosi.
                 </p>
                 <p>
                   <b>
@@ -680,16 +678,16 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
-  suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
+                      alt="Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä
+  Suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin."
                       loading="lazy"
                       src="/src/userGuide/assets/05-10-sahkopostiosoite.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä 
-  suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
+                      Sähköpostiosoite toimii tunnuksenasi Helsingin kaupungin palveluihin. Käyttämällä samaa sähköpostiosoitetta sekä
+  Suomi.fi-tunnistautumisessa että Helsinki-tunnuksella, saat yhden Helsinki-profiilin. Yhdistämistä ei voi purkaa myöhemmin.
                     </p>
                   </p>
                 </p>
@@ -736,7 +734,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa 
+                      alt="Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa
             salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda."
                       loading="lazy"
                       src="/src/userGuide/assets/13-helsinki-tunnus-teko.png"
@@ -744,7 +742,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <p
                       class="image-text"
                     >
-                      Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa 
+                      Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa
             salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda.
                     </p>
                   </p>
@@ -834,7 +832,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 style="display: none;"
               >
                 <p>
-                  Voit halutessasi yhdistää eri tunnistautumistavat yhdeksi Helsinki-profiiliksi, jolloin voit tarkastella ja hallinnoida kaikkia tietojasi ja hyödyntämiäsi palveluja kerralla. Tämä onnistuu tekemällä ensin Helsinki-tunnus sähköpostiosoite-salasana-yhdistelmällä ja käyttämällä sitten samaa sähköpostiosoitetta ensimmäisellä suomi.fi-tunnistautumisella.
+                  Voit halutessasi yhdistää eri tunnistautumistavat yhdeksi Helsinki-profiiliksi, jolloin voit tarkastella ja hallinnoida kaikkia tietojasi ja hyödyntämiäsi palveluja kerralla. Yhdistääksesi tunnistautumistavat, luo ensin Helsinki-tunnus sähköpostiosoite-salasana-yhdistelmällä. Käytä sitten samaa sähköpostiosoitetta, kun kirjaudut ensimmäistä kertaa käyttäen Suomi.fi-tunnistautumista.
                 </p>
                 <p>
                   <b>
@@ -842,7 +840,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </b>
                 </p>
                 <p>
-                  Jos Helsinki-profiili on luotu suomi.fi-tunnistautumisella, sisäänkirjautumisnäkymässä voi klikata
+                  Jos Helsinki-profiili on luotu Suomi.fi-tunnistautumisella, sisäänkirjautumisnäkymässä voi klikata
                    
                   <i>
                     Olen unohtanut salasanani
@@ -895,7 +893,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               Kirjautuminen
             </h2>
             <p>
-              Helsinki-profiililla voit kirjautua kaikkiin Helsingin kaupungin digitaalisiin palveluihin. Kirjautumisen voit tehdä käyttämää suomi.fi-tunnistautumista tai profiilin luomisen yhteydessä antamasi sähköpostiosoitteen ja salasanan.
+              Helsinki-profiililla voit kirjautua Helsingin kaupungin digitaalisiin palveluihin. Voit käyttää kirjautumiseen Suomi.fi-tunnistautumista tai profiilin luomisen yhteydessä annettua sähköpostiosoitetta ja salasanaa.
             </p>
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-4"
@@ -953,7 +951,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <i>
                     Olen unohtanut salasanani
                   </i>
-                   -linkistä. Salasanan ”unohtuminen” voi myös johtua siitä, että olet aiemmilla kerroilla kirjautunut palveluun suomi.fi-tunnistautuen, jolloin salasanaa ei ole luotu.
+                   -linkistä. Salasanan ”unohtuminen” voi myös johtua siitä, että olet aiemmilla kerroilla kirjautunut palveluun Suomi.fi-tunnistautuen, jolloin salasanaa ei ole luotu.
                 </p>
                 <p>
                   Sähköpostin antamisen jälkeen saat sähköpostiisi linkin uuden salasanan antamiseen. Linkki on voimassa 30 minuuttia.
@@ -1020,7 +1018,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla 
+                      alt="Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla
             vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä."
                       loading="lazy"
                       src="/src/userGuide/assets/18-uusi-salasana.png"
@@ -1028,7 +1026,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <p
                       class="image-text"
                     >
-                      Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla 
+                      Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla
             vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.
                     </p>
                   </p>
@@ -1118,25 +1116,19 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 style="display: none;"
               >
                 <p>
-                  Kun siirryt palvelusta toiseen, tunnistautumistapa voi olla erilainen eri palveluissa. Esimerkiksi olit kirjautuneena ensimmäiseen palveluun Helsinki-tunnuksella eli sähköpostin ja salasanan yhdistelmällä, mutta toinen palvelu tarvitsee suomi.fi-tunnistautumisen. Tällöin saat ilmoituksen, ettei tunnistautumistapa ole yhteensopiva. Sinun tulee kirjautua ulos aiemmasta palvelusta, jotta voit tunnistautua uuteen palveluun. Kahta eri tunnistautumistapaa ei voi olla yhtaikaa avoinna.
+                  Kun siirryt palvelusta toiseen, tunnistautumistapa voi olla erilainen eri palveluissa. Esimerkiksi olit kirjautuneena ensimmäiseen palveluun Helsinki-tunnuksella eli sähköpostin ja salasanan yhdistelmällä, mutta toinen palvelu tarvitsee Suomi.fi-tunnistautumisen. Tällöin saat ilmoituksen, ettei tunnistautumistapa ole yhteensopiva. Sinun tulee kirjautua ulos aiemmasta palvelusta, jotta voit tunnistautua uuteen palveluun. Kahta eri tunnistautumistapaa ei voi olla samaan aikaa avoinna.
                 </p>
                 <p>
                   <p>
                     <img
-                      alt="Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun 
-            sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin 
-            suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi 
-            kirjautua uuteen palveluun."
+                      alt="Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin Suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun."
                       loading="lazy"
                       src="/src/userGuide/assets/19-yhteensopimaton-kirjautuminen.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun 
-            sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin 
-            suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi 
-            kirjautua uuteen palveluun.
+                      Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin Suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun.
                     </p>
                   </p>
                 </p>
@@ -1254,16 +1246,16 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 style="display: none;"
               >
                 <p>
-                  Viralliset tiedot tulevat profiiliin ja näkyvät vain suomi.fi-tunnistautuen. Näiden tietojen päivittäminen tehdään väestörekisterikeskuksen palvelussa.
+                  Viralliset tiedot tulevat profiiliin ja näkyvät vain, kun käytät Suomi.fi-tunnistautumista. Näiden tietojen päivittäminen tehdään väestörekisterikeskuksen palvelussa.
                 </p>
                 <p>
-                  Helsinki-profiilin omissa tiedoissa voit lisätä puhelinnumeron, vaihtaa sähköpostiosoitteen ja lisätä osoitetiedot. Jos vaihdat nimitietosi Helsinki-profiilissa, niin seuraavalla suomi.fi-tunnistautumiskerralla viralliset tiedot päivittävät ne.
+                  Helsinki-profiilin omissa tiedoissa voit lisätä puhelinnumeron, vaihtaa sähköpostiosoitteen ja lisätä osoitetiedot. Jos vaihdat nimitietosi Helsinki-profiilissa, niin seuraavalla Suomi.fi-tunnistautumiskerralla nimitiedot päivittyvät väestötietojärjestelmän tietojen mukaisesti.
                 </p>
                 <p>
                   Voit lisätä tai muuttaa itse syöttämiäsi tietoja Lisää-painikkeella tai Muokkaa-painikkeella. Tiedot tallentuvat tietokantaan Tallenna-painikkeella.
                 </p>
                 <p>
-                  Helsinki-profiilin asiointikieli-kohta määrittää, millä kielellä esimerkiksi palvelun sähköpostit lähetetään. Näet myös, miten olet tunnistautunut Helsinki-profiiliin.
+                  Helsinki-profiilin asiointikieli-kohta määrittää, millä kielellä esimerkiksi palvelun sähköpostit lähetetään. Näet myös miten olet tunnistautunut Helsinki-profiiliin.
                 </p>
                 <p>
                   <img
@@ -1294,18 +1286,14 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi. Asiointikieli määrittää, millä
-            kielellä saat viestejä palvelusta. Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli 
-            suomi.fitunnistautuen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella."
+                      alt="Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi. Asiointikieli määrittää, millä kielellä saat viestejä palvelusta. Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli Suomi.fi-tunnistautuen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella."
                       loading="lazy"
                       src="/src/userGuide/assets/23-omat-yhteystiedot.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi. Asiointikieli määrittää, millä
-            kielellä saat viestejä palvelusta. Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli 
-            suomi.fitunnistautuen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella.
+                      Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi. Asiointikieli määrittää, millä kielellä saat viestejä palvelusta. Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli Suomi.fi-tunnistautuen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella.
                     </p>
                   </p>
                 </p>
@@ -1394,7 +1382,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 style="display: none;"
               >
                 <p>
-                  Palvelut hyödyntävät Helsinki-profiilin hallinnoimia tietoja ilmoittamallaan tavalla. Tunnistautumalla ensimmäisen kerran palveluun, näet mitä tietoja palvelu hyödyntää.
+                  Palvelut hyödyntävät Helsinki-profiilin hallinnoimia tietoja ilmoittamallaan tavalla. Kirjautumalla ensimmäisen kerran palveluun näet mitä tietoja palvelu hyödyntää.
                 </p>
                 <p>
                   Helsinki-profiilissa voit tarkistaa myöhemmin nämä tiedot sekä halutessasi poistaa tietosi palvelusta. Poisto ei ole mahdollista, jos asiointi on kesken palvelussa. On myös suositeltavaa
@@ -1409,7 +1397,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. 
+                      alt="Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön.
             Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä."
                       loading="lazy"
                       src="/src/userGuide/assets/24-olemassa-olevan-profiilin-kirjautuminen.png"
@@ -1417,7 +1405,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <p
                       class="image-text"
                     >
-                      Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön. 
+                      Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön.
             Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä.
                     </p>
                   </p>
@@ -1425,7 +1413,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä 
+                      alt="Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä
             tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista."
                       loading="lazy"
                       src="/src/userGuide/assets/25-kayttamasi-palvelut.png"
@@ -1433,7 +1421,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <p
                       class="image-text"
                     >
-                      Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä 
+                      Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä
             tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista.
                     </p>
                   </p>
@@ -1523,14 +1511,14 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 style="display: none;"
               >
                 <p>
-                  Voit myös ladata eri palveluihin tallentamasi tiedot yhtenä json-tiedostona. Lisää tietoa
+                  Voit ladata eri palveluihin tallentamasi tiedot yhtenä json-tiedostona. Lisää tietoa
                    
                   <a
                     href="https://fi.wikipedia.org/wiki/JSON"
                   >
                     json-tiedostomuodosta Wikipediassa (linkki avautuu uuteen ikkunaan)
                   </a>
-                  . Jos olet yhdistänyt suomi.fi-tunnistautumisen ja sähköpostiosoite+salasana-kirjautumisen samaan Helsinki-profiiliin, tietojen lataus pitää tehdä suomi.fi-tunnistautuneena.
+                  . Jos olet yhdistänyt Suomi.fi-tunnistautumisen ja sähköpostiosoite-salasana-kirjautumisen samaan Helsinki-profiiliin, tietojen lataus pitää tehdä Suomi.fi-tunnistautuneena.
                   <p>
                     <p>
                       <img
@@ -1586,7 +1574,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               Tietojen poisto
             </h2>
             <p>
-              Voit poistaa tietosi joko yksittäisistä palveluista tai koko profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan tai anonymisoidaan, jos palvelu esim. lakisääteisenä joutuu niitä säilyttämään. Sinulla ei kuitenkaan ole poiston jälkeen pääsyä tietoihin, eikä niitä ole yhdistettävissä sinuun.
+              Voit poistaa tietosi yksittäisistä palveluista tai halutessasi koko profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan. Jos palvelu joutuu esim. lakisääteisistä syistä säilyttämään tietoja, tiedot anonymisoidaan poiston sijaan. Sinulla ei kuitenkaan ole poiston jälkeen pääsyä tietoihin, eikä niitä voi yhdistää sinuun.
             </p>
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-9"
@@ -1639,10 +1627,10 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 style="display: none;"
               >
                 <p>
-                  Jos olet yhdistänyt suomi.fi-tunnistautumisen ja sähköpostiosoite+salasana-kirjautumisen samaan Helsinki-profiiliin, palvelun poistaminen pitää tehdä suomi.fi-tunnistautuneena.
+                  Jos olet yhdistänyt Suomi.fi-tunnistautumisen ja sähköpostiosoite-salasana-kirjautumisen samaan Helsinki-profiiliin, palvelun poistaminen pitää tehdä Suomi.fi-tunnistautuneena.
                 </p>
                 <p>
-                  Kun valitset poistettavan palvelun Käyttämäsi palvelut -välilehdellä, saat pop-up-ikkunaan vahvistusviestin poistosta.
+                  Kun valitset poistettavan palvelun Käyttämäsi palvelut -välilehdellä, saat ponnahdusikkunaan vahvistusviestin poistosta.
                 </p>
                 <p>
                   <p>
@@ -1661,14 +1649,14 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä pop-up-vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa."
+                      alt="Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä ponnahdusikkunaan vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa."
                       loading="lazy"
                       src="/src/userGuide/assets/28-tietojen-poisto-palvelusta-pop-up.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä pop-up-vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa.
+                      Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä ponnahdusikkunaan vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa.
                     </p>
                   </p>
                 </p>
@@ -1763,7 +1751,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   Jotkin lakisääteiset asiointipalvelut voivat edellyttää tietojen säilyttämistä määräajan tai pysyvästi. Asioinnista ja asiointipalvelusta riippuen tiedot voidaan joissakin tapauksissa anonymisoida. Jos lakisääteisen palvelun pitää säilyttää tiedot, tällöin profiilia tai kyseisen palvelun käyttöoikeutta tietoihin ei voida poistaa.
                 </p>
                 <p>
-                  Jos olet yhdistänyt suomi.fi-tunnistautumisen ja sähköpostiosoite+salasana -kirjautumisen samaan Helsinki-profiiliin, profiilin poisto pitää tehdä suomi.fi-tunnistautuneena.
+                  Jos olet yhdistänyt Suomi.fi-tunnistautumisen ja sähköpostiosoite-salasana-kirjautumisen samaan Helsinki-profiiliin, profiilin poisto pitää tehdä Suomi.fi-tunnistautuneena.
                 </p>
                 <p>
                   Helsinki-profiilin poistamisen jälkeen voit aina tarvittaessa tehdä uuden profiilin, mutta kaikki aiemmat tiedot on menetetty.
@@ -1785,14 +1773,14 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   <p>
                     <img
-                      alt="Ruudulle tulee vielä varmistusviesti pop-up-ikkunaan, jotta tietoja ei poisteta vahingossa."
+                      alt="Ruudulle tulee vielä varmistusviesti ponnahdusikkunaan, jotta tietoja ei poisteta vahingossa."
                       loading="lazy"
                       src="/src/userGuide/assets/30-tietojen-poisto-popup.png"
                     />
                     <p
                       class="image-text"
                     >
-                      Ruudulle tulee vielä varmistusviesti pop-up-ikkunaan, jotta tietoja ei poisteta vahingossa.
+                      Ruudulle tulee vielä varmistusviesti ponnahdusikkunaan, jotta tietoja ei poisteta vahingossa.
                     </p>
                   </p>
                 </p>
