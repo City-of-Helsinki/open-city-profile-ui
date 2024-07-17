@@ -8,11 +8,11 @@ function AccessibilityStatementFi(): ReactElement {
     <Fragment>
       <FocusableH1>Helsinki-profiilin saavutettavuusseloste</FocusableH1>
       <p>
-        Tämä saavutettavuusseloste koskee Helsingin kaupungin Helsinki-profiili-
-        verkkopalvelua (https//profiili.hel.fi). Verkkopalvelusta vastaa
-        Helsingin kaupunki. Tässä selosteessa kerrotaan, kuinka saavutettava
-        verkkopalvelu on ja miten voit antaa meille palautetta
-        saavutettavuudesta.
+        Tämä saavutettavuusseloste koskee Helsingin kaupungin
+        Helsinki-profiili-verkkopalvelua (https://profiili.hel.fi).
+        Verkkopalvelusta vastaa Helsingin kaupunki. Tässä selosteessa kerrotaan,
+        kuinka saavutettava verkkopalvelu on ja miten voit antaa meille
+        palautetta saavutettavuudesta.
       </p>
       <h2>Kuinka saavutettava tämä verkkopalvelu on?</h2>
       <p>
@@ -56,7 +56,7 @@ function AccessibilityStatementFi(): ReactElement {
         Etelä-Suomen aluehallintovirasto valvoo saavutettavuusvaatimusten
         toteutumista. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa
         vastausta lainkaan kahden viikon aikana, voit tehdä ilmoituksen
-        Etelä-Suomen aluehallintovirastoon. Etelä- Suomen aluehallintoviraston
+        Etelä-Suomen aluehallintovirastoon. Etelä-Suomen aluehallintoviraston
         sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia
         käsitellään.
       </p>

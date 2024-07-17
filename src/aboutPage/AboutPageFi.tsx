@@ -17,9 +17,9 @@ function AboutPageFi(): ReactElement {
         tunnistautuminen tapahtuu:
       </p>
       <ul>
-        <li>vahvasti suomi.fi-tunnistautumista käyttäen</li>
+        <li>vahvasti Suomi.fi-tunnistautumista käyttäen</li>
         <li>
-          kevyesti Helsinki-tunnuksen sähköpostiosoite+salasana-yhdistelmällä
+          kevyesti Helsinki-tunnuksen sähköpostiosoite-salasana-yhdistelmällä.
         </li>
       </ul>
       <p>
@@ -60,7 +60,7 @@ function AboutPageFi(): ReactElement {
       </p>
       <p>
         Viralliset henkilötiedot päivitetään Suomen väestötietojärjestelmästä
-        Helsinki-profiiliin jokaisen suomi.fi-kirjautumisen yhteydessä.
+        Helsinki-profiiliin jokaisen Suomi.fi-kirjautumisen yhteydessä.
       </p>
       <p>
         Asiakas antaa suostumuksensa eri digitaalisille palveluille, jotta nämä
@@ -113,7 +113,7 @@ function AboutPageFi(): ReactElement {
         Tiedot tallennetaan Helsinki-profiilin tietokantaan, josta ne välitetään
         eri palvelujen käyttöön asiakkaan suostumuksen perusteella.
         Helsinki-profiilissa admin-käyttäjät näkevät ja voivat muokata käyttäjän
-        itse ilmoittamia tietoja. Tällaisia käyttäjiä on 3-7 henkilöä.
+        itse ilmoittamia tietoja. Tällaisia käyttäjiä on 3–7 henkilöä.
       </p>
       <p>
         Lisäksi Helsinki-profiilin kehittämisen sekä mahdollisten
