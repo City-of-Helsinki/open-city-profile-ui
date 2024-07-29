@@ -4,6 +4,7 @@ import {
   tunnistusSuomifiAMR,
 } from '../../../auth/useProfile';
 import config from '../../../config';
+import { LoginMethodType, ProfileRoot } from '../../../graphql/typings';
 
 function getAmrFromProfileData(profile: Profile | null): string | undefined {
   return profile && Array.isArray(profile.amr) ? profile.amr[0] : '';
@@ -42,4 +43,10 @@ export function hasTunnistusSuomiFiAmr(profile: Profile | null): boolean {
 
 export function hasHelsinkiAccountAMR(profile: Profile | null): boolean {
   return getAmrFromProfileData(profile) === config.helsinkiAccountAMR;
+}
+
+export function hasPasswordLogin(data: ProfileRoot | undefined): boolean {
+  return (
+    data?.myProfile?.loginMethods?.includes(LoginMethodType.PASSWORD) ?? false
+  );
 }

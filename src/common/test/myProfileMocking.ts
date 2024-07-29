@@ -21,6 +21,7 @@ import {
   Addresses,
   Phones,
   InsertableNode,
+  LoginMethodType,
 } from '../../graphql/typings';
 import {
   AdditionalInformationSource,
@@ -185,6 +186,7 @@ export const getMyProfile = (): ProfileRoot => ({
       __typename: 'PhoneNodeConnection',
     },
     verifiedPersonalInformation: null,
+    loginMethods: [LoginMethodType.PASSWORD],
     __typename: 'ProfileNode',
   },
 });

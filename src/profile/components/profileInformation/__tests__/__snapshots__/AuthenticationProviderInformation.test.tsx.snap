@@ -1,5 +1,79 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`<AuthenticationProviderInformation />  > renders correctly according to Login method > should not render change password button when password is not used 1`] = `
+<div>
+  <section
+    class="content-box profile-section"
+  >
+    <div
+      class="flex-box-columns"
+    >
+      <div
+        class="editor-description-container"
+      >
+        <h2>
+          profileInformation.loginAndAuthentication
+        </h2>
+        <span>
+          identityProvider.tunnistusSuomifi
+        </span>
+      </div>
+    </div>
+  </section>
+</div>
+`;
+
+exports[`<AuthenticationProviderInformation />  > renders correctly according to Login method > should render change password button when password is used 1`] = `
+<div>
+  <section
+    class="content-box profile-section"
+  >
+    <div
+      class="flex-box-columns"
+    >
+      <div
+        class="editor-description-container"
+      >
+        <h2>
+          profileInformation.loginAndAuthentication
+        </h2>
+        <span>
+          identityProvider.tunnistusSuomifi
+        </span>
+      </div>
+      <hr />
+      <div
+        class="flex-box-rows"
+      >
+        <div
+          class="editor-title-and-value"
+        >
+          <h3
+            class="label-size"
+          >
+            profileInformation.password
+          </h3>
+        </div>
+        <div
+          class="edit-buttons-container"
+        >
+          <button
+            class="Button-module_button__1msFE button_hds-button__2A0je Button-module_primary__2LfKB button_hds-button--primary__2NVvO"
+            type="button"
+          >
+            <span
+              class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+            >
+              profileInformation.changePassword
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+`;
+
 exports[`<AuthenticationProviderInformation />  > renders correctly when AMR is helsinkiAccountAMR > should render helsinki account information as expected based on config 1`] = `
 <div>
   <section
@@ -12,7 +86,7 @@ exports[`<AuthenticationProviderInformation />  > renders correctly when AMR is 
         class="editor-description-container"
       >
         <h2>
-          profileInformation.authenticationMethod
+          profileInformation.loginAndAuthentication
         </h2>
         <span>
           identityProvider.helsinkiAccount
@@ -35,11 +109,62 @@ exports[`<AuthenticationProviderInformation />  > renders correctly when AMR is 
         class="editor-description-container"
       >
         <h2>
-          profileInformation.authenticationMethod
+          profileInformation.loginAndAuthentication
         </h2>
         <span>
           identityProvider.tunnistusSuomifi
         </span>
+      </div>
+    </div>
+  </section>
+</div>
+`;
+
+exports[`<AuthenticationProviderInformation />  > renders correctly when Login method is PASSWORD > should render suomi.fi information as expected based on config 1`] = `
+<div>
+  <section
+    class="content-box profile-section"
+  >
+    <div
+      class="flex-box-columns"
+    >
+      <div
+        class="editor-description-container"
+      >
+        <h2>
+          profileInformation.loginAndAuthentication
+        </h2>
+        <span>
+          identityProvider.tunnistusSuomifi
+        </span>
+      </div>
+      <hr />
+      <div
+        class="flex-box-rows"
+      >
+        <div
+          class="editor-title-and-value"
+        >
+          <h3
+            class="label-size"
+          >
+            profileInformation.password
+          </h3>
+        </div>
+        <div
+          class="edit-buttons-container"
+        >
+          <button
+            class="Button-module_button__1msFE button_hds-button__2A0je Button-module_primary__2LfKB button_hds-button--primary__2NVvO"
+            type="button"
+          >
+            <span
+              class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+            >
+              profileInformation.changePassword
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   </section>
