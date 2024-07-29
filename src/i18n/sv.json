@@ -42,7 +42,7 @@
     "title": "Vill du radera din information?",
     "loadingServices": "Söker efter tjänster som är kopplade till profilen",
     "deleteSuccessful": "Helsingforsprofilen och alla uppgifter som vi har sparat om dig har tagits bort på ett lyckat sätt.",
-    "deleteFailed": "Av någon anledning lyckades borttagningen inte. Försök på nytt om en stund!",
+    "deleteFailed": "Av någon anledning lyckades borttagningen inte. Försök på nytt om en stund.",
     "deleteInfoforLightAuthentication": "Du har tjänster kopplade till din Helsingforsprofil för vilka du har använt stark autentisering. Logga ut och logga in igen med Suomi.fi-autentisering för att radera dina uppgifter."
   },
   "deleteProfileModal": {
@@ -188,11 +188,14 @@
     "ariaShowOptions": "Visa alternativ",
     "ariaSelectedOption": "{{value}} har valts",
     "ariaNoSelectedItemForLabel": "{{label}} har inte valts",
+    "changePassword": "Uppdatera lösenord",
     "deleteProfile": "Radera profilen",
-    "description": "Uppgifterna som sparats i Helsingforsprofilen används i Helsingfors stads e-tjänster. Närmare information hittar du på <linkToServices>{{linkToServicesText}} sidan</linkToServices>.",
+    "description": "Uppgifterna som sparats i Helsingforsprofilen används i Helsingfors stads e-tjänster. Närmare information hittar du på <linkToServices>{{linkToServicesText}}</linkToServices> sidan.",
     "downloadData": "Ladda ner min information",
     "email": "Epost",
+    "loginAndAuthentication": "Inloggning och autentisering",
     "name": "Namn",
+    "password": "Lösenord",
     "personalData": "Personuppgifter",
     "phone": "Telefonnummer",
     "title": "Min information",
@@ -200,7 +203,7 @@
     "authenticationMethod": "Autentiseringsmetod",
     "permanentAddress": "Stadigvarande adress",
     "permanentForeignAddress": "Stadigvarande utländsk adress",
-    "verifiedDataInformation": "Du ser de officiella uppgifterna endast när du loggat in med stark identifiering, det vill säga Suomi-fi-identifieringen. Uppgifterna har hämtats från det officiella befolkningsdatasystemet och kan inte redigeras via Helsingforsprofilen. Du kan se uppgifterna om dig i befolkningsdatasystemet <suomiFiLink>i webbtjänsten suomi.fi</suomiFiLink>.",
+    "verifiedDataInformation": "Du ser de officiella uppgifterna endast när du loggat in med stark identifiering, det vill säga Suomi-fi-identifieringen. Uppgifterna har hämtats från det officiella befolkningsdatasystemet och kan inte redigeras via Helsingforsprofilen. Du kan se uppgifterna om dig i befolkningsdatasystemet <suomiFiLink>i webbtjänsten Suomi.fi</suomiFiLink>.",
     "verifiedDataInformationLink": "https://www.suomi.fi/",
     "verifiedData": "Verifierad uppgift",
     "verifiedBasicData": "Officiella uppgifter",
@@ -253,12 +256,12 @@
     "requiredFieldIndication": "Fälten markerade med en asterisk (*) är obligatoriska."
   },
   "identityProvider": {
-    "helsinkiAccount": "Användarnamnet för Helsingforsprofilen",
-    "github": "GitHub",
-    "google": "Google",
-    "facebook": "Facebook",
-    "yletunnus": "Yle",
-    "tunnistusSuomifi": "Suomi.fi"
+    "helsinkiAccount": "Du är autentiserad med Helsingfors-konto.",
+    "github": "Du är autentiserad med GitHub-konto.",
+    "google": "Du är autentiserad med Google-konto.",
+    "facebook": "Du är autentiserad med Facebook-konto.",
+    "yletunnus": "Du är autentiserad med Yle Konto.",
+    "tunnistusSuomifi": "Du är autentiserad med Suomi.fi-identifikation."
   },
   "opensInNewWindow": "{{title}}. Öppnas i ett nytt fönster.",
   "openInNewTabAriaLabel": "Öppnas i en ny flik.",

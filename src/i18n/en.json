@@ -42,8 +42,8 @@
     "title": "Do you want to delete your information?",
     "loadingServices": "Searching for services connected to the profile",
     "deleteSuccessful": "The Helsinki profile and all the data we hold on you have been deleted successfully!",
-    "deleteFailed": "The deletion failed for some reason. Please try again after a while!",
-    "deleteInfoforLightAuthentication": "You have services linked to your profile for which you have used strong identification. Please log out and log in again using Suomi.fi-authentication to delete your data."
+    "deleteFailed": "The deletion failed for some reason. Please try again after a while.",
+    "deleteInfoforLightAuthentication": "You have services linked to your profile for which you have used strong identification. Please log out and log in again using Suomi.fi authentication to delete your data."
   },
   "deleteProfileModal": {
     "delete": "Delete my information",
@@ -62,7 +62,7 @@
     "button": "Download my information (.json)",
     "panelText": "Here you can download a file containing all the data related to you. The file contains all the data about you stored in the Helsinki profile and information about all the associated e-services.",
     "panelTitle": "Do you want to download your information?",
-    "extrapanelTextforLightAuthentication": "You have services linked to your profile for which you have used strong identification. Please log out and log back in with Suomi.fi-authentication to download your data."
+    "extrapanelTextforLightAuthentication": "You have services linked to your profile for which you have used strong identification. Please log out and log back in with Suomi.fi authentication to download your data."
   },
   "expandingPanel": {
     "closeButtonText": "Close",
@@ -101,9 +101,9 @@
   },
   "loading": "Loading...",
   "login": {
-    "description": "A Helsinki profile will be created for you when you log in to City of Helsinki services. Through your profile, you can view and manage your data and how it is used in different services.",
+    "description": "A Helsinki profile will be created for you when you log in to City of Helsinki services. Through your profile, you can manage your data and view how it is used in different services.",
     "login": "Log in",
-    "title": "Your profile information in one address!"
+    "title": "Your profile information at one address!"
   },
   "nav": {
     "information": "Information",
@@ -188,11 +188,14 @@
     "ariaShowOptions": "Show options",
     "ariaSelectedOption": "{{value}} is selected",
     "ariaNoSelectedItemForLabel": "{{label}} is not selected",
+    "changePassword": "Change password",
     "deleteProfile": "Delete your profile",
-    "description": "The data stored in the Helsinki profile is used in the City of Helsinki’s e-services. You can find more detailed information on the <linkToServices>{{linkToServicesText}} page</linkToServices>.",
+    "description": "The data stored in the Helsinki profile is used in the City of Helsinki’s e-services. You can find more detailed information on the <linkToServices>{{linkToServicesText}}</linkToServices> page.",
     "downloadData": "Download your data",
     "email": "Email",
+    "loginAndAuthentication": "Login and authentication",
     "name": "Name",
+    "password": "Password",
     "personalData": "Personal data",
     "phone": "Phone number",
     "title": "My information",
@@ -200,7 +203,7 @@
     "authenticationMethod": "Authentication method",
     "permanentAddress": "Permanent address",
     "permanentForeignAddress": "Permanent foreign address",
-    "verifiedDataInformation": "You can only see the official information when you have logged in using strong authentication via the Suomi.fi service. The information has been retrieved from The National Population Information System and cannot be edited via your Helsinki profile. You can check the data stored about you in the Population Information System in the <suomiFiLink>suomi.fi -web service</suomiFiLink>.",
+    "verifiedDataInformation": "You can only see the official information when you have logged in using strong authentication via the Suomi.fi service. The information has been retrieved from The National Population Information System and cannot be edited via your Helsinki profile. You can check the data stored about you in the Population Information System in the <suomiFiLink>Suomi.fi web service</suomiFiLink>.",
     "verifiedDataInformationLink": "https://www.suomi.fi/",
     "verifiedData": "Verified data",
     "verifiedBasicData": "Official information",
@@ -239,7 +242,7 @@
     "connectionRemovalVerificationButtonText": "Delete data",
     "connectionRemovalError": "For some reason, the deletion was not successful. Please, try again later!",
     "contactServiceToDelete": "If you still want to delete the data, please contact <linkToExternalServiceList >the service</linkToExternalServiceList> directly and then retry deleting the data.",
-    "explanationforLightAuthentication": "You can only delete data from this service if you are strongly identified. Please log out and log in again using Suomi.fi-identification to delete your data."
+    "explanationforLightAuthentication": "You can only delete data from this service if you are strongly identified. Please log out and log in again using Suomi.fi identification to delete your data."
   },
   "skipToContent": "Skip to content",
   "validation": {
@@ -253,12 +256,12 @@
     "requiredFieldIndication": "Fields marked with an * are compulsory."
   },
   "identityProvider": {
-    "helsinkiAccount": "Helsinki Profile user ID",
-    "github": "GitHub",
-    "google": "Google",
-    "facebook": "Facebook",
-    "yletunnus": "Yle",
-    "tunnistusSuomifi": "Suomi.fi"
+    "helsinkiAccount": "You are authenticated with Helsinki ID.",
+    "github": "You are authenticated with GitHub account.",
+    "google": "You are authenticated with Google account.",
+    "facebook": "You are authenticated with Facebook account.",
+    "yletunnus": "You are authenticated with Yle ID.",
+    "tunnistusSuomifi": "You are authenticated with Suomi.fi e-Identification."
   },
   "opensInNewWindow": "{{title}}. Opens in a new window.",
   "openInNewTabAriaLabel": "Opens in a new tab.",
@@ -285,7 +288,7 @@
     "consentStorageDescription": "Cookie stores consent for using analytics cookies."
   },
   "changeProfilePassword ": {
-    "explanationForStrongAuthentication": "You can only change your password if you are strongly identified. Log out and log in again using Suomi.fi-authentication to change your password."
+    "explanationForStrongAuthentication": "You can only change your password if you are strongly identified. Log out and log in again using Suomi.fi authentication to change your password."
   },
   "userGuide": "Helsinki profile guide"
 }
