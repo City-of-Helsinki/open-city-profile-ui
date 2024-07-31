@@ -86,7 +86,12 @@ const deleteServiceConnectionExecutor: ActionExecutor = async (
   );
 
   if (error) {
-    reportErrorsToSentry(error);
+    if (
+      !parseGraphQLError(error).isInsufficientLoaError ||
+      !parseGraphQLError(error).isAllowedError
+    ) {
+      reportErrorsToSentry(error);
+    }
 
     if (parseGraphQLError(error).isInsufficientLoaError) {
       return Promise.reject(resultTypes.insufficientLoa);
