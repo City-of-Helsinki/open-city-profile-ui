@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'hds-react';
+import { Button, IconLinkExternal, Notification } from 'hds-react';
 import classNames from 'classnames';
 
 import authService from '../../../auth/authService';
@@ -49,6 +49,8 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
               </div>
               <div className={commonFormStyles['edit-buttons-container']}>
                 <Button
+                  iconLeft={<IconLinkExternal />}
+                  data-testid={'change-password-button'}
                   onClick={() => {
                     authService.changePassword();
                   }}

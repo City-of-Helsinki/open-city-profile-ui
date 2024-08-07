@@ -57,7 +57,8 @@ describe('<AuthenticationProviderInformation /> ', () => {
         'hasPasswordLogin'
       ).mockImplementation(() => true);
 
-      const { container } = getWrapper();
+      const { container, getByTestId } = getWrapper();
+      expect(getByTestId('change-password-button')).toBeVisible();
       expect(container).toMatchSnapshot();
     });
 
@@ -67,7 +68,8 @@ describe('<AuthenticationProviderInformation /> ', () => {
         'hasPasswordLogin'
       ).mockImplementation(() => false);
 
-      const { container } = getWrapper();
+      const { container, queryByTestId } = getWrapper();
+      expect(queryByTestId('change-password-button')).not.toBeInTheDocument();
       expect(container).toMatchSnapshot();
     });
   });
