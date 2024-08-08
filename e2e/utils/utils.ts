@@ -23,7 +23,8 @@ export const clickLoginButton = async (page: Page) => {
 
 export const clickServiceConnectionsLink = async (page: Page) => {
   await page
-    .getByRole('link', { name: 'Käyttämäsi palvelut', exact: true })
+    .getByRole('navigation')
+    .getByRole('link', { name: 'Käyttämäsi palvelut' })
     .click();
 };
 
@@ -92,7 +93,7 @@ export const createProfile = async (page: Page, mailbox: Mailbox) => {
   await page.goto(PROFILE_URL);
   await clickLoginButton(page);
   await page.locator('.login-method-helsinki_tunnus a').click();
-  await page.locator('a:text("Luo Helsinki-profiili")').click();
+  await page.locator('a.hds-button:has-text("Luo Helsinki-profiili")').click();
   await page
     .getByPlaceholder('sähköpostiosoite@email.com')
     .fill(mailbox.emailAddress);
