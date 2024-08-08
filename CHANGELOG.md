@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.14.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.13.0...open-city-profile-ui-v1.14.0) (2024-08-08)
+
+
+### Features
+
+* Password change HP-2289  ([#371](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/371)) ([66c7b7a](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/66c7b7abff9081f69fac4e4b1e34d94627e7f0c1))
+
+
+### Bug Fixes
+
+* E2e tests navigation ([#374](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/374)) ([62659a2](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/62659a27b8c61d9221efb93e69680f9d32fcd440))
+
 ## [1.13.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.12.1...open-city-profile-ui-v1.13.0) (2024-08-01)
 
 
