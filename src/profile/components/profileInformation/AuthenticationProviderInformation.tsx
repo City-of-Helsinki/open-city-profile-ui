@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, IconLinkExternal, Notification } from 'hds-react';
+import { Button, IconLinkExternal } from 'hds-react';
 import classNames from 'classnames';
 
 import authService from '../../../auth/authService';
