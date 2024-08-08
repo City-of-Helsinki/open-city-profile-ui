@@ -535,4 +535,12 @@ describe('authService', () => {
       });
     });
   });
+
+  describe('changePassword', () => {
+    it('should resolve if signinRedirect is successful', async () => {
+      vi.spyOn(userManager, 'signinRedirect').mockResolvedValueOnce();
+
+      await expect(authService.changePassword()).resolves.toBeUndefined();
+    });
+  });
 });

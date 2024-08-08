@@ -49,4 +49,28 @@ describe('<AuthenticationProviderInformation /> ', () => {
       expect(container).toMatchSnapshot();
     });
   });
+
+  describe('renders correctly according to Login method', () => {
+    it('should render change password button when password is used', () => {
+      vi.spyOn(
+        authenticationProviderUtil,
+        'hasPasswordLogin'
+      ).mockImplementation(() => true);
+
+      const { container, getByTestId } = getWrapper();
+      expect(getByTestId('change-password-button')).toBeVisible();
+      expect(container).toMatchSnapshot();
+    });
+
+    it('should not render change password button when password is not used', () => {
+      vi.spyOn(
+        authenticationProviderUtil,
+        'hasPasswordLogin'
+      ).mockImplementation(() => false);
+
+      const { container, queryByTestId } = getWrapper();
+      expect(queryByTestId('change-password-button')).not.toBeInTheDocument();
+      expect(container).toMatchSnapshot();
+    });
+  });
 });

@@ -93,6 +93,7 @@ export {
   AddressType,
   Language,
   TranslationLanguage,
+  LoginMethodType,
 } from './generatedTypes';
 
 export type AnyObject<T = unknown> = Record<string, T>;

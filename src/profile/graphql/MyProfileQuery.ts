@@ -119,6 +119,7 @@ export const MY_PROFILE = gql`
     lastName
     nickname
     language
+    loginMethods
     primaryAddress {
       ...MyProfileQueryPrimaryAddress
     }

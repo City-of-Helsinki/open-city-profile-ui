@@ -258,6 +258,24 @@ export class AuthService {
     sessionStorage.removeItem(API_TOKEN);
     this.userSessionValidityPoller.stop();
   }
+
+  public async changePassword(): Promise<void> {
+    let success = true;
+    await this.userManager
+      .signinRedirect({
+        ui_locales: i18n.language,
+        extraQueryParams: {
+          kc_action: 'UPDATE_PASSWORD',
+        },
+      })
+      .catch(error => {
+        success = false;
+        if (error.message !== 'Network Error') {
+          Sentry.captureException(error);
+        }
+      });
+    return success ? Promise.resolve() : Promise.reject();
+  }
 }
 
 export default new AuthService();
