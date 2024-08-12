@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/react';
 import { Button, Notification } from 'hds-react';
 import { useHistory } from 'react-router';
-import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import {
@@ -29,6 +28,7 @@ import { getDeleteProfileResultOrError } from '../../../gdprApi/actions/deletePr
 import reportErrorsToSentry from '../../../common/sentry/reportErrorsToSentry';
 import { SERVICE_CONNECTIONS } from '../../graphql/ServiceConnectionsQuery';
 import { QueueController } from '../../../common/actionQueue/actionQueue';
+import useMatomo from '../../../common/matomo/hooks/useMatomo';
 
 function DeleteProfile(): React.ReactElement {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);

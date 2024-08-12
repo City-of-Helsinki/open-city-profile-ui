@@ -1,12 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import { ApolloProvider } from '@apollo/client';
-import { MatomoProvider } from '@datapunt/matomo-tracker-react';
 import countries from 'i18n-iso-countries';
 import fi from 'i18n-iso-countries/langs/fi.json';
 import en from 'i18n-iso-countries/langs/en.json';
 import sv from 'i18n-iso-countries/langs/sv.json';
-import { MatomoInstance } from '@datapunt/matomo-tracker-react/lib/types';
 
 import graphqlClient from './graphql/client';
 import Login from './auth/components/login/Login';
@@ -26,7 +24,8 @@ import { useHistoryListener } from './profile/hooks/useHistoryListener';
 import WithAuthCheck from './profile/components/withAuthCheck/WithAuthCheck';
 import CookieConsentPage from './cookieConsents/CookieConsentPage';
 import LoginSSO from './auth/components/loginsso/LoginSSO';
-import { useTrackingInstance } from './common/helpers/tracking/matomoTracking';
+import MatomoTracker from './common/matomo/MatomoTracker';
+import { MatomoProvider } from './common/matomo/matomo-context';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -34,11 +33,21 @@ countries.registerLocale(sv);
 
 function App(): React.ReactElement {
   useHistoryListener();
-  const instance = useTrackingInstance();
+
+  const matomoTracker = new MatomoTracker({
+    urlBase: window._env_.REACT_APP_MATOMO_URL_BASE,
+    siteId: window._env_.REACT_APP_MATOMO_SITE_ID,
+    srcUrl: window._env_.REACT_APP_MATOMO_SRC_URL,
+    enabled: window._env_.REACT_APP_MATOMO_ENABLED === 'true',
+    configurations: {
+      setDoNotTrack: true,
+    },
+  });
+
   return (
     <ApolloProvider client={graphqlClient}>
       <ToastProvider>
-        <MatomoProvider value={instance as MatomoInstance}>
+        <MatomoProvider value={matomoTracker}>
           <ProfileProvider>
             <Switch>
               <Route path="/callback" component={OidcCallback} />

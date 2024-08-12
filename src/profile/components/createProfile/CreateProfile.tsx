@@ -3,7 +3,6 @@ import { User } from 'oidc-client-ts';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/client';
 import * as Sentry from '@sentry/react';
-import { useMatomo } from '@datapunt/matomo-tracker-react';
 import classNames from 'classnames';
 
 import CreateProfileForm, {
@@ -20,6 +19,7 @@ import useToast from '../../../toast/useToast';
 import Explanation from '../../../common/explanation/Explanation';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 import { CREATE_PROFILE } from '../../graphql/CreateMyProfileMutation';
+import useMatomo from '../../../common/matomo/hooks/useMatomo';
 
 type Props = {
   tunnistamoUser: User;
