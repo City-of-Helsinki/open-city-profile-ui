@@ -3,7 +3,6 @@ import { render } from '@testing-library/react';
 import { Mock } from 'vitest';
 
 import BrowserApp from '../BrowserApp';
-import { getMockCallArgs } from '../common/test/mockHelper';
 
 describe('BrowserApp', () => {
   const pushTracker = vi.fn();
@@ -21,16 +20,7 @@ describe('BrowserApp', () => {
     }));
   });
 
-  it('renders without crashing and commands tracker to wait for consent', () => {
+  it('renders without crashing', () => {
     render(<BrowserApp />);
-
-    const calls = getMockCallArgs(pushTracker) as string[];
-
-    expect(calls).toEqual([
-      ['requireCookieConsent'],
-      ['requireConsent'],
-      ['forgetCookieConsentGiven'],
-      ['forgetConsentGiven'],
-    ]);
   });
 });

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMatomo } from '@datapunt/matomo-tracker-react';
 import classNames from 'classnames';
 import { Button } from 'hds-react';
 
@@ -10,6 +9,7 @@ import PageLayout from '../../../common/pageLayout/PageLayout';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 import authService from '../../authService';
 import FocusableH1 from '../../../common/focusableH1/FocusableH1';
+import useMatomo from '../../../common/matomo/hooks/useMatomo';
 
 function Login(): React.ReactElement {
   const { t } = useTranslation();

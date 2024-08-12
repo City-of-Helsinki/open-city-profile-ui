@@ -1,6 +1,3 @@
-import { createInstance } from '@datapunt/matomo-tracker-react';
-import { useMemo } from 'react';
-
 import { trackingCookieId } from '../../../cookieConsents/cookieContentSource';
 
 type TrackingEvent = string[];
@@ -57,37 +54,4 @@ export function handleCookieConsentChange(
   } else {
     disableTrackingCookies();
   }
-}
-
-export function useTrackingInstance():
-  | ReturnType<typeof createInstance>
-  | undefined {
-  return useMemo(() => {
-    if (import.meta.env.REACT_APP_MATOMO_ENABLED !== 'true') {
-      return undefined;
-    }
-
-    // matomo.js is not loaded, if window._paq.length > 0
-    // so clearing it before creating the instance.
-    // events are pushed back below
-    const existingTrackingEvents = Array.isArray(window._paq)
-      ? [...window._paq]
-      : [];
-
-    const hadExistingEvents = existingTrackingEvents.length;
-    if (hadExistingEvents) {
-      window._paq.length = 0;
-    }
-
-    const matomo = createInstance({
-      urlBase: 'https://analytics.hel.ninja/',
-      siteId: 60,
-    });
-
-    if (hadExistingEvents) {
-      existingTrackingEvents.forEach(pushEvent);
-    }
-
-    return matomo;
-  }, []);
 }

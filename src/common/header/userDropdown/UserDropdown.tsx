@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Header as HDSHeader, IconUser } from 'hds-react';
-import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import authService from '../../../auth/authService';
 import { ProfileContext } from '../../../profile/context/ProfileContext';
+import useMatomo from '../../matomo/hooks/useMatomo';
 
 type UserDataWithActions = {
   userName: string;

@@ -9,11 +9,11 @@ import {
   logoSv,
   LanguageSelectorProps,
 } from 'hds-react';
-import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import { MAIN_CONTENT_ID } from '../constants';
 import { ProfileContext } from '../../profile/context/ProfileContext';
 import UserDropdown from './userDropdown/UserDropdown';
+import useMatomo from '../matomo/hooks/useMatomo';
 
 function Header(): React.ReactElement {
   const { t, i18n } = useTranslation();

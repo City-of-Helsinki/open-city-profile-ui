@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { useTranslation } from 'react-i18next';
 
 import { MAIN_CONTENT_ID } from '../constants';
@@ -9,6 +8,7 @@ import Footer from '../footer/Footer';
 import styles from './PageLayout.module.css';
 import PageMeta from '../pageMeta/PageMeta';
 import { usePageLoadFocusSetter } from '../../profile/hooks/usePageLoadFocusSetter';
+import useMatomo from '../matomo/hooks/useMatomo';
 
 type Props = React.PropsWithChildren<{
   className?: string;
