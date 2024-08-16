@@ -264,6 +264,7 @@ export class AuthService {
     await this.userManager
       .signinRedirect({
         ui_locales: i18n.language,
+        redirect_uri: `${origin}/password-change-callback`,
         extraQueryParams: {
           kc_action: 'UPDATE_PASSWORD',
         },

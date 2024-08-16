@@ -35,6 +35,8 @@ export type ProfileContextData = {
   isComplete: boolean;
   getName: (preferNickOrGivenName?: boolean) => string;
   getProfile: () => ProfileRoot | null;
+  passwordUpdateState: boolean;
+  setPasswordUpdateState: (state: boolean) => void;
 };
 
 const reportErrorToSentry = (apolloError: ApolloError) => {
@@ -57,6 +59,8 @@ export const ProfileContext = createContext<ProfileContextData>({
   isComplete: false,
   getName: () => '',
   getProfile: () => null,
+  passwordUpdateState: false,
+  setPasswordUpdateState: () => undefined,
 });
 
 export const Provider = (props: ContextProps): React.ReactElement => {
@@ -83,6 +87,7 @@ export const Provider = (props: ContextProps): React.ReactElement => {
     },
   });
   const [profileData, updateData] = useState(data);
+  const [passwordUpdateState, setPasswordUpdateState] = useState(false);
   const loadTracker = useRef({
     started: false,
     complete: false,
@@ -159,6 +164,8 @@ export const Provider = (props: ContextProps): React.ReactElement => {
     },
     getProfile: () =>
       profileData && profileData.myProfile ? profileData : null,
+    passwordUpdateState,
+    setPasswordUpdateState,
   };
 
   return (

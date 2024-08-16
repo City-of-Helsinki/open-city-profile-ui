@@ -7,6 +7,11 @@
   border-bottom: 1px solid var(--color-black-30);
 }
 
+.password-container {
+  border-top: 1px solid var(--color-black-30);
+  padding-top: var(--spacing-layout-s);
+}
+
 .editor-description-container h2,
 .editor-description-container h3 {
   margin-top: 0;
@@ -81,6 +86,12 @@ span.visually-h2 {
 
 h3.label-size {
   font-size: var(--fontsize-body-m);
+  font-weight: 500;
+  margin-top: 0;
+}
+
+h3.subtitle-size {
+  font-size: var(--fontsize-body-l);
   font-weight: 500;
   margin-top: 0;
 }

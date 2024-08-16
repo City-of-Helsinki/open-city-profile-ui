@@ -26,6 +26,7 @@ import CookieConsentPage from './cookieConsents/CookieConsentPage';
 import LoginSSO from './auth/components/loginsso/LoginSSO';
 import MatomoTracker from './common/matomo/MatomoTracker';
 import { MatomoProvider } from './common/matomo/matomo-context';
+import PasswordChangeCallback from './passwordChange/PasswordChangeCallback';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -54,6 +55,10 @@ function App(): React.ReactElement {
               <Route path="/gdpr-callback">
                 <GdprAuthorizationCodeManagerCallback />
               </Route>
+              <Route
+                path="/password-change-callback"
+                component={PasswordChangeCallback}
+              ></Route>
               <Route path="/login">
                 <Login />
               </Route>
