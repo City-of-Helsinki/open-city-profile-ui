@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.15.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.14.0...open-city-profile-ui-v1.15.0) (2024-08-19)
+
+
+### Features
+
+* Replace old matomo tracking HP-2500 ([4e38591](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/4e385919b02dba13474a8ebf52fc378ac88040a9))
+
 ## [1.14.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.13.0...open-city-profile-ui-v1.14.0) (2024-08-08)
 
 
