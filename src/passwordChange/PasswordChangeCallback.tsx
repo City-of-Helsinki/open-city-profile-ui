@@ -1,10 +1,9 @@
 import React, { useEffect, useContext } from 'react';
-import { RouteChildrenProps } from 'react-router';
+import { RouteChildrenProps, useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { LoadingSpinner } from 'hds-react';
 
-import { useErrorPageRedirect } from '../profile/hooks/useErrorPageRedirect';
-import styles from '../auth/components/oidcCallback/OidcCallback.module.css';
+import styles from './PasswordChangeCallback.module.css';
 import { getLinkRedirectState } from '../profile/hooks/useHistoryListener';
 import { ProfileContext } from '../profile/context/ProfileContext';
 
@@ -12,12 +11,12 @@ function PasswordChangeCallback({
   history,
 }: RouteChildrenProps): React.ReactElement | null {
   const { t } = useTranslation();
-  const redirectToErrorPage = useErrorPageRedirect();
 
   const { setPasswordUpdateState } = useContext(ProfileContext);
+  const location = useLocation();
 
   useEffect(() => {
-    const params = new URLSearchParams(document.location.search);
+    const params = new URLSearchParams(location.search);
     const stat = params.get('kc_action_status');
 
     if (stat === 'success') {
@@ -25,7 +24,7 @@ function PasswordChangeCallback({
     }
 
     history.replace('/', getLinkRedirectState());
-  }, [history, redirectToErrorPage, setPasswordUpdateState, t]);
+  }, [history, location, setPasswordUpdateState]);
 
   return (
     <div className={styles.wrapper}>

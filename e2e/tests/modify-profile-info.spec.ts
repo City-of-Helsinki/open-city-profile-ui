@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test';
 
+import { USER_PASSWORD } from '../utils/constants';
 import { loginToProfileWithSuomiFi } from '../utils/utils';
 
 const TEST_SSN = '210281-9988';
+const SAVE_SUCCESS = 'Tallennus onnistui';
 
 test.describe.configure({ mode: 'serial' });
 
@@ -18,7 +20,7 @@ test('Modify phonenumber', async ({ page }) => {
   await page.getByLabel('Muokkaa puhelinnumeroa').click();
   await page.getByLabel('Kirjoita Puhelinnumero. Tämä').fill(randomPhoneNumber);
   await page.getByTestId('phones-0-save-button').click();
-  await expect(page.getByText('Tallennus onnistui')).toBeVisible();
+  await expect(page.getByText(SAVE_SUCCESS)).toBeVisible();
   await expect(page.getByTestId('phones-0-value')).toContainText(
     randomPhoneNumber
   );
@@ -36,7 +38,7 @@ test('Modify address', async ({ page }) => {
   await page.getByLabel('Kirjoita Postinumero').fill(randomZipCode);
   await page.getByLabel('Kirjoita Kaupunki').fill(randomCity);
   await page.getByTestId('addresses-0-save-button').click();
-  await expect(page.getByText('Tallennus onnistui')).toBeVisible();
+  await expect(page.getByText(SAVE_SUCCESS)).toBeVisible();
 
   // Check if new values are visible
   await expect(page.getByTestId('addresses-0-address-value')).toContainText(
@@ -69,4 +71,19 @@ test.skip('Change language and verify notification', async ({ page }) => {
   await page.getByLabel('Ruotsi').click();
   await page.getByRole('option', { name: 'Suomi' }).click();
   await expect(notificationElement).toBeVisible();
+});
+
+test('Change password', async ({ page }) => {
+  await expect(page.getByTestId('change-password-button')).toBeVisible();
+  await page.getByTestId('change-password-button').click();
+  await page.getByLabel('Uusi salasana').click();
+  await page.getByLabel('Uusi salasana').fill(USER_PASSWORD);
+  await page.getByLabel('Vahvista salasana').click();
+  await page.getByLabel('Vahvista salasana').fill(USER_PASSWORD);
+  await expect(
+    page.getByRole('button', { name: 'Vaihda salasana' })
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'Vaihda salasana' }).click();
+  await expect(page.getByLabel('Profiilivalikko')).toBeVisible();
+  await expect(page.getByText(SAVE_SUCCESS)).toBeVisible();
 });
