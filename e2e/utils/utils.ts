@@ -65,7 +65,7 @@ export const loginToExampleApp = async (page: Page, ssn: string) => {
     .getByRole('banner')
     .getByRole('button', { name: 'Kirjaudu sisään' })
     .click();
-  await page.getByRole('link', { name: 'Suomi.fi-tunnistautuminen' }).click();
+  await page.getByRole('link', { name: 'Suomi.fi identification' }).click();
   await page.getByRole('link', { name: 'Test IdP' }).click();
   await fillSSNAndContinue(page, ssn);
   await page.getByRole('button', { name: 'Continue to service' }).click();
