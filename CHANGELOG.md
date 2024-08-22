@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.16.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.15.0...open-city-profile-ui-v1.16.0) (2024-08-22)
+
+
+### Features
+
+* Handle password change return value HP-2501 ([#376](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/376)) ([4866ee4](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/4866ee4448c6434f86f18f85c2d53eb37b40dfaf))
+
+
+### Bug Fixes
+
+* Allow robots to access the root site ([e2f1679](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/e2f1679cb4006ef0a1b724f2dffa0d14294c5d07))
+
 ## [1.15.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.14.0...open-city-profile-ui-v1.15.0) (2024-08-19)
 
 
