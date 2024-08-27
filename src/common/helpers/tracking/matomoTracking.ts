@@ -3,9 +3,9 @@ import { trackingCookieId } from '../../../cookieConsents/cookieContentSource';
 type TrackingEvent = string[];
 type Tracker = { push: (event: TrackingEvent) => void };
 
-const disableEvents = ['requireCookieConsent', 'requireConsent'];
-const enableEvents = ['rememberCookieConsentGiven', 'rememberConsentGiven'];
-const forgetEvents = ['forgetCookieConsentGiven', 'forgetConsentGiven'];
+const disableEvents = ['requireConsent', 'requireCookieConsent'];
+const enableEvents = ['setConsentGiven', 'setCookieConsentGiven'];
+const forgetEvents = ['forgetConsentGiven'];
 
 function getTrackingObject(): Tracker {
   if (!window._paq) {
@@ -30,7 +30,12 @@ export function enableTrackingCookies() {
   if (window._env_.REACT_APP_ENVIRONMENT !== 'production') {
     return;
   }
+
   pushEvent(enableEvents);
+}
+
+export function waitForConsent() {
+  pushEvent(disableEvents);
 }
 
 export function disableTrackingCookies() {
@@ -46,12 +51,18 @@ export function areTrackingCookiesEnabled(
   return cookies[trackingCookieId] === true;
 }
 
-export function handleCookieConsentChange(
+export function handleOnAllConsentsGiven(
   cookies: Record<string, boolean>
 ): void {
-  if (areTrackingCookiesEnabled(cookies)) {
+  if (cookies[trackingCookieId]) {
     enableTrackingCookies();
-  } else {
+  }
+}
+
+export function handleOnConsentsParsed(cookies: Record<string, boolean>): void {
+  if (cookies[trackingCookieId] === undefined) {
+    waitForConsent();
+  } else if (!areTrackingCookiesEnabled(cookies)) {
     disableTrackingCookies();
   }
 }

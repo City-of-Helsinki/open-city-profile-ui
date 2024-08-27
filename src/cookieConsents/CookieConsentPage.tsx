@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import PageLayout from '../common/pageLayout/PageLayout';
 import { getCookieContent } from './cookieContentSource';
 import commonContentStyles from '../common/cssHelpers/content.module.css';
-import { handleCookieConsentChange } from '../common/helpers/tracking/matomoTracking';
+import { handleOnAllConsentsGiven } from '../common/helpers/tracking/matomoTracking';
 import getLanguageCode from '../common/helpers/getLanguageCode';
 
 function CookieConsentPage(): React.ReactElement | null {
@@ -19,7 +19,7 @@ function CookieConsentPage(): React.ReactElement | null {
     () => ({
       ...getCookieContent(t),
       currentLanguage,
-      onAllConsentsGiven: handleCookieConsentChange,
+      onAllConsentsGiven: handleOnAllConsentsGiven,
     }),
     [currentLanguage, t]
   );

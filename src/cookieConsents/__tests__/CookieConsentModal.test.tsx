@@ -10,6 +10,7 @@ import MockCookieModal, {
   setCookieConsents,
   verifyTrackingCookiesAreRemembered,
   verifyTrackingCookiesAreForgotten,
+  verifyTrackingCookiesAreNotSet,
 } from '../__mocks__/CookieModalAndPage';
 import { trackingCookieId } from '../cookieContentSource';
 import config from '../../config';
@@ -61,17 +62,18 @@ describe('CookieConsentModal', () => {
   describe('renders HDS cookieModal and calls onConsentsParsed', () => {
     it('and tracking is disabled, if consent is not given.', async () => {
       const result = renderComponent();
+      await setCookieConsents(result, { [trackingCookieId]: false });
       await triggerOnConsentsParsed(result);
       verifyTrackingCookiesAreForgotten(pushTracker);
       expect(() =>
         result.getByTestId('mock-cookie-modal-and-page')
       ).not.toThrow();
     });
-    it('and tracking is enabled, if consent is given.', async () => {
+    it('and tracking is not yet set, if consent is given.', async () => {
       const result = renderComponent();
       await setCookieConsents(result, { [trackingCookieId]: true });
       await triggerOnConsentsParsed(result);
-      verifyTrackingCookiesAreRemembered(pushTracker);
+      verifyTrackingCookiesAreNotSet(pushTracker);
     });
   });
 
@@ -94,7 +96,7 @@ describe('CookieConsentModal', () => {
     it('tracking cookies are forgotten, if consent is not given', async () => {
       const result = renderComponent();
       await triggeronAllConsentsGiven(result);
-      verifyTrackingCookiesAreForgotten(pushTracker);
+      verifyTrackingCookiesAreNotSet(pushTracker);
     });
   });
 });

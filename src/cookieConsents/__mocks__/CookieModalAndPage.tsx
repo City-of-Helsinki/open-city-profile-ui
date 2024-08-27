@@ -35,15 +35,17 @@ export async function triggeronAllConsentsGiven(result: RenderResult) {
 
 export function verifyTrackingCookiesAreRemembered(mockFn: Mock) {
   const calls = getMockCallArgs(mockFn) as string[];
-  expect(calls).toEqual([
-    ['rememberCookieConsentGiven'],
-    ['rememberConsentGiven'],
-  ]);
+  expect(calls).toEqual([['setConsentGiven'], ['setCookieConsentGiven']]);
 }
 
 export function verifyTrackingCookiesAreForgotten(mockFn: Mock) {
   const calls = getMockCallArgs(mockFn) as string[];
-  expect(calls).toEqual([['forgetCookieConsentGiven'], ['forgetConsentGiven']]);
+  expect(calls).toEqual([['forgetConsentGiven']]);
+}
+
+export function verifyTrackingCookiesAreNotSet(mockFn: Mock) {
+  const calls = getMockCallArgs(mockFn) as string[];
+  expect(calls).toEqual([]);
 }
 
 function CookieModalAndPageMock({

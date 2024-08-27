@@ -4,7 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
 import getLanguageCode from '../common/helpers/getLanguageCode';
-import { handleCookieConsentChange } from '../common/helpers/tracking/matomoTracking';
+import {
+  handleOnAllConsentsGiven,
+  handleOnConsentsParsed,
+} from '../common/helpers/tracking/matomoTracking';
 import config from '../config';
 import { getCookieContent } from './cookieContentSource';
 
@@ -25,8 +28,8 @@ function CookieConsentModal(): React.ReactElement | null {
       language: {
         onLanguageChange: changeLanguage,
       },
-      onAllConsentsGiven: handleCookieConsentChange,
-      onConsentsParsed: handleCookieConsentChange,
+      onAllConsentsGiven: handleOnAllConsentsGiven,
+      onConsentsParsed: handleOnConsentsParsed,
     }),
     [currentLanguage, changeLanguage, t]
   );
