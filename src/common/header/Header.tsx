@@ -8,6 +8,7 @@ import {
   logoFi,
   logoSv,
   LanguageSelectorProps,
+  useCookies,
 } from 'hds-react';
 
 import { MAIN_CONTENT_ID } from '../constants';
@@ -21,6 +22,7 @@ function Header(): React.ReactElement {
   const location = useLocation();
   const currentPath = location.pathname;
 
+  const { getAllConsents } = useCookies();
   const { trackEvent } = useMatomo();
 
   const { getProfile } = useContext(ProfileContext);
@@ -31,7 +33,9 @@ function Header(): React.ReactElement {
   const onClick = (path: string, e?: MouseEvent) => {
     e?.preventDefault();
     history.push(path);
-    trackEvent({ category: 'nav', action: `${path} click` });
+    if (getAllConsents().matomo) {
+      trackEvent({ category: 'nav', action: `${path} click` });
+    }
   };
 
   const availableLanguages = i18n.options.resources
@@ -64,10 +68,12 @@ function Header(): React.ReactElement {
 
   const changeLanguageAction = (langCode: string) => {
     if (langCode !== lang) {
-      trackEvent({
-        category: 'action',
-        action: `Language selected ${langCode}`,
-      });
+      if (getAllConsents().matomo) {
+        trackEvent({
+          category: 'action',
+          action: `Language selected ${langCode}`,
+        });
+      }
       i18n.changeLanguage(langCode);
     }
   };

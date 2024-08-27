@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Button } from 'hds-react';
+import { Button, useCookies } from 'hds-react';
 
 import HelsinkiLogo from '../../../common/helsinkiLogo/HelsinkiLogo';
 import styles from './Login.module.css';
@@ -13,6 +13,7 @@ import useMatomo from '../../../common/matomo/hooks/useMatomo';
 
 function Login(): React.ReactElement {
   const { t } = useTranslation();
+  const { getAllConsents } = useCookies();
   const { trackEvent } = useMatomo();
 
   return (
@@ -30,7 +31,9 @@ function Login(): React.ReactElement {
 
           <Button
             onClick={() => {
-              trackEvent({ category: 'action', action: 'Log in' });
+              if (getAllConsents().matomo) {
+                trackEvent({ category: 'action', action: 'Log in' });
+              }
               authService.login();
             }}
           >
