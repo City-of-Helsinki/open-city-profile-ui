@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import { useCookies } from 'hds-react';
 
 import { MAIN_CONTENT_ID } from '../constants';
 import Header from '../header/Header';
@@ -18,7 +20,9 @@ type Props = React.PropsWithChildren<{
 }>;
 
 function PageLayout(props: Props): React.ReactElement {
+  const location = useLocation();
   const { trackPageView } = useMatomo();
+  const { getAllConsents } = useCookies();
   const { t } = useTranslation();
   const {
     focusElementSelector,
@@ -30,11 +34,14 @@ function PageLayout(props: Props): React.ReactElement {
     props.title !== 'appName' ? `${t(title)} - ${t('appName')}` : t('appName');
 
   useEffect(() => {
-    trackPageView({
-      documentTitle: pageTitle,
-      href: window.location.href,
-    });
-  }, [trackPageView, pageTitle]);
+    if (getAllConsents().matomo) {
+      trackPageView({
+        documentTitle: pageTitle,
+        href: window.location.href,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getAllConsents, location.pathname, location.search]);
 
   usePageLoadFocusSetter({ disableFocusing, selector: focusElementSelector });
 
