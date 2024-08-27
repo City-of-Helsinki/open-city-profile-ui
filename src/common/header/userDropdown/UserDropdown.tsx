@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Header as HDSHeader, IconUser } from 'hds-react';
+import { Header as HDSHeader, IconUser, useCookies } from 'hds-react';
 
 import authService from '../../../auth/authService';
 import { ProfileContext } from '../../../profile/context/ProfileContext';
@@ -15,6 +15,7 @@ type UserDataWithActions = {
 
 const UserDropdown = () => {
   const { t } = useTranslation();
+  const { getAllConsents } = useCookies();
   const { trackEvent } = useMatomo();
   const { getName } = useContext(ProfileContext);
 
@@ -26,11 +27,15 @@ const UserDropdown = () => {
 
     const logoutAction = (e?: React.MouseEvent): Promise<void> => {
       e?.preventDefault();
-      trackEvent({ category: 'action', action: 'Log out' });
+      if (getAllConsents().matomo) {
+        trackEvent({ category: 'action', action: 'Log out' });
+      }
       return authService.logout();
     };
     const loginAction = (): Promise<void> => {
-      trackEvent({ category: 'action', action: 'Log in' });
+      if (getAllConsents().matomo) {
+        trackEvent({ category: 'action', action: 'Log in' });
+      }
       return authService.login();
     };
 

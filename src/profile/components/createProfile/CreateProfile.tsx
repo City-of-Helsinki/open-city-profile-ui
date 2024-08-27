@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/client';
 import * as Sentry from '@sentry/react';
 import classNames from 'classnames';
+import { useCookies } from 'hds-react';
 
 import CreateProfileForm, {
   FormValues,
@@ -31,6 +32,7 @@ function CreateProfile({
   onProfileCreated,
 }: Props): React.ReactElement {
   const { t } = useTranslation();
+  const { getAllConsents } = useCookies();
   const { trackEvent } = useMatomo();
   const [createProfile, { loading }] = useMutation<
     CreateMyProfileRoot,
@@ -68,7 +70,9 @@ function CreateProfile({
     createProfile({ variables })
       .then(result => {
         if (result.data) {
-          trackEvent({ category: 'action', action: 'Register profile' });
+          if (getAllConsents().matomo) {
+            trackEvent({ category: 'action', action: 'Register profile' });
+          }
           onProfileCreated();
         }
       })
