@@ -10,7 +10,7 @@ import MockCookieModal, {
   triggeronAllConsentsGiven,
   setCookieConsents,
   verifyTrackingCookiesAreRemembered,
-  verifyTrackingCookiesAreForgotten,
+  verifyTrackingCookiesAreNotSet,
 } from '../__mocks__/CookieModalAndPage';
 import { trackingCookieId } from '../cookieContentSource';
 
@@ -67,7 +67,7 @@ describe('CookieConsentPage', () => {
     });
     it('tracking cookies are forgotten, if consent is not given', async () => {
       await triggeronAllConsentsGiven(renderComponent());
-      verifyTrackingCookiesAreForgotten(pushTracker);
+      verifyTrackingCookiesAreNotSet(pushTracker);
     });
   });
 });
