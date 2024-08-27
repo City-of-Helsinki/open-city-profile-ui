@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.16.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.16.0...open-city-profile-ui-v1.16.1) (2024-08-27)
+
+
+### Bug Fixes
+
+* Cookie modal set tracking cookies correctly HP-2500 ([79bc353](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/79bc353090e19b18caa345243aa70f1c6422e6db))
+* Only trackEvent if matomo enabled HP-2500 ([1644bb5](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/1644bb561838e3c784204331b45c2e67095ff418))
+* Page layout only trackPageView if matomo enabled HP-2500 ([8d85972](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/8d85972cf3cbab10844f868cb9c277c8832519be))
+
 ## [1.16.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.15.0...open-city-profile-ui-v1.16.0) (2024-08-22)
 
 
