@@ -66,7 +66,7 @@ const getDownloadDataExecutor: ActionExecutor = async (
   );
   if (error) {
     if (
-      !parseGraphQLError(error).isInsufficientLoaError ||
+      !parseGraphQLError(error).isInsufficientLoaError &&
       !parseGraphQLError(error).isAllowedError
     ) {
       reportErrorsToSentry(error);
