@@ -30,7 +30,7 @@
     "await-to-js": "^3.0.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.9.0",
-    "dompurify": "^2.2.9",
+    "dompurify": "^2.5.4",
     "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^8.5.0",
