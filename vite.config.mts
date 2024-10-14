@@ -37,9 +37,11 @@ export default defineConfig({
       disable: !import.meta.env.REACT_APP_SENTRY_DSN && !import.meta.env.REACT_APP_ENVIRONMENT,
       org: 'city-of-helsinki',
       project: 'helsinki-profile-ui',
+      url: 'https://sentry.test.hel.ninja',
       authToken: import.meta.env.REACT_APP_SENTRY_AUTH_TOKEN,
       telemetry: false,
       sourcemaps: {
+        assets: ['./build/assets/*.js', './build/assets/*.js.map'],
         filesToDeleteAfterUpload: './build/assets/*.js.map',
       },
     }),
