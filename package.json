@@ -81,7 +81,7 @@
   },
   "scripts": {
     "start": "yarn clear-babel-cache && yarn update-runtime-env && vite",
-    "build": "yarn typecheck && cross-env NODE_OPTIONS=--max-old-space-size=4096 vite build",
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 yarn typecheck && vite build",
     "preview": "yarn clear-babel-cache && yarn update-runtime-env && vite preview",
     "test": "cross-env NODE_ENV=test yarn update-runtime-env && vitest",
     "test:e2e": "yarn playwright test",
