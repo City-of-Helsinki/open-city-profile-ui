@@ -14,6 +14,8 @@ import pickProfileApiToken from './pickProfileApiToken';
 import createHttpPoller, { HttpPoller } from './http-poller';
 import retryPollingUntilSuccessful from './http-poller-with-promises';
 
+// This whole file should be replaced with useAuth ?
+
 const origin = window.location.origin;
 export const API_TOKEN = 'apiToken';
 

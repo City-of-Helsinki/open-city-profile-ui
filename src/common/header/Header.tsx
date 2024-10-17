@@ -13,7 +13,6 @@ import {
 
 import { MAIN_CONTENT_ID } from '../constants';
 import { ProfileContext } from '../../profile/context/ProfileContext';
-import UserDropdown from './userDropdown/UserDropdown';
 import useMatomo from '../matomo/hooks/useMatomo';
 
 function Header(): React.ReactElement {
@@ -102,8 +101,26 @@ function Header(): React.ReactElement {
       >
         <HDSHeader.LanguageSelector sortLanguageOptions={sortLanguageOptions} />
 
-        <hr aria-hidden="true" />
-        <UserDropdown />
+        {/* TODO: Translate text*/}
+        <HDSHeader.LoginButton
+          label="Log in"
+          id="action-bar-login-action"
+          errorLabel="Login failed!"
+          errorText="Redirection to the OIDC server failed. Try again!"
+          errorCloseAriaLabel="Close this error notification"
+          loggingInText="Logging in"
+          fixedRightPosition
+        />
+        <HDSHeader.UserMenuButton id="user-menu" fixedRightPosition>
+          <HDSHeader.LogoutSubmenuButton
+            label="Log out"
+            errorLabel="Logout failed!"
+            errorText="Redirection to the OIDC server failed. Try again!"
+            errorCloseAriaLabel="Close this error notification"
+            id="logout-button"
+            loggingOutText="Logging out"
+          />
+        </HDSHeader.UserMenuButton>
       </HDSHeader.ActionBar>
       {!!getProfile() && isProfilePagePath && (
         <HDSHeader.NavigationMenu>

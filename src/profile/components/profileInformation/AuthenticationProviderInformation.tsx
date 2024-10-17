@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Button, IconLinkExternal } from 'hds-react';
 import classNames from 'classnames';
 
-import authService from '../../../auth/authService';
 import useProfile from '../../../auth/useProfile';
 import { getAmrStatic, hasPasswordLogin } from './authenticationProviderUtil';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
@@ -11,6 +10,7 @@ import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import { ProfileContext } from '../../context/ProfileContext';
 import useNotificationContent from '../editingNotifications/useNotificationContent';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
+import useAuth from '../../../auth/useAuth';
 
 function AuthenticationProviderInformation(): React.ReactElement | null {
   const { t } = useTranslation();
@@ -24,6 +24,7 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
   const amr = getAmrStatic(profile);
   const showSuccess = passwordUpdateState;
   const { content, setSuccessMessage } = useNotificationContent();
+  const { changePassword } = useAuth();
 
   useEffect(() => {
     if (showSuccess) {
@@ -74,7 +75,7 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
                     iconLeft={<IconLinkExternal />}
                     data-testid={'change-password-button'}
                     onClick={() => {
-                      authService.changePassword();
+                      changePassword();
                     }}
                   >
                     {t('profileInformation.changePassword')}

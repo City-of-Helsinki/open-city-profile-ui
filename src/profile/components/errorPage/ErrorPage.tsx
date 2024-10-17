@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import queryParamsToObject from '../../../common/helpers/queryParamsToObject';
 import styles from './ErrorPage.module.css';
-import authService from '../../../auth/authService';
+import useAuth from '../../../auth/useAuth';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 
 export type ErrorPageQueryParams = {
@@ -58,7 +58,8 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
   } = getContentFromPropsOrUrl(props);
   const notificationMessage = message || t('notification.defaultErrorText');
   const notificationTitle = title || t('notification.defaultErrorTitle');
-  const isAuthenticated = authService.isAuthenticated();
+  // const isAuthenticated = authService.isAuthenticated();
+  const { isAuthenticated, login } = useAuth();
 
   return (
     <PageLayout
@@ -78,7 +79,7 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
         <Notification
           type={'error'}
           label={notificationTitle}
-          dataTestId={'error-page-notification'}
+          data-testid={'error-page-notification'}
         >
           <p>{notificationMessage}</p>
           {hideFrontPageLink !== true && (
@@ -92,7 +93,7 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
         <div className={styles.buttons}>
           {hideLoginButton !== true && !isAuthenticated && (
             <Button
-              onClick={() => authService.login()}
+              onClick={() => login()}
               data-testid={'error-page-login-button'}
             >
               {t('login.login')}

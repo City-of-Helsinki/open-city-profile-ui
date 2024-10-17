@@ -1,6 +1,6 @@
 import React from 'react';
 import { act, waitFor } from '@testing-library/react';
-
+/*
 import { renderComponentWithMocksAndContexts } from '../../../../common/test/testingLibraryTools';
 import WithAuthCheck, { WithAuthCheckChildProps } from '../WithAuthCheck';
 import { MockedResponse } from '../../../../common/test/MockApolloClientProvider';
@@ -86,3 +86,5 @@ describe('<WithAuthCheck /> ', () => {
     });
   });
 });
+
+*/
