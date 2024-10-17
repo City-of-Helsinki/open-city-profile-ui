@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Header as HDSHeader, IconUser, useCookies } from 'hds-react';
-
+/*
 import authService from '../../../auth/authService';
 import { ProfileContext } from '../../../profile/context/ProfileContext';
 import useMatomo from '../../matomo/hooks/useMatomo';
@@ -81,3 +81,5 @@ const UserDropdown = () => {
 };
 
 export default UserDropdown;
+
+*/

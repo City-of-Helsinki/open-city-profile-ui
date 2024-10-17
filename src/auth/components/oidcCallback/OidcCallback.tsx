@@ -3,7 +3,7 @@ import { RouteChildrenProps } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/react';
 import { LoadingSpinner } from 'hds-react';
-
+/* 
 import authService from '../../authService';
 import { useErrorPageRedirect } from '../../../profile/hooks/useErrorPageRedirect';
 import styles from './OidcCallback.module.css';
@@ -59,3 +59,5 @@ function OidcCallback({
 }
 
 export default OidcCallback;
+
+*/

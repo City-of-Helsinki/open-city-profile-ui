@@ -1,13 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Button, useCookies } from 'hds-react';
+import { Button, useCookies, LoginButton } from 'hds-react';
 
 import HelsinkiLogo from '../../../common/helsinkiLogo/HelsinkiLogo';
 import styles from './Login.module.css';
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
-import authService from '../../authService';
 import FocusableH1 from '../../../common/focusableH1/FocusableH1';
 import useMatomo from '../../../common/matomo/hooks/useMatomo';
 
@@ -29,16 +28,24 @@ function Login(): React.ReactElement {
           <FocusableH1>{t('login.title')}</FocusableH1>
           <p className={styles.ingress}>{t('login.description')}</p>
 
-          <Button
+          {/* <Button
             onClick={() => {
               if (getAllConsents().matomo) {
-                trackEvent({ category: 'action', action: 'Log in' });
+              trackEvent({ category: 'action', action: 'Log in' });
               }
               authService.login();
             }}
+            >
+            vanha login
+            </Button> */}
+
+          {/* TODO: matomo.. lokalisaatiot */}
+          <LoginButton
+            errorText={t('authentication.genericError.message')}
+            loggingInText="Logging in"
           >
             {t('login.login')}
-          </Button>
+          </LoginButton>
         </div>
       </div>
     </PageLayout>

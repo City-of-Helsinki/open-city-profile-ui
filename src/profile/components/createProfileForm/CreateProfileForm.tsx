@@ -197,6 +197,7 @@ function CreateProfileForm(props: Props): React.ReactElement {
                 readOnly
                 label={t('profileForm.email')}
                 defaultValue={props.profile.email}
+                crossOrigin={undefined} // Remove when HDS is updated
               />
             </div>
           </div>

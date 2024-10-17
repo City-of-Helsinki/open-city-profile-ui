@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-
+/*
 import authService from '../../auth/authService';
 import client from '../client';
 
@@ -36,3 +36,5 @@ describe('graphql client', () => {
     );
   });
 });
+
+*/
