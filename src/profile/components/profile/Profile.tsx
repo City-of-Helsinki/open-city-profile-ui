@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { Button, Notification, User } from 'hds-react';
@@ -11,9 +11,10 @@ import styles from './Profile.module.css';
 import useAuth from '../../../auth/useAuth';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import { useProfileLoadTracker } from '../../hooks/useProfileLoadTracker';
-// import { WithAuthCheckChildProps } from '../withAuthCheck/WithAuthCheck';
 
-function Profile(): React.ReactElement {
+type Props = { user: User };
+
+function Profile(props: Props): React.ReactElement {
   const { t } = useTranslation();
   const location = useLocation();
   const {
@@ -86,11 +87,10 @@ function Profile(): React.ReactElement {
     }
     return (
       <PageLayout title={getPageTitle()}>
-        {/*
         <CreateProfile
           tunnistamoUser={props.user}
           onProfileCreated={() => reloadProfile()}
-        /> // */}
+        />
         ;
       </PageLayout>
     );
