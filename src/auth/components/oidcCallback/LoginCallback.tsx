@@ -29,31 +29,12 @@ function LoginCallback({
         history.replace('/', getLinkRedirectState());
       })
       .catch((error: Error) => {
-        // Handle error caused by device time being more than 5 minutes off
-        if (
-          error.message.includes('iat is in the future') ||
-          error.message.includes('exp is in the past')
-        ) {
-          redirectToErrorPage({
-            message: t('authentication.deviceTimeError.message'),
-          });
-        } else if (
-          // Handle error caused by end user choosing Deny in Tunnistamo's
-          // permission request
-          error.message ===
-          'The resource owner or authorization server denied the request'
-        ) {
-          redirectToErrorPage({
-            message: t('authentication.permissionRequestDenied.message'),
-          });
-        } else {
-          // Send other errors to Sentry for analysis
-          Sentry.captureException(error);
-          // Give user a generic error
-          redirectToErrorPage({
-            message: t(generigErrorString),
-          });
-        }
+        // Send other errors to Sentry for analysis
+        Sentry.captureException(error);
+        // Give user a generic error
+        redirectToErrorPage({
+          message: t(generigErrorString),
+        });
       });
   };
 

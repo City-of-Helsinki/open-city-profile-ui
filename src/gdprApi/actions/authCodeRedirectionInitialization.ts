@@ -33,9 +33,7 @@ export const getAuthCodeRedirectionInitializationResult = (
     queueController
   ).result;
 
-// TODO: Should this be here?
 const getAuthorizationEndpoint = (): string =>
-  // Replacing: authService.userManager.metadataService.getAuthorizationEndpoint()
   `${window._env_.REACT_APP_OIDC_AUTHORITY}openid/authorize`;
 
 const authCodeRedirectionInitializationExecutor: ActionExecutor = async (
