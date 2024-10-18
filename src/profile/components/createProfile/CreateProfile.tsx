@@ -1,10 +1,9 @@
 import React from 'react';
-import { User } from 'oidc-client-ts';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/client';
 import * as Sentry from '@sentry/react';
 import classNames from 'classnames';
-import { useCookies } from 'hds-react';
+import { useCookies, User } from 'hds-react';
 
 import CreateProfileForm, {
   FormValues,

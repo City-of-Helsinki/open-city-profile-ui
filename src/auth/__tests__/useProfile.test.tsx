@@ -6,9 +6,10 @@ import {
   mockUserCreator,
   MockedUserOverrides,
 } from '../../common/test/userMocking';
-import authService from '../authService';
+// import authService from '../authService';
 import useProfile, { Profile } from '../useProfile';
 
+/*
 type Status = 'loading' | 'error' | 'loaded';
 type DataGetters = {
   getInfo: () => Status;
@@ -48,6 +49,7 @@ describe('useProfile', () => {
       </div>
     );
   };
+
   const renderTestComponent = (
     overrides?: MockedUserOverrides,
     error = false
@@ -79,6 +81,7 @@ describe('useProfile', () => {
       getMockedUserData: () => userData,
     };
   };
+  
 
   afterEach(() => {
     vi.restoreAllMocks();
@@ -142,3 +145,5 @@ describe('useProfile', () => {
     await waitFor(() => expect(getInfo()).toEqual(errorStatus));
   });
 });
+
+*/

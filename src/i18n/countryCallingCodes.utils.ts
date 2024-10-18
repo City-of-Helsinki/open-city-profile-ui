@@ -117,7 +117,7 @@ export function splitNumberAndCountryCallingCode(
 ): ParsedNumber {
   const { countryCallingCode } = getCountryAndCallingCodeForNumber(phoneNumber);
   const number = countryCallingCode
-    ? phoneNumber.substr(countryCallingCode.length)
+    ? phoneNumber.substring(countryCallingCode.length)
     : phoneNumber;
   return {
     countryCallingCode: countryCallingCode || getDefaultCountryCallingCode(),

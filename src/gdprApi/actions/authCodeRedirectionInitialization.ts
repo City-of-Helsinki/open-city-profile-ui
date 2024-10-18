@@ -7,7 +7,6 @@ import {
   ActionProps,
   QueueController,
 } from '../../common/actionQueue/actionQueue';
-import authService from '../../auth/authService';
 import { getLoadKeycloakConfigResult } from './loadKeycloakConfig';
 import {
   AuthorizationUrlParams,
@@ -34,6 +33,9 @@ export const getAuthCodeRedirectionInitializationResult = (
     queueController
   ).result;
 
+const getAuthorizationEndpoint = (): string =>
+  `${window._env_.REACT_APP_OIDC_AUTHORITY}openid/authorize`;
+
 const authCodeRedirectionInitializationExecutor: ActionExecutor = async (
   action,
   controller
@@ -43,8 +45,8 @@ const authCodeRedirectionInitializationExecutor: ActionExecutor = async (
   }
   const [error, oidcUri] = await to(
     isTunnistamoAuthCodeAction(action)
-      ? authService.userManager.metadataService.getAuthorizationEndpoint()
-      : Promise.resolve(getLoadKeycloakConfigResult(controller))
+      ? Promise.resolve(getAuthorizationEndpoint())
+      : Promise.resolve(getLoadKeycloakConfigResult(controller)) // tunnistus
   );
 
   if (error || !oidcUri) {

@@ -5,12 +5,18 @@ import {
   HttpLink,
   from,
 } from '@apollo/client';
+import { getApiTokensFromStorage } from 'hds-react';
 
 import i18n from '../i18n/i18nInit';
-import authService from '../auth/authService';
+import pickProfileApiToken from '../auth/pickProfileApiToken';
+
 const cache = new InMemoryCache();
 const authMiddleware = new ApolloLink((operation, forward) => {
-  const token = authService.getToken();
+  let token = null;
+  const apiTokens = getApiTokensFromStorage();
+  if (apiTokens) {
+    token = pickProfileApiToken(apiTokens);
+  }
 
   if (token) {
     operation.setContext({
