@@ -13,7 +13,7 @@ import { ApolloProvider } from '@apollo/client';
 
 import graphqlClient from './graphql/client';
 import Login from './auth/components/login/Login';
-import LoginCallback from './auth/components/oidcCallback/LoginCallback';
+import OidcCallback from './auth/components/oidcCallback/OidcCallback';
 import Profile from './profile/components/profile/Profile';
 import { Provider as ProfileProvider } from './profile/context/ProfileContext';
 import ProfileDeleted from './profile/components/profileDeleted/ProfileDeleted';
@@ -86,7 +86,7 @@ function App(): React.ReactElement {
           <MatomoProvider value={matomoTracker}>
             <ProfileProvider>
               <Switch>
-                <Route path="/callback" component={LoginCallback} />
+                <Route path="/callback" component={OidcCallback} />
                 <Route path="/gdpr-callback">
                   <GdprAuthorizationCodeManagerCallback />
                 </Route>
