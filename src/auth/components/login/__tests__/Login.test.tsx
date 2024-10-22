@@ -2,13 +2,16 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 
+import TestLoginProvider from '../../../../common/test/TestLoginProvider';
 import Login from '../Login';
 
 const renderComponent = () =>
   render(
-    <MemoryRouter>
-      <Login />
-    </MemoryRouter>
+    <TestLoginProvider>
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    </TestLoginProvider>
   );
 
 describe('<Login />', () => {
