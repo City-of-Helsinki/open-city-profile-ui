@@ -8,8 +8,8 @@ import {
 } from '../../common/test/userMocking';
 // import authService from '../authService';
 import useProfile, { Profile } from '../useProfile';
+import TestLoginProvider from '../../common/test/TestLoginProvider';
 
-/*
 type Status = 'loading' | 'error' | 'loaded';
 type DataGetters = {
   getInfo: () => Status;
@@ -63,9 +63,11 @@ describe('useProfile', () => {
       mockedGetUser.mockResolvedValueOnce(userData);
     }
     const result = render(
-      <TestProfileComponent
-        callCounter={() => mockedGetUser.mock.calls.length}
-      />
+      <TestLoginProvider>
+        <TestProfileComponent
+          callCounter={() => mockedGetUser.mock.calls.length}
+        />
+      </TestLoginProvider>
     );
     const { container } = result;
     const getElementById = (id: string) =>
@@ -81,7 +83,6 @@ describe('useProfile', () => {
       getMockedUserData: () => userData,
     };
   };
-  
 
   afterEach(() => {
     vi.restoreAllMocks();
@@ -145,5 +146,3 @@ describe('useProfile', () => {
     await waitFor(() => expect(getInfo()).toEqual(errorStatus));
   });
 });
-
-*/
