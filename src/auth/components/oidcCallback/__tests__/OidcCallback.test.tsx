@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, RouteChildrenProps } from 'react-router-dom';
 import { act, render } from '@testing-library/react';
-/*
-import authService from '../../../authService';
+
+// import authService from '../../../authService';
 import OidcCallback from '../OidcCallback';
 
 const mockedDefaultProps = {
@@ -13,11 +13,13 @@ const mockedDefaultProps = {
 
 const renderComponent = () =>
   render(
-    <BrowserRouter>
-      <OidcCallback
-        {...((mockedDefaultProps as unknown) as RouteChildrenProps)}
-      />
-    </BrowserRouter>
+    <TestLoginProvider>
+      <BrowserRouter>
+        <OidcCallback
+          {...((mockedDefaultProps as unknown) as RouteChildrenProps)}
+        />
+      </BrowserRouter>
+    </TestLoginProvider>
   );
 
 const getHistoryReplaceCallArgument = () =>
@@ -100,5 +102,3 @@ describe('<OidcCallback />', () => {
     });
   });
 });
-
-*/
