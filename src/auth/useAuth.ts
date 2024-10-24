@@ -5,7 +5,6 @@ import { to } from 'await-to-js';
 import { getApiTokensFromStorage, useOidcClient, User } from 'hds-react';
 
 import pickProfileApiToken from './pickProfileApiToken';
-import retryPollingUntilSuccessful from './http-poller-with-promises';
 
 const origin = window.location.origin;
 

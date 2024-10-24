@@ -1,8 +1,10 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import React from 'react';
 import { BrowserRouter, RouteChildrenProps } from 'react-router-dom';
 import { act, render } from '@testing-library/react';
 
-// import authService from '../../../authService';
+// import useAuth from '../../../useAuth';
+import TestLoginProvider from '../../../../common/test/TestLoginProvider';
 import OidcCallback from '../OidcCallback';
 
 const mockedDefaultProps = {
@@ -40,9 +42,17 @@ describe('<OidcCallback />', () => {
   });
 
   it('as a user I want to see an error message about incorrect device time, because only I can fix it', async () => {
-    vi.spyOn(authService, 'endLogin').mockRejectedValue(
+    /* vi.spyOn(authService, 'endLogin').mockRejectedValue(
       new Error('iat is in the future')
-    );
+    ); */
+
+    vi.mock('../../../useAuth', async () => {
+      const module = await vi.importActual('../../../useAuth');
+      return {
+        ...module,
+        endLogin: vi.fn().mockRejectedValue(new Error('iat is in the future')),
+      };
+    });
 
     renderComponent();
 
@@ -59,9 +69,23 @@ describe('<OidcCallback />', () => {
 
   // eslint-disable-next-line max-len
   it('as a user I want to be informed when I deny permissions, because the application is unusable due to my choice', async () => {
-    vi.spyOn(authService, 'endLogin').mockRejectedValue(
+    /* vi.spyOn(authService, 'endLogin').mockRejectedValue(
       new Error('The resource owner or authorization server denied the request')
-    );
+    ); */
+
+    vi.mock('../../../useAuth', async () => {
+      const module = await vi.importActual('../../../useAuth');
+      return {
+        ...module,
+        endLogin: vi
+          .fn()
+          .mockRejectedValue(
+            new Error(
+              'The resource owner or authorization server denied the request'
+            )
+          ),
+      };
+    });
 
     renderComponent();
 
@@ -78,7 +102,15 @@ describe('<OidcCallback />', () => {
 
   describe('implementation details', () => {
     it('should call authService.endLogin', async () => {
-      const authServiceEndLoginSpy = vi.spyOn(authService, 'endLogin');
+      const authServiceEndLoginSpy = vi.fn();
+
+      vi.mock('../../../useAuth', async () => {
+        const module = await vi.importActual('../../../useAuth');
+        return {
+          ...module,
+          endLogin: authServiceEndLoginSpy,
+        };
+      });
 
       renderComponent();
 
@@ -90,7 +122,13 @@ describe('<OidcCallback />', () => {
     });
 
     it('should redirect user after successful login', async () => {
-      vi.spyOn(authService, 'endLogin');
+      vi.mock('../../../useAuth', async () => {
+        const module = await vi.importActual('../../../useAuth');
+        return {
+          ...module,
+          endLogin: vi.fn(),
+        };
+      });
 
       renderComponent();
 
