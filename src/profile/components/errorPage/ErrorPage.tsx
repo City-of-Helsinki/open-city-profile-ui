@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
-import { Button, Notification } from 'hds-react';
+import { LoginButton, Notification } from 'hds-react';
 import classNames from 'classnames';
 
 import PageLayout from '../../../common/pageLayout/PageLayout';
@@ -58,8 +58,7 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
   } = getContentFromPropsOrUrl(props);
   const notificationMessage = message || t('notification.defaultErrorText');
   const notificationTitle = title || t('notification.defaultErrorTitle');
-  // const isAuthenticated = authService.isAuthenticated();
-  const { isAuthenticated, login } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <PageLayout
@@ -92,12 +91,13 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
         </Notification>
         <div className={styles.buttons}>
           {hideLoginButton !== true && !isAuthenticated && (
-            <Button
-              onClick={() => login()}
+            <LoginButton
               data-testid={'error-page-login-button'}
+              errorText={t('authentication.genericError.message')}
+              loggingInText="Logging in"
             >
               {t('login.login')}
-            </Button>
+            </LoginButton>
           )}
         </div>
       </div>

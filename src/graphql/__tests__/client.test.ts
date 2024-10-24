@@ -1,12 +1,21 @@
 import { gql } from '@apollo/client';
-/*
-import authService from '../../auth/authService';
+
 import client from '../client';
 
 describe('graphql client', () => {
   beforeEach(() => {
     fetchMock.resetMocks();
-    vi.spyOn(authService, 'getToken').mockReturnValue('foo.bar.baz');
+  });
+
+  vi.mock('hds-react', async () => {
+    // Get the original module to keep other functionalities intact
+    const actualHdsReact = await vi.importActual('hds-react');
+    return {
+      ...actualHdsReact, // Spread the original implementation
+      getApiTokensFromStorage: vi.fn(() => ({
+        'https://api.hel.fi/auth/helsinkiprofile': 'foo.bar.baz',
+      })), // Mock just this function
+    };
   });
 
   it('sets authorization-header to requests', async () => {
@@ -36,5 +45,3 @@ describe('graphql client', () => {
     );
   });
 });
-
-*/

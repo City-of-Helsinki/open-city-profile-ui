@@ -12,25 +12,8 @@ import {
 } from '../authCodeRedirectionInitialization';
 import { AuthorizationUrlParams } from '../utils';
 
-const mockTunnistamoEndPoint = 'tunnistamo.hel.ninja';
+const mockTunnistamoEndPoint = 'https://api.hel.fi/sso/openid/openid/authorize';
 const mockKeycloakEndPoint = 'keycloak.hel.ninja';
-
-vi.mock('../../../auth/authService', async () => {
-  const module = await vi.importActual('../../../auth/authService');
-
-  return {
-    __esModule: true,
-    ...module,
-    default: {
-      userManager: {
-        metadataService: {
-          getAuthorizationEndpoint: () =>
-            Promise.resolve(mockTunnistamoEndPoint),
-        },
-      },
-    },
-  };
-});
 
 describe('authCodeRedirectionInitialization.ts', () => {
   const initTests = ({

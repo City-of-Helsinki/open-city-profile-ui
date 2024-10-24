@@ -1,7 +1,7 @@
 import React from 'react';
 import { User } from 'oidc-client-ts';
 import { act, cleanup } from '@testing-library/react';
-/*
+
 import { getMyProfile } from '../../../../common/test/myProfileMocking';
 import {
   ElementSelector,
@@ -16,6 +16,8 @@ import {
 } from '../../../../common/test/MockApolloClientProvider';
 import { submitCreateProfileForm } from '../../../../common/test/commonUiActions';
 import { mockProfileCreator } from '../../../../common/test/userMocking';
+import TestLoginProvider from '../../../../common/test/TestLoginProvider';
+
 describe('<Profile />', () => {
   const renderTestSuite = (responses: MockedResponse[]) => {
     const responseProvider: ResponseProvider = () =>
@@ -28,7 +30,9 @@ describe('<Profile />', () => {
     return renderComponentWithMocksAndContexts(
       responseProvider,
       <React.Fragment>
-        <Profile user={user} />
+        <TestLoginProvider>
+          <Profile user={user} />
+        </TestLoginProvider>
       </React.Fragment>
     );
   };
@@ -130,6 +134,3 @@ describe('<Profile />', () => {
     });
   });
 });
-
-
-*/
