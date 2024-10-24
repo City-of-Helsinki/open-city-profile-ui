@@ -7,6 +7,7 @@ import {
   MockedUserOverrides,
 } from '../../common/test/userMocking';
 // import authService from '../authService';
+import * as useAuthMock from '../useAuth';
 import useProfile, { Profile } from '../useProfile';
 import TestLoginProvider from '../../common/test/TestLoginProvider';
 
@@ -55,7 +56,15 @@ describe('useProfile', () => {
     error = false
   ): DataGetters => {
     const userData = mockUserCreator(overrides);
-    const mockedGetUser = vi.spyOn(authService, 'getUser');
+    const mockedGetUser = vi.fn();
+
+    vi.spyOn(useAuthMock, 'default').mockImplementationOnce(() => ({
+      isAuthenticated: vi.fn(),
+      getUser: mockedGetUser,
+      endLogin: vi.fn(),
+      logout: vi.fn(),
+      changePassword: vi.fn(),
+    }));
 
     if (error) {
       mockedGetUser.mockRejectedValueOnce(null);

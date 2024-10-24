@@ -9,6 +9,7 @@ import ErrorPage, {
 import i18n from '../../../../common/test/testi18nInit';
 import config from '../../../../config';
 import TestLoginProvider from '../../../../common/test/TestLoginProvider';
+import * as useAuthMock from '../../../../auth/useAuth';
 
 const mockUseLocationValue = {
   pathname: config.errorPagePath,
@@ -209,13 +210,13 @@ describe('<ErrorPage /> ', () => {
       when location.search has no other affecting params, but user is authenticated`, async () => {
     mockUseLocationValue.search = '';
 
-    vi.mock('../../../../auth/useAuth', async () => {
-      const module = await vi.importActual('../../../../auth/useAuth');
-      return {
-        ...module,
-        isAuthenticated: vi.fn().mockReturnValue(true),
-      };
-    });
+    vi.spyOn(useAuthMock, 'default').mockImplementationOnce(() => ({
+      isAuthenticated: vi.fn().mockReturnValue(true),
+      getUser: vi.fn(),
+      endLogin: vi.fn(),
+      logout: vi.fn(),
+      changePassword: vi.fn(),
+    }));
 
     result = render(
       <MemoryRouter>
