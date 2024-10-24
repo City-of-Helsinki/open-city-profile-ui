@@ -14,7 +14,7 @@ function AccessibilityStatement(): React.ReactElement {
   const selectStatement = () => {
     const lang =
       i18n.languages[0].length > 2
-        ? i18n.languages[0].substr(0, 2)
+        ? i18n.languages[0].substring(0, 2)
         : i18n.languages[0];
 
     switch (lang) {

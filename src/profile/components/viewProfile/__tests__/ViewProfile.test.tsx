@@ -13,6 +13,7 @@ import {
 } from '../../../../common/test/MockApolloClientProvider';
 import i18n from '../../../../common/test/testi18nInit';
 import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
+import TestLoginProvider from '../../../../common/test/TestLoginProvider';
 
 // mock children, so they wont make queries
 vi.mock('../../deleteProfile/DeleteProfile');
@@ -25,9 +26,11 @@ describe('<ViewProfile /> ', () => {
       responses.shift() as MockedResponse;
     const renderResult = await renderComponentWithMocksAndContexts(
       responseProvider,
-      <Router history={history}>
-        <ViewProfile />
-      </Router>
+      <TestLoginProvider>
+        <Router history={history}>
+          <ViewProfile />
+        </Router>
+      </TestLoginProvider>
     );
     await renderResult.fetch();
     await renderResult.waitForIsComplete();

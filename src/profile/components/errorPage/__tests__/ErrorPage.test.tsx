@@ -7,8 +7,9 @@ import ErrorPage, {
   ErrorPageQueryParams,
 } from '../ErrorPage';
 import i18n from '../../../../common/test/testi18nInit';
-import authService from '../../../../auth/authService';
 import config from '../../../../config';
+import TestLoginProvider from '../../../../common/test/TestLoginProvider';
+import * as useAuthMock from '../../../../auth/useAuth';
 
 const mockUseLocationValue = {
   pathname: config.errorPagePath,
@@ -90,9 +91,11 @@ describe('<ErrorPage /> ', () => {
       when location.search is has no affecting params`, async () => {
     mockUseLocationValue.search = '';
     result = render(
-      <MemoryRouter>
-        <ErrorPage />
-      </MemoryRouter>
+      <TestLoginProvider>
+        <MemoryRouter>
+          <ErrorPage />
+        </MemoryRouter>
+      </TestLoginProvider>
     );
     expect(getErrorsFromElementAndParamsMatch({})).toBe('');
   });
@@ -107,9 +110,11 @@ describe('<ErrorPage /> ', () => {
     const title = 'test_title';
     mockUseLocationValue.search = `title=${title}`;
     result = render(
-      <MemoryRouter>
-        <ErrorPage />
-      </MemoryRouter>
+      <TestLoginProvider>
+        <MemoryRouter>
+          <ErrorPage />
+        </MemoryRouter>
+      </TestLoginProvider>
     );
     expect(getErrorsFromElementAndParamsMatch({ title })).toBe('');
   });
@@ -126,9 +131,11 @@ describe('<ErrorPage /> ', () => {
     const message = 'test_message';
     mockUseLocationValue.search = `title=${title}&message=${message}`;
     result = render(
-      <MemoryRouter>
-        <ErrorPage />
-      </MemoryRouter>
+      <TestLoginProvider>
+        <MemoryRouter>
+          <ErrorPage />
+        </MemoryRouter>
+      </TestLoginProvider>
     );
     expect(getErrorsFromElementAndParamsMatch({ title, message })).toBe('');
   });
@@ -148,7 +155,9 @@ describe('<ErrorPage /> ', () => {
     mockUseLocationValue.search = `title=${title}&message=${message}&hideLoginButton=${hideLoginButton}`;
     result = render(
       <MemoryRouter>
-        <ErrorPage />
+        <TestLoginProvider>
+          <ErrorPage />
+        </TestLoginProvider>
       </MemoryRouter>
     );
     expect(
@@ -178,9 +187,11 @@ describe('<ErrorPage /> ', () => {
     mockUseLocationValue.search += `&hideLoginButton=${hideLoginButton}`;
     mockUseLocationValue.search += `&hideFrontPageLink=${hideFrontPageLink}`;
     result = render(
-      <MemoryRouter>
-        <ErrorPage />
-      </MemoryRouter>
+      <TestLoginProvider>
+        <MemoryRouter>
+          <ErrorPage />
+        </MemoryRouter>
+      </TestLoginProvider>
     );
     expect(
       getErrorsFromElementAndParamsMatch({
@@ -199,11 +210,20 @@ describe('<ErrorPage /> ', () => {
       when location.search has no other affecting params, but user is authenticated`, async () => {
     mockUseLocationValue.search = '';
 
-    vi.spyOn(authService, 'isAuthenticated').mockReturnValue(true);
+    vi.spyOn(useAuthMock, 'default').mockImplementationOnce(() => ({
+      isAuthenticated: vi.fn().mockReturnValue(true),
+      getUser: vi.fn(),
+      endLogin: vi.fn(),
+      logout: vi.fn(),
+      login: vi.fn(),
+      changePassword: vi.fn(),
+    }));
 
     result = render(
       <MemoryRouter>
-        <ErrorPage />
+        <TestLoginProvider>
+          <ErrorPage />
+        </TestLoginProvider>
       </MemoryRouter>
     );
     expect(
@@ -231,9 +251,11 @@ describe('<ErrorPage /> ', () => {
     };
 
     result = render(
-      <MemoryRouter>
-        <ErrorPage content={content} />
-      </MemoryRouter>
+      <TestLoginProvider>
+        <MemoryRouter>
+          <ErrorPage content={content} />
+        </MemoryRouter>
+      </TestLoginProvider>
     );
     expect(getErrorsFromElementAndParamsMatch(content)).toBe('');
   });
@@ -251,9 +273,11 @@ describe('<ErrorPage /> ', () => {
     };
 
     result = render(
-      <MemoryRouter>
-        <ErrorPage content={content} />
-      </MemoryRouter>
+      <TestLoginProvider>
+        <MemoryRouter>
+          <ErrorPage content={content} />
+        </MemoryRouter>
+      </TestLoginProvider>
     );
     expect(getErrorsFromElementAndParamsMatch(content)).toBe('');
   });

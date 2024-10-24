@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 
 import AuthenticationProviderInformation from '../AuthenticationProviderInformation';
 import { mockProfileCreator } from '../../../../common/test/userMocking';
+import TestLoginProvider from '../../../../common/test/TestLoginProvider';
 import * as useProfile from '../../../../auth/useProfile';
 import * as authenticationProviderUtil from '../authenticationProviderUtil';
 
@@ -19,7 +20,11 @@ describe('<AuthenticationProviderInformation /> ', () => {
   const defaultProps = {};
 
   const getWrapper = () =>
-    render(<AuthenticationProviderInformation {...defaultProps} />);
+    render(
+      <TestLoginProvider>
+        <AuthenticationProviderInformation {...defaultProps} />
+      </TestLoginProvider>
+    );
 
   describe('renders correctly when AMR is helsinkiAccountAMR', () => {
     beforeAll(() => {

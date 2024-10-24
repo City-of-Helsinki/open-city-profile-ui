@@ -1,12 +1,17 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 
+import TestLoginProvider from '../../test/TestLoginProvider';
 import i18n from '../../test/testi18nInit';
 import Header from '../Header';
 
 it('language is changed from header language selector', async () => {
   i18n.changeLanguage('fi');
-  const { getByText } = render(<Header />);
+  const { getByText } = render(
+    <TestLoginProvider>
+      <Header />
+    </TestLoginProvider>
+  );
 
   const ariaCurrent = 'aria-current';
 

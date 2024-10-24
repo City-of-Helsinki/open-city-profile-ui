@@ -1,7 +1,7 @@
 import { User } from 'oidc-client-ts';
 import React from 'react';
 
-import authService from './authService';
+import useAuth from './useAuth';
 
 export const tunnistusSuomifiAMR = 'heltunnistussuomifi';
 
@@ -50,14 +50,15 @@ function useProfile(): ProfileState {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<Error | null>(null);
 
+  const { getUser: authGetUser } = useAuth();
+
   React.useEffect(() => {
     let ignore = false;
 
     function getUser() {
       setIsLoading(true);
 
-      authService
-        .getUser()
+      authGetUser()
         .then(user => {
           if (ignore) {
             return;
@@ -85,7 +86,7 @@ function useProfile(): ProfileState {
     return () => {
       ignore = true;
     };
-  }, []);
+  }, [authGetUser]);
 
   return {
     profile,
