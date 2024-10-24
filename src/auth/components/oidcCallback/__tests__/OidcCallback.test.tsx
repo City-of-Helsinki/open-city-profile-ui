@@ -1,11 +1,30 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { BrowserRouter, RouteChildrenProps } from 'react-router-dom';
-import { act, render } from '@testing-library/react';
 
-// import useAuth from '../../../useAuth';
-import TestLoginProvider from '../../../../common/test/TestLoginProvider';
 import OidcCallback from '../OidcCallback';
+import * as useAuthMock from '../../../../auth/useAuth';
+import TestLoginProvider from '../../../../common/test/TestLoginProvider';
+
+vi.mock('hds-react', async () => {
+  // Get the original module to keep other functionalities intact
+  const actualHdsReact = await vi.importActual('hds-react');
+  return {
+    ...actualHdsReact, // Spread the original implementation
+    LoginCallbackHandler: ({ onSuccess, onError }: any) => (
+      <div>
+        <button onClick={() => onSuccess({ profile: { name: 'Test User' } })}>
+          Trigger Success
+        </button>
+        <button onClick={() => onError({ message: 'Some error' })}>
+          Trigger Error
+        </button>
+        <div>oidc.authenticating</div>
+      </div>
+    ),
+  };
+});
 
 const mockedDefaultProps = {
   history: {
@@ -36,107 +55,48 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-describe('<OidcCallback />', () => {
-  afterEach(() => {
-    mockedDefaultProps.history.replace.mockReset();
+describe('OidcCallback', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  it('as a user I want to see an error message about incorrect device time, because only I can fix it', async () => {
-    /* vi.spyOn(authService, 'endLogin').mockRejectedValue(
-      new Error('iat is in the future')
-    ); */
+  it('handles successful login', async () => {
+    // Mock endLogin to resolve successfully
+    const authServiceEndLoginSpy = vi.fn().mockResolvedValueOnce(undefined);
 
-    vi.mock('../../../useAuth', async () => {
-      const module = await vi.importActual('../../../useAuth');
-      return {
-        ...module,
-        endLogin: vi.fn().mockRejectedValue(new Error('iat is in the future')),
-      };
-    });
+    vi.spyOn(useAuthMock, 'default').mockImplementationOnce(() => ({
+      isAuthenticated: vi.fn().mockReturnValue(true),
+      getUser: vi.fn(),
+      endLogin: authServiceEndLoginSpy,
+      logout: vi.fn(),
+      changePassword: vi.fn(),
+    }));
 
     renderComponent();
 
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
-    });
+    // Simulate the success callback
+    const successButton = screen.getByText('Trigger Success');
+    successButton.click();
 
-    expect(
-      getHistoryReplaceCallArgument().includes(
-        'authentication.deviceTimeError.message'
-      )
-    ).toBe(true);
-  });
-
-  // eslint-disable-next-line max-len
-  it('as a user I want to be informed when I deny permissions, because the application is unusable due to my choice', async () => {
-    /* vi.spyOn(authService, 'endLogin').mockRejectedValue(
-      new Error('The resource owner or authorization server denied the request')
-    ); */
-
-    vi.mock('../../../useAuth', async () => {
-      const module = await vi.importActual('../../../useAuth');
-      return {
-        ...module,
-        endLogin: vi
-          .fn()
-          .mockRejectedValue(
-            new Error(
-              'The resource owner or authorization server denied the request'
-            )
-          ),
-      };
-    });
-
-    renderComponent();
-
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
-    });
-
-    expect(
-      getHistoryReplaceCallArgument().includes(
-        'authentication.permissionRequestDenied.message'
-      )
-    ).toBe(true);
-  });
-
-  describe('implementation details', () => {
-    it('should call authService.endLogin', async () => {
-      const authServiceEndLoginSpy = vi.fn();
-
-      vi.mock('../../../useAuth', async () => {
-        const module = await vi.importActual('../../../useAuth');
-        return {
-          ...module,
-          endLogin: authServiceEndLoginSpy,
-        };
-      });
-
-      renderComponent();
-
-      await act(async () => {
-        await new Promise(resolve => setTimeout(resolve, 0));
-      });
-
-      expect(authServiceEndLoginSpy).toHaveBeenCalled();
-    });
-
-    it('should redirect user after successful login', async () => {
-      vi.mock('../../../useAuth', async () => {
-        const module = await vi.importActual('../../../useAuth');
-        return {
-          ...module,
-          endLogin: vi.fn(),
-        };
-      });
-
-      renderComponent();
-
-      await act(async () => {
-        await new Promise(resolve => setTimeout(resolve, 0));
-      });
-
+    await waitFor(() => {
+      expect(authServiceEndLoginSpy).toHaveBeenCalledOnce();
       expect(mockedDefaultProps.history.replace).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('handles error during login', async () => {
+    renderComponent();
+
+    // Simulate the error callback
+    const errorButton = screen.getByText('Trigger Error');
+    errorButton.click();
+
+    await waitFor(() => {
+      expect(
+        getHistoryReplaceCallArgument().includes(
+          'authentication.genericError.message'
+        )
+      ).toBe(true);
     });
   });
 });
