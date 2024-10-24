@@ -20,6 +20,7 @@ vi.mock('hds-react', async () => {
         <button onClick={() => onError({ message: 'Some error' })}>
           Trigger Error
         </button>
+        <button onClick={() => onError()}>Trigger Empty Error</button>
         <div>oidc.authenticating</div>
       </div>
     ),
@@ -90,6 +91,22 @@ describe('OidcCallback', () => {
 
     // Simulate the error callback
     const errorButton = screen.getByText('Trigger Error');
+    errorButton.click();
+
+    await waitFor(() => {
+      expect(
+        getHistoryReplaceCallArgument().includes(
+          'authentication.genericError.message'
+        )
+      ).toBe(true);
+    });
+  });
+
+  it('handles undefined error during login', async () => {
+    renderComponent();
+
+    // Simulate the error callback
+    const errorButton = screen.getByText('Trigger Empty Error');
     errorButton.click();
 
     await waitFor(() => {
