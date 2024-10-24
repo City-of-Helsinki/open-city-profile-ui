@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Button, useCookies, LoginButton } from 'hds-react';
+import { useCookies, LoginButton } from 'hds-react';
 
 import HelsinkiLogo from '../../../common/helsinkiLogo/HelsinkiLogo';
 import styles from './Login.module.css';

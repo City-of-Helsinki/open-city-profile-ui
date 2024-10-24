@@ -62,6 +62,7 @@ describe('useProfile', () => {
       isAuthenticated: vi.fn(),
       getUser: mockedGetUser,
       endLogin: vi.fn(),
+      login: vi.fn(),
       logout: vi.fn(),
       changePassword: vi.fn(),
     }));

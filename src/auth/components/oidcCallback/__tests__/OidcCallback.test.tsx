@@ -68,6 +68,7 @@ describe('OidcCallback', () => {
       isAuthenticated: vi.fn().mockReturnValue(true),
       getUser: vi.fn(),
       endLogin: authServiceEndLoginSpy,
+      login: vi.fn(),
       logout: vi.fn(),
       changePassword: vi.fn(),
     }));

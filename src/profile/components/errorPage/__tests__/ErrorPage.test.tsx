@@ -215,6 +215,7 @@ describe('<ErrorPage /> ', () => {
       getUser: vi.fn(),
       endLogin: vi.fn(),
       logout: vi.fn(),
+      login: vi.fn(),
       changePassword: vi.fn(),
     }));
 

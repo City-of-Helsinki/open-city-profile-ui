@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import * as Sentry from '@sentry/react';
 import i18n from 'i18next';
 import { to } from 'await-to-js';
-import { getApiTokensFromStorage, useOidcClient, User } from 'hds-react';
+import { useOidcClient, User } from 'hds-react';
 
 import pickProfileApiToken from './pickProfileApiToken';
 
@@ -123,6 +123,7 @@ const useAuth = () => {
   return {
     getUser,
     isAuthenticated,
+    login: oidcClient.login,
     endLogin,
     logout,
     changePassword,
