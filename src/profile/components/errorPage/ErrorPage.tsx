@@ -90,7 +90,7 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
           )}
         </Notification>
         <div className={styles.buttons}>
-          {hideLoginButton !== true && !isAuthenticated && (
+          {hideLoginButton !== true && !isAuthenticated() && (
             <LoginButton
               data-testid={'error-page-login-button'}
               errorText={t('authentication.genericError.message')}

@@ -68,13 +68,6 @@ const useAuth = () => {
     },
     [fetchApiToken, parseAndStoreApiToken]
   );
-  const getToken = useCallback((): string | null => {
-    const apiTokens = getApiTokensFromStorage();
-    if (apiTokens) {
-      return pickProfileApiToken(apiTokens);
-    }
-    return null;
-  }, []);
 
   const isAuthenticatedUser = useCallback(
     (user?: User | null): boolean =>
@@ -82,13 +75,7 @@ const useAuth = () => {
     []
   );
 
-  const isAuthenticated = useCallback((): boolean => {
-    const userKey = `oidc.user:${window._env_.REACT_APP_OIDC_AUTHORITY}:${window._env_.REACT_APP_OIDC_CLIENT_ID}`;
-    const oidcStorage = sessionStorage.getItem(userKey);
-    const apiTokens = getToken();
-    const parsedUser = oidcStorage && JSON.parse(oidcStorage);
-    return isAuthenticatedUser(parsedUser) && !!apiTokens;
-  }, [getToken, isAuthenticatedUser]);
+  const isAuthenticated = () => oidcClient.isAuthenticated();
 
   const logout = useCallback(async (): Promise<void> => {
     await oidcClient.logout({
