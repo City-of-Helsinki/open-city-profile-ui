@@ -6,7 +6,6 @@ import {
   mockUserCreator,
   MockedUserOverrides,
 } from '../../common/test/userMocking';
-// import authService from '../authService';
 import * as useAuthMock from '../useAuth';
 import useProfile, { Profile } from '../useProfile';
 import TestLoginProvider from '../../common/test/TestLoginProvider';
@@ -59,15 +58,11 @@ describe('useProfile', () => {
     const userData = mockUserCreator(overrides);
     const mockedGetUser = vi.fn();
 
-    if (error) {
-      mockedGetUser.mockRejectedValue(null);
-    } else {
-      mockedGetUser.mockResolvedValue(userData);
-    }
-
-    vi.spyOn(useAuthMock, 'default').mockImplementationOnce(() => ({
+    vi.spyOn(useAuthMock, 'default').mockImplementation(() => ({
       isAuthenticated: vi.fn(),
-      getUser: vi.fn().mockRejectedValue(null),
+      getUser: error
+        ? mockedGetUser.mockRejectedValue(null)
+        : mockedGetUser.mockResolvedValue(userData),
       endLogin: vi.fn(),
       login: vi.fn(),
       logout: vi.fn(),
@@ -81,6 +76,7 @@ describe('useProfile', () => {
         />
       </TestLoginProvider>
     );
+
     const { container } = result;
     const getElementById = (id: string) =>
       container.querySelector(`#${id}`) as HTMLElement;
@@ -103,15 +99,6 @@ describe('useProfile', () => {
   it('should return the profile which the authService.getUser() provides where amr is always an array', async () => {
     const amr = 'string-arm';
 
-    vi.spyOn(useAuthMock, 'default').mockImplementationOnce(() => ({
-      isAuthenticated: vi.fn(),
-      getUser: vi.fn().mockRejectedValue(null),
-      endLogin: vi.fn(),
-      login: vi.fn(),
-      logout: vi.fn(),
-      changePassword: vi.fn(),
-    }));
-
     const {
       getInfo,
       getProfile,
@@ -121,7 +108,6 @@ describe('useProfile', () => {
       profileOverrides: { amr },
     });
 
-    /*
     const userData = getMockedUserData();
     await waitFor(() => expect(getInfo()).toEqual(loadedStatus));
     expect(hasCalledGetUser()).toBeTruthy();
@@ -129,7 +115,7 @@ describe('useProfile', () => {
       ...userData.profile,
       amr: [amr],
     };
-    expect(getProfile()).toEqual(profileWithConvertedAmr); */
+    expect(getProfile()).toEqual(profileWithConvertedAmr);
   });
 
   /*
