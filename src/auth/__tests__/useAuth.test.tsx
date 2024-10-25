@@ -1,6 +1,6 @@
 // useAuth.test.ts
 import { renderHook, act } from '@testing-library/react-hooks';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 import * as Sentry from '@sentry/react';
 import { useOidcClient } from 'hds-react';
 
@@ -35,7 +35,7 @@ describe('useAuth', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (useOidcClient as vi.Mock).mockReturnValue(mockOidcClient);
+    (useOidcClient as Mock).mockReturnValue(mockOidcClient);
   });
 
   it('should call login from OIDC client when login is triggered', async () => {
