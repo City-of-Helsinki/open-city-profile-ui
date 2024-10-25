@@ -32,8 +32,7 @@ describe('useProfile', () => {
   }: {
     callCounter: () => number;
   }) => {
-    const turha = undefined;
-    /* const hasLoadStarted = callCounter() > 0;
+    const hasLoadStarted = callCounter() > 0;
     const { profile, loading, error } = useProfile();
     const isFinished = hasLoadStarted && loading === false;
 
@@ -42,7 +41,7 @@ describe('useProfile', () => {
     }
     if (!isFinished) {
       return <span id={statusIndicatorElementId}>{loadingStatus}</span>;
-    } 
+    }
     return (
       <div>
         <span id={statusIndicatorElementId}>{loadedStatus}</span>
@@ -51,8 +50,6 @@ describe('useProfile', () => {
         </span>
       </div>
     );
-    */
-    return <div></div>;
   };
 
   const renderTestComponent = (
