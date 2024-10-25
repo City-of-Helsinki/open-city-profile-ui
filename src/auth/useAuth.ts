@@ -8,21 +8,6 @@ import pickProfileApiToken from './pickProfileApiToken';
 
 const origin = window.location.origin;
 
-function isUserExpired(user?: Partial<User> | null): boolean {
-  if (!user) {
-    return true;
-  }
-  if (user.expired !== undefined) {
-    return user.expired;
-  }
-  const expiresAtInSeconds = user.expires_at;
-
-  if (expiresAtInSeconds) {
-    return expiresAtInSeconds - Date.now() / 1000 <= 0;
-  }
-  return true;
-}
-
 const useAuth = () => {
   const oidcClient = useOidcClient();
   const { getUser, signinRedirect, removeUser } = oidcClient.getUserManager();
@@ -69,12 +54,6 @@ const useAuth = () => {
     [fetchApiToken, parseAndStoreApiToken]
   );
 
-  const isAuthenticatedUser = useCallback(
-    (user?: User | null): boolean =>
-      !!user && !isUserExpired(user) && !!user.access_token,
-    []
-  );
-
   const isAuthenticated = () => oidcClient.isAuthenticated();
 
   const logout = useCallback(async (): Promise<void> => {
@@ -85,11 +64,6 @@ const useAuth = () => {
 
   const endLogin = useCallback(
     async (user: User): Promise<User> => {
-      if (!isAuthenticatedUser(user)) {
-        return Promise.reject(
-          new Error('Login failed - no valid user returned')
-        );
-      }
       const apiTokenSuccess = await fetchAndStoreApiToken(user);
       if (!apiTokenSuccess) {
         await removeUser();
@@ -100,7 +74,7 @@ const useAuth = () => {
 
       return user;
     },
-    [fetchAndStoreApiToken, isAuthenticatedUser, removeUser]
+    [fetchAndStoreApiToken, removeUser]
   );
 
   const changePassword = useCallback(async (): Promise<void> => {
