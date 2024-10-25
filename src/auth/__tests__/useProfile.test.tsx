@@ -118,7 +118,6 @@ describe('useProfile', () => {
     expect(getProfile()).toEqual(profileWithConvertedAmr);
   });
 
-  /*
   it('should provide no profile if it has expired', async () => {
     const { getInfo, getProfile } = renderTestComponent({
       userOverrides: ({
@@ -156,6 +155,4 @@ describe('useProfile', () => {
     const { getInfo } = renderTestComponent(undefined, true);
     await waitFor(() => expect(getInfo()).toEqual(errorStatus));
   });
-
-*/
 });
