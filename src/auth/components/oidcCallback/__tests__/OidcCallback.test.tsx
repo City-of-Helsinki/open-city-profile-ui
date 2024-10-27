@@ -4,15 +4,22 @@ import { describe, it, expect, vi } from 'vitest';
 import { BrowserRouter, RouteChildrenProps } from 'react-router-dom';
 
 import OidcCallback from '../OidcCallback';
-import * as useAuthMock from '../../../../auth/useAuth';
 import TestLoginProvider from '../../../../common/test/TestLoginProvider';
+
+const getApiTokensFromStorage = vi.fn(() => ({ 'foo.bar.baz': 'foo.bar.baz' }));
 
 vi.mock('hds-react', async () => {
   // Get the original module to keep other functionalities intact
   const actualHdsReact = await vi.importActual('hds-react');
   return {
     ...actualHdsReact, // Spread the original implementation
-    LoginCallbackHandler: ({ onSuccess, onError }: any) => (
+    LoginCallbackHandler: ({
+      onSuccess,
+      onError,
+    }: {
+      onSuccess: (data: { profile: { name: string } }) => void;
+      onError: (error?: { message: string }) => void;
+    }) => (
       <div>
         <button onClick={() => onSuccess({ profile: { name: 'Test User' } })}>
           Trigger Success
@@ -24,6 +31,7 @@ vi.mock('hds-react', async () => {
         <div>oidc.authenticating</div>
       </div>
     ),
+    getApiTokensFromStorage: vi.fn(() => ({ foo: 'bar' })),
   };
 });
 
@@ -62,27 +70,14 @@ describe('OidcCallback', () => {
   });
 
   it('handles successful login', async () => {
-    // Mock endLogin to resolve successfully
-    const authServiceEndLoginSpy = vi.fn().mockResolvedValueOnce(undefined);
-
-    vi.spyOn(useAuthMock, 'default').mockImplementationOnce(() => ({
-      isAuthenticated: vi.fn().mockReturnValue(true),
-      getUser: vi.fn(),
-      endLogin: authServiceEndLoginSpy,
-      login: vi.fn(),
-      logout: vi.fn(),
-      changePassword: vi.fn(),
-    }));
-
     renderComponent();
 
     // Simulate the success callback
     const successButton = screen.getByText('Trigger Success');
     successButton.click();
-
     await waitFor(() => {
-      expect(authServiceEndLoginSpy).toHaveBeenCalledOnce();
       expect(mockedDefaultProps.history.replace).toHaveBeenCalledTimes(1);
+      expect(getApiTokensFromStorage).toHaveBeenCalled;
     });
   });
 

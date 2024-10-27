@@ -48,7 +48,6 @@ import {
   getScenarioWithoutScopesWillAutoComplete,
   keycloakState,
   tunnistamoCode,
-  tunnistamoOidcUri,
   tunnistamoState,
 } from '../actions/__mocks__/queueScenarios';
 import {
@@ -73,25 +72,6 @@ type HookFunctionResults = {
   shouldResumeDownload: boolean;
   canStart: boolean;
 };
-
-const mockTunnistamoOidcUri = tunnistamoOidcUri;
-
-vi.mock('../../auth/authService', async () => {
-  const module = await vi.importActual('../../auth/authService');
-
-  return {
-    __esModule: true,
-    ...module,
-    default: {
-      userManager: {
-        metadataService: {
-          getAuthorizationEndpoint: () =>
-            Promise.resolve(mockTunnistamoOidcUri),
-        },
-      },
-    },
-  };
-});
 
 const mockHistoryPushTracker = vi.fn();
 

@@ -6,10 +6,10 @@ import {
   LoginCallbackHandler,
   OidcClientError,
   User,
+  getApiTokensFromStorage,
 } from 'hds-react';
 import * as Sentry from '@sentry/react';
 
-import useAuth from '../../useAuth';
 import { useErrorPageRedirect } from '../../../profile/hooks/useErrorPageRedirect';
 import styles from './OidcCallback.module.css';
 import { getLinkRedirectState } from '../../../profile/hooks/useHistoryListener';
@@ -19,23 +19,28 @@ function OidcCallback({
 }: RouteChildrenProps): React.ReactElement | null {
   const { t } = useTranslation();
   const redirectToErrorPage = useErrorPageRedirect();
-  const { endLogin } = useAuth();
   const generigErrorString = 'authentication.genericError.message';
 
-  const onSuccess = (user: User) => {
+  const onSuccess = () => {
     // Handle successful login - redirect to profile page
-    endLogin(user)
-      .then(() => {
+    function delay(time: number, callback: () => void) {
+      setTimeout(callback, time);
+    }
+
+    let apiTokens = null;
+
+    // When onSuccess is called getApiTokensFromStorage is not yet available and profile cannot be fetched
+    function checkApiTokens() {
+      apiTokens = getApiTokensFromStorage(); // Call your function and wait for its result
+
+      if (apiTokens === null) {
+        delay(10, checkApiTokens);
+      } else {
         history.replace('/', getLinkRedirectState());
-      })
-      .catch((error: Error) => {
-        // Send other errors to Sentry for analysis
-        Sentry.captureException(error);
-        // Give user a generic error
-        redirectToErrorPage({
-          message: t(generigErrorString),
-        });
-      });
+      }
+    }
+
+    checkApiTokens();
   };
 
   const onError = (error?: OidcClientError) => {
