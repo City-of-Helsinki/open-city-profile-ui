@@ -28,7 +28,9 @@
     "saveTitle": "Vill du spara dina ändringar?",
     "idleWarning": "Sessionen är på väg att gå ut. Om du vill fortsätta ska du klicka på Fortsätt. Annars loggas du ut.",
     "idleWarningTitle": "Du loggas ut inom kort",
-    "continue": "Fortsätt"
+    "continue": "Fortsätt",
+    "sessionEndedTitle": "Sessionen har avslutats!",
+    "sessionEndedMessage": "Din session på servern har avslutats. Du kommer att loggas ut även i detta fönster."
   },
   "createProfile": {
     "heading": "Fyll i detaljerna för att skapa en profil",

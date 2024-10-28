@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { useCookies } from 'hds-react';
+import { useCookies, SessionEndedHandler } from 'hds-react';
 
 import { MAIN_CONTENT_ID } from '../constants';
 import Header from '../header/Header';
@@ -49,6 +49,14 @@ function PageLayout(props: Props): React.ReactElement {
     <div className={styles.wrapper}>
       <Header />
       <PageMeta title={pageTitle} />
+      <SessionEndedHandler
+        content={{
+          title: t('confirmationModal.sessionEndedTitle'),
+          text: t('confirmationModal.sessionEndedMessage'),
+          buttonText: t('nav.signout'),
+          closeButtonLabelText: t('nav.signout'),
+        }}
+      />
       <main
         id={MAIN_CONTENT_ID}
         className={classNames(styles.content, props.className)}
