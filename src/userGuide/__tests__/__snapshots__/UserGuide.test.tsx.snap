@@ -97,7 +97,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 aria-hidden="true"
               />
               <button
-                aria-label="Log in"
+                aria-label="nav.signin"
                 class="HeaderActionBarItemButton-module_actionBarItemButton__2ALyH HeaderActionBarItemButton-module_fixedRightPosition__kBVLv"
                 data-hds-header-error-usage="login"
                 id="action-bar-login-action"
@@ -129,7 +129,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <span
                       class="HeaderActionBarItemButton-module_actionBarItemButtonLabel__12Iec"
                     >
-                      Log in
+                      nav.signin
                     </span>
                   </span>
                 </div>
