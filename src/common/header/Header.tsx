@@ -9,11 +9,23 @@ import {
   logoSv,
   LanguageSelectorProps,
   useCookies,
+  useOidcClientTracking,
+  isLoggingInSignal,
 } from 'hds-react';
 
 import { MAIN_CONTENT_ID } from '../constants';
 import { ProfileContext } from '../../profile/context/ProfileContext';
 import useMatomo from '../matomo/hooks/useMatomo';
+
+const useTrackLoginToMatomo = () => {
+  const [lastSignal] = useOidcClientTracking();
+  const { getAllConsents } = useCookies();
+  const { trackEvent } = useMatomo();
+
+  if (isLoggingInSignal(lastSignal) && getAllConsents().matomo) {
+    trackEvent({ category: 'action', action: 'Log in' });
+  }
+};
 
 function Header(): React.ReactElement {
   const { t, i18n } = useTranslation();
@@ -28,6 +40,8 @@ function Header(): React.ReactElement {
   const profilePagePaths = ['/', '/connected-services'];
   const [myProfilePath, connectedServicesPath] = profilePagePaths;
   const isProfilePagePath = profilePagePaths.includes(currentPath);
+
+  useTrackLoginToMatomo();
 
   const onClick = (path: string, e?: MouseEvent) => {
     e?.preventDefault();
