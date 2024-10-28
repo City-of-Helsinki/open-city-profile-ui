@@ -117,22 +117,22 @@ function Header(): React.ReactElement {
 
         {/* TODO: Translate text*/}
         <HDSHeader.LoginButton
-          label="Log in"
+          label={t('nav.signin')}
           id="action-bar-login-action"
-          errorLabel="Login failed!"
-          errorText="Redirection to the OIDC server failed. Try again!"
-          errorCloseAriaLabel="Close this error notification"
-          loggingInText="Logging in"
+          errorLabel={t('nav.loginFailed')}
+          errorText={t('authentication.genericError.message')}
+          errorCloseAriaLabel={t('nav.closeLoginError')}
+          loggingInText={t('nav.loggingIn')}
           fixedRightPosition
         />
         <HDSHeader.UserMenuButton id="user-menu" fixedRightPosition>
           <HDSHeader.LogoutSubmenuButton
-            label="Log out"
-            errorLabel="Logout failed!"
-            errorText="Redirection to the OIDC server failed. Try again!"
-            errorCloseAriaLabel="Close this error notification"
+            label={t('nav.signout')}
+            errorLabel={t('nav.logoutFailed')}
+            errorText={t('authentication.genericError.message')}
+            errorCloseAriaLabel={t('nav.closeLoginError')}
             id="logout-button"
-            loggingOutText="Logging out"
+            loggingOutText={t('nav.loggingOut')}
           />
         </HDSHeader.UserMenuButton>
       </HDSHeader.ActionBar>

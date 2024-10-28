@@ -113,7 +113,12 @@
     "signout": "Logga ut",
     "titleAriaLabel": "Gå till profilens startsida",
     "goToHomePage": "Till startsidan",
-    "close": "Stäng"
+    "close": "Stäng",
+    "loginFailed": "Inloggningen misslyckades",
+    "logoutFailed": "Det gick inte att logga ut",
+    "loggingIn": "Loggar in",
+    "loggingOut": "Loggar ut",
+    "closeLoginError": "Stäng detta felmeddelande"
   },
   "notification": {
     "closeButtonText": "Stäng",

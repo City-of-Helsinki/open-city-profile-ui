@@ -113,7 +113,12 @@
     "signout": "Sign out",
     "titleAriaLabel": "Go to homepage of the Profile",
     "goToHomePage": "Go to homepage",
-    "close": "Close"
+    "close": "Close",
+    "loginFailed": "Login failed!",
+    "logoutFailed": "Logout failed!",
+    "loggingIn": "Logging in",
+    "loggingOut": "Logging out",
+    "closeLoginError": "Close this error notification"
   },
   "notification": {
     "closeButtonText": "Close",

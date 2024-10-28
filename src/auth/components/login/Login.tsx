@@ -24,11 +24,9 @@ function Login(): React.ReactElement {
           <HelsinkiLogo />
           <FocusableH1>{t('login.title')}</FocusableH1>
           <p className={styles.ingress}>{t('login.description')}</p>
-
-          {/* TODO: matomo.. lokalisaatiot */}
           <LoginButton
             errorText={t('authentication.genericError.message')}
-            loggingInText="Logging in"
+            loggingInText={t('nav.loggingIn')}
           >
             {t('login.login')}
           </LoginButton>
