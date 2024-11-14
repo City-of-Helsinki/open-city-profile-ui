@@ -10,6 +10,7 @@ import {
   WithAuthentication,
 } from 'hds-react';
 import { ApolloProvider } from '@apollo/client';
+import { UserManagerSettings } from 'oidc-client-ts';
 
 import graphqlClient from './graphql/client';
 import Login from './auth/components/login/Login';
@@ -51,7 +52,7 @@ function App(): React.ReactElement {
 
   const origin = window.location.origin;
 
-  const settings = {
+  const settings: Partial<UserManagerSettings> = {
     automaticSilentRenew: true,
     validateSubOnSilentRenew: false,
     includeIdTokenInSilentRenew: false,
@@ -67,7 +68,7 @@ function App(): React.ReactElement {
     // This calculates to 1 minute, good for debugging:
     // eslint-disable-next-line max-len
     // https://github.com/City-of-Helsinki/kukkuu-ui/blob/8029ed64c3d0496fa87fa57837c73520e8cbe37f/src/domain/auth/userManager.ts#L18
-    // accessTokenExpiringNotificationTime: 59.65 * 60,
+    // accessTokenExpiringNotificationTimeInSeconds: 3600 - 60,
   };
 
   const providerProperties: LoginProviderProps = {

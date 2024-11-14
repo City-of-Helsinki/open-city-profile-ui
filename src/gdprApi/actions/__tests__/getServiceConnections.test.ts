@@ -1,4 +1,5 @@
 import to from 'await-to-js';
+import * as hdsReact from 'hds-react';
 
 import {
   createActionForGettingSpecificServiceConnection,
@@ -36,6 +37,11 @@ describe('getServiceConnections.ts', () => {
       }
       return Promise.resolve({ body: JSON.stringify(response) });
     });
+
+    vi.spyOn(hdsReact, 'getApiTokensFromStorage').mockReturnValue({
+      'https://api.hel.fi/auth/helsinkiprofile': 'foo.bar.baz',
+    });
+
     const queue = [
       serviceName
         ? createActionForGettingSpecificServiceConnection(serviceName)

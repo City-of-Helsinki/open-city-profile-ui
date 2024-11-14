@@ -114,8 +114,6 @@ function Header(): React.ReactElement {
         frontPageLabel={t('nav.goToHomePage')}
       >
         <HDSHeader.LanguageSelector sortLanguageOptions={sortLanguageOptions} />
-
-        {/* TODO: Translate text*/}
         <HDSHeader.LoginButton
           label={t('nav.signin')}
           id="action-bar-login-action"
