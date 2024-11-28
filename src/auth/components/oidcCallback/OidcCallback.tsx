@@ -17,7 +17,7 @@ function OidcCallback({
 }: RouteChildrenProps): React.ReactElement | null {
   const { t } = useTranslation();
   const redirectToErrorPage = useErrorPageRedirect();
-  const generigErrorString = 'authentication.genericError.message';
+  const genericErrorString = 'authentication.genericError.message';
 
   const onSuccess = () => {
     // Successful login - redirect to profile page
@@ -27,7 +27,7 @@ function OidcCallback({
   const onError = (error?: OidcClientError) => {
     if (!error) {
       redirectToErrorPage({
-        message: t('authentication.genericError.message'),
+        message: t(genericErrorString),
       });
       return;
     }
@@ -46,7 +46,7 @@ function OidcCallback({
       Sentry.captureException(error);
       // Give user a generic error
       redirectToErrorPage({
-        message: t(generigErrorString),
+        message: t(genericErrorString),
       });
     }
   };
