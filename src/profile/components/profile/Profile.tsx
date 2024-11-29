@@ -1,19 +1,20 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import { Button, Notification } from 'hds-react';
+import { Button, Notification, User } from 'hds-react';
 
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import CreateProfile from '../createProfile/CreateProfile';
 import ViewProfile from '../viewProfile/ViewProfile';
 import Loading from '../../../common/loading/Loading';
 import styles from './Profile.module.css';
-import authService from '../../../auth/authService';
+import useAuth from '../../../auth/useAuth';
 import responsive from '../../../common/cssHelpers/responsive.module.css';
 import { useProfileLoadTracker } from '../../hooks/useProfileLoadTracker';
-import { WithAuthCheckChildProps } from '../withAuthCheck/WithAuthCheck';
 
-function Profile(props: WithAuthCheckChildProps): React.ReactElement {
+type Props = { user: User };
+
+function Profile(props: Props): React.ReactElement {
   const { t } = useTranslation();
   const location = useLocation();
   const {
@@ -23,8 +24,10 @@ function Profile(props: WithAuthCheckChildProps): React.ReactElement {
     reloadProfile,
   } = useProfileLoadTracker();
 
+  const { logout } = useAuth();
+
   const getPageTitle = () => {
-    const pathname = location.pathname.substr(1);
+    const pathname = location.pathname.substring(1);
 
     if (isProfileLoadComplete() && pathname.length === 0) {
       return hasExistingProfile()
@@ -63,7 +66,7 @@ function Profile(props: WithAuthCheckChildProps): React.ReactElement {
                   {t('profile.reload')}
                 </Button>
                 <Button
-                  onClick={() => authService.logout()}
+                  onClick={() => logout()}
                   data-testid={'profile-check-error-logout-button'}
                   variant={'secondary'}
                 >

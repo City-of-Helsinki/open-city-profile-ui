@@ -1,5 +1,6 @@
 import to from 'await-to-js';
 import { waitFor } from '@testing-library/react';
+import * as hdsReact from 'hds-react';
 
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import { Action, getOption } from '../../../common/actionQueue/actionQueue';
@@ -50,6 +51,10 @@ describe('deleteProfile.ts', () => {
         });
       }
       return Promise.resolve({ body: JSON.stringify(response) });
+    });
+
+    vi.spyOn(hdsReact, 'getApiTokensFromStorage').mockReturnValue({
+      'https://api.hel.fi/auth/helsinkiprofile': 'foo.bar.baz',
     });
 
     const queue = [

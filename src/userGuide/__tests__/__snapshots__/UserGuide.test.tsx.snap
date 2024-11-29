@@ -29,6 +29,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
           >
             <span
               class="HeaderActionBar-module_titleAndLogoContainer__2LEAb HeaderActionBar-module_logo__2r2T0"
+              role="link"
             >
               <span
                 class="HeaderActionBarLogo-module_logoWrapper__8NgfS"
@@ -95,50 +96,23 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               <hr
                 aria-hidden="true"
               />
-              <div
-                class="HeaderActionBarItemWithDropdown-module_container__2NETb HeaderActionBarItemWithDropdown-module_hasContent__1nypi"
-                id="header-user-dropdown"
+              <button
+                aria-label="nav.signin"
+                class="HeaderActionBarItemButton-module_actionBarItemButton__2ALyH HeaderActionBarItemButton-module_fixedRightPosition__kBVLv"
+                data-hds-header-error-usage="login"
+                id="action-bar-login-action"
+                type="button"
               >
-                <button
-                  aria-controls="header-user-dropdown-dropdown"
-                  aria-expanded="false"
-                  aria-label="nav.menuButtonLabel"
-                  class="HeaderActionBarItem-module_actionBarItem__2AJTk HeaderActionBarItemWithDropdown-module_icon__-TAc5 HeaderActionBarItem-module_fixedRightPosition__1SJj5"
-                  type="button"
+                <div
+                  class="HeaderActionBarItemButton-module_buttonContent__3JeY0"
                 >
-                  <span
-                    class="HeaderActionBarItem-module_actionBarItemIcon__1l2lb"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="user"
-                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        clip-rule="evenodd"
-                        d="M16.2667 13C18.8082 13 20.8819 15.0031 20.9951 17.5167L21 17.7333V22H3V17.7333C3 15.1918 5.00309 13.1181 7.51667 13.0049L7.73333 13H16.2667ZM7.73333 15C6.27966 15 5.09104 16.1348 5.00499 17.5668L5 17.7333V20H19V17.7333C19 16.3172 17.8926 15.0973 16.54 15.0075L16.3766 15.0022L7.73333 15ZM12 2C14.7614 2 17 4.23858 17 7C17 9.76142 14.7614 12 12 12C9.23858 12 7 9.76142 7 7C7 4.23858 9.23858 2 12 2ZM12 4C10.3431 4 9 5.34315 9 7C9 8.65685 10.3431 10 12 10C13.6569 10 15 8.65685 15 7C15 5.34315 13.6569 4 12 4Z"
-                        fill="currentColor"
-                        fill-rule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                  <span
-                    class="HeaderActionBarItem-module_actionBarItemLabel__815JB"
-                  >
-                    nav.signin
-                  </span>
-                  <div
-                    class="HeaderActionBarItem-module_activeStateContent__3CU9N"
-                  >
+                  <span>
                     <span
-                      class="HeaderActionBarItem-module_actionBarItemIcon__1l2lb"
+                      class="HeaderActionBarItemButton-module_actionBarItemButtonIcon__1_1Cg"
                     >
                       <svg
                         aria-hidden="true"
-                        aria-label="cross"
+                        aria-label="signin"
                         class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
                         role="img"
                         viewBox="0 0 24 24"
@@ -146,40 +120,20 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                       >
                         <path
                           clip-rule="evenodd"
-                          d="M18 7.5L13.5 12L18 16.5L16.5 18L12 13.5L7.5 18L6 16.5L10.5 12L6 7.5L7.5 6L12 10.5L16.5 6L18 7.5Z"
+                          d="M21 2V22H8V17H10V20H19V4H10V7H8V2H21ZM12.5 7L17.5 12L12.5 17L11 15.5L13.5 12.999L2 13V11L13.499 10.999L11 8.5L12.5 7Z"
                           fill="currentColor"
                           fill-rule="evenodd"
                         />
                       </svg>
                     </span>
                     <span
-                      aria-hidden="true"
-                      class="HeaderActionBarItem-module_actionBarItemLabel__815JB HeaderActionBarItem-module_activeStateContentLabel__3zLW1"
+                      class="HeaderActionBarItemButton-module_actionBarItemButtonLabel__12Iec"
                     >
-                      nav.close
+                      nav.signin
                     </span>
-                  </div>
-                </button>
-                <div
-                  class="HeaderActionBarItemWithDropdown-module_dropdownWrapper__Mb2ft"
-                >
-                  <aside
-                    class="HeaderActionBarItemWithDropdown-module_dropdown__2M8r7 HeaderActionBarItemWithDropdown-module_hasContent__1nypi"
-                    id="header-user-dropdown-dropdown"
-                  >
-                    <span
-                      class="HeaderLink-module_navigationLinkWrapper__2jd7A"
-                    >
-                      <a
-                        class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_linkM__30gsY link_hds-link--medium__xEU_F HeaderLink-module_headerLink__2i9-J"
-                        href="#"
-                      >
-                        nav.signin
-                      </a>
-                    </span>
-                  </aside>
+                  </span>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import to from 'await-to-js';
 import { waitFor } from '@testing-library/react';
+import * as hdsReact from 'hds-react';
 
 import {
   getDownloadDataAction,
@@ -46,6 +47,11 @@ describe('getDownloadData.ts', () => {
       }
       return Promise.resolve({ body: JSON.stringify(response) });
     });
+
+    vi.spyOn(hdsReact, 'getApiTokensFromStorage').mockReturnValue({
+      'https://api.hel.fi/auth/helsinkiprofile': 'foo.bar.baz',
+    });
+
     const queue = [
       tunnistamoAuthCodeParserAction,
       keycloakAuthCodeParserAction,

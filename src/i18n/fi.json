@@ -28,7 +28,9 @@
     "saveTitle": "Haluatko tallentaa tekemäsi muutokset?",
     "idleWarning": "Sessio on vanhentumassa, jos haluat jatkaa niin klikkaa jatka, muuten sinut kirjataan ulos",
     "idleWarningTitle": "Sinut kirjataan pian ulos",
-    "continue": "Jatka"
+    "continue": "Jatka",
+    "sessionEndedTitle": "Istunto on päättynyt!",
+    "sessionEndedMessage": "Istuntosi palvelimella on päättynyt. Sinut kirjataan ulos myös tässä ikkunassa."
   },
   "createProfile": {
     "heading": "Täydennä tietosi luodaksesi profiilin",
@@ -113,7 +115,12 @@
     "signout": "Kirjaudu ulos",
     "titleAriaLabel": "Siirry Profiilin etusivulle",
     "goToHomePage": "Etusivulle",
-    "close": "Sulje"
+    "close": "Sulje",
+    "loginFailed": "Kirjautuminen epäonnistui",
+    "logoutFailed": "Uloskirjautuminen epäonnistui",
+    "loggingIn": "Kirjaudutaan sisään",
+    "loggingOut": "Kirjaudutaan ulos",
+    "closeLoginError": "Sulje tämä virheilmoitus"
   },
   "notification": {
     "closeButtonText": "Sulje",

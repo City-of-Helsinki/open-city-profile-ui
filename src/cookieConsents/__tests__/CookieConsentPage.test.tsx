@@ -13,6 +13,7 @@ import MockCookieModal, {
   verifyTrackingCookiesAreNotSet,
 } from '../__mocks__/CookieModalAndPage';
 import { trackingCookieId } from '../cookieContentSource';
+import TestLoginProvider from '../../common/test/TestLoginProvider';
 
 vi.mock('hds-react', async () => {
   const module = await vi.importActual('hds-react');
@@ -30,9 +31,11 @@ describe('CookieConsentPage', () => {
   const initialEnv = window._env_.REACT_APP_ENVIRONMENT;
   const renderComponent = () =>
     render(
-      <MemoryRouter>
-        <CookieConsentPage />
-      </MemoryRouter>
+      <TestLoginProvider>
+        <MemoryRouter>
+          <CookieConsentPage />
+        </MemoryRouter>
+      </TestLoginProvider>
     );
   beforeAll(() => {
     ((global.window as unknown) as { _paq: { push: Mock } })._paq = {

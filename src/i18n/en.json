@@ -28,7 +28,9 @@
     "saveTitle": "Do you want to save your changes?",
     "idleWarning": "The session is about to expire. To prevent an automatic logout, select Continue",
     "idleWarningTitle": "You will be logged out soon",
-    "continue": "Continue"
+    "continue": "Continue",
+    "sessionEndedTitle": "Session has ended!",
+    "sessionEndedMessage": "Your session on the server has ended. You will be logged out in this window too."
   },
   "createProfile": {
     "heading": "Fill in your details to create a profile",
@@ -110,10 +112,15 @@
     "menuButtonLabel": "Profile menu",
     "services": "Your services",
     "signin": "Log in",
-    "signout": "Sign out",
+    "signout": "Log out",
     "titleAriaLabel": "Go to homepage of the Profile",
     "goToHomePage": "Go to homepage",
-    "close": "Close"
+    "close": "Close",
+    "loginFailed": "Login failed!",
+    "logoutFailed": "Logout failed!",
+    "loggingIn": "Logging in",
+    "loggingOut": "Logging out",
+    "closeLoginError": "Close this error notification"
   },
   "notification": {
     "closeButtonText": "Close",

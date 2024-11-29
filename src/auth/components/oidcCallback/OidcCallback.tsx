@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { RouteChildrenProps } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import {
+  LoadingSpinner,
+  LoginCallbackHandler,
+  OidcClientError,
+} from 'hds-react';
 import * as Sentry from '@sentry/react';
-import { LoadingSpinner } from 'hds-react';
 
-import authService from '../../authService';
 import { useErrorPageRedirect } from '../../../profile/hooks/useErrorPageRedirect';
 import styles from './OidcCallback.module.css';
 import { getLinkRedirectState } from '../../../profile/hooks/useHistoryListener';
@@ -14,47 +17,47 @@ function OidcCallback({
 }: RouteChildrenProps): React.ReactElement | null {
   const { t } = useTranslation();
   const redirectToErrorPage = useErrorPageRedirect();
+  const genericErrorString = 'authentication.genericError.message';
 
-  useEffect(() => {
-    authService
-      .endLogin()
-      .then(() => {
-        history.replace('/', getLinkRedirectState());
-      })
-      .catch((error: Error) => {
-        // Handle error caused by device time being more than 5 minutes off
-        if (
-          error.message.includes('iat is in the future') ||
-          error.message.includes('exp is in the past')
-        ) {
-          redirectToErrorPage({
-            message: t('authentication.deviceTimeError.message'),
-          });
-        } else if (
-          // Handle error caused by end user choosing Deny in Tunnistamo's
-          // permission request
-          error.message ===
-          'The resource owner or authorization server denied the request'
-        ) {
-          redirectToErrorPage({
-            message: t('authentication.permissionRequestDenied.message'),
-          });
-        } else {
-          // Send other errors to Sentry for analysis
-          Sentry.captureException(error);
-          // Give user a generic error
-          redirectToErrorPage({
-            message: t('authentication.genericError.message'),
-          });
-        }
+  const onSuccess = () => {
+    // Successful login - redirect to profile page
+    history.replace('/', getLinkRedirectState());
+  };
+
+  const onError = (error?: OidcClientError) => {
+    if (!error) {
+      redirectToErrorPage({
+        message: t(genericErrorString),
       });
-  }, [history, redirectToErrorPage, t]);
+      return;
+    }
+
+    if (
+      // Handle error caused by end user choosing Deny in Tunnistamo's
+      // permission request
+      error.message ===
+      'The resource owner or authorization server denied the request'
+    ) {
+      redirectToErrorPage({
+        message: t('authentication.permissionRequestDenied.message'),
+      });
+    } else {
+      // Send other errors to Sentry for analysis
+      Sentry.captureException(error);
+      // Give user a generic error
+      redirectToErrorPage({
+        message: t(genericErrorString),
+      });
+    }
+  };
 
   return (
-    <div className={styles.wrapper}>
-      <LoadingSpinner small />
-      <p>{t('oidc.authenticating')}</p>
-    </div>
+    <LoginCallbackHandler onSuccess={onSuccess} onError={onError}>
+      <div className={styles.wrapper}>
+        <LoadingSpinner small />
+        <p>{t('oidc.authenticating')}</p>
+      </div>
+    </LoginCallbackHandler>
   );
 }
 

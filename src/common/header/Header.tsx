@@ -9,12 +9,23 @@ import {
   logoSv,
   LanguageSelectorProps,
   useCookies,
+  useOidcClientTracking,
+  isLoggingInSignal,
 } from 'hds-react';
 
 import { MAIN_CONTENT_ID } from '../constants';
 import { ProfileContext } from '../../profile/context/ProfileContext';
-import UserDropdown from './userDropdown/UserDropdown';
 import useMatomo from '../matomo/hooks/useMatomo';
+
+const useTrackLoginToMatomo = () => {
+  const [lastSignal] = useOidcClientTracking();
+  const { getAllConsents } = useCookies();
+  const { trackEvent } = useMatomo();
+
+  if (isLoggingInSignal(lastSignal) && getAllConsents().matomo) {
+    trackEvent({ category: 'action', action: 'Log in' });
+  }
+};
 
 function Header(): React.ReactElement {
   const { t, i18n } = useTranslation();
@@ -29,6 +40,8 @@ function Header(): React.ReactElement {
   const profilePagePaths = ['/', '/connected-services'];
   const [myProfilePath, connectedServicesPath] = profilePagePaths;
   const isProfilePagePath = profilePagePaths.includes(currentPath);
+
+  useTrackLoginToMatomo();
 
   const onClick = (path: string, e?: MouseEvent) => {
     e?.preventDefault();
@@ -101,9 +114,25 @@ function Header(): React.ReactElement {
         frontPageLabel={t('nav.goToHomePage')}
       >
         <HDSHeader.LanguageSelector sortLanguageOptions={sortLanguageOptions} />
-
-        <hr aria-hidden="true" />
-        <UserDropdown />
+        <HDSHeader.LoginButton
+          label={t('nav.signin')}
+          id="action-bar-login-action"
+          errorLabel={t('nav.loginFailed')}
+          errorText={t('authentication.genericError.message')}
+          errorCloseAriaLabel={t('nav.closeLoginError')}
+          loggingInText={t('nav.loggingIn')}
+          fixedRightPosition
+        />
+        <HDSHeader.UserMenuButton id="user-menu" fixedRightPosition>
+          <HDSHeader.LogoutSubmenuButton
+            label={t('nav.signout')}
+            errorLabel={t('nav.logoutFailed')}
+            errorText={t('authentication.genericError.message')}
+            errorCloseAriaLabel={t('nav.closeLoginError')}
+            id="logout-button"
+            loggingOutText={t('nav.loggingOut')}
+          />
+        </HDSHeader.UserMenuButton>
       </HDSHeader.ActionBar>
       {!!getProfile() && isProfilePagePath && (
         <HDSHeader.NavigationMenu>

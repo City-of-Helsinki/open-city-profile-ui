@@ -26,8 +26,6 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-vi.mock('./auth/http-poller');
-
 global.HTMLElement.prototype.scrollIntoView = vi.fn();
 
 const originalError = console.error.bind(console.error);

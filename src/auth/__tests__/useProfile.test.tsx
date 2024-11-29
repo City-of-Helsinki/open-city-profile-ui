@@ -6,8 +6,9 @@ import {
   mockUserCreator,
   MockedUserOverrides,
 } from '../../common/test/userMocking';
-import authService from '../authService';
+import * as useAuthMock from '../useAuth';
 import useProfile, { Profile } from '../useProfile';
+import TestLoginProvider from '../../common/test/TestLoginProvider';
 
 type Status = 'loading' | 'error' | 'loaded';
 type DataGetters = {
@@ -24,6 +25,7 @@ describe('useProfile', () => {
   const statusIndicatorElementId = 'status-indicator';
   const profileElementId = 'profile';
   const noProfile = { noProfile: true };
+
   const TestProfileComponent = ({
     callCounter,
   }: {
@@ -48,23 +50,33 @@ describe('useProfile', () => {
       </div>
     );
   };
+
   const renderTestComponent = (
     overrides?: MockedUserOverrides,
     error = false
   ): DataGetters => {
     const userData = mockUserCreator(overrides);
-    const mockedGetUser = vi.spyOn(authService, 'getUser');
+    const mockedGetUser = vi.fn();
 
-    if (error) {
-      mockedGetUser.mockRejectedValueOnce(null);
-    } else {
-      mockedGetUser.mockResolvedValueOnce(userData);
-    }
+    vi.spyOn(useAuthMock, 'default').mockImplementation(() => ({
+      isAuthenticated: vi.fn(),
+      getUser: error
+        ? mockedGetUser.mockRejectedValue(null)
+        : mockedGetUser.mockResolvedValue(userData),
+      endLogin: vi.fn(),
+      login: vi.fn(),
+      logout: vi.fn(),
+      changePassword: vi.fn(),
+    }));
+
     const result = render(
-      <TestProfileComponent
-        callCounter={() => mockedGetUser.mock.calls.length}
-      />
+      <TestLoginProvider>
+        <TestProfileComponent
+          callCounter={() => mockedGetUser.mock.calls.length}
+        />
+      </TestLoginProvider>
     );
+
     const { container } = result;
     const getElementById = (id: string) =>
       container.querySelector(`#${id}`) as HTMLElement;
@@ -86,6 +98,7 @@ describe('useProfile', () => {
 
   it('should return the profile which the authService.getUser() provides where amr is always an array', async () => {
     const amr = 'string-arm';
+
     const {
       getInfo,
       getProfile,
@@ -94,6 +107,7 @@ describe('useProfile', () => {
     } = renderTestComponent({
       profileOverrides: { amr },
     });
+
     const userData = getMockedUserData();
     await waitFor(() => expect(getInfo()).toEqual(loadedStatus));
     expect(hasCalledGetUser()).toBeTruthy();

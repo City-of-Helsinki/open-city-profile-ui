@@ -2,7 +2,7 @@ import React from 'react';
 import { ApolloError, ApolloProvider } from '@apollo/client';
 import { ExecutionResult, GraphQLError } from 'graphql';
 
-import graphqlClient from '../../graphql/client';
+import graphqlClient from './mockApolloClient';
 import {
   ProfileData,
   ServiceConnectionsQueryVariables,

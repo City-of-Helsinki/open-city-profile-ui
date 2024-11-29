@@ -4,13 +4,15 @@ import classNames from 'classnames';
 
 import styles from './ProfileDeleted.module.css';
 import PageLayout from '../../../common/pageLayout/PageLayout';
-import authService from '../../../auth/authService';
+import useAuth from '../../../auth/useAuth';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 import FocusableH1 from '../../../common/focusableH1/FocusableH1';
 
 function ProfileDeleted(): React.ReactElement {
   const [timeUntilLogout, setTimeUntilLogout] = useState(10);
   const { t } = useTranslation();
+
+  const { logout } = useAuth();
 
   useEffect(() => {
     if (timeUntilLogout > 0) {
@@ -19,10 +21,10 @@ function ProfileDeleted(): React.ReactElement {
       }, 1000);
       return () => clearInterval(interval);
     } else {
-      authService.logout();
+      logout();
       return undefined;
     }
-  }, [timeUntilLogout]);
+  }, [logout, timeUntilLogout]);
 
   const title = t('deleteProfile.deleteSuccessful');
   return (
