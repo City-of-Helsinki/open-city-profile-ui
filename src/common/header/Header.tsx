@@ -122,6 +122,7 @@ function Header(): React.ReactElement {
           errorCloseAriaLabel={t('nav.closeLoginError')}
           loggingInText={t('nav.loggingIn')}
           fixedRightPosition
+          redirectWithLanguage
         />
         <HDSHeader.UserMenuButton id="user-menu" fixedRightPosition>
           <HDSHeader.LogoutSubmenuButton
@@ -131,6 +132,7 @@ function Header(): React.ReactElement {
             errorCloseAriaLabel={t('nav.closeLoginError')}
             id="logout-button"
             loggingOutText={t('nav.loggingOut')}
+            redirectWithLanguage
           />
         </HDSHeader.UserMenuButton>
       </HDSHeader.ActionBar>

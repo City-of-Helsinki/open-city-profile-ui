@@ -10,7 +10,8 @@ import commonContentStyles from '../../../common/cssHelpers/content.module.css';
 import FocusableH1 from '../../../common/focusableH1/FocusableH1';
 
 function Login(): React.ReactElement {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.resolvedLanguage;
 
   return (
     <PageLayout title={'login.login'}>
@@ -27,6 +28,7 @@ function Login(): React.ReactElement {
           <LoginButton
             errorText={t('authentication.genericError.message')}
             loggingInText={t('nav.loggingIn')}
+            redirectionProps={{ language: lang }}
           >
             {t('login.login')}
           </LoginButton>
