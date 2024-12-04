@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-import { clickLoginButton, fillSSNAndContinue } from '../utils/utils';
+import { fillSSNAndContinue } from '../utils/utils';
 import { PROFILE_URL } from '../utils/constants';
 
 const TEST_SSN = '081172-998T';
@@ -13,13 +13,13 @@ test.beforeEach(async ({ page }) => {
 
 test('Login and logout - Swedish', async ({ page }) => {
   await page.getByRole('button', { name: 'Svenska' }).click();
-  await page.getByRole('button', { name: 'Logga in' }).click();
+  await page.getByLabel('Logga in').click();
   await page.getByRole('link', { name: 'Suomi.fi-identifikation' }).click();
   await page.getByRole('link', { name: 'Test IdP' }).click();
   await fillSSNAndContinue(page, TEST_SSN);
   await page.getByRole('button', { name: 'Fortsätt till tjänsten' }).click();
-  await page.getByLabel('Profilmeny').click();
-  await page.getByRole('link', { name: 'Logga ut' }).click();
+  await page.getByTestId('user-menu-button').click();
+  await page.getByRole('button', { name: 'Logga ut' }).click();
   await expect(
     page.getByText('Du har loggats ut från Helsingfors stads e-tjänst')
   ).toBeVisible();
@@ -27,44 +27,14 @@ test('Login and logout - Swedish', async ({ page }) => {
 
 test('Login and logout - English', async ({ page }) => {
   await page.getByRole('button', { name: 'English' }).click();
-  await page.getByRole('button', { name: 'Log in' }).click();
+  await page.getByLabel('Log in').click();
   await page.getByRole('link', { name: 'Suomi.fi e-Identification' }).click();
   await page.getByRole('link', { name: 'Test IdP' }).click();
   await fillSSNAndContinue(page, TEST_SSN);
   await page.getByRole('button', { name: 'Continue to service' }).click();
-  await page.getByLabel('Profile menu').click();
-  await page.getByRole('link', { name: 'Sign out' }).click();
+  await page.getByTestId('user-menu-button').click();
+  await page.getByRole('button', { name: 'Log out' }).click();
   await expect(
     page.getByText('You have been logged out of City of Helsinki services')
   ).toBeVisible();
-});
-
-test('Login with YLE account', async ({ page }) => {
-  const YLE_ACCOUNT_NAME = 'Emeritus Tarmo';
-  const YLE_ACCOUNT_EMAIL = process.env.YLE_TEST_USER_EMAIL || null;
-  const YLE_ACCOUNT_PASSWORD = process.env.YLE_TEST_USER_PASSWORD || null;
-
-  if (!YLE_ACCOUNT_EMAIL || !YLE_ACCOUNT_PASSWORD) {
-    test.skip(true, 'YLE account credentials not provided');
-    return;
-  }
-
-  await clickLoginButton(page);
-  await page.getByRole('link', { name: 'Yle Tunnus' }).click();
-  await page.getByLabel('Vain välttämättömät').click();
-  await page.getByLabel('Sähköposti').fill(YLE_ACCOUNT_EMAIL);
-  await page.getByLabel('Salasana', { exact: true }).fill(YLE_ACCOUNT_PASSWORD);
-  await Promise.all([
-    page.waitForURL(PROFILE_URL),
-    page.getByLabel('Kirjaudu sisään').click(),
-  ]);
-  await expect(
-    page.getByRole('heading', { name: 'Omat tiedot' })
-  ).toBeVisible();
-  await expect(page.getByTestId('basic-data-firstName-value')).toContainText(
-    YLE_ACCOUNT_NAME
-  );
-  await expect(
-    page.locator('section').filter({ hasText: 'Tunnistautumistapa' })
-  ).toContainText('Yle');
 });

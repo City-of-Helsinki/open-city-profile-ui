@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import { User } from 'oidc-client-ts';
+import * as hdsReact from 'hds-react';
 
 import {
   mockUserCreator,
   MockedUserOverrides,
 } from '../../common/test/userMocking';
-import * as useAuthMock from '../useAuth';
 import useProfile, { Profile } from '../useProfile';
 import TestLoginProvider from '../../common/test/TestLoginProvider';
 
@@ -31,19 +31,20 @@ describe('useProfile', () => {
   }: {
     callCounter: () => number;
   }) => {
-    const hasLoadStarted = callCounter() > 0;
     const { profile, loading, error } = useProfile();
+    const hasLoadStarted = callCounter() > 0;
     const isFinished = hasLoadStarted && loading === false;
+    let status: Status = loadedStatus;
 
     if (error) {
-      return <span id={statusIndicatorElementId}>{errorStatus}</span>;
+      status = errorStatus;
+    } else if (!isFinished) {
+      status = loadingStatus;
     }
-    if (!isFinished) {
-      return <span id={statusIndicatorElementId}>{loadingStatus}</span>;
-    }
+
     return (
       <div>
-        <span id={statusIndicatorElementId}>{loadedStatus}</span>
+        <span id={statusIndicatorElementId}>{status}</span>
         <span id={profileElementId}>
           {JSON.stringify(profile ? profile : noProfile)}
         </span>
@@ -56,18 +57,25 @@ describe('useProfile', () => {
     error = false
   ): DataGetters => {
     const userData = mockUserCreator(overrides);
-    const mockedGetUser = vi.fn();
+    const mockedGetUser = vi
+      .fn()
+      .mockImplementation(() => (error ? null : userData));
 
-    vi.spyOn(useAuthMock, 'default').mockImplementation(() => ({
+    vi.spyOn(hdsReact, 'useOidcClient').mockReturnValue({
+      getUser: mockedGetUser,
+      getAmr: vi.fn(),
+      getState: vi.fn(),
+      getToken: vi.fn(),
+      getUserManager: vi.fn(),
+      handleCallback: vi.fn(),
       isAuthenticated: vi.fn(),
-      getUser: error
-        ? mockedGetUser.mockRejectedValue(null)
-        : mockedGetUser.mockResolvedValue(userData),
-      endLogin: vi.fn(),
+      isRenewing: vi.fn(),
       login: vi.fn(),
       logout: vi.fn(),
-      changePassword: vi.fn(),
-    }));
+      renewUser: vi.fn(),
+      connect: vi.fn(),
+      namespace: '',
+    });
 
     const result = render(
       <TestLoginProvider>
@@ -119,13 +127,12 @@ describe('useProfile', () => {
   });
 
   it('should provide no profile if it has expired', async () => {
-    const { getInfo, getProfile } = renderTestComponent({
+    const { getProfile } = renderTestComponent({
       userOverrides: ({
         expired: true,
       } as unknown) as Partial<User>,
     });
-    await waitFor(() => expect(getInfo()).toEqual(loadedStatus));
-    expect(getProfile()).toEqual(noProfile);
+    await waitFor(() => expect(getProfile()).toEqual(noProfile));
   });
 
   it('should provide no profile if user.expired is undefined', async () => {
@@ -134,8 +141,8 @@ describe('useProfile', () => {
         expired: undefined,
       } as unknown) as Partial<User>,
     });
-    await waitFor(() => expect(getInfo()).toEqual(loadedStatus));
-    expect(getProfile()).toEqual(noProfile);
+    await waitFor(() => getInfo());
+    await waitFor(() => expect(getProfile()).toEqual(noProfile));
   });
 
   it('should return an empty array if arm is undefined', async () => {

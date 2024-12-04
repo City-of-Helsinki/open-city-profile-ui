@@ -1,7 +1,6 @@
 import { User } from 'oidc-client-ts';
 import React from 'react';
-
-import useAuth from './useAuth';
+import { useOidcClient } from 'hds-react';
 
 export const tunnistusSuomifiAMR = 'heltunnistussuomifi';
 
@@ -50,43 +49,25 @@ function useProfile(): ProfileState {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<Error | null>(null);
 
-  const { getUser: authGetUser } = useAuth();
+  const { getUser } = useOidcClient();
 
   React.useEffect(() => {
-    let ignore = false;
-
-    function getUser() {
+    function setup() {
       setIsLoading(true);
 
-      authGetUser()
-        .then(user => {
-          if (ignore) {
-            return;
-          }
-          setProfile(getUserProfile(user));
-        })
-        .catch(() => {
-          if (ignore) {
-            return;
-          }
+      const user = getUser();
 
-          setError(Error('User was not found'));
-        })
-        .finally(() => {
-          if (ignore) {
-            return;
-          }
+      if (user) {
+        setProfile(getUserProfile(user));
+      } else {
+        setError(Error('User was not found'));
+      }
 
-          setIsLoading(false);
-        });
+      setIsLoading(false);
     }
 
-    getUser();
-
-    return () => {
-      ignore = true;
-    };
-  }, [authGetUser]);
+    setup();
+  }, [getUser]);
 
   return {
     profile,

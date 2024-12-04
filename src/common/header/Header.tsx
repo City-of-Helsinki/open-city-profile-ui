@@ -124,7 +124,11 @@ function Header(): React.ReactElement {
           fixedRightPosition
           redirectWithLanguage
         />
-        <HDSHeader.UserMenuButton id="user-menu" fixedRightPosition>
+        <HDSHeader.UserMenuButton
+          id="user-menu"
+          fixedRightPosition
+          data-testid="user-menu-button"
+        >
           <HDSHeader.LogoutSubmenuButton
             label={t('nav.signout')}
             errorLabel={t('nav.logoutFailed')}
