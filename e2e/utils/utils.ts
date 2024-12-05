@@ -9,7 +9,10 @@ import {
   EXAMPLE_APP_URL,
   USER_FIRSTNAME,
   USER_LASTNAME,
+  PROFILE_NAME,
 } from './constants';
+
+const LOG_IN_BUTTON = 'Kirjaudu sisään';
 
 export const fillSSNAndContinue = async (page: Page, SSN: string) => {
   await page.getByPlaceholder('-9988').fill(SSN);
@@ -17,8 +20,14 @@ export const fillSSNAndContinue = async (page: Page, SSN: string) => {
   await page.getByRole('button', { name: 'Tunnistaudu' }).click();
 };
 
-export const clickLoginButton = async (page: Page) => {
-  await page.getByRole('button', { name: 'Kirjaudu sisään' }).click();
+// Click login button in profile app page
+export const clickProfileLoginButton = async (page: Page) => {
+  await page.getByLabel(LOG_IN_BUTTON, { exact: true }).click();
+};
+
+// Click login button in keycloak
+export const clickKeycloakLoginButton = async (page: Page) => {
+  await page.getByRole('button', { name: LOG_IN_BUTTON }).click();
 };
 
 export const clickServiceConnectionsLink = async (page: Page) => {
@@ -30,12 +39,12 @@ export const clickServiceConnectionsLink = async (page: Page) => {
 
 export const loginToProfileWithEmail = async (page: Page, email: string) => {
   await page.goto(PROFILE_URL);
-  await clickLoginButton(page);
+  await clickProfileLoginButton(page);
   await page.getByRole('link', { name: 'Helsinki-tunnus' }).click();
   await page.getByLabel('Sähköposti').fill(email);
-  await page.getByLabel('Salasana').fill(USER_PASSWORD);
-  await clickLoginButton(page);
-  await expect(page.getByLabel('Profiilivalikko')).toBeVisible();
+  await page.getByLabel('Salasana', { exact: true }).fill(USER_PASSWORD);
+  await clickKeycloakLoginButton(page);
+  await expect(page.getByLabel(PROFILE_NAME)).toBeVisible();
   await expect(
     page.getByTestId('profile-information-explanation')
   ).toBeVisible();
@@ -43,7 +52,7 @@ export const loginToProfileWithEmail = async (page: Page, email: string) => {
 
 export const loginToProfileWithSuomiFi = async (page: Page, ssn: string) => {
   await page.goto(PROFILE_URL);
-  await clickLoginButton(page);
+  await clickProfileLoginButton(page);
   await page.getByRole('link', { name: 'Suomi.fi-tunnistus' }).click();
   await page.getByRole('link', { name: 'Testitunnistaja' }).click();
   await fillSSNAndContinue(page, ssn);
@@ -63,7 +72,7 @@ export const loginToExampleApp = async (page: Page, ssn: string) => {
     .click();
   await page
     .getByRole('banner')
-    .getByRole('button', { name: 'Kirjaudu sisään' })
+    .getByRole('button', { name: LOG_IN_BUTTON })
     .click();
   await page.getByRole('link', { name: 'Suomi.fi identification' }).click();
   await page.getByRole('link', { name: 'Test IdP' }).click();
@@ -91,7 +100,7 @@ export const checkDownloadedJson = async (page: Page, values: string[]) => {
 
 export const createProfile = async (page: Page, mailbox: Mailbox) => {
   await page.goto(PROFILE_URL);
-  await clickLoginButton(page);
+  await clickProfileLoginButton(page);
   await page.locator('.login-method-helsinki_tunnus a').click();
   await page.locator('a.hds-button:has-text("Luo Helsinki-profiili")').click();
   await page
@@ -116,5 +125,5 @@ export const createProfile = async (page: Page, mailbox: Mailbox) => {
   await page.locator('#hs-register-acknowledgements').click();
   await page.locator('#hs-register-age-check').click();
   await page.locator('input[value="Luo profiili"]').click();
-  await expect(page.getByLabel('Profiilivalikko')).toBeVisible();
+  await expect(page.getByLabel(PROFILE_NAME)).toBeVisible();
 };

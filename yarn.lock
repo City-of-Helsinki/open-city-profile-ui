@@ -5839,20 +5839,20 @@ hasown@^2.0.0, hasown@^2.0.1, hasown@^2.0.2:
   dependencies:
     function-bind "^1.1.2"
 
-hds-core@3.10.1, hds-core@^3.10.1:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-3.10.1.tgz#84fd3129adf52d5d9cf0ba126cfec7b1e98e2da6"
-  integrity sha512-UJKYX8ivRMWFiPmqMFN0wWnXI2qslhLA9bX8ap7caQ4icbeALfqgPtGcO9ccGghUExNXbt3s3JsDD+Tmkt4VLw==
+hds-core@3.11.0, hds-core@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-3.11.0.tgz#27d357da72752a402d97aa7904b3491be09e3225"
+  integrity sha512-405+8VHW4N3/y5ESWGOv6vUIbgp/DCYjQVpdVLsWg6RowrUwNk9VvU6N2ZpEP8HM3ujJYu/bcIQ6zzwvAOFMCA==
 
-hds-design-tokens@^3.10.1:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-3.10.1.tgz#b1f623d0d60f25a5487ab87957bbf98b4c92d827"
-  integrity sha512-v20N0GQFk6S/94LQnJofdEa/M1xP0lZXAfxFasGGYiMMx60wq9j/D12e8lBJ6BKvb2hLYNGL1KfT16Du5MigYQ==
+hds-design-tokens@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-3.11.0.tgz#b232d0e223e62b4f2db29bed4d96c64c70668e7b"
+  integrity sha512-A44gjN+TDpQQnCnw/AflCHIrqBZP8FYUW+HlPPUx4SCe4ISnEWVvxrEFWvzfOXSmO+9MDSXdNKS4ItEwluJUMQ==
 
-hds-react@^3.10.1:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-3.10.1.tgz#f69d5909cf38816f278e38ec41656d4ae870c966"
-  integrity sha512-X8Zx5DfzWnB9Sb3AJFtusH/gSDSYtt6WgHFYcea+mTnS4Pf3ISAsey3nmczcL1vBS0eavACn4TVGfQ/X/gUIWA==
+hds-react@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-3.11.0.tgz#064018eb67520fd88223085ea6a629d79c332275"
+  integrity sha512-n3JiEX1K9xWqwEi7VvZvDj4+wnpMNCZX9mmOdsK8h9ZYGHS49vPnvYLXs3hlX/Ljw1XGsgX3vtQlOO69C1iu2g==
   dependencies:
     "@apollo/client" "^3.10.1"
     "@babel/runtime" "7.17.9"
@@ -5870,8 +5870,7 @@ hds-react@^3.10.1:
     date-fns "2.16.1"
     downshift "6.0.6"
     graphql "^16.8.1"
-    hds-core "3.10.1"
-    http-status-typed "^1.0.1"
+    hds-core "3.11.0"
     jwt-decode "^3.1.2"
     kashe "1.0.4"
     lodash "^4.17.21"
@@ -5969,7 +5968,7 @@ http-proxy-agent@^7.0.0:
     agent-base "^7.1.0"
     debug "^4.3.4"
 
-http-status-typed@^1.0.0, http-status-typed@^1.0.1:
+http-status-typed@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/http-status-typed/-/http-status-typed-1.0.1.tgz#25a8b08efb4dfc6711c0214b575adb4974616d1a"
   integrity sha512-U8jF221dmNNZbdBiOoK2HduguCwparnsP0z11PQZaDtaHBHuxG3gCimxQi8Cfb8VECave4yoVbONSByQU6z0Ew==

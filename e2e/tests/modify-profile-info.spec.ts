@@ -84,6 +84,6 @@ test('Change password', async ({ page }) => {
     page.getByRole('button', { name: 'Vaihda salasana' })
   ).toBeVisible();
   await page.getByRole('button', { name: 'Vaihda salasana' }).click();
-  await expect(page.getByLabel('Profiilivalikko')).toBeVisible();
+  await expect(page.getByTestId('user-menu-button')).toBeVisible();
   await expect(page.getByText(SAVE_SUCCESS)).toBeVisible();
 });

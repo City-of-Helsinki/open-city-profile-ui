@@ -5,7 +5,8 @@ import {
   createProfile,
   loginToProfileWithEmail,
   checkDownloadedJson,
-  clickLoginButton,
+  clickProfileLoginButton,
+  clickKeycloakLoginButton,
   clickServiceConnectionsLink,
 } from '../utils/utils';
 import {
@@ -38,10 +39,10 @@ test('1 - No connected accounts', async ({ page }) => {
 
 test.skip('2 - Connect profile to Linked Events', async ({ page }) => {
   await page.goto(LINKED_EVENTS_URL);
-  await clickLoginButton(page);
+  await clickProfileLoginButton(page);
   await page.getByLabel('Sähköposti').fill(mailbox.emailAddress);
-  await page.getByLabel('Salasana').fill(USER_PASSWORD);
-  await clickLoginButton(page);
+  await page.getByLabel('Salasana', { exact: true }).fill(USER_PASSWORD);
+  await clickProfileLoginButton(page);
   await expect(
     page.getByText(
       'Palvelu Linked Events DEV pyytää lupaa käyttää seuraavia tietoja profiilistasi'
@@ -56,7 +57,7 @@ test.skip('2 - Connect profile to Linked Events', async ({ page }) => {
 
   // Check that the connected profile is visible
   await page.goto(PROFILE_URL);
-  await clickLoginButton(page);
+  await clickProfileLoginButton(page);
   await page.getByRole('link', { name: 'Helsinki-tunnus' }).click();
   const valuesThatShouldBeInJson = ['linkedevents-test', mailbox.emailAddress];
   await checkDownloadedJson(page, valuesThatShouldBeInJson);
@@ -97,11 +98,15 @@ test('3 - Delete profile', async ({ page }) => {
     )
   ).toBeVisible();
 
+  // TODO: Remove this when the profile deletion is improved
+  await page.waitForTimeout(11000);
+
   // Try to login after deleting the profile
   await page.goto(PROFILE_URL + '/login');
-  await clickLoginButton(page);
+  await clickProfileLoginButton(page);
+  await page.getByRole('link', { name: 'Helsinki-tunnus' }).click();
   await page.getByLabel('Sähköposti').fill(mailbox.emailAddress);
-  await page.getByLabel('Salasana').fill(USER_PASSWORD);
-  await clickLoginButton(page);
+  await page.getByLabel('Salasana', { exact: true }).fill(USER_PASSWORD);
+  await clickKeycloakLoginButton(page);
   await expect(page.getByText('Väärä sähköposti tai salasana')).toBeVisible();
 });

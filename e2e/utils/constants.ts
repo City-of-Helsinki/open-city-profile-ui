@@ -1,6 +1,7 @@
 export const USER_FIRSTNAME = 'Testietunimi';
 export const USER_LASTNAME = 'Testisukunimi';
 export const USER_PASSWORD = 'Testisalasana123!';
+export const PROFILE_NAME = `${USER_FIRSTNAME} ${USER_LASTNAME}`;
 
 export const LINKED_EVENTS_URL =
   process.env.LINKED_EVENTS_URL ?? 'https://linkedevents.dev.hel.ninja';

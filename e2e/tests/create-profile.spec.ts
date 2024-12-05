@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-import { clickLoginButton, createProfile } from '../utils/utils';
+import { clickProfileLoginButton, createProfile } from '../utils/utils';
 import { Mailbox } from '../utils/mailbox';
 import { PROFILE_URL } from '../utils/constants';
 
@@ -24,7 +24,7 @@ test('Same email address cannot be used for multiple accounts', async ({
   const newContext = await browser.newContext();
   const newPage = await newContext.newPage();
   await newPage.goto(PROFILE_URL);
-  await clickLoginButton(newPage);
+  await clickProfileLoginButton(newPage);
   await newPage.locator('.login-method-helsinki_tunnus a').click();
   await newPage
     .locator('a.hds-button:has-text("Luo Helsinki-profiili")')
