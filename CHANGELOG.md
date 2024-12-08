@@ -3,6 +3,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.17.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.16.2...open-city-profile-ui-v1.17.0) (2024-12-08)
+
+
+### Features
+
+* Use HDS login component ([beda29b](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/beda29b02a9e7cbba14d573dc7abaf1a2d78ac10))
+* Use HDS login component HP-1867 ([#395](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/395)) ([beda29b](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/beda29b02a9e7cbba14d573dc7abaf1a2d78ac10))
+
+
+### Bug Fixes
+
+* Issues with HDS login component HP-1867 ([#398](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/398)) ([aa83876](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/aa83876e23893747aff8caffbaad600fb9f74daf))
+
+
+### Dependencies
+
+* Bump dompurify from 2.5.3 to 2.5.4 ([#389](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/389)) ([b266df3](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/b266df3457a021c2d23474a9ec8d9aaa69ccbb90))
+* Bump dset from 3.1.3 to 3.1.4 ([#388](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/388)) ([e27d0da](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/e27d0da289171530840ab556e38e228caa9b4bef))
+* Bump path-to-regexp from 1.8.0 to 1.9.0 ([#387](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/387)) ([d9120f6](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/d9120f62b533a77e4a1ea04c703cc01beae26e69))
+* Bump vite from 5.2.11 to 5.2.14 ([#390](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/390)) ([f44469d](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/f44469ddd74bde20a26601eafc58a9f3c8a97fca))
+* Bump ws from 8.17.0 to 8.18.0 ([#393](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/393)) ([fd19ee6](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/fd19ee6ff7a53b6592a1d02cb092c0e433064291))
+
 ## [1.16.2](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.16.1...open-city-profile-ui-v1.16.2) (2024-09-03)
 
 
