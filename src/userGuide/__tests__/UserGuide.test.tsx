@@ -19,7 +19,7 @@ vi.mock('react-router-dom', async () => {
 describe('User guide', () => {
   const renderLang = (language: string) => {
     i18n.changeLanguage(language);
-    render(
+    return render(
       <TestLoginProvider>
         <I18nextProvider i18n={i18n}>
           <UserGuide />
@@ -37,17 +37,20 @@ describe('User guide', () => {
     expect(container).toMatchSnapshot();
   });
   test('renders UserGuide component in Finnish', () => {
-    renderLang('fi');
+    const container = renderLang('fi');
     expect(screen.getByText('Helsinki-profiilin ohje')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
   test('renders UserGuide component in Swedish', () => {
-    renderLang('sv');
+    const container = renderLang('sv');
     expect(screen.getByText('Helsingforsprofilens hjälp')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
   test('renders UserGuide component in English', () => {
-    renderLang('en');
+    const container = renderLang('en');
     expect(screen.getByText('Helsinki profile guide')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 });

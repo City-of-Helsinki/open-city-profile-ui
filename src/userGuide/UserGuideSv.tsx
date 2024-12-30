@@ -108,18 +108,16 @@ function UserGuideSv(): ReactElement {
           med olika inloggningsalternativ, där inloggningen till Suomi.fi väljs.
           Visningen av inloggningsalternativen varierar från en tjänst till en
           annan.
-          <UserGuideImage
-            src={image001}
-            alt="I autentiseringsfönstret väljer du Suomi.fi-identifikation."
-          />
         </p>
+        <UserGuideImage
+          src={image001}
+          alt="I autentiseringsfönstret väljer du Suomi.fi-identifikation."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image002}
-            alt="I autentiseringsfönstret väljer du Suomi.fi-identifikation."
-          />
-        </p>
+        <UserGuideImage
+          src={image002}
+          alt="I autentiseringsfönstret väljer du Suomi.fi-identifikation."
+        />
 
         <h4>Identifiering i tjänsten Suomi.fi</h4>
 
@@ -135,19 +133,15 @@ function UserGuideSv(): ReactElement {
           Befolkningsregistercentralens tjänst.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image003}
-            alt="Välj ditt bank- eller mobilkonto som autentiseringsalternativ på Suomi.fi."
-          />
-        </p>
+        <UserGuideImage
+          src={image003}
+          alt="Välj ditt bank- eller mobilkonto som autentiseringsalternativ på Suomi.fi."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image004}
-            alt="När du byter tillbaka till Helsingfors stads tjänst, kontrollera att dina uppgifter är korrekta."
-          />
-        </p>
+        <UserGuideImage
+          src={image004}
+          alt="När du byter tillbaka till Helsingfors stads tjänst, kontrollera att dina uppgifter är korrekta."
+        />
 
         <h4>Verifiering av e-postadress</h4>
 
@@ -181,28 +175,22 @@ function UserGuideSv(): ReactElement {
           </b>
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image005}
-            alt={`Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
+        <UserGuideImage
+          src={image005}
+          alt={`Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
             använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en 
             Helsingfors-profil. Sammanslagningen kan inte tas bort senare.`}
-          />
-        </p>
+        />
 
-        <p>
-          <UserGuideImage
-            src={image006}
-            alt="E-postmeddelandet innehåller en 6-siffrig verifieringskod för att bekräfta att e-postadressen är äkta."
-          />
-        </p>
+        <UserGuideImage
+          src={image006}
+          alt="E-postmeddelandet innehåller en 6-siffrig verifieringskod för att bekräfta att e-postadressen är äkta."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image007}
-            alt="Det 6-siffriga numret på e-postmeddelandet måste anges i fältet för bekräftelsekod i webbläsarfönstret."
-          />
-        </p>
+        <UserGuideImage
+          src={image007}
+          alt="Det 6-siffriga numret på e-postmeddelandet måste anges i fältet för bekräftelsekod i webbläsarfönstret."
+        />
 
         <h4>Skapa en Helsingforsprofilen</h4>
 
@@ -252,12 +240,11 @@ function UserGuideSv(): ReactElement {
           Visningen av inloggningsalternativen varierar från en tjänst till en
           annan.
         </p>
-        <p>
-          <UserGuideImage
-            src={image009}
-            alt="Helsingfors ID består av en kombination av e-post och lösenord genom att klicka på knappen Skapa ny Helsingforsprofilen."
-          />
-        </p>
+
+        <UserGuideImage
+          src={image009}
+          alt="Helsingfors ID består av en kombination av e-post och lösenord genom att klicka på knappen Skapa ny Helsingforsprofilen."
+        />
 
         <h4>Verifiering av e-postadress</h4>
 
@@ -298,28 +285,22 @@ function UserGuideSv(): ReactElement {
           </b>
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image005}
-            alt={`Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
+        <UserGuideImage
+          src={image005}
+          alt={`Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
             använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en 
             Helsingfors-profil. Sammanslagningen kan inte tas bort senare.`}
-          />
-        </p>
+        />
 
-        <p>
-          <UserGuideImage
-            src={image006}
-            alt={`E-postmeddelandet innehåller en 6-siffrig verifieringskod för att bekräfta att e-postadressen är äkta.`}
-          />
-        </p>
+        <UserGuideImage
+          src={image006}
+          alt={`E-postmeddelandet innehåller en 6-siffrig verifieringskod för att bekräfta att e-postadressen är äkta.`}
+        />
 
-        <p>
-          <UserGuideImage
-            src={image007}
-            alt="Det 6-siffriga numret på e-postmeddelandet måste anges i fältet för bekräftelsekod i webbläsarfönstret."
-          />
-        </p>
+        <UserGuideImage
+          src={image007}
+          alt="Det 6-siffriga numret på e-postmeddelandet måste anges i fältet för bekräftelsekod i webbläsarfönstret."
+        />
 
         <h4>Skapa en Helsingforsprofilen</h4>
 
@@ -341,13 +322,11 @@ function UserGuideSv(): ReactElement {
           och lösenord.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image010}
-            alt={`När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste 
+        <UserGuideImage
+          src={image010}
+          alt={`När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste 
             också ge ditt samtycke till att dina uppgifter används för att skapa Helsingforsprofilen.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -370,7 +349,7 @@ function UserGuideSv(): ReactElement {
 
         <p>
           Om din Helsingforsprofil skapades med en Suomi.fi-autentisering kan du
-          klicka på länken <i>Jag har glömt mitt lösenord</i>
+          klicka på länken <i>Jag har glömt mitt lösenord </i>
           på inloggningsskärmen. För instruktioner om hur du gör detta, se
           avsnittet <a href="#_Glömt_lösenord">Glömt lösenord</a> nedan.
         </p>
@@ -411,35 +390,27 @@ function UserGuideSv(): ReactElement {
           alt="I inloggningsfönstret klickar du på länken Jag har glömt mitt lösenord."
         />
 
-        <p>
-          <UserGuideImage
-            src={image012}
-            alt="Ange din e-postadress i rutan som visas för att få en länk till förnyat lösenord i din e-post."
-          />
-        </p>
+        <UserGuideImage
+          src={image012}
+          alt="Ange din e-postadress i rutan som visas för att få en länk till förnyat lösenord i din e-post."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image013}
-            alt="Du kommer att informeras om att ett e-postmeddelande kommer att skickas till dig för att förnya ditt lösenord."
-          />
-        </p>
+        <UserGuideImage
+          src={image013}
+          alt="Du kommer att informeras om att ett e-postmeddelande kommer att skickas till dig för att förnya ditt lösenord."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image014}
-            alt={`I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken 
+        <UserGuideImage
+          src={image014}
+          alt={`I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken 
             kommer att vara giltig i 30 minuter.`}
-          />
-        </p>
+        />
 
-        <p>
-          <UserGuideImage
-            src={image015}
-            alt={`I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst 
+        <UserGuideImage
+          src={image015}
+          alt={`I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst 
             12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, nummer och specialtecken.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -457,21 +428,17 @@ function UserGuideSv(): ReactElement {
           autentiseringsmetoder kan inte vara öppna samtidigt.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image016}
-            alt={`En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en 
+        <UserGuideImage
+          src={image016}
+          alt={`En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en 
             kombination av e-post och lösenord och går vidare till nästa tjänst, som kräver en Suomi.fi-autentisering. 
             I detta fall måste du logga ut från den första tjänsten för att kunna autentisera dig till den nya tjänsten.`}
-          />
-        </p>
+        />
 
-        <p>
-          <UserGuideImage
-            src={image017}
-            alt="Bekräfta din utloggning från en tidigare tjänst."
-          />
-        </p>
+        <UserGuideImage
+          src={image017}
+          alt="Bekräfta din utloggning från en tidigare tjänst."
+        />
       </UserGuideAccordion>
 
       <h2 id="_viewing_and_editing">Visa och redigera dina egna uppgifter</h2>
@@ -513,30 +480,24 @@ function UserGuideSv(): ReactElement {
           hur du är autentiserad dig på din Helsingforsprofil.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image018}
-            alt={`I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från 
+        <UserGuideImage
+          src={image018}
+          alt={`I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från 
             Befolkningsregistercentralen och uppdateras också där.`}
-          />
-        </p>
+        />
 
-        <p>
-          <UserGuideImage
-            src={image019}
-            alt="I din Helsingforsprofil kan du uppdatera din basuppgifter i avsnittet Min information."
-          />
-        </p>
+        <UserGuideImage
+          src={image019}
+          alt="I din Helsingforsprofil kan du uppdatera din basuppgifter i avsnittet Min information."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image023}
-            alt={`Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress. 
+        <UserGuideImage
+          src={image023}
+          alt={`Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress. 
             Tjänstens kontaktspråk avgör på vilket språk du tar emot meddelanden från tjänsten. Den 
             autentiseringsmetoden hur du är inloggad i tjänsten, dvs. Suomi.fi-autentisering eller en kombination 
             av e-post och lösenord, dvs. Helsingfors-ID.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -559,14 +520,12 @@ function UserGuideSv(): ReactElement {
           raderar dem.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image024}
-            alt={`När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av 
+        <UserGuideImage
+          src={image024}
+          alt={`När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av 
             dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina 
             tjänster i din Helsingforsprofil.`}
-          />
-        </p>
+        />
 
         <UserGuideImage
           src={image025}
@@ -595,12 +554,10 @@ function UserGuideSv(): ReactElement {
           datanerladdningen göras med Suomi.fi-autentiseringen.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image026}
-            alt="I avsnittet Min information i din Helsingforsprofil kan du ladda ner din information för alla tjänster som en json-fil."
-          />
-        </p>
+        <UserGuideImage
+          src={image026}
+          alt="I avsnittet Min information i din Helsingforsprofil kan du ladda ner din information för alla tjänster som en json-fil."
+        />
       </UserGuideAccordion>
 
       <h2 id="_Deleting_your_information">Radering av uppgifter</h2>
@@ -629,20 +586,16 @@ function UserGuideSv(): ReactElement {
           får du ett popup-meddelande som bekräftar borttagningen.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image027}
-            alt="Du kan radera dina uppgifter i din Helsingforsprofil för en enskild tjänst i avsnittet Dina tjänster."
-          />
-        </p>
+        <UserGuideImage
+          src={image027}
+          alt="Du kan radera dina uppgifter i din Helsingforsprofil för en enskild tjänst i avsnittet Dina tjänster."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image028}
-            alt={`När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett 
+        <UserGuideImage
+          src={image028}
+          alt={`När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett 
             popup-bekräftelsemeddelande på skärmen för att förhindra oavsiktlig radering av dina uppgifter.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
 
       <UserGuideAccordion
@@ -677,20 +630,16 @@ function UserGuideSv(): ReactElement {
           ny profil vid behov, men alla tidigare uppgifter försvinner.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image029}
-            alt={`I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken 
+        <UserGuideImage
+          src={image029}
+          alt={`I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken 
             du kan radera hela din Helsingforsprofil och den information som du har använt i olika tjänster.`}
-          />
-        </p>
+        />
 
-        <p>
-          <UserGuideImage
-            src={image030}
-            alt={`Ett bekräftelsemeddelande visas också i ett popup-fönster för att förhindra oavsiktlig radering av data.`}
-          />
-        </p>
+        <UserGuideImage
+          src={image030}
+          alt={`Ett bekräftelsemeddelande visas också i ett popup-fönster för att förhindra oavsiktlig radering av data.`}
+        />
       </UserGuideAccordion>
     </Fragment>
   );
