@@ -67,16 +67,18 @@ function AccessibilityStatementSv(): React.ReactElement {
         för att lämna in en anmälan och hur den handläggs.
       </p>
       <p>
-        Regionförvaltningsverket i Södra Finland
+        Transport- och kommunikationsverket Traficom
         <br />
-        Enheten för tillgänglighetstillsyn
+        Enheten för tillsyn över digital tillgänglighet
         <br /> E-post:{' '}
-        <a href="mailto:webbtillganglighet@rfv.fi">webbtillganglighet@rfv.fi</a>
+        <a href="mailto:tillganglighet@traficom.fi">
+          tillganglighet@traficom.fi
+        </a>
         <br />
-        Telefonväxel: <a href="tel:0295 016 000">0295 016 000</a>
+        Telefonnummer (växeln): <a href="tel:029 534 5000">029 534 5000</a>
         <br />
-        <Link href="https://www.tillganglighetskrav.fi" external openInNewTab>
-          www.tillganglighetskrav.fi
+        <Link href="https://www.tillgänglighetskrav.fi" external openInNewTab>
+          www.tillgänglighetskrav.fi
         </Link>
       </p>
 

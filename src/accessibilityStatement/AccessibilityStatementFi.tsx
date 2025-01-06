@@ -61,12 +61,15 @@ function AccessibilityStatementFi(): ReactElement {
         käsitellään.
       </p>
       <p>
-        Etelä-Suomen aluehallintovirasto <br />
-        Saavutettavuuden valvonnan yksikkö
+        Liikenne- ja viestintävirasto Traficom <br />
+        Digitaalisen esteettömyyden ja saavutettavuuden valvontayksikkö
         <br />
         Sähköposti:{' '}
-        <a href="mailto:saavutettavuus@avi.fi">saavutettavuus@avi.fi</a> <br />
-        Puhelinnumero vaihde: <a href="tel:0295 016 000">0295 016 000</a>
+        <a href="mailto:saavutettavuus@traficom.fi">
+          saavutettavuus@traficom.fi
+        </a>{' '}
+        <br />
+        Puhelinnumero (vaihde): <a href="tel:029 534 5000">029 534 5000</a>
       </p>
       <Link
         href="https://www.saavutettavuusvaatimukset.fi"
@@ -78,7 +81,7 @@ function AccessibilityStatementFi(): ReactElement {
       <h2>Saavutettavuusselosteen tiedot</h2>
       <p>Verkkopalvelu on julkaistu 30.11.2022.</p>{' '}
       <p>Tämä seloste on laadittu 20.03.2024. </p>
-      <p>Seloste on viimeksi päivitetty 21.05.2024.</p>{' '}
+      <p>Seloste on viimeksi päivitetty 01.01.2025.</p>{' '}
       <p>
         <Link
           href="https://www.finlex.fi/fi/laki/alkup/2019/20190306"
