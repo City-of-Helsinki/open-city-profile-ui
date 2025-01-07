@@ -62,15 +62,15 @@ function AccessibilityStatementEn(): ReactElement {
         submitting a complaint and how complaints are processed.
       </p>
       <p>
-        Regional State Administrative Agency for Southern Finland <br />
-        Accessibility Monitoring Unit <br />
-        E-mail: <a href="mailto:saavutettavuus@avi.fi">saavutettavuus@avi.fi</a>
+        Finnish Transport and Communication Agency Traficom <br />
+        Digital Accessibility Supervision Unit <br />
+        E-mail:{' '}
+        <a href="mailto:saavutettavuus@traficom.fi">
+          saavutettavuus@traficom.fi
+        </a>
         <br />
-        Telephone number: <a href="tel:+358 295 016 000">
-          +358 295 016 000
-        </a>{' '}
-        (Switchboard)
-        <br />
+        Telephone switchboard:{' '}
+        <a href="tel:+358 295 345 000">+358 295 345 000</a> <br />
         <Link href="https://www.webaccessibility.fi" external openInNewTab>
           www.webaccessibility.fi
         </Link>
@@ -80,7 +80,7 @@ function AccessibilityStatementEn(): ReactElement {
       <h2>Accessibility statement information</h2>
       <p>This website was published on 30.11.2022.</p>
       <p>This accessibility statement was prepared on 20.03.2024.</p>
-      <p>This accessibility statement was last reviewed on 21.05.2024.</p>
+      <p>This accessibility statement was last reviewed on 01.01.2025.</p>
       <p>
         <Link
           href="https://www.finlex.fi/fi/laki/alkup/2019/20190306"
