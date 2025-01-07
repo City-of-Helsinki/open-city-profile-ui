@@ -104,19 +104,15 @@ function UserGuideEn(): ReactElement {
           another.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image001}
-            alt="In the authentication window, select Suomi.fi identification."
-          />
-        </p>
+        <UserGuideImage
+          src={image001}
+          alt="In the authentication window, select Suomi.fi identification."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image002}
-            alt="In the authentication window, select Suomi.fi identification."
-          />
-        </p>
+        <UserGuideImage
+          src={image002}
+          alt="In the authentication window, select Suomi.fi identification."
+        />
 
         <h4>Identification in the Suomi.fi service</h4>
 
@@ -137,12 +133,10 @@ function UserGuideEn(): ReactElement {
           alt="Choose your bank or mobile account as your Suomi.fi authentication option."
         />
 
-        <p>
-          <UserGuideImage
-            src={image004}
-            alt="Check that your details are correct when you switch back to the City of Helsinki service."
-          />
-        </p>
+        <UserGuideImage
+          src={image004}
+          alt="Check that your details are correct when you switch back to the City of Helsinki service."
+        />
 
         <h4>Email address verification</h4>
 
@@ -178,14 +172,12 @@ function UserGuideEn(): ReactElement {
           </b>
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image005}
-            alt={`Your email address will serve as your login to City of Helsinki services.
+        <UserGuideImage
+          src={image005}
+          alt={`Your email address will serve as your login to City of Helsinki services.
             By using the same email address for both the Suomi.fi login and the Helsinki ID,
             you will have one Helsinki profile. The merge cannot be unmerged later.`}
-          />
-        </p>
+        />
 
         <UserGuideImage
           src={image006}
@@ -243,12 +235,10 @@ function UserGuideEn(): ReactElement {
           another.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image009}
-            alt={`The Helsinki ID consists of an email and password combination, which will be created by clicking on the Create a new Helsinki profile button.`}
-          />
-        </p>
+        <UserGuideImage
+          src={image009}
+          alt={`The Helsinki ID consists of an email and password combination, which will be created by clicking on the Create a new Helsinki profile button.`}
+        />
 
         <h4>Email address verification</h4>
         <p>
@@ -288,14 +278,12 @@ function UserGuideEn(): ReactElement {
           </b>
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image005}
-            alt={`Your email address will serve as your login to City of Helsinki services.
+        <UserGuideImage
+          src={image005}
+          alt={`Your email address will serve as your login to City of Helsinki services.
             By using the same email address for both the Suomi.fi login and the Helsinki ID,
             you will have one Helsinki profile. The merge cannot be unmerged later.`}
-          />
-        </p>
+        />
 
         <UserGuideImage
           src={image006}
@@ -324,14 +312,12 @@ function UserGuideEn(): ReactElement {
           password combination.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image010}
-            alt={`When you create a Helsinki profile, you still have to fill in
+        <UserGuideImage
+          src={image010}
+          alt={`When you create a Helsinki profile, you still have to fill in
             your name and password. You will also need to give your consent
             for your data to be used in order to create Helsinki profile.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         id="_Combining_identification_methods"
@@ -376,7 +362,7 @@ function UserGuideEn(): ReactElement {
       >
         <p>
           If you can&apos;t remember your password, you can create a new one in
-          the login window using the <i>I forgot my password</i>
+          the login window using the <i>I forgot my password </i>
           link. You may also have &quot;forgotten&quot; your password because
           you have previously logged in to the service using Suomi.fi, in which
           case you didn&apos;t have to create a password.
@@ -396,33 +382,29 @@ function UserGuideEn(): ReactElement {
           src={image011}
           alt="In the login window, click on the I forgot my password link."
         />
-        <p>
-          <UserGuideImage
-            src={image012}
-            alt="Enter your email address in the box that appears to receive a password renewal link in your email."
-          />
-        </p>
+
+        <UserGuideImage
+          src={image012}
+          alt="Enter your email address in the box that appears to receive a password renewal link in your email."
+        />
+
         <UserGuideImage
           src={image013}
           alt="You will be informed that an email will be sent to you to renew your password."
         />
 
-        <p>
-          <UserGuideImage
-            src={image014}
-            alt={`In the email you receive, there will be a link to enter a new password.
+        <UserGuideImage
+          src={image014}
+          alt={`In the email you receive, there will be a link to enter a new password.
             The link will be valid for 30 minutes.`}
-          />
-        </p>
+        />
 
-        <p>
-          <UserGuideImage
-            src={image015}
-            alt={`In the update password window, you must enter the same password twice.
+        <UserGuideImage
+          src={image015}
+          alt={`In the update password window, you must enter the same password twice.
             The password must be at least 12 characters long. The password must contain
             both upper and lower case letters, numbers and special characters.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -440,22 +422,18 @@ function UserGuideEn(): ReactElement {
           different authentication methods cannot be open at the same time.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image016}
-            alt={`An incompatible login method means, for example, that you have logged
+        <UserGuideImage
+          src={image016}
+          alt={`An incompatible login method means, for example, that you have logged
             in to one service with an email/password combination and you have moved on to
             the next service, which requires a Suomi.fi authentication. In this case,
             you need to log out of the first service in order to authenticate to the new service.`}
-          />
-        </p>
+        />
 
-        <p>
-          <UserGuideImage
-            src={image017}
-            alt="Confirm the logout from a previous service."
-          />
-        </p>
+        <UserGuideImage
+          src={image017}
+          alt="Confirm the logout from a previous service."
+        />
       </UserGuideAccordion>
 
       <h2 id="_viewing_and_editing">Viewing and editing your own data</h2>
@@ -495,30 +473,24 @@ function UserGuideEn(): ReactElement {
           Helsinki profile.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image018}
-            alt={`In the My Information section of the Helsinki profile, official information
+        <UserGuideImage
+          src={image018}
+          alt={`In the My Information section of the Helsinki profile, official information
             comes directly from the Population Register Centre and is updated there as well.`}
-          />
-        </p>
+        />
 
-        <p>
-          <UserGuideImage
-            src={image019}
-            alt="In the My information section of your Helsinki profile, you can update the basic data yourself."
-          />
-        </p>
+        <UserGuideImage
+          src={image019}
+          alt="In the My information section of your Helsinki profile, you can update the basic data yourself."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image023}
-            alt={`You can add and edit your other address details, your phone number and your email address. The
+        <UserGuideImage
+          src={image023}
+          alt={`You can add and edit your other address details, your phone number and your email address. The
             language of communication determines the language in which you receive messages from the service.
             The authentication method tells you how you are logged in to the service, i.e. Suomi.fi authentication
             or an email/password combination, i.e. the Helsinki ID.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -542,22 +514,18 @@ function UserGuideEn(): ReactElement {
           before deleting it.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image024}
-            alt={`When you authenticate to the new service, you will be asked to
+        <UserGuideImage
+          src={image024}
+          alt={`When you authenticate to the new service, you will be asked to
             consent to the use of your data required by the service. You can return to this information later on the Your services section of your Helsinki profile.`}
-          />
-        </p>
+        />
 
-        <p>
-          <UserGuideImage
-            src={image025}
-            alt={`In the Your services used section of your Helsinki profile, you can
+        <UserGuideImage
+          src={image025}
+          alt={`In the Your services used section of your Helsinki profile, you can
             see all the services you are authenticated to and what data they use.
             You can also delete your data from individual services.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -578,13 +546,12 @@ function UserGuideEn(): ReactElement {
           / password login in the same Helsinki profile, the data download must
           be done with the Suomi.fi authentication.
         </p>
-        <p>
-          <UserGuideImage
-            src={image026}
-            alt={`In the My information section of your Helsinki profile,
+
+        <UserGuideImage
+          src={image026}
+          alt={`In the My information section of your Helsinki profile,
             you can download your data for all services as a JSON file.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
 
       <h2 id="_Deleting_your_information">Deleting your information</h2>
@@ -611,20 +578,18 @@ function UserGuideEn(): ReactElement {
           When you select the service, you want to delete on the Your services
           tab, you will receive a pop-up message confirming the deletion.
         </p>
-        <p>
-          <UserGuideImage
-            src={image027}
-            alt={`You can delete your data in your Helsinki profile for an individual
+
+        <UserGuideImage
+          src={image027}
+          alt={`You can delete your data in your Helsinki profile for an individual
             service in the Your services section.`}
-          />
-        </p>
-        <p>
-          <UserGuideImage
-            src={image028}
-            alt={`After clicking on the "Delete your data from this service" button, you will
+        />
+
+        <UserGuideImage
+          src={image028}
+          alt={`After clicking on the "Delete your data from this service" button, you will
             receive a pop-up confirmation message on the screen to prevent accidental deletion.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
 
       <UserGuideAccordion
@@ -663,13 +628,12 @@ function UserGuideEn(): ReactElement {
             information button that allows you to delete your entire Helsinki profile
              and your information used in different services.`}
         />
-        <p>
-          <UserGuideImage
-            src={image030}
-            alt={`A confirmation message is also displayed in a pop-up window
+
+        <UserGuideImage
+          src={image030}
+          alt={`A confirmation message is also displayed in a pop-up window
             to prevent accidental deletion of the data.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
     </Fragment>
   );

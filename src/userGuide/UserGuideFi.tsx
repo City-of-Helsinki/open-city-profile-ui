@@ -103,19 +103,15 @@ function UserGuideFi(): ReactElement {
           Kirjautumisvaihtoehtojen näkymä vaihtelee eri asiointipalveluissa.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image001}
-            alt="Tunnistautumisikkunassa valitaan Suomi.fi-tunnistautuminen."
-          />
-        </p>
+        <UserGuideImage
+          src={image001}
+          alt="Tunnistautumisikkunassa valitaan Suomi.fi-tunnistautuminen."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image002}
-            alt="Tunnistautumistavaksi valitaan Suomi.fi-tunnistautuminen."
-          />
-        </p>
+        <UserGuideImage
+          src={image002}
+          alt="Tunnistautumistavaksi valitaan Suomi.fi-tunnistautuminen."
+        />
 
         <h4>Tunnistautuminen Suomi.fi-palvelussa</h4>
 
@@ -131,19 +127,15 @@ function UserGuideFi(): ReactElement {
           väestörekisterikeskuksen palvelussa.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image003}
-            alt="Valitse oma pankkisi tai mobiilivarmenne Suomi.fi-tunnistautumisvaihtoehtona."
-          />
-        </p>
+        <UserGuideImage
+          src={image003}
+          alt="Valitse oma pankkisi tai mobiilivarmenne Suomi.fi-tunnistautumisvaihtoehtona."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image004}
-            alt="Tarkista, että tietosi ovat oikein, kun siirryt takaisin Helsingin kaupungin palveluun."
-          />
-        </p>
+        <UserGuideImage
+          src={image004}
+          alt="Tarkista, että tietosi ovat oikein, kun siirryt takaisin Helsingin kaupungin palveluun."
+        />
 
         <h4>Sähköpostiosoitteen vahvistus</h4>
         <p>
@@ -175,23 +167,17 @@ function UserGuideFi(): ReactElement {
           </b>
         </p>
 
-        <p>
-          <UserGuideImage src={image005} alt={altText05} />
-        </p>
+        <UserGuideImage src={image005} alt={altText05} />
 
-        <p>
-          <UserGuideImage
-            src={image006}
-            alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
-          />
-        </p>
+        <UserGuideImage
+          src={image006}
+          alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image007}
-            alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
-          />
-        </p>
+        <UserGuideImage
+          src={image007}
+          alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
+        />
 
         <h4>Helsinki-profiilin luonti</h4>
 
@@ -221,12 +207,11 @@ function UserGuideFi(): ReactElement {
           Kun kirjaudut seuraavan kerran samaan palveluun, valitse
           tunnistautumisvaihtoehdoksi Suomi.fi.
         </p>
-        <p>
-          <UserGuideImage
-            src={image008}
-            alt="Ennen kuin voit käyttää haluamaasi palvelua tai luoda Helsinki-profiilin, sinun pitää antaa suostumus tietojesi käyttöön. Ilman suostumusta tietojasi ei voida käyttää eikä profiilia voida luoda."
-          />
-        </p>
+
+        <UserGuideImage
+          src={image008}
+          alt="Ennen kuin voit käyttää haluamaasi palvelua tai luoda Helsinki-profiilin, sinun pitää antaa suostumus tietojesi käyttöön. Ilman suostumusta tietojasi ei voida käyttää eikä profiilia voida luoda."
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -240,12 +225,11 @@ function UserGuideFi(): ReactElement {
           Kirjautumisvaihtoehtojen näkymä vaihtelee eri asiointipalveluissa.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image009}
-            alt="Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili-painiketta."
-          />
-        </p>
+        <UserGuideImage
+          src={image009}
+          alt="Helsinki-tunnus koostuu sähköposti ja salasana -yhdistelmästä klikkaamalla Luo uusi Helsinki-profiili-painiketta."
+        />
+
         <h4>Sähköpostiosoitteen vahvistus</h4>
         <p>
           Profiilin luomisen yhteydessä sinulta pyydetään sähköpostiosoite, joka
@@ -274,22 +258,19 @@ function UserGuideFi(): ReactElement {
             keskeyttäneen tunnistautumisprosessin.
           </b>
         </p>
-        <p>
-          <UserGuideImage src={image005} alt={altText05} />
-        </p>
-        <p>
-          <UserGuideImage
-            src={image006}
-            alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
-          />
-        </p>
 
-        <p>
-          <UserGuideImage
-            src={image007}
-            alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
-          />
-        </p>
+        <UserGuideImage src={image005} alt={altText05} />
+
+        <UserGuideImage
+          src={image006}
+          alt="Sähköpostiviestissä on 6-numeroinen vahvistuskoodi, jolla varmennetaan, että sähköpostiosoite on aito."
+        />
+
+        <UserGuideImage
+          src={image007}
+          alt="Sähköpostin 6-numeroinen luku pitää kirjata selainikkunan vahvistuskoodi-kenttään."
+        />
+
         <h4>Helsinki-profiilin luonti</h4>
         <p>
           Sähköpostin vahvistamisen jälkeen täytä nimitietosi ja anna salasana.
@@ -306,13 +287,12 @@ function UserGuideFi(): ReactElement {
           tarvitsemasi Helsinki-tunnus on tämä
           sähköpostiosoite-salasana-yhdistelmä.
         </p>
-        <p>
-          <UserGuideImage
-            src={image010}
-            alt={`Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa
+
+        <UserGuideImage
+          src={image010}
+          alt={`Helsinki-profiilin luomisen yhteydessä pitää vielä täyttää nimitiedot ja antaa
             salasana. Sinun pitää myös antaa suostumus tietojesi käyttöön, jotta Helsinki-profiili voidaan luoda.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -365,40 +345,31 @@ function UserGuideFi(): ReactElement {
           sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image011}
-            alt="Klikkaa kirjautumisikkunassa Olen unohtanut salasanani -linkkiä."
-          />
-        </p>
-        <p>
-          <UserGuideImage
-            src={image012}
-            alt="Syötä sähköpostiosoitteesi avautuvaan kenttään, jotta saat salasanan uusimislinkin sähköpostiisi."
-          />
-        </p>
+        <UserGuideImage
+          src={image011}
+          alt="Klikkaa kirjautumisikkunassa Olen unohtanut salasanani -linkkiä."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image013}
-            alt="Saat tiedon, että sinulle lähetetään sähköpostiviesti salasanan uusimista varten."
-          />
-        </p>
+        <UserGuideImage
+          src={image012}
+          alt="Syötä sähköpostiosoitteesi avautuvaan kenttään, jotta saat salasanan uusimislinkin sähköpostiisi."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image014}
-            alt="Saamassasi sähköpostiviestissä on linkki uuden salasanan antamista varten. Linkki on voimassa 30 minuuttia. "
-          />
-        </p>
+        <UserGuideImage
+          src={image013}
+          alt="Saat tiedon, että sinulle lähetetään sähköpostiviesti salasanan uusimista varten."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image015}
-            alt={`Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla
+        <UserGuideImage
+          src={image014}
+          alt="Saamassasi sähköpostiviestissä on linkki uuden salasanan antamista varten. Linkki on voimassa 30 minuuttia. "
+        />
+
+        <UserGuideImage
+          src={image015}
+          alt={`Salasanan vaihtoikkunassa sinun pitää syöttää sama salasana kahteen kertaan. Salasanassa pitää olla
             vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -416,19 +387,15 @@ function UserGuideFi(): ReactElement {
           avoinna.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image016}
-            alt="Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin Suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun."
-          />
-        </p>
+        <UserGuideImage
+          src={image016}
+          alt="Yhteensopimaton kirjautumistapa tarkoittaa, että olet kirjautunut esimerkiksi yhteen palveluun sähköposti-salasana-yhdistelmällä ja siirryt käyttämään seuraavaa palvelua, joka tarvitseekin Suomi.fi-tunnistautumisen. Tällöin sinun pitää kirjautua ulos ensimmäisestä palvelusta voidaksesi kirjautua uuteen palveluun."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image017}
-            alt="Vahvista uloskirjautuminen aiemmasta palvelusta."
-          />
-        </p>
+        <UserGuideImage
+          src={image017}
+          alt="Vahvista uloskirjautuminen aiemmasta palvelusta."
+        />
       </UserGuideAccordion>
       <h2 id="_Omien_tietojen_katselu">
         Omien tietojen katselu ja muokkaaminen
@@ -471,19 +438,16 @@ function UserGuideFi(): ReactElement {
           src={image018}
           alt="Helsinki-profiilissa Omat tiedot -osiossa Viralliset tiedot tulevat suoraan väestörekisterikeskuksesta ja niiden päivittäminen tehdään myös siellä."
         />
-        <p>
-          <UserGuideImage
-            src={image019}
-            alt="Helsinki-profiilissa Omat tiedot -osiossa Perustiedot ovat itse päivitettävissä."
-          />
-        </p>
 
-        <p>
-          <UserGuideImage
-            src={image023}
-            alt="Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi. Asiointikieli määrittää, millä kielellä saat viestejä palvelusta. Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli Suomi.fi-tunnistautuen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella."
-          />
-        </p>
+        <UserGuideImage
+          src={image019}
+          alt="Helsinki-profiilissa Omat tiedot -osiossa Perustiedot ovat itse päivitettävissä."
+        />
+
+        <UserGuideImage
+          src={image023}
+          alt="Voit lisätä ja muokata muita osoitetietojasi, puhelinnumerosi ja sähköpostiosoitteesi. Asiointikieli määrittää, millä kielellä saat viestejä palvelusta. Tunnistautumistapa kertoo, millä tavalla olet kirjautunut palveluun eli Suomi.fi-tunnistautuen tai sähköposti-salasana-yhdistelmällä eli Helsinki-tunnuksella."
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -504,21 +468,17 @@ function UserGuideFi(): ReactElement {
           poistoa.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image024}
-            alt={`Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön.
+        <UserGuideImage
+          src={image024}
+          alt={`Tunnistautuessasi uuteen palveluun sinulta pyydetään suostumus palvelun tarvitsemien tietojesi käyttöön.
             Voit myöhemmin palata näihin tietoihin Helsinki-profiilin Käyttämäsi palvelut -välilehdellä.`}
-          />
-        </p>
+        />
 
-        <p>
-          <UserGuideImage
-            src={image025}
-            alt={`Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä
+        <UserGuideImage
+          src={image025}
+          alt={`Helsinki-profiilin Käyttämäsi palvelut -osiossa näet kaikki palvelut, joihin olet tunnistautunut ja mitä
             tietojasi ne käyttävät. Voit myös poistaa tietosi yksittäisistä palveluista.`}
-          />
-        </p>
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -534,13 +494,11 @@ function UserGuideFi(): ReactElement {
           . Jos olet yhdistänyt Suomi.fi-tunnistautumisen ja
           sähköpostiosoite-salasana-kirjautumisen samaan Helsinki-profiiliin,
           tietojen lataus pitää tehdä Suomi.fi-tunnistautuneena.
-          <p>
-            <UserGuideImage
-              src={image026}
-              alt="Helsinki-profiilin Omat tiedot -osiossa voit ladata tietosi kaikista palveluista json-tiedostona."
-            />
-          </p>
         </p>
+        <UserGuideImage
+          src={image026}
+          alt="Helsinki-profiilin Omat tiedot -osiossa voit ladata tietosi kaikista palveluista json-tiedostona."
+        />
       </UserGuideAccordion>
       <h2 id="_Tietojen_poisto">Tietojen poisto</h2>
       <p>
@@ -566,19 +524,15 @@ function UserGuideFi(): ReactElement {
           saat ponnahdusikkunaan vahvistusviestin poistosta.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image027}
-            alt="Voit poistaa tietosi Helsinki-profiilissa yksittäisen palvelun kohdalla Käyttämäsi palvelut -osiossa."
-          />
-        </p>
+        <UserGuideImage
+          src={image027}
+          alt="Voit poistaa tietosi Helsinki-profiilissa yksittäisen palvelun kohdalla Käyttämäsi palvelut -osiossa."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image028}
-            alt='Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä ponnahdusikkunaan vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa.'
-          />
-        </p>
+        <UserGuideImage
+          src={image028}
+          alt='Klikattuasi "Poista tietosi tästä palvelusta"-painiketta saat vielä ponnahdusikkunaan vahvistusviestin ruudulle, jotta tietoja ei poisteta vahingossa.'
+        />
       </UserGuideAccordion>
       <UserGuideAccordion
         language={lang}
@@ -613,19 +567,15 @@ function UserGuideFi(): ReactElement {
           uuden profiilin, mutta kaikki aiemmat tiedot on menetetty.
         </p>
 
-        <p>
-          <UserGuideImage
-            src={image029}
-            alt="Helsinki-profiilin Omat tiedot -osiossa on painike Poista omat tiedot, jolla voit poistaa koko Helsinki-profiilin ja eri palveluissa käytetyt tietosi."
-          />
-        </p>
+        <UserGuideImage
+          src={image029}
+          alt="Helsinki-profiilin Omat tiedot -osiossa on painike Poista omat tiedot, jolla voit poistaa koko Helsinki-profiilin ja eri palveluissa käytetyt tietosi."
+        />
 
-        <p>
-          <UserGuideImage
-            src={image030}
-            alt="Ruudulle tulee vielä varmistusviesti ponnahdusikkunaan, jotta tietoja ei poisteta vahingossa."
-          />
-        </p>
+        <UserGuideImage
+          src={image030}
+          alt="Ruudulle tulee vielä varmistusviesti ponnahdusikkunaan, jotta tietoja ei poisteta vahingossa."
+        />
       </UserGuideAccordion>
     </Fragment>
   );
