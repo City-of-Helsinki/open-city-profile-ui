@@ -11,6 +11,7 @@ const config = {
   tunnistamoGdprClientId: window._env_.REACT_APP_PROFILE_BE_GDPR_CLIENT_ID,
   keycloakGdprClientId: window._env_.REACT_APP_KEYCLOAK_GDPR_CLIENT_ID,
   keycloakAuthority: window._env_.REACT_APP_KEYCLOAK_AUTHORITY,
+  mfa: window._env_.REACT_APP_MFA_ENABLED === 'true',
   errorPagePath: '/error',
   cookiePagePath: '/cookies',
   autoSSOLoginPath: '/loginsso',

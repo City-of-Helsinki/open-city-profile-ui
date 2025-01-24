@@ -297,5 +297,16 @@
   "changeProfilePassword ": {
     "explanationForStrongAuthentication": "You can only change your password if you are strongly identified. Log out and log in again using Suomi.fi authentication to change your password."
   },
-  "userGuide": "Helsinki profile guide"
+  "userGuide": "Helsinki profile guide",
+  "mfa": {
+    "title": "Two-step authentication",
+    "enable": "Enable",
+    "disable": "Disable",
+    "dateEnabled": "Enabled",
+    "disabled": "",
+    "enableSuccess": "",
+    "enableFailed": "",
+    "disableSuccess": "",
+    "disableFailed": ""
+  }
 }

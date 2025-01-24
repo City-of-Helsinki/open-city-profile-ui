@@ -32,6 +32,7 @@ import LoginSSO from './auth/components/loginsso/LoginSSO';
 import MatomoTracker from './common/matomo/MatomoTracker';
 import { MatomoProvider } from './common/matomo/matomo-context';
 import PasswordChangeCallback from './passwordChange/PasswordChangeCallback';
+import OtpConfigurationCallback from './otpConfiguration/OtpConfigurationCallback';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -95,6 +96,16 @@ function App(): React.ReactElement {
                   path="/password-change-callback"
                   component={PasswordChangeCallback}
                 ></Route>
+                <Route
+                  path="/otp-configuration-callback"
+                  component={OtpConfigurationCallback}
+                ></Route>
+                <Route
+                  path="/delete-credential-callback"
+                  render={routeProps => (
+                    <OtpConfigurationCallback {...routeProps} action="delete" />
+                  )}
+                />
                 <Route path="/login">
                   <Login />
                 </Route>

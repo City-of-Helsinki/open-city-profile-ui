@@ -217,6 +217,8 @@ describe('<ErrorPage /> ', () => {
       logout: vi.fn(),
       login: vi.fn(),
       changePassword: vi.fn(),
+      initiateTOTP: vi.fn(),
+      disableTOTP: vi.fn(),
     }));
 
     result = render(

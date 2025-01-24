@@ -297,5 +297,16 @@
   "changeProfilePassword ": {
     "explanationForStrongAuthentication": "Voit vaihtaa salasanan vain, jos olet vahvasti tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista vaihtaaksesi salasanasi."
   },
-  "userGuide": "Helsinki-profiilin ohje"
+  "userGuide": "Helsinki-profiilin ohje",
+  "mfa": {
+    "title": "Kaksivaiheinen tunnistautuminen",
+    "enable": "Ota käyttöön",
+    "disable": "Poista käytöstä",
+    "dateEnabled": "Otettu käyttöön",
+    "disabled": "Ei käytössä",
+    "enableSuccess": "Käyttöönotto onnistui.",
+    "enableFailed": "Käyttöönotto epäonnistui. Yritä uudelleen.",
+    "disableSuccess": "Käytöstä poisto onnistui.",
+    "disableFailed": "Käytöstä poisto epäonnistui. Yritä uudelleen."
+  }
 }

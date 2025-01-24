@@ -37,6 +37,10 @@ export type ProfileContextData = {
   getProfile: () => ProfileRoot | null;
   passwordUpdateState: boolean;
   setPasswordUpdateState: (state: boolean) => void;
+  otpConfigurationState: boolean;
+  setOtpConfigurationState: (state: boolean) => void;
+  otpDeleteState: boolean;
+  setOtpDeleteState: (state: boolean) => void;
 };
 
 const reportErrorToSentry = (apolloError: ApolloError) => {
@@ -61,6 +65,10 @@ export const ProfileContext = createContext<ProfileContextData>({
   getProfile: () => null,
   passwordUpdateState: false,
   setPasswordUpdateState: () => undefined,
+  otpConfigurationState: false,
+  setOtpConfigurationState: () => undefined,
+  otpDeleteState: false,
+  setOtpDeleteState: () => undefined,
 });
 
 export const Provider = (props: ContextProps): React.ReactElement => {
@@ -88,6 +96,9 @@ export const Provider = (props: ContextProps): React.ReactElement => {
   });
   const [profileData, updateData] = useState(data);
   const [passwordUpdateState, setPasswordUpdateState] = useState(false);
+  const [otpConfigurationState, setOtpConfigurationState] = useState(false);
+  const [otpDeleteState, setOtpDeleteState] = useState(false);
+
   const loadTracker = useRef({
     started: false,
     complete: false,
@@ -166,6 +177,10 @@ export const Provider = (props: ContextProps): React.ReactElement => {
       profileData && profileData.myProfile ? profileData : null,
     passwordUpdateState,
     setPasswordUpdateState,
+    otpConfigurationState,
+    setOtpConfigurationState,
+    otpDeleteState,
+    setOtpDeleteState,
   };
 
   return (

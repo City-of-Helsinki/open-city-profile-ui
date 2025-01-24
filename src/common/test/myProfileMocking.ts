@@ -186,7 +186,15 @@ export const getMyProfile = (): ProfileRoot => ({
       __typename: 'PhoneNodeConnection',
     },
     verifiedPersonalInformation: null,
-    loginMethods: [LoginMethodType.PASSWORD],
+    availableLoginMethods: [
+      {
+        __typename: 'LoginMethodNode',
+        method: LoginMethodType.PASSWORD,
+        createdAt: '2025-01-24T11:27:45.637Z',
+        credentialId: null,
+        userLabel: null,
+      },
+    ],
     __typename: 'ProfileNode',
   },
 });

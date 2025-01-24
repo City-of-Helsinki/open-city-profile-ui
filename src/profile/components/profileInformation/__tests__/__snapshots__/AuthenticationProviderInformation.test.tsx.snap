@@ -64,6 +64,11 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
               data-testid="change-password-button"
               type="button"
             >
+              <span
+                class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+              >
+                profileInformation.changePassword
+              </span>
               <div
                 aria-hidden="true"
                 class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
@@ -84,10 +89,64 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
                   />
                 </svg>
               </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="responsive-flex-box-columns-rows password-container"
+      >
+        <div
+          class="editor-title-and-value responsive-flex-box-columns-rows"
+        >
+          <div>
+            <h3
+              class="subtitle-size"
+            >
+              mfa.title
+            </h3>
+            <span
+              class="StatusLabel-module_statusLabel__3R2J2 status-label_hds-status-label__1L8YI StatusLabel-module_statusLabelWithIcon__5lKVk status-label_hds-status-label--with-icon__3bHf6"
+            >
+              <span
+                aria-hidden="true"
+                class="StatusLabel-module_statusLabelIcon__2SAou status-label_hds-status-label-icon__3K58a"
+              >
+                <svg
+                  aria-hidden="true"
+                  aria-label="info-circle"
+                  class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4ZM13 10V16.5H15V18H9V16.5H11V11.5H9V10H13ZM11.8125 6C12.5374 6 13.125 6.5876 13.125 7.3125C13.125 8.03735 12.5374 8.625 11.8125 8.625C11.0876 8.625 10.5 8.03735 10.5 7.3125C10.5 6.5876 11.0876 6 11.8125 6Z"
+                    fill="currentColor"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+              mfa.disabled
+            </span>
+          </div>
+        </div>
+        <div
+          class="edit-buttons"
+        >
+          <div
+            class="edit-buttons-container"
+          >
+            <button
+              class="Button-module_button__1msFE button_hds-button__2A0je Button-module_primary__2LfKB button_hds-button--primary__2NVvO"
+              data-testid="enable-totp-button"
+              type="button"
+            >
               <span
                 class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
               >
-                profileInformation.changePassword
+                mfa.enable
               </span>
             </button>
           </div>
