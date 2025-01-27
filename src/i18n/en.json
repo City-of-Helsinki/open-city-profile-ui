@@ -303,7 +303,7 @@
     "enable": "Enable",
     "disable": "Disable",
     "dateEnabled": "Enabled",
-    "disabled": "",
+    "disabled": "Not enabled",
     "enableSuccess": "",
     "enableFailed": "",
     "disableSuccess": "",

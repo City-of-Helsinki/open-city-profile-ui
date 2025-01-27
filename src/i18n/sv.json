@@ -303,7 +303,7 @@
     "enable": "Aktivera",
     "disable": "Inaktivera",
     "dateEnabled": "Aktiverades",
-    "disabled": "",
+    "disabled": "Inte aktiverad",
     "enableSuccess": "",
     "enableFailed": "",
     "disableSuccess": "",
