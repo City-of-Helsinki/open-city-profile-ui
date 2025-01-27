@@ -6,6 +6,8 @@ import { mockProfileCreator } from '../../../../common/test/userMocking';
 import TestLoginProvider from '../../../../common/test/TestLoginProvider';
 import * as useProfile from '../../../../auth/useProfile';
 import * as authenticationProviderUtil from '../authenticationProviderUtil';
+import { LoginMethodType } from '../../../../graphql/typings';
+import { MyLoginMethodNodeFragment } from '../../../../graphql/generatedTypes';
 
 const helsinkiAccountAMR = 'helsinki_tunnus-test';
 
@@ -15,6 +17,14 @@ vi.spyOn(useProfile, 'default').mockImplementation(
       profile: mockProfileCreator(),
     } as unknown) as useProfile.ProfileState)
 );
+
+const mockLoginMethodNodeFragment: MyLoginMethodNodeFragment = {
+  createdAt: '2023-01-01T00:00:00Z',
+  method: LoginMethodType.OTP,
+  __typename: 'LoginMethodNode',
+  credentialId: '3837373',
+  userLabel: 'foo',
+};
 
 describe('<AuthenticationProviderInformation /> ', () => {
   const defaultProps = {};
@@ -75,6 +85,42 @@ describe('<AuthenticationProviderInformation /> ', () => {
 
       const { container, queryByTestId } = getWrapper();
       expect(queryByTestId('change-password-button')).not.toBeInTheDocument();
+      expect(container).toMatchSnapshot();
+    });
+  });
+
+  describe('renders correctly according to MFA setting', () => {
+    it('should render enable MFA button', () => {
+      vi.spyOn(
+        authenticationProviderUtil,
+        'hasPasswordLogin'
+      ).mockImplementation(() => true);
+
+      vi.spyOn(
+        authenticationProviderUtil,
+        'getMFALoginMethod'
+      ).mockImplementation(() => undefined);
+
+      const { container, queryByTestId } = getWrapper();
+      expect(queryByTestId('enable-totp-button')).toBeVisible();
+      expect(queryByTestId('disable-totp-button')).not.toBeInTheDocument();
+      expect(container).toMatchSnapshot();
+    });
+
+    it('should render "disable MFA button" when MFA is already configured', () => {
+      vi.spyOn(
+        authenticationProviderUtil,
+        'hasPasswordLogin'
+      ).mockImplementation(() => true);
+
+      vi.spyOn(
+        authenticationProviderUtil,
+        'getMFALoginMethod'
+      ).mockImplementation(() => mockLoginMethodNodeFragment);
+
+      const { container, queryByTestId } = getWrapper();
+      expect(queryByTestId('enable-totp-button')).not.toBeInTheDocument();
+      expect(queryByTestId('disable-totp-button')).toBeVisible();
       expect(container).toMatchSnapshot();
     });
   });

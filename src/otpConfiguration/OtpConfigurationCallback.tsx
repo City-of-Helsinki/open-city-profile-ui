@@ -7,8 +7,8 @@ import styles from './OtpConfigurationCallback.module.css';
 import { getLinkRedirectState } from '../profile/hooks/useHistoryListener';
 import { ProfileContext } from '../profile/context/ProfileContext';
 
-interface OtpConfigurationCallbackProps extends RouteChildrenProps {
-  action: string;
+export interface OtpConfigurationCallbackProps extends RouteChildrenProps {
+  action: string | null;
 }
 
 function OtpConfigurationCallback({
