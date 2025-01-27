@@ -2,7 +2,6 @@ import React, { Fragment, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
-  IconLinkExternal,
   StatusLabel,
   IconCheckCircle,
   IconInfoCircle,
@@ -100,7 +99,7 @@ function OtpInformation(): React.ReactElement | null {
             )}
             {MFALoginMethod && (
               <Button
-                data-testid={'enable-totp-button'}
+                data-testid={'disable-totp-button'}
                 iconLeft={<IconCrossCircle />}
                 variant="secondary"
                 onClick={() => {

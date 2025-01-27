@@ -68,7 +68,7 @@ export function formatDate(dateString: string): string | null {
   const date = new Date(dateString);
   // Extract day, month, and year
   const day = String(date.getUTCDate()).padStart(2, '0');
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  const month = String(date.getUTCMonth() + 1);
   const year = date.getUTCFullYear();
   // Format to DD.MM.YYYY
   return `${day}.${month}.${year}`;
