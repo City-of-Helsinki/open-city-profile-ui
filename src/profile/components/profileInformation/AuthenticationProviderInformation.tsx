@@ -1,16 +1,18 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, IconLinkExternal } from 'hds-react';
+import { Button } from 'hds-react';
 import classNames from 'classnames';
 
 import useProfile from '../../../auth/useProfile';
 import { getAmrStatic, hasPasswordLogin } from './authenticationProviderUtil';
+import OtpInformation from './OtpInformation';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import { ProfileContext } from '../../context/ProfileContext';
 import useNotificationContent from '../editingNotifications/useNotificationContent';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
 import useAuth from '../../../auth/useAuth';
+import config from '../../../config';
 
 function AuthenticationProviderInformation(): React.ReactElement | null {
   const { t } = useTranslation();
@@ -39,6 +41,8 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
 
   const authenticationMethodReferenceName = t(`identityProvider.${amr}`);
 
+  const flexBoxColumns = 'responsive-flex-box-columns-rows';
+
   return (
     <ProfileSection>
       <div className={commonFormStyles['flex-box-columns']}>
@@ -55,7 +59,7 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
           <Fragment>
             <div
               className={classNames(
-                commonFormStyles['responsive-flex-box-columns-rows'],
+                commonFormStyles[flexBoxColumns],
                 commonFormStyles['password-container']
               )}
             >
@@ -72,7 +76,6 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
               <div className={commonFormStyles['edit-buttons']}>
                 <div className={commonFormStyles['edit-buttons-container']}>
                   <Button
-                    iconLeft={<IconLinkExternal />}
                     data-testid={'change-password-button'}
                     onClick={() => {
                       changePassword();
@@ -83,8 +86,9 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
                 </div>
               </div>
             </div>
-
             <EditingNotifications content={content} dataType={'password'} />
+
+            {config.mfa && <OtpInformation />}
           </Fragment>
         )}
       </div>

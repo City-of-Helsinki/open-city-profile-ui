@@ -77,6 +77,13 @@ export const MY_PROFILE = gql`
     phoneType
   }
 
+  fragment MyLoginMethodNode on LoginMethodNode {
+    method
+    createdAt
+    credentialId
+    userLabel
+  }
+
   fragment MyProfileQueryAddressesEdges on AddressNodeEdge {
     node {
       ...MyProfileQueryAddressesEdgesNode
@@ -119,7 +126,9 @@ export const MY_PROFILE = gql`
     lastName
     nickname
     language
-    loginMethods
+    availableLoginMethods {
+      ...MyLoginMethodNode
+    }
     primaryAddress {
       ...MyProfileQueryPrimaryAddress
     }

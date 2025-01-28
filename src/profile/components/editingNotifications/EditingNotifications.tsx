@@ -8,7 +8,7 @@ import { EditDataType } from '../../helpers/editData';
 
 type Props = {
   content: NotificationContent;
-  dataType: EditDataType | 'password';
+  dataType: EditDataType | 'password' | 'totp';
   bottomSpacing?: boolean;
   noSpacing?: boolean;
   bottomSpacingDesktop?: boolean;
