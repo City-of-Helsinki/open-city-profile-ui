@@ -8,7 +8,7 @@ import { getLinkRedirectState } from '../profile/hooks/useHistoryListener';
 import { ProfileContext } from '../profile/context/ProfileContext';
 
 export interface OtpConfigurationCallbackProps extends RouteChildrenProps {
-  action?: string;
+  action?: 'delete';
 }
 
 function OtpConfigurationCallback({
