@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.18.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.17.0...open-city-profile-ui-v1.18.0) (2025-01-28)
+
+
+### Features
+
+* Functionality to switch mfa on and off HP-2472 ([#404](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/404)) ([78611cc](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/78611cc825fe66a02ad1e26ca94df44d16acfc99))
+
 ## [1.17.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.16.2...open-city-profile-ui-v1.17.0) (2025-01-10)
 
 
