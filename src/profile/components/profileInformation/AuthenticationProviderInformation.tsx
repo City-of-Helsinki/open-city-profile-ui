@@ -1,22 +1,10 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  IconLinkExternal,
-  StatusLabel,
-  IconCheckCircle,
-  IconInfoCircle,
-  IconCrossCircle,
-} from 'hds-react';
+import { Button } from 'hds-react';
 import classNames from 'classnames';
 
 import useProfile from '../../../auth/useProfile';
-import {
-  getAmrStatic,
-  hasPasswordLogin,
-  getMFALoginMethod,
-  formatDate,
-} from './authenticationProviderUtil';
+import { getAmrStatic, hasPasswordLogin } from './authenticationProviderUtil';
 import OtpInformation from './OtpInformation';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
@@ -30,21 +18,15 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
   const { t } = useTranslation();
   const { profile } = useProfile();
 
-  const {
-    data,
-    passwordUpdateState,
-    setPasswordUpdateState,
-    otpConfigurationState,
-    setOtpConfigurationState,
-  } = useContext(ProfileContext);
+  const { data, passwordUpdateState, setPasswordUpdateState } = useContext(
+    ProfileContext
+  );
 
   const hasPassword = hasPasswordLogin(data);
-  const MFALoginMethod = getMFALoginMethod(data);
   const amr = getAmrStatic(profile);
   const showSuccess = passwordUpdateState;
-  const showOtpSuccess = otpConfigurationState;
   const { content, setSuccessMessage } = useNotificationContent();
-  const { changePassword, initiateTOTP, disableTOTP } = useAuth();
+  const { changePassword } = useAuth();
 
   useEffect(() => {
     if (showSuccess) {
@@ -52,13 +34,6 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
       setPasswordUpdateState(false);
     }
   }, [showSuccess, setPasswordUpdateState, setSuccessMessage]);
-  /*
-  useEffect(() => {
-    if (showOtpSuccess) {
-      setSuccessMessage('save');
-      setOtpConfigurationState(false);
-    }
-  }, [showOtpSuccess, setOtpConfigurationState, setSuccessMessage]); */
 
   if (!amr) {
     return null;
@@ -101,7 +76,6 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
               <div className={commonFormStyles['edit-buttons']}>
                 <div className={commonFormStyles['edit-buttons-container']}>
                   <Button
-                    iconRight={<IconLinkExternal />}
                     data-testid={'change-password-button'}
                     onClick={() => {
                       changePassword();
