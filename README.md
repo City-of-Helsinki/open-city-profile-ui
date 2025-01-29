@@ -107,6 +107,7 @@ Fetches country calling codes and generates src/i18n/countryCallingCodes.json fi
 | `REACT_APP_OIDC_RESPONSE_TYPE`        | Which response type to require.                                                                                 |
 | `REACT_APP_KEYCLOAK_GDPR_CLIENT_ID`   | Client id for getting auth codes from keycloak                                                                  |
 | `REACT_APP_KEYCLOAK_AUTHORITY`        | Url to Keycloak. The openid config is fetched from this url                                                     |
+| `REACT_APP_MFA_ENABLED`               | Show multi factor authentication section in ui                                                                  |
 
 ## Setting up local development environment with Docker
 
