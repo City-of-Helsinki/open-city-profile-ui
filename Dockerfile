@@ -1,5 +1,5 @@
 # ===============================================
-FROM registry.access.redhat.com/ubi9/nodejs-18 as appbase
+FROM registry.access.redhat.com/ubi9/nodejs-22 as appbase
 # ===============================================
 
 WORKDIR /app
@@ -21,7 +21,7 @@ ENV NPM_CONFIG_PREFIX=/app/.npm-global
 ENV PATH=$PATH:/app/.npm-global/bin
 
 # Yarn
-ENV YARN_VERSION 1.22.19
+ENV YARN_VERSION 1.22.22
 RUN yarn policies set-version $YARN_VERSION
 
 RUN chown -R default:root /app
