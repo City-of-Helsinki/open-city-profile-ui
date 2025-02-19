@@ -87,3 +87,13 @@ test('Change password', async ({ page }) => {
   await expect(page.getByTestId('user-menu-button')).toBeVisible();
   await expect(page.getByText(SAVE_SUCCESS)).toBeVisible();
 });
+
+test('Check MFA view', async ({ page }) => {
+  await expect(page.getByTestId('enable-totp-button')).toBeVisible();
+  await page.getByTestId('enable-totp-button').click();
+  await expect(
+    page.getByRole('button', { name: 'Ota käyttöön' })
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'Peruuta' }).click();
+  await expect(page.getByTestId('user-menu-button')).toBeVisible();
+});
