@@ -38,7 +38,7 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
       setTimeout(() => {
         if (notificationRef.current) {
           notificationRef.current.scrollIntoView({
-            behavior: 'instant',
+            behavior: 'auto',
             block: 'center',
           });
         }
