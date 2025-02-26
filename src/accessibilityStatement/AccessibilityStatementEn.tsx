@@ -52,14 +52,12 @@ function AccessibilityStatementEn(): ReactElement {
       </p>
       <h2>Accessibility monitoring</h2>
       <p>
-        The Regional State Administrative Agency for Southern Finland enforces
-        compliance with accessibility requirements. If you are dissatisfied with
-        the reply you received from us about a detected accessibility
-        shortcoming or you did not receive a reply within 14 days, you may
-        submit a complaint or request for information to the Regional State
-        Administrative Agency for Southern Finland. The website of the Regional
-        State Administrative Agency of Southern Finland has information on
-        submitting a complaint and how complaints are processed.
+        Finnish Transport and Communication Agency Traficom enforces compliance
+        with accessibility requirements. If you are dissatisfied with the reply
+        you received from us about a detected accessibility shortcoming or you
+        did not receive a reply within 14 days, you may submit a complaint or
+        request for information to Traficom. The website of Traficom has
+        information on submitting a complaint and how complaints are processed.
       </p>
       <p>
         Finnish Transport and Communication Agency Traficom <br />

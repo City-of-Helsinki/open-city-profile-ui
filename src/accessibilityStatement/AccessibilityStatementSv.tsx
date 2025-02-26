@@ -59,12 +59,11 @@ function AccessibilityStatementSv(): React.ReactElement {
 
       <h2>Tillgänglighetstillsyn</h2>
       <p>
-        Regionförvaltningsverket i Södra Finland övervakar att
+        Transport- och kommunikationsverket Traficom övervakar att
         tillgänglighetskraven följs. Om du är missnöjd med svaret eller om du
         inte fått något svar inom två veckor, kan du göra en anmälan till
-        Regionförvaltningsverket i Södra Finland. Regionförvaltningsverket i
-        Södra Finland meddelar detaljerat på sin webbplats hur man går till väga
-        för att lämna in en anmälan och hur den handläggs.
+        Traficom. Traficom meddelar detaljerat på sin webbplats hur man går till
+        väga för att lämna in en anmälan och hur den handläggs.
       </p>
       <p>
         Transport- och kommunikationsverket Traficom
