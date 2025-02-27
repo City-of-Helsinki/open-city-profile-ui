@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Notification } from 'hds-react';
 import classNames from 'classnames';
 
@@ -15,41 +15,53 @@ type Props = {
   topSpacingMobile?: boolean;
 };
 
-function EditingNotifications({
-  content,
-  dataType,
-  bottomSpacing,
-  bottomSpacingDesktop,
-  topSpacingMobile,
-  noSpacing,
-}: Props): React.ReactElement | null {
-  if (!content.text) {
-    return null;
+// Forwarding ref to the outer div
+const EditingNotifications = forwardRef<HTMLDivElement, Props>(
+  function EditingNotifications(
+    {
+      content,
+      dataType,
+      bottomSpacing,
+      bottomSpacingDesktop,
+      topSpacingMobile,
+      noSpacing,
+    }: Props,
+    ref
+  ): React.ReactElement | null {
+    if (!content.text) {
+      return null;
+    }
+
+    const classList = [styles.wrapper];
+    if (bottomSpacing) {
+      classList.push(styles['bottom-padding']);
+    } else if (noSpacing) {
+      classList.push(styles['no-padding']);
+    }
+    if (bottomSpacingDesktop) {
+      classList.push(styles['bottom-padding-desktop']);
+    }
+    if (topSpacingMobile) {
+      classList.push(styles['top-padding-mobile']);
+    }
+
+    return (
+      <div
+        ref={ref} // Attach the ref to the div
+        className={classNames(...classList)}
+        role="alert"
+        id={`${dataType}-edit-notifications`}
+      >
+        <Notification
+          type={content.error ? 'error' : 'success'}
+          size={'small'}
+          label={content.text}
+        >
+          {content.text}
+        </Notification>
+      </div>
+    );
   }
-  const classList = [styles.wrapper];
-  if (bottomSpacing) {
-    classList.push(styles['bottom-padding']);
-  } else if (noSpacing) {
-    classList.push(styles['no-padding']);
-  }
-  if (bottomSpacingDesktop) {
-    classList.push(styles['bottom-padding-desktop']);
-  }
-  if (topSpacingMobile) {
-    classList.push(styles['top-padding-mobile']);
-  }
-  return (
-    <div
-      className={classNames(...classList)}
-      role="alert"
-      id={`${dataType}-edit-notifications`}
-    >
-      <Notification
-        type={content.error ? 'error' : 'success'}
-        label={content.text}
-      />
-    </div>
-  );
-}
+);
 
 export default EditingNotifications;

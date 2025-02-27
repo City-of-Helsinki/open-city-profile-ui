@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'hds-react';
 import classNames from 'classnames';
@@ -17,6 +17,7 @@ import config from '../../../config';
 function AuthenticationProviderInformation(): React.ReactElement | null {
   const { t } = useTranslation();
   const { profile } = useProfile();
+  const notificationRef = useRef<HTMLDivElement>(null);
 
   const { data, passwordUpdateState, setPasswordUpdateState } = useContext(
     ProfileContext
@@ -32,6 +33,16 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
     if (showSuccess) {
       setSuccessMessage('save');
       setPasswordUpdateState(false);
+
+      // Scrolling needs timeout because the notification is not yet rendered
+      setTimeout(() => {
+        if (notificationRef.current) {
+          notificationRef.current.scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+          });
+        }
+      }, 0);
     }
   }, [showSuccess, setPasswordUpdateState, setSuccessMessage]);
 
@@ -86,7 +97,12 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
                 </div>
               </div>
             </div>
-            <EditingNotifications content={content} dataType={'password'} />
+            <EditingNotifications
+              ref={notificationRef}
+              content={content}
+              dataType={'password'}
+              bottomSpacing
+            />
 
             {config.mfa && <OtpInformation />}
           </Fragment>

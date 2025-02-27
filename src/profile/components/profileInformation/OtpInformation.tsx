@@ -1,10 +1,10 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
   StatusLabel,
   IconCheckCircle,
-  IconInfoCircle,
+  IconAlertCircle,
   IconCrossCircle,
 } from 'hds-react';
 import classNames from 'classnames';
@@ -18,6 +18,7 @@ import useAuth from '../../../auth/useAuth';
 
 function OtpInformation(): React.ReactElement | null {
   const { t } = useTranslation();
+  const notificationRef = useRef<HTMLDivElement>(null);
 
   const {
     data,
@@ -34,15 +35,29 @@ function OtpInformation(): React.ReactElement | null {
   const { content, setSuccessMessage } = useNotificationContent();
   const { initiateTOTP, disableTOTP } = useAuth();
 
+  const scrollNotification = () => {
+    // Scrolling needs timeout because the notification is not yet rendered
+    setTimeout(() => {
+      if (notificationRef.current) {
+        notificationRef.current.scrollIntoView({
+          behavior: 'auto',
+          block: 'center',
+        });
+      }
+    }, 0);
+  };
+
   useEffect(() => {
     if (showOtpSuccess) {
       setSuccessMessage('save');
       setOtpConfigurationState(false);
+      scrollNotification();
     }
 
     if (otpDeleteState) {
       setSuccessMessage('remove');
       setOtpDeleteState(false);
+      scrollNotification();
     }
   }, [
     showOtpSuccess,
@@ -74,7 +89,7 @@ function OtpInformation(): React.ReactElement | null {
             </h3>
 
             {!MFALoginMethod && (
-              <StatusLabel iconLeft={<IconInfoCircle />}>
+              <StatusLabel iconLeft={<IconAlertCircle />}>
                 {t('mfa.disabled')}
               </StatusLabel>
             )}
@@ -112,7 +127,11 @@ function OtpInformation(): React.ReactElement | null {
           </div>
         </div>
       </div>
-      <EditingNotifications content={content} dataType={'totp'} />
+      <EditingNotifications
+        ref={notificationRef}
+        content={content}
+        dataType={'totp'}
+      />
     </Fragment>
   );
 }
