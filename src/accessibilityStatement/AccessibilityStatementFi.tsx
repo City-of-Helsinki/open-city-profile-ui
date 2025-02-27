@@ -53,12 +53,11 @@ function AccessibilityStatementFi(): ReactElement {
       </p>
       <h2>Saavutettavuuden valvonta</h2>
       <p>
-        Etelä-Suomen aluehallintovirasto valvoo saavutettavuusvaatimusten
+        Liikenne- ja viestintävirasto Traficom valvoo saavutettavuusvaatimusten
         toteutumista. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa
         vastausta lainkaan kahden viikon aikana, voit tehdä ilmoituksen
-        Etelä-Suomen aluehallintovirastoon. Etelä-Suomen aluehallintoviraston
-        sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia
-        käsitellään.
+        Traficomiin. Traficomin sivulla kerrotaan tarkasti, miten ilmoituksen
+        voi tehdä ja miten asia käsitellään.
       </p>
       <p>
         Liikenne- ja viestintävirasto Traficom <br />
