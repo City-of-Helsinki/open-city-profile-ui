@@ -3,6 +3,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.19.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.18.1...open-city-profile-ui-v1.19.0) (2025-02-27)
+
+
+### Features
+
+* Add proper label to edit notification ([#416](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/416)) ([265def7](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/265def7ffba6d28ac4999b411339d59cf4122e9a))
+
+
+### Bug Fixes
+
+* Change aluehallintovirasto name to traficom ([#414](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/414)) ([44ea8ff](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/44ea8ff1eb88048c7dd2f62edcab106e1ad336dd))
+* Issues with MFA ui HP-2816 ([#412](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/412)) ([b016216](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/b016216e0f6f6b9d9547021630e73f53840e4d40))
+
+
+### Dependencies
+
+* Bump dompurify from 2.5.4 to 3.2.4 ([#411](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/411)) ([2579f4e](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/2579f4ef80d9ccd3d3c61ee4d27a1183d4011a5f))
+
 ## [1.18.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.18.0...open-city-profile-ui-v1.18.1) (2025-02-17)
 
 
