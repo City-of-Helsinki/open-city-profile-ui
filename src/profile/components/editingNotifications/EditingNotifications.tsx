@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { Notification } from 'hds-react';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { NotificationContent } from './useNotificationContent';
 import styles from './EditingNotifications.module.css';
@@ -28,6 +29,8 @@ const EditingNotifications = forwardRef<HTMLDivElement, Props>(
     }: Props,
     ref
   ): React.ReactElement | null {
+    const { t } = useTranslation();
+
     if (!content.text) {
       return null;
     }
@@ -55,7 +58,11 @@ const EditingNotifications = forwardRef<HTMLDivElement, Props>(
         <Notification
           type={content.error ? 'error' : 'success'}
           size={'small'}
-          label={content.text}
+          label={
+            content.error
+              ? t('notification.genericError')
+              : t('notification.genericSuccess')
+          }
         >
           {content.text}
         </Notification>
