@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import countries from 'i18n-iso-countries';
 import fi from 'i18n-iso-countries/langs/fi.json';
 import en from 'i18n-iso-countries/langs/en.json';
@@ -26,7 +26,6 @@ import GdprAuthorizationCodeManagerCallback from './gdprApi/GdprAuthorizationCod
 import ToastProvider from './toast/ToastProvider';
 import config from './config';
 import PageNotFound from './common/pageNotFound/PageNotFound';
-import { useHistoryListener } from './profile/hooks/useHistoryListener';
 import CookieConsentPage from './cookieConsents/CookieConsentPage';
 import LoginSSO from './auth/components/loginsso/LoginSSO';
 import MatomoTracker from './common/matomo/MatomoTracker';
@@ -39,8 +38,6 @@ countries.registerLocale(en);
 countries.registerLocale(sv);
 
 function App(): React.ReactElement {
-  useHistoryListener();
-
   const matomoTracker = new MatomoTracker({
     urlBase: window._env_.REACT_APP_MATOMO_URL_BASE,
     siteId: window._env_.REACT_APP_MATOMO_SITE_ID,
@@ -87,59 +84,51 @@ function App(): React.ReactElement {
         <ToastProvider>
           <MatomoProvider value={matomoTracker}>
             <ProfileProvider>
-              <Switch>
-                <Route path="/callback" component={OidcCallback} />
-                <Route path="/gdpr-callback">
-                  <GdprAuthorizationCodeManagerCallback />
-                </Route>
+              <Routes>
+                <Route path="/callback" element={<OidcCallback />} />
+                <Route
+                  path="/gdpr-callback"
+                  element={<GdprAuthorizationCodeManagerCallback />}
+                />
                 <Route
                   path="/password-change-callback"
-                  component={PasswordChangeCallback}
-                ></Route>
+                  element={<PasswordChangeCallback />}
+                />
                 <Route
                   path="/otp-configuration-callback"
-                  component={OtpConfigurationCallback}
-                ></Route>
+                  element={<OtpConfigurationCallback />}
+                />
                 <Route
                   path="/delete-credential-callback"
-                  render={routeProps => (
-                    <OtpConfigurationCallback {...routeProps} action="delete" />
-                  )}
+                  element={<OtpConfigurationCallback action="delete" />}
                 />
-                <Route path="/login">
-                  <Login />
-                </Route>
-                <Route path={['/', '/connected-services']} exact>
-                  <WithAuthentication
-                    AuthorisedComponent={Profile}
-                    UnauthorisedComponent={Login}
-                  />
-                </Route>
-                <Route path="/about" exact>
-                  <AboutPage />
-                </Route>
-                <Route path="/guide" exact>
-                  <UserGuide />
-                </Route>
-                <Route path="/accessibility" exact>
-                  <AccessibilityStatement />
-                </Route>
-                <Route path="/profile-deleted" exact>
-                  <ProfileDeleted />
-                </Route>
-                <Route path={config.errorPagePath} exact>
-                  <ErrorPage />
-                </Route>
-                <Route path={config.autoSSOLoginPath} exact>
-                  <LoginSSO />
-                </Route>
-                <Route path={config.cookiePagePath} exact>
-                  <CookieConsentPage />
-                </Route>
-                <Route path="*">
-                  <PageNotFound />
-                </Route>
-              </Switch>
+                <Route path="/login" element={<Login />} />
+                <Route
+                  path="/*"
+                  element={
+                    <WithAuthentication
+                      AuthorisedComponent={() => <Profile />}
+                      UnauthorisedComponent={() => <Login />}
+                    />
+                  }
+                />
+
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/guide" element={<UserGuide />} />
+                <Route
+                  path="/accessibility"
+                  element={<AccessibilityStatement />}
+                />
+                <Route path="/profile-deleted" element={<ProfileDeleted />} />
+                <Route path={config.errorPagePath} element={<ErrorPage />} />
+                <Route path={config.autoSSOLoginPath} element={<LoginSSO />} />
+                <Route
+                  path={config.cookiePagePath}
+                  element={<CookieConsentPage />}
+                />
+
+                <Route path="*" element={<PageNotFound />} />
+              </Routes>
             </ProfileProvider>
           </MatomoProvider>
         </ToastProvider>

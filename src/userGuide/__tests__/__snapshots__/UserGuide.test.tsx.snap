@@ -2433,21 +2433,42 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     >
                       |
                     </span>
-                    <div />
+                    <a
+                      class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      href="/accessibility"
+                    >
+                      <span>
+                        footer.accessibility
+                      </span>
+                    </a>
                     <span
                       aria-hidden="true"
                       class="FooterBase-module_separator__cwQTe"
                     >
                       |
                     </span>
-                    <div />
+                    <a
+                      class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      href="/cookies"
+                    >
+                      <span>
+                        cookies.pageName
+                      </span>
+                    </a>
                     <span
                       aria-hidden="true"
                       class="FooterBase-module_separator__cwQTe"
                     >
                       |
                     </span>
-                    <div />
+                    <a
+                      class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      href="/about"
+                    >
+                      <span>
+                        footer.about
+                      </span>
+                    </a>
                   </div>
                   <button
                     class="FooterBase-module_backToTopButton__hXTHm"
@@ -4908,21 +4929,42 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   >
                     |
                   </span>
-                  <div />
+                  <a
+                    class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    href="/accessibility"
+                  >
+                    <span>
+                      footer.accessibility
+                    </span>
+                  </a>
                   <span
                     aria-hidden="true"
                     class="FooterBase-module_separator__cwQTe"
                   >
                     |
                   </span>
-                  <div />
+                  <a
+                    class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    href="/cookies"
+                  >
+                    <span>
+                      cookies.pageName
+                    </span>
+                  </a>
                   <span
                     aria-hidden="true"
                     class="FooterBase-module_separator__cwQTe"
                   >
                     |
                   </span>
-                  <div />
+                  <a
+                    class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    href="/about"
+                  >
+                    <span>
+                      footer.about
+                    </span>
+                  </a>
                 </div>
                 <button
                   class="FooterBase-module_backToTopButton__hXTHm"
@@ -7357,21 +7399,42 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     >
                       |
                     </span>
-                    <div />
+                    <a
+                      class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      href="/accessibility"
+                    >
+                      <span>
+                        footer.accessibility
+                      </span>
+                    </a>
                     <span
                       aria-hidden="true"
                       class="FooterBase-module_separator__cwQTe"
                     >
                       |
                     </span>
-                    <div />
+                    <a
+                      class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      href="/cookies"
+                    >
+                      <span>
+                        cookies.pageName
+                      </span>
+                    </a>
                     <span
                       aria-hidden="true"
                       class="FooterBase-module_separator__cwQTe"
                     >
                       |
                     </span>
-                    <div />
+                    <a
+                      class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      href="/about"
+                    >
+                      <span>
+                        footer.about
+                      </span>
+                    </a>
                   </div>
                   <button
                     class="FooterBase-module_backToTopButton__hXTHm"
@@ -9749,21 +9812,42 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   >
                     |
                   </span>
-                  <div />
+                  <a
+                    class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    href="/accessibility"
+                  >
+                    <span>
+                      footer.accessibility
+                    </span>
+                  </a>
                   <span
                     aria-hidden="true"
                     class="FooterBase-module_separator__cwQTe"
                   >
                     |
                   </span>
-                  <div />
+                  <a
+                    class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    href="/cookies"
+                  >
+                    <span>
+                      cookies.pageName
+                    </span>
+                  </a>
                   <span
                     aria-hidden="true"
                     class="FooterBase-module_separator__cwQTe"
                   >
                     |
                   </span>
-                  <div />
+                  <a
+                    class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    href="/about"
+                  >
+                    <span>
+                      footer.about
+                    </span>
+                  </a>
                 </div>
                 <button
                   class="FooterBase-module_backToTopButton__hXTHm"
@@ -12214,21 +12298,42 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     >
                       |
                     </span>
-                    <div />
+                    <a
+                      class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      href="/accessibility"
+                    >
+                      <span>
+                        footer.accessibility
+                      </span>
+                    </a>
                     <span
                       aria-hidden="true"
                       class="FooterBase-module_separator__cwQTe"
                     >
                       |
                     </span>
-                    <div />
+                    <a
+                      class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      href="/cookies"
+                    >
+                      <span>
+                        cookies.pageName
+                      </span>
+                    </a>
                     <span
                       aria-hidden="true"
                       class="FooterBase-module_separator__cwQTe"
                     >
                       |
                     </span>
-                    <div />
+                    <a
+                      class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      href="/about"
+                    >
+                      <span>
+                        footer.about
+                      </span>
+                    </a>
                   </div>
                   <button
                     class="FooterBase-module_backToTopButton__hXTHm"
@@ -14622,21 +14727,42 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   >
                     |
                   </span>
-                  <div />
+                  <a
+                    class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    href="/accessibility"
+                  >
+                    <span>
+                      footer.accessibility
+                    </span>
+                  </a>
                   <span
                     aria-hidden="true"
                     class="FooterBase-module_separator__cwQTe"
                   >
                     |
                   </span>
-                  <div />
+                  <a
+                    class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    href="/cookies"
+                  >
+                    <span>
+                      cookies.pageName
+                    </span>
+                  </a>
                   <span
                     aria-hidden="true"
                     class="FooterBase-module_separator__cwQTe"
                   >
                     |
                   </span>
-                  <div />
+                  <a
+                    class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    href="/about"
+                  >
+                    <span>
+                      footer.about
+                    </span>
+                  </a>
                 </div>
                 <button
                   class="FooterBase-module_backToTopButton__hXTHm"
@@ -17068,21 +17194,42 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 >
                   |
                 </span>
-                <div />
+                <a
+                  class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                  href="/accessibility"
+                >
+                  <span>
+                    footer.accessibility
+                  </span>
+                </a>
                 <span
                   aria-hidden="true"
                   class="FooterBase-module_separator__cwQTe"
                 >
                   |
                 </span>
-                <div />
+                <a
+                  class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                  href="/cookies"
+                >
+                  <span>
+                    cookies.pageName
+                  </span>
+                </a>
                 <span
                   aria-hidden="true"
                   class="FooterBase-module_separator__cwQTe"
                 >
                   |
                 </span>
-                <div />
+                <a
+                  class="FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                  href="/about"
+                >
+                  <span>
+                    footer.about
+                  </span>
+                </a>
               </div>
               <button
                 class="FooterBase-module_backToTopButton__hXTHm"

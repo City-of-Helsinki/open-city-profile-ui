@@ -60,7 +60,7 @@ function ToastProvider({ children }: Props): React.ReactElement {
   // After a logout, if the user goes back into /profile-deleted, the
   // root element for toast may be missing.
   if (!toastRoot) {
-    return children;
+    return <>{children}</>;
   }
 
   return (

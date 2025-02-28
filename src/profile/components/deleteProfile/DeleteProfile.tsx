@@ -3,7 +3,7 @@ import { ApolloError, useLazyQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/react';
 import { Button, Notification, useCookies } from 'hds-react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import {
@@ -42,7 +42,7 @@ function DeleteProfile(): React.ReactElement {
     | typeof loadedLoadState
     | typeof errorLoadState
   >(notStartedLoadState);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { getAllConsents } = useCookies();
   const { trackEvent } = useMatomo();
@@ -61,12 +61,12 @@ function DeleteProfile(): React.ReactElement {
         if (getAllConsents().matomo) {
           trackEvent({ category: 'action', action: 'Delete profile' });
         }
-        history.push('/profile-deleted');
+        navigate('/profile-deleted');
       } else {
         setResultError({ failures, successful });
       }
     },
-    [getAllConsents, history, trackEvent]
+    [getAllConsents, navigate, trackEvent]
   );
   const onError: AuthCodeQueuesProps['onError'] = useCallback(
     (controller: QueueController) => {

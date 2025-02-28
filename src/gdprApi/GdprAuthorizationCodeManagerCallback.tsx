@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './gdprAuthorizationCodeManagerCallback.module.css';
 import useAuthCodeQueues, {
@@ -18,21 +18,22 @@ import {
 function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
   const redirectToErrorPage = useErrorPageRedirect();
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const storedData = useMemo<Partial<AuthCodeQueuesProps>>(
     () => getStoredQueueData(authCodeQueuesStorageKey) || {},
     []
   );
+
   const redirectAfterError = useCallback(
     (failedAction?: Action) => {
       if (!failedAction || !didFailedActionRedirect(failedAction)) {
         const path = storedData.startPagePath as string;
         if (path) {
-          history.push(
+          navigate(
             createPagePathWithFailedActionParams(
               path,
               failedAction || ({ type: 'unknown' } as Action),
-              'Failed grpr callback'
+              'Failed GDPR callback'
             )
           );
         } else {
@@ -42,8 +43,9 @@ function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
         }
       }
     },
-    [redirectToErrorPage, t, history, storedData.startPagePath]
+    [redirectToErrorPage, t, navigate, storedData.startPagePath]
   );
+
   const onError = useCallback(
     (controller: QueueController) => {
       redirectAfterError(controller.getFailed());
