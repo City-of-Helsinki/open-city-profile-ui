@@ -33,6 +33,13 @@ import image027 from './assets/27-tietojen-poisto-palvelusta-sv.png';
 import image028 from './assets/28-tietojen-poisto-palvelusta-pop-up-sv.png';
 import image029 from './assets/29-tietojen-poisto-sv.png';
 import image030 from './assets/30-tietojen-poisto-popup-sv.png';
+import image031 from './assets/01-salasana-vaihto-sve.png';
+import image032 from './assets/02-salasana-vaihto-keycloak-sve.png';
+import image2fa01 from './assets/01-2fa-kayttoonnotto-sv.jpg';
+import image2fa02 from './assets/02-2fa-kayttoonotto-keycloak-sv.jpg';
+import image2fa03 from './assets/03-2fa-kirjautuminen-sv.jpg';
+import image2fa04 from './assets/04-2fa-kaytostapoisto-sv.jpg';
+import image2fa05 from './assets/05-2fa-kaytostapoisto-varmistus-sv.jpg';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 const tableOfContents = [
@@ -354,6 +361,166 @@ function UserGuideSv(): ReactElement {
           avsnittet <a href="#_Glömt_lösenord">Glömt lösenord</a> nedan.
         </p>
       </UserGuideAccordion>
+
+      <UserGuideAccordion
+        language={lang}
+        id="_Kaksivaiheinen_tunnistautuminen"
+        heading="Tvåfaktorsautentisering"
+      >
+        <p>
+          Tvåfaktorsautentisering ökar säkerheten för ditt konto. När du
+          aktiverar den krävs förutom ett lösenord en separat engångskod för att
+          logga in på din Helsingforsprofil, som du hämtar från
+          autentiseringsappen.
+        </p>
+
+        <h4>Så här aktiverar du tvåfaktorsautentisering</h4>
+
+        <p>
+          På sidan Mina uppgifter i din profil kan du aktivera
+          tvåfaktorsautentisering i avsnittet Inloggning och autentisering.
+        </p>
+
+        <UserGuideImage
+          src={image2fa01}
+          alt="Tvåfaktorsautentisering på sidan Min information."
+        />
+
+        <UserGuideImage
+          src={image2fa02}
+          alt="Vy för aktivering av tvåfaktorsautentisering. Följ de numrerade instruktionerna."
+        />
+        <p>
+          Följ installationsanvisningarna och ladda ner en valfri
+          autentiseringsapp, t.ex. Google Authenticator, Microsoft Authenticator
+          eller FreeOTP, till din mobila enhet.
+        </p>
+        <p>
+          Öppna autentiseringsappen och skanna QR-koden på skärmen. Om du inte
+          kan skanna koden kan du ange den manuellt genom att välja länken ”Kan
+          du inte läsa koden?”.
+        </p>
+        <p>
+          <b>
+            Spara koden som dyker upp från länken så att du fortfarande kan
+            komma åt ditt konto om det skulle uppstå problem, till exempel om
+            din telefon går sönder.
+          </b>
+        </p>
+        <p>
+          Autentiseringsappen genererar en engångskod som du anger i Helsingfors
+          profilvy i steg 3.
+        </p>
+        <p>
+          <b>
+            Stäng inte webbläsarfönstret för din Helsingforsprofil när du hämtar
+            engångskoden från din autentiseringsapplikation. I annat fall kommer
+            systemet att anta att du har avbrutit aktiveringsprocessen.
+          </b>
+        </p>
+        <p>
+          När verifieringen har lyckats är tvåstegsautentiseringen aktiverad och
+          du ser att den är aktiverad på sidan Mina uppgifter.
+        </p>
+
+        <h4>Logga in med tvåfaktorsautentisering</h4>
+
+        <p>
+          Om ditt konto har tvåfaktorsautentisering aktiverad när du loggar in
+          via e-post kommer du att uppmanas av systemet att ange en engångskod
+          som genereras av din tidigare definierade autentiseringsapplikation.
+        </p>
+
+        <UserGuideImage
+          src={image2fa03}
+          alt="Hämta och klistra in engångskoden från din autentiseringsapplikation i den här vyn."
+        />
+
+        <p>
+          Gå till din autentiseringsapplikation, kopiera koden och klistra in
+          den i vyn Profilinloggning. Koden är vanligtvis giltig i en minut.
+        </p>
+
+        <p>
+          <b>
+            Stäng inte webbläsarfönstret för din Helsingforsprofil när du hämtar
+            engångskoden från din autentiseringsapp. I annat fall antar systemet
+            att du har avbrutit inloggningsprocessen.
+          </b>
+        </p>
+        <p>
+          Om du inte har tillgång till din autentiseringsapplikation, logga in
+          på din profil med suomi.fi-account och följ anvisningarna i avsnittet
+          Autentiseringsapplikation inte tillgänglig eller kod fungerar inte
+          nedan.
+        </p>
+
+        <h4>Inaktivera tvåfaktorsautentisering</h4>
+
+        <p>
+          Du kan inaktivera tvåfaktorsautentisering på sidan Mina uppgifter.
+        </p>
+
+        <UserGuideImage
+          src={image2fa04}
+          alt="Inaktivera tvåfaktorsautentisering genom att klicka på knappen ”Inaktivera”."
+        />
+
+        <p>
+          Systemet kommer att be dig bekräfta avaktiveringen med dina
+          inloggningsuppgifter och en engångskod från
+          autentiseringsapplikationen.
+        </p>
+
+        <UserGuideImage
+          src={image2fa05}
+          alt="Bekräftelse på inaktivering av tvåfaktorsautentisering."
+        />
+
+        <p>
+          Efter borttagningen måste du också ta bort länken/kontot som är
+          kopplat till din Helsingforsprofil från din autentiseringsapplikation.
+        </p>
+
+        <p>
+          Du kan när som helst återaktivera tvåfaktorsautentisering från
+          profiluppgifterna.
+        </p>
+        <p>
+          Om du har ett så kallat hybridkonto med både lätt autentisering och
+          stark suomi.fi-autentisering, kan du också inaktivera
+          tvåfaktorsautentisering med suomi.fi-autentisering.
+        </p>
+
+        <h4>
+          Autentiseringsapplikationen är inte tillgänglig eller koden fungerar
+          inte
+        </h4>
+        <p>
+          Om du inte har tillgång till din autentiseringsapp, till exempel för
+          att du har bytt telefon, kan du autentisera dig till din
+          Helsingfors-profil med en stark suomi.fi-autentisering, vilket gör att
+          du kan inaktivera tvåfaktorsautentisering från sidan Mina uppgifter.
+        </p>
+        <p>
+          Om du ännu inte har suomi.fi-autentisering i din Helsingfors-profil
+          kan du aktivera den genom att autentisera dig på suomi.fi och skapa
+          ett konto för stark autentisering via e-post.{' '}
+          <b>Använd samma e-postadress</b> så att den lätta och den starka
+          autentiseringen kombineras. Sedan kan du stänga av
+          tvåstegsautentisering från dina kontouppgifter.
+        </p>
+        <p>
+          Om du redan har ett starkt konto med suomi.fi-autentisering med en
+          annan e-postadress kommer du tyvärr inte längre att kunna avaktivera
+          tvåfaktorsautentisering.{' '}
+          <b>
+            Därför är det mycket viktigt att du sparar den första
+            autentiseringskoden.
+          </b>
+        </p>
+      </UserGuideAccordion>
+
       <h2 id="_Login">Logga in</h2>
       <p>
         Med din Helsingforsprofil kan du logga in på alla Helsingfors stads
@@ -412,6 +579,42 @@ function UserGuideSv(): ReactElement {
             12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, nummer och specialtecken.`}
         />
       </UserGuideAccordion>
+
+      <UserGuideAccordion
+        language={lang}
+        id="_Salasanan_vaihto"
+        heading="Salasanan vaihto ja salasanakentän käyttöohje"
+      >
+        <p>
+          Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta
+          osiosta <i>Kirjautuminen ja tunnistautuminen.</i>
+        </p>
+
+        <UserGuideImage
+          src={image031}
+          alt="Salasanan vaihtaminen Omat tiedot-sivulla."
+        />
+
+        <p>
+          Jos tililläsi on käytössä kaksivaiheinen tunnistus, salasanaa
+          vaihtaessasi tarvitset kertakäyttöisen koodin todennussovelluksestasi.
+          Apua kaksivaiheisen tunnistuksen ongelmiin löydät tämän ohjeen osiosta{' '}
+          <i>“Kaksivaiheinen tunnistautuminen.”</i>
+        </p>
+
+        <UserGuideImage
+          src={image032}
+          alt="Silmäikonia painamalla voit näyttää tai piilottaa salasanan näkymässä."
+        />
+
+        <p>
+          Kirjoita kenttään valitsemasi uusi salasana. Salasanassa pitää olla
+          vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä
+          kirjaimia, numeroita ja erikoismerkkejä. Silmäikonia painamalla voit
+          näyttää tai piilottaa salasanan.{' '}
+        </p>
+      </UserGuideAccordion>
+
       <UserGuideAccordion
         language={lang}
         id="_Problem_med_identifiering"
