@@ -33,6 +33,13 @@ import image027 from './assets/27-tietojen-poisto-palvelusta.png';
 import image028 from './assets/28-tietojen-poisto-palvelusta-pop-up.png';
 import image029 from './assets/29-tietojen-poisto.png';
 import image030 from './assets/30-tietojen-poisto-popup.png';
+import image031 from './assets/01-salasana-vaihto-fi.png';
+import image032 from './assets/02-salasana-vaihto-keycloak-fi.png';
+import image2fa01 from './assets/01-2fa-kayttoonnotto-fi.jpg';
+import image2fa02 from './assets/02-2fa-kayttoonotto-keycloak-fi.jpg';
+import image2fa03 from './assets/03-2fa-kirjautuminen-fi.jpg';
+import image2fa04 from './assets/04-2fa-kaytostapoisto-fi.jpg';
+import image2fa05 from './assets/05-2fa-kaytostapoisto-varmistus-fi.jpg';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 const tableOfContents = [
@@ -318,6 +325,161 @@ function UserGuideFi(): ReactElement {
           osiossa <a href="#_Unohtunut_salasana">Unohtunut salasana</a>.
         </p>
       </UserGuideAccordion>
+
+      <UserGuideAccordion
+        language={lang}
+        id="_Kaksivaiheinen_tunnistautuminen"
+        heading="Kaksivaiheinen tunnistautuminen"
+      >
+        <p>
+          Kaksivaiheinen tunnistautuminen lisää tilisi turvallisuutta. Kun otat
+          sen käyttöön, Helsinki-profiili kirjautumisen yhteydessä tarvitaan
+          salasanan lisäksi myös erillinen kertakäyttöinen koodi, jonka saat
+          todennussovelluksesta.
+        </p>
+
+        <h4>Kaksivaiheisen tunnistautumisen käyttöönotto</h4>
+
+        <p>
+          Profiilisi Omat tiedot-sivulla voit{' '}
+          <i>Kirjautuminen ja tunnistautuminen</i>-osiossa ottaa kaksivaiheisen
+          tunnistautumisen käyttöön.
+        </p>
+
+        <UserGuideImage
+          src={image2fa01}
+          alt="Kaksivaiheinen tunnistautuminen Omat tiedot-sivulla."
+        />
+
+        <UserGuideImage
+          src={image2fa02}
+          alt="Kaksivaiheisen tunnistautumisen käyttöönottonäkymä. Seuraa numeroituja ohjeita."
+        />
+        <p>
+          Seuraa käyttöönoton ohjeita ja lataa mobiililaitteellesi
+          vapaavalintainen todennussovellus kuten Google Authenticator,
+          Microsoft Authenticator tai FreeOTP.
+        </p>
+        <p>
+          Avaa todennussovellus ja skannaa näytöllä näkyvä QR-koodi. Jos et voi
+          skannata koodia, voit syöttää sen manuaalisesti valitsemalla
+          &quot;Etkö voi lukea koodia?&quot; -linkin.
+        </p>
+        <p>
+          <b>
+            Ota linkistä avautuva koodi talteen mahdollisten ongelmatilanteiden,
+            esimerkiksi puhelimen hajoamisen takia, jotta pääsy tilille säilyy.
+          </b>
+        </p>
+        <p>
+          Todennussovellus luo kertakäyttöisen koodin, jonka syötät
+          Helsinki-profiilin käyttöönottonäkymässä kohdassa 3.
+        </p>
+        <p>
+          <b>
+            Älä sulje Helsinki-profiilin selainikkunaa, kun haet kertakäyttöisen
+            koodin todennussovelluksestasi. Muuten järjestelmä olettaa sinun
+            keskeyttäneen aktivointiprosessin.
+          </b>
+        </p>
+        <p>
+          Kun vahvistus onnistuu, kaksivaiheinen tunnistautuminen on käytössä,
+          ja näet sen aktivoituna Omat tiedot-sivulla.
+        </p>
+
+        <h4>Kirjautuminen kaksivaiheisen tunnistautumisen kanssa</h4>
+
+        <p>
+          Jos tililläsi on kaksivaiheinen tunnistus käytössä kirjautuessasi
+          sähköpostilla, järjestelmä kysyy sinulta kertakäyttöistä koodia, jonka
+          aiemmin määritelty todennusovelluksesi generoi.
+        </p>
+
+        <UserGuideImage
+          src={image2fa03}
+          alt="Hae ja liitä kertakäyttökoodi todennussovelluksestasi tähän näkymään."
+        />
+
+        <p>
+          Siirry todennussovellukseesi, kopioi koodi ja liitä se Profiilin
+          kirjautumisnäkymään. Koodi on yleensä voimassa minuutin ajan.
+        </p>
+
+        <p>
+          <b>
+            Älä sulje Helsinki-profiilin selainikkunaa, kun haet kertakäyttöisen
+            koodin todennussovelluksestasi. Muuten järjestelmä olettaa sinun
+            keskeyttäneen kirjautumisprosessin.
+          </b>
+        </p>
+        <p>
+          Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään
+          profiiliin suomi.fi-tunnistautumisella ja käytä ohjetta
+          Todennussovellus ei ole käytettävissä tai koodi ei toimi -osiossa
+          alla.
+        </p>
+
+        <h4> Kaksivaiheisen tunnistautumisen käytöstä poisto</h4>
+
+        <p>
+          Voit ottaa kaksivaiheisen tunnistautumisen pois käytöstä Omat
+          tiedot-sivulla.
+        </p>
+
+        <UserGuideImage
+          src={image2fa04}
+          alt="Poista kaksivaiheinen tunnistautuminen käytöstä painamalla “Poista käytöstä”-painiketta."
+        />
+
+        <p>
+          Järjestelmä pyytää sinua vahvistamaan poistamisen
+          kirjautumistiedoillasi ja todennussovelluksen kertakäyttöisellä
+          koodilla.{' '}
+        </p>
+
+        <UserGuideImage
+          src={image2fa05}
+          alt="Varmistus kaksivaiheisen tunnistautumisen poistosta."
+        />
+
+        <p>
+          Poiston jälkeen muista poistaa myös todennussovelluksestasi
+          Helsinki-profiiliin liittyvä linkitys/tili.
+        </p>
+
+        <p>
+          Voit ottaa kaksivaiheisen tunnistautumisen käyttöön uudelleen milloin
+          tahansa profiilin tiedoista.
+        </p>
+        <p>
+          Jos sinulla on käytössäsi ns. hybridi-tili, johon on yhdistetty sekä
+          kevyt tunnistautuminen että vahva suomi.fi-tunnistautuminen, voit
+          poistaa kaksivaiheisen tunnistautumisen myös
+          suomi.fi-tunnistautumalla.
+        </p>
+
+        <h4>Todennussovellus ei ole käytettävissä tai koodi ei toimi</h4>
+        <p>
+          Jos sinulla ei ole pääsyä todennussovellukseesi esimerkiksi puhelimen
+          vaihdon myötä, voit tunnistautua Helsinki-profiiliin vahvasti
+          suomi.fi-tunnuksella, jolloin pääset ottamaan kaksivaiheisen
+          tunnistautumisen pois päältä Omat tiedot-sivulta.
+        </p>
+        <p>
+          Jos sinulla ei vielä ole suomi.fi-tunnistautuminen käytössä, voit
+          ottaa sen käyttöön tunnistautumalla suomi.fi:llä ja luomalla{' '}
+          <b>samalla sähköpostilla</b> vahvan tunnistautumisen tilin. Samalla
+          sähköpostiosoitteella kevyt ja vahva tunnistautuminen yhdistyvät ja
+          voit ottaa kaksivaiheisen tunnistautumisen pois päältä.
+        </p>
+        <p>
+          Jos sinulla on jo suomi.fi-tunnistautuminen käytössä eri
+          sähköpostiosoitteella, valitettavasti kaksivaiheisen tunnistautumisen
+          pois päältä ottaminen ei enää onnistu. Tästä johtuen{' '}
+          <b>alkuvaiheen tunnistekoodin tallentaminen on erittäin tärkeää.</b>
+        </p>
+      </UserGuideAccordion>
+
       <h2 id="_Kirjautuminen">Kirjautuminen</h2>
       <p>
         Helsinki-profiililla voit kirjautua Helsingin kaupungin digitaalisiin
@@ -371,6 +533,42 @@ function UserGuideFi(): ReactElement {
             vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä.`}
         />
       </UserGuideAccordion>
+
+      <UserGuideAccordion
+        language={lang}
+        id="_Salasanan_vaihto"
+        heading="Salasanan vaihto ja salasanakentän käyttöohje"
+      >
+        <p>
+          Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta
+          osiosta <i>Kirjautuminen ja tunnistautuminen.</i>
+        </p>
+
+        <UserGuideImage
+          src={image031}
+          alt="Salasanan vaihtaminen Omat tiedot-sivulla."
+        />
+
+        <p>
+          Jos tililläsi on käytössä kaksivaiheinen tunnistus, salasanaa
+          vaihtaessasi tarvitset kertakäyttöisen koodin todennussovelluksestasi.
+          Apua kaksivaiheisen tunnistuksen ongelmiin löydät tämän ohjeen osiosta{' '}
+          <i>“Kaksivaiheinen tunnistautuminen.”</i>
+        </p>
+
+        <UserGuideImage
+          src={image032}
+          alt="Silmäikonia painamalla voit näyttää tai piilottaa salasanan näkymässä."
+        />
+
+        <p>
+          Kirjoita kenttään valitsemasi uusi salasana. Salasanassa pitää olla
+          vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä
+          kirjaimia, numeroita ja erikoismerkkejä. Silmäikonia painamalla voit
+          näyttää tai piilottaa salasanan.{' '}
+        </p>
+      </UserGuideAccordion>
+
       <UserGuideAccordion
         language={lang}
         id="_Ongelma_kirjautumisessa"
