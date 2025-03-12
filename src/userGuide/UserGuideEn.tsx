@@ -7,7 +7,6 @@ import UserGuideAccordion from './UserGuideAccordion';
 import UserGuideImage from './UserGuideImage';
 import TableOfContents from '../profile/components/tableOfContents/TableOfContents';
 import image001 from './assets/01-sisaankirjautuminen-en.png';
-import image002 from './assets/02-sisaankirjautuminen-tunnistamo-en.png';
 import image003 from './assets/03-vahvan-valinta-en.png';
 import image004 from './assets/04-vahvat-tiedot-en.png';
 import image005 from './assets/05-10-sahkopostiosoite-en.png';
@@ -113,11 +112,6 @@ function UserGuideEn(): ReactElement {
 
         <UserGuideImage
           src={image001}
-          alt="In the authentication window, select Suomi.fi identification."
-        />
-
-        <UserGuideImage
-          src={image002}
           alt="In the authentication window, select Suomi.fi identification."
         />
 

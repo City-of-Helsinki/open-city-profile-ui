@@ -7,7 +7,6 @@ import UserGuideAccordion from './UserGuideAccordion';
 import UserGuideImage from './UserGuideImage';
 import TableOfContents from '../profile/components/tableOfContents/TableOfContents';
 import image001 from './assets/01-sisaankirjautuminen.png';
-import image002 from './assets/02-sisaankirjautuminen-tunnistamo.png';
 import image003 from './assets/03-vahvan-valinta.png';
 import image004 from './assets/04-vahvat-tiedot.png';
 import image005 from './assets/05-10-sahkopostiosoite.png';
@@ -113,11 +112,6 @@ function UserGuideFi(): ReactElement {
         <UserGuideImage
           src={image001}
           alt="Tunnistautumisikkunassa valitaan Suomi.fi-tunnistautuminen."
-        />
-
-        <UserGuideImage
-          src={image002}
-          alt="Tunnistautumistavaksi valitaan Suomi.fi-tunnistautuminen."
         />
 
         <h4>Tunnistautuminen Suomi.fi-palvelussa</h4>
