@@ -396,32 +396,32 @@ function UserGuideSv(): ReactElement {
         </p>
         <p>
           <b>
-            Spara koden som dyker upp från länken så att du fortfarande kan
-            komma åt ditt konto om det skulle uppstå problem, till exempel om
-            din telefon går sönder.
+            Om det skulle uppstå problem, t.ex. att din telefon går sönder,
+            spara koden som öppnas från länken så att du ändå kan komma åt ditt
+            konto.
           </b>
         </p>
         <p>
-          Autentiseringsappen genererar en engångskod som du anger i Helsingfors
-          profilvy i steg 3.
+          Autentiseringsappen genererar en engångskod, som du anger i
+          Helsingfors profilvy i steg 3.
         </p>
         <p>
           <b>
-            Stäng inte webbläsarfönstret för din Helsingforsprofil när du hämtar
-            engångskoden från din autentiseringsapplikation. I annat fall kommer
-            systemet att anta att du har avbrutit aktiveringsprocessen.
+            Stäng inte webbläsarfönstret för din Helsingforsprofil, när du
+            hämtar engångskoden från din autentiseringsapplikation. I annat fall
+            kommer systemet att anta att du har avbrutit aktiveringsprocessen.
           </b>
         </p>
         <p>
-          När verifieringen har lyckats är tvåstegsautentiseringen aktiverad och
-          du ser att den är aktiverad på sidan Mina uppgifter.
+          När verifieringen har lyckats, är tvåstegsautentiseringen aktiverad
+          och du ser att den är aktiverad på sidan Mina uppgifter.
         </p>
 
         <h4>Logga in med tvåfaktorsautentisering</h4>
 
         <p>
-          Om ditt konto har tvåfaktorsautentisering aktiverad när du loggar in
-          via e-post kommer du att uppmanas av systemet att ange en engångskod
+          Om ditt konto har tvåfaktorsautentisering aktiverad, när du loggar in
+          via e-post, kommer du att uppmanas av systemet att ange en engångskod,
           som genereras av din tidigare definierade autentiseringsapplikation.
         </p>
 
@@ -437,15 +437,15 @@ function UserGuideSv(): ReactElement {
 
         <p>
           <b>
-            Stäng inte webbläsarfönstret för din Helsingforsprofil när du hämtar
-            engångskoden från din autentiseringsapp. I annat fall antar systemet
-            att du har avbrutit inloggningsprocessen.
+            Stäng inte webbläsarfönstret för din Helsingforsprofil, när du
+            hämtar engångskoden från din autentiseringsapp. I annat fall antar
+            systemet att du har avbrutit inloggningsprocessen.
           </b>
         </p>
         <p>
-          Om du inte har tillgång till din autentiseringsapplikation, logga in
-          på din profil med suomi.fi-account och följ anvisningarna i avsnittet
-          Autentiseringsapplikation inte tillgänglig eller kod fungerar inte
+          Om du inte har tillgång till din autentiseringsapp, logga in på din
+          profil med suomi.fi och följ anvisningarna i avsnittet
+          <i>Autentiseringsapp inte tillgänglig eller kod fungerar inte</i>{' '}
           nedan.
         </p>
 
@@ -492,24 +492,22 @@ function UserGuideSv(): ReactElement {
         </h4>
         <p>
           Om du inte har tillgång till din autentiseringsapp, till exempel för
-          att du har bytt telefon, kan du autentisera dig till din
-          Helsingfors-profil med en stark suomi.fi-autentisering, vilket gör att
-          du kan inaktivera tvåfaktorsautentisering från sidan Mina uppgifter.
+          att du har bytt telefon, kan du autentisera dig på din
+          Helsingforsprofil med ett starkt suomi.fi-ID, så att du kan inaktivera
+          tvåstegsautentisering på sidan Mina uppgifter.
         </p>
         <p>
-          Om du ännu inte har suomi.fi-autentisering i din Helsingfors-profil
-          kan du aktivera den genom att autentisera dig på suomi.fi och skapa
-          ett konto för stark autentisering via e-post.{' '}
-          <b>Använd samma e-postadress</b> så att den lätta och den starka
-          autentiseringen kombineras. Sedan kan du stänga av
-          tvåstegsautentisering från dina kontouppgifter.
+          Om du ännu inte har en suomi.fi-autentisering kan du aktivera den
+          genom att logga in med suomi.fi och skapa ett konto för stark
+          autentisering med samma e-postadressen. Med samma e-postadressen
+          kombineras lätt och stark autentisering och du kan inaktivera
+          tvåstegsautentisering.
         </p>
         <p>
-          Om du redan har ett starkt konto med suomi.fi-autentisering med en
-          annan e-postadress kommer du tyvärr inte längre att kunna avaktivera
-          tvåfaktorsautentisering.{' '}
+          Om du redan har en suomi.fi-autentisering med en annan e-postadress
+          kan du tyvärr inte längre inaktivera tvåstegsinloggningen.{' '}
           <b>
-            Därför är det mycket viktigt att du sparar den första
+            Därför är det mycket viktigt att spara den första
             autentiseringskoden.
           </b>
         </p>
@@ -577,35 +575,35 @@ function UserGuideSv(): ReactElement {
       <UserGuideAccordion
         language={lang}
         id="_Salasanan_vaihto"
-        heading="Salasanan vaihto ja salasanakentän käyttöohje"
+        heading="Uppdatera lösenord och guide till lösenordsfältet"
       >
         <p>
-          Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta
-          osiosta <i>Kirjautuminen ja tunnistautuminen.</i>
+          Du kan när som helst ändra ditt lösenord till ett nytt från avsnittet
+          Inloggning och autentisering på sidan Mina uppgifter.
         </p>
 
         <UserGuideImage
           src={image031}
-          alt="Salasanan vaihtaminen Omat tiedot-sivulla."
+          alt="Uppdatera lösenord på sidan Mina uppgifter."
         />
 
         <p>
-          Jos tililläsi on käytössä kaksivaiheinen tunnistus, salasanaa
-          vaihtaessasi tarvitset kertakäyttöisen koodin todennussovelluksestasi.
-          Apua kaksivaiheisen tunnistuksen ongelmiin löydät tämän ohjeen osiosta{' '}
-          <i>“Kaksivaiheinen tunnistautuminen.”</i>
+          Om ditt konto har tvåfaktorsautentisering, behöver du en engångskod
+          från din autentiseringsapplikation för att ändra ditt lösenord. För
+          hjälp med problem med tvåfaktorsautentisering, se avsnittet{' '}
+          <i>“Tvåfaktorsautentisering”</i> i den här guiden.
         </p>
 
         <UserGuideImage
           src={image032}
-          alt="Silmäikonia painamalla voit näyttää tai piilottaa salasanan näkymässä."
+          alt="Tryck på ögonikonen för att visa eller dölja lösenordet i vyn."
         />
 
         <p>
-          Kirjoita kenttään valitsemasi uusi salasana. Salasanassa pitää olla
-          vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä
-          kirjaimia, numeroita ja erikoismerkkejä. Silmäikonia painamalla voit
-          näyttää tai piilottaa salasanan.{' '}
+          Ange det nya lösenord som du väljer i fältet. Lösenordet måste vara
+          minst 12 tecken långt. Lösenordet måste innehålla både stora och små
+          bokstäver, siffror och specialtecken. Tryck på ögonsymbolen för att
+          visa eller dölja lösenordet.
         </p>
       </UserGuideAccordion>
 

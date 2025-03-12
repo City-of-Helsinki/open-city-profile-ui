@@ -335,9 +335,8 @@ function UserGuideFi(): ReactElement {
         <h4>Kaksivaiheisen tunnistautumisen käyttöönotto</h4>
 
         <p>
-          Profiilisi Omat tiedot-sivulla voit{' '}
-          <i>Kirjautuminen ja tunnistautuminen</i>-osiossa ottaa kaksivaiheisen
-          tunnistautumisen käyttöön.
+          Voit ottaa kaksivaiheisen tunnistautumisen käyttöön Helsinki-profiilin
+          Omat tiedot-sivulla <i>Kirjautuminen ja tunnistautuminen</i>-osiossa.
         </p>
 
         <UserGuideImage
@@ -356,8 +355,8 @@ function UserGuideFi(): ReactElement {
         </p>
         <p>
           Avaa todennussovellus ja skannaa näytöllä näkyvä QR-koodi. Jos et voi
-          skannata koodia, voit syöttää sen manuaalisesti valitsemalla
-          &quot;Etkö voi lukea koodia?&quot; -linkin.
+          skannata koodia, voit syöttää sen manuaalisesti valitsemalla{' '}
+          <i>&quot;Etkö voi lukea koodia?&quot;</i> -linkin.
         </p>
         <p>
           <b>
@@ -462,9 +461,9 @@ function UserGuideFi(): ReactElement {
         <p>
           Jos sinulla ei vielä ole suomi.fi-tunnistautuminen käytössä, voit
           ottaa sen käyttöön tunnistautumalla suomi.fi:llä ja luomalla{' '}
-          <b>samalla sähköpostilla</b> vahvan tunnistautumisen tilin. Samalla
-          sähköpostiosoitteella kevyt ja vahva tunnistautuminen yhdistyvät ja
-          voit ottaa kaksivaiheisen tunnistautumisen pois päältä.
+          <b>samalla sähköpostiosoitteella</b> vahvan tunnistautumisen tilin.
+          Samalla sähköpostiosoitteella kevyt ja vahva tunnistautuminen
+          yhdistyvät ja voit ottaa kaksivaiheisen tunnistautumisen pois päältä.
         </p>
         <p>
           Jos sinulla on jo suomi.fi-tunnistautuminen käytössä eri

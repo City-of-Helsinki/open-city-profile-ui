@@ -363,8 +363,8 @@ function UserGuideEn(): ReactElement {
         <h4>How to enable two-factor authentication</h4>
 
         <p>
-          On the <i>My information</i>-page of your profile, you can enable
-          two-factor authentication in the Login and authentication section.
+          You can activate two-factor authentication on Helsinki profile on the{' '}
+          <i>My information</i>-page in the Login and authentication section.
         </p>
 
         <UserGuideImage
@@ -438,8 +438,8 @@ function UserGuideEn(): ReactElement {
         <p>
           If you do not have access to your authentication application, log in
           to your profile with suomi.fi-account and use the instructions in the
-          Authentication application not available or code not working-section
-          below.
+          <i>Authentication application not available or code not working</i>
+          -section below.
         </p>
 
         <h4>Disabling two-factor authentication</h4>
