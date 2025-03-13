@@ -280,7 +280,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   You can create a Helsinki profile using your Suomi.fi e-Identification or your email and password. You can also log in to the City of Helsinki's digital services using Google or Yle IDs, which will be phased out in 2024.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-67"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-79"
                   id="_Suomi.fi_identification"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -340,18 +340,6 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                         alt="In the authentication window, select Suomi.fi identification."
                         loading="lazy"
                         src="/src/userGuide/assets/01-sisaankirjautuminen-en.png"
-                      />
-                      <p
-                        class="image-text"
-                      >
-                        In the authentication window, select Suomi.fi identification.
-                      </p>
-                    </div>
-                    <div>
-                      <img
-                        alt="In the authentication window, select Suomi.fi identification."
-                        loading="lazy"
-                        src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo-en.png"
                       />
                       <p
                         class="image-text"
@@ -522,7 +510,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-68"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-80"
                   id="_Email_identification"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -724,7 +712,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-69"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-81"
                   id="_Combining_identification_methods"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -828,6 +816,264 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     </button>
                   </div>
                 </div>
+                <div
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-82"
+                  id="_Kaksivaiheinen_tunnistautuminen"
+                  style="max-width: 800px; border: 1px solid #ffffff;"
+                >
+                  <div
+                    class="Accordion-module_accordionHeader__3_uK7"
+                  >
+                    <div
+                      aria-level="3"
+                      id="_Kaksivaiheinen_tunnistautuminen-heading"
+                      role="heading"
+                    >
+                      <div
+                        aria-expanded="false"
+                        aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                        class="Accordion-module_headingContainer__1DzX3"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <span
+                          class="label"
+                        >
+                          Two-factor authentication
+                        </span>
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-down"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                    class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                    id="_Kaksivaiheinen_tunnistautuminen-content"
+                    role="region"
+                    style="display: none;"
+                  >
+                    <p>
+                      Two-factor authentication increases the security of your account. When you enable it, in addition to a password, a separate one-time code is required to log in to your Helsinki profile, which you retrieve from the authentication app.
+                    </p>
+                    <h4>
+                      How to enable two-factor authentication
+                    </h4>
+                    <p>
+                      You can activate two-factor authentication on Helsinki profile on the
+                       
+                      <i>
+                        My information
+                      </i>
+                      -page in the Login and authentication section.
+                    </p>
+                    <div>
+                      <img
+                        alt="Two-factor authentication on the My information- page."
+                        loading="lazy"
+                        src="/src/userGuide/assets/01-2fa-kayttoonnotto-en.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Two-factor authentication on the My information- page.
+                      </p>
+                    </div>
+                    <div>
+                      <img
+                        alt="Two-factor authentication enabling view. Follow the numbered instructions."
+                        loading="lazy"
+                        src="/src/userGuide/assets/02-2fa-kayttoonotto-keycloak-en.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Two-factor authentication enabling view. Follow the numbered instructions.
+                      </p>
+                    </div>
+                    <p>
+                      Follow the setup instructions and download an authentication app of your choice such as Google Authenticator, Microsoft Authenticator or FreeOTP to your mobile device.
+                    </p>
+                    <p>
+                      Open the authentication app and scan the QR code on the screen. If you cannot scan the code, you can enter it manually by selecting the
+                       
+                      <i>
+                        "Can't read the code?"
+                      </i>
+                       link.
+                    </p>
+                    <p>
+                      <b>
+                        Save the code that pops up from the link so that you can still access your account in case of problems such as your phone breaking down.
+                      </b>
+                    </p>
+                    <p>
+                      The authentication app will generate a one-time code that you enter in the Helsinki profile view in step 3.
+                    </p>
+                    <p>
+                      <b>
+                        Do not close the browser window of your Helsinki profile when retrieving the one-time code from your authentication application. Otherwise, the system will assume that you have aborted the activation process.
+                      </b>
+                    </p>
+                    <p>
+                      Once verification is successful, two-step authentication is enabled and you will see it activated on the My information-page.
+                    </p>
+                    <h4>
+                      Logging in with two-factor authentication
+                    </h4>
+                    <p>
+                      If your account has two-factor authentication enabled when you sign in by email, you will be prompted by the system for a one-time code generated by your previously defined authentication application.
+                    </p>
+                    <div>
+                      <img
+                        alt="Retrieve and paste the one-time code from your authentication application into this view."
+                        loading="lazy"
+                        src="/src/userGuide/assets/03-2fa-kirjautuminen-en.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Retrieve and paste the one-time code from your authentication application into this view.
+                      </p>
+                    </div>
+                    <p>
+                      Go to your authentication application, copy the code and paste it into the Profile login view. The code is usually valid for one minute.
+                    </p>
+                    <p>
+                      <b>
+                        Do not close the browser window of your Helsinki profile when you retrieve the one-time code from your authentication app. Otherwise, the system will assume that you have aborted the login process.
+                      </b>
+                    </p>
+                    <p>
+                      If you do not have access to your authentication application, log in to your profile with suomi.fi-account and use the instructions in the
+                      <i>
+                        Authentication application not available or code not working
+                      </i>
+                      -section below.
+                    </p>
+                    <h4>
+                      Disabling two-factor authentication
+                    </h4>
+                    <p>
+                      You can disable two-factor authentication on the 
+                      <i>
+                        My information
+                      </i>
+                      -page.
+                    </p>
+                    <div>
+                      <img
+                        alt="Disable two-factor authentication by clicking the “Disable“ button."
+                        loading="lazy"
+                        src="/src/userGuide/assets/04-2fa-kaytostapoisto-en.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Disable two-factor authentication by clicking the “Disable“ button.
+                      </p>
+                    </div>
+                    <p>
+                      The system will ask you to confirm the deactivation with your login details and a one-time code from the authentication application.
+                    </p>
+                    <div>
+                      <img
+                        alt="Confirmation of disabling two-factor authentication."
+                        loading="lazy"
+                        src="/src/userGuide/assets/05-2fa-kaytostapoisto-varmistus-en.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Confirmation of disabling two-factor authentication.
+                      </p>
+                    </div>
+                    <p>
+                      After deletion, be sure to also delete the link/account associated with your Helsinki profile from your authentication application.
+                    </p>
+                    <p>
+                      You can re-enable two-factor authentication at any time from the profile details.
+                    </p>
+                    <p>
+                      If you have a so-called hybrid account with both light authentication and strong suomi.fi-authentication, you can also disable two-factor authentication with suomi.fi-authentication.
+                    </p>
+                    <h4>
+                      Authentication application not available or code not working
+                    </h4>
+                    <p>
+                      If you do not have access to your authentication app, for example because you have changed your phone, you can authenticate to your Helsinki profile with a strong suomi.fi-authentication, which will allow you to disable two-factor authentication from the
+                       
+                      <i>
+                        My information
+                      </i>
+                      -page.
+                    </p>
+                    <p>
+                      If you do not yet have suomi.fi-authentication in your Helsinki profile, you can enable it by authenticating with suomi.fi and creating a strong authentication account via email.
+                       
+                      <b>
+                        Use the same email address
+                      </b>
+                      , so that light and strong authentication are combined. Then you can turn off two-step authentication from your account information.
+                    </p>
+                    <p>
+                      If you already have a strong account with 
+                      <i>
+                        suomi.fi
+                      </i>
+                      -authentication with a different email address, you will unfortunately no longer be able to deactivate two-factor authentication.
+                       
+                      <b>
+                        Therefore, it is very important to save the initial authentication code.
+                      </b>
+                    </p>
+                    <button
+                      aria-label="Close Two-factor authentication"
+                      class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                      data-testid="_Kaksivaiheinen_tunnistautuminen-closeButton"
+                      type="button"
+                    >
+                      <span
+                        class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                      >
+                        Close
+                      </span>
+                      <div
+                        aria-hidden="true"
+                        class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-up"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                </div>
                 <h2
                   id="_Login"
                 >
@@ -837,7 +1083,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   With your Helsinki profile, you can log in to the digital services of the City of Helsinki. You can log in using the Suomi.fi e-Identification or the email address and password you provided when creating your profile.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-70"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-83"
                   id="_Forgotten_password"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -1000,7 +1246,131 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-71"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-84"
+                  id="_Changing_password"
+                  style="max-width: 800px; border: 1px solid #ffffff;"
+                >
+                  <div
+                    class="Accordion-module_accordionHeader__3_uK7"
+                  >
+                    <div
+                      aria-level="3"
+                      id="_Changing_password-heading"
+                      role="heading"
+                    >
+                      <div
+                        aria-expanded="false"
+                        aria-labelledby="_Changing_password-heading"
+                        class="Accordion-module_headingContainer__1DzX3"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <span
+                          class="label"
+                        >
+                          Changing password and guide to password field
+                        </span>
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-down"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    aria-labelledby="_Changing_password-heading"
+                    class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                    id="_Changing_password-content"
+                    role="region"
+                    style="display: none;"
+                  >
+                    <p>
+                      You can change your password to a new one at any time from the Login and authentication section of the 
+                      <i>
+                        My information
+                      </i>
+                      -page.
+                    </p>
+                    <div>
+                      <img
+                        alt="Changing password on the My information-page."
+                        loading="lazy"
+                        src="/src/userGuide/assets/01-salasana-vaihto-en.png"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Changing password on the My information-page.
+                      </p>
+                    </div>
+                    <p>
+                      If your account has two-factor authentication, you will need a one-time code from your authentication application to change your password. For help with two-factor authentication issues, see the section of this guide called 
+                      <i>
+                        “Two-factor authentication.”
+                      </i>
+                    </p>
+                    <div>
+                      <img
+                        alt="Press the eye icon to show or hide the password in the view."
+                        loading="lazy"
+                        src="/src/userGuide/assets/02-salasana-vaihto-keycloak-en.png"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Press the eye icon to show or hide the password in the view.
+                      </p>
+                    </div>
+                    <p>
+                      Enter the new password of your choice in the field. The password must be at least 12 characters long. The password must contain both upper and lower case letters, numbers and special characters. Press the eye icon to show or hide the password.
+                    </p>
+                    <button
+                      aria-label="Close Changing password and guide to password field"
+                      class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                      data-testid="_Changing_password-closeButton"
+                      type="button"
+                    >
+                      <span
+                        class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                      >
+                        Close
+                      </span>
+                      <div
+                        aria-hidden="true"
+                        class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-up"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-85"
                   id="_Problem_with_identification"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -1132,7 +1502,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   , you can view and edit your data and how it is used by the services.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-72"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-86"
                   id="_Editing_profile_information"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -1288,7 +1658,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-73"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-87"
                   id="_Processing_of_your"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -1416,7 +1786,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-74"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-88"
                   id="_Download_your_information"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -1539,7 +1909,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   You can delete your data either for individual services or for your entire profile. Upon deletion, all your data from the service will be deleted or anonymised if, for example, the service is required by law to retain it. However, you will not have access to the data after deletion nor will it be linked to you.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-75"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-89"
                   id="_Deleting_your_information"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -1657,7 +2027,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-76"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-90"
                   id="_Deleting_your_Helsinki_profile"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -1793,7 +2163,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
           </div>
         </main>
         <footer
-          class="Footer-module_footer__1aD3T custom-theme-77"
+          class="Footer-module_footer__1aD3T custom-theme-91"
         >
           <div
             class="Koros-module_koros__1r3rg Footer-module_koros__Orx_W"
@@ -1808,7 +2178,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <defs>
                 <pattern
                   height="85"
-                  id="koros_basic-78"
+                  id="koros_basic-92"
                   patternUnits="userSpaceOnUse"
                   width="96"
                   x="0"
@@ -1821,7 +2191,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 </pattern>
               </defs>
               <rect
-                fill="url(#koros_basic-78)"
+                fill="url(#koros_basic-92)"
                 height="85"
                 style="shape-rendering: crispEdges;"
                 width="100%"
@@ -2379,7 +2749,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 You can create a Helsinki profile using your Suomi.fi e-Identification or your email and password. You can also log in to the City of Helsinki's digital services using Google or Yle IDs, which will be phased out in 2024.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-67"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-79"
                 id="_Suomi.fi_identification"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -2439,18 +2809,6 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       alt="In the authentication window, select Suomi.fi identification."
                       loading="lazy"
                       src="/src/userGuide/assets/01-sisaankirjautuminen-en.png"
-                    />
-                    <p
-                      class="image-text"
-                    >
-                      In the authentication window, select Suomi.fi identification.
-                    </p>
-                  </div>
-                  <div>
-                    <img
-                      alt="In the authentication window, select Suomi.fi identification."
-                      loading="lazy"
-                      src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo-en.png"
                     />
                     <p
                       class="image-text"
@@ -2621,7 +2979,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-68"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-80"
                 id="_Email_identification"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -2823,7 +3181,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-69"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-81"
                 id="_Combining_identification_methods"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -2927,6 +3285,264 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   </button>
                 </div>
               </div>
+              <div
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-82"
+                id="_Kaksivaiheinen_tunnistautuminen"
+                style="max-width: 800px; border: 1px solid #ffffff;"
+              >
+                <div
+                  class="Accordion-module_accordionHeader__3_uK7"
+                >
+                  <div
+                    aria-level="3"
+                    id="_Kaksivaiheinen_tunnistautuminen-heading"
+                    role="heading"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                      class="Accordion-module_headingContainer__1DzX3"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="label"
+                      >
+                        Two-factor authentication
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-down"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                  class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                  id="_Kaksivaiheinen_tunnistautuminen-content"
+                  role="region"
+                  style="display: none;"
+                >
+                  <p>
+                    Two-factor authentication increases the security of your account. When you enable it, in addition to a password, a separate one-time code is required to log in to your Helsinki profile, which you retrieve from the authentication app.
+                  </p>
+                  <h4>
+                    How to enable two-factor authentication
+                  </h4>
+                  <p>
+                    You can activate two-factor authentication on Helsinki profile on the
+                     
+                    <i>
+                      My information
+                    </i>
+                    -page in the Login and authentication section.
+                  </p>
+                  <div>
+                    <img
+                      alt="Two-factor authentication on the My information- page."
+                      loading="lazy"
+                      src="/src/userGuide/assets/01-2fa-kayttoonnotto-en.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Two-factor authentication on the My information- page.
+                    </p>
+                  </div>
+                  <div>
+                    <img
+                      alt="Two-factor authentication enabling view. Follow the numbered instructions."
+                      loading="lazy"
+                      src="/src/userGuide/assets/02-2fa-kayttoonotto-keycloak-en.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Two-factor authentication enabling view. Follow the numbered instructions.
+                    </p>
+                  </div>
+                  <p>
+                    Follow the setup instructions and download an authentication app of your choice such as Google Authenticator, Microsoft Authenticator or FreeOTP to your mobile device.
+                  </p>
+                  <p>
+                    Open the authentication app and scan the QR code on the screen. If you cannot scan the code, you can enter it manually by selecting the
+                     
+                    <i>
+                      "Can't read the code?"
+                    </i>
+                     link.
+                  </p>
+                  <p>
+                    <b>
+                      Save the code that pops up from the link so that you can still access your account in case of problems such as your phone breaking down.
+                    </b>
+                  </p>
+                  <p>
+                    The authentication app will generate a one-time code that you enter in the Helsinki profile view in step 3.
+                  </p>
+                  <p>
+                    <b>
+                      Do not close the browser window of your Helsinki profile when retrieving the one-time code from your authentication application. Otherwise, the system will assume that you have aborted the activation process.
+                    </b>
+                  </p>
+                  <p>
+                    Once verification is successful, two-step authentication is enabled and you will see it activated on the My information-page.
+                  </p>
+                  <h4>
+                    Logging in with two-factor authentication
+                  </h4>
+                  <p>
+                    If your account has two-factor authentication enabled when you sign in by email, you will be prompted by the system for a one-time code generated by your previously defined authentication application.
+                  </p>
+                  <div>
+                    <img
+                      alt="Retrieve and paste the one-time code from your authentication application into this view."
+                      loading="lazy"
+                      src="/src/userGuide/assets/03-2fa-kirjautuminen-en.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Retrieve and paste the one-time code from your authentication application into this view.
+                    </p>
+                  </div>
+                  <p>
+                    Go to your authentication application, copy the code and paste it into the Profile login view. The code is usually valid for one minute.
+                  </p>
+                  <p>
+                    <b>
+                      Do not close the browser window of your Helsinki profile when you retrieve the one-time code from your authentication app. Otherwise, the system will assume that you have aborted the login process.
+                    </b>
+                  </p>
+                  <p>
+                    If you do not have access to your authentication application, log in to your profile with suomi.fi-account and use the instructions in the
+                    <i>
+                      Authentication application not available or code not working
+                    </i>
+                    -section below.
+                  </p>
+                  <h4>
+                    Disabling two-factor authentication
+                  </h4>
+                  <p>
+                    You can disable two-factor authentication on the 
+                    <i>
+                      My information
+                    </i>
+                    -page.
+                  </p>
+                  <div>
+                    <img
+                      alt="Disable two-factor authentication by clicking the “Disable“ button."
+                      loading="lazy"
+                      src="/src/userGuide/assets/04-2fa-kaytostapoisto-en.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Disable two-factor authentication by clicking the “Disable“ button.
+                    </p>
+                  </div>
+                  <p>
+                    The system will ask you to confirm the deactivation with your login details and a one-time code from the authentication application.
+                  </p>
+                  <div>
+                    <img
+                      alt="Confirmation of disabling two-factor authentication."
+                      loading="lazy"
+                      src="/src/userGuide/assets/05-2fa-kaytostapoisto-varmistus-en.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Confirmation of disabling two-factor authentication.
+                    </p>
+                  </div>
+                  <p>
+                    After deletion, be sure to also delete the link/account associated with your Helsinki profile from your authentication application.
+                  </p>
+                  <p>
+                    You can re-enable two-factor authentication at any time from the profile details.
+                  </p>
+                  <p>
+                    If you have a so-called hybrid account with both light authentication and strong suomi.fi-authentication, you can also disable two-factor authentication with suomi.fi-authentication.
+                  </p>
+                  <h4>
+                    Authentication application not available or code not working
+                  </h4>
+                  <p>
+                    If you do not have access to your authentication app, for example because you have changed your phone, you can authenticate to your Helsinki profile with a strong suomi.fi-authentication, which will allow you to disable two-factor authentication from the
+                     
+                    <i>
+                      My information
+                    </i>
+                    -page.
+                  </p>
+                  <p>
+                    If you do not yet have suomi.fi-authentication in your Helsinki profile, you can enable it by authenticating with suomi.fi and creating a strong authentication account via email.
+                     
+                    <b>
+                      Use the same email address
+                    </b>
+                    , so that light and strong authentication are combined. Then you can turn off two-step authentication from your account information.
+                  </p>
+                  <p>
+                    If you already have a strong account with 
+                    <i>
+                      suomi.fi
+                    </i>
+                    -authentication with a different email address, you will unfortunately no longer be able to deactivate two-factor authentication.
+                     
+                    <b>
+                      Therefore, it is very important to save the initial authentication code.
+                    </b>
+                  </p>
+                  <button
+                    aria-label="Close Two-factor authentication"
+                    class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                    data-testid="_Kaksivaiheinen_tunnistautuminen-closeButton"
+                    type="button"
+                  >
+                    <span
+                      class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                    >
+                      Close
+                    </span>
+                    <div
+                      aria-hidden="true"
+                      class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-up"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
               <h2
                 id="_Login"
               >
@@ -2936,7 +3552,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 With your Helsinki profile, you can log in to the digital services of the City of Helsinki. You can log in using the Suomi.fi e-Identification or the email address and password you provided when creating your profile.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-70"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-83"
                 id="_Forgotten_password"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -3099,7 +3715,131 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-71"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-84"
+                id="_Changing_password"
+                style="max-width: 800px; border: 1px solid #ffffff;"
+              >
+                <div
+                  class="Accordion-module_accordionHeader__3_uK7"
+                >
+                  <div
+                    aria-level="3"
+                    id="_Changing_password-heading"
+                    role="heading"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-labelledby="_Changing_password-heading"
+                      class="Accordion-module_headingContainer__1DzX3"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="label"
+                      >
+                        Changing password and guide to password field
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-down"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-labelledby="_Changing_password-heading"
+                  class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                  id="_Changing_password-content"
+                  role="region"
+                  style="display: none;"
+                >
+                  <p>
+                    You can change your password to a new one at any time from the Login and authentication section of the 
+                    <i>
+                      My information
+                    </i>
+                    -page.
+                  </p>
+                  <div>
+                    <img
+                      alt="Changing password on the My information-page."
+                      loading="lazy"
+                      src="/src/userGuide/assets/01-salasana-vaihto-en.png"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Changing password on the My information-page.
+                    </p>
+                  </div>
+                  <p>
+                    If your account has two-factor authentication, you will need a one-time code from your authentication application to change your password. For help with two-factor authentication issues, see the section of this guide called 
+                    <i>
+                      “Two-factor authentication.”
+                    </i>
+                  </p>
+                  <div>
+                    <img
+                      alt="Press the eye icon to show or hide the password in the view."
+                      loading="lazy"
+                      src="/src/userGuide/assets/02-salasana-vaihto-keycloak-en.png"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Press the eye icon to show or hide the password in the view.
+                    </p>
+                  </div>
+                  <p>
+                    Enter the new password of your choice in the field. The password must be at least 12 characters long. The password must contain both upper and lower case letters, numbers and special characters. Press the eye icon to show or hide the password.
+                  </p>
+                  <button
+                    aria-label="Close Changing password and guide to password field"
+                    class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                    data-testid="_Changing_password-closeButton"
+                    type="button"
+                  >
+                    <span
+                      class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                    >
+                      Close
+                    </span>
+                    <div
+                      aria-hidden="true"
+                      class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-up"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-85"
                 id="_Problem_with_identification"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -3231,7 +3971,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 , you can view and edit your data and how it is used by the services.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-72"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-86"
                 id="_Editing_profile_information"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -3387,7 +4127,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-73"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-87"
                 id="_Processing_of_your"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -3515,7 +4255,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-74"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-88"
                 id="_Download_your_information"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -3638,7 +4378,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 You can delete your data either for individual services or for your entire profile. Upon deletion, all your data from the service will be deleted or anonymised if, for example, the service is required by law to retain it. However, you will not have access to the data after deletion nor will it be linked to you.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-75"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-89"
                 id="_Deleting_your_information"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -3756,7 +4496,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-76"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-90"
                 id="_Deleting_your_Helsinki_profile"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -3892,7 +4632,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
         </div>
       </main>
       <footer
-        class="Footer-module_footer__1aD3T custom-theme-77"
+        class="Footer-module_footer__1aD3T custom-theme-91"
       >
         <div
           class="Koros-module_koros__1r3rg Footer-module_koros__Orx_W"
@@ -3907,7 +4647,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
             <defs>
               <pattern
                 height="85"
-                id="koros_basic-78"
+                id="koros_basic-92"
                 patternUnits="userSpaceOnUse"
                 width="96"
                 x="0"
@@ -3920,7 +4660,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               </pattern>
             </defs>
             <rect
-              fill="url(#koros_basic-78)"
+              fill="url(#koros_basic-92)"
               height="85"
               style="shape-rendering: crispEdges;"
               width="100%"
@@ -4534,7 +5274,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   Helsinki-profiilin voit luoda käyttäen Suomi.fi-tunnistautumista tai sähköpostia ja salasanaa. Helsingin kaupungin digitaalisiin palveluihin voi myös kirjautua Google- tai Yle-tunnuksilla, jotka poistuvat käytöstä vuoden 2024 aikana.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-23"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-27"
                   id="_Suomi.fi-tunnistautuminen"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -4599,18 +5339,6 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                         class="image-text"
                       >
                         Tunnistautumisikkunassa valitaan Suomi.fi-tunnistautuminen.
-                      </p>
-                    </div>
-                    <div>
-                      <img
-                        alt="Tunnistautumistavaksi valitaan Suomi.fi-tunnistautuminen."
-                        loading="lazy"
-                        src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo.png"
-                      />
-                      <p
-                        class="image-text"
-                      >
-                        Tunnistautumistavaksi valitaan Suomi.fi-tunnistautuminen.
                       </p>
                     </div>
                     <h4>
@@ -4774,7 +5502,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-24"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-28"
                   id="_Helsinki-tunnuksen_käyttö"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -4968,7 +5696,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-25"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-29"
                   id="_Tunnistautumistapojen_yhdistäminen"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -5073,6 +5801,247 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     </button>
                   </div>
                 </div>
+                <div
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-30"
+                  id="_Kaksivaiheinen_tunnistautuminen"
+                  style="max-width: 800px; border: 1px solid #ffffff;"
+                >
+                  <div
+                    class="Accordion-module_accordionHeader__3_uK7"
+                  >
+                    <div
+                      aria-level="3"
+                      id="_Kaksivaiheinen_tunnistautuminen-heading"
+                      role="heading"
+                    >
+                      <div
+                        aria-expanded="false"
+                        aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                        class="Accordion-module_headingContainer__1DzX3"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <span
+                          class="label"
+                        >
+                          Kaksivaiheinen tunnistautuminen
+                        </span>
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-down"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                    class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                    id="_Kaksivaiheinen_tunnistautuminen-content"
+                    role="region"
+                    style="display: none;"
+                  >
+                    <p>
+                      Kaksivaiheinen tunnistautuminen lisää tilisi turvallisuutta. Kun otat sen käyttöön, Helsinki-profiili kirjautumisen yhteydessä tarvitaan salasanan lisäksi myös erillinen kertakäyttöinen koodi, jonka saat todennussovelluksesta.
+                    </p>
+                    <h4>
+                      Kaksivaiheisen tunnistautumisen käyttöönotto
+                    </h4>
+                    <p>
+                      Voit ottaa kaksivaiheisen tunnistautumisen käyttöön Helsinki-profiilin Omat tiedot-sivulla 
+                      <i>
+                        Kirjautuminen ja tunnistautuminen
+                      </i>
+                      -osiossa.
+                    </p>
+                    <div>
+                      <img
+                        alt="Kaksivaiheinen tunnistautuminen Omat tiedot-sivulla."
+                        loading="lazy"
+                        src="/src/userGuide/assets/01-2fa-kayttoonnotto-fi.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Kaksivaiheinen tunnistautuminen Omat tiedot-sivulla.
+                      </p>
+                    </div>
+                    <div>
+                      <img
+                        alt="Kaksivaiheisen tunnistautumisen käyttöönottonäkymä. Seuraa numeroituja ohjeita."
+                        loading="lazy"
+                        src="/src/userGuide/assets/02-2fa-kayttoonotto-keycloak-fi.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Kaksivaiheisen tunnistautumisen käyttöönottonäkymä. Seuraa numeroituja ohjeita.
+                      </p>
+                    </div>
+                    <p>
+                      Seuraa käyttöönoton ohjeita ja lataa mobiililaitteellesi vapaavalintainen todennussovellus kuten Google Authenticator, Microsoft Authenticator tai FreeOTP.
+                    </p>
+                    <p>
+                      Avaa todennussovellus ja skannaa näytöllä näkyvä QR-koodi. Jos et voi skannata koodia, voit syöttää sen manuaalisesti valitsemalla
+                       
+                      <i>
+                        "Etkö voi lukea koodia?"
+                      </i>
+                       -linkin.
+                    </p>
+                    <p>
+                      <b>
+                        Ota linkistä avautuva koodi talteen mahdollisten ongelmatilanteiden, esimerkiksi puhelimen hajoamisen takia, jotta pääsy tilille säilyy.
+                      </b>
+                    </p>
+                    <p>
+                      Todennussovellus luo kertakäyttöisen koodin, jonka syötät Helsinki-profiilin käyttöönottonäkymässä kohdassa 3.
+                    </p>
+                    <p>
+                      <b>
+                        Älä sulje Helsinki-profiilin selainikkunaa, kun haet kertakäyttöisen koodin todennussovelluksestasi. Muuten järjestelmä olettaa sinun keskeyttäneen aktivointiprosessin.
+                      </b>
+                    </p>
+                    <p>
+                      Kun vahvistus onnistuu, kaksivaiheinen tunnistautuminen on käytössä, ja näet sen aktivoituna Omat tiedot-sivulla.
+                    </p>
+                    <h4>
+                      Kirjautuminen kaksivaiheisen tunnistautumisen kanssa
+                    </h4>
+                    <p>
+                      Jos tililläsi on kaksivaiheinen tunnistus käytössä kirjautuessasi sähköpostilla, järjestelmä kysyy sinulta kertakäyttöistä koodia, jonka aiemmin määritelty todennusovelluksesi generoi.
+                    </p>
+                    <div>
+                      <img
+                        alt="Hae ja liitä kertakäyttökoodi todennussovelluksestasi tähän näkymään."
+                        loading="lazy"
+                        src="/src/userGuide/assets/03-2fa-kirjautuminen-fi.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Hae ja liitä kertakäyttökoodi todennussovelluksestasi tähän näkymään.
+                      </p>
+                    </div>
+                    <p>
+                      Siirry todennussovellukseesi, kopioi koodi ja liitä se Profiilin kirjautumisnäkymään. Koodi on yleensä voimassa minuutin ajan.
+                    </p>
+                    <p>
+                      <b>
+                        Älä sulje Helsinki-profiilin selainikkunaa, kun haet kertakäyttöisen koodin todennussovelluksestasi. Muuten järjestelmä olettaa sinun keskeyttäneen kirjautumisprosessin.
+                      </b>
+                    </p>
+                    <p>
+                      Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja käytä ohjetta Todennussovellus ei ole käytettävissä tai koodi ei toimi -osiossa alla.
+                    </p>
+                    <h4>
+                       Kaksivaiheisen tunnistautumisen käytöstä poisto
+                    </h4>
+                    <p>
+                      Voit ottaa kaksivaiheisen tunnistautumisen pois käytöstä Omat tiedot-sivulla.
+                    </p>
+                    <div>
+                      <img
+                        alt="Poista kaksivaiheinen tunnistautuminen käytöstä painamalla “Poista käytöstä”-painiketta."
+                        loading="lazy"
+                        src="/src/userGuide/assets/04-2fa-kaytostapoisto-fi.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Poista kaksivaiheinen tunnistautuminen käytöstä painamalla “Poista käytöstä”-painiketta.
+                      </p>
+                    </div>
+                    <p>
+                      Järjestelmä pyytää sinua vahvistamaan poistamisen kirjautumistiedoillasi ja todennussovelluksen kertakäyttöisellä koodilla.
+                       
+                    </p>
+                    <div>
+                      <img
+                        alt="Varmistus kaksivaiheisen tunnistautumisen poistosta."
+                        loading="lazy"
+                        src="/src/userGuide/assets/05-2fa-kaytostapoisto-varmistus-fi.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Varmistus kaksivaiheisen tunnistautumisen poistosta.
+                      </p>
+                    </div>
+                    <p>
+                      Poiston jälkeen muista poistaa myös todennussovelluksestasi Helsinki-profiiliin liittyvä linkitys/tili.
+                    </p>
+                    <p>
+                      Voit ottaa kaksivaiheisen tunnistautumisen käyttöön uudelleen milloin tahansa profiilin tiedoista.
+                    </p>
+                    <p>
+                      Jos sinulla on käytössäsi ns. hybridi-tili, johon on yhdistetty sekä kevyt tunnistautuminen että vahva suomi.fi-tunnistautuminen, voit poistaa kaksivaiheisen tunnistautumisen myös suomi.fi-tunnistautumalla.
+                    </p>
+                    <h4>
+                      Todennussovellus ei ole käytettävissä tai koodi ei toimi
+                    </h4>
+                    <p>
+                      Jos sinulla ei ole pääsyä todennussovellukseesi esimerkiksi puhelimen vaihdon myötä, voit tunnistautua Helsinki-profiiliin vahvasti suomi.fi-tunnuksella, jolloin pääset ottamaan kaksivaiheisen tunnistautumisen pois päältä Omat tiedot-sivulta.
+                    </p>
+                    <p>
+                      Jos sinulla ei vielä ole suomi.fi-tunnistautuminen käytössä, voit ottaa sen käyttöön tunnistautumalla suomi.fi:llä ja luomalla
+                       
+                      <b>
+                        samalla sähköpostiosoitteella
+                      </b>
+                       vahvan tunnistautumisen tilin. Samalla sähköpostiosoitteella kevyt ja vahva tunnistautuminen yhdistyvät ja voit ottaa kaksivaiheisen tunnistautumisen pois päältä.
+                    </p>
+                    <p>
+                      Jos sinulla on jo suomi.fi-tunnistautuminen käytössä eri sähköpostiosoitteella, valitettavasti kaksivaiheisen tunnistautumisen pois päältä ottaminen ei enää onnistu. Tästä johtuen
+                       
+                      <b>
+                        alkuvaiheen tunnistekoodin tallentaminen on erittäin tärkeää.
+                      </b>
+                    </p>
+                    <button
+                      aria-label="Sulje Kaksivaiheinen tunnistautuminen"
+                      class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                      data-testid="_Kaksivaiheinen_tunnistautuminen-closeButton"
+                      type="button"
+                    >
+                      <span
+                        class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                      >
+                        Sulje
+                      </span>
+                      <div
+                        aria-hidden="true"
+                        class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-up"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                </div>
                 <h2
                   id="_Kirjautuminen"
                 >
@@ -5082,7 +6051,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   Helsinki-profiililla voit kirjautua Helsingin kaupungin digitaalisiin palveluihin. Voit käyttää kirjautumiseen Suomi.fi-tunnistautumista tai profiilin luomisen yhteydessä annettua sähköpostiosoitetta ja salasanaa.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-26"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-31"
                   id="_Unohtunut_salasana"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -5242,7 +6211,132 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-27"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-32"
+                  id="_Salasanan_vaihto"
+                  style="max-width: 800px; border: 1px solid #ffffff;"
+                >
+                  <div
+                    class="Accordion-module_accordionHeader__3_uK7"
+                  >
+                    <div
+                      aria-level="3"
+                      id="_Salasanan_vaihto-heading"
+                      role="heading"
+                    >
+                      <div
+                        aria-expanded="false"
+                        aria-labelledby="_Salasanan_vaihto-heading"
+                        class="Accordion-module_headingContainer__1DzX3"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <span
+                          class="label"
+                        >
+                          Salasanan vaihto ja salasanakentän käyttöohje
+                        </span>
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-down"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    aria-labelledby="_Salasanan_vaihto-heading"
+                    class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                    id="_Salasanan_vaihto-content"
+                    role="region"
+                    style="display: none;"
+                  >
+                    <p>
+                      Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta osiosta 
+                      <i>
+                        Kirjautuminen ja tunnistautuminen.
+                      </i>
+                    </p>
+                    <div>
+                      <img
+                        alt="Salasanan vaihtaminen Omat tiedot-sivulla."
+                        loading="lazy"
+                        src="/src/userGuide/assets/01-salasana-vaihto-fi.png"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Salasanan vaihtaminen Omat tiedot-sivulla.
+                      </p>
+                    </div>
+                    <p>
+                      Jos tililläsi on käytössä kaksivaiheinen tunnistus, salasanaa vaihtaessasi tarvitset kertakäyttöisen koodin todennussovelluksestasi. Apua kaksivaiheisen tunnistuksen ongelmiin löydät tämän ohjeen osiosta
+                       
+                      <i>
+                        “Kaksivaiheinen tunnistautuminen.”
+                      </i>
+                    </p>
+                    <div>
+                      <img
+                        alt="Silmäikonia painamalla voit näyttää tai piilottaa salasanan näkymässä."
+                        loading="lazy"
+                        src="/src/userGuide/assets/02-salasana-vaihto-keycloak-fi.png"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Silmäikonia painamalla voit näyttää tai piilottaa salasanan näkymässä.
+                      </p>
+                    </div>
+                    <p>
+                      Kirjoita kenttään valitsemasi uusi salasana. Salasanassa pitää olla vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä. Silmäikonia painamalla voit näyttää tai piilottaa salasanan.
+                       
+                    </p>
+                    <button
+                      aria-label="Sulje Salasanan vaihto ja salasanakentän käyttöohje"
+                      class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                      data-testid="_Salasanan_vaihto-closeButton"
+                      type="button"
+                    >
+                      <span
+                        class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                      >
+                        Sulje
+                      </span>
+                      <div
+                        aria-hidden="true"
+                        class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-up"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-33"
                   id="_Ongelma_kirjautumisessa"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -5368,7 +6462,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   voit katsella ja muokata omia tietojasi ja sitä, miten palvelut niitä käyttävät.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-28"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-34"
                   id="_Profiili_tietojen_muokkaaminen"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -5500,7 +6594,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-29"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-35"
                   id="_Tietojen_käsittely_eri"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -5625,7 +6719,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-30"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-36"
                   id="_Tietojen_lataaminen"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -5739,7 +6833,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   Voit poistaa tietosi yksittäisistä palveluista tai halutessasi koko profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan. Jos palvelu joutuu esim. lakisääteisistä syistä säilyttämään tietoja, tiedot anonymisoidaan poiston sijaan. Sinulla ei kuitenkaan ole poiston jälkeen pääsyä tietoihin, eikä niitä voi yhdistää sinuun.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-31"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-37"
                   id="_Tietojen_poisto"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -5853,7 +6947,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-32"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-38"
                   id="_Profiilin_poisto"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -5977,7 +7071,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
           </div>
         </main>
         <footer
-          class="Footer-module_footer__1aD3T custom-theme-33"
+          class="Footer-module_footer__1aD3T custom-theme-39"
         >
           <div
             class="Koros-module_koros__1r3rg Footer-module_koros__Orx_W"
@@ -5992,7 +7086,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <defs>
                 <pattern
                   height="85"
-                  id="koros_basic-34"
+                  id="koros_basic-40"
                   patternUnits="userSpaceOnUse"
                   width="96"
                   x="0"
@@ -6005,7 +7099,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 </pattern>
               </defs>
               <rect
-                fill="url(#koros_basic-34)"
+                fill="url(#koros_basic-40)"
                 height="85"
                 style="shape-rendering: crispEdges;"
                 width="100%"
@@ -6562,7 +7656,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 Helsinki-profiilin voit luoda käyttäen Suomi.fi-tunnistautumista tai sähköpostia ja salasanaa. Helsingin kaupungin digitaalisiin palveluihin voi myös kirjautua Google- tai Yle-tunnuksilla, jotka poistuvat käytöstä vuoden 2024 aikana.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-23"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-27"
                 id="_Suomi.fi-tunnistautuminen"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -6627,18 +7721,6 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       class="image-text"
                     >
                       Tunnistautumisikkunassa valitaan Suomi.fi-tunnistautuminen.
-                    </p>
-                  </div>
-                  <div>
-                    <img
-                      alt="Tunnistautumistavaksi valitaan Suomi.fi-tunnistautuminen."
-                      loading="lazy"
-                      src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo.png"
-                    />
-                    <p
-                      class="image-text"
-                    >
-                      Tunnistautumistavaksi valitaan Suomi.fi-tunnistautuminen.
                     </p>
                   </div>
                   <h4>
@@ -6802,7 +7884,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-24"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-28"
                 id="_Helsinki-tunnuksen_käyttö"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -6996,7 +8078,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-25"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-29"
                 id="_Tunnistautumistapojen_yhdistäminen"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -7101,6 +8183,247 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   </button>
                 </div>
               </div>
+              <div
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-30"
+                id="_Kaksivaiheinen_tunnistautuminen"
+                style="max-width: 800px; border: 1px solid #ffffff;"
+              >
+                <div
+                  class="Accordion-module_accordionHeader__3_uK7"
+                >
+                  <div
+                    aria-level="3"
+                    id="_Kaksivaiheinen_tunnistautuminen-heading"
+                    role="heading"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                      class="Accordion-module_headingContainer__1DzX3"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="label"
+                      >
+                        Kaksivaiheinen tunnistautuminen
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-down"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                  class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                  id="_Kaksivaiheinen_tunnistautuminen-content"
+                  role="region"
+                  style="display: none;"
+                >
+                  <p>
+                    Kaksivaiheinen tunnistautuminen lisää tilisi turvallisuutta. Kun otat sen käyttöön, Helsinki-profiili kirjautumisen yhteydessä tarvitaan salasanan lisäksi myös erillinen kertakäyttöinen koodi, jonka saat todennussovelluksesta.
+                  </p>
+                  <h4>
+                    Kaksivaiheisen tunnistautumisen käyttöönotto
+                  </h4>
+                  <p>
+                    Voit ottaa kaksivaiheisen tunnistautumisen käyttöön Helsinki-profiilin Omat tiedot-sivulla 
+                    <i>
+                      Kirjautuminen ja tunnistautuminen
+                    </i>
+                    -osiossa.
+                  </p>
+                  <div>
+                    <img
+                      alt="Kaksivaiheinen tunnistautuminen Omat tiedot-sivulla."
+                      loading="lazy"
+                      src="/src/userGuide/assets/01-2fa-kayttoonnotto-fi.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Kaksivaiheinen tunnistautuminen Omat tiedot-sivulla.
+                    </p>
+                  </div>
+                  <div>
+                    <img
+                      alt="Kaksivaiheisen tunnistautumisen käyttöönottonäkymä. Seuraa numeroituja ohjeita."
+                      loading="lazy"
+                      src="/src/userGuide/assets/02-2fa-kayttoonotto-keycloak-fi.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Kaksivaiheisen tunnistautumisen käyttöönottonäkymä. Seuraa numeroituja ohjeita.
+                    </p>
+                  </div>
+                  <p>
+                    Seuraa käyttöönoton ohjeita ja lataa mobiililaitteellesi vapaavalintainen todennussovellus kuten Google Authenticator, Microsoft Authenticator tai FreeOTP.
+                  </p>
+                  <p>
+                    Avaa todennussovellus ja skannaa näytöllä näkyvä QR-koodi. Jos et voi skannata koodia, voit syöttää sen manuaalisesti valitsemalla
+                     
+                    <i>
+                      "Etkö voi lukea koodia?"
+                    </i>
+                     -linkin.
+                  </p>
+                  <p>
+                    <b>
+                      Ota linkistä avautuva koodi talteen mahdollisten ongelmatilanteiden, esimerkiksi puhelimen hajoamisen takia, jotta pääsy tilille säilyy.
+                    </b>
+                  </p>
+                  <p>
+                    Todennussovellus luo kertakäyttöisen koodin, jonka syötät Helsinki-profiilin käyttöönottonäkymässä kohdassa 3.
+                  </p>
+                  <p>
+                    <b>
+                      Älä sulje Helsinki-profiilin selainikkunaa, kun haet kertakäyttöisen koodin todennussovelluksestasi. Muuten järjestelmä olettaa sinun keskeyttäneen aktivointiprosessin.
+                    </b>
+                  </p>
+                  <p>
+                    Kun vahvistus onnistuu, kaksivaiheinen tunnistautuminen on käytössä, ja näet sen aktivoituna Omat tiedot-sivulla.
+                  </p>
+                  <h4>
+                    Kirjautuminen kaksivaiheisen tunnistautumisen kanssa
+                  </h4>
+                  <p>
+                    Jos tililläsi on kaksivaiheinen tunnistus käytössä kirjautuessasi sähköpostilla, järjestelmä kysyy sinulta kertakäyttöistä koodia, jonka aiemmin määritelty todennusovelluksesi generoi.
+                  </p>
+                  <div>
+                    <img
+                      alt="Hae ja liitä kertakäyttökoodi todennussovelluksestasi tähän näkymään."
+                      loading="lazy"
+                      src="/src/userGuide/assets/03-2fa-kirjautuminen-fi.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Hae ja liitä kertakäyttökoodi todennussovelluksestasi tähän näkymään.
+                    </p>
+                  </div>
+                  <p>
+                    Siirry todennussovellukseesi, kopioi koodi ja liitä se Profiilin kirjautumisnäkymään. Koodi on yleensä voimassa minuutin ajan.
+                  </p>
+                  <p>
+                    <b>
+                      Älä sulje Helsinki-profiilin selainikkunaa, kun haet kertakäyttöisen koodin todennussovelluksestasi. Muuten järjestelmä olettaa sinun keskeyttäneen kirjautumisprosessin.
+                    </b>
+                  </p>
+                  <p>
+                    Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja käytä ohjetta Todennussovellus ei ole käytettävissä tai koodi ei toimi -osiossa alla.
+                  </p>
+                  <h4>
+                     Kaksivaiheisen tunnistautumisen käytöstä poisto
+                  </h4>
+                  <p>
+                    Voit ottaa kaksivaiheisen tunnistautumisen pois käytöstä Omat tiedot-sivulla.
+                  </p>
+                  <div>
+                    <img
+                      alt="Poista kaksivaiheinen tunnistautuminen käytöstä painamalla “Poista käytöstä”-painiketta."
+                      loading="lazy"
+                      src="/src/userGuide/assets/04-2fa-kaytostapoisto-fi.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Poista kaksivaiheinen tunnistautuminen käytöstä painamalla “Poista käytöstä”-painiketta.
+                    </p>
+                  </div>
+                  <p>
+                    Järjestelmä pyytää sinua vahvistamaan poistamisen kirjautumistiedoillasi ja todennussovelluksen kertakäyttöisellä koodilla.
+                     
+                  </p>
+                  <div>
+                    <img
+                      alt="Varmistus kaksivaiheisen tunnistautumisen poistosta."
+                      loading="lazy"
+                      src="/src/userGuide/assets/05-2fa-kaytostapoisto-varmistus-fi.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Varmistus kaksivaiheisen tunnistautumisen poistosta.
+                    </p>
+                  </div>
+                  <p>
+                    Poiston jälkeen muista poistaa myös todennussovelluksestasi Helsinki-profiiliin liittyvä linkitys/tili.
+                  </p>
+                  <p>
+                    Voit ottaa kaksivaiheisen tunnistautumisen käyttöön uudelleen milloin tahansa profiilin tiedoista.
+                  </p>
+                  <p>
+                    Jos sinulla on käytössäsi ns. hybridi-tili, johon on yhdistetty sekä kevyt tunnistautuminen että vahva suomi.fi-tunnistautuminen, voit poistaa kaksivaiheisen tunnistautumisen myös suomi.fi-tunnistautumalla.
+                  </p>
+                  <h4>
+                    Todennussovellus ei ole käytettävissä tai koodi ei toimi
+                  </h4>
+                  <p>
+                    Jos sinulla ei ole pääsyä todennussovellukseesi esimerkiksi puhelimen vaihdon myötä, voit tunnistautua Helsinki-profiiliin vahvasti suomi.fi-tunnuksella, jolloin pääset ottamaan kaksivaiheisen tunnistautumisen pois päältä Omat tiedot-sivulta.
+                  </p>
+                  <p>
+                    Jos sinulla ei vielä ole suomi.fi-tunnistautuminen käytössä, voit ottaa sen käyttöön tunnistautumalla suomi.fi:llä ja luomalla
+                     
+                    <b>
+                      samalla sähköpostiosoitteella
+                    </b>
+                     vahvan tunnistautumisen tilin. Samalla sähköpostiosoitteella kevyt ja vahva tunnistautuminen yhdistyvät ja voit ottaa kaksivaiheisen tunnistautumisen pois päältä.
+                  </p>
+                  <p>
+                    Jos sinulla on jo suomi.fi-tunnistautuminen käytössä eri sähköpostiosoitteella, valitettavasti kaksivaiheisen tunnistautumisen pois päältä ottaminen ei enää onnistu. Tästä johtuen
+                     
+                    <b>
+                      alkuvaiheen tunnistekoodin tallentaminen on erittäin tärkeää.
+                    </b>
+                  </p>
+                  <button
+                    aria-label="Sulje Kaksivaiheinen tunnistautuminen"
+                    class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                    data-testid="_Kaksivaiheinen_tunnistautuminen-closeButton"
+                    type="button"
+                  >
+                    <span
+                      class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                    >
+                      Sulje
+                    </span>
+                    <div
+                      aria-hidden="true"
+                      class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-up"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
               <h2
                 id="_Kirjautuminen"
               >
@@ -7110,7 +8433,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 Helsinki-profiililla voit kirjautua Helsingin kaupungin digitaalisiin palveluihin. Voit käyttää kirjautumiseen Suomi.fi-tunnistautumista tai profiilin luomisen yhteydessä annettua sähköpostiosoitetta ja salasanaa.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-26"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-31"
                 id="_Unohtunut_salasana"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -7270,7 +8593,132 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-27"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-32"
+                id="_Salasanan_vaihto"
+                style="max-width: 800px; border: 1px solid #ffffff;"
+              >
+                <div
+                  class="Accordion-module_accordionHeader__3_uK7"
+                >
+                  <div
+                    aria-level="3"
+                    id="_Salasanan_vaihto-heading"
+                    role="heading"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-labelledby="_Salasanan_vaihto-heading"
+                      class="Accordion-module_headingContainer__1DzX3"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="label"
+                      >
+                        Salasanan vaihto ja salasanakentän käyttöohje
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-down"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-labelledby="_Salasanan_vaihto-heading"
+                  class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                  id="_Salasanan_vaihto-content"
+                  role="region"
+                  style="display: none;"
+                >
+                  <p>
+                    Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta osiosta 
+                    <i>
+                      Kirjautuminen ja tunnistautuminen.
+                    </i>
+                  </p>
+                  <div>
+                    <img
+                      alt="Salasanan vaihtaminen Omat tiedot-sivulla."
+                      loading="lazy"
+                      src="/src/userGuide/assets/01-salasana-vaihto-fi.png"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Salasanan vaihtaminen Omat tiedot-sivulla.
+                    </p>
+                  </div>
+                  <p>
+                    Jos tililläsi on käytössä kaksivaiheinen tunnistus, salasanaa vaihtaessasi tarvitset kertakäyttöisen koodin todennussovelluksestasi. Apua kaksivaiheisen tunnistuksen ongelmiin löydät tämän ohjeen osiosta
+                     
+                    <i>
+                      “Kaksivaiheinen tunnistautuminen.”
+                    </i>
+                  </p>
+                  <div>
+                    <img
+                      alt="Silmäikonia painamalla voit näyttää tai piilottaa salasanan näkymässä."
+                      loading="lazy"
+                      src="/src/userGuide/assets/02-salasana-vaihto-keycloak-fi.png"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Silmäikonia painamalla voit näyttää tai piilottaa salasanan näkymässä.
+                    </p>
+                  </div>
+                  <p>
+                    Kirjoita kenttään valitsemasi uusi salasana. Salasanassa pitää olla vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä. Silmäikonia painamalla voit näyttää tai piilottaa salasanan.
+                     
+                  </p>
+                  <button
+                    aria-label="Sulje Salasanan vaihto ja salasanakentän käyttöohje"
+                    class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                    data-testid="_Salasanan_vaihto-closeButton"
+                    type="button"
+                  >
+                    <span
+                      class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                    >
+                      Sulje
+                    </span>
+                    <div
+                      aria-hidden="true"
+                      class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-up"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-33"
                 id="_Ongelma_kirjautumisessa"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -7396,7 +8844,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 voit katsella ja muokata omia tietojasi ja sitä, miten palvelut niitä käyttävät.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-28"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-34"
                 id="_Profiili_tietojen_muokkaaminen"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -7528,7 +8976,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-29"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-35"
                 id="_Tietojen_käsittely_eri"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -7653,7 +9101,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-30"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-36"
                 id="_Tietojen_lataaminen"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -7767,7 +9215,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 Voit poistaa tietosi yksittäisistä palveluista tai halutessasi koko profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan. Jos palvelu joutuu esim. lakisääteisistä syistä säilyttämään tietoja, tiedot anonymisoidaan poiston sijaan. Sinulla ei kuitenkaan ole poiston jälkeen pääsyä tietoihin, eikä niitä voi yhdistää sinuun.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-31"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-37"
                 id="_Tietojen_poisto"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -7881,7 +9329,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-32"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-38"
                 id="_Profiilin_poisto"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -8005,7 +9453,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
         </div>
       </main>
       <footer
-        class="Footer-module_footer__1aD3T custom-theme-33"
+        class="Footer-module_footer__1aD3T custom-theme-39"
       >
         <div
           class="Koros-module_koros__1r3rg Footer-module_koros__Orx_W"
@@ -8020,7 +9468,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
             <defs>
               <pattern
                 height="85"
-                id="koros_basic-34"
+                id="koros_basic-40"
                 patternUnits="userSpaceOnUse"
                 width="96"
                 x="0"
@@ -8033,7 +9481,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               </pattern>
             </defs>
             <rect
-              fill="url(#koros_basic-34)"
+              fill="url(#koros_basic-40)"
               height="85"
               style="shape-rendering: crispEdges;"
               width="100%"
@@ -8647,7 +10095,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   Du kan skapa en Helsingforsprofilen med din Suomi.fi-identifikation eller med din e-post och ditt lösenord. Du kan också logga in i Helsingfors stads digitala tjänster med Google eller Yle Konto, som tas ur bruk 2024.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-45"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-53"
                   id="_Suomi.fi_identifiering"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -8707,18 +10155,6 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                         alt="I autentiseringsfönstret väljer du Suomi.fi-identifikation."
                         loading="lazy"
                         src="/src/userGuide/assets/01-sisaankirjautuminen-sv.png"
-                      />
-                      <p
-                        class="image-text"
-                      >
-                        I autentiseringsfönstret väljer du Suomi.fi-identifikation.
-                      </p>
-                    </div>
-                    <div>
-                      <img
-                        alt="I autentiseringsfönstret väljer du Suomi.fi-identifikation."
-                        loading="lazy"
-                        src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo-sv.png"
                       />
                       <p
                         class="image-text"
@@ -8893,7 +10329,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-46"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-54"
                   id="_Identifiering_av_e-post"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -9091,7 +10527,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-47"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-55"
                   id="_Kombinera_identifieringsmetoder"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -9195,6 +10631,237 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </button>
                   </div>
                 </div>
+                <div
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-56"
+                  id="_Kaksivaiheinen_tunnistautuminen"
+                  style="max-width: 800px; border: 1px solid #ffffff;"
+                >
+                  <div
+                    class="Accordion-module_accordionHeader__3_uK7"
+                  >
+                    <div
+                      aria-level="3"
+                      id="_Kaksivaiheinen_tunnistautuminen-heading"
+                      role="heading"
+                    >
+                      <div
+                        aria-expanded="false"
+                        aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                        class="Accordion-module_headingContainer__1DzX3"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <span
+                          class="label"
+                        >
+                          Tvåfaktorsautentisering
+                        </span>
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-down"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                    class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                    id="_Kaksivaiheinen_tunnistautuminen-content"
+                    role="region"
+                    style="display: none;"
+                  >
+                    <p>
+                      Tvåfaktorsautentisering ökar säkerheten för ditt konto. När du aktiverar den krävs förutom ett lösenord en separat engångskod för att logga in på din Helsingforsprofil, som du hämtar från autentiseringsappen.
+                    </p>
+                    <h4>
+                      Så här aktiverar du tvåfaktorsautentisering
+                    </h4>
+                    <p>
+                      På sidan Mina uppgifter i din profil kan du aktivera tvåfaktorsautentisering i avsnittet Inloggning och autentisering.
+                    </p>
+                    <div>
+                      <img
+                        alt="Tvåfaktorsautentisering på sidan Min information."
+                        loading="lazy"
+                        src="/src/userGuide/assets/01-2fa-kayttoonnotto-sv.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Tvåfaktorsautentisering på sidan Min information.
+                      </p>
+                    </div>
+                    <div>
+                      <img
+                        alt="Vy för aktivering av tvåfaktorsautentisering. Följ de numrerade instruktionerna."
+                        loading="lazy"
+                        src="/src/userGuide/assets/02-2fa-kayttoonotto-keycloak-sv.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Vy för aktivering av tvåfaktorsautentisering. Följ de numrerade instruktionerna.
+                      </p>
+                    </div>
+                    <p>
+                      Följ installationsanvisningarna och ladda ner en valfri autentiseringsapp, t.ex. Google Authenticator, Microsoft Authenticator eller FreeOTP, till din mobila enhet.
+                    </p>
+                    <p>
+                      Öppna autentiseringsappen och skanna QR-koden på skärmen. Om du inte kan skanna koden kan du ange den manuellt genom att välja länken ”Kan du inte läsa koden?”.
+                    </p>
+                    <p>
+                      <b>
+                        Om det skulle uppstå problem, t.ex. att din telefon går sönder, spara koden som öppnas från länken så att du ändå kan komma åt ditt konto.
+                      </b>
+                    </p>
+                    <p>
+                      Autentiseringsappen genererar en engångskod, som du anger i Helsingfors profilvy i steg 3.
+                    </p>
+                    <p>
+                      <b>
+                        Stäng inte webbläsarfönstret för din Helsingforsprofil, när du hämtar engångskoden från din autentiseringsapplikation. I annat fall kommer systemet att anta att du har avbrutit aktiveringsprocessen.
+                      </b>
+                    </p>
+                    <p>
+                      När verifieringen har lyckats, är tvåstegsautentiseringen aktiverad och du ser att den är aktiverad på sidan Mina uppgifter.
+                    </p>
+                    <h4>
+                      Logga in med tvåfaktorsautentisering
+                    </h4>
+                    <p>
+                      Om ditt konto har tvåfaktorsautentisering aktiverad, när du loggar in via e-post, kommer du att uppmanas av systemet att ange en engångskod, som genereras av din tidigare definierade autentiseringsapplikation.
+                    </p>
+                    <div>
+                      <img
+                        alt="Hämta och klistra in engångskoden från din autentiseringsapplikation i den här vyn."
+                        loading="lazy"
+                        src="/src/userGuide/assets/03-2fa-kirjautuminen-sv.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Hämta och klistra in engångskoden från din autentiseringsapplikation i den här vyn.
+                      </p>
+                    </div>
+                    <p>
+                      Gå till din autentiseringsapplikation, kopiera koden och klistra in den i vyn Profilinloggning. Koden är vanligtvis giltig i en minut.
+                    </p>
+                    <p>
+                      <b>
+                        Stäng inte webbläsarfönstret för din Helsingforsprofil, när du hämtar engångskoden från din autentiseringsapp. I annat fall antar systemet att du har avbrutit inloggningsprocessen.
+                      </b>
+                    </p>
+                    <p>
+                      Om du inte har tillgång till din autentiseringsapp, logga in på din profil med suomi.fi och följ anvisningarna i avsnittet
+                      <i>
+                        Autentiseringsapp inte tillgänglig eller kod fungerar inte
+                      </i>
+                       
+                      nedan.
+                    </p>
+                    <h4>
+                      Inaktivera tvåfaktorsautentisering
+                    </h4>
+                    <p>
+                      Du kan inaktivera tvåfaktorsautentisering på sidan Mina uppgifter.
+                    </p>
+                    <div>
+                      <img
+                        alt="Inaktivera tvåfaktorsautentisering genom att klicka på knappen ”Inaktivera”."
+                        loading="lazy"
+                        src="/src/userGuide/assets/04-2fa-kaytostapoisto-sv.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Inaktivera tvåfaktorsautentisering genom att klicka på knappen ”Inaktivera”.
+                      </p>
+                    </div>
+                    <p>
+                      Systemet kommer att be dig bekräfta avaktiveringen med dina inloggningsuppgifter och en engångskod från autentiseringsapplikationen.
+                    </p>
+                    <div>
+                      <img
+                        alt="Bekräftelse på inaktivering av tvåfaktorsautentisering."
+                        loading="lazy"
+                        src="/src/userGuide/assets/05-2fa-kaytostapoisto-varmistus-sv.jpg"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Bekräftelse på inaktivering av tvåfaktorsautentisering.
+                      </p>
+                    </div>
+                    <p>
+                      Efter borttagningen måste du också ta bort länken/kontot som är kopplat till din Helsingforsprofil från din autentiseringsapplikation.
+                    </p>
+                    <p>
+                      Du kan när som helst återaktivera tvåfaktorsautentisering från profiluppgifterna.
+                    </p>
+                    <p>
+                      Om du har ett så kallat hybridkonto med både lätt autentisering och stark suomi.fi-autentisering, kan du också inaktivera tvåfaktorsautentisering med suomi.fi-autentisering.
+                    </p>
+                    <h4>
+                      Autentiseringsapplikationen är inte tillgänglig eller koden fungerar inte
+                    </h4>
+                    <p>
+                      Om du inte har tillgång till din autentiseringsapp, till exempel för att du har bytt telefon, kan du autentisera dig på din Helsingforsprofil med ett starkt suomi.fi-ID, så att du kan inaktivera tvåstegsautentisering på sidan Mina uppgifter.
+                    </p>
+                    <p>
+                      Om du ännu inte har en suomi.fi-autentisering kan du aktivera den genom att logga in med suomi.fi och skapa ett konto för stark autentisering med samma e-postadressen. Med samma e-postadressen kombineras lätt och stark autentisering och du kan inaktivera tvåstegsautentisering.
+                    </p>
+                    <p>
+                      Om du redan har en suomi.fi-autentisering med en annan e-postadress kan du tyvärr inte längre inaktivera tvåstegsinloggningen.
+                       
+                      <b>
+                        Därför är det mycket viktigt att spara den första autentiseringskoden.
+                      </b>
+                    </p>
+                    <button
+                      aria-label="Stäng Tvåfaktorsautentisering"
+                      class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                      data-testid="_Kaksivaiheinen_tunnistautuminen-closeButton"
+                      type="button"
+                    >
+                      <span
+                        class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                      >
+                        Stäng
+                      </span>
+                      <div
+                        aria-hidden="true"
+                        class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-up"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                </div>
                 <h2
                   id="_Login"
                 >
@@ -9204,7 +10871,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   Med din Helsingforsprofil kan du logga in på alla Helsingfors stads digitala tjänster. Du kan logga in med Suomi.fi-inloggningen eller med den e-postadress och det lösenord som du angav när du skapade din profil.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-48"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-57"
                   id="_Glömt_lösenord"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -9366,7 +11033,129 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-49"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-58"
+                  id="_Salasanan_vaihto"
+                  style="max-width: 800px; border: 1px solid #ffffff;"
+                >
+                  <div
+                    class="Accordion-module_accordionHeader__3_uK7"
+                  >
+                    <div
+                      aria-level="3"
+                      id="_Salasanan_vaihto-heading"
+                      role="heading"
+                    >
+                      <div
+                        aria-expanded="false"
+                        aria-labelledby="_Salasanan_vaihto-heading"
+                        class="Accordion-module_headingContainer__1DzX3"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <span
+                          class="label"
+                        >
+                          Uppdatera lösenord och guide till lösenordsfältet
+                        </span>
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-down"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    aria-labelledby="_Salasanan_vaihto-heading"
+                    class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                    id="_Salasanan_vaihto-content"
+                    role="region"
+                    style="display: none;"
+                  >
+                    <p>
+                      Du kan när som helst ändra ditt lösenord till ett nytt från avsnittet Inloggning och autentisering på sidan Mina uppgifter.
+                    </p>
+                    <div>
+                      <img
+                        alt="Uppdatera lösenord på sidan Mina uppgifter."
+                        loading="lazy"
+                        src="/src/userGuide/assets/01-salasana-vaihto-sve.png"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Uppdatera lösenord på sidan Mina uppgifter.
+                      </p>
+                    </div>
+                    <p>
+                      Om ditt konto har tvåfaktorsautentisering, behöver du en engångskod från din autentiseringsapplikation för att ändra ditt lösenord. För hjälp med problem med tvåfaktorsautentisering, se avsnittet
+                       
+                      <i>
+                        “Tvåfaktorsautentisering”
+                      </i>
+                       i den här guiden.
+                    </p>
+                    <div>
+                      <img
+                        alt="Tryck på ögonikonen för att visa eller dölja lösenordet i vyn."
+                        loading="lazy"
+                        src="/src/userGuide/assets/02-salasana-vaihto-keycloak-sve.png"
+                      />
+                      <p
+                        class="image-text"
+                      >
+                        Tryck på ögonikonen för att visa eller dölja lösenordet i vyn.
+                      </p>
+                    </div>
+                    <p>
+                      Ange det nya lösenord som du väljer i fältet. Lösenordet måste vara minst 12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, siffror och specialtecken. Tryck på ögonsymbolen för att visa eller dölja lösenordet.
+                    </p>
+                    <button
+                      aria-label="Stäng Uppdatera lösenord och guide till lösenordsfältet"
+                      class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                      data-testid="_Salasanan_vaihto-closeButton"
+                      type="button"
+                    >
+                      <span
+                        class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                      >
+                        Stäng
+                      </span>
+                      <div
+                        aria-hidden="true"
+                        class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          aria-label="angle-up"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-59"
                   id="_Problem_med_identifiering"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -9496,7 +11285,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   kan du se och redigera dina uppgifter och hur de används av tjänsterna.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-50"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-60"
                   id="_Redigera_profilinformation"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -9636,7 +11425,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-51"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-61"
                   id="_Olika_tjänsters_bearbetning"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -9763,7 +11552,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-52"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-62"
                   id="_Ladda_ner_din"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -9880,7 +11669,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   Du kan radera dina uppgifter antingen för enskilda tjänster eller för hela din profil. Vid radering kommer alla dina uppgifter från tjänsten att raderas eller anonymiseras om tjänsten till exempel är skyldig enligt lag att behålla dem. Du kommer dock inte att ha tillgång till uppgifterna efter raderingen och de kommer inte att kunna kopplas till dig.
                 </p>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-53"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-63"
                   id="_Radera_dina_uppgifter"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -9996,7 +11785,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </div>
                 </div>
                 <div
-                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-54"
+                  class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-64"
                   id="_Radera_din_Helsingforsprofil"
                   style="max-width: 800px; border: 1px solid #ffffff;"
                 >
@@ -10126,7 +11915,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
           </div>
         </main>
         <footer
-          class="Footer-module_footer__1aD3T custom-theme-55"
+          class="Footer-module_footer__1aD3T custom-theme-65"
         >
           <div
             class="Koros-module_koros__1r3rg Footer-module_koros__Orx_W"
@@ -10141,7 +11930,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <defs>
                 <pattern
                   height="85"
-                  id="koros_basic-56"
+                  id="koros_basic-66"
                   patternUnits="userSpaceOnUse"
                   width="96"
                   x="0"
@@ -10154,7 +11943,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 </pattern>
               </defs>
               <rect
-                fill="url(#koros_basic-56)"
+                fill="url(#koros_basic-66)"
                 height="85"
                 style="shape-rendering: crispEdges;"
                 width="100%"
@@ -10711,7 +12500,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 Du kan skapa en Helsingforsprofilen med din Suomi.fi-identifikation eller med din e-post och ditt lösenord. Du kan också logga in i Helsingfors stads digitala tjänster med Google eller Yle Konto, som tas ur bruk 2024.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-45"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-53"
                 id="_Suomi.fi_identifiering"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -10771,18 +12560,6 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       alt="I autentiseringsfönstret väljer du Suomi.fi-identifikation."
                       loading="lazy"
                       src="/src/userGuide/assets/01-sisaankirjautuminen-sv.png"
-                    />
-                    <p
-                      class="image-text"
-                    >
-                      I autentiseringsfönstret väljer du Suomi.fi-identifikation.
-                    </p>
-                  </div>
-                  <div>
-                    <img
-                      alt="I autentiseringsfönstret väljer du Suomi.fi-identifikation."
-                      loading="lazy"
-                      src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo-sv.png"
                     />
                     <p
                       class="image-text"
@@ -10957,7 +12734,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-46"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-54"
                 id="_Identifiering_av_e-post"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -11155,7 +12932,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-47"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-55"
                 id="_Kombinera_identifieringsmetoder"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -11259,6 +13036,237 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </button>
                 </div>
               </div>
+              <div
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-56"
+                id="_Kaksivaiheinen_tunnistautuminen"
+                style="max-width: 800px; border: 1px solid #ffffff;"
+              >
+                <div
+                  class="Accordion-module_accordionHeader__3_uK7"
+                >
+                  <div
+                    aria-level="3"
+                    id="_Kaksivaiheinen_tunnistautuminen-heading"
+                    role="heading"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                      class="Accordion-module_headingContainer__1DzX3"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="label"
+                      >
+                        Tvåfaktorsautentisering
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-down"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                  class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                  id="_Kaksivaiheinen_tunnistautuminen-content"
+                  role="region"
+                  style="display: none;"
+                >
+                  <p>
+                    Tvåfaktorsautentisering ökar säkerheten för ditt konto. När du aktiverar den krävs förutom ett lösenord en separat engångskod för att logga in på din Helsingforsprofil, som du hämtar från autentiseringsappen.
+                  </p>
+                  <h4>
+                    Så här aktiverar du tvåfaktorsautentisering
+                  </h4>
+                  <p>
+                    På sidan Mina uppgifter i din profil kan du aktivera tvåfaktorsautentisering i avsnittet Inloggning och autentisering.
+                  </p>
+                  <div>
+                    <img
+                      alt="Tvåfaktorsautentisering på sidan Min information."
+                      loading="lazy"
+                      src="/src/userGuide/assets/01-2fa-kayttoonnotto-sv.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Tvåfaktorsautentisering på sidan Min information.
+                    </p>
+                  </div>
+                  <div>
+                    <img
+                      alt="Vy för aktivering av tvåfaktorsautentisering. Följ de numrerade instruktionerna."
+                      loading="lazy"
+                      src="/src/userGuide/assets/02-2fa-kayttoonotto-keycloak-sv.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Vy för aktivering av tvåfaktorsautentisering. Följ de numrerade instruktionerna.
+                    </p>
+                  </div>
+                  <p>
+                    Följ installationsanvisningarna och ladda ner en valfri autentiseringsapp, t.ex. Google Authenticator, Microsoft Authenticator eller FreeOTP, till din mobila enhet.
+                  </p>
+                  <p>
+                    Öppna autentiseringsappen och skanna QR-koden på skärmen. Om du inte kan skanna koden kan du ange den manuellt genom att välja länken ”Kan du inte läsa koden?”.
+                  </p>
+                  <p>
+                    <b>
+                      Om det skulle uppstå problem, t.ex. att din telefon går sönder, spara koden som öppnas från länken så att du ändå kan komma åt ditt konto.
+                    </b>
+                  </p>
+                  <p>
+                    Autentiseringsappen genererar en engångskod, som du anger i Helsingfors profilvy i steg 3.
+                  </p>
+                  <p>
+                    <b>
+                      Stäng inte webbläsarfönstret för din Helsingforsprofil, när du hämtar engångskoden från din autentiseringsapplikation. I annat fall kommer systemet att anta att du har avbrutit aktiveringsprocessen.
+                    </b>
+                  </p>
+                  <p>
+                    När verifieringen har lyckats, är tvåstegsautentiseringen aktiverad och du ser att den är aktiverad på sidan Mina uppgifter.
+                  </p>
+                  <h4>
+                    Logga in med tvåfaktorsautentisering
+                  </h4>
+                  <p>
+                    Om ditt konto har tvåfaktorsautentisering aktiverad, när du loggar in via e-post, kommer du att uppmanas av systemet att ange en engångskod, som genereras av din tidigare definierade autentiseringsapplikation.
+                  </p>
+                  <div>
+                    <img
+                      alt="Hämta och klistra in engångskoden från din autentiseringsapplikation i den här vyn."
+                      loading="lazy"
+                      src="/src/userGuide/assets/03-2fa-kirjautuminen-sv.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Hämta och klistra in engångskoden från din autentiseringsapplikation i den här vyn.
+                    </p>
+                  </div>
+                  <p>
+                    Gå till din autentiseringsapplikation, kopiera koden och klistra in den i vyn Profilinloggning. Koden är vanligtvis giltig i en minut.
+                  </p>
+                  <p>
+                    <b>
+                      Stäng inte webbläsarfönstret för din Helsingforsprofil, när du hämtar engångskoden från din autentiseringsapp. I annat fall antar systemet att du har avbrutit inloggningsprocessen.
+                    </b>
+                  </p>
+                  <p>
+                    Om du inte har tillgång till din autentiseringsapp, logga in på din profil med suomi.fi och följ anvisningarna i avsnittet
+                    <i>
+                      Autentiseringsapp inte tillgänglig eller kod fungerar inte
+                    </i>
+                     
+                    nedan.
+                  </p>
+                  <h4>
+                    Inaktivera tvåfaktorsautentisering
+                  </h4>
+                  <p>
+                    Du kan inaktivera tvåfaktorsautentisering på sidan Mina uppgifter.
+                  </p>
+                  <div>
+                    <img
+                      alt="Inaktivera tvåfaktorsautentisering genom att klicka på knappen ”Inaktivera”."
+                      loading="lazy"
+                      src="/src/userGuide/assets/04-2fa-kaytostapoisto-sv.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Inaktivera tvåfaktorsautentisering genom att klicka på knappen ”Inaktivera”.
+                    </p>
+                  </div>
+                  <p>
+                    Systemet kommer att be dig bekräfta avaktiveringen med dina inloggningsuppgifter och en engångskod från autentiseringsapplikationen.
+                  </p>
+                  <div>
+                    <img
+                      alt="Bekräftelse på inaktivering av tvåfaktorsautentisering."
+                      loading="lazy"
+                      src="/src/userGuide/assets/05-2fa-kaytostapoisto-varmistus-sv.jpg"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Bekräftelse på inaktivering av tvåfaktorsautentisering.
+                    </p>
+                  </div>
+                  <p>
+                    Efter borttagningen måste du också ta bort länken/kontot som är kopplat till din Helsingforsprofil från din autentiseringsapplikation.
+                  </p>
+                  <p>
+                    Du kan när som helst återaktivera tvåfaktorsautentisering från profiluppgifterna.
+                  </p>
+                  <p>
+                    Om du har ett så kallat hybridkonto med både lätt autentisering och stark suomi.fi-autentisering, kan du också inaktivera tvåfaktorsautentisering med suomi.fi-autentisering.
+                  </p>
+                  <h4>
+                    Autentiseringsapplikationen är inte tillgänglig eller koden fungerar inte
+                  </h4>
+                  <p>
+                    Om du inte har tillgång till din autentiseringsapp, till exempel för att du har bytt telefon, kan du autentisera dig på din Helsingforsprofil med ett starkt suomi.fi-ID, så att du kan inaktivera tvåstegsautentisering på sidan Mina uppgifter.
+                  </p>
+                  <p>
+                    Om du ännu inte har en suomi.fi-autentisering kan du aktivera den genom att logga in med suomi.fi och skapa ett konto för stark autentisering med samma e-postadressen. Med samma e-postadressen kombineras lätt och stark autentisering och du kan inaktivera tvåstegsautentisering.
+                  </p>
+                  <p>
+                    Om du redan har en suomi.fi-autentisering med en annan e-postadress kan du tyvärr inte längre inaktivera tvåstegsinloggningen.
+                     
+                    <b>
+                      Därför är det mycket viktigt att spara den första autentiseringskoden.
+                    </b>
+                  </p>
+                  <button
+                    aria-label="Stäng Tvåfaktorsautentisering"
+                    class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                    data-testid="_Kaksivaiheinen_tunnistautuminen-closeButton"
+                    type="button"
+                  >
+                    <span
+                      class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                    >
+                      Stäng
+                    </span>
+                    <div
+                      aria-hidden="true"
+                      class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-up"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
               <h2
                 id="_Login"
               >
@@ -11268,7 +13276,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 Med din Helsingforsprofil kan du logga in på alla Helsingfors stads digitala tjänster. Du kan logga in med Suomi.fi-inloggningen eller med den e-postadress och det lösenord som du angav när du skapade din profil.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-48"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-57"
                 id="_Glömt_lösenord"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -11430,7 +13438,129 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-49"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-58"
+                id="_Salasanan_vaihto"
+                style="max-width: 800px; border: 1px solid #ffffff;"
+              >
+                <div
+                  class="Accordion-module_accordionHeader__3_uK7"
+                >
+                  <div
+                    aria-level="3"
+                    id="_Salasanan_vaihto-heading"
+                    role="heading"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-labelledby="_Salasanan_vaihto-heading"
+                      class="Accordion-module_headingContainer__1DzX3"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="label"
+                      >
+                        Uppdatera lösenord och guide till lösenordsfältet
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-down"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-labelledby="_Salasanan_vaihto-heading"
+                  class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                  id="_Salasanan_vaihto-content"
+                  role="region"
+                  style="display: none;"
+                >
+                  <p>
+                    Du kan när som helst ändra ditt lösenord till ett nytt från avsnittet Inloggning och autentisering på sidan Mina uppgifter.
+                  </p>
+                  <div>
+                    <img
+                      alt="Uppdatera lösenord på sidan Mina uppgifter."
+                      loading="lazy"
+                      src="/src/userGuide/assets/01-salasana-vaihto-sve.png"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Uppdatera lösenord på sidan Mina uppgifter.
+                    </p>
+                  </div>
+                  <p>
+                    Om ditt konto har tvåfaktorsautentisering, behöver du en engångskod från din autentiseringsapplikation för att ändra ditt lösenord. För hjälp med problem med tvåfaktorsautentisering, se avsnittet
+                     
+                    <i>
+                      “Tvåfaktorsautentisering”
+                    </i>
+                     i den här guiden.
+                  </p>
+                  <div>
+                    <img
+                      alt="Tryck på ögonikonen för att visa eller dölja lösenordet i vyn."
+                      loading="lazy"
+                      src="/src/userGuide/assets/02-salasana-vaihto-keycloak-sve.png"
+                    />
+                    <p
+                      class="image-text"
+                    >
+                      Tryck på ögonikonen för att visa eller dölja lösenordet i vyn.
+                    </p>
+                  </div>
+                  <p>
+                    Ange det nya lösenord som du väljer i fältet. Lösenordet måste vara minst 12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, siffror och specialtecken. Tryck på ögonsymbolen för att visa eller dölja lösenordet.
+                  </p>
+                  <button
+                    aria-label="Stäng Uppdatera lösenord och guide till lösenordsfältet"
+                    class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                    data-testid="_Salasanan_vaihto-closeButton"
+                    type="button"
+                  >
+                    <span
+                      class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                    >
+                      Stäng
+                    </span>
+                    <div
+                      aria-hidden="true"
+                      class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        aria-label="angle-up"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-59"
                 id="_Problem_med_identifiering"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -11560,7 +13690,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 kan du se och redigera dina uppgifter och hur de används av tjänsterna.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-50"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-60"
                 id="_Redigera_profilinformation"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -11700,7 +13830,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-51"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-61"
                 id="_Olika_tjänsters_bearbetning"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -11827,7 +13957,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-52"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-62"
                 id="_Ladda_ner_din"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -11944,7 +14074,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 Du kan radera dina uppgifter antingen för enskilda tjänster eller för hela din profil. Vid radering kommer alla dina uppgifter från tjänsten att raderas eller anonymiseras om tjänsten till exempel är skyldig enligt lag att behålla dem. Du kommer dock inte att ha tillgång till uppgifterna efter raderingen och de kommer inte att kunna kopplas till dig.
               </p>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-53"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-63"
                 id="_Radera_dina_uppgifter"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -12060,7 +14190,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 </div>
               </div>
               <div
-                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-54"
+                class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-64"
                 id="_Radera_din_Helsingforsprofil"
                 style="max-width: 800px; border: 1px solid #ffffff;"
               >
@@ -12190,7 +14320,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
         </div>
       </main>
       <footer
-        class="Footer-module_footer__1aD3T custom-theme-55"
+        class="Footer-module_footer__1aD3T custom-theme-65"
       >
         <div
           class="Koros-module_koros__1r3rg Footer-module_koros__Orx_W"
@@ -12205,7 +14335,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
             <defs>
               <pattern
                 height="85"
-                id="koros_basic-56"
+                id="koros_basic-66"
                 patternUnits="userSpaceOnUse"
                 width="96"
                 x="0"
@@ -12218,7 +14348,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               </pattern>
             </defs>
             <rect
-              fill="url(#koros_basic-56)"
+              fill="url(#koros_basic-66)"
               height="85"
               style="shape-rendering: crispEdges;"
               width="100%"
@@ -12896,18 +15026,6 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     Tunnistautumisikkunassa valitaan Suomi.fi-tunnistautuminen.
                   </p>
                 </div>
-                <div>
-                  <img
-                    alt="Tunnistautumistavaksi valitaan Suomi.fi-tunnistautuminen."
-                    loading="lazy"
-                    src="/src/userGuide/assets/02-sisaankirjautuminen-tunnistamo.png"
-                  />
-                  <p
-                    class="image-text"
-                  >
-                    Tunnistautumistavaksi valitaan Suomi.fi-tunnistautuminen.
-                  </p>
-                </div>
                 <h4>
                   Tunnistautuminen Suomi.fi-palvelussa
                 </h4>
@@ -13368,6 +15486,247 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 </button>
               </div>
             </div>
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-4"
+              id="_Kaksivaiheinen_tunnistautuminen"
+              style="max-width: 800px; border: 1px solid #ffffff;"
+            >
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
+              >
+                <div
+                  aria-level="3"
+                  id="_Kaksivaiheinen_tunnistautuminen-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Kaksivaiheinen tunnistautuminen
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Kaksivaiheinen_tunnistautuminen-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Kaksivaiheinen_tunnistautuminen-content"
+                role="region"
+                style="display: none;"
+              >
+                <p>
+                  Kaksivaiheinen tunnistautuminen lisää tilisi turvallisuutta. Kun otat sen käyttöön, Helsinki-profiili kirjautumisen yhteydessä tarvitaan salasanan lisäksi myös erillinen kertakäyttöinen koodi, jonka saat todennussovelluksesta.
+                </p>
+                <h4>
+                  Kaksivaiheisen tunnistautumisen käyttöönotto
+                </h4>
+                <p>
+                  Voit ottaa kaksivaiheisen tunnistautumisen käyttöön Helsinki-profiilin Omat tiedot-sivulla 
+                  <i>
+                    Kirjautuminen ja tunnistautuminen
+                  </i>
+                  -osiossa.
+                </p>
+                <div>
+                  <img
+                    alt="Kaksivaiheinen tunnistautuminen Omat tiedot-sivulla."
+                    loading="lazy"
+                    src="/src/userGuide/assets/01-2fa-kayttoonnotto-fi.jpg"
+                  />
+                  <p
+                    class="image-text"
+                  >
+                    Kaksivaiheinen tunnistautuminen Omat tiedot-sivulla.
+                  </p>
+                </div>
+                <div>
+                  <img
+                    alt="Kaksivaiheisen tunnistautumisen käyttöönottonäkymä. Seuraa numeroituja ohjeita."
+                    loading="lazy"
+                    src="/src/userGuide/assets/02-2fa-kayttoonotto-keycloak-fi.jpg"
+                  />
+                  <p
+                    class="image-text"
+                  >
+                    Kaksivaiheisen tunnistautumisen käyttöönottonäkymä. Seuraa numeroituja ohjeita.
+                  </p>
+                </div>
+                <p>
+                  Seuraa käyttöönoton ohjeita ja lataa mobiililaitteellesi vapaavalintainen todennussovellus kuten Google Authenticator, Microsoft Authenticator tai FreeOTP.
+                </p>
+                <p>
+                  Avaa todennussovellus ja skannaa näytöllä näkyvä QR-koodi. Jos et voi skannata koodia, voit syöttää sen manuaalisesti valitsemalla
+                   
+                  <i>
+                    "Etkö voi lukea koodia?"
+                  </i>
+                   -linkin.
+                </p>
+                <p>
+                  <b>
+                    Ota linkistä avautuva koodi talteen mahdollisten ongelmatilanteiden, esimerkiksi puhelimen hajoamisen takia, jotta pääsy tilille säilyy.
+                  </b>
+                </p>
+                <p>
+                  Todennussovellus luo kertakäyttöisen koodin, jonka syötät Helsinki-profiilin käyttöönottonäkymässä kohdassa 3.
+                </p>
+                <p>
+                  <b>
+                    Älä sulje Helsinki-profiilin selainikkunaa, kun haet kertakäyttöisen koodin todennussovelluksestasi. Muuten järjestelmä olettaa sinun keskeyttäneen aktivointiprosessin.
+                  </b>
+                </p>
+                <p>
+                  Kun vahvistus onnistuu, kaksivaiheinen tunnistautuminen on käytössä, ja näet sen aktivoituna Omat tiedot-sivulla.
+                </p>
+                <h4>
+                  Kirjautuminen kaksivaiheisen tunnistautumisen kanssa
+                </h4>
+                <p>
+                  Jos tililläsi on kaksivaiheinen tunnistus käytössä kirjautuessasi sähköpostilla, järjestelmä kysyy sinulta kertakäyttöistä koodia, jonka aiemmin määritelty todennusovelluksesi generoi.
+                </p>
+                <div>
+                  <img
+                    alt="Hae ja liitä kertakäyttökoodi todennussovelluksestasi tähän näkymään."
+                    loading="lazy"
+                    src="/src/userGuide/assets/03-2fa-kirjautuminen-fi.jpg"
+                  />
+                  <p
+                    class="image-text"
+                  >
+                    Hae ja liitä kertakäyttökoodi todennussovelluksestasi tähän näkymään.
+                  </p>
+                </div>
+                <p>
+                  Siirry todennussovellukseesi, kopioi koodi ja liitä se Profiilin kirjautumisnäkymään. Koodi on yleensä voimassa minuutin ajan.
+                </p>
+                <p>
+                  <b>
+                    Älä sulje Helsinki-profiilin selainikkunaa, kun haet kertakäyttöisen koodin todennussovelluksestasi. Muuten järjestelmä olettaa sinun keskeyttäneen kirjautumisprosessin.
+                  </b>
+                </p>
+                <p>
+                  Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja käytä ohjetta Todennussovellus ei ole käytettävissä tai koodi ei toimi -osiossa alla.
+                </p>
+                <h4>
+                   Kaksivaiheisen tunnistautumisen käytöstä poisto
+                </h4>
+                <p>
+                  Voit ottaa kaksivaiheisen tunnistautumisen pois käytöstä Omat tiedot-sivulla.
+                </p>
+                <div>
+                  <img
+                    alt="Poista kaksivaiheinen tunnistautuminen käytöstä painamalla “Poista käytöstä”-painiketta."
+                    loading="lazy"
+                    src="/src/userGuide/assets/04-2fa-kaytostapoisto-fi.jpg"
+                  />
+                  <p
+                    class="image-text"
+                  >
+                    Poista kaksivaiheinen tunnistautuminen käytöstä painamalla “Poista käytöstä”-painiketta.
+                  </p>
+                </div>
+                <p>
+                  Järjestelmä pyytää sinua vahvistamaan poistamisen kirjautumistiedoillasi ja todennussovelluksen kertakäyttöisellä koodilla.
+                   
+                </p>
+                <div>
+                  <img
+                    alt="Varmistus kaksivaiheisen tunnistautumisen poistosta."
+                    loading="lazy"
+                    src="/src/userGuide/assets/05-2fa-kaytostapoisto-varmistus-fi.jpg"
+                  />
+                  <p
+                    class="image-text"
+                  >
+                    Varmistus kaksivaiheisen tunnistautumisen poistosta.
+                  </p>
+                </div>
+                <p>
+                  Poiston jälkeen muista poistaa myös todennussovelluksestasi Helsinki-profiiliin liittyvä linkitys/tili.
+                </p>
+                <p>
+                  Voit ottaa kaksivaiheisen tunnistautumisen käyttöön uudelleen milloin tahansa profiilin tiedoista.
+                </p>
+                <p>
+                  Jos sinulla on käytössäsi ns. hybridi-tili, johon on yhdistetty sekä kevyt tunnistautuminen että vahva suomi.fi-tunnistautuminen, voit poistaa kaksivaiheisen tunnistautumisen myös suomi.fi-tunnistautumalla.
+                </p>
+                <h4>
+                  Todennussovellus ei ole käytettävissä tai koodi ei toimi
+                </h4>
+                <p>
+                  Jos sinulla ei ole pääsyä todennussovellukseesi esimerkiksi puhelimen vaihdon myötä, voit tunnistautua Helsinki-profiiliin vahvasti suomi.fi-tunnuksella, jolloin pääset ottamaan kaksivaiheisen tunnistautumisen pois päältä Omat tiedot-sivulta.
+                </p>
+                <p>
+                  Jos sinulla ei vielä ole suomi.fi-tunnistautuminen käytössä, voit ottaa sen käyttöön tunnistautumalla suomi.fi:llä ja luomalla
+                   
+                  <b>
+                    samalla sähköpostiosoitteella
+                  </b>
+                   vahvan tunnistautumisen tilin. Samalla sähköpostiosoitteella kevyt ja vahva tunnistautuminen yhdistyvät ja voit ottaa kaksivaiheisen tunnistautumisen pois päältä.
+                </p>
+                <p>
+                  Jos sinulla on jo suomi.fi-tunnistautuminen käytössä eri sähköpostiosoitteella, valitettavasti kaksivaiheisen tunnistautumisen pois päältä ottaminen ei enää onnistu. Tästä johtuen
+                   
+                  <b>
+                    alkuvaiheen tunnistekoodin tallentaminen on erittäin tärkeää.
+                  </b>
+                </p>
+                <button
+                  aria-label="Sulje Kaksivaiheinen tunnistautuminen"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Kaksivaiheinen_tunnistautuminen-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Sulje
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
             <h2
               id="_Kirjautuminen"
             >
@@ -13377,7 +15736,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               Helsinki-profiililla voit kirjautua Helsingin kaupungin digitaalisiin palveluihin. Voit käyttää kirjautumiseen Suomi.fi-tunnistautumista tai profiilin luomisen yhteydessä annettua sähköpostiosoitetta ja salasanaa.
             </p>
             <div
-              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-4"
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-5"
               id="_Unohtunut_salasana"
               style="max-width: 800px; border: 1px solid #ffffff;"
             >
@@ -13537,7 +15896,132 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               </div>
             </div>
             <div
-              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-5"
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-6"
+              id="_Salasanan_vaihto"
+              style="max-width: 800px; border: 1px solid #ffffff;"
+            >
+              <div
+                class="Accordion-module_accordionHeader__3_uK7"
+              >
+                <div
+                  aria-level="3"
+                  id="_Salasanan_vaihto-heading"
+                  role="heading"
+                >
+                  <div
+                    aria-expanded="false"
+                    aria-labelledby="_Salasanan_vaihto-heading"
+                    class="Accordion-module_headingContainer__1DzX3"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span
+                      class="label"
+                    >
+                      Salasanan vaihto ja salasanakentän käyttöohje
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-down"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 13.5L17 8.5L18.5 10L12 16.5L5.5 10L7 8.5L12 13.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-labelledby="_Salasanan_vaihto-heading"
+                class="Accordion-module_accordionContent__1umso Accordion-module_card__1iRKx Accordion-module_contentWithCloseButton__-einM"
+                id="_Salasanan_vaihto-content"
+                role="region"
+                style="display: none;"
+              >
+                <p>
+                  Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta osiosta 
+                  <i>
+                    Kirjautuminen ja tunnistautuminen.
+                  </i>
+                </p>
+                <div>
+                  <img
+                    alt="Salasanan vaihtaminen Omat tiedot-sivulla."
+                    loading="lazy"
+                    src="/src/userGuide/assets/01-salasana-vaihto-fi.png"
+                  />
+                  <p
+                    class="image-text"
+                  >
+                    Salasanan vaihtaminen Omat tiedot-sivulla.
+                  </p>
+                </div>
+                <p>
+                  Jos tililläsi on käytössä kaksivaiheinen tunnistus, salasanaa vaihtaessasi tarvitset kertakäyttöisen koodin todennussovelluksestasi. Apua kaksivaiheisen tunnistuksen ongelmiin löydät tämän ohjeen osiosta
+                   
+                  <i>
+                    “Kaksivaiheinen tunnistautuminen.”
+                  </i>
+                </p>
+                <div>
+                  <img
+                    alt="Silmäikonia painamalla voit näyttää tai piilottaa salasanan näkymässä."
+                    loading="lazy"
+                    src="/src/userGuide/assets/02-salasana-vaihto-keycloak-fi.png"
+                  />
+                  <p
+                    class="image-text"
+                  >
+                    Silmäikonia painamalla voit näyttää tai piilottaa salasanan näkymässä.
+                  </p>
+                </div>
+                <p>
+                  Kirjoita kenttään valitsemasi uusi salasana. Salasanassa pitää olla vähintään 12 merkkiä. Salasanan pitää sisältää sekä isoja että pieniä kirjaimia, numeroita ja erikoismerkkejä. Silmäikonia painamalla voit näyttää tai piilottaa salasanan.
+                   
+                </p>
+                <button
+                  aria-label="Sulje Salasanan vaihto ja salasanakentän käyttöohje"
+                  class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
+                  data-testid="_Salasanan_vaihto-closeButton"
+                  type="button"
+                >
+                  <span
+                    class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
+                  >
+                    Sulje
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="angle-up"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_xs__3kAOj icon_hds-icon--size-xs__3dAMZ Accordion-module_accordionButtonIcon__MQu2J"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M12 11.5L17 16.5L18.5 15L12 8.5L5.5 15L7 16.5L12 11.5Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-7"
               id="_Ongelma_kirjautumisessa"
               style="max-width: 800px; border: 1px solid #ffffff;"
             >
@@ -13663,7 +16147,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               voit katsella ja muokata omia tietojasi ja sitä, miten palvelut niitä käyttävät.
             </p>
             <div
-              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-6"
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-8"
               id="_Profiili_tietojen_muokkaaminen"
               style="max-width: 800px; border: 1px solid #ffffff;"
             >
@@ -13795,7 +16279,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               </div>
             </div>
             <div
-              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-7"
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-9"
               id="_Tietojen_käsittely_eri"
               style="max-width: 800px; border: 1px solid #ffffff;"
             >
@@ -13920,7 +16404,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               </div>
             </div>
             <div
-              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-8"
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-10"
               id="_Tietojen_lataaminen"
               style="max-width: 800px; border: 1px solid #ffffff;"
             >
@@ -14034,7 +16518,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               Voit poistaa tietosi yksittäisistä palveluista tai halutessasi koko profiilin. Poiston myötä kaikki tietosi palvelusta poistetaan. Jos palvelu joutuu esim. lakisääteisistä syistä säilyttämään tietoja, tiedot anonymisoidaan poiston sijaan. Sinulla ei kuitenkaan ole poiston jälkeen pääsyä tietoihin, eikä niitä voi yhdistää sinuun.
             </p>
             <div
-              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-9"
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-11"
               id="_Tietojen_poisto"
               style="max-width: 800px; border: 1px solid #ffffff;"
             >
@@ -14148,7 +16632,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               </div>
             </div>
             <div
-              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-10"
+              class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_l__gPzdT custom-theme-12"
               id="_Profiilin_poisto"
               style="max-width: 800px; border: 1px solid #ffffff;"
             >
@@ -14272,7 +16756,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
       </div>
     </main>
     <footer
-      class="Footer-module_footer__1aD3T custom-theme-11"
+      class="Footer-module_footer__1aD3T custom-theme-13"
     >
       <div
         class="Koros-module_koros__1r3rg Footer-module_koros__Orx_W"
@@ -14287,7 +16771,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
           <defs>
             <pattern
               height="85"
-              id="koros_basic-12"
+              id="koros_basic-14"
               patternUnits="userSpaceOnUse"
               width="96"
               x="0"
@@ -14300,7 +16784,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             </pattern>
           </defs>
           <rect
-            fill="url(#koros_basic-12)"
+            fill="url(#koros_basic-14)"
             height="85"
             style="shape-rendering: crispEdges;"
             width="100%"
