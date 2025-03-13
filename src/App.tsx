@@ -53,7 +53,7 @@ function App(): React.ReactElement {
 
   const origin = window.location.origin;
 
-  const settings: Partial<UserManagerSettings> = {
+  const userManagerSettings: Partial<UserManagerSettings> = {
     automaticSilentRenew: true,
     validateSubOnSilentRenew: false,
     includeIdTokenInSilentRenew: false,
@@ -64,7 +64,7 @@ function App(): React.ReactElement {
     redirect_uri: `${origin}/callback`,
     silent_redirect_uri: `${origin}/silent_renew.html`,
     response_type: window._env_.REACT_APP_OIDC_RESPONSE_TYPE,
-    scope: window._env_.REACT_APP_OIDC_SCOPE,
+    scope: 'openid profile email',
     post_logout_redirect_uri: `${origin}/`,
     // This calculates to 1 minute, good for debugging:
     // eslint-disable-next-line max-len
@@ -72,17 +72,22 @@ function App(): React.ReactElement {
     // accessTokenExpiringNotificationTimeInSeconds: 3600 - 60,
   };
 
-  const providerProperties: LoginProviderProps = {
-    userManagerSettings: settings,
+  const loginProviderProps: LoginProviderProps = {
+    userManagerSettings,
     apiTokensClientSettings: {
-      url: `${window._env_.REACT_APP_OIDC_AUTHORITY}api-tokens/`,
+      url: window._env_.REACT_APP_OIDC_API_TOKENS_URL,
+      queryProps: {
+        grantType: 'urn:ietf:params:oauth:grant-type:uma-ticket',
+        permission: '#access',
+      },
+      audiences: window._env_.REACT_APP_OIDC_API_SCOPE,
     },
     debug: true,
     sessionPollerSettings: { pollIntervalInMs: 300000 },
   };
 
   return (
-    <LoginProvider {...providerProperties}>
+    <LoginProvider {...loginProviderProps}>
       <ApolloProvider client={graphqlClient}>
         <ToastProvider>
           <MatomoProvider value={matomoTracker}>
