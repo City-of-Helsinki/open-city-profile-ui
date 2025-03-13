@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.20.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.19.0...open-city-profile-ui-v1.20.0) (2025-03-13)
+
+
+### Features
+
+* Add user guide for 2fa HP-2730 ([#417](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/417)) ([300760a](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/300760ae0cfd247d5c6e48cf5dfb23cd7f24b8a6))
+
+
+### Dependencies
+
+* Bump @babel/helpers from 7.24.5 to 7.26.10 ([#418](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/418)) ([689798c](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/689798cafd94aa6b8d5b6204b51ba2df12b7c549))
+
 ## [1.19.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.18.1...open-city-profile-ui-v1.19.0) (2025-02-27)
 
 
