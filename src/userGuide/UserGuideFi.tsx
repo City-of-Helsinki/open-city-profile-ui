@@ -407,12 +407,14 @@ function UserGuideFi(): ReactElement {
         </p>
         <p>
           Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään
-          profiiliin suomi.fi-tunnistautumisella ja käytä ohjetta
-          Todennussovellus ei ole käytettävissä tai koodi ei toimi -osiossa
-          alla.
+          profiiliin suomi.fi-tunnistautumisella ja seuraa{' '}
+          <a href="#_Todennus_sovellus_ei">
+            Todennussovellus ei ole käytettävissä tai koodi ei toimi
+          </a>{' '}
+          -osion ohjeita.
         </p>
 
-        <h4> Kaksivaiheisen tunnistautumisen käytöstä poisto</h4>
+        <h4>Kaksivaiheisen tunnistautumisen käytöstä poisto</h4>
 
         <p>
           Voit ottaa kaksivaiheisen tunnistautumisen pois käytöstä Omat
@@ -451,7 +453,9 @@ function UserGuideFi(): ReactElement {
           suomi.fi-tunnistautumalla.
         </p>
 
-        <h4>Todennussovellus ei ole käytettävissä tai koodi ei toimi</h4>
+        <h4 id="_Todennus_sovellus_ei">
+          Todennussovellus ei ole käytettävissä tai koodi ei toimi
+        </h4>
         <p>
           Jos sinulla ei ole pääsyä todennussovellukseesi esimerkiksi puhelimen
           vaihdon myötä, voit tunnistautua Helsinki-profiiliin vahvasti
@@ -530,7 +534,7 @@ function UserGuideFi(): ReactElement {
       <UserGuideAccordion
         language={lang}
         id="_Salasanan_vaihto"
-        heading="Salasanan vaihto ja salasanakentän käyttöohje"
+        heading="Salasanan vaihto"
       >
         <p>
           Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta

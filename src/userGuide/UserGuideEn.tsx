@@ -436,10 +436,12 @@ function UserGuideEn(): ReactElement {
           </b>
         </p>
         <p>
-          If you do not have access to your authentication application, log in
-          to your profile with suomi.fi-account and use the instructions in the
-          <i>Authentication application not available or code not working</i>
-          -section below.
+          If you do not have access to your authentication app, sign in to your
+          profile with suomi.fi and follow the instructions in the{' '}
+          <a href="#_Todennus_sovellus_ei">
+            Authentication application not available or code not working
+          </a>{' '}
+          section.
         </p>
 
         <h4>Disabling two-factor authentication</h4>
@@ -479,7 +481,9 @@ function UserGuideEn(): ReactElement {
           authentication with suomi.fi-authentication.
         </p>
 
-        <h4>Authentication application not available or code not working</h4>
+        <h4 id="_Todennus_sovellus_ei">
+          Authentication application not available or code not working
+        </h4>
         <p>
           If you do not have access to your authentication app, for example
           because you have changed your phone, you can authenticate to your
@@ -569,7 +573,7 @@ function UserGuideEn(): ReactElement {
       <UserGuideAccordion
         language={lang}
         id="_Changing_password"
-        heading="Changing password and guide to password field"
+        heading="Changing password"
       >
         <p>
           You can change your password to a new one at any time from the Login
