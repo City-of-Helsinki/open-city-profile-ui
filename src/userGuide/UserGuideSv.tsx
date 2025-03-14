@@ -443,10 +443,11 @@ function UserGuideSv(): ReactElement {
           </b>
         </p>
         <p>
-          Om du inte har tillgång till din autentiseringsapp, logga in på din
-          profil med suomi.fi och följ anvisningarna i avsnittet
-          <i>Autentiseringsapp inte tillgänglig eller kod fungerar inte</i>{' '}
-          nedan.
+          Om du inte har tillgång till din autentiseringsapp kan du logga in på
+          din profil med suomi.fi och följa anvisningarna i avsnittet{' '}
+          <a href="#_Todennus_sovellus_ei">
+            Autentiseringsappen är inte tillgänglig eller koden fungerar inte.
+          </a>
         </p>
 
         <h4>Inaktivera tvåfaktorsautentisering</h4>
@@ -486,10 +487,11 @@ function UserGuideSv(): ReactElement {
           tvåfaktorsautentisering med suomi.fi-autentisering.
         </p>
 
-        <h4>
+        <h4 id="_Todennus_sovellus_ei">
           Autentiseringsapplikationen är inte tillgänglig eller koden fungerar
           inte
         </h4>
+
         <p>
           Om du inte har tillgång till din autentiseringsapp, till exempel för
           att du har bytt telefon, kan du autentisera dig på din
@@ -575,7 +577,7 @@ function UserGuideSv(): ReactElement {
       <UserGuideAccordion
         language={lang}
         id="_Salasanan_vaihto"
-        heading="Uppdatera lösenord och guide till lösenordsfältet"
+        heading="Uppdatera lösenord"
       >
         <p>
           Du kan när som helst ändra ditt lösenord till ett nytt från avsnittet
