@@ -958,11 +958,15 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       </b>
                     </p>
                     <p>
-                      If you do not have access to your authentication application, log in to your profile with suomi.fi-account and use the instructions in the
-                      <i>
+                      If you do not have access to your authentication app, sign in to your profile with suomi.fi and follow the instructions in the
+                       
+                      <a
+                        href="#_Todennus_sovellus_ei"
+                      >
                         Authentication application not available or code not working
-                      </i>
-                      -section below.
+                      </a>
+                       
+                      section.
                     </p>
                     <h4>
                       Disabling two-factor authentication
@@ -1010,7 +1014,9 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     <p>
                       If you have a so-called hybrid account with both light authentication and strong suomi.fi-authentication, you can also disable two-factor authentication with suomi.fi-authentication.
                     </p>
-                    <h4>
+                    <h4
+                      id="_Todennus_sovellus_ei"
+                    >
                       Authentication application not available or code not working
                     </h4>
                     <p>
@@ -1268,7 +1274,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                         <span
                           class="label"
                         >
-                          Changing password and guide to password field
+                          Changing password
                         </span>
                         <svg
                           aria-hidden="true"
@@ -1336,7 +1342,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       Enter the new password of your choice in the field. The password must be at least 12 characters long. The password must contain both upper and lower case letters, numbers and special characters. Press the eye icon to show or hide the password.
                     </p>
                     <button
-                      aria-label="Close Changing password and guide to password field"
+                      aria-label="Close Changing password"
                       class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                       data-testid="_Changing_password-closeButton"
                       type="button"
@@ -3427,11 +3433,15 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     </b>
                   </p>
                   <p>
-                    If you do not have access to your authentication application, log in to your profile with suomi.fi-account and use the instructions in the
-                    <i>
+                    If you do not have access to your authentication app, sign in to your profile with suomi.fi and follow the instructions in the
+                     
+                    <a
+                      href="#_Todennus_sovellus_ei"
+                    >
                       Authentication application not available or code not working
-                    </i>
-                    -section below.
+                    </a>
+                     
+                    section.
                   </p>
                   <h4>
                     Disabling two-factor authentication
@@ -3479,7 +3489,9 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   <p>
                     If you have a so-called hybrid account with both light authentication and strong suomi.fi-authentication, you can also disable two-factor authentication with suomi.fi-authentication.
                   </p>
-                  <h4>
+                  <h4
+                    id="_Todennus_sovellus_ei"
+                  >
                     Authentication application not available or code not working
                   </h4>
                   <p>
@@ -3737,7 +3749,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       <span
                         class="label"
                       >
-                        Changing password and guide to password field
+                        Changing password
                       </span>
                       <svg
                         aria-hidden="true"
@@ -3805,7 +3817,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     Enter the new password of your choice in the field. The password must be at least 12 characters long. The password must contain both upper and lower case letters, numbers and special characters. Press the eye icon to show or hide the password.
                   </p>
                   <button
-                    aria-label="Close Changing password and guide to password field"
+                    aria-label="Close Changing password"
                     class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                     data-testid="_Changing_password-closeButton"
                     type="button"
@@ -5942,10 +5954,18 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       </b>
                     </p>
                     <p>
-                      Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja käytä ohjetta Todennussovellus ei ole käytettävissä tai koodi ei toimi -osiossa alla.
+                      Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja seuraa
+                       
+                      <a
+                        href="#_Todennus_sovellus_ei"
+                      >
+                        Todennussovellus ei ole käytettävissä tai koodi ei toimi
+                      </a>
+                       
+                      -osion ohjeita.
                     </p>
                     <h4>
-                       Kaksivaiheisen tunnistautumisen käytöstä poisto
+                      Kaksivaiheisen tunnistautumisen käytöstä poisto
                     </h4>
                     <p>
                       Voit ottaa kaksivaiheisen tunnistautumisen pois käytöstä Omat tiedot-sivulla.
@@ -5987,7 +6007,9 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     <p>
                       Jos sinulla on käytössäsi ns. hybridi-tili, johon on yhdistetty sekä kevyt tunnistautuminen että vahva suomi.fi-tunnistautuminen, voit poistaa kaksivaiheisen tunnistautumisen myös suomi.fi-tunnistautumalla.
                     </p>
-                    <h4>
+                    <h4
+                      id="_Todennus_sovellus_ei"
+                    >
                       Todennussovellus ei ole käytettävissä tai koodi ei toimi
                     </h4>
                     <p>
@@ -6233,7 +6255,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                         <span
                           class="label"
                         >
-                          Salasanan vaihto ja salasanakentän käyttöohje
+                          Salasanan vaihto
                         </span>
                         <svg
                           aria-hidden="true"
@@ -6302,7 +6324,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                        
                     </p>
                     <button
-                      aria-label="Sulje Salasanan vaihto ja salasanakentän käyttöohje"
+                      aria-label="Sulje Salasanan vaihto"
                       class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                       data-testid="_Salasanan_vaihto-closeButton"
                       type="button"
@@ -8324,10 +8346,18 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     </b>
                   </p>
                   <p>
-                    Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja käytä ohjetta Todennussovellus ei ole käytettävissä tai koodi ei toimi -osiossa alla.
+                    Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja seuraa
+                     
+                    <a
+                      href="#_Todennus_sovellus_ei"
+                    >
+                      Todennussovellus ei ole käytettävissä tai koodi ei toimi
+                    </a>
+                     
+                    -osion ohjeita.
                   </p>
                   <h4>
-                     Kaksivaiheisen tunnistautumisen käytöstä poisto
+                    Kaksivaiheisen tunnistautumisen käytöstä poisto
                   </h4>
                   <p>
                     Voit ottaa kaksivaiheisen tunnistautumisen pois käytöstä Omat tiedot-sivulla.
@@ -8369,7 +8399,9 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   <p>
                     Jos sinulla on käytössäsi ns. hybridi-tili, johon on yhdistetty sekä kevyt tunnistautuminen että vahva suomi.fi-tunnistautuminen, voit poistaa kaksivaiheisen tunnistautumisen myös suomi.fi-tunnistautumalla.
                   </p>
-                  <h4>
+                  <h4
+                    id="_Todennus_sovellus_ei"
+                  >
                     Todennussovellus ei ole käytettävissä tai koodi ei toimi
                   </h4>
                   <p>
@@ -8615,7 +8647,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       <span
                         class="label"
                       >
-                        Salasanan vaihto ja salasanakentän käyttöohje
+                        Salasanan vaihto
                       </span>
                       <svg
                         aria-hidden="true"
@@ -8684,7 +8716,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                      
                   </p>
                   <button
-                    aria-label="Sulje Salasanan vaihto ja salasanakentän käyttöohje"
+                    aria-label="Sulje Salasanan vaihto"
                     class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                     data-testid="_Salasanan_vaihto-closeButton"
                     type="button"
@@ -10763,12 +10795,13 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       </b>
                     </p>
                     <p>
-                      Om du inte har tillgång till din autentiseringsapp, logga in på din profil med suomi.fi och följ anvisningarna i avsnittet
-                      <i>
-                        Autentiseringsapp inte tillgänglig eller kod fungerar inte
-                      </i>
+                      Om du inte har tillgång till din autentiseringsapp kan du logga in på din profil med suomi.fi och följa anvisningarna i avsnittet
                        
-                      nedan.
+                      <a
+                        href="#_Todennus_sovellus_ei"
+                      >
+                        Autentiseringsappen är inte tillgänglig eller koden fungerar inte.
+                      </a>
                     </p>
                     <h4>
                       Inaktivera tvåfaktorsautentisering
@@ -10812,7 +10845,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p>
                       Om du har ett så kallat hybridkonto med både lätt autentisering och stark suomi.fi-autentisering, kan du också inaktivera tvåfaktorsautentisering med suomi.fi-autentisering.
                     </p>
-                    <h4>
+                    <h4
+                      id="_Todennus_sovellus_ei"
+                    >
                       Autentiseringsapplikationen är inte tillgänglig eller koden fungerar inte
                     </h4>
                     <p>
@@ -11055,7 +11090,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                         <span
                           class="label"
                         >
-                          Uppdatera lösenord och guide till lösenordsfältet
+                          Uppdatera lösenord
                         </span>
                         <svg
                           aria-hidden="true"
@@ -11121,7 +11156,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       Ange det nya lösenord som du väljer i fältet. Lösenordet måste vara minst 12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, siffror och specialtecken. Tryck på ögonsymbolen för att visa eller dölja lösenordet.
                     </p>
                     <button
-                      aria-label="Stäng Uppdatera lösenord och guide till lösenordsfältet"
+                      aria-label="Stäng Uppdatera lösenord"
                       class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                       data-testid="_Salasanan_vaihto-closeButton"
                       type="button"
@@ -13168,12 +13203,13 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </b>
                   </p>
                   <p>
-                    Om du inte har tillgång till din autentiseringsapp, logga in på din profil med suomi.fi och följ anvisningarna i avsnittet
-                    <i>
-                      Autentiseringsapp inte tillgänglig eller kod fungerar inte
-                    </i>
+                    Om du inte har tillgång till din autentiseringsapp kan du logga in på din profil med suomi.fi och följa anvisningarna i avsnittet
                      
-                    nedan.
+                    <a
+                      href="#_Todennus_sovellus_ei"
+                    >
+                      Autentiseringsappen är inte tillgänglig eller koden fungerar inte.
+                    </a>
                   </p>
                   <h4>
                     Inaktivera tvåfaktorsautentisering
@@ -13217,7 +13253,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   <p>
                     Om du har ett så kallat hybridkonto med både lätt autentisering och stark suomi.fi-autentisering, kan du också inaktivera tvåfaktorsautentisering med suomi.fi-autentisering.
                   </p>
-                  <h4>
+                  <h4
+                    id="_Todennus_sovellus_ei"
+                  >
                     Autentiseringsapplikationen är inte tillgänglig eller koden fungerar inte
                   </h4>
                   <p>
@@ -13460,7 +13498,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <span
                         class="label"
                       >
-                        Uppdatera lösenord och guide till lösenordsfältet
+                        Uppdatera lösenord
                       </span>
                       <svg
                         aria-hidden="true"
@@ -13526,7 +13564,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     Ange det nya lösenord som du väljer i fältet. Lösenordet måste vara minst 12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, siffror och specialtecken. Tryck på ögonsymbolen för att visa eller dölja lösenordet.
                   </p>
                   <button
-                    aria-label="Stäng Uppdatera lösenord och guide till lösenordsfältet"
+                    aria-label="Stäng Uppdatera lösenord"
                     class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                     data-testid="_Salasanan_vaihto-closeButton"
                     type="button"
@@ -15627,10 +15665,18 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </b>
                 </p>
                 <p>
-                  Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja käytä ohjetta Todennussovellus ei ole käytettävissä tai koodi ei toimi -osiossa alla.
+                  Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja seuraa
+                   
+                  <a
+                    href="#_Todennus_sovellus_ei"
+                  >
+                    Todennussovellus ei ole käytettävissä tai koodi ei toimi
+                  </a>
+                   
+                  -osion ohjeita.
                 </p>
                 <h4>
-                   Kaksivaiheisen tunnistautumisen käytöstä poisto
+                  Kaksivaiheisen tunnistautumisen käytöstä poisto
                 </h4>
                 <p>
                   Voit ottaa kaksivaiheisen tunnistautumisen pois käytöstä Omat tiedot-sivulla.
@@ -15672,7 +15718,9 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 <p>
                   Jos sinulla on käytössäsi ns. hybridi-tili, johon on yhdistetty sekä kevyt tunnistautuminen että vahva suomi.fi-tunnistautuminen, voit poistaa kaksivaiheisen tunnistautumisen myös suomi.fi-tunnistautumalla.
                 </p>
-                <h4>
+                <h4
+                  id="_Todennus_sovellus_ei"
+                >
                   Todennussovellus ei ole käytettävissä tai koodi ei toimi
                 </h4>
                 <p>
@@ -15918,7 +15966,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <span
                       class="label"
                     >
-                      Salasanan vaihto ja salasanakentän käyttöohje
+                      Salasanan vaihto
                     </span>
                     <svg
                       aria-hidden="true"
@@ -15987,7 +16035,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                    
                 </p>
                 <button
-                  aria-label="Sulje Salasanan vaihto ja salasanakentän käyttöohje"
+                  aria-label="Sulje Salasanan vaihto"
                   class="Button-module_button__1msFE button_hds-button__2A0je Button-module_supplementary__3YKiS button_hds-button--supplementary__GcHcV Button-module_theme-black__m8giY button_hds-button--theme-black__3K_k4 Button-module_size-small__3lizH button_hds-button--small__2NFef Accordion-module_closeButton__1Qt8U"
                   data-testid="_Salasanan_vaihto-closeButton"
                   type="button"
