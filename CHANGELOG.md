@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.21.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.20.0...open-city-profile-ui-v1.21.0) (2025-03-24)
+
+
+### Features
+
+* Update userguide HP-2730 ([186a8ae](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/186a8aea6ed7d80d0056cfb85148ac7cda8d2ced))
+
 ## [1.20.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.19.0...open-city-profile-ui-v1.20.0) (2025-03-13)
 
 
