@@ -352,11 +352,15 @@ async function updateAndSetInputValue(suite: TestSuite, test: ValidationTest) {
   await setValues({ ...suite, formData: updatedData });
 }
 
-function getFetchMockLastCall(
-  mockFn: FetchMock
-): [string | Request | undefined, RequestInit | undefined] {
+type FetchMockCallTuple = [string | URL | Request, RequestInit | undefined];
+
+function getFetchMockLastCall(mockFn: FetchMock): FetchMockCallTuple {
+  if (!mockFn.mock.calls.length) {
+    throw new Error('No fetch calls were made');
+  }
+
   const mockCalls = mockFn.mock.calls;
-  return mockCalls[mockCalls.length - 1];
+  return mockCalls[mockCalls.length - 1] as FetchMockCallTuple;
 }
 
 async function verifySentData({ formData, sentDataPicker }: TestSuite) {

@@ -1,12 +1,12 @@
-import { configDefaults, UserConfig, defineConfig } from 'vitest/config';
+import { configDefaults } from 'vitest/config';
 import react from '@vitejs/plugin-react-swc';
-import eslint from 'vite-plugin-eslint';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import eslint from '@nabla/vite-plugin-eslint';
+import { defineConfig } from 'vite';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   base: '/',
   envPrefix: 'REACT_APP_',
-  plugins: [react(), nodePolyfills(), eslint()] as UserConfig['plugins'],
+  plugins: [react(), mode !== 'test' && eslint()],
   build: {
     outDir: './build',
     emptyOutDir: true,
@@ -33,6 +33,6 @@ export default defineConfig({
       include: ['src/**/*'],
       provider: 'istanbul',
     },
-    exclude: [...configDefaults.exclude, 'e2e/**']
+    exclude: [...configDefaults.exclude, 'e2e/**'],
   },
-});
+}));
