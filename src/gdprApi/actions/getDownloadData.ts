@@ -12,10 +12,7 @@ import {
 } from '../../graphql/generatedTypes';
 import { Mutable } from '../../graphql/typings';
 import { getActionResultAndErrorMessage } from './utils';
-import {
-  getStoredKeycloakAuthCode,
-  getStoredTunnistamoAuthCode,
-} from './authCodeParser';
+import { getStoredKeycloakAuthCode } from './authCodeParser';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
 import { DOWNLOAD_MY_PROFILE } from '../../profile/graphql/DownloadMyProfileQuery';
 import parseGraphQLError from '../../profile/helpers/parseGraphQLError';
@@ -44,10 +41,10 @@ const getDownloadDataExecutor: ActionExecutor = async (
   action,
   queueController
 ) => {
-  const authorizationCode = getStoredTunnistamoAuthCode(queueController);
+  const authorizationCode = getStoredKeycloakAuthCode(queueController);
   const authorizationCodeKeycloak = getStoredKeycloakAuthCode(queueController);
   if (!authorizationCode) {
-    return Promise.reject('No tunnistamo authorization code');
+    return Promise.reject('No keycloak authorization code');
   }
   const variables: Mutable<DownloadMyProfileQueryVariables> = {
     authorizationCode,

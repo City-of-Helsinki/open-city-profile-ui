@@ -1,9 +1,8 @@
 import React, { Fragment, useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'hds-react';
+import { Button, useOidcClient } from 'hds-react';
 import classNames from 'classnames';
 
-import useProfile from '../../../auth/useProfile';
 import { getAmrStatic, hasPasswordLogin } from './authenticationProviderUtil';
 import OtpInformation from './OtpInformation';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
@@ -16,7 +15,6 @@ import config from '../../../config';
 
 function AuthenticationProviderInformation(): React.ReactElement | null {
   const { t } = useTranslation();
-  const { profile } = useProfile();
   const notificationRef = useRef<HTMLDivElement>(null);
 
   const { data, passwordUpdateState, setPasswordUpdateState } = useContext(
@@ -24,7 +22,8 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
   );
 
   const hasPassword = hasPasswordLogin(data);
-  const amr = getAmrStatic(profile);
+  const { getAmr } = useOidcClient();
+  const amr = getAmrStatic(getAmr());
   const showSuccess = passwordUpdateState;
   const { content, setSuccessMessage } = useNotificationContent();
   const { changePassword } = useAuth();

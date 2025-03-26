@@ -111,21 +111,8 @@ describe('deleteProfile.ts', () => {
       await to(action.executor(action, runner));
       expect(getPayloadVariables()).toMatchObject({
         input: {
-          authorizationCode: tunnistamoAuthCode,
+          authorizationCode: keycloakAuthCode,
           authorizationCodeKeycloak: keycloakAuthCode,
-          dryRun: false,
-        },
-        language,
-      });
-    });
-    it('Sends only tunnistamo auth code, when keycload code is not set', async () => {
-      const { runner, getAction, getPayloadVariables } = initTests({
-        noKeycloadAuthCode: true,
-      });
-      await to(getAction().executor(getAction(), runner));
-      expect(getPayloadVariables()).toMatchObject({
-        input: {
-          authorizationCode: tunnistamoAuthCode,
           dryRun: false,
         },
         language,

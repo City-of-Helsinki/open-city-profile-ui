@@ -40,7 +40,6 @@ export const clickServiceConnectionsLink = async (page: Page) => {
 export const loginToProfileWithEmail = async (page: Page, email: string) => {
   await page.goto(PROFILE_URL);
   await clickProfileLoginButton(page);
-  await page.getByRole('link', { name: 'Helsinki-tunnus' }).click();
   await page.getByLabel('Sähköposti').fill(email);
   await page.getByLabel('Salasana', { exact: true }).fill(USER_PASSWORD);
   await clickKeycloakLoginButton(page);
@@ -53,7 +52,7 @@ export const loginToProfileWithEmail = async (page: Page, email: string) => {
 export const loginToProfileWithSuomiFi = async (page: Page, ssn: string) => {
   await page.goto(PROFILE_URL);
   await clickProfileLoginButton(page);
-  await page.getByRole('link', { name: 'Suomi.fi-tunnistus' }).click();
+  await page.getByRole('link', { name: 'Suomi.fi-tunnistautuminen' }).click();
   await page.getByRole('link', { name: 'Testitunnistaja' }).click();
   await fillSSNAndContinue(page, ssn);
   await Promise.all([
@@ -101,7 +100,6 @@ export const checkDownloadedJson = async (page: Page, values: string[]) => {
 export const createProfile = async (page: Page, mailbox: Mailbox) => {
   await page.goto(PROFILE_URL);
   await clickProfileLoginButton(page);
-  await page.locator('.login-method-helsinki_tunnus a').click();
   await page.locator('a.hds-button:has-text("Luo Helsinki-profiili")').click();
   await page
     .getByPlaceholder('sähköpostiosoite@email.com')

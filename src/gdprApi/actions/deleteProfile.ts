@@ -15,10 +15,7 @@ import {
 } from '../../graphql/generatedTypes';
 import { Mutable } from '../../graphql/typings';
 import { getActionResultAndErrorMessage } from './utils';
-import {
-  getStoredKeycloakAuthCode,
-  getStoredTunnistamoAuthCode,
-} from './authCodeParser';
+import { getStoredKeycloakAuthCode } from './authCodeParser';
 import parseDeleteProfileResult, {
   DeleteResultLists,
 } from '../../profile/helpers/parseDeleteProfileResult';
@@ -51,10 +48,11 @@ const deleteProfileExecutor: ActionExecutor = async (
   action,
   queueController
 ) => {
-  const authorizationCode = getStoredTunnistamoAuthCode(queueController);
+  // Use keycloak for both auth codes until we properly clean up tunnistamo
+  const authorizationCode = getStoredKeycloakAuthCode(queueController);
   const authorizationCodeKeycloak = getStoredKeycloakAuthCode(queueController);
   if (!authorizationCode) {
-    return Promise.reject('No tunnistamo authorization code');
+    return Promise.reject('No keycloak authorization code');
   }
   const language = getData(action, 'language') as TranslationLanguage;
   const input: Mutable<DeleteMyProfileMutationInput> = {

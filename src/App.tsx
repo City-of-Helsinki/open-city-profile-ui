@@ -54,11 +54,6 @@ function App(): React.ReactElement {
   const origin = window.location.origin;
 
   const userManagerSettings: Partial<UserManagerSettings> = {
-    automaticSilentRenew: true,
-    validateSubOnSilentRenew: false,
-    includeIdTokenInSilentRenew: false,
-    monitorSession: true,
-    filterProtocolClaims: false,
     authority: window._env_.REACT_APP_OIDC_AUTHORITY,
     client_id: window._env_.REACT_APP_OIDC_CLIENT_ID,
     redirect_uri: `${origin}/callback`,
@@ -80,10 +75,10 @@ function App(): React.ReactElement {
         grantType: 'urn:ietf:params:oauth:grant-type:uma-ticket',
         permission: '#access',
       },
-      audiences: window._env_.REACT_APP_OIDC_API_SCOPE,
+      audiences: [window._env_.REACT_APP_OIDC_API_SCOPE],
     },
     debug: true,
-    sessionPollerSettings: { pollIntervalInMs: 300000 },
+    sessionPollerSettings: { pollIntervalInMs: 60000 },
   };
 
   return (

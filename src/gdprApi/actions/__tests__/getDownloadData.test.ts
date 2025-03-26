@@ -18,7 +18,6 @@ describe('getDownloadData.ts', () => {
   const queryTracker = vi.fn();
   const successfulResponse = { variable1: 'variable1' };
   const keycloakAuthCode = 'keycloak-auth-code';
-  const tunnistamoAuthCode = 'tunnistamo-auth-code';
   const initTests = ({
     noKeycloadAuthCode,
     returnNoData,
@@ -59,7 +58,7 @@ describe('getDownloadData.ts', () => {
     ];
     const runner = createActionQueueRunner(queue);
     runner.updateActionAndQueue(tunnistamoAuthCodeParserAction.type, {
-      result: tunnistamoAuthCode,
+      result: keycloakAuthCode,
       complete: true,
     });
 
@@ -99,17 +98,8 @@ describe('getDownloadData.ts', () => {
       const { runner, getAction, getPayloadVariables } = initTests();
       await to(getAction().executor(getAction(), runner));
       expect(getPayloadVariables()).toMatchObject({
-        authorizationCode: tunnistamoAuthCode,
+        authorizationCode: keycloakAuthCode,
         authorizationCodeKeycloak: keycloakAuthCode,
-      });
-    });
-    it('Sends only tunnistamo auth code, when keycload code is not set', async () => {
-      const { runner, getAction, getPayloadVariables } = initTests({
-        noKeycloadAuthCode: true,
-      });
-      await to(getAction().executor(getAction(), runner));
-      expect(getPayloadVariables()).toMatchObject({
-        authorizationCode: tunnistamoAuthCode,
       });
     });
     it('Empty data rejects the promise', async () => {

@@ -25,7 +25,6 @@ test('Same email address cannot be used for multiple accounts', async ({
   const newPage = await newContext.newPage();
   await newPage.goto(PROFILE_URL);
   await clickProfileLoginButton(newPage);
-  await newPage.locator('.login-method-helsinki_tunnus a').click();
   await newPage
     .locator('a.hds-button:has-text("Luo Helsinki-profiili")')
     .click();
