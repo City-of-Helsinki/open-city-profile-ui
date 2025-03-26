@@ -75,7 +75,7 @@ function App(): React.ReactElement {
         grantType: 'urn:ietf:params:oauth:grant-type:uma-ticket',
         permission: '#access',
       },
-      audiences: [window._env_.REACT_APP_OIDC_API_SCOPE],
+      audiences: [window._env_.REACT_APP_PROFILE_AUDIENCE],
     },
     debug: true,
     sessionPollerSettings: { pollIntervalInMs: 60000 },

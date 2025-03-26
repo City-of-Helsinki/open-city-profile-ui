@@ -15,8 +15,5 @@ export const PROFILE_API_URL =
 export const EXAMPLE_APP_URL =
   process.env.EXAMPLE_APP_URL ?? 'https://example-ui.dev.hel.ninja';
 
-export const TUNNISTAMO_URL =
-  process.env.TUNNISTAMO_URL ?? 'https://tunnistamo.dev.hel.ninja';
-
 export const TUNNISTUS_URL =
   process.env.TUNNISTUS_URL ?? 'https://tunnistus.dev.hel.ninja';
