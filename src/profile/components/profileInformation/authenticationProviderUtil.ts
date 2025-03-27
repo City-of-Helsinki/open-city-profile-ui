@@ -23,7 +23,7 @@ export function getAmrStatic(amrArray: Amr | undefined): AMRStatic | null {
     return 'tunnistusSuomifi';
   }
 
-  // Should be removed soon
+  // TODO: Should be removed soon
   if (
     amr === 'github' ||
     amr === 'google' ||
