@@ -59,7 +59,7 @@ function App(): React.ReactElement {
     redirect_uri: `${origin}/callback`,
     silent_redirect_uri: `${origin}/silent_renew.html`,
     response_type: window._env_.REACT_APP_OIDC_RESPONSE_TYPE,
-    scope: 'openid profile email',
+    scope: window._env_.REACT_APP_OIDC_SCOPE,
     post_logout_redirect_uri: `${origin}/`,
     // This calculates to 1 minute, good for debugging:
     // eslint-disable-next-line max-len
