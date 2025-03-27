@@ -43,11 +43,13 @@ const getDownloadDataExecutor: ActionExecutor = async (
 ) => {
   const authorizationCode = getStoredKeycloakAuthCode(queueController);
   const authorizationCodeKeycloak = getStoredKeycloakAuthCode(queueController);
+
   if (!authorizationCode) {
-    return Promise.reject('No keycloak authorization code');
+    // TODO: in tunnistamo cleanup add some error handling here ?
+    // return Promise.reject('No keycloak authorization code for download');
   }
   const variables: Mutable<DownloadMyProfileQueryVariables> = {
-    authorizationCode,
+    authorizationCode: authorizationCode || 'dummy',
   };
   if (typeof authorizationCodeKeycloak === 'string') {
     variables.authorizationCodeKeycloak = authorizationCodeKeycloak;

@@ -48,15 +48,13 @@ const deleteProfileExecutor: ActionExecutor = async (
   action,
   queueController
 ) => {
-  // Use keycloak for both auth codes until we properly clean up tunnistamo
-  const authorizationCode = getStoredKeycloakAuthCode(queueController);
+  // TODO: Use keycloak for both auth codes until we properly clean up tunnistamo
   const authorizationCodeKeycloak = getStoredKeycloakAuthCode(queueController);
-  if (!authorizationCode) {
-    return Promise.reject('No keycloak authorization code');
-  }
+
   const language = getData(action, 'language') as TranslationLanguage;
   const input: Mutable<DeleteMyProfileMutationInput> = {
-    authorizationCode,
+    authorizationCode: authorizationCodeKeycloak || 'dummy',
+    authorizationCodeKeycloak: authorizationCodeKeycloak || 'dummy',
     dryRun: false,
   };
   if (typeof authorizationCodeKeycloak === 'string') {
