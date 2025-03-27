@@ -21,20 +21,20 @@ test('Login and logout - Swedish', async ({ page }) => {
   await page.getByTestId('user-menu-button').click();
   await page.getByRole('button', { name: 'Logga ut' }).click();
   await expect(
-    page.getByText('Du har loggats ut från Helsingfors stads e-tjänst')
+    page.getByText('Din profilinformation på en adress!')
   ).toBeVisible();
 });
 
 test('Login and logout - English', async ({ page }) => {
   await page.getByRole('button', { name: 'English' }).click();
   await page.getByLabel('Log in').click();
-  await page.getByRole('link', { name: 'Suomi.fi e-Identification' }).click();
+  await page.getByRole('link', { name: 'Suomi.fi identification' }).click();
   await page.getByRole('link', { name: 'Test IdP' }).click();
   await fillSSNAndContinue(page, TEST_SSN);
   await page.getByRole('button', { name: 'Continue to service' }).click();
   await page.getByTestId('user-menu-button').click();
   await page.getByRole('button', { name: 'Log out' }).click();
   await expect(
-    page.getByText('You have been logged out of City of Helsinki services')
+    page.getByText('Your profile information at one address!')
   ).toBeVisible();
 });

@@ -1,5 +1,7 @@
 import React from 'react';
 import { act } from '@testing-library/react';
+import { useOidcClient } from 'hds-react';
+import { Mock } from 'vitest';
 
 import {
   cloneProfileAndProvideManipulationFunctions,
@@ -44,17 +46,19 @@ import {
   ValidationTest,
 } from '../../../../common/test/commonTestRuns';
 
-let mockedAmr: AMRStatic;
 const suomifiAmr: AMRStatic = 'tunnistusSuomifi';
 
-vi.spyOn(useProfile, 'default').mockImplementation(
-  () =>
-    (({
-      profile: mockProfileCreator({
-        amr: [mockedAmr],
-      }),
-    } as unknown) as ProfileState)
-);
+vi.mock('hds-react', async () => {
+  const module = await vi.importActual('hds-react');
+  const getAmrMock = vi.fn();
+
+  return {
+    ...module,
+    useOidcClient: () => ({
+      getAmr: getAmrMock,
+    }),
+  };
+});
 
 describe('<EmailEditor /> ', () => {
   const responses: MockedResponse[] = [];
@@ -86,7 +90,8 @@ describe('<EmailEditor /> ', () => {
 
   beforeEach(() => {
     responses.length = 0;
-    mockedAmr = suomifiAmr;
+    const { getAmr } = useOidcClient();
+    (getAmr as Mock).mockReturnValue([suomifiAmr]); // Change mock return value
   });
   afterEach(() => {
     cleanComponentMocks();
@@ -164,7 +169,6 @@ describe('<EmailEditor /> ', () => {
 
   it('sends new data and returns to view mode when saved and shows only save notifications', async () => {
     await act(async () => {
-      mockedAmr = 'google';
       const testTools = await initTests();
       await testEditingItem({
         testTools,
@@ -188,6 +192,9 @@ describe('<EmailEditor /> ', () => {
           }),
         } as unknown) as ProfileState)
     );
+
+    const { getAmr } = useOidcClient();
+    (getAmr as Mock).mockReturnValue([tunnistusSuomifiAMR]); // Change mock return value
 
     await act(async () => {
       const testTools = await initTests();

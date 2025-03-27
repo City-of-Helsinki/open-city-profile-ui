@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
-import { TextInput, Notification } from 'hds-react';
+import { TextInput, Notification, useOidcClient } from 'hds-react';
 import classNames from 'classnames';
 
 import styles from './emailEditor.module.css';
@@ -23,7 +23,6 @@ import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
-import useProfile from '../../../auth/useProfile';
 import {
   hasHelsinkiAccountAMR,
   hasTunnistusSuomiFiAmr,
@@ -51,15 +50,16 @@ function EmailEditor(): React.ReactElement | null {
   } = editHandler;
 
   const { content } = notificationContent;
+  const { getAmr } = useOidcClient();
 
   const editData = getEmailEditDataForUI(hasData() ? [getData()] : []);
   const { value, saving } = editData;
   const { email } = value as EmailValue;
   const formFields = getFormFields(dataType);
   const ariaLabels = createActionAriaLabels(dataType, email, t);
-  const { profile } = useProfile();
+  const amrArray = getAmr();
   const willSendEmailVerificationCode =
-    hasTunnistusSuomiFiAmr(profile) || hasHelsinkiAccountAMR(profile);
+    hasTunnistusSuomiFiAmr(amrArray) || hasHelsinkiAccountAMR(amrArray);
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
     EmailValue
   >(t, true);

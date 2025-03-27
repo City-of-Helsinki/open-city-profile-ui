@@ -49,7 +49,6 @@ The tests use the following environment variables to configure the URLs of diffe
     PROFILE_URL
     PROFILE_API_URL
     EXAMPLE_APP_URL
-    TUNNISTAMO_URL
     TUNNISTUS_URL
 
 Please ensure these environment variables are correctly set in your environment before running the tests.

@@ -1,18 +1,16 @@
-import {
-  Profile,
-  AMRStatic,
-  tunnistusSuomifiAMR,
-} from '../../../auth/useProfile';
+import { Amr } from 'hds-react';
+
+import { AMRStatic, tunnistusSuomifiAMR } from '../../../auth/useProfile';
 import config from '../../../config';
 import { LoginMethodType, ProfileRoot } from '../../../graphql/typings';
 import { MyLoginMethodNodeFragment } from '../../../graphql/generatedTypes';
 
-function getAmrFromProfileData(profile: Profile | null): string | undefined {
-  return profile && Array.isArray(profile.amr) ? profile.amr[0] : '';
+function getAmrFromArray(amrArray: Amr | undefined): string | undefined {
+  return amrArray && Array.isArray(amrArray) ? amrArray[0] : '';
 }
 
-export function getAmrStatic(profile: Profile | null): AMRStatic | null {
-  const amr = getAmrFromProfileData(profile);
+export function getAmrStatic(amrArray: Amr | undefined): AMRStatic | null {
+  const amr = getAmrFromArray(amrArray);
 
   // If amr designates helsinki account, switch the value into a static
   // value. This setup allows the amr for Helsinki account to be
@@ -25,6 +23,7 @@ export function getAmrStatic(profile: Profile | null): AMRStatic | null {
     return 'tunnistusSuomifi';
   }
 
+  // TODO: Should be removed soon
   if (
     amr === 'github' ||
     amr === 'google' ||
@@ -38,12 +37,12 @@ export function getAmrStatic(profile: Profile | null): AMRStatic | null {
   return null;
 }
 
-export function hasTunnistusSuomiFiAmr(profile: Profile | null): boolean {
-  return getAmrFromProfileData(profile) === tunnistusSuomifiAMR;
+export function hasTunnistusSuomiFiAmr(amrArray: Amr | undefined): boolean {
+  return getAmrFromArray(amrArray) === tunnistusSuomifiAMR;
 }
 
-export function hasHelsinkiAccountAMR(profile: Profile | null): boolean {
-  return getAmrFromProfileData(profile) === config.helsinkiAccountAMR;
+export function hasHelsinkiAccountAMR(amrArray: Amr | undefined): boolean {
+  return getAmrFromArray(amrArray) === config.helsinkiAccountAMR;
 }
 
 export function hasPasswordLogin(data: ProfileRoot | undefined): boolean {
