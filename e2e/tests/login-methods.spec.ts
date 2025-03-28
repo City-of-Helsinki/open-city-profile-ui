@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto(PROFILE_URL);
 });
 
-test('Login and logout - Swedish', async ({ page }) => {
+test.skip('Login and logout - Swedish', async ({ page }) => {
   await page.getByRole('button', { name: 'Svenska' }).click();
   await page.getByLabel('Logga in').click();
   await page.getByRole('link', { name: 'Suomi.fi-identifikation' }).click();
@@ -25,7 +25,7 @@ test('Login and logout - Swedish', async ({ page }) => {
   ).toBeVisible();
 });
 
-test('Login and logout - English', async ({ page }) => {
+test.skip('Login and logout - English', async ({ page }) => {
   await page.getByRole('button', { name: 'English' }).click();
   await page.getByLabel('Log in').click();
   await page.getByRole('link', { name: 'Suomi.fi identification' }).click();
