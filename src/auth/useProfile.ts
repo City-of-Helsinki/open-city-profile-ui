@@ -2,7 +2,7 @@ import { User } from 'oidc-client-ts';
 import React from 'react';
 import { useOidcClient } from 'hds-react';
 
-export const tunnistusSuomifiAMR = 'suomi_fi';
+export const tunnistusSuomifiAMR = 'heltunnistussuomifi';
 
 export type AMRStatic =
   | 'github'
