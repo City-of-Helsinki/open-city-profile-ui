@@ -3,6 +3,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.22.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.21.0...open-city-profile-ui-v1.22.0) (2025-03-28)
+
+
+### Features
+
+* Add missing url for tunnistus ([#426](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/426)) ([cf964b8](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/cf964b855bc98262ee6da14a6457e404103d11c0))
+* E2e test update HP-2818 ([#428](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/428)) ([8f23562](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/8f23562bda2a91a603ebd3826d7e59ace994be88))
+* Remove tunnistamo HP-2818  ([#423](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/423)) ([03e1129](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/03e1129098dfde06e7078b042f022447a1b200d0))
+* Skip tunnistamo auth code checks ([#427](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/427)) ([55c0d83](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/55c0d83381a2998293ccf12da41c19713d404788))
+
+
+### Bug Fixes
+
+* Skip language e2e tests as they seem to be to fragile ([#430](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/430)) ([8a6c75d](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/8a6c75d41d6d44a5c635c29e746fb58d60b640c7))
+* Update suomifi amr ([#429](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/429)) ([1e046db](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/1e046db8abde08bd9b3d148fadc318d3fdaad1c2))
+
+
+### Dependencies
+
+* Upgrade vite vitest, replace eslint vite plugin HP-2833 ([246dbea](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/246dbea38aec267ac2ee7c617c35b9a505b5b9f9))
+
 ## [1.21.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.20.0...open-city-profile-ui-v1.21.0) (2025-03-24)
 
 
