@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 import { USER_PASSWORD } from '../utils/constants';
 import { loginToProfileWithSuomiFi } from '../utils/utils';
 
-const TEST_SSN = '210281-9988';
+const TEST_SSN = '240499-999F';
 const SAVE_SUCCESS = 'Tallennus onnistui';
 
 test.describe.configure({ mode: 'serial' });
