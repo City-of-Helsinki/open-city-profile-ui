@@ -58,7 +58,6 @@ test.skip('2 - Connect profile to Linked Events', async ({ page }) => {
   // Check that the connected profile is visible
   await page.goto(PROFILE_URL);
   await clickProfileLoginButton(page);
-  await page.getByRole('link', { name: 'Helsinki-tunnus' }).click();
   const valuesThatShouldBeInJson = ['linkedevents-test', mailbox.emailAddress];
   await checkDownloadedJson(page, valuesThatShouldBeInJson);
   await clickServiceConnectionsLink(page);
@@ -104,7 +103,6 @@ test('3 - Delete profile', async ({ page }) => {
   // Try to login after deleting the profile
   await page.goto(PROFILE_URL + '/login');
   await clickProfileLoginButton(page);
-  await page.getByRole('link', { name: 'Helsinki-tunnus' }).click();
   await page.getByLabel('Sähköposti').fill(mailbox.emailAddress);
   await page.getByLabel('Salasana', { exact: true }).fill(USER_PASSWORD);
   await clickKeycloakLoginButton(page);
