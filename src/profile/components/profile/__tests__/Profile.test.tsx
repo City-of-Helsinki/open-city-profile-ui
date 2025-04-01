@@ -14,24 +14,17 @@ import {
   resetApolloMocks,
   ResponseProvider,
 } from '../../../../common/test/MockApolloClientProvider';
-import { submitCreateProfileForm } from '../../../../common/test/commonUiActions';
-import { mockProfileCreator } from '../../../../common/test/userMocking';
 import TestLoginProvider from '../../../../common/test/TestLoginProvider';
 
 describe('<Profile />', () => {
   const renderTestSuite = (responses: MockedResponse[]) => {
     const responseProvider: ResponseProvider = () =>
       responses.shift() as MockedResponse;
-    const user = ({
-      profile: mockProfileCreator(),
-      access_token: 'huuhaa',
-      expired: false,
-    } as unknown) as User;
     return renderComponentWithMocksAndContexts(
       responseProvider,
       <React.Fragment>
         <TestLoginProvider>
-          <Profile user={user} />
+          <Profile />
         </TestLoginProvider>
       </React.Fragment>
     );
@@ -51,31 +44,6 @@ describe('<Profile />', () => {
     errorLayout: { testId: 'profile-check-error-layout' },
     errorLayoutReloadButton: { testId: 'profile-check-error-reload-button' },
   };
-
-  it('should render load indicator and then CreateProfile when profile does not exist', async () => {
-    const responses: MockedResponse[] = [{ profileData: null }];
-    await act(async () => {
-      const { waitForElement, getElement } = await renderTestSuite(responses);
-      getElement(selectors.loadIndicator);
-      await waitForElement(selectors.createProfileHeading);
-    });
-  });
-
-  it('should load and render profile after it has been created', async () => {
-    const responses: MockedResponse[] = [
-      { profileData: null },
-      { createMyProfile: {} },
-      { profileData: getMyProfile().myProfile as ProfileData },
-    ];
-    await act(async () => {
-      const testTools = await renderTestSuite(responses);
-      const { waitForElement, getElement } = testTools;
-      getElement(selectors.loadIndicator);
-      await waitForElement(selectors.createProfileHeading);
-      await submitCreateProfileForm(testTools);
-      await waitForElement(selectors.profileHeading);
-    });
-  });
 
   it('should render load indicator and then ViewProfile when profile exists', async () => {
     const responses: MockedResponse[] = [
