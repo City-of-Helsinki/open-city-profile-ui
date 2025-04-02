@@ -4,9 +4,6 @@ export const DOWNLOAD_MY_PROFILE = gql`
     $authorizationCode: String!
     $authorizationCodeKeycloak: String
   ) {
-    downloadMyProfile(
-      authorizationCode: $authorizationCode
-      authorizationCodeKeycloak: $authorizationCodeKeycloak
-    )
+    downloadMyProfile(authorizationCode: $authorizationCode)
   }
 `;

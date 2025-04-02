@@ -5,7 +5,6 @@ export const GDPR_SERVICE_CONNECTIONS = gql`
     name
     gdprQueryScope
     gdprDeleteScope
-    isPureKeycloak
   }
 
   fragment GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNode on ServiceConnectionType {

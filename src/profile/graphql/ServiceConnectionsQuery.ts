@@ -21,7 +21,6 @@ export const SERVICE_CONNECTIONS = gql`
         ...ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdges
       }
     }
-    isPureKeycloak
   }
 
   fragment ServiceConnectionsQueryEdgesNode on ServiceConnectionType {
