@@ -12,14 +12,7 @@ import {
   hasMatchingDataProperty,
 } from '../../common/actionQueue/actionQueue';
 import config from '../../config';
-import {
-  isTunnistamoAuthorisationCodeNeeded,
-  isKeycloakAuthorisationCodeNeeded,
-} from './getGdprScopes';
-import { tunnistamoRedirectionInitializationAction } from './authCodeRedirectionInitialization';
-import { tunnistamoAuthCodeParserAction } from './authCodeParser';
-import { tunnistamoAuthCodeRedirectionAction } from './authCodeRedirectionHandler';
-import { tunnistamoAuthCodeCallbackUrlAction } from './authCodeCallbackUrlDetector';
+import { isKeycloakAuthorisationCodeNeeded } from './getGdprScopes';
 import { AnyObject } from '../../graphql/typings';
 import matchUrls from '../../common/helpers/matchUrls';
 import { getStartPagePathFromQueue } from './redirectionHandlers';
@@ -57,22 +50,11 @@ export function getActionResultAndErrorMessage<T = JSONStringifyableResult>(
   };
 }
 
-export function isTunnistamoAuthCodeAction(action: Action): boolean {
-  return (
-    action.type === tunnistamoRedirectionInitializationAction.type ||
-    action.type === tunnistamoAuthCodeParserAction.type ||
-    action.type === tunnistamoAuthCodeCallbackUrlAction.type ||
-    action.type === tunnistamoAuthCodeRedirectionAction.type
-  );
-}
-
 export function isAuthCodeActionNeeded(
   action: Action,
   controller: QueueController
 ): boolean {
-  return isTunnistamoAuthCodeAction(action)
-    ? isTunnistamoAuthorisationCodeNeeded(controller)
-    : isKeycloakAuthorisationCodeNeeded(controller);
+  return isKeycloakAuthorisationCodeNeeded(controller);
 }
 
 export function delayRedirection(uri: string) {

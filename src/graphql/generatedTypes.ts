@@ -486,7 +486,6 @@ export type GdprServiceConnectionsQuery = { readonly myProfile: { readonly __typ
 
 export type DownloadMyProfileQueryVariables = Exact<{
   authorizationCode: Scalars['String']['input'];
-  authorizationCodeKeycloak?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
