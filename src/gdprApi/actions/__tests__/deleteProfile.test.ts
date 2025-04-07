@@ -4,10 +4,7 @@ import * as hdsReact from 'hds-react';
 
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import { Action, getOption } from '../../../common/actionQueue/actionQueue';
-import {
-  tunnistamoAuthCodeParserAction,
-  keycloakAuthCodeParserAction,
-} from '../authCodeParser';
+import { keycloakAuthCodeParserAction } from '../authCodeParser';
 import { getMockCalls } from '../../../common/test/mockHelper';
 import {
   createDeleteProfileAction,
@@ -20,16 +17,13 @@ import { DeleteResultLists } from '../../../profile/helpers/parseDeleteProfileRe
 describe('deleteProfile.ts', () => {
   const queryTracker = vi.fn();
   const keycloakAuthCode = 'keycloak-auth-code';
-  const tunnistamoAuthCode = 'tunnistamo-auth-code';
   const language = 'AF';
   const initTests = ({
-    noKeycloadAuthCode,
     returnFailed,
     returnError,
     returnNoData,
   }: {
     noKeycloadAuthCode?: boolean;
-    noTunnistamoAuthCode?: boolean;
     returnFailed?: boolean;
     returnError?: boolean;
     returnNoData?: boolean;
@@ -58,22 +52,16 @@ describe('deleteProfile.ts', () => {
     });
 
     const queue = [
-      tunnistamoAuthCodeParserAction,
       keycloakAuthCodeParserAction,
       createDeleteProfileAction(language),
     ];
     const runner = createActionQueueRunner(queue);
-    runner.updateActionAndQueue(tunnistamoAuthCodeParserAction.type, {
-      result: tunnistamoAuthCode,
+
+    runner.updateActionAndQueue(keycloakAuthCodeParserAction.type, {
+      result: keycloakAuthCode,
       complete: true,
     });
 
-    if (!noKeycloadAuthCode) {
-      runner.updateActionAndQueue(keycloakAuthCodeParserAction.type, {
-        result: keycloakAuthCode,
-        complete: true,
-      });
-    }
     return {
       runner,
       getAction: () => runner.getByType(deleteProfileType) as Action,
@@ -112,7 +100,6 @@ describe('deleteProfile.ts', () => {
       expect(getPayloadVariables()).toMatchObject({
         input: {
           authorizationCode: keycloakAuthCode,
-          authorizationCodeKeycloak: keycloakAuthCode,
           dryRun: false,
         },
         language,

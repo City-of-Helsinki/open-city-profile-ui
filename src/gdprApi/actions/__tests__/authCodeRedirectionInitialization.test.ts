@@ -6,36 +6,30 @@ import { loadKeycloakConfigAction } from '../loadKeycloakConfig';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import { Action } from '../../../common/actionQueue/actionQueue';
 import {
-  tunnistamoRedirectionInitializationAction,
   keycloakRedirectionInitializationAction,
   getAuthCodeRedirectionInitializationResult,
 } from '../authCodeRedirectionInitialization';
 import { AuthorizationUrlParams } from '../utils';
 
-const mockTunnistamoEndPoint = 'https://api.hel.fi/sso/openid/openid/authorize';
 const mockKeycloakEndPoint = 'keycloak.hel.ninja';
 
 describe('authCodeRedirectionInitialization.ts', () => {
   const initTests = ({
     noKeycloakScopes,
-    noTunnistamoScopes,
     noKeycloakUrl,
   }: {
-    noTunnistamoScopes?: boolean;
     noKeycloakScopes?: boolean;
     noKeycloakUrl?: boolean;
   } = {}) => {
     const queue = [
       getGdprQueryScopesAction,
       loadKeycloakConfigAction,
-      tunnistamoRedirectionInitializationAction,
       keycloakRedirectionInitializationAction,
     ];
     const runner = createActionQueueRunner(queue);
     runner.updateActionAndQueue(getGdprQueryScopesAction.type, {
       result: {
         keycloakScopes: noKeycloakScopes ? [] : ['scope'],
-        tunnistamoScopes: noTunnistamoScopes ? [] : ['scope'],
       },
       complete: true,
     });
@@ -45,10 +39,6 @@ describe('authCodeRedirectionInitialization.ts', () => {
     });
     return {
       runner,
-      getTunnistamoAction: () =>
-        runner.getByType(
-          tunnistamoRedirectionInitializationAction.type
-        ) as Action,
       getKeycloadAction: () =>
         runner.getByType(
           keycloakRedirectionInitializationAction.type
@@ -68,32 +58,18 @@ describe('authCodeRedirectionInitialization.ts', () => {
     vi.resetAllMocks();
   });
   it('Resolves oidc authorization url and state for the query for given oidc server', async () => {
-    const { runner, getTunnistamoAction, getKeycloadAction } = initTests();
-    const tunnistamoAction = getTunnistamoAction();
+    const { runner, getKeycloadAction } = initTests();
     const keycloadAction = getKeycloadAction();
-    const [, resultForTunnistamo] = await to(
-      tunnistamoAction.executor(tunnistamoAction, runner)
-    );
-    expect(
-      checkResult(resultForTunnistamo, mockTunnistamoEndPoint)
-    ).toBeTruthy();
-
     const [, resultForKeycloak] = await to(
       keycloadAction.executor(keycloadAction, runner)
     );
     expect(checkResult(resultForKeycloak, mockKeycloakEndPoint)).toBeTruthy();
   });
   it('Resolves empty oidc authorization url and state when given oidc server is not needed', async () => {
-    const { runner, getTunnistamoAction, getKeycloadAction } = initTests({
+    const { runner, getKeycloadAction } = initTests({
       noKeycloakScopes: true,
-      noTunnistamoScopes: true,
     });
-    const tunnistamoAction = getTunnistamoAction();
     const keycloadAction = getKeycloadAction();
-    const [, resultForTunnistamo] = await to(
-      tunnistamoAction.executor(tunnistamoAction, runner)
-    );
-    expect(checkResult(resultForTunnistamo, '', 0)).toBeTruthy();
 
     const [, resultForKeycloak] = await to(
       keycloadAction.executor(keycloadAction, runner)
@@ -107,30 +83,16 @@ describe('authCodeRedirectionInitialization.ts', () => {
     expect(error).toBeDefined();
   });
   it('getAuthCodeRedirectionInitializationResult() returns props related to given action', async () => {
-    const { runner, getTunnistamoAction, getKeycloadAction } = initTests();
-    expect(
-      getAuthCodeRedirectionInitializationResult(getTunnistamoAction(), runner)
-    ).toBeUndefined();
+    const { runner, getKeycloadAction } = initTests();
 
     expect(
       getAuthCodeRedirectionInitializationResult(getKeycloadAction(), runner)
     ).toBeUndefined();
 
-    runner.resume(getTunnistamoAction().type);
+    runner.resume(getKeycloadAction().type);
     await waitFor(() => {
       expect(runner.isFinished()).toBeTruthy();
     });
-
-    expect(
-      checkResult(
-        getAuthCodeRedirectionInitializationResult(
-          getTunnistamoAction(),
-          runner
-        ),
-        mockTunnistamoEndPoint
-      )
-    ).toBeTruthy();
-
     expect(
       checkResult(
         getAuthCodeRedirectionInitializationResult(getKeycloadAction(), runner),

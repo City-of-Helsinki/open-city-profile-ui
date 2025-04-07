@@ -14,13 +14,9 @@ import {
   createInternalRedirectionRequest,
   getActionResultAndErrorMessage,
   isAuthCodeActionNeeded,
-  isTunnistamoAuthCodeAction,
   rejectExecutorWithStartPageRedirection,
 } from '../utils';
-import {
-  keycloakRedirectionInitializationAction,
-  tunnistamoRedirectionInitializationAction,
-} from '../authCodeRedirectionInitialization';
+import { keycloakRedirectionInitializationAction } from '../authCodeRedirectionInitialization';
 import {
   Action,
   createQueueController,
@@ -93,38 +89,21 @@ describe('utils.ts', () => {
       expect(result.errorMessage).toBeUndefined();
     });
   });
-  describe('isTunnistamoAuthCodeAction()', () => {
-    it('returns true if given action is one of tunnistamo related actions', async () => {
-      expect(
-        isTunnistamoAuthCodeAction(
-          tunnistamoRedirectionInitializationAction as Action
-        )
-      ).toBeTruthy();
-      expect(
-        isTunnistamoAuthCodeAction(resolvingActionSource1 as Action)
-      ).toBeFalsy();
-    });
-  });
-  describe(`isAuthCodeActionNeeded() returns true is auth code is needed for Tunnistamo/Keycloak related action.
-            Uses isTunnistamoAuthCodeAction() to define which scopes to check.
+  describe(`isAuthCodeActionNeeded() returns true is auth code is needed for Keycloak related action.
             Uses getGrprScopes as a source for scopes`, () => {
     const initAuthCodeTests = ({
       noKeycloakScopes,
-      noTunnistamoScopes,
     }: {
-      noTunnistamoScopes?: boolean;
       noKeycloakScopes?: boolean;
     } = {}) => {
       const queue = [
         getGdprQueryScopesAction,
-        tunnistamoRedirectionInitializationAction,
         keycloakRedirectionInitializationAction,
       ];
       const runner = createActionQueueRunner(queue);
       runner.updateActionAndQueue(getGdprQueryScopesAction.type, {
         result: {
           keycloakScopes: noKeycloakScopes ? [] : ['scope'],
-          tunnistamoScopes: noTunnistamoScopes ? [] : ['scope'],
         },
         complete: true,
       });
@@ -133,24 +112,6 @@ describe('utils.ts', () => {
         runner,
       };
     };
-    it(`returns true when Tunnistamo scopes exist and action is Tunnistamo related`, async () => {
-      const { runner } = initAuthCodeTests();
-      expect(
-        isAuthCodeActionNeeded(
-          tunnistamoRedirectionInitializationAction as Action,
-          runner
-        )
-      ).toBeTruthy();
-    });
-    it(`returns false when Tunnistamo scopes does not exist and action is Tunnistamo related`, async () => {
-      const { runner } = initAuthCodeTests({ noTunnistamoScopes: true });
-      expect(
-        isAuthCodeActionNeeded(
-          tunnistamoRedirectionInitializationAction as Action,
-          runner
-        )
-      ).toBeFalsy();
-    });
     it(`returns true when Keycloak scopes exist and action is Keycloak related`, async () => {
       const { runner } = initAuthCodeTests();
       expect(
@@ -160,7 +121,7 @@ describe('utils.ts', () => {
         )
       ).toBeTruthy();
     });
-    it(`returns false when Tunnistamo scopes does not exist and action is Keycloak related`, async () => {
+    it(`returns false when Keycloak scopes does not exist`, async () => {
       const { runner } = initAuthCodeTests({ noKeycloakScopes: true });
       expect(
         isAuthCodeActionNeeded(
@@ -174,16 +135,16 @@ describe('utils.ts', () => {
     it('creates url params with failed action type and an optional message', async () => {
       expect(
         createFailedActionParams(
-          tunnistamoRedirectionInitializationAction as Action
+          keycloakRedirectionInitializationAction as Action
         )
-      ).toBe(`error=${tunnistamoRedirectionInitializationAction.type}`);
+      ).toBe(`error=${keycloakRedirectionInitializationAction.type}`);
       expect(
         createFailedActionParams(
-          tunnistamoRedirectionInitializationAction as Action,
+          keycloakRedirectionInitializationAction as Action,
           'errorMessage'
         )
       ).toBe(
-        `error=${tunnistamoRedirectionInitializationAction.type}&message=errorMessage`
+        `error=${keycloakRedirectionInitializationAction.type}&message=errorMessage`
       );
     });
     it('if third argument is true, new params are appended to existing', async () => {
@@ -191,12 +152,12 @@ describe('utils.ts', () => {
       mockedWindowControls.setSearch(existingParams);
       expect(
         createFailedActionParams(
-          tunnistamoRedirectionInitializationAction as Action,
+          keycloakRedirectionInitializationAction as Action,
           'errorMessage',
           true
         )
       ).toBe(
-        `${existingParams}&error=${tunnistamoRedirectionInitializationAction.type}&message=errorMessage`
+        `${existingParams}&error=${keycloakRedirectionInitializationAction.type}&message=errorMessage`
       );
     });
   });
@@ -224,14 +185,14 @@ describe('utils.ts', () => {
       const [error] = await to(
         rejectExecutorWithStartPageRedirection(
           queue,
-          tunnistamoRedirectionInitializationAction as Action,
+          keycloakRedirectionInitializationAction as Action,
           'errorMessage'
         )
       );
       expect(JSON.parse(error?.message as string)).toMatchObject({
         isRedirectionRequest: true,
         path: `${path}?${createFailedActionParams(
-          tunnistamoRedirectionInitializationAction as Action,
+          keycloakRedirectionInitializationAction as Action,
           'errorMessage'
         )}`,
       });
@@ -243,7 +204,7 @@ describe('utils.ts', () => {
       expect(() =>
         rejectExecutorWithStartPageRedirection(
           queue,
-          tunnistamoRedirectionInitializationAction as Action,
+          keycloakRedirectionInitializationAction as Action,
           'errorMessage'
         )
       ).toThrow();

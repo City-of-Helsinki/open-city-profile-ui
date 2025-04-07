@@ -4,10 +4,7 @@ import * as hdsReact from 'hds-react';
 
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import { Action, getOption } from '../../../common/actionQueue/actionQueue';
-import {
-  tunnistamoAuthCodeParserAction,
-  keycloakAuthCodeParserAction,
-} from '../authCodeParser';
+import { keycloakAuthCodeParserAction } from '../authCodeParser';
 import { getMockCalls } from '../../../common/test/mockHelper';
 import { getServiceConnectionDeleteResult } from '../../../common/test/serviceConnectionDeleteMocking';
 import {
@@ -23,16 +20,13 @@ type ActionResults = ReturnType<typeof getDeleteServiceConnectionResultOrError>;
 describe('deleteServiceConnection.ts', () => {
   const queryTracker = vi.fn();
   const keycloakAuthCode = 'keycloak-auth-code';
-  const tunnistamoAuthCode = 'tunnistamo-auth-code';
   const serviceName = 'test-Service';
   const initTests = ({
-    noKeycloadAuthCode,
     returnForbidden,
     returnError,
     returnNoData,
   }: {
     noKeycloadAuthCode?: boolean;
-    noTunnistamoAuthCode?: boolean;
     returnForbidden?: boolean;
     returnError?: boolean;
     returnNoData?: boolean;
@@ -65,22 +59,16 @@ describe('deleteServiceConnection.ts', () => {
     });
 
     const queue = [
-      tunnistamoAuthCodeParserAction,
       keycloakAuthCodeParserAction,
       createDeleteServiceConnectionAction(serviceName),
     ];
     const runner = createActionQueueRunner(queue);
-    runner.updateActionAndQueue(tunnistamoAuthCodeParserAction.type, {
-      result: tunnistamoAuthCode,
+
+    runner.updateActionAndQueue(keycloakAuthCodeParserAction.type, {
+      result: keycloakAuthCode,
       complete: true,
     });
 
-    if (!noKeycloadAuthCode) {
-      runner.updateActionAndQueue(keycloakAuthCodeParserAction.type, {
-        result: keycloakAuthCode,
-        complete: true,
-      });
-    }
     return {
       runner,
       getAction: () => runner.getByType(deleteServiceConnectionType) as Action,
@@ -108,32 +96,19 @@ describe('deleteServiceConnection.ts', () => {
       const [, result] = await to(action.executor(action, runner));
       expect(isSuccessResult({ result } as ActionResults)).toBeTruthy();
     });
-    it('Sends both auth codes in query variables when both are set', async () => {
+    it('Sends auth code in query variables when set', async () => {
       const { runner, getAction, getPayloadVariables } = initTests();
       const action = getAction();
       await to(action.executor(action, runner));
       expect(getPayloadVariables()).toMatchObject({
         input: {
-          authorizationCode: tunnistamoAuthCode,
-          authorizationCodeKeycloak: keycloakAuthCode,
+          authorizationCode: keycloakAuthCode,
           dryRun: false,
           serviceName,
         },
       });
     });
-    it('Sends only tunnistamo auth code, when keycload code is not set', async () => {
-      const { runner, getAction, getPayloadVariables } = initTests({
-        noKeycloadAuthCode: true,
-      });
-      await to(getAction().executor(getAction(), runner));
-      expect(getPayloadVariables()).toMatchObject({
-        input: {
-          authorizationCode: tunnistamoAuthCode,
-          dryRun: false,
-          serviceName,
-        },
-      });
-    });
+
     it('When result has no "success" flag, promise is rejected', async () => {
       const { runner, getAction } = initTests({ returnForbidden: true });
       const [errorMessage] = await to(

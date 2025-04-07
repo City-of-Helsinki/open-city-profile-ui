@@ -8,10 +8,7 @@ import {
 } from '../getDownloadData';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import { Action, getOption } from '../../../common/actionQueue/actionQueue';
-import {
-  tunnistamoAuthCodeParserAction,
-  keycloakAuthCodeParserAction,
-} from '../authCodeParser';
+import { keycloakAuthCodeParserAction } from '../authCodeParser';
 import { getMockCalls } from '../../../common/test/mockHelper';
 
 describe('getDownloadData.ts', () => {
@@ -19,12 +16,10 @@ describe('getDownloadData.ts', () => {
   const successfulResponse = { variable1: 'variable1' };
   const keycloakAuthCode = 'keycloak-auth-code';
   const initTests = ({
-    noKeycloadAuthCode,
     returnNoData,
     returnError,
   }: {
     noKeycloadAuthCode?: boolean;
-    noTunnistamoAuthCode?: boolean;
     returnNoData?: boolean;
     returnError?: boolean;
   } = {}) => {
@@ -51,23 +46,14 @@ describe('getDownloadData.ts', () => {
       'https://api.hel.fi/auth/helsinkiprofile': 'foo.bar.baz',
     });
 
-    const queue = [
-      tunnistamoAuthCodeParserAction,
-      keycloakAuthCodeParserAction,
-      getDownloadDataAction,
-    ];
+    const queue = [keycloakAuthCodeParserAction, getDownloadDataAction];
     const runner = createActionQueueRunner(queue);
-    runner.updateActionAndQueue(tunnistamoAuthCodeParserAction.type, {
+
+    runner.updateActionAndQueue(keycloakAuthCodeParserAction.type, {
       result: keycloakAuthCode,
       complete: true,
     });
 
-    if (!noKeycloadAuthCode) {
-      runner.updateActionAndQueue(keycloakAuthCodeParserAction.type, {
-        result: keycloakAuthCode,
-        complete: true,
-      });
-    }
     return {
       runner,
       getAction: () => runner.getByType(getDownloadDataAction.type) as Action,
@@ -99,7 +85,6 @@ describe('getDownloadData.ts', () => {
       await to(getAction().executor(getAction(), runner));
       expect(getPayloadVariables()).toMatchObject({
         authorizationCode: keycloakAuthCode,
-        authorizationCodeKeycloak: keycloakAuthCode,
       });
     });
     it('Empty data rejects the promise', async () => {

@@ -31,7 +31,7 @@ import {
 import { getServiceConnectionsAction } from '../../../../gdprApi/actions/getServiceConnections';
 import { defaultRedirectionCatcherActionType } from '../../../../gdprApi/actions/redirectionHandlers';
 import { createNextActionParams } from '../../../../gdprApi/actions/utils';
-import { tunnistamoAuthCodeRedirectionAction } from '../../../../gdprApi/actions/authCodeRedirectionHandler';
+import { keycloakAuthCodeRedirectionAction } from '../../../../gdprApi/actions/authCodeRedirectionHandler';
 import { deleteProfileType } from '../../../../gdprApi/actions/deleteProfile';
 
 vi.mock('../../../../gdprApi/actions/queues');
@@ -214,7 +214,7 @@ describe('<DeleteProfile /> ', () => {
       await waitForElement(deletingProfileSelector);
       await waitFor(() => {
         expect(
-          isActionTriggered(tunnistamoAuthCodeRedirectionAction.type)
+          isActionTriggered(keycloakAuthCodeRedirectionAction.type)
         ).toBeTruthy();
       });
     });
