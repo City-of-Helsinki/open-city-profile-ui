@@ -8,21 +8,12 @@ import {
 import {
   getActionResultAndErrorMessage,
   isAuthCodeActionNeeded,
-  isTunnistamoAuthCodeAction,
   parseAuthorizationCallbackUrl,
   rejectExecutorWithStartPageRedirection,
 } from './utils';
 import { getAuthCodeRedirectionInitializationResult } from './authCodeRedirectionInitialization';
 
-const tunnistamoAuthCodeParserType = 'tunnistamoAuthCodeParser';
 const keycloakAuthCodeParserType = 'keycloakAuthCodeParser';
-const dummyTunnistamoAuthCode = 'dummyTunnistamoAuthCode';
-
-export const getStoredTunnistamoAuthCode = (queueController: QueueController) =>
-  getActionResultAndErrorMessage<string>(
-    tunnistamoAuthCodeParserType,
-    queueController
-  ).result;
 
 export const getStoredKeycloakAuthCode = (queueController: QueueController) =>
   getActionResultAndErrorMessage<string>(
@@ -32,9 +23,7 @@ export const getStoredKeycloakAuthCode = (queueController: QueueController) =>
 
 const authCodeParserExecutor: ActionExecutor = async (action, controller) => {
   if (!isAuthCodeActionNeeded(action, controller)) {
-    return Promise.resolve(
-      isTunnistamoAuthCodeAction(action) ? dummyTunnistamoAuthCode : ''
-    );
+    return Promise.resolve('');
   }
 
   const rejector = (message: string) =>
@@ -63,13 +52,6 @@ const options: ActionOptions = {
 };
 const data: Action['data'] = {
   redirectsOnError: true,
-};
-
-export const tunnistamoAuthCodeParserAction: ActionProps = {
-  type: tunnistamoAuthCodeParserType,
-  executor: authCodeParserExecutor,
-  options,
-  data,
 };
 
 export const keycloakAuthCodeParserAction: ActionProps = {

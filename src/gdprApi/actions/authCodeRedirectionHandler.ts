@@ -9,14 +9,12 @@ import {
   delayRedirection,
   getActionResultAndErrorMessage,
   isAuthCodeActionNeeded,
-  isTunnistamoAuthCodeAction,
   makeAuthorizationUrl,
 } from './utils';
 import { getFetchedScopes } from './getGdprScopes';
 import config from '../../config';
 import { getAuthCodeRedirectionInitializationResult } from './authCodeRedirectionInitialization';
 
-const tunnistamoAuthCodeRedirectionType = 'tunnistamoAuthCodeRedirection';
 const keycloakAuthCodeRedirectionType = 'keycloakAuthCodeRedirection';
 
 export const isQueueWaitingForAuthCodeRedirection = (
@@ -26,10 +24,7 @@ export const isQueueWaitingForAuthCodeRedirection = (
   if (!activeAction) {
     return false;
   }
-  return (
-    activeAction.type === tunnistamoAuthCodeRedirectionType ||
-    activeAction.type === keycloakAuthCodeRedirectionType
-  );
+  return activeAction.type === keycloakAuthCodeRedirectionType;
 };
 
 export const getAuthCodeRedirectionResult = (
@@ -37,9 +32,7 @@ export const getAuthCodeRedirectionResult = (
   queueController: QueueController
 ) =>
   getActionResultAndErrorMessage<boolean>(
-    isTunnistamoAuthCodeAction(action)
-      ? tunnistamoAuthCodeRedirectionType
-      : keycloakAuthCodeRedirectionType,
+    keycloakAuthCodeRedirectionType,
     queueController
   ).result;
 
@@ -66,15 +59,11 @@ const authCodeRedirectionHandlerExecutor: ActionExecutor = async (
     return Promise.reject('No scopes found');
   }
 
-  const forTunnistamo = isTunnistamoAuthCodeAction(action);
-  const scopesToUse = forTunnistamo ? scopes.tunnistamoScopes : [];
-  const clientId = forTunnistamo
-    ? config.tunnistamoGdprClientId
-    : config.keycloakGdprClientId;
+  const clientId = config.keycloakGdprClientId;
 
   const props = {
     ...stateAndUri,
-    scopes: ['openid', ...scopesToUse],
+    scopes: ['openid'],
     clientId,
     redirectUri: `${window.location.origin}${config.gdprCallbackPath}`,
   };
@@ -85,12 +74,6 @@ const authCodeRedirectionHandlerExecutor: ActionExecutor = async (
 
 const options: ActionOptions = {
   noStorage: true,
-};
-
-export const tunnistamoAuthCodeRedirectionAction: ActionProps = {
-  type: tunnistamoAuthCodeRedirectionType,
-  executor: authCodeRedirectionHandlerExecutor,
-  options,
 };
 
 export const keycloakAuthCodeRedirectionAction: ActionProps = {

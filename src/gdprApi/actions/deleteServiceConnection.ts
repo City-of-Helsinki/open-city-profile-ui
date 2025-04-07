@@ -14,10 +14,7 @@ import {
 } from '../../graphql/generatedTypes';
 import { Mutable } from '../../graphql/typings';
 import { getActionResultAndErrorMessage } from './utils';
-import {
-  getStoredKeycloakAuthCode,
-  getStoredTunnistamoAuthCode,
-} from './authCodeParser';
+import { getStoredKeycloakAuthCode } from './authCodeParser';
 import reportErrorsToSentry from '../../common/sentry/reportErrorsToSentry';
 import { DELETE_SERVICE_DATA } from '../graphql/GdprDeleteServiceDataMutation';
 import parseGraphQLError from '../../profile/helpers/parseGraphQLError';
@@ -58,8 +55,7 @@ const deleteServiceConnectionExecutor: ActionExecutor = async (
   action,
   queueController
 ) => {
-  const authorizationCode = getStoredTunnistamoAuthCode(queueController);
-  const authorizationCodeKeycloak = getStoredKeycloakAuthCode(queueController);
+  const authorizationCode = getStoredKeycloakAuthCode(queueController);
   if (!authorizationCode) {
     return Promise.reject(resultTypes.noAuthCodes);
   }
@@ -69,9 +65,7 @@ const deleteServiceConnectionExecutor: ActionExecutor = async (
     serviceName,
     dryRun: false,
   };
-  if (typeof authorizationCodeKeycloak === 'string') {
-    input.authorizationCodeKeycloak = authorizationCodeKeycloak;
-  }
+
   const [error, result] = await to(
     graphqlClient.mutate<
       GdprDeleteMyServiceDataMutation,

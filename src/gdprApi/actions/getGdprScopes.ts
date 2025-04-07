@@ -16,12 +16,10 @@ type Scopes = Pick<
 
 type ScopesPerOidcType = {
   pureKeyloakServices: Scopes[];
-  nopeServices?: Scopes[];
 };
 
 type ScopesPerType = {
   keycloakScopes: string[];
-  nopeScopes: string[];
 };
 
 const gdprQueryScopesType = 'gdprQueryScopes';
@@ -89,10 +87,7 @@ const getScopes = async (
     service => service[scopeType]
   );
 
-  // TODO: remove this
-  const nopeScopes: string[] = [];
-
-  return Promise.resolve({ keycloakScopes, nopeScopes });
+  return Promise.resolve({ keycloakScopes });
 };
 
 const gdprQueryScopesExecutor: ActionExecutor = async (action, controller) =>
