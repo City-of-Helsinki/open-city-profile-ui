@@ -489,14 +489,12 @@ describe('useAuthCodeQueues', () => {
     it('when storage has a queue with failed auth code retrieval, nextPhase is "restart"', async () => {
       mockedWindowControls.setPath(config.downloadPath);
       mockedWindowControls.setSearch(
-        // createFailedActionParams(tunnistamoAuthCodeCallbackUrlAction as Action)
         createFailedActionParams(keycloakAuthCodeCallbackUrlAction as Action)
       );
       initTestQueue(
         getScenarioWhereNextPhaseIsResumeCallback({
           overrides: [
             {
-              //type: tunnistamoAuthCodeCallbackUrlAction.type,
               type: keycloakAuthCodeCallbackUrlAction.type,
               rejectValue: rejectionError,
               store: true,
