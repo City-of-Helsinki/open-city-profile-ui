@@ -274,6 +274,7 @@ describe('useAuthCodeQueues', () => {
   });
 
   describe('On download page', () => {
+    // TODO: sort this out after app functionality is checked on dev
     it.skip('The queue can be started and proceeds to auth code redirection automatically', async () => {
       initTestQueue(getScenarioWhichGoesFromStartToAuthRedirectAutomatically());
       const { start, getState, getFunctionResults } = renderTestComponent();
@@ -565,6 +566,7 @@ describe('useAuthCodeQueues', () => {
     });
   });
   describe.skip('Testing whole download queue action by action.', () => {
+    // TODO: sort this out after app functionality is checked on dev
     it('phases change and re-rendering or unmounting (in correct phases) wont affect anything', async () => {
       initTestQueue(
         getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully()
