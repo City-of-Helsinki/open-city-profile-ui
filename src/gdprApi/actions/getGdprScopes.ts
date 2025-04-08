@@ -16,12 +16,10 @@ type Scopes = Pick<
 
 type ScopesPerOidcType = {
   pureKeyloakServices: Scopes[];
-  tunnistamoServices: Scopes[];
 };
 
 type ScopesPerType = {
   keycloakScopes: string[];
-  tunnistamoScopes: string[];
 };
 
 const gdprQueryScopesType = 'gdprQueryScopes';
@@ -52,13 +50,6 @@ export const isKeycloakAuthorisationCodeNeeded = (
   return scopes.keycloakScopes.length > 0;
 };
 
-export const isTunnistamoAuthorisationCodeNeeded = (
-  queueController: QueueController
-) => {
-  const scopes = getFetchedScopes(queueController);
-  return scopes.tunnistamoScopes.length > 0;
-};
-
 const gdprScopesExecutor = async (controller: QueueController) => {
   const { result } = getServiceConnectionsResultAndError(controller);
   if (!result) {
@@ -66,7 +57,6 @@ const gdprScopesExecutor = async (controller: QueueController) => {
   }
   const scopesPerOidcType: ScopesPerOidcType = {
     pureKeyloakServices: [],
-    tunnistamoServices: [],
   };
 
   result.forEach(service => {
@@ -75,11 +65,8 @@ const gdprScopesExecutor = async (controller: QueueController) => {
       gdprDeleteScope,
       gdprQueryScope,
     };
-    if (service.isPureKeycloak) {
-      scopesPerOidcType.pureKeyloakServices.push(data);
-    } else {
-      scopesPerOidcType.tunnistamoServices.push(data);
-    }
+
+    scopesPerOidcType.pureKeyloakServices.push(data);
   });
 
   return Promise.resolve(scopesPerOidcType);
@@ -99,11 +86,8 @@ const getScopes = async (
   const keycloakScopes = scopes.pureKeyloakServices.map(
     service => service[scopeType]
   );
-  const tunnistamoScopes = scopes.tunnistamoServices.map(
-    service => service[scopeType]
-  );
 
-  return Promise.resolve({ keycloakScopes, tunnistamoScopes });
+  return Promise.resolve({ keycloakScopes });
 };
 
 const gdprQueryScopesExecutor: ActionExecutor = async (action, controller) =>

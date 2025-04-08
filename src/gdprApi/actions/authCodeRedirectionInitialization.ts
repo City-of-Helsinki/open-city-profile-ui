@@ -12,13 +12,10 @@ import {
   AuthorizationUrlParams,
   getActionResultAndErrorMessage,
   isAuthCodeActionNeeded,
-  isTunnistamoAuthCodeAction,
 } from './utils';
 
 type RedirectionProps = Pick<AuthorizationUrlParams, 'state' | 'oidcUri'>;
 
-const tunnistamoRedirectionInitializationType =
-  'tunnistamoRedirectionInitialization';
 const keycloakRedirectionInitializationType =
   'keycloakRedirectionInitializationType';
 
@@ -27,14 +24,9 @@ export const getAuthCodeRedirectionInitializationResult = (
   queueController: QueueController
 ) =>
   getActionResultAndErrorMessage<RedirectionProps>(
-    isTunnistamoAuthCodeAction(action)
-      ? tunnistamoRedirectionInitializationType
-      : keycloakRedirectionInitializationType,
+    keycloakRedirectionInitializationType,
     queueController
   ).result;
-
-const getAuthorizationEndpoint = (): string =>
-  `${window._env_.REACT_APP_OIDC_AUTHORITY}openid/authorize`;
 
 const authCodeRedirectionInitializationExecutor: ActionExecutor = async (
   action,
@@ -44,20 +36,13 @@ const authCodeRedirectionInitializationExecutor: ActionExecutor = async (
     return Promise.resolve({ state: '', oidcUri: '' });
   }
   const [error, oidcUri] = await to(
-    isTunnistamoAuthCodeAction(action)
-      ? Promise.resolve(getAuthorizationEndpoint())
-      : Promise.resolve(getLoadKeycloakConfigResult(controller)) // tunnistus
+    Promise.resolve(getLoadKeycloakConfigResult(controller)) // tunnistus
   );
 
   if (error || !oidcUri) {
     return Promise.reject(new Error('Failed to get oidc auth uri'));
   }
   return Promise.resolve({ state: uuidv4(), oidcUri });
-};
-
-export const tunnistamoRedirectionInitializationAction: ActionProps = {
-  type: tunnistamoRedirectionInitializationType,
-  executor: authCodeRedirectionInitializationExecutor,
 };
 
 export const keycloakRedirectionInitializationAction: ActionProps = {

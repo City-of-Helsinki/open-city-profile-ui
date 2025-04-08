@@ -32,23 +32,12 @@ function OidcCallback({
       return;
     }
 
-    if (
-      // Handle error caused by end user choosing Deny in Tunnistamo's
-      // permission request
-      error.message ===
-      'The resource owner or authorization server denied the request'
-    ) {
-      redirectToErrorPage({
-        message: t('authentication.permissionRequestDenied.message'),
-      });
-    } else {
-      // Send other errors to Sentry for analysis
-      Sentry.captureException(error);
-      // Give user a generic error
-      redirectToErrorPage({
-        message: t(genericErrorString),
-      });
-    }
+    // Send errors to Sentry for analysis
+    Sentry.captureException(error);
+    // Give user a generic error
+    redirectToErrorPage({
+      message: t(genericErrorString),
+    });
   };
 
   return (

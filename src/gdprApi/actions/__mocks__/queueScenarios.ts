@@ -1,20 +1,8 @@
 import { DeleteResultLists } from '../../../profile/helpers/parseDeleteProfileResult';
-import {
-  keycloakAuthCodeCallbackUrlAction,
-  tunnistamoAuthCodeCallbackUrlAction,
-} from '../authCodeCallbackUrlDetector';
-import {
-  keycloakAuthCodeParserAction,
-  tunnistamoAuthCodeParserAction,
-} from '../authCodeParser';
-import {
-  keycloakAuthCodeRedirectionAction,
-  tunnistamoAuthCodeRedirectionAction,
-} from '../authCodeRedirectionHandler';
-import {
-  keycloakRedirectionInitializationAction,
-  tunnistamoRedirectionInitializationAction,
-} from '../authCodeRedirectionInitialization';
+import { keycloakAuthCodeCallbackUrlAction } from '../authCodeCallbackUrlDetector';
+import { keycloakAuthCodeParserAction } from '../authCodeParser';
+import { keycloakAuthCodeRedirectionAction } from '../authCodeRedirectionHandler';
+import { keycloakRedirectionInitializationAction } from '../authCodeRedirectionInitialization';
 import { deleteProfileType } from '../deleteProfile';
 import { deleteServiceConnectionType } from '../deleteServiceConnection';
 import { downloadAsFileAction } from '../downloadAsFile';
@@ -37,11 +25,8 @@ type ScenarioProps = Pick<
   'store' | 'storeAsActive' | 'runOriginal' | 'autoTrigger'
 > & { overrides?: ActionMockData[] };
 
-export const tunnistamoState = 'tunnistamo-state';
 export const keycloakState = 'keycloak-state';
-export const tunnistamoCode = 'tunnistamo-code';
 export const keycloakCode = 'keycloak-code';
-export const tunnistamoOidcUri = 'tunnistamo.hel.ninja';
 export const keycloakOidcUri = 'keycloak.hel.ninja';
 
 export function modifyScenario(
@@ -62,13 +47,11 @@ export function modifyScenario(
 
 export function getScenarioForScopes({
   hasKeycloakScopes = true,
-  hasTunnistamoScopes = true,
   hasDeleteScopes = false,
   overrides,
   ...rest
 }: ScenarioProps & {
   hasKeycloakScopes?: boolean;
-  hasTunnistamoScopes?: boolean;
   hasDeleteScopes?: boolean;
 } = {}): ActionMockData[] {
   const list = [
@@ -85,52 +68,7 @@ export function getScenarioForScopes({
         keycloakScopes: hasKeycloakScopes
           ? ['keycloak-scope1', 'keycloak-scope2']
           : [],
-        tunnistamoScopes: hasTunnistamoScopes
-          ? ['tunnistamo-scope1', 'tunnistamo-scope2']
-          : [],
       },
-      ...rest,
-    },
-  ];
-  if (overrides) {
-    return modifyScenario(list, overrides);
-  }
-  return list;
-}
-
-export function getScenarioForTunnistamoAuth({
-  state = tunnistamoState,
-  oidcUri = tunnistamoOidcUri,
-  code = tunnistamoCode,
-  overrides,
-  ...rest
-}: ScenarioProps & {
-  state?: string;
-  oidcUri?: string;
-  code?: string;
-} = {}): ActionMockData[] {
-  const list = [
-    {
-      type: tunnistamoRedirectionInitializationAction.type,
-      resolveValue: {
-        state,
-        oidcUri,
-      },
-      ...rest,
-    },
-    {
-      type: tunnistamoAuthCodeRedirectionAction.type,
-      resolveValue: true,
-      ...rest,
-    },
-    {
-      type: tunnistamoAuthCodeCallbackUrlAction.type,
-      resolveValue: true,
-      ...rest,
-    },
-    {
-      type: tunnistamoAuthCodeParserAction.type,
-      resolveValue: code,
       ...rest,
     },
   ];
@@ -215,7 +153,6 @@ export function getScenarioForDownloadData({
   ...rest
 }: ScenarioProps & {
   hasKeycloakScopes?: boolean;
-  hasTunnistamoScopes?: boolean;
 } = {}): ActionMockData[] {
   const list = [
     {
@@ -296,7 +233,7 @@ export function getScenarioForDeleteProfile({
   return list;
 }
 
-// next action is tunnistamoAuthCodeCallbackUrlAction
+// next action is keycloakAuthCodeCallbackUrlAction
 // actions before it are stored and complete
 // keycloak auth code is not needed, because there are no keylocak scopes
 export function getScenarioWhichGoesFromStartToAuthRedirectAutomatically({
@@ -304,10 +241,10 @@ export function getScenarioWhichGoesFromStartToAuthRedirectAutomatically({
 }: ScenarioProps = {}) {
   const list = [
     ...getScenarioForScopes({ autoTrigger: true }),
-    ...getScenarioForTunnistamoAuth({
+    ...getScenarioForKeycloakAuth({
       overrides: [
         {
-          type: tunnistamoRedirectionInitializationAction.type,
+          type: keycloakRedirectionInitializationAction.type,
           autoTrigger: true,
         },
       ],
@@ -320,7 +257,7 @@ export function getScenarioWhichGoesFromStartToAuthRedirectAutomatically({
   return list;
 }
 
-// next action is tunnistamoAuthCodeCallbackUrlAction
+// next action is keycloakAuthCodeCallbackUrlAction
 // actions before it are stored and complete
 // keycloak auth code is not needed, because there are no keylocak scopes
 export function getScenarioWhereNextPhaseIsResumeCallback({
@@ -328,22 +265,21 @@ export function getScenarioWhereNextPhaseIsResumeCallback({
 }: ScenarioProps = {}) {
   const list = [
     ...getScenarioForScopes({ store: true, hasKeycloakScopes: false }),
-    ...getScenarioForTunnistamoAuth({
+    ...getScenarioForKeycloakAuth({
       store: true,
       overrides: [
         {
-          type: tunnistamoAuthCodeCallbackUrlAction.type,
+          type: keycloakAuthCodeCallbackUrlAction.type,
           store: false,
           autoTrigger: true,
         },
         {
-          type: tunnistamoAuthCodeParserAction.type,
+          type: keycloakAuthCodeParserAction.type,
           store: false,
           autoTrigger: true,
         },
       ],
     }),
-    ...getScenarioForKeycloakAuth({ runOriginal: true }),
     ...getScenarioForStartPageRedirect({
       autoTrigger: true,
       runOriginal: true,
@@ -364,9 +300,6 @@ export function getScenarioWhereNextPhaseIsResumeDownload({
 }: ScenarioProps = {}) {
   const list = [
     ...getScenarioForScopes({ store: true, hasKeycloakScopes: false }),
-    ...getScenarioForTunnistamoAuth({
-      store: true,
-    }),
     ...getScenarioForKeycloakAuth({ store: true }),
     ...getScenarioForStartPageRedirect({
       store: true,
@@ -393,9 +326,6 @@ export function getScenarioWhereKeycloakAuthCodeNotInUrl({
 }: ScenarioProps = {}) {
   const list = [
     ...getScenarioForScopes({ store: true }),
-    ...getScenarioForTunnistamoAuth({
-      store: true,
-    }),
     ...getScenarioForKeycloakAuth({
       store: true,
       overrides: [
@@ -425,7 +355,6 @@ export function getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully(
 }: ScenarioProps = {}) {
   const list = [
     ...getScenarioForScopes(),
-    ...getScenarioForTunnistamoAuth(),
     ...getScenarioForKeycloakAuth(),
     ...getScenarioForStartPageRedirect({
       overrides: [
@@ -456,9 +385,6 @@ export function getScenarioWhereDeleteServiceConnectionIsResumable({
 }: ScenarioProps & { serviceName?: string } = {}) {
   const list = [
     ...getScenarioForScopes({ store: true, hasDeleteScopes: true }),
-    ...getScenarioForTunnistamoAuth({
-      store: true,
-    }),
     ...getScenarioForKeycloakAuth({
       store: true,
     }),
@@ -489,7 +415,6 @@ export function getScenarioWhereDeleteProfileCanStartAndProceedToRedirection({
 }: ScenarioProps & { serviceName?: string } = {}) {
   const list = [
     ...getScenarioForScopes({ hasDeleteScopes: true, autoTrigger: true }),
-    ...getScenarioForTunnistamoAuth({ autoTrigger: true }),
     ...getScenarioForKeycloakAuth({ autoTrigger: true }),
     ...getScenarioForStartPageRedirect({ autoTrigger: true }),
     ...getScenarioForDeleteProfile(),
@@ -511,9 +436,6 @@ export function getScenarioWhereDeleteProfileIsResumable({
 } = {}) {
   const list = [
     ...getScenarioForScopes({ store: true, hasDeleteScopes: true }),
-    ...getScenarioForTunnistamoAuth({
-      store: true,
-    }),
     ...getScenarioForKeycloakAuth({
       store: true,
     }),
@@ -547,7 +469,6 @@ export function getScenarioWithoutScopesWillAutoComplete() {
         type: getGdprQueryScopesAction.type,
         resolveValue: {
           keycloakScopes: [],
-          tunnistamoScopes: [],
         },
       },
     ],

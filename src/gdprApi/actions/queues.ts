@@ -1,19 +1,7 @@
-import {
-  tunnistamoAuthCodeCallbackUrlAction,
-  keycloakAuthCodeCallbackUrlAction,
-} from './authCodeCallbackUrlDetector';
-import {
-  tunnistamoAuthCodeParserAction,
-  keycloakAuthCodeParserAction,
-} from './authCodeParser';
-import {
-  tunnistamoAuthCodeRedirectionAction,
-  keycloakAuthCodeRedirectionAction,
-} from './authCodeRedirectionHandler';
-import {
-  tunnistamoRedirectionInitializationAction,
-  keycloakRedirectionInitializationAction,
-} from './authCodeRedirectionInitialization';
+import { keycloakAuthCodeCallbackUrlAction } from './authCodeCallbackUrlDetector';
+import { keycloakAuthCodeParserAction } from './authCodeParser';
+import { keycloakAuthCodeRedirectionAction } from './authCodeRedirectionHandler';
+import { keycloakRedirectionInitializationAction } from './authCodeRedirectionInitialization';
 import { createDeleteProfileAction } from './deleteProfile';
 import { createDeleteServiceConnectionAction } from './deleteServiceConnection';
 import { downloadAsFileAction } from './downloadAsFile';
@@ -49,10 +37,6 @@ export function getQueue({
   ] = createRedirectorAndCatcherActionProps(startPagePath);
   const infoAction = createQueueInfoAction(queueName);
   const commonAuthCodeActions = [
-    tunnistamoRedirectionInitializationAction,
-    tunnistamoAuthCodeRedirectionAction,
-    tunnistamoAuthCodeCallbackUrlAction,
-    tunnistamoAuthCodeParserAction,
     loadKeycloakConfigAction,
     keycloakRedirectionInitializationAction,
     keycloakAuthCodeRedirectionAction,

@@ -5,7 +5,6 @@ import {
   getGdprDeleteScopesAction,
   getGdprQueryScopesAction,
   isKeycloakAuthorisationCodeNeeded,
-  isTunnistamoAuthorisationCodeNeeded,
 } from '../getGdprScopes';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import {
@@ -26,10 +25,7 @@ describe('getGdprScopes.ts', () => {
   const getScopes = (
     isPureKeycloak: boolean,
     scope: 'gdprQueryScope' | 'gdprDeleteScope'
-  ) =>
-    serviceConnections
-      .filter(service => service.isPureKeycloak === isPureKeycloak)
-      .map(service => service[scope]);
+  ) => serviceConnections.map(service => service[scope]);
 
   const initTests = async ({
     scopeType = 'query',
@@ -84,13 +80,12 @@ describe('getGdprScopes.ts', () => {
   });
   describe('getGdprQueryScopesAction', () => {
     it(`Picks gdpr query scopes from service connections.
-        Scopes are grouped as "keycloakScopes" and "tunnistamoScopes".`, async () => {
+        Scopes are grouped as "keycloakScopes" `, async () => {
       const { getResultAndError } = await initTests();
 
       expect(getResultAndError()).toMatchObject({
         result: {
           keycloakScopes: getScopes(true, 'gdprQueryScope'),
-          tunnistamoScopes: getScopes(false, 'gdprQueryScope'),
         },
         errorMessage: undefined,
       });
@@ -103,7 +98,6 @@ describe('getGdprScopes.ts', () => {
       expect(getResultAndError()).toMatchObject({
         result: {
           keycloakScopes: [],
-          tunnistamoScopes: [],
         },
         errorMessage: undefined,
       });
@@ -127,7 +121,7 @@ describe('getGdprScopes.ts', () => {
   });
   describe('getGdprDeleteScopesAction', () => {
     it(`Picks gdpr delete scopes from service connections.
-        Scopes are grouped as "keycloakScopes" and "tunnistamoScopes".`, async () => {
+        Scopes are grouped as "keycloakScopes".`, async () => {
       const { getResultAndError } = await initTests({
         scopeType: 'delete',
       });
@@ -135,7 +129,6 @@ describe('getGdprScopes.ts', () => {
       expect(getResultAndError()).toMatchObject({
         result: {
           keycloakScopes: getScopes(true, 'gdprDeleteScope'),
-          tunnistamoScopes: getScopes(false, 'gdprDeleteScope'),
         },
         errorMessage: undefined,
       });
@@ -148,19 +141,17 @@ describe('getGdprScopes.ts', () => {
       const { runner } = await initTests();
       expect(getFetchedScopes(runner)).toMatchObject({
         keycloakScopes: getScopes(true, 'gdprQueryScope'),
-        tunnistamoScopes: getScopes(false, 'gdprQueryScope'),
       });
     });
     it(`If getGdprDeleteScopesAction action is found, delete scopes are returned. `, async () => {
       const { runner } = await initTests({ scopeType: 'delete' });
       expect(getFetchedScopes(runner)).toMatchObject({
         keycloakScopes: getScopes(true, 'gdprDeleteScope'),
-        tunnistamoScopes: getScopes(false, 'gdprDeleteScope'),
       });
     });
   });
-  describe(`isKeycloakAuthorisationCodeNeeded() and isTunnistamoAuthorisationCodeNeeded()
-            Checks from scopes, if authorization code is needed from either oidc servers.`, () => {
+  describe(`isKeycloakAuthorisationCodeNeeded() 
+            Checks from scopes, if authorization code is needed from oidc server.`, () => {
     const updateServiceConnectionsResult = (
       controller: QueueController,
       result: JSONStringifyableResult
@@ -174,27 +165,22 @@ describe('getGdprScopes.ts', () => {
       const { runner } = await initTests({ noAutoStart: true });
       updateServiceConnectionsResult(runner, {
         keycloakScopes: ['scope'],
-        tunnistamoScopes: [],
       });
       expect(isKeycloakAuthorisationCodeNeeded(runner)).toBeTruthy();
-      expect(isTunnistamoAuthorisationCodeNeeded(runner)).toBeFalsy();
     });
-    it(`If scopes for tunnistamo are found, isTunnistamoAuthorisationCodeNeeded() returns true. `, async () => {
+    it(`If no scopes are found, isKeycloakAuthorisationCodeNeeded() returns false. `, async () => {
       const { runner } = await initTests({ noAutoStart: true });
       updateServiceConnectionsResult(runner, {
         keycloakScopes: [],
-        tunnistamoScopes: ['scope'],
       });
-      expect(isTunnistamoAuthorisationCodeNeeded(runner)).toBeTruthy();
+
       expect(isKeycloakAuthorisationCodeNeeded(runner)).toBeFalsy();
     });
     it(`If scopes for for both are found, both return true. `, async () => {
       const { runner } = await initTests({ noAutoStart: true });
       updateServiceConnectionsResult(runner, {
         keycloakScopes: ['scope', 'scope', 'scope'],
-        tunnistamoScopes: ['scope', 'scope', 'scope'],
       });
-      expect(isTunnistamoAuthorisationCodeNeeded(runner)).toBeTruthy();
       expect(isKeycloakAuthorisationCodeNeeded(runner)).toBeTruthy();
     });
   });

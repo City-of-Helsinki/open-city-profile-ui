@@ -26,9 +26,6 @@ When the redirection happens, the queue is stored and this action is the next,
 when browser returns from the oidc server.
 */
 
-const tunnistamoAuthCodeCallbackUrlDetectorType =
-  'tunnistamoAuthCodeCallbackUrlDetector';
-
 const keycloakAuthCodeCallbackUrlDetectorType =
   'keycloakAuthCodeCallbackUrlDetectorType';
 
@@ -38,9 +35,6 @@ export const getNextAuthCodeCallbackDetector = (
   const nextAction = controller.getNext();
   if (!nextAction) {
     return undefined;
-  }
-  if (nextAction.type === tunnistamoAuthCodeCallbackUrlDetectorType) {
-    return tunnistamoAuthCodeCallbackUrlDetectorType;
   }
   if (nextAction.type === keycloakAuthCodeCallbackUrlDetectorType) {
     return keycloakAuthCodeCallbackUrlDetectorType;
@@ -64,10 +58,7 @@ export const resumeQueueFromNextCallbackDetector = (runner: QueueRunner) => {
 };
 
 export const isResumableGdprCallback = (action: Action) => {
-  if (
-    action.type !== tunnistamoAuthCodeCallbackUrlDetectorType &&
-    action.type !== keycloakAuthCodeCallbackUrlDetectorType
-  ) {
+  if (action.type !== keycloakAuthCodeCallbackUrlDetectorType) {
     return false;
   }
   if (!isResumable(action)) {
@@ -118,13 +109,6 @@ const options: ActionOptions = {
 const data: Action['data'] = {
   requiredPath: config.gdprCallbackPath,
   redirectsOnError: true,
-};
-
-export const tunnistamoAuthCodeCallbackUrlAction: ActionProps = {
-  type: tunnistamoAuthCodeCallbackUrlDetectorType,
-  executor: authCodeCallbackUrlDetectorExecutor,
-  options,
-  data,
 };
 
 export const keycloakAuthCodeCallbackUrlAction: ActionProps = {

@@ -48,18 +48,18 @@ const deleteProfileExecutor: ActionExecutor = async (
   action,
   queueController
 ) => {
-  // TODO: Use keycloak for both auth codes until we properly clean up tunnistamo
-  const authorizationCodeKeycloak = getStoredKeycloakAuthCode(queueController);
+  const authorizationCode = getStoredKeycloakAuthCode(queueController);
+
+  if (!authorizationCode) {
+    return Promise.reject('No keycloak authorization code for delete profile');
+  }
 
   const language = getData(action, 'language') as TranslationLanguage;
   const input: Mutable<DeleteMyProfileMutationInput> = {
-    authorizationCode: authorizationCodeKeycloak || 'dummy',
-    authorizationCodeKeycloak: authorizationCodeKeycloak || 'dummy',
+    authorizationCode,
     dryRun: false,
   };
-  if (typeof authorizationCodeKeycloak === 'string') {
-    input.authorizationCodeKeycloak = authorizationCodeKeycloak;
-  }
+
   const [error, result] = await to(
     graphqlClient.mutate<
       GdprDeleteMyProfileMutation,

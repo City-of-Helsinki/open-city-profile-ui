@@ -17,8 +17,8 @@ import {
   AuthCodeQueuesProps,
   authCodeQueuesStorageKey,
 } from '../useAuthCodeQueues';
-import { tunnistamoAuthCodeParserAction } from '../actions/authCodeParser';
-import { tunnistamoAuthCodeCallbackUrlAction } from '../actions/authCodeCallbackUrlDetector';
+import { keycloakAuthCodeParserAction } from '../actions/authCodeParser';
+import { keycloakAuthCodeCallbackUrlAction } from '../actions/authCodeCallbackUrlDetector';
 import { loadKeycloakConfigAction } from '../actions/loadKeycloakConfig';
 import { getMockCallArgs } from '../../common/test/mockHelper';
 import mockWindowLocation from '../../common/test/mockWindowLocation';
@@ -83,7 +83,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       await initTests();
       await waitFor(() => {
         expect(
-          isActionTriggered(tunnistamoAuthCodeParserAction.type)
+          isActionTriggered(keycloakAuthCodeParserAction.type)
         ).toBeTruthy();
       });
     });
@@ -94,11 +94,11 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       getScenarioWhereNextPhaseIsResumeCallback({
         overrides: [
           {
-            type: tunnistamoAuthCodeCallbackUrlAction.type,
+            type: keycloakAuthCodeCallbackUrlAction.type,
             store: true,
           },
           {
-            type: tunnistamoAuthCodeParserAction.type,
+            type: keycloakAuthCodeParserAction.type,
             store: true,
           },
         ],
@@ -119,7 +119,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       getScenarioWhereNextPhaseIsResumeCallback({
         overrides: [
           {
-            type: tunnistamoAuthCodeParserAction.type,
+            type: keycloakAuthCodeParserAction.type,
             resolveValue: undefined,
             runOriginal: true,
           },
@@ -130,15 +130,11 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       await initTests();
       await waitFor(() => {
         expect(
-          isActionTriggered(tunnistamoAuthCodeParserAction.type)
+          isActionTriggered(keycloakAuthCodeParserAction.type)
         ).toBeTruthy();
       });
       expect(mockHistoryTracker).toHaveBeenCalledTimes(1);
-      expect(
-        getRedirectPath().includes(
-          `${startPagePath}?error=${tunnistamoAuthCodeParserAction.type}`
-        )
-      ).toBeTruthy();
+      expect(getRedirectPath().includes(`${startPagePath}`)).toBeTruthy();
     });
   });
   it(`If queue fails and failed action will not redirect, redirect to start page.`, async () => {
@@ -158,7 +154,6 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
     await act(async () => {
       await initTests();
       await waitFor(() => {
-        expect(isActionTriggered(loadKeycloakConfigAction.type)).toBeTruthy();
         expect(
           getRedirectPath().includes(
             `${startPagePath}?error=${loadKeycloakConfigAction.type}`

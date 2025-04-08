@@ -42,18 +42,14 @@ const getDownloadDataExecutor: ActionExecutor = async (
   queueController
 ) => {
   const authorizationCode = getStoredKeycloakAuthCode(queueController);
-  const authorizationCodeKeycloak = getStoredKeycloakAuthCode(queueController);
 
   if (!authorizationCode) {
-    // TODO: in tunnistamo cleanup add some error handling here ?
-    // return Promise.reject('No keycloak authorization code for download');
+    return Promise.reject('No keycloak authorization code for download');
   }
   const variables: Mutable<DownloadMyProfileQueryVariables> = {
-    authorizationCode: authorizationCode || 'dummy',
+    authorizationCode,
   };
-  if (typeof authorizationCodeKeycloak === 'string') {
-    variables.authorizationCodeKeycloak = authorizationCodeKeycloak;
-  }
+
   const [error, result] = await to(
     graphqlClient.query<DownloadMyProfileQuery>({
       query: DOWNLOAD_MY_PROFILE,
