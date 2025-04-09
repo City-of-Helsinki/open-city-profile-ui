@@ -89,7 +89,7 @@ describe('authCodeParser.ts', () => {
       expect(resultForKeycloak2).toBeUndefined();
     });
 
-    it('Resolves empty string when keycloak auth code is not needed', async () => {
+    it('Resolves dummy code when keycloak auth code is not needed', async () => {
       const { runner, getKeycloadAction } = initTests({
         noKeycloakScopes: true,
       });
@@ -99,12 +99,7 @@ describe('authCodeParser.ts', () => {
       const [, resultForKeycloak] = await to(
         getKeycloadAction().executor(getKeycloadAction(), runner)
       );
-      expect(resultForKeycloak).toBe('');
-
-      const [, resultForKeycloak2] = await to(
-        getKeycloadAction().executor(getKeycloadAction(), runner)
-      );
-      expect(resultForKeycloak2).toBe('');
+      expect(resultForKeycloak).toBe('dummyKeycloakAuthCode');
     });
 
     it('Rejects if the stored state does not match the one in the callback url', async () => {

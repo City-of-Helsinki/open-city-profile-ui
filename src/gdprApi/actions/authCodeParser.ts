@@ -14,6 +14,7 @@ import {
 import { getAuthCodeRedirectionInitializationResult } from './authCodeRedirectionInitialization';
 
 const keycloakAuthCodeParserType = 'keycloakAuthCodeParser';
+const dummyKeycloakAuthCode = 'dummyKeycloakAuthCode';
 
 export const getStoredKeycloakAuthCode = (queueController: QueueController) =>
   getActionResultAndErrorMessage<string>(
@@ -23,7 +24,7 @@ export const getStoredKeycloakAuthCode = (queueController: QueueController) =>
 
 const authCodeParserExecutor: ActionExecutor = async (action, controller) => {
   if (!isAuthCodeActionNeeded(action, controller)) {
-    return Promise.resolve('');
+    return Promise.resolve(dummyKeycloakAuthCode);
   }
 
   const rejector = (message: string) =>
