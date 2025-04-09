@@ -67,9 +67,6 @@ export const loginToProfileWithSuomiFi = async (page: Page, ssn: string) => {
 export const loginToExampleApp = async (page: Page, ssn: string) => {
   await page.goto(EXAMPLE_APP_URL);
   await page
-    .getByRole('button', { name: 'Kirjaudu Helsinki-Tunnistus' })
-    .click();
-  await page
     .getByRole('banner')
     .getByRole('button', { name: LOG_IN_BUTTON })
     .click();
