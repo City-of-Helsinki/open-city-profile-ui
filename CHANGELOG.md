@@ -3,6 +3,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.23.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.22.0...open-city-profile-ui-v1.23.0) (2025-04-10)
+
+
+### Features
+
+* Tunnistamo cleanup - HP-2818  ([#434](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/434)) ([150c93f](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/150c93f54e68412c86e78a9bd78ac6855a490e97))
+* Update exampleapp e2e test ([#436](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/436)) ([3c7483a](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/3c7483aef138f3d0406fec1fd99f6d464e42afda))
+
+
+### Bug Fixes
+
+* Instead of empty string use dummy when kc auth code is not needed ([#435](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/435)) ([52867b8](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/52867b8dab3a0a04990ea89ca0fc55ac14d899a6))
+
+
+### Dependencies
+
+* Bump vite from 6.2.3 to 6.2.4 ([#431](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/431)) ([ebab55f](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/ebab55f6595bf13c4a87a3cd8c59aaf3492adcd9))
+* Bump vite from 6.2.4 to 6.2.5 ([#433](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/433)) ([bcbf3eb](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/bcbf3eb7d7c59516a3577a0955dfa3713c3e1198))
+
 ## [1.22.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.21.0...open-city-profile-ui-v1.22.0) (2025-03-28)
 
 
