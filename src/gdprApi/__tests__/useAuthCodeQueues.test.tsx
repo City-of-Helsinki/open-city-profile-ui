@@ -38,7 +38,6 @@ import {
   getScenarioWhereKeycloakAuthCodeNotInUrl,
   getScenarioWhereNextPhaseIsResumeCallback,
   getScenarioWhereNextPhaseIsResumeDownload,
-  getScenarioWhichGoesFromStartToAuthRedirectAutomatically,
   getScenarioWithoutScopesWillAutoComplete,
   keycloakState,
   keycloakCode,
@@ -274,35 +273,6 @@ describe('useAuthCodeQueues', () => {
   });
 
   describe('On download page', () => {
-    // TODO: sort this out after app functionality is checked on dev
-    it.skip('The queue can be started and proceeds to auth code redirection automatically', async () => {
-      initTestQueue(getScenarioWhichGoesFromStartToAuthRedirectAutomatically());
-      const { start, getState, getFunctionResults } = renderTestComponent();
-      expect(getState()).toMatchObject({
-        runningStatus: runningStatuses.idle,
-        nextPhase: nextPhases.start,
-      });
-      expect(getFunctionResults()).toMatchObject({
-        ...hookFunctionResultsAsFalse,
-        canStart: true,
-      });
-
-      await act(async () => {
-        start();
-      });
-
-      await waitFor(() => {
-        expect(getState()).toMatchObject({
-          runningStatus: runningStatuses.running,
-          nextPhase: nextPhases.waitForAction,
-        });
-      });
-
-      expect(getFunctionResults()).toMatchObject({
-        ...hookFunctionResultsAsFalse,
-        isLoading: true,
-      });
-    });
     it('The queue stops on error and when an action fails, next phase is "restart"', async () => {
       initTestQueue(
         getScenarioForScopes({
@@ -380,10 +350,6 @@ describe('useAuthCodeQueues', () => {
           runningStatus: runningStatuses.running,
         });
       });
-      /* await waitFor(() => {
-        expect(isActionCompleted(loadKeycloakConfigAction.type)).toBeTruthy();
-      });
-      */
       await waitFor(() => {
         expect(mockHistoryPushTracker).toHaveBeenLastCalledWith(
           '/?next=redirectionCatcher'
@@ -565,8 +531,7 @@ describe('useAuthCodeQueues', () => {
       });
     });
   });
-  describe.skip('Testing whole download queue action by action.', () => {
-    // TODO: sort this out after app functionality is checked on dev
+  describe('Testing whole download queue action by action.', () => {
     it('phases change and re-rendering or unmounting (in correct phases) wont affect anything', async () => {
       initTestQueue(
         getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully()
@@ -636,69 +601,9 @@ describe('useAuthCodeQueues', () => {
         ...hookFunctionResultsAsFalse,
         isLoading: true,
       });
-      /*
+
       await checkCurrentActionAndManuallyCompleteIt(
         getGdprQueryScopesAction.type,
-        // tunnistamoRedirectionInitializationAction.type
-        keycloakRedirectionInitializationAction.type
-      ); */
-
-      expect(getState()).toMatchObject({
-        runningStatus: runningStatuses.running,
-        nextPhase: nextPhases.waitForAction,
-      });
-      // fails
-      expect(getFunctionResults()).toMatchObject({
-        ...hookFunctionResultsAsFalse,
-        isLoading: true,
-      });
-
-      /*
-      await checkCurrentActionAndManuallyCompleteIt(
-        keycloakRedirectionInitializationAction.type,
-        keycloakAuthCodeRedirectionAction.type
-      ); 
-      */
-
-      expect(getState()).toMatchObject({
-        runningStatus: runningStatuses.running,
-        nextPhase: nextPhases.waitForAction,
-      });
-
-      /*    await checkCurrentActionAndManuallyCompleteIt(
-        keycloakAuthCodeRedirectionAction.type,
-        keycloakAuthCodeCallbackUrlAction.type
-      );
-*/
-
-      await toggleComponentMounting();
-      mockedWindowControls.setPath(config.gdprCallbackPath);
-      await toggleComponentMounting();
-      /*
-      expect(getState()).toMatchObject({
-        runningStatus: runningStatuses.idle,
-        nextPhase: nextPhases.resumeCallback,
-      });
-   */
-      expect(getFunctionResults()).toMatchObject({
-        ...hookFunctionResultsAsFalse,
-        shouldHandleCallback: true,
-      });
-      /*
-      resume();
-
-      await checkCurrentActionAndManuallyCompleteIt(
-        keycloakAuthCodeCallbackUrlAction.type,
-        keycloakAuthCodeParserAction.type
-      );
-
-      expect(getState()).toMatchObject({
-        runningStatus: runningStatuses.running,
-        nextPhase: nextPhases.waitForAction,
-      });
-
-      await checkCurrentActionAndManuallyCompleteIt(
-        keycloakAuthCodeParserAction.type,
         loadKeycloakConfigAction.type
       );
       expect(getState()).toMatchObject({
@@ -839,7 +744,7 @@ describe('useAuthCodeQueues', () => {
         shouldRestart: true,
       });
     });
-    it('If there are no tunnistamo or keycloak scopes, the queue will complete without redirections', async () => {
+    it('If there are no keycloak scopes, the queue will complete without redirections', async () => {
       initTestQueue(getScenarioWithoutScopesWillAutoComplete());
       const { start, getState, getFunctionResults } = renderTestComponent();
 
@@ -866,8 +771,6 @@ describe('useAuthCodeQueues', () => {
         ...hookFunctionResultsAsFalse,
         shouldRestart: true,
       });
-
-      */
     });
   });
   describe('If queue is restored (from storage) in some unintended and unresumable position', () => {

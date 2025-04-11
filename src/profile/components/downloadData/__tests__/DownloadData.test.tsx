@@ -13,7 +13,6 @@ import config from '../../../../config';
 import {
   ActionMockData,
   initMockQueue,
-  isActionTriggered,
 } from '../../../../common/actionQueue/mock.util';
 import {
   AuthCodeQueuesProps,
@@ -23,7 +22,6 @@ import {
   getScenarioForScopes,
   getScenarioWhichGoesFromStartToAuthRedirectAutomatically,
 } from '../../../../gdprApi/actions/__mocks__/queueScenarios';
-import { keycloakAuthCodeRedirectionAction } from '../../../../gdprApi/actions/authCodeRedirectionHandler';
 import { getGdprQueryScopesAction } from '../../../../gdprApi/actions/getGdprScopes';
 
 const mockSaveAsListener = vi.fn();
@@ -75,7 +73,7 @@ describe('<DownloadData /> ', () => {
     vi.clearAllMocks();
   });
 
-  it.skip(`Clicking the button disables it, changes its text and starts the queue.`, async () => {
+  it(`Clicking the button disables it, changes its text and starts the queue.`, async () => {
     initTestQueue(getScenarioWhichGoesFromStartToAuthRedirectAutomatically());
     await act(async () => {
       const { clickElement, getElement, isDisabled } = await initTests();
