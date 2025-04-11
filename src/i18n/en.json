@@ -4,9 +4,6 @@
     "deviceTimeError": {
       "message": "You cannot log in because the clock on your device is off by more than 5 minutes. Adjust the clock and try again."
     },
-    "permissionRequestDenied": {
-      "message": "You need to approve our request to access your Tunnistamo profile in order to use this service. Please try logging in again."
-    },
     "genericError": {
       "message": "An error occured while logging in. Please try again"
     }

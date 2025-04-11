@@ -4,9 +4,6 @@
     "deviceTimeError": {
       "message": "Et voi kirjautua sisään, koska laitteesi kello on yli 5 minuuttia väärässä. Säädä kelloa ja kokeile uudestaan."
     },
-    "permissionRequestDenied": {
-      "message": "Sinun täytyy hyväksyä pyytämämme oikeudet Tunnistamossa käyttääksesi tätä palvelua. Ole hyvä ja yritä kirjautua uudelleen."
-    },
     "genericError": {
       "message": "Tapahtui virhe. Yritä uudestaan"
     }
