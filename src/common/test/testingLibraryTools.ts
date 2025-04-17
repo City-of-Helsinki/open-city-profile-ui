@@ -133,9 +133,14 @@ export const waitForElementFocus = async (
 
 export const renderComponentWithMocksAndContexts = async (
   responseProvider: ResponseProvider,
-  children: React.ReactElement
+  children: React.ReactElement,
+  initialEntries?: string[]
 ): Promise<TestTools> => {
-  const renderResult = renderComponentTestDOM(responseProvider, children);
+  const renderResult = renderComponentTestDOM(
+    responseProvider,
+    children,
+    initialEntries
+  );
   const getLastTime = (targetElement: string): number => {
     const lastUpdateElement = renderResult.getByTestId(
       `context-as-html-${targetElement}`

@@ -1,42 +1,39 @@
 import React from 'react';
-import { BrowserRouter, RouteChildrenProps } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { act, render } from '@testing-library/react';
+import { vi, describe, it, expect, afterEach } from 'vitest';
 
 import PasswordChangeCallback from '../PasswordChangeCallback';
 
-const mockedDefaultProps = {
-  history: {
-    replace: vi.fn(),
-  },
-};
-
-const renderComponent = () =>
-  render(
-    <BrowserRouter>
-      <PasswordChangeCallback
-        {...((mockedDefaultProps as unknown) as RouteChildrenProps)}
-      />
-    </BrowserRouter>
-  );
-
-const getHistoryReplaceCallArgument = () =>
-  mockedDefaultProps.history.replace.mock.calls[0][0];
+const mockNavigate = vi.fn();
 
 vi.mock('react-router-dom', async () => {
   const module = await vi.importActual('react-router-dom');
 
   return {
     ...module,
-    useHistory: vi.fn().mockImplementation(() => mockedDefaultProps.history),
+    useNavigate: () => mockNavigate,
+    useLocation: () => ({
+      search: '',
+    }),
   };
 });
 
+const renderComponent = () =>
+  render(
+    <MemoryRouter>
+      <PasswordChangeCallback />
+    </MemoryRouter>
+  );
+
+const getNavigateCallArgument = () => mockNavigate.mock.calls[0][0];
+
 describe('<PasswordChangeCallback />', () => {
   afterEach(() => {
-    mockedDefaultProps.history.replace.mockReset();
+    mockNavigate.mockReset();
   });
 
-  it('render without error', async () => {
+  it('renders without error', async () => {
     renderComponent();
 
     await act(async () => {
@@ -51,6 +48,6 @@ describe('<PasswordChangeCallback />', () => {
       await new Promise(resolve => setTimeout(resolve, 0));
     });
 
-    expect(getHistoryReplaceCallArgument()).toBe('/');
+    expect(getNavigateCallArgument()).toBe('/');
   });
 });

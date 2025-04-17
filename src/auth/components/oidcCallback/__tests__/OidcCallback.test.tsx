@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { BrowserRouter, RouteChildrenProps } from 'react-router-dom';
+import { BrowserRouter, useNavigate } from 'react-router-dom';
 
 import OidcCallback from '../OidcCallback';
 import TestLoginProvider from '../../../../common/test/TestLoginProvider';
@@ -35,32 +35,28 @@ vi.mock('hds-react', async () => {
   };
 });
 
-const mockedDefaultProps = {
-  history: {
-    replace: vi.fn(),
-  },
-};
+const mockedNavigate = vi.fn();
 
-const renderComponent = () =>
+const renderComponent = () => {
+  vi.mocked(useNavigate).mockReturnValue(mockedNavigate);
+
   render(
     <TestLoginProvider>
       <BrowserRouter>
-        <OidcCallback
-          {...((mockedDefaultProps as unknown) as RouteChildrenProps)}
-        />
+        <OidcCallback />
       </BrowserRouter>
     </TestLoginProvider>
   );
+};
 
-const getHistoryReplaceCallArgument = () =>
-  mockedDefaultProps.history.replace.mock.calls[0][0];
+const getNavigateCallArgument = () => mockedNavigate.mock.calls[0][0];
 
 vi.mock('react-router-dom', async () => {
   const module = await vi.importActual('react-router-dom');
 
   return {
     ...module,
-    useHistory: vi.fn().mockImplementation(() => mockedDefaultProps.history),
+    useNavigate: vi.fn(),
   };
 });
 
@@ -76,7 +72,7 @@ describe('OidcCallback', () => {
     const successButton = screen.getByText('Trigger Success');
     successButton.click();
     await waitFor(() => {
-      expect(mockedDefaultProps.history.replace).toHaveBeenCalledTimes(1);
+      expect(mockedNavigate).toHaveBeenCalledTimes(1);
       expect(getApiTokensFromStorage).toHaveBeenCalled;
     });
   });
@@ -89,11 +85,9 @@ describe('OidcCallback', () => {
     errorButton.click();
 
     await waitFor(() => {
-      expect(
-        getHistoryReplaceCallArgument().includes(
-          'authentication.genericError.message'
-        )
-      ).toBe(true);
+      expect(getNavigateCallArgument()).toContain(
+        'authentication.genericError.message'
+      );
     });
   });
 
@@ -105,11 +99,9 @@ describe('OidcCallback', () => {
     errorButton.click();
 
     await waitFor(() => {
-      expect(
-        getHistoryReplaceCallArgument().includes(
-          'authentication.genericError.message'
-        )
-      ).toBe(true);
+      expect(getNavigateCallArgument()).toContain(
+        'authentication.genericError.message'
+      );
     });
   });
 });

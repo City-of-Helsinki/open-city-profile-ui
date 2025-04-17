@@ -1,6 +1,6 @@
 import React, { MouseEvent, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Header as HDSHeader,
   LanguageOption,
@@ -29,7 +29,7 @@ const useTrackLoginToMatomo = () => {
 
 function Header(): React.ReactElement {
   const { t, i18n } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -45,7 +45,7 @@ function Header(): React.ReactElement {
 
   const onClick = (path: string, e?: MouseEvent) => {
     e?.preventDefault();
-    history.push(path);
+    navigate(path);
     if (getAllConsents().matomo) {
       trackEvent({ category: 'nav', action: `${path} click` });
     }

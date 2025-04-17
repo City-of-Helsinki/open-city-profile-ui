@@ -5,6 +5,16 @@ import TestLoginProvider from '../../test/TestLoginProvider';
 import i18n from '../../test/testi18nInit';
 import Header from '../Header';
 
+vi.mock('react-router-dom', async () => {
+  const module = await vi.importActual('react-router-dom');
+
+  return {
+    ...module,
+    useNavigate: () => vi.fn(),
+    useLocation: () => vi.fn(),
+  };
+});
+
 it('language is changed from header language selector', async () => {
   i18n.changeLanguage('fi');
   const { getByText } = render(

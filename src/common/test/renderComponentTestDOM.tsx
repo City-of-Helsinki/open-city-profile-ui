@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 import { Provider as ProfileProvider } from '../../profile/context/ProfileContext';
 import {
@@ -12,10 +12,11 @@ import ProfileContextAsHTML from './ProfileContextAsHTML';
 
 function renderComponentTestDOM(
   responseProvider: ResponseProvider,
-  children: React.ReactElement
+  children: React.ReactElement,
+  initialEntries: string[] = ['/']
 ): RenderResult {
   return render(
-    <BrowserRouter>
+    <MemoryRouter initialEntries={initialEntries}>
       <MockApolloClientProvider responseProvider={responseProvider}>
         <ProfileProvider>
           <ToastProvider>{children}</ToastProvider>
@@ -23,7 +24,7 @@ function renderComponentTestDOM(
         </ProfileProvider>
       </MockApolloClientProvider>
       <div id="modal-container" />
-    </BrowserRouter>
+    </MemoryRouter>
   );
 }
 
