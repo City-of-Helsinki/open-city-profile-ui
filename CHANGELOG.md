@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.24.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.23.0...open-city-profile-ui-v1.24.0) (2025-04-19)
+
+
+### Features
+
+* Add node version to package.json engines HP-2746 ([#439](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/439)) ([72e0eec](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/72e0eece697cb8cbdd2be8a0ad6504403a4cf75f))
+
+
+### Dependencies
+
+* Bump vite from 6.2.5 to 6.2.6 ([#437](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/437)) ([39dfbe5](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/39dfbe599879e2873efa213760e4c5062f9a6b13))
+
 ## [1.23.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.22.0...open-city-profile-ui-v1.23.0) (2025-04-10)
 
 
