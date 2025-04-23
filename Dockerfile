@@ -1,5 +1,5 @@
 # ===============================================
-FROM registry.access.redhat.com/ubi9/nodejs-22 as appbase
+FROM registry.access.redhat.com/ubi9/nodejs-22 AS appbase
 # ===============================================
 
 WORKDIR /app
@@ -9,19 +9,19 @@ RUN curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum
 RUN yum -y install yarn
 
 # Offical image has npm log verbosity as info. More info - https://github.com/nodejs/docker-node#verbosity
-ENV NPM_CONFIG_LOGLEVEL warn
+ENV NPM_CONFIG_LOGLEVEL=warn
 
 # set our node environment, either development or production
 # defaults to production, compose overrides this to development on build and run
 ARG NODE_ENV=production
-ENV NODE_ENV $NODE_ENV
+ENV NODE_ENV=$NODE_ENV
 
 # Global npm deps in a non-root user directory
 ENV NPM_CONFIG_PREFIX=/app/.npm-global
 ENV PATH=$PATH:/app/.npm-global/bin
 
 # Yarn
-ENV YARN_VERSION 1.22.22
+ENV YARN_VERSION=1.22.22
 RUN yarn policies set-version $YARN_VERSION
 
 RUN chown -R default:root /app
@@ -34,7 +34,7 @@ COPY --chown=default:root ./scripts /app/scripts
 COPY --chown=default:root ./public /app/public
 
 # Install npm dependencies
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH=/app/node_modules/.bin:$PATH
 
 RUN yarn config set network-timeout 300000
 RUN yarn && yarn cache clean --force
@@ -42,20 +42,20 @@ RUN yarn && yarn cache clean --force
 COPY --chown=default:root index.html vite.config.mts .eslintrc.json .eslintignore tsconfig.json .prettierrc.json .env* /app/
 COPY --chown=default:root ./src /app/src
 # =============================
-FROM appbase as development
+FROM appbase AS development
 # =============================
 
 WORKDIR /app
 
 # Set NODE_ENV to development in the development container
 ARG NODE_ENV=development
-ENV NODE_ENV $NODE_ENV
+ENV NODE_ENV=$NODE_ENV
 
 # Bake package.json start command into the image
-CMD yarn start
+CMD ["yarn", "start"]
 
 # ===================================
-FROM appbase as staticbuilder
+FROM appbase AS staticbuilder
 # ===================================
 
 WORKDIR /app
@@ -63,7 +63,7 @@ WORKDIR /app
 RUN yarn build
 
 # =============================
-FROM registry.access.redhat.com/ubi9/nginx-122 as production
+FROM registry.access.redhat.com/ubi9/nginx-122 AS production
 # =============================
 
 USER root
