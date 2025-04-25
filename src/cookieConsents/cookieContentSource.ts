@@ -25,7 +25,7 @@ export function getCookieContent(
 
   const tunnistusHostName = 'tunnistus.hel.fi';
   const profiiliHostName = 'profiili.hel.fi';
-  const tunnistamoAndProfileBeHostName = 'api.hel.fi';
+  const profileBeHostName = 'api.hel.fi';
   const anyHelFiHostName = '*.hel.fi';
 
   return {
@@ -44,16 +44,9 @@ export function getCookieContent(
           commonGroup: 'informationSecurity',
           cookies: [
             {
-              id: 'tunnistamo-csrftoken',
-              name: 'tunnistamo_prod-csrftoken',
-              hostName: tunnistamoAndProfileBeHostName,
-              description: securityCookieDescription,
-              expiration: `365 ${daysPlural}`,
-            },
-            {
               id: 'profiili-csrftoken',
               name: 'profiili-prod-csrftoken',
-              hostName: tunnistamoAndProfileBeHostName,
+              hostName: profileBeHostName,
               description: securityCookieDescription,
               expiration: `365 ${daysPlural}`,
             },
@@ -79,7 +72,7 @@ export function getCookieContent(
             {
               id: 'loadbalancer',
               name: loadBalancerCookieName,
-              hostName: `${profiiliHostName}, ${tunnistamoAndProfileBeHostName}, ${tunnistusHostName}`,
+              hostName: `${profiiliHostName}, ${tunnistusHostName}`,
               description: loadBalancerCookieDescription,
               expiration: sessionExpiration,
             },
