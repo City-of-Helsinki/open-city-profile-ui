@@ -27,7 +27,7 @@ function ProfileInformation(): React.ReactElement {
               i18nKey="profileInformation.description"
               components={{
                 linkToServices: <Link to={'/connected-services'}>{''}</Link>,
-                linkToServicesText: t('nav.services'),
+                linkToServicesText: <>{t('nav.services')}</>,
               }}
             />
           }

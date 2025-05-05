@@ -28,7 +28,7 @@ function DeleteFailureList(
                   {''}
                 </Link>
               ),
-              linkToServicesText: t('nav.services'),
+              linkToServicesText: <>{t('nav.services')}</>,
             }}
           />
           <ul data-testid="delete-profile-success-list">
