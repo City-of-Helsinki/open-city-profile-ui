@@ -92,67 +92,23 @@ Fetches country calling codes and generates src/i18n/countryCallingCodes.json fi
 
 ## Environment variables
 
-| Name                                  | Description                                                                                                     |
-| ------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `REACT_APP_HELSINKI_ACCOUNT_AMR`      | Authentication method reference for Helsinki account. </br> **default:** `helsinki_tunnus`                      |
-| `REACT_APP_OIDC_AUTHORITY`            | This is the URL to tunnistamo.                                                                                  |
-| `REACT_APP_OIDC_CLIENT_ID`            | ID of the client that has to be configured in tunnistamo.                                                       |
-| `REACT_APP_OIDC_SCOPE`                | Which scopes the app requires.                                                                                  |
-| `REACT_APP_PROFILE_AUDIENCE`          | Name of the api-token that client uses profile-api with.                                                        |
-| `REACT_APP_PROFILE_BE_GDPR_CLIENT_ID` | Client id used when getting gdpr authentication token for connected services                                    |
-| `REACT_APP_PROFILE_GRAPHQL`           | URL to the profile graphql.                                                                                     |
-| `REACT_APP_SENTRY_DSN`                | Sentry public dns-key. Both REACT_APP_SENTRY_DSN and REACT_APP_ENVIRONMENT has to be set to send error reports. |
-| `REACT_APP_ENVIRONMENT`               | App environment.                                                                                                |
-| `REACT_APP_OIDC_RESPONSE_TYPE`        | Which response type to require.                                                                                 |
-| `REACT_APP_KEYCLOAK_GDPR_CLIENT_ID`   | Client id for getting auth codes from keycloak                                                                  |
-| `REACT_APP_KEYCLOAK_AUTHORITY`        | Url to Keycloak. The openid config is fetched from this url                                                     |
-| `REACT_APP_MFA_ENABLED`               | Show multi factor authentication section in ui                                                                  |
+| Name                                | Description                                                                                                     |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `REACT_APP_HELSINKI_ACCOUNT_AMR`    | Authentication method reference for Helsinki account. </br> **default:** `helsinki_tunnus`                      |
+| `REACT_APP_KEYCLOAK_GDPR_CLIENT_ID` | Client id used when getting gdpr authentication token for connected services                                    |
+| `REACT_APP_OIDC_AUTHORITY`          | This is the URL to tunnistus.                                                                                   |
+| `REACT_APP_OIDC_CLIENT_ID`          | ID of the client that has to be configured in keycloak.                                                         |
+| `REACT_APP_OIDC_SCOPE`              | Which scopes the app requires.                                                                                  |
+| `REACT_APP_PROFILE_AUDIENCE`        | Name of the api-token that client uses profile-api with.                                                        |
+| `REACT_APP_PROFILE_GRAPHQL`         | URL to the profile graphql.                                                                                     |
+| `REACT_APP_SENTRY_DSN`              | Sentry public dns-key. Both REACT_APP_SENTRY_DSN and REACT_APP_ENVIRONMENT has to be set to send error reports. |
+| `REACT_APP_ENVIRONMENT`             | App environment.                                                                                                |
+| `REACT_APP_OIDC_RESPONSE_TYPE`      | Which response type to require.                                                                                 |
+| `REACT_APP_KEYCLOAK_GDPR_CLIENT_ID` | Client id for getting auth codes from keycloak                                                                  |
+| `REACT_APP_KEYCLOAK_AUTHORITY`      | Url to Keycloak. The openid config is fetched from this url                                                     |
+| `REACT_APP_MFA_ENABLED`             | Show multi factor authentication section in ui                                                                  |
 
 ## Setting up local development environment with Docker
-
-### Set tunnistamo hostname
-
-Add the following line to your hosts file (`/etc/hosts` on mac and linux):
-
-    127.0.0.1 tunnistamo-backend
-
-### Create a new OAuth app on GitHub
-
-Go to https://github.com/settings/developers/ and add a new app with the following settings:
-
-- Application name: can be anything, e.g. local tunnistamo
-- Homepage URL: http://tunnistamo-backend:8000
-- Authorization callback URL: http://tunnistamo-backend:8000/accounts/github/login/callback/
-
-Save. You'll need the created **Client ID** and **Client Secret** for configuring tunnistamo in the next step.
-
-### Install local tunnistamo
-
-Clone https://github.com/City-of-Helsinki/tunnistamo/.
-
-Follow the instructions for setting up tunnistamo locally. Before running `docker-compose up` set the following settings in tunnistamo roots `docker-compose.env.yaml`:
-
-- SOCIAL_AUTH_GITHUB_KEY: **Client ID** from the GitHub OAuth app
-- SOCIAL_AUTH_GITHUB_SECRET: **Client Secret** from the GitHub OAuth app
-
-Run `docker-compose up`
-
-After container is up and running, few things need to be set up at http://localhost:8000/admin
-
-**OIDC client**
-
-The ID of this client must be the same as set in the REACT_APP_OIDC_CLIENT_ID environment variable.
-
-Requires the following things:
-
-- Response types - 'code' OR 'id_token token'
-- Redirect URIs (app-url is where the UI is running, e.g. http://localhost:3000 for development) - {app-url}/callback, {app-url}/silent_renew
-- Client ID - the name as noted above
-- Login methods - which providers can be used to authenticate, should have at least GitHub enabled for development.
-
-**API Scopes**
-
-The scopes this app uses are set with the REACT_APP_OIDC_SCOPE environment variable.
 
 ### Install local open-city-profile
 
@@ -163,7 +119,7 @@ Clone https://github.com/City-of-Helsinki/open-city-profile/.
    - Use `docker-compose.env.yaml.example` as a base, it does not need any changes
      for getting the project running.
    - Change `DEBUG` and the rest of the Django settings if needed.
-     - `TOKEN_AUTH_*`, settings for [tunnistamo](https://github.com/City-of-Helsinki/tunnistamo) authentication service
+     - `TOKEN_AUTH_*`, settings for [keycloak](https://dev.azure.com/City-of-Helsinki/helsinki-tunnistus/) authentication service
    - Set entrypoint/startup variables according to taste.
 
      - `CREATE_SUPERUSER`, creates a superuser with credentials `admin`:`admin` (admin@example.com)
@@ -182,8 +138,4 @@ OR
 
 Run `yarn` to install dependencies, start app with `yarn start`.
 
-The graphql-backend for development is located at https://profiili-api.test.kuva.hel.ninja/graphql/, it has graphiql installed so you can browse it in your browser!
-
-## Learn More
-
-To learn more about specific choices in this repository, you can browse the [docs](/docs).
+The graphql-backend for development is located at https://profile-api.dev.hel.ninja/graphql/, it has graphiql installed so you can browse it in your browser!

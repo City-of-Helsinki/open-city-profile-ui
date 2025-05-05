@@ -4,9 +4,6 @@
     "deviceTimeError": {
       "message": "Du kan inte logga in eftersom klockan i din enhet går mer än 5 minuter fel. Justera klockan och prova på nytt."
     },
-    "permissionRequestDenied": {
-      "message": "Du måste godkänna begäran om åtkomst till din Tunnistamo-profil för att kunna använda den här tjänsten. Försök att logga in igen."
-    },
     "genericError": {
       "message": "Ett fel uppstod. Försök igen"
     }

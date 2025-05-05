@@ -283,6 +283,11 @@ export function createQueueController(
     newProps: Partial<ActionUpdateProps>
   ) => {
     const action = getCurrentActionVersion(actionOrActionType);
+
+    if (!action) {
+      throw new Error(`Action is undefined`);
+    }
+
     if (checkIfActionCanUpdate(action, newProps)) {
       return updateActionAndQueue(action.type, newProps);
     } else {

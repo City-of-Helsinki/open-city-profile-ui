@@ -21,6 +21,11 @@ type CheckEmailResponse = {
   s_time_expires: number;
 };
 
+function changeEmailDomain(email: string, newDomain: string): string {
+  const [localPart] = email.split('@');
+  return `${localPart}@${newDomain}`;
+}
+
 export class Mailbox {
   emailAddress: string;
   mailId: string;
@@ -41,7 +46,9 @@ export class Mailbox {
     }
     const { email_addr, sid_token } = await response.json();
 
-    this.emailAddress = email_addr;
+    // For some reason, the email address domain guerrillamailblock.com is blocked
+    // in either end, so we need to change it to a different domain
+    this.emailAddress = changeEmailDomain(email_addr, 'grr.la');
     this.sidToken = sid_token;
   }
 
