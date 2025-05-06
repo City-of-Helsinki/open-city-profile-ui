@@ -3,6 +3,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.24.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.23.0...open-city-profile-ui-v1.24.0) (2025-05-06)
+
+
+### Features
+
+* Add node version to package.json engines HP-2746 ([#439](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/439)) ([72e0eec](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/72e0eece697cb8cbdd2be8a0ad6504403a4cf75f))
+* Tunnistamo cleanup HP-2818 ([#442](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/442)) ([e74100c](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/e74100ce4f23c96260c5ab3a78f6a9e745b9b5c9))
+
+
+### Bug Fixes
+
+* E2e test logout timing ([#444](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/444)) ([17cc40a](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/17cc40a531d6118bcf1ae6a5a5044da84e78914a))
+
+
+### Dependencies
+
+* Bump vite from 6.2.5 to 6.2.6 ([#437](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/437)) ([39dfbe5](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/39dfbe599879e2873efa213760e4c5062f9a6b13))
+* Bump vite from 6.2.6 to 6.2.7 ([#443](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/443)) ([fb38054](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/fb38054d625a9a38c4fe1d944326a36438c0a11a))
+
 ## [1.23.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.22.0...open-city-profile-ui-v1.23.0) (2025-04-10)
 
 
