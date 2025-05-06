@@ -18,8 +18,14 @@ test('Login and logout - Swedish', async ({ page }) => {
   await page.getByRole('link', { name: 'Test IdP' }).click();
   await fillSSNAndContinue(page, TEST_SSN);
   await page.getByRole('button', { name: 'Fortsätt till tjänsten' }).click();
+  // Wait that the page has loaded
+  await expect(
+    page.getByTestId('profile-information-explanation')
+  ).toBeVisible();
   await page.getByTestId('user-menu-button').click();
-  await page.getByRole('button', { name: 'Logga ut' }).click();
+  const logoutButton = page.getByRole('button', { name: 'Logga ut' });
+  await expect(logoutButton).toBeVisible();
+  await logoutButton.click();
   await expect(
     page.getByText('Din profilinformation på en adress!')
   ).toBeVisible();
@@ -32,8 +38,14 @@ test('Login and logout - English', async ({ page }) => {
   await page.getByRole('link', { name: 'Test IdP' }).click();
   await fillSSNAndContinue(page, TEST_SSN);
   await page.getByRole('button', { name: 'Continue to service' }).click();
+  // Wait that the page has loaded
+  await expect(
+    page.getByTestId('profile-information-explanation')
+  ).toBeVisible();
   await page.getByTestId('user-menu-button').click();
-  await page.getByRole('button', { name: 'Log out' }).click();
+  const logoutButton = page.getByRole('button', { name: 'Log out' });
+  await expect(logoutButton).toBeVisible();
+  await logoutButton.click();
   await expect(
     page.getByText('Your profile information at one address!')
   ).toBeVisible();
