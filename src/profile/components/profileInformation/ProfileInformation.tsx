@@ -25,10 +25,10 @@ function ProfileInformation(): React.ReactElement {
           text={
             <Trans
               i18nKey="profileInformation.description"
-              components={{
-                linkToServices: <Link to={'/connected-services'}>{''}</Link>,
-                linkToServicesText: <>{t('nav.services')}</>,
-              }}
+              values={{ linkToServicesText: t('nav.services') }}
+              components={[
+                <Link key="linkToServices" to="/connected-services" />,
+              ]}
             />
           }
           dataTestId="profile-information-explanation"

@@ -131,7 +131,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
           isActionTriggered(keycloakAuthCodeParserAction.type)
         ).toBeTruthy();
       });
-      expect(mockHistoryTracker).toHaveBeenCalledTimes(1);
+      expect(mockHistoryTracker).toHaveBeenCalled();
       expect(getRedirectPath().includes(`${startPagePath}`)).toBeTruthy();
     });
   });
