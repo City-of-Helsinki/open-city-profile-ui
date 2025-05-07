@@ -69,8 +69,7 @@ function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
     } else {
       redirectAfterError();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [shouldHandleCallback, resume, redirectAfterError]);
 
   return (
     <div className={styles['wrapper']}>
