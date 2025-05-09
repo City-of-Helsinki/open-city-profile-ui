@@ -52,7 +52,7 @@
     "notAllowed": "Et voi poistaa profiiliasi, koska jokin sitä käyttävistä palveluista tarvitsee tietojasi esimerkiksi laskutukseen.",
     "deletionErrorTitle": "Poisto epäonnistui!",
     "genericError": "Profiilin poistaminen ei onnistunut. Yritä myöhemmin uudelleen.",
-    "deleteServiceFromPage": "Voit poistaa tiedot näistä palveluista <linkToServices>{{linkToServicesText}}</linkToServices> -sivulta.",
+    "deleteServiceFromPage": "Voit poistaa tiedot näistä palveluista <0>{{linkToServicesText}}</0> -sivulta.",
     "unableToDeleteServices": "Emme voi poistaa tietoja näistä palveluista esimerkiksi asioinnin tilan tai säilytysajan vuoksi.",
     "contactServiceToDelete": "Jos haluat silti poistaa tiedot, ole suoraan yhteydessä <linkToExternalServiceList>kyseiseen palveluun</linkToExternalServiceList> ja yritä profiilin poistoa sen jälkeen uudestaan.",
     "urlToServiceList": "https://www.hel.fi/search/services"
@@ -194,7 +194,7 @@
     "ariaNoSelectedItemForLabel": "{{label}} ei ole valittuna",
     "changePassword": "Vaihda salasana",
     "deleteProfile": "Poista omat tietosi",
-    "description": "Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <linkToServices>{{linkToServicesText}}</linkToServices> -sivulta.",
+    "description": "Helsinki-profiiliin tallennettuja tietoja käytetään Helsingin kaupungin asiointipalveluissa. Tarkemmat tiedot löydät <0>{{linkToServicesText}}</0> -sivulta.",
     "downloadData": "Lataa omat tietosi (.json)",
     "email": "Sähköpostiosoite",
     "loginAndAuthentication": "Kirjautuminen ja tunnistautuminen",

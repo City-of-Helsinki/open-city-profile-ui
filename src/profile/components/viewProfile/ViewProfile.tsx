@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import ProfileInformation from '../profileInformation/ProfileInformation';
 import ServiceConnections from '../serviceConnections/ServiceConnections';
@@ -11,14 +11,10 @@ function ViewProfile(): React.ReactElement {
   return (
     <React.Fragment>
       {isComplete && (
-        <Switch>
-          <Route path="/connected-services">
-            <ServiceConnections />
-          </Route>
-          <Route path="/">
-            <ProfileInformation />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/connected-services" element={<ServiceConnections />} />
+          <Route path="/*" element={<ProfileInformation />} />
+        </Routes>
       )}
     </React.Fragment>
   );

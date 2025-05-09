@@ -52,7 +52,7 @@
     "notAllowed": "You cannot delete your profile because one of the services using it needs your information, for example, for invoicing.",
     "deletionErrorTitle": "The deletion failed!",
     "genericError": "The profile could not be deleted. Please try again later.",
-    "deleteServiceFromPage": "You can delete the data from these services via the <linkToServices>{{linkToServicesText}}</linkToServices> page.",
+    "deleteServiceFromPage": "You can delete the data from these services via the <0>{{linkToServicesText}}</0> page.",
     "unableToDeleteServices": "We cannot delete data from these services, for example due to the transaction status or storage time.",
     "contactServiceToDelete": "If you still want to delete the data, please contact <linkToExternalServiceList >the service</linkToExternalServiceList> directly and then retry deleting the profile.",
     "urlToServiceList": "https://www.hel.fi/search/services"
@@ -194,7 +194,7 @@
     "ariaNoSelectedItemForLabel": "{{label}} is not selected",
     "changePassword": "Change password",
     "deleteProfile": "Delete your profile",
-    "description": "The data stored in the Helsinki profile is used in the City of Helsinki’s e-services. You can find more detailed information on the <linkToServices>{{linkToServicesText}}</linkToServices> page.",
+    "description": "The data stored in the Helsinki profile is used in the City of Helsinki’s e-services. You can find more detailed information on the <0>{{linkToServicesText}}</0> page.",
     "downloadData": "Download your data",
     "email": "Email",
     "loginAndAuthentication": "Login and authentication",

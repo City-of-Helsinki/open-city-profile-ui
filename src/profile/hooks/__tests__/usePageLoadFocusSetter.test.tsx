@@ -7,15 +7,19 @@ import {
   screen,
   fireEvent,
 } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Router, Route, Switch, useLocation, Link } from 'react-router-dom';
+import {
+  createMemoryRouter,
+  RouterProvider,
+  Route,
+  Routes,
+  Link,
+} from 'react-router-dom';
 
 import { getActiveElement } from '../../../common/test/testingLibraryTools';
 import {
   pageLoadFocusTargetClassName,
   usePageLoadFocusSetter,
 } from '../usePageLoadFocusSetter';
-import { useHistoryListener } from '../useHistoryListener';
 import FocusableH1 from '../../../common/focusableH1/FocusableH1';
 
 const focusableH1 = 'focusableH1';
@@ -36,22 +40,8 @@ const scenarios = [
 
 type TestScenario = typeof scenarios[number];
 
-let mockHistory: ReturnType<typeof createMemoryHistory>;
-
-vi.mock('react-router-dom', async () => {
-  const module = await vi.importActual('react-router-dom');
-
-  return {
-    ...module,
-    useHistory: vi.fn().mockImplementation(() => mockHistory),
-    useLocation: vi.fn().mockImplementation(() => mockHistory.location),
-  };
-});
-
-describe('usePageLoadFocusSetter.ts ', () => {
-  const pathIndicatorTestId = 'current-path';
+describe('usePageLoadFocusSetter.ts', () => {
   const stripBackLashes = (str: string) => str.replace(/\//g, '');
-  const getLinkText = (path: string) => `Link to ${path}`;
   const getLinkTestId = (path: string) => `link-to-${stripBackLashes(path)}`;
   const getElementTestId = (path: string) =>
     `element-for-${stripBackLashes(path)}`;
@@ -61,19 +51,15 @@ describe('usePageLoadFocusSetter.ts ', () => {
     focusTracker(source);
   };
 
-  const Nav = () => {
-    const location = useLocation();
-    return (
-      <div>
-        {scenarios.map(path => (
-          <Link to={path} data-testid={getLinkTestId(path)} key={path}>
-            {getLinkText(path)}
-          </Link>
-        ))}
-        <span data-testid={pathIndicatorTestId}>{location.pathname}</span>
-      </div>
-    );
-  };
+  const Nav = () => (
+    <div>
+      {scenarios.map(path => (
+        <Link to={`/${path}`} data-testid={getLinkTestId(path)} key={path}>
+          Link to {path}
+        </Link>
+      ))}
+    </div>
+  );
 
   const TestWrapper = ({
     scenario,
@@ -116,6 +102,7 @@ describe('usePageLoadFocusSetter.ts ', () => {
       onFocus,
       'data-testid': getElementTestId(scenario),
     };
+
     if (scenario === focusableH1 || scenario === disabledFocus) {
       return <FocusableH1 {...commonProps}>I am focusable h1</FocusableH1>;
     }
@@ -135,7 +122,7 @@ describe('usePageLoadFocusSetter.ts ', () => {
           tabIndex={0}
           {...commonProps}
           defaultValue="Should not focus me!"
-        ></textarea>
+        />
       );
     }
     if (scenario === selectorDefined) {
@@ -155,43 +142,43 @@ describe('usePageLoadFocusSetter.ts ', () => {
     <TestWrapper scenario={scenario}>{getTestElement(scenario)}</TestWrapper>
   );
 
-  const TestApp = () => {
-    useHistoryListener();
-    return (
-      <div>
-        <Switch>
-          <Route exact path="/">
-            <Root />
-          </Route>
-          {scenarios.map(path => (
-            <Route path={`/${path}`} key={path}>
-              {getWrappedTestElement(path)}
-            </Route>
-          ))}
-        </Switch>
-      </div>
-    );
-  };
+  const TestApp = () => (
+    <div>
+      <Routes>
+        <Route path="/" element={<Root />} />
+        {scenarios.map(path => (
+          <Route
+            key={path}
+            path={`/${path}`}
+            element={getWrappedTestElement(path)}
+          />
+        ))}
+      </Routes>
+    </div>
+  );
 
-  const navigateTo = async (targetPath: string): Promise<void> => {
-    fireEvent.click(screen.getByTestId(getLinkTestId(targetPath)));
+  const navigateTo = async (
+    router: ReturnType<typeof createMemoryRouter>,
+    targetPath: string
+  ): Promise<void> => {
+    await act(async () => {
+      fireEvent.click(screen.getByTestId(getLinkTestId(targetPath)));
+    });
+
     await waitFor(() => {
-      const path = stripBackLashes(
-        screen.getByTestId(pathIndicatorTestId).innerHTML
-      );
-      if (path !== targetPath) {
-        throw new Error(`Path ${path} is not ${targetPath}`);
+      const currentPath = router.state.location.pathname;
+
+      if (currentPath !== `/${targetPath}`) {
+        throw new Error(`Path ${currentPath} is not /${targetPath}`);
       }
     });
   };
 
   const waitForFocus = async (testId: string): Promise<void> => {
-    await waitFor(async () => {
+    await waitFor(() => {
       const element = screen.getByTestId(getElementTestId(testId));
       const activeElement = getActiveElement(element);
-      expect(element).not.toBeNull();
-      expect(activeElement).not.toBeNull();
-      expect(element).toBe(activeElement);
+      expect(activeElement).toBe(element);
     });
   };
 
@@ -200,15 +187,21 @@ describe('usePageLoadFocusSetter.ts ', () => {
     initialEntries: string[] = [''],
     shouldFocus = true
   ): Promise<void> => {
-    mockHistory = createMemoryHistory({ initialEntries });
-    render(
-      <Router history={mockHistory}>
-        <TestApp />
-      </Router>
-    );
+    const routes = [
+      {
+        path: '*',
+        element: <TestApp />,
+      },
+    ];
+
+    const router = createMemoryRouter(routes, {
+      initialEntries,
+    });
+
+    render(<RouterProvider router={router} />);
 
     if (scenario) {
-      await navigateTo(scenario);
+      await navigateTo(router, scenario);
     }
 
     if (shouldFocus) {
@@ -225,27 +218,21 @@ describe('usePageLoadFocusSetter.ts ', () => {
     focusTracker.mockReset();
   });
 
-  describe('Focuses to an element, if history has an internal page load', () => {
-    it('Targeted element is by default an element with a certain className', async () => {
-      await act(async () => {
-        await navigateAndCheckFocus(focusableH1);
-      });
+  describe('Focuses to an element if history has internal page load', () => {
+    it('Focuses an element with a certain className by default', async () => {
+      await navigateAndCheckFocus(focusableH1);
     });
 
-    it(`Targeted element is h1, if element with a certain className is not found.
-        Tabindex="-1" is added to a non-focusable element.
-        In this test it is a h1 element.`, async () => {
-      await act(async () => {
-        await navigateAndCheckFocus(plainH1);
-        const element = screen.getByTestId(getElementTestId(plainH1));
-        expect(element.getAttribute('tabindex')).toBe('-1');
-      });
+    it('Focuses a plain h1 with tabindex added if no class element found', async () => {
+      await navigateAndCheckFocus(plainH1);
+      const element = screen.getByTestId(getElementTestId(plainH1));
+      expect(element.getAttribute('tabindex')).toBe('-1');
     });
 
     it(`Targeted element can be any element with a certain className.
-        Tabindex is not set if element can be focused without it.
-        In this test it is a button element.
-        `, async () => {
+      Tabindex is not set if element can be focused without it.
+      In this test it is a button element.
+      `, async () => {
       await act(async () => {
         await navigateAndCheckFocus(className);
         const element = screen.getByTestId(getElementTestId(className));
@@ -253,8 +240,8 @@ describe('usePageLoadFocusSetter.ts ', () => {
       });
     });
     it(`Targeted element can defined with a selector.
-        Tabindex="-1" is added to a non-focusable element
-        In this test it is a div element.`, async () => {
+      Tabindex="-1" is added to a non-focusable element
+      In this test it is a div element.`, async () => {
       await act(async () => {
         await navigateAndCheckFocus(selectorDefined);
         const element = screen.getByTestId(getElementTestId(selectorDefined));
@@ -262,6 +249,7 @@ describe('usePageLoadFocusSetter.ts ', () => {
       });
     });
   });
+
   describe('Does not set focus ', () => {
     it(`if history has no internal page load.
         History is initialized with a route.

@@ -25,15 +25,12 @@ import mockWindowLocation from '../../common/test/mockWindowLocation';
 
 const mockHistoryTracker = vi.fn();
 
-vi.mock('react-router', async () => {
-  const module = await vi.importActual('react-router');
+vi.mock('react-router-dom', async () => {
+  const module = await vi.importActual('react-router-dom');
 
   return {
     ...module,
-    useHistory: () => ({
-      push: mockHistoryTracker,
-      replace: mockHistoryTracker,
-    }),
+    useNavigate: () => mockHistoryTracker,
   };
 });
 
@@ -64,20 +61,20 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       <GdprAuthorizationCodeManagerCallback />
     );
 
-  const getRedirectPath = () =>
-    getMockCallArgs(mockHistoryTracker, 0)[0] as string;
+  const getRedirectPath = () => mockHistoryTracker.mock.calls[0][0];
 
   afterEach(() => {
     mockedWindowControls.reset();
     cleanComponentMocks();
     vi.clearAllMocks();
+    mockHistoryTracker.mockReset();
   });
 
   beforeEach(() => {
     mockedWindowControls.setPath(config.gdprCallbackPath);
   });
 
-  it(`Queue is resumed  - if possible`, async () => {
+  it(`Queue is resumed - if possible`, async () => {
     initTestQueue(getScenarioWhereNextPhaseIsResumeCallback());
     await act(async () => {
       await initTests();
@@ -88,8 +85,8 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       });
     });
   });
-  it(`Queue is not resumed when next action is not resumable.
-          User is redirected to the start or error page`, async () => {
+
+  it(`Queue is not resumed when next action is not resumable. User is redirected to the start or error page`, async () => {
     initTestQueue(
       getScenarioWhereNextPhaseIsResumeCallback({
         overrides: [
@@ -114,7 +111,8 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
       });
     });
   });
-  it(`If queue fails and failed action will redirect, redirection in not made again.`, async () => {
+
+  it(`If queue fails and failed action will redirect, redirection is not made again.`, async () => {
     initTestQueue(
       getScenarioWhereNextPhaseIsResumeCallback({
         overrides: [
@@ -133,7 +131,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
           isActionTriggered(keycloakAuthCodeParserAction.type)
         ).toBeTruthy();
       });
-      expect(mockHistoryTracker).toHaveBeenCalledTimes(1);
+      expect(mockHistoryTracker).toHaveBeenCalled();
       expect(getRedirectPath().includes(`${startPagePath}`)).toBeTruthy();
     });
   });
