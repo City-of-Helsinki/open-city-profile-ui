@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, PropsWithChildren } from 'react';
 import { renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import _ from 'lodash';
 
@@ -19,32 +19,14 @@ import { EditDataType } from '../../profile/helpers/editData';
 import ProfileContextFetcher from './ProfileContextFetcher';
 import { getErrorMessage } from './testingLibraryTools';
 
-export type ElementSelector = {
-  testId?: string;
-  text?: string;
-  valueSelector?: string;
-  id?: string;
-  querySelector?: string;
-  label?: string;
-};
-
-export type RenderHookResultsChildren = {
-  children: React.ReactNodeArray;
-};
-
-export type WaitForElementAndValueProps = {
-  selector: ElementSelector;
-  value: string;
-};
-
 export const exposeProfileContext = (
   responseProvider: ResponseProvider
-): RenderHookResult<RenderHookResultsChildren, ProfileContextData> & {
+): RenderHookResult<PropsWithChildren<object>, ProfileContextData> & {
   waitForDataChange: () => Promise<ProfileContextData>;
   waitForUpdate: () => Promise<ProfileContextData>;
   waitForErrorChange: () => Promise<ProfileContextData>;
 } => {
-  const wrapper = ({ children }: RenderHookResultsChildren) => (
+  const wrapper = ({ children }: PropsWithChildren<object>) => (
     <MockApolloClientProvider responseProvider={responseProvider}>
       <ProfileProvider>{children}</ProfileProvider>
     </MockApolloClientProvider>
@@ -127,14 +109,14 @@ export function exposeHook<T = unknown>(
   responseProvider: ResponseProvider,
   hookProvider: () => T,
   waitForProfileData: boolean
-): RenderHookResult<RenderHookResultsChildren, T> {
+): RenderHookResult<PropsWithChildren<object>, T> {
   const ChildWrapper = waitForProfileData
     ? ProfileContextFetcher
     : React.Fragment;
-  const wrapper = ({ children }: RenderHookResultsChildren) => (
+  const wrapper = ({ children }: PropsWithChildren<object>) => (
     <MockApolloClientProvider responseProvider={responseProvider}>
       <ProfileProvider>
-        <ChildWrapper>{children}</ChildWrapper>
+        <ChildWrapper>{<>{children}</>}</ChildWrapper>
       </ProfileProvider>
     </MockApolloClientProvider>
   );
@@ -147,7 +129,7 @@ export function exposeHook<T = unknown>(
 export const exposeProfileMutationsHook = (
   responseProvider: ResponseProvider,
   dataType: EditDataType
-): RenderHookResult<RenderHookResultsChildren, MutationReturnType> =>
+): RenderHookResult<PropsWithChildren<object>, MutationReturnType> =>
   exposeHook<MutationReturnType>(
     responseProvider,
     () =>

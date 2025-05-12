@@ -5,7 +5,7 @@ import { ProfileContext } from '../../profile/context/ProfileContext';
 function ProfileContextFetcher({
   children,
 }: {
-  children: React.ReactElement | React.ReactNodeArray;
+  children: React.ReactElement | React.ReactNode[];
 }): React.ReactElement {
   const { data, fetch } = useContext(ProfileContext);
 

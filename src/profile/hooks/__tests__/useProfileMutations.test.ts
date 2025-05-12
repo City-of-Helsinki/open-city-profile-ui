@@ -1,10 +1,10 @@
+import React from 'react';
 import { waitFor } from '@testing-library/react';
 import { RenderHookResult, act } from '@testing-library/react-hooks';
 import _ from 'lodash';
 
 import {
   createResultPropertyTracker,
-  RenderHookResultsChildren,
   cleanComponentMocks,
 } from '../../../common/test/testingLibraryTools';
 import {
@@ -39,7 +39,7 @@ describe('useProfileMutations.ts ', () => {
   };
 
   type RenderResult = RenderHookResult<
-    RenderHookResultsChildren,
+    React.PropsWithChildren<object>,
     MutationReturnType
   > & {
     waitForDataChange: () => Promise<void>;

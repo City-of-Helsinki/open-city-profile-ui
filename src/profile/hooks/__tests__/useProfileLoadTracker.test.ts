@@ -1,11 +1,9 @@
+import React from 'react';
 import { waitFor } from '@testing-library/react';
 import { RenderHookResult, act } from '@testing-library/react-hooks';
 import { ApolloError } from '@apollo/client';
 
-import {
-  RenderHookResultsChildren,
-  cleanComponentMocks,
-} from '../../../common/test/testingLibraryTools';
+import { cleanComponentMocks } from '../../../common/test/testingLibraryTools';
 import {
   createApolloErrorWithAllowedPermissionError,
   MockedResponse,
@@ -20,7 +18,7 @@ import { exposeHook } from '../../../common/test/exposeHooksForTesting';
 import * as profileQueryModule from '../useProfileQuery';
 
 type RenderResult = RenderHookResult<
-  RenderHookResultsChildren,
+  React.PropsWithChildren<object>,
   useProfileLoaderHookReturnType
 >;
 

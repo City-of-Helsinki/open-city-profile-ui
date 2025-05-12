@@ -20,7 +20,6 @@ import {
 import { keycloakAuthCodeParserAction } from '../actions/authCodeParser';
 import { keycloakAuthCodeCallbackUrlAction } from '../actions/authCodeCallbackUrlDetector';
 import { loadKeycloakConfigAction } from '../actions/loadKeycloakConfig';
-import { getMockCallArgs } from '../../common/test/mockHelper';
 import mockWindowLocation from '../../common/test/mockWindowLocation';
 
 const mockHistoryTracker = vi.fn();

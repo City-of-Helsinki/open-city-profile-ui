@@ -1,5 +1,4 @@
 import React from 'react';
-import { User } from 'oidc-client-ts';
 import { act, cleanup } from '@testing-library/react';
 
 import { getMyProfile } from '../../../../common/test/myProfileMocking';
