@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, cleanup } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 
 import { getMyProfile } from '../../../../common/test/myProfileMocking';
 import {
@@ -48,16 +48,15 @@ describe('<Profile />', () => {
     const responses: MockedResponse[] = [
       { profileData: getMyProfile().myProfile as ProfileData },
     ];
-    await act(async () => {
-      const {
-        getElement,
-        waitForIsComplete,
-        waitForElement,
-      } = await renderTestSuite(responses);
-      getElement(selectors.loadIndicator);
-      await waitForIsComplete();
-      await waitForElement(selectors.profileHeading);
-    });
+
+    const {
+      getElement,
+      waitForIsComplete,
+      waitForElement,
+    } = await renderTestSuite(responses);
+    getElement(selectors.loadIndicator);
+    await waitForIsComplete();
+    await waitForElement(selectors.profileHeading);
   });
   it('should render profile when data has an allowed error', async () => {
     const responses: MockedResponse[] = [
@@ -66,38 +65,34 @@ describe('<Profile />', () => {
         withAllowedPermissionError: true,
       },
     ];
-    await act(async () => {
-      const { waitForIsComplete, waitForElement } = await renderTestSuite(
-        responses
-      );
-      await waitForIsComplete();
-      await waitForElement(selectors.profileHeading);
-    });
+
+    const { waitForIsComplete, waitForElement } = await renderTestSuite(
+      responses
+    );
+    await waitForIsComplete();
+    await waitForElement(selectors.profileHeading);
   });
   it('should render an error notification when query fails', async () => {
     const responses: MockedResponse[] = [{ errorType: 'graphQLError' }];
-    await act(async () => {
-      const { waitForElement } = await renderTestSuite(responses);
-      await waitForElement(selectors.errorLayout);
-    });
+
+    const { waitForElement } = await renderTestSuite(responses);
+    await waitForElement(selectors.errorLayout);
   });
   it('should render an error notification when profile load fails', async () => {
     const responses: MockedResponse[] = [{ errorType: 'networkError' }];
-    await act(async () => {
-      const { waitForElement } = await renderTestSuite(responses);
-      await waitForElement(selectors.errorLayout);
-    });
+
+    const { waitForElement } = await renderTestSuite(responses);
+    await waitForElement(selectors.errorLayout);
   });
   it('should retry profile load when reload button is clicked', async () => {
     const responses: MockedResponse[] = [
       { errorType: 'networkError' },
       { profileData: getMyProfile().myProfile as ProfileData },
     ];
-    await act(async () => {
-      const { waitForElement, clickElement } = await renderTestSuite(responses);
-      await waitForElement(selectors.errorLayout);
-      await clickElement(selectors.errorLayoutReloadButton);
-      await waitForElement(selectors.profileHeading);
-    });
+
+    const { waitForElement, clickElement } = await renderTestSuite(responses);
+    await waitForElement(selectors.errorLayout);
+    await clickElement(selectors.errorLayoutReloadButton);
+    await waitForElement(selectors.profileHeading);
   });
 });

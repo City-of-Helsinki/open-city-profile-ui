@@ -50,7 +50,7 @@ function DeleteProfile(): React.ReactElement {
     ApolloError | Error | undefined | DeleteResultLists
   >(undefined);
   const onCompleted: AuthCodeQueuesProps['onCompleted'] = useCallback(
-    controller => {
+    (controller: QueueController) => {
       const { failures, successful } = (getDeleteProfileResultOrError(
         controller
       ).result as DeleteResultLists) || {

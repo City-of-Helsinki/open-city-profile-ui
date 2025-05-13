@@ -1,6 +1,5 @@
-import React from 'react';
+import { act } from 'react';
 import { waitFor } from '@testing-library/react';
-import { RenderHookResult, act } from '@testing-library/react-hooks';
 import { ApolloError } from '@apollo/client';
 
 import { cleanComponentMocks } from '../../../common/test/testingLibraryTools';
@@ -17,10 +16,15 @@ import {
 import { exposeHook } from '../../../common/test/exposeHooksForTesting';
 import * as profileQueryModule from '../useProfileQuery';
 
-type RenderResult = RenderHookResult<
-  React.PropsWithChildren<object>,
-  useProfileLoaderHookReturnType
->;
+type RenderResult = {
+  result: {
+    // Allow any property to be accessed on current
+    current: useProfileLoaderHookReturnType & { [key: string]: unknown };
+  };
+  rerender: (props?: unknown) => void;
+  unmount: () => void;
+  waitForDataChange?: () => Promise<void>;
+};
 
 type UseProfileQueryReturnType = ReturnType<
   typeof profileQueryModule['useProfileQuery']
@@ -134,7 +138,9 @@ describe('useProfileLoader.ts ', () => {
       ? createApolloErrorWithAllowedPermissionError()
       : (({} as unknown) as ApolloError);
     const error = loadSuccess ? undefined : errorObj;
-    mockProfileLoadProcess({ ...result, error });
+    await act(async () => {
+      mockProfileLoadProcess({ ...result, error });
+    });
     await waitForProfileLoadToEnd(renderHookResult);
     return { renderHookResult };
   };
@@ -167,18 +173,16 @@ describe('useProfileLoader.ts ', () => {
         - hook.isProfileLoadComplete() returns true
         - hook.hasExistingProfile() returns true
         - hook.didProfileLoadFail() returns false`, async () => {
-      await act(async () => {
-        updateMockUseProfileQueryResult({
-          ...successfulProfileLoadData,
-          loading: false,
-        });
-
-        const renderHookResult = await initTests();
-        const currentHookProps = renderHookResult.result.current;
-        expect(currentHookProps.isProfileLoadComplete()).toBeTruthy();
-        expect(currentHookProps.hasExistingProfile()).toBeTruthy();
-        expect(fetchProfileMock).toHaveBeenCalledTimes(0);
+      updateMockUseProfileQueryResult({
+        ...successfulProfileLoadData,
+        loading: false,
       });
+
+      const renderHookResult = await initTests();
+      const currentHookProps = renderHookResult.result.current;
+      expect(currentHookProps.isProfileLoadComplete()).toBeTruthy();
+      expect(currentHookProps.hasExistingProfile()).toBeTruthy();
+      expect(fetchProfileMock).toHaveBeenCalledTimes(0);
     });
 
     it(`Profile should not be loaded at all, if context has an error. In this case
@@ -190,13 +194,12 @@ describe('useProfileLoader.ts ', () => {
           error: {} as ApolloError,
           loading: false,
         });
-
-        const renderHookResult = await initTests();
-        const currentHookProps = renderHookResult.result.current;
-        expect(currentHookProps.isProfileLoadComplete()).toBeTruthy();
-        expect(currentHookProps.hasExistingProfile()).toBeFalsy();
-        expect(fetchProfileMock).toHaveBeenCalledTimes(0);
       });
+      const renderHookResult = await initTests();
+      const currentHookProps = renderHookResult.result.current;
+      expect(currentHookProps.isProfileLoadComplete()).toBeTruthy();
+      expect(currentHookProps.hasExistingProfile()).toBeFalsy();
+      expect(fetchProfileMock).toHaveBeenCalledTimes(0);
     });
 
     it(`When profile load is successful and profile exists
@@ -204,97 +207,87 @@ describe('useProfileLoader.ts ', () => {
         - hook.didProfileLoadFail() returns false
         - hook.isProfileLoadComplete() returns true.
         Response can include an allowed graphQL error.`, async () => {
-      await act(async () => {
-        const { renderHookResult } = await proceedToProfileLoadCompleteState({
-          loadSuccess: true,
-          profileExist: true,
-          addAllowedGraphQLError: true,
-        });
-        const currentHookProps = renderHookResult.result.current;
-        expect(currentHookProps.hasExistingProfile()).toBeTruthy();
-        expect(currentHookProps.didProfileLoadFail()).toBeFalsy();
-        expect(currentHookProps.isProfileLoadComplete()).toBeTruthy();
-        expect(fetchProfileMock).toHaveBeenCalledTimes(1);
+      const { renderHookResult } = await proceedToProfileLoadCompleteState({
+        loadSuccess: true,
+        profileExist: true,
+        addAllowedGraphQLError: true,
       });
+      const currentHookProps = renderHookResult.result.current;
+      expect(currentHookProps.hasExistingProfile()).toBeTruthy();
+      expect(currentHookProps.didProfileLoadFail()).toBeFalsy();
+      expect(currentHookProps.isProfileLoadComplete()).toBeTruthy();
+      expect(fetchProfileMock).toHaveBeenCalledTimes(1);
     });
 
     it(`When profile load is successful, but profile does not exist,
           - hook.hasExistingProfile() returns false
           - hook.didProfileLoadFail() returns false
           - hook.isProfileLoadComplete() returns true`, async () => {
-      await act(async () => {
-        const { renderHookResult } = await proceedToProfileLoadCompleteState({
-          loadSuccess: true,
-          profileExist: false,
-          addAllowedGraphQLError: false,
-        });
-        const currentHookProps = renderHookResult.result.current;
-        expect(currentHookProps.hasExistingProfile()).toBeFalsy();
-        expect(currentHookProps.didProfileLoadFail()).toBeFalsy();
-        expect(currentHookProps.isProfileLoadComplete()).toBeTruthy();
-        expect(fetchProfileMock).toHaveBeenCalledTimes(1);
+      const { renderHookResult } = await proceedToProfileLoadCompleteState({
+        loadSuccess: true,
+        profileExist: false,
+        addAllowedGraphQLError: false,
       });
+      const currentHookProps = renderHookResult.result.current;
+      expect(currentHookProps.hasExistingProfile()).toBeFalsy();
+      expect(currentHookProps.didProfileLoadFail()).toBeFalsy();
+      expect(currentHookProps.isProfileLoadComplete()).toBeTruthy();
+      expect(fetchProfileMock).toHaveBeenCalledTimes(1);
     });
 
     it(`When profile load fails
           - hook.hasExistingProfile() returns false
           - hook.didProfileLoadFail() returns true
           - hook.isProfileLoadComplete() returns true`, async () => {
-      await act(async () => {
-        const { renderHookResult } = await proceedToProfileLoadCompleteState({
-          loadSuccess: false,
-          profileExist: true,
-          addAllowedGraphQLError: false,
-        });
-        const currentHookProps = renderHookResult.result.current;
-        expect(currentHookProps.isProfileLoadComplete()).toBeTruthy();
-        expect(currentHookProps.didProfileLoadFail()).toBeTruthy();
-        expect(currentHookProps.hasExistingProfile()).toBeFalsy();
-        expect(fetchProfileMock).toHaveBeenCalledTimes(1);
+      const { renderHookResult } = await proceedToProfileLoadCompleteState({
+        loadSuccess: false,
+        profileExist: true,
+        addAllowedGraphQLError: false,
       });
+      const currentHookProps = renderHookResult.result.current;
+      expect(currentHookProps.isProfileLoadComplete()).toBeTruthy();
+      expect(currentHookProps.didProfileLoadFail()).toBeTruthy();
+      expect(currentHookProps.hasExistingProfile()).toBeFalsy();
+      expect(fetchProfileMock).toHaveBeenCalledTimes(1);
     });
 
     it(`Hook provides a reloadProfile() function for refetching profile when
           - load fails
           - profile is fetched after it is created for first time.`, async () => {
-      await act(async () => {
-        const { renderHookResult } = await proceedToProfileLoadCompleteState({
-          loadSuccess: false,
-          profileExist: true,
-          addAllowedGraphQLError: false,
-        });
-        const currentHookProps = renderHookResult.result.current;
-        expect(currentHookProps.didProfileLoadFail()).toBeTruthy();
-        expect(currentHookProps.hasExistingProfile()).toBeFalsy();
-        updateMockUseProfileQueryResult({
-          error: undefined,
-          loading: true,
-          data: undefined,
-        });
-        mockProfileLoadProcess({
-          ...successfulProfileLoadData,
-        });
-        currentHookProps.reloadProfile();
-
-        await waitForProfileLoadToEnd(renderHookResult);
-        const updatedHookProps = renderHookResult.result.current;
-        expect(updatedHookProps.didProfileLoadFail()).toBeFalsy();
-        expect(updatedHookProps.hasExistingProfile()).toBeTruthy();
-
-        expect(fetchProfileMock).toHaveBeenCalledTimes(1);
-        expect(refetchProfileMock).toHaveBeenCalledTimes(1);
+      const { renderHookResult } = await proceedToProfileLoadCompleteState({
+        loadSuccess: false,
+        profileExist: true,
+        addAllowedGraphQLError: false,
       });
+      const currentHookProps = renderHookResult.result.current;
+      expect(currentHookProps.didProfileLoadFail()).toBeTruthy();
+      expect(currentHookProps.hasExistingProfile()).toBeFalsy();
+      updateMockUseProfileQueryResult({
+        error: undefined,
+        loading: true,
+        data: undefined,
+      });
+      mockProfileLoadProcess({
+        ...successfulProfileLoadData,
+      });
+      currentHookProps.reloadProfile();
+
+      await waitForProfileLoadToEnd(renderHookResult);
+      const updatedHookProps = renderHookResult.result.current;
+      expect(updatedHookProps.didProfileLoadFail()).toBeFalsy();
+      expect(updatedHookProps.hasExistingProfile()).toBeTruthy();
+
+      expect(fetchProfileMock).toHaveBeenCalledTimes(1);
+      expect(refetchProfileMock).toHaveBeenCalledTimes(1);
     });
 
     it('Hook.hasExistingProfile() throws, when used before profile load is complete', async () => {
-      await act(async () => {
-        const renderHookResult = await initTests();
-        const currentHookProps = renderHookResult.result.current;
-        expect(() => currentHookProps.hasExistingProfile()).toThrow();
-        mockProfileLoadProcess(successfulProfileLoadData);
-        await waitForProfileLoadToEnd(renderHookResult);
-        expect(() => currentHookProps.hasExistingProfile()).not.toThrow();
-      });
+      const renderHookResult = await initTests();
+      const currentHookProps = renderHookResult.result.current;
+      expect(() => currentHookProps.hasExistingProfile()).toThrow();
+      mockProfileLoadProcess(successfulProfileLoadData);
+      await waitForProfileLoadToEnd(renderHookResult);
+      expect(() => currentHookProps.hasExistingProfile()).not.toThrow();
     });
   });
 });

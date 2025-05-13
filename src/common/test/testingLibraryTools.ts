@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import {
   fireEvent,
   RenderResult,
   waitFor,
   cleanup,
-} from '@testing-library/react';
-import {
   RenderHookResult,
-  cleanup as cleanupHooks,
-} from '@testing-library/react-hooks';
+} from '@testing-library/react';
 import { GraphQLError } from 'graphql';
+import userEvent from '@testing-library/user-event';
 
 import { resetApolloMocks, ResponseProvider } from './MockApolloClientProvider';
 import { AnyObject } from '../../graphql/typings';
@@ -72,7 +70,6 @@ export type TestTools = RenderResult & {
 
 export const cleanComponentMocks = (): void => {
   cleanup();
-  cleanupHooks();
   resetApolloMocks();
 };
 
@@ -381,11 +378,12 @@ export const createResultPropertyTracker = <T>({
   renderHookResult: RenderHookResult<React.PropsWithChildren<object>, T>;
   valuePicker: (props: T) => string | undefined | AnyObject;
 }): [() => Promise<void>] => {
-  const currentPicker = (): T => renderHookResult.result.current;
+  const currentPicker = (): PropsWithChildren<object> =>
+    renderHookResult.result.current;
   const waitForChange = () => {
-    const initialValue = valuePicker(currentPicker());
+    const initialValue = valuePicker(currentPicker() as T);
     return waitFor(() => {
-      const newValue = valuePicker(currentPicker());
+      const newValue = valuePicker(currentPicker() as T);
       if (newValue === initialValue) {
         throw new Error('waiting...');
       }

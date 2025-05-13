@@ -1,5 +1,5 @@
-import React from 'react';
-import { render, act } from '@testing-library/react';
+import React, { act } from 'react';
+import { render } from '@testing-library/react';
 
 import i18n from '../../test/testi18nInit';
 import HelsinkiLogo from '../HelsinkiLogo';

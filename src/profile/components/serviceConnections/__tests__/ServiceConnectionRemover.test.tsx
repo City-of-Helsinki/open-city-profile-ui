@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 
 import {
   renderComponentWithMocksAndContexts,
@@ -112,48 +112,40 @@ describe('<ServiceConnectionRemover /> ', () => {
 
   it(`Renders the confirmation modal on initial render.
       Close button closes it and calls the onAbort callback`, async () => {
-    await act(async () => {
-      const { clickElement, waitForElement } = await initTests();
+    const { clickElement, waitForElement } = await initTests();
 
-      await waitForElement(getTestId('deleteVerificationText'));
-      await clickElement(getTestId('cancelButton'));
-      await waitFor(async () => {
-        expect(onAbortTracker).toHaveBeenCalledTimes(1);
-      });
+    await waitForElement(getTestId('deleteVerificationText'));
+    await clickElement(getTestId('cancelButton'));
+    await waitFor(async () => {
+      expect(onAbortTracker).toHaveBeenCalledTimes(1);
     });
   });
   it(`Shows a loading indicator when deletion starts`, async () => {
-    await act(async () => {
-      const { clickElement, waitForElement } = await initTests();
-      await waitForElement(getTestId('deleteVerificationText'));
-      await clickElement(getTestId('confirmButton'));
-      await waitForElement(getTestId('loadIndicator'));
-    });
+    const { clickElement, waitForElement } = await initTests();
+    await waitForElement(getTestId('deleteVerificationText'));
+    await clickElement(getTestId('confirmButton'));
+    await waitForElement(getTestId('loadIndicator'));
   });
   it(`Shows a loading indicator when returned back from gdpr callback and queue has started`, async () => {
-    await act(async () => {
-      initQueueAndLocationForResume();
-      const { waitForElement } = await initTests();
-      await waitForElement(getTestId('loadIndicator'));
-    });
+    initQueueAndLocationForResume();
+    const { waitForElement } = await initTests();
+    await waitForElement(getTestId('loadIndicator'));
   });
   it(`If deletion succeeds, a success text is shown in the modal and
       onDelete-callback is called when ok-button is pressed .`, async () => {
     initQueueAndLocationForResume();
 
-    await act(async () => {
-      const { waitForElement, clickElement } = await initTests();
-      await waitForElement(getTestId('loadIndicator'));
-      await waitForElement({ text: t('notification.removeSuccess') });
-      await waitFor(async () => {
-        expect(onDeleteTracker).toHaveBeenCalledTimes(0);
-        expect(onAbortTracker).toHaveBeenCalledTimes(0);
-      });
-      await clickElement(getTestId('cancelButton'));
-      await waitFor(async () => {
-        expect(onDeleteTracker).toHaveBeenCalledTimes(1);
-        expect(onAbortTracker).toHaveBeenCalledTimes(0);
-      });
+    const { waitForElement, clickElement } = await initTests();
+    await waitForElement(getTestId('loadIndicator'));
+    await waitForElement({ text: t('notification.removeSuccess') });
+    await waitFor(async () => {
+      expect(onDeleteTracker).toHaveBeenCalledTimes(0);
+      expect(onAbortTracker).toHaveBeenCalledTimes(0);
+    });
+    await clickElement(getTestId('cancelButton'));
+    await waitFor(async () => {
+      expect(onDeleteTracker).toHaveBeenCalledTimes(1);
+      expect(onAbortTracker).toHaveBeenCalledTimes(0);
     });
   });
   it(`If deletion fails with a non-forbidden error, a specific error text is shown in the modal.`, async () => {
@@ -167,20 +159,18 @@ describe('<ServiceConnectionRemover /> ', () => {
       ],
     });
 
-    await act(async () => {
-      const { clickElement, waitForElement } = await initTests(
-        defaultServiceConnectionData
-      );
+    const { clickElement, waitForElement } = await initTests(
+      defaultServiceConnectionData
+    );
 
-      await waitForElement(getTestId('loadIndicator'));
-      await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
-      await waitForElement({
-        text: t('serviceConnections.connectionRemovalError'),
-      });
-      await clickElement(getTestId('cancelButton'));
-      await waitFor(async () => {
-        expect(onAbortTracker).toHaveBeenCalledTimes(1);
-      });
+    await waitForElement(getTestId('loadIndicator'));
+    await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
+    await waitForElement({
+      text: t('serviceConnections.connectionRemovalError'),
+    });
+    await clickElement(getTestId('cancelButton'));
+    await waitFor(async () => {
+      expect(onAbortTracker).toHaveBeenCalledTimes(1);
     });
   });
   it(`If deletion query succeeds, but result indicates removal was unsuccessful,
@@ -195,19 +185,17 @@ describe('<ServiceConnectionRemover /> ', () => {
       ],
     });
 
-    await act(async () => {
-      const { clickElement, waitForElement } = await initTests(
-        defaultServiceConnectionData
-      );
+    const { clickElement, waitForElement } = await initTests(
+      defaultServiceConnectionData
+    );
 
-      await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
-      await waitForElement({
-        text: t('serviceConnections.connectionRemovalForbidden'),
-      });
-      await clickElement(getTestId('cancelButton'));
-      await waitFor(async () => {
-        expect(onAbortTracker).toHaveBeenCalledTimes(1);
-      });
+    await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
+    await waitForElement({
+      text: t('serviceConnections.connectionRemovalForbidden'),
+    });
+    await clickElement(getTestId('cancelButton'));
+    await waitFor(async () => {
+      expect(onAbortTracker).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -223,13 +211,11 @@ describe('<ServiceConnectionRemover /> ', () => {
       ],
     });
 
-    await act(async () => {
-      const { waitForElement } = await initTests(defaultServiceConnectionData);
+    const { waitForElement } = await initTests(defaultServiceConnectionData);
 
-      await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
-      await waitForElement({
-        text: t('serviceConnections.explanationforLightAuthentication'),
-      });
+    await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
+    await waitForElement({
+      text: t('serviceConnections.explanationforLightAuthentication'),
     });
   });
 });
