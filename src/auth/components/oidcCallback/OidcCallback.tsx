@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteChildrenProps } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   LoadingSpinner,
@@ -10,18 +10,17 @@ import * as Sentry from '@sentry/react';
 
 import { useErrorPageRedirect } from '../../../profile/hooks/useErrorPageRedirect';
 import styles from './OidcCallback.module.css';
-import { getLinkRedirectState } from '../../../profile/hooks/useHistoryListener';
+import { getLinkRedirectState } from '../../../profile/hooks/usePageLoadFocusSetter';
 
-function OidcCallback({
-  history,
-}: RouteChildrenProps): React.ReactElement | null {
+function OidcCallback(): React.ReactElement | null {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const redirectToErrorPage = useErrorPageRedirect();
   const genericErrorString = 'authentication.genericError.message';
 
   const onSuccess = () => {
     // Successful login - redirect to profile page
-    history.replace('/', getLinkRedirectState());
+    navigate('/', { state: getLinkRedirectState() });
   };
 
   const onError = (error?: OidcClientError) => {

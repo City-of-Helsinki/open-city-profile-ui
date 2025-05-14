@@ -52,7 +52,7 @@
     "notAllowed": "Du kan inte ta bort din profil eftersom någon av tjänsterna som används behöver dina uppgifter till exempel för fakturering.",
     "deletionErrorTitle": "Profilen kunde inte avlägsnas!",
     "genericError": "Profilen kunde inte avlägsnas. Försök senare på nytt.",
-    "deleteServiceFromPage": "Du kan ta bort uppgifterna från dessa tjänster på sidan <linkToServices>{{linkToServicesText}}</linkToServices>.",
+    "deleteServiceFromPage": "Du kan ta bort uppgifterna från dessa tjänster på sidan <0>{{linkToServicesText}}</0>.",
     "unableToDeleteServices": "Vi kan inte radera data från dessa tjänster, till exempel på grund av transaktionsstatus eller lagringstid.",
     "contactServiceToDelete": "Om du ändå vill ta bort uppgifterna, kontakta <linkToExternalServiceList>tjänsten</linkToExternalServiceList> i fråga direkt och försök därefter att ta bort profilen på nytt.",
     "urlToServiceList": "https://www.hel.fi/sok/tjanster"
@@ -194,7 +194,7 @@
     "ariaNoSelectedItemForLabel": "{{label}} har inte valts",
     "changePassword": "Uppdatera lösenord",
     "deleteProfile": "Radera profilen",
-    "description": "Uppgifterna som sparats i Helsingforsprofilen används i Helsingfors stads e-tjänster. Närmare information hittar du på <linkToServices>{{linkToServicesText}}</linkToServices> sidan.",
+    "description": "Uppgifterna som sparats i Helsingforsprofilen används i Helsingfors stads e-tjänster. Närmare information hittar du på <0>{{linkToServicesText}}</0> sidan.",
     "downloadData": "Ladda ner min information",
     "email": "Epost",
     "loginAndAuthentication": "Inloggning och autentisering",

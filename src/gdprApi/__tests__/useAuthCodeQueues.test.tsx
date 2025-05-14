@@ -59,15 +59,16 @@ type HookFunctionResults = {
   canStart: boolean;
 };
 
-const mockHistoryPushTracker = vi.fn();
+const mockNavigate = vi.fn();
 
-vi.mock('react-router', async () => {
-  const module = await vi.importActual('react-router');
+vi.mock('react-router-dom', async () => {
+  const module = await vi.importActual('react-router-dom');
 
   return {
     ...module,
-    useHistory: () => ({
-      push: mockHistoryPushTracker,
+    useNavigate: () => mockNavigate,
+    useLocation: () => ({
+      search: '',
     }),
   };
 });
@@ -351,7 +352,7 @@ describe('useAuthCodeQueues', () => {
         });
       });
       await waitFor(() => {
-        expect(mockHistoryPushTracker).toHaveBeenLastCalledWith(
+        expect(mockNavigate).toHaveBeenLastCalledWith(
           '/?next=redirectionCatcher'
         );
         expect(getState()).toMatchObject({
@@ -398,11 +399,8 @@ describe('useAuthCodeQueues', () => {
         ).toBeTruthy();
       });
       await waitFor(async () => {
-        expect(mockHistoryPushTracker).toHaveBeenCalledTimes(1);
-        const lastCall = getMockCallArgs(
-          mockHistoryPushTracker,
-          0
-        )[0] as string;
+        expect(mockNavigate).toHaveBeenCalledTimes(1);
+        const lastCall = getMockCallArgs(mockNavigate, 0)[0] as string;
 
         expect(
           lastCall.includes(`/?error=${keycloakAuthCodeParserAction.type}`)
@@ -682,7 +680,7 @@ describe('useAuthCodeQueues', () => {
         nextPhase: nextPhases.waitForInternalRedirect,
       });
 
-      expect(mockHistoryPushTracker).toHaveBeenLastCalledWith(
+      expect(mockNavigate).toHaveBeenLastCalledWith(
         '/?next=redirectionCatcher'
       );
 

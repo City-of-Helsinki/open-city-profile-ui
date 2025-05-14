@@ -6,20 +6,16 @@ import OtpConfigurationCallback, {
   OtpConfigurationCallbackProps,
 } from '../OtpConfigurationCallback';
 
-const historyReplaceMock = {
-  replace: vi.fn(),
-};
+// Mock navigate function
+const navigateMock = vi.fn();
 
 const mockedDefaultProps = {
-  history: historyReplaceMock,
   action: null,
 };
 
 const mockedDeleteProps = {
-  history: historyReplaceMock,
   action: 'delete',
 };
-
 const renderComponent = (props: OtpConfigurationCallbackProps) =>
   render(
     <BrowserRouter>
@@ -27,21 +23,20 @@ const renderComponent = (props: OtpConfigurationCallbackProps) =>
     </BrowserRouter>
   );
 
-const getHistoryReplaceCallArgument = () =>
-  mockedDefaultProps.history.replace.mock.calls[0][0];
+const getNavigateCallArgument = () => navigateMock.mock.calls[0][0];
 
 vi.mock('react-router-dom', async () => {
   const module = await vi.importActual('react-router-dom');
 
   return {
     ...module,
-    useHistory: vi.fn().mockImplementation(() => mockedDefaultProps.history),
+    useNavigate: () => navigateMock,
   };
 });
 
 describe('<OtpConfigurationCallback />', () => {
   afterEach(() => {
-    mockedDefaultProps.history.replace.mockReset();
+    navigateMock.mockReset();
   });
 
   it('render without error', async () => {
@@ -63,13 +58,13 @@ describe('<OtpConfigurationCallback />', () => {
       await new Promise(resolve => setTimeout(resolve, 0));
     });
 
-    expect(getHistoryReplaceCallArgument()).toBe('/');
+    expect(getNavigateCallArgument()).toBe('/');
   });
 });
 
 describe('<OtpConfigurationCallback /> delete', () => {
   afterEach(() => {
-    mockedDefaultProps.history.replace.mockReset();
+    navigateMock.mockReset();
   });
 
   it('render without error', async () => {
@@ -91,6 +86,6 @@ describe('<OtpConfigurationCallback /> delete', () => {
       await new Promise(resolve => setTimeout(resolve, 0));
     });
 
-    expect(getHistoryReplaceCallArgument()).toBe('/');
+    expect(getNavigateCallArgument()).toBe('/');
   });
 });

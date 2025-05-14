@@ -1,19 +1,17 @@
 import React, { useEffect, useContext } from 'react';
-import { RouteChildrenProps, useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LoadingSpinner } from 'hds-react';
 
 import styles from './PasswordChangeCallback.module.css';
-import { getLinkRedirectState } from '../profile/hooks/useHistoryListener';
+import { getLinkRedirectState } from '../profile/hooks/usePageLoadFocusSetter';
 import { ProfileContext } from '../profile/context/ProfileContext';
 
-function PasswordChangeCallback({
-  history,
-}: RouteChildrenProps): React.ReactElement | null {
+function PasswordChangeCallback(): React.ReactElement | null {
   const { t } = useTranslation();
-
   const { setPasswordUpdateState } = useContext(ProfileContext);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -23,8 +21,8 @@ function PasswordChangeCallback({
       setPasswordUpdateState(true);
     }
 
-    history.replace('/', getLinkRedirectState());
-  }, [history, location, setPasswordUpdateState]);
+    navigate('/', { state: getLinkRedirectState() });
+  }, [location, setPasswordUpdateState, navigate]);
 
   return (
     <div className={styles.wrapper}>
@@ -33,4 +31,5 @@ function PasswordChangeCallback({
     </div>
   );
 }
+
 export default PasswordChangeCallback;

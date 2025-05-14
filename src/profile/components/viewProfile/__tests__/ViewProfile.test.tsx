@@ -1,7 +1,6 @@
 import React from 'react';
 import { act } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { getMyProfile } from '../../../../common/test/myProfileMocking';
 import { renderComponentWithMocksAndContexts } from '../../../../common/test/testingLibraryTools';
@@ -19,24 +18,29 @@ import TestLoginProvider from '../../../../common/test/TestLoginProvider';
 vi.mock('../../deleteProfile/DeleteProfile');
 vi.mock('../../downloadData/DownloadData');
 
-const history = createMemoryHistory({ initialEntries: ['/'] });
 describe('<ViewProfile /> ', () => {
-  const renderTestSuite = async (responses: MockedResponse[]) => {
+  const renderTestSuite = async (
+    responses: MockedResponse[],
+    initialEntries: string[] = ['/']
+  ) => {
     const responseProvider: ResponseProvider = () =>
       responses.shift() as MockedResponse;
     const renderResult = await renderComponentWithMocksAndContexts(
       responseProvider,
       <TestLoginProvider>
-        <Router history={history}>
-          <ViewProfile />
-        </Router>
-      </TestLoginProvider>
+        <Routes>
+          <Route path="/*" element={<ViewProfile />} />
+        </Routes>
+      </TestLoginProvider>,
+      initialEntries
     );
     await renderResult.fetch();
     await renderResult.waitForIsComplete();
     return renderResult;
   };
+
   const t = i18n.getFixedT('fi');
+
   it('renders profileInformation when route is "/" ', async () => {
     const responses: MockedResponse[] = [
       { profileData: getMyProfile().myProfile as ProfileData },
@@ -50,6 +54,7 @@ describe('<ViewProfile /> ', () => {
       ).not.toThrow();
     });
   });
+
   it('renders serviceConnections when route is "/connected-services" ', async () => {
     const responses: MockedResponse[] = [
       {
@@ -57,9 +62,10 @@ describe('<ViewProfile /> ', () => {
       },
     ];
 
-    history.replace('/connected-services');
     await act(async () => {
-      const { waitForElement, getByText } = await renderTestSuite(responses);
+      const { waitForElement, getByText } = await renderTestSuite(responses, [
+        '/connected-services',
+      ]);
       await waitForElement({ testId: 'service-connections-explanation' });
       expect(() =>
         getByText(String(t('serviceConnections.explanation')))

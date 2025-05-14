@@ -18,18 +18,17 @@ function DeleteFailureList(
         <>
           <Trans
             i18nKey="deleteProfileModal.deleteServiceFromPage"
-            components={{
-              linkToServices: (
-                <Link
-                  href={'/connected-services'}
-                  size="M"
-                  data-testid="delete-profile-service-connections-page-link"
-                >
-                  {''}
-                </Link>
-              ),
-              linkToServicesText: t('nav.services'),
-            }}
+            values={{ linkToServicesText: t('nav.services') }}
+            components={[
+              <Link
+                key="linkToServices"
+                href={'/connected-services'}
+                size="M"
+                data-testid="delete-profile-service-connections-page-link"
+              >
+                {''}
+              </Link>,
+            ]}
           />
           <ul data-testid="delete-profile-success-list">
             {successful.map(serviceTitle => (

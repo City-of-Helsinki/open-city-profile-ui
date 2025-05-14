@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useMemo, useRef } from 'react';
 
 import {
@@ -253,7 +253,7 @@ export function useInternalRedirect(
   redirect: (path: string) => boolean;
 } {
   const currentRedirectPath = useRef<string | undefined>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const isRouteMatch = (path?: string) => (path ? matchUrls(path) : false);
   return useMemo(() => {
     const reset = () => (currentRedirectPath.current = undefined);
@@ -261,7 +261,7 @@ export function useInternalRedirect(
       if (currentRedirectPath.current || isRouteMatch(path)) {
         return false;
       }
-      history.push(path);
+      navigate(path);
       currentRedirectPath.current = path;
       return true;
     };
@@ -291,7 +291,7 @@ export function useInternalRedirect(
       reset,
       redirect,
     };
-  }, [controller, history]);
+  }, [controller, navigate]);
 }
 
 export function didFailedActionRedirect(action: Action) {
