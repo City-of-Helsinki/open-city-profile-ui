@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { ContentSource } from 'hds-react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 import { Mock } from 'vitest';
 
 import CookieConsentPage from '../CookieConsentPage';
@@ -32,7 +32,7 @@ describe('CookieConsentPage', () => {
   const renderComponent = () =>
     render(
       <TestLoginProvider>
-        <MemoryRouter>
+        <MemoryRouter initialEntries={['/']}>
           <CookieConsentPage />
         </MemoryRouter>
       </TestLoginProvider>
