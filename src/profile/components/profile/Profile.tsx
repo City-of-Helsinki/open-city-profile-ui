@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import { Button, Notification } from 'hds-react';
 
 import PageLayout from '../../../common/pageLayout/PageLayout';

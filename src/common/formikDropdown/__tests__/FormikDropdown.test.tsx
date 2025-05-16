@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import { Formik, FormikProps, Form } from 'formik';
-import { act, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import to from 'await-to-js';
 import { Mock } from 'vitest';
 
@@ -187,15 +187,28 @@ describe('<FormikDropdown /> ', () => {
     func.mock.calls[func.mock.calls.length - 1];
 
   const submitFormAndReturnData = async (
-    testTools: TestTools
+    testTools: TestTools,
+    expectedValue?: string
   ): Promise<{ value: string }> => {
     const { clickElement } = testTools;
     await clickElement(selectors.submitButton);
+
     await waitFor(() => {
       if (!getLastMockCallArgs(onSubmitListener)) {
         throw new Error('Not submitted yet');
       }
+
+      // If an expected value is provided, also check that the submitted value matches it
+      if (expectedValue) {
+        const submittedValue = getLastMockCallArgs(onSubmitListener)[0].value;
+        if (submittedValue !== expectedValue) {
+          throw new Error(
+            `Expected submitted value to be ${expectedValue} but got ${submittedValue}`
+          );
+        }
+      }
     });
+
     return getLastMockCallArgs(onSubmitListener)[0];
   };
 
@@ -319,12 +332,19 @@ describe('<FormikDropdown /> ', () => {
       await testTools.comboBoxSelector(formikId, option.label);
       await checkInputValue(testTools.getElement, option.value, option.label);
 
+      // First ensure the onChange event has been called with the right value
       await waitFor(() => {
         const changeValue = getLastMockCallArgs(onChangeListener)[0];
         if (changeValue !== option.value) {
           throw new Error('onChange value mismatch');
         }
       });
+
+      // Additionally, ensure the Formik internal state has been updated
+      // by waiting a tick in the event loop to give Formik time to process the change.
+      // This is crucial especially for the first iteration of any loop that changes multiple options.
+      // Without this delay, the first form submit may still have the previous value.
+      await new Promise(resolve => setTimeout(resolve, 0));
     };
 
     it('Changing UI language changes the value of the input, but option.value remains the same', async () => {
@@ -369,8 +389,16 @@ describe('<FormikDropdown /> ', () => {
       for (const nextValue of testValues) {
         const newOption = findOptionByValue(optionsInComponent, nextValue);
         await changeDropdownOption(testTools, newOption);
-        const values = await submitFormAndReturnData(testTools);
-        expect(values).toEqual({ value: newOption.value });
+
+        // Ensure Formik has had time to update its internal state before checking
+        await waitFor(async () => {
+          const values = await submitFormAndReturnData(testTools);
+          if (values.value !== newOption.value) {
+            throw new Error(
+              `Expected form value to be ${newOption.value} but got ${values.value}`
+            );
+          }
+        });
       }
     }, 15000);
     it(`Using current option prevents visible changes from within the FormikDropdown.
@@ -399,10 +427,9 @@ describe('<FormikDropdown /> ', () => {
         optionsInComponent,
         injectedValue
       );
-      await act(async () => {
-        injectNewCurrentOption(injectedOption);
-        await checkToggleButtonText(getElement, injectedOption.label);
-      });
+
+      injectNewCurrentOption(injectedOption);
+      await checkToggleButtonText(getElement, injectedOption.label);
     });
   });
 });

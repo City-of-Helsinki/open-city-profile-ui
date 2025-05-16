@@ -55,7 +55,11 @@ export default function mockWindowLocation(): MockedWindowLocationActions {
   return {
     restore: () => {
       if (oldWindowLocation) {
-        globalWin.location = oldWindowLocation;
+        Reflect.defineProperty(globalWin, 'location', {
+          configurable: true,
+          value: oldWindowLocation,
+          writable: true,
+        });
       }
       oldWindowLocation = undefined;
     },

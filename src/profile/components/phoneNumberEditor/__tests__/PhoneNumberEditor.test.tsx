@@ -1,5 +1,4 @@
 import React from 'react';
-import { act } from '@testing-library/react';
 
 import {
   cloneProfileAndProvideManipulationFunctions,
@@ -280,139 +279,121 @@ describe('<PhoneNumberEditor /> ', () => {
       .getProfile();
 
   it("renders user's phone number - also in edit mode. Add button is not shown when phone number exists.", async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      expect(phoneNodes).toHaveLength(2);
-      const testSuite = {
-        testTools,
-        formData: usedPhoneNode,
-        ...commonTestProps,
-      };
-      await testDataIsRendered(testSuite);
-      checkAddButton(testSuite, false);
-    });
+    const testTools = await initTests();
+    expect(phoneNodes).toHaveLength(2);
+    const testSuite = {
+      testTools,
+      formData: usedPhoneNode,
+      ...commonTestProps,
+    };
+    await testDataIsRendered(testSuite);
+    checkAddButton(testSuite, false);
   });
 
   it(`sends updated data and returns to view mode when saved.
     Shows save notifications.
     Focus is returned to edit button`, async () => {
-    await act(async () => {
-      const testTools = await initTests();
+    const testTools = await initTests();
 
-      await testEditingItem({
-        testTools,
-        formData: newNumberAsPhoneValue,
-        assumedResponse: getUpdatedProfile(newNumberAsPhoneValue),
-        sentDataPicker: variables =>
-          (variables.input.profile.updatePhones as DataSource[])[0],
-        ...commonTestProps,
-      });
+    await testEditingItem({
+      testTools,
+      formData: newNumberAsPhoneValue,
+      assumedResponse: getUpdatedProfile(newNumberAsPhoneValue),
+      sentDataPicker: variables =>
+        (variables.input.profile.updatePhones as DataSource[])[0],
+      ...commonTestProps,
     });
   });
 
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testEditingItemFailsAndCancelResets({
-        testTools,
-        formData: newNumberAsPhoneValue,
-        initialValues: usedPhoneNode,
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testEditingItemFailsAndCancelResets({
+      testTools,
+      formData: newNumberAsPhoneValue,
+      initialValues: usedPhoneNode,
+      ...commonTestProps,
     });
   });
 
   it('invalid values are indicated and setting a valid value removes error', async () => {
-    await act(async () => {
-      const testTools = await initTests();
+    const testTools = await initTests();
 
-      const testRuns: ValidationTest[] = inputFields.map(prop => ({
-        prop,
-        value: invalidFormValues[prop],
-        inputSelector: getFieldValueSelector(prop, true),
-        errorSelector: { id: `${dataType}-0-${prop}-error` },
-      }));
+    const testRuns: ValidationTest[] = inputFields.map(prop => ({
+      prop,
+      value: invalidFormValues[prop],
+      inputSelector: getFieldValueSelector(prop, true),
+      errorSelector: { id: `${dataType}-0-${prop}-error` },
+    }));
 
-      await testInvalidValues(
-        {
-          testTools,
-          formData: validNumberAsPhoneValue,
-          initialValues: initialProfile,
-          ...commonTestProps,
-        },
-        testRuns
-      );
-    });
+    await testInvalidValues(
+      {
+        testTools,
+        formData: validNumberAsPhoneValue,
+        initialValues: initialProfile,
+        ...commonTestProps,
+      },
+      testRuns
+    );
   });
 
   it(`When there is no phonenumber, the add button is rendered and an number can be added.
       Add button is not shown after it has been clicked and number is saved.`, async () => {
-    await act(async () => {
-      const testTools = await initTests(profileWithoutPhones);
-      await testAddingItem({
-        testTools,
-        formData: validNumberAsPhoneValue,
-        assumedResponse: getProfileWithPhone(validNumberAsPhoneValue),
-        sentDataPicker: variables =>
-          ((variables.input.profile.addPhones as unknown) as DataSource[])[0],
-        ...commonTestProps,
-      });
+    const testTools = await initTests(profileWithoutPhones);
+    await testAddingItem({
+      testTools,
+      formData: validNumberAsPhoneValue,
+      assumedResponse: getProfileWithPhone(validNumberAsPhoneValue),
+      sentDataPicker: variables =>
+        ((variables.input.profile.addPhones as unknown) as DataSource[])[0],
+      ...commonTestProps,
     });
   });
 
   it(`When removing an phonenumber, a confirmation modal is shown.
       Remove error is handled and shown.
       When removal is complete, add button is shown and a text about no phones.`, async () => {
-    await act(async () => {
-      const testTools = await initTests(
-        getProfileWithPhone(validNumberAsPhoneValue)
-      );
-      await testRemovingItem({
-        testTools,
-        assumedResponse: profileWithoutPhones,
-        ...commonTestProps,
-      });
+    const testTools = await initTests(
+      getProfileWithPhone(validNumberAsPhoneValue)
+    );
+    await testRemovingItem({
+      testTools,
+      assumedResponse: profileWithoutPhones,
+      ...commonTestProps,
     });
   });
 
   it(`When a new number is cancelled, nothing is saved and
       add button is shown and a text about no phone numbers.
       Focus is returned to add button`, async () => {
-    await act(async () => {
-      const testTools = await initTests(profileWithoutPhones);
-      await testAddingItemWithCancel(
-        {
-          testTools,
-          formData: validNumberAsPhoneValue,
-          ...commonTestProps,
-        },
-        true
-      );
-    });
+    const testTools = await initTests(profileWithoutPhones);
+    await testAddingItemWithCancel(
+      {
+        testTools,
+        formData: validNumberAsPhoneValue,
+        ...commonTestProps,
+      },
+      true
+    );
   });
 
   it('When user saves without making changes, data is not sent, but save success is shown.', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testUnchangedDataIsNotSent({
-        testTools,
-        formData: usedPhoneNode,
-        initialValues: usedPhoneNode,
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testUnchangedDataIsNotSent({
+      testTools,
+      formData: usedPhoneNode,
+      initialValues: usedPhoneNode,
+      ...commonTestProps,
     });
   });
 
   it('When saving fails twice, the second one does result in save success, because data did not change.', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testDoubleFailing({
-        testTools,
-        formData: newNumberAsPhoneValue,
-        initialValues: usedPhoneNode,
-        assumedResponse: getUpdatedProfile(newNumberAsPhoneValue),
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testDoubleFailing({
+      testTools,
+      formData: newNumberAsPhoneValue,
+      initialValues: usedPhoneNode,
+      assumedResponse: getUpdatedProfile(newNumberAsPhoneValue),
+      ...commonTestProps,
     });
   });
 });

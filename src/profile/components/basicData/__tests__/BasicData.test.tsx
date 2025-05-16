@@ -1,5 +1,4 @@
 import React from 'react';
-import { act } from '@testing-library/react';
 
 import {
   cloneProfileAndProvideManipulationFunctions,
@@ -133,92 +132,82 @@ describe('<BasicData /> ', () => {
   };
 
   it("renders user's names - also in edit mode", async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testDataIsRendered({
-        testTools,
-        formData: originalData,
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testDataIsRendered({
+      testTools,
+      formData: originalData,
+      ...commonTestProps,
     });
   });
 
   it('sends new data and returns to view mode when saved', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testEditingItem({
-        testTools,
-        formData: basicData,
-        assumedResponse: getUpdatedProfile(basicData),
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testEditingItem({
+      testTools,
+      formData: basicData,
+      assumedResponse: getUpdatedProfile(basicData),
+      ...commonTestProps,
     });
   });
 
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testEditingItemFailsAndCancelResets({
-        testTools,
-        formData: basicData,
-        initialValues: initialProfile,
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testEditingItemFailsAndCancelResets({
+      testTools,
+      formData: basicData,
+      initialValues: initialProfile,
+      ...commonTestProps,
     });
   });
 
   it('invalid values are indicated and setting a valid value removes error', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      const formFields = getFormFields(basicDataType);
-      const testRuns: ValidationTest[] = [
-        {
-          prop: 'firstName',
-          value: '',
-          inputSelector: { id: 'basic-data-firstName' },
-          errorSelector: {
-            id: 'basic-data-firstName-error',
-          },
+    const testTools = await initTests();
+    const formFields = getFormFields(basicDataType);
+    const testRuns: ValidationTest[] = [
+      {
+        prop: 'firstName',
+        value: '',
+        inputSelector: { id: 'basic-data-firstName' },
+        errorSelector: {
+          id: 'basic-data-firstName-error',
         },
-        {
-          prop: 'lastName',
-          value: '',
-          inputSelector: { id: 'basic-data-lastName' },
-          errorSelector: {
-            id: 'basic-data-lastName-error',
-          },
+      },
+      {
+        prop: 'lastName',
+        value: '',
+        inputSelector: { id: 'basic-data-lastName' },
+        errorSelector: {
+          id: 'basic-data-lastName-error',
         },
-        {
-          prop: 'nickname',
-          value: String('a').repeat((formFields.nickname.max as number) + 1),
-          inputSelector: { id: 'basic-data-nickname' },
-          errorSelector: {
-            id: 'basic-data-nickname-error',
-          },
+      },
+      {
+        prop: 'nickname',
+        value: String('a').repeat((formFields.nickname.max as number) + 1),
+        inputSelector: { id: 'basic-data-nickname' },
+        errorSelector: {
+          id: 'basic-data-nickname-error',
         },
-      ];
-      await testInvalidValues(
-        {
-          testTools,
-          formData: basicData,
-          initialValues: initialProfile,
-          ...commonTestProps,
-        },
-        testRuns
-      );
-    });
+      },
+    ];
+    await testInvalidValues(
+      {
+        testTools,
+        formData: basicData,
+        initialValues: initialProfile,
+        ...commonTestProps,
+      },
+      testRuns
+    );
   });
 
   it('empty value should have aria-hidden true in parent', async () => {
-    await act(async () => {
-      const testTools = await initTests({ ...initialProfile, nickname: '' });
-      const { findByTestId } = testTools;
+    const testTools = await initTests({ ...initialProfile, nickname: '' });
+    const { findByTestId } = testTools;
 
-      expect(
-        (
-          await findByTestId(`${basicDataType}-nickname-label`)
-        ).parentElement?.getAttribute('aria-hidden')
-      ).toEqual('true');
-    });
+    expect(
+      (
+        await findByTestId(`${basicDataType}-nickname-label`)
+      ).parentElement?.getAttribute('aria-hidden')
+    ).toEqual('true');
   });
 });

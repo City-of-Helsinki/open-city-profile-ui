@@ -1,16 +1,12 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import {
   fireEvent,
   RenderResult,
   waitFor,
   cleanup,
-} from '@testing-library/react';
-import {
   RenderHookResult,
-  cleanup as cleanupHooks,
-} from '@testing-library/react-hooks';
+} from '@testing-library/react';
 import { GraphQLError } from 'graphql';
-import to from 'await-to-js';
 
 import { resetApolloMocks, ResponseProvider } from './MockApolloClientProvider';
 import { AnyObject } from '../../graphql/typings';
@@ -25,11 +21,7 @@ export type ElementSelector = {
   label?: string;
 };
 
-export type RenderHookResultsChildren = {
-  children: React.ReactNodeArray;
-};
-
-export type WaitForElementAndValueProps = {
+type WaitForElementAndValueProps = {
   selector: ElementSelector;
   value: string;
 };
@@ -77,7 +69,6 @@ export type TestTools = RenderResult & {
 
 export const cleanComponentMocks = (): void => {
   cleanup();
-  cleanupHooks();
   resetApolloMocks();
 };
 
@@ -238,27 +229,27 @@ export const renderComponentWithMocksAndContexts = async (
       },
       { timeout: 150 }
     );
-    return Promise.resolve(value);
+    return value;
   };
 
   const clickElement: TestTools['clickElement'] = async selector => {
-    const button = getElement(selector);
+    const button = getElement(selector) as HTMLElement;
     await waitFor(() => {
-      fireEvent.click(button as Element);
+      fireEvent.click(button);
     });
-    return Promise.resolve(button);
+    return button;
   };
 
   const keydownEnterElement: TestTools['keydownEnterElement'] = async selector => {
-    const button = getElement(selector);
+    const button = getElement(selector) as HTMLElement;
 
     await waitFor(() => {
-      fireEvent.keyDown(button as Element, {
+      fireEvent.keyDown(button, {
         key: 'Enter',
         charCode: 13,
       });
     });
-    return Promise.resolve(button);
+    return button;
   };
 
   const isDisabled: TestTools['isDisabled'] = element =>
@@ -383,14 +374,15 @@ export const createResultPropertyTracker = <T>({
   renderHookResult,
   valuePicker,
 }: {
-  renderHookResult: RenderHookResult<RenderHookResultsChildren, T>;
+  renderHookResult: RenderHookResult<React.PropsWithChildren<object>, T>;
   valuePicker: (props: T) => string | undefined | AnyObject;
 }): [() => Promise<void>] => {
-  const currentPicker = (): T => renderHookResult.result.current;
+  const currentPicker = (): PropsWithChildren<object> =>
+    renderHookResult.result.current;
   const waitForChange = () => {
-    const initialValue = valuePicker(currentPicker());
+    const initialValue = valuePicker(currentPicker() as T);
     return waitFor(() => {
-      const newValue = valuePicker(currentPicker());
+      const newValue = valuePicker(currentPicker() as T);
       if (newValue === initialValue) {
         throw new Error('waiting...');
       }
@@ -424,17 +416,22 @@ export const createDomHelpersWithTesting = (
   click: (target: HTMLElement) => Promise<void>;
 } => ({
   findByTestId: async (testId: string): Promise<HTMLElement | null> => {
-    const [, el] = await to(renderResult.findByTestId(testId));
-    return Promise.resolve(el || null);
+    try {
+      const el = await renderResult.findByTestId(testId);
+      return el;
+    } catch (error) {
+      // Handle error as needed - in this case, return null
+      return null;
+    }
   },
   findById: async (id: string): Promise<HTMLElement | null> => {
     const el = renderResult.baseElement.querySelector(`#${id}`);
-    return Promise.resolve((el as HTMLElement) || null);
+    return (el as HTMLElement) || null;
   },
   click: async (target: HTMLElement) => {
     expect(!!target).toBeTruthy();
     await waitFor(() => {
-      fireEvent.click(target as Element);
+      fireEvent.click(target);
     });
     Promise.resolve();
   },

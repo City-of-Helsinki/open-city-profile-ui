@@ -233,20 +233,16 @@ describe('usePageLoadFocusSetter.ts', () => {
       Tabindex is not set if element can be focused without it.
       In this test it is a button element.
       `, async () => {
-      await act(async () => {
-        await navigateAndCheckFocus(className);
-        const element = screen.getByTestId(getElementTestId(className));
-        expect(element.getAttribute('tabindex')).toBeNull();
-      });
+      await navigateAndCheckFocus(className);
+      const element = screen.getByTestId(getElementTestId(className));
+      expect(element.getAttribute('tabindex')).toBeNull();
     });
     it(`Targeted element can defined with a selector.
       Tabindex="-1" is added to a non-focusable element
       In this test it is a div element.`, async () => {
-      await act(async () => {
-        await navigateAndCheckFocus(selectorDefined);
-        const element = screen.getByTestId(getElementTestId(selectorDefined));
-        expect(element.getAttribute('tabindex')).toBe('-1');
-      });
+      await navigateAndCheckFocus(selectorDefined);
+      const element = screen.getByTestId(getElementTestId(selectorDefined));
+      expect(element.getAttribute('tabindex')).toBe('-1');
     });
   });
 
@@ -254,25 +250,19 @@ describe('usePageLoadFocusSetter.ts', () => {
     it(`if history has no internal page load.
         History is initialized with a route.
         Route is not changed.`, async () => {
-      await act(async () => {
-        await navigateAndCheckFocus('', [`/${focusableH1}`], false);
-        const element = screen.getByTestId(getElementTestId(focusableH1));
-        // check the focusable element was rendered
-        expect(element).not.toBeNull();
-      });
+      await navigateAndCheckFocus('', [`/${focusableH1}`], false);
+      const element = screen.getByTestId(getElementTestId(focusableH1));
+      // check the focusable element was rendered
+      expect(element).not.toBeNull();
     });
     it('when there is no element to target', async () => {
-      await act(async () => {
-        await navigateAndCheckFocus(noFocusableElement, undefined, false);
-      });
+      await navigateAndCheckFocus(noFocusableElement, undefined, false);
     });
     it('when hook is disabled', async () => {
-      await act(async () => {
-        await navigateAndCheckFocus(disabledFocus, undefined, false);
-        const element = screen.getByTestId(getElementTestId(disabledFocus));
-        // check the focusable element was rendered
-        expect(element).not.toBeNull();
-      });
+      await navigateAndCheckFocus(disabledFocus, undefined, false);
+      const element = screen.getByTestId(getElementTestId(disabledFocus));
+      // check the focusable element was rendered
+      expect(element).not.toBeNull();
     });
   });
 });

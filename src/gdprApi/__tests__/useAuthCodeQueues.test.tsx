@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import React, { useState, act } from 'react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 
 import useAuthCodeQueues, {
   AuthCodeQueuesProps,
@@ -291,37 +291,36 @@ describe('useAuthCodeQueues', () => {
         runningStatus: runningStatuses.idle,
         nextPhase: nextPhases.start,
       });
-      await act(async () => {
-        start();
 
-        await waitFor(() => {
-          expect(getFunctionResults().isLoading).toBeTruthy();
-          expect(
-            isActionTriggered(getServiceConnectionsAction.type)
-          ).toBeTruthy();
-        });
+      start();
 
-        completeActionExecutor(getServiceConnectionsAction.type);
-        await waitFor(() => {
-          expect(isActionTriggered(getGdprQueryScopesAction.type)).toBeTruthy();
-        });
-        completeActionExecutor(getGdprQueryScopesAction.type);
-        await waitFor(() => {
-          expect(getFunctionResults().hasError).toBeTruthy();
-          expect(
-            isActionCompleted(getServiceConnectionsAction.type)
-          ).toBeTruthy();
-          expect(getFunctionResults().isLoading).toBeFalsy();
-        });
-        expect(getState()).toMatchObject({
-          runningStatus: runningStatuses.error,
-          nextPhase: nextPhases.restart,
-        });
-        expect(getFunctionResults()).toMatchObject({
-          ...hookFunctionResultsAsFalse,
-          hasError: true,
-          shouldRestart: true,
-        });
+      await waitFor(() => {
+        expect(getFunctionResults().isLoading).toBeTruthy();
+        expect(
+          isActionTriggered(getServiceConnectionsAction.type)
+        ).toBeTruthy();
+      });
+
+      completeActionExecutor(getServiceConnectionsAction.type);
+      await waitFor(() => {
+        expect(isActionTriggered(getGdprQueryScopesAction.type)).toBeTruthy();
+      });
+      completeActionExecutor(getGdprQueryScopesAction.type);
+      await waitFor(() => {
+        expect(getFunctionResults().hasError).toBeTruthy();
+        expect(
+          isActionCompleted(getServiceConnectionsAction.type)
+        ).toBeTruthy();
+        expect(getFunctionResults().isLoading).toBeFalsy();
+      });
+      expect(getState()).toMatchObject({
+        runningStatus: runningStatuses.error,
+        nextPhase: nextPhases.restart,
+      });
+      expect(getFunctionResults()).toMatchObject({
+        ...hookFunctionResultsAsFalse,
+        hasError: true,
+        shouldRestart: true,
       });
     });
   });
@@ -547,7 +546,10 @@ describe('useAuthCodeQueues', () => {
         actionType: ActionType,
         nextActionType?: ActionType
       ) => {
-        expect(isActionTriggered(actionType)).toBeTruthy();
+        await waitFor(() => {
+          expect(isActionTriggered(actionType)).toBeTruthy();
+        });
+
         expect(getState()).toMatchObject({
           lastActionType: actionType,
           lastLogType: actionLogTypes.started,
@@ -571,15 +573,14 @@ describe('useAuthCodeQueues', () => {
       await act(async () => {
         start();
       });
-      await act(async () => {
-        await checkCurrentActionAndManuallyCompleteIt(
-          getServiceConnectionsAction.type,
-          getGdprQueryScopesAction.type
-        );
-        expect(getState()).toMatchObject({
-          runningStatus: runningStatuses.running,
-          nextPhase: nextPhases.waitForAction,
-        });
+
+      await checkCurrentActionAndManuallyCompleteIt(
+        getServiceConnectionsAction.type,
+        getGdprQueryScopesAction.type
+      );
+      expect(getState()).toMatchObject({
+        runningStatus: runningStatuses.running,
+        nextPhase: nextPhases.waitForAction,
       });
 
       expect(getFunctionResults()).toMatchObject({
@@ -666,6 +667,9 @@ describe('useAuthCodeQueues', () => {
         defaultRedirectorActionType
       );
 
+      await act(async () => {
+        // Empty act to let things settle
+      });
       expect(getState()).toMatchObject({
         runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForInternalRedirect,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { act, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 
 import {
   renderComponentWithMocksAndContexts,
@@ -108,103 +108,86 @@ describe('<ServiceConnection /> ', () => {
 
   it(`Shows the service title and the accordion can be expanded.
       Expanding shows service connection info and a remove button.`, async () => {
-    await act(async () => {
-      const { clickElement, getByText, waitForElement } = await initTests();
-      expect(
-        getByText(defaultServiceConnectionData.title as string)
-      ).toBeDefined();
-      expect(
-        getByText(defaultServiceConnectionData.description as string)
-      ).toBeDefined();
-      await clickElement(getExpandableSelector(defaultServiceConnectionData));
-      await waitForElement(
-        getDeleteButtonSelector(defaultServiceConnectionData)
-      );
-      await waitForElement(
-        getServiceInformationSelector(defaultServiceConnectionData)
-      );
-    });
+    const { clickElement, getByText, waitForElement } = await initTests();
+    expect(
+      getByText(defaultServiceConnectionData.title as string)
+    ).toBeDefined();
+    expect(
+      getByText(defaultServiceConnectionData.description as string)
+    ).toBeDefined();
+    await clickElement(getExpandableSelector(defaultServiceConnectionData));
+    await waitForElement(getDeleteButtonSelector(defaultServiceConnectionData));
+    await waitForElement(
+      getServiceInformationSelector(defaultServiceConnectionData)
+    );
   });
   it(`If "isActive"-prop is true, the accordion is initially open and delete button and data are visible`, async () => {
-    await act(async () => {
-      const { waitForElement } = await initTests(
-        defaultServiceConnectionData,
-        true
-      );
+    const { waitForElement } = await initTests(
+      defaultServiceConnectionData,
+      true
+    );
 
-      await waitForElement(
-        getDeleteButtonSelector(defaultServiceConnectionData)
-      );
-      await waitForElement(
-        getServiceInformationSelector(defaultServiceConnectionData)
-      );
-    });
+    await waitForElement(getDeleteButtonSelector(defaultServiceConnectionData));
+    await waitForElement(
+      getServiceInformationSelector(defaultServiceConnectionData)
+    );
   });
   it(`Clicking secondary close button should close accordion and focus on primary button`, async () => {
-    await act(async () => {
-      const { clickElement, waitForElement, getElement } = await initTests(
-        defaultServiceConnectionData,
-        true
-      );
+    const { clickElement, waitForElement, getElement } = await initTests(
+      defaultServiceConnectionData,
+      true
+    );
 
-      await waitForElement(
-        getServiceInformationSelector(defaultServiceConnectionData)
-      );
-      await waitForElement(
-        getSecondaryExpandableSelector(defaultServiceConnectionData)
-      );
+    await waitForElement(
+      getServiceInformationSelector(defaultServiceConnectionData)
+    );
+    await waitForElement(
+      getSecondaryExpandableSelector(defaultServiceConnectionData)
+    );
 
-      await clickElement(
-        getSecondaryExpandableSelector(defaultServiceConnectionData)
-      );
+    await clickElement(
+      getSecondaryExpandableSelector(defaultServiceConnectionData)
+    );
 
-      await waitFor(async () => {
-        expect(
-          getElement(getExpandableSelector(defaultServiceConnectionData))
-        ).toHaveFocus();
-      });
+    await waitFor(async () => {
+      expect(
+        getElement(getExpandableSelector(defaultServiceConnectionData))
+      ).toHaveFocus();
     });
   });
 
   it(`Keydown on secondary close button should close accordion and focus on primary button`, async () => {
-    await act(async () => {
-      const {
-        keydownEnterElement,
-        waitForElement,
-        getElement,
-      } = await initTests(defaultServiceConnectionData, true);
+    const { keydownEnterElement, waitForElement, getElement } = await initTests(
+      defaultServiceConnectionData,
+      true
+    );
 
-      await waitForElement(
-        getServiceInformationSelector(defaultServiceConnectionData)
-      );
-      await waitForElement(
-        getSecondaryExpandableSelector(defaultServiceConnectionData)
-      );
+    await waitForElement(
+      getServiceInformationSelector(defaultServiceConnectionData)
+    );
+    await waitForElement(
+      getSecondaryExpandableSelector(defaultServiceConnectionData)
+    );
 
-      await keydownEnterElement(
-        getSecondaryExpandableSelector(defaultServiceConnectionData)
-      );
+    await keydownEnterElement(
+      getSecondaryExpandableSelector(defaultServiceConnectionData)
+    );
 
-      await waitFor(async () => {
-        expect(
-          getElement(getExpandableSelector(defaultServiceConnectionData))
-        ).toHaveFocus();
-      });
+    await waitFor(async () => {
+      expect(
+        getElement(getExpandableSelector(defaultServiceConnectionData))
+      ).toHaveFocus();
     });
   });
   it(`Clicking the remove button calls the onDeletion() with service data`, async () => {
-    await act(async () => {
-      const { clickElement } = await initTests();
+    const { clickElement } = await initTests();
 
-      await clickElement(getExpandableSelector(defaultServiceConnectionData));
-      await waitFor(async () => {
-        await clickElement(
-          getDeleteButtonSelector(defaultServiceConnectionData)
-        );
-      });
-      await waitFor(async () => {
-        expect(onDeleteTracker).toHaveBeenCalledTimes(1);
-      });
+    await clickElement(getExpandableSelector(defaultServiceConnectionData));
+    await waitFor(async () => {
+      await clickElement(getDeleteButtonSelector(defaultServiceConnectionData));
+    });
+    await waitFor(async () => {
+      expect(onDeleteTracker).toHaveBeenCalledTimes(1);
     });
   });
 });

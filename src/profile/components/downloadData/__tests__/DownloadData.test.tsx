@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 
 import {
   renderComponentWithMocksAndContexts,
@@ -75,17 +75,16 @@ describe('<DownloadData /> ', () => {
 
   it(`Clicking the button disables it, changes its text and starts the queue.`, async () => {
     initTestQueue(getScenarioWhichGoesFromStartToAuthRedirectAutomatically());
-    await act(async () => {
-      const { clickElement, getElement, isDisabled } = await initTests();
-      await clickElement(submitButton);
 
-      await waitFor(() => {
-        const button = getElement(submitButton) as HTMLElement;
-        if (!isDisabled(button)) {
-          throw new Error('NOT DISABLED');
-        }
-        expect(button.textContent).toBe(t('loading'));
-      });
+    const { clickElement, getElement, isDisabled } = await initTests();
+    await clickElement(submitButton);
+
+    await waitFor(() => {
+      const button = getElement(submitButton) as HTMLElement;
+      if (!isDisabled(button)) {
+        throw new Error('NOT DISABLED');
+      }
+      expect(button.textContent).toBe(t('loading'));
     });
   });
 
@@ -102,11 +101,10 @@ describe('<DownloadData /> ', () => {
         ],
       })
     );
-    await act(async () => {
-      const { clickElement, waitForElement } = await initTests();
-      await clickElement(submitButton);
-      await waitForElement(errorNotification);
-    });
+
+    const { clickElement, waitForElement } = await initTests();
+    await clickElement(submitButton);
+    await waitForElement(errorNotification);
   });
 
   it(`When insufficient loa, an error is shown.`, async () => {
@@ -122,10 +120,9 @@ describe('<DownloadData /> ', () => {
         ],
       })
     );
-    await act(async () => {
-      const { clickElement, waitForElement } = await initTests();
-      await clickElement(submitButton);
-      await waitForElement(insufficientLoaErrorNotification);
-    });
+
+    const { clickElement, waitForElement } = await initTests();
+    await clickElement(submitButton);
+    await waitForElement(insufficientLoaErrorNotification);
   });
 });

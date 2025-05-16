@@ -5,7 +5,7 @@ import { ProfileContext } from '../../profile/context/ProfileContext';
 function RenderChildrenWhenDataIsComplete({
   children,
 }: {
-  children: React.ReactElement | React.ReactNodeArray;
+  children: React.ReactElement | React.ReactNode[];
 }): React.ReactElement | null {
   const { isComplete } = useContext(ProfileContext);
   if (!isComplete) {

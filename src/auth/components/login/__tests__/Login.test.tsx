@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 
 import TestLoginProvider from '../../../../common/test/TestLoginProvider';
 import Login from '../Login';
@@ -8,7 +8,7 @@ import Login from '../Login';
 const renderComponent = () =>
   render(
     <TestLoginProvider>
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/']}>
         <Login />
       </MemoryRouter>
     </TestLoginProvider>

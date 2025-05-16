@@ -1,5 +1,4 @@
 import React from 'react';
-import { act } from '@testing-library/react';
 import { useOidcClient } from 'hds-react';
 import { Mock } from 'vitest';
 
@@ -156,31 +155,27 @@ describe('<EmailEditor /> ', () => {
     .getProfile();
 
   it("renders user's email - also in edit mode", async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      const testSuite = {
-        testTools,
-        formData: getDataFromInitialProfile(0),
-        ...commonTestProps,
-      };
-      await testDataIsRendered(testSuite);
-    });
+    const testTools = await initTests();
+    const testSuite = {
+      testTools,
+      formData: getDataFromInitialProfile(0),
+      ...commonTestProps,
+    };
+    await testDataIsRendered(testSuite);
   });
 
   it('sends new data and returns to view mode when saved and shows only save notifications', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testEditingItem({
-        testTools,
-        formData: validEmailValue,
-        assumedResponse: getUpdatedProfile(validEmailValue),
-        sentDataPicker: variables =>
-          (variables.input.profile.updateEmails as DataSource[])[0],
-        ...commonTestProps,
-      });
-      // "verify email" notification should not be rendered with current amr
-      expect(() => testTools.getElement(verifyEmailSelector)).toThrow();
+    const testTools = await initTests();
+    await testEditingItem({
+      testTools,
+      formData: validEmailValue,
+      assumedResponse: getUpdatedProfile(validEmailValue),
+      sentDataPicker: variables =>
+        (variables.input.profile.updateEmails as DataSource[])[0],
+      ...commonTestProps,
     });
+    // "verify email" notification should not be rendered with current amr
+    expect(() => testTools.getElement(verifyEmailSelector)).toThrow();
   });
 
   it("will render email verification information when user's amr is tunnistusSuomifiAMR", async () => {
@@ -196,98 +191,86 @@ describe('<EmailEditor /> ', () => {
     const { getAmr } = useOidcClient();
     (getAmr as Mock).mockReturnValue([tunnistusSuomifiAMR]); // Change mock return value
 
-    await act(async () => {
-      const testTools = await initTests();
-      await testEditingItem({
-        testTools,
-        formData: validEmailValue,
-        assumedResponse: getUpdatedProfile(validEmailValue),
-        submitProps: {
-          waitForAfterSaveNotification: {
-            selector: verifyEmailSelector,
-            value: t('profileInformation.verifyEmailText'),
-          },
+    const testTools = await initTests();
+    await testEditingItem({
+      testTools,
+      formData: validEmailValue,
+      assumedResponse: getUpdatedProfile(validEmailValue),
+      submitProps: {
+        waitForAfterSaveNotification: {
+          selector: verifyEmailSelector,
+          value: t('profileInformation.verifyEmailText'),
         },
-        sentDataPicker: variables =>
-          (variables.input.profile.updateEmails as DataSource[])[0],
-        ...commonTestProps,
-      });
+      },
+      sentDataPicker: variables =>
+        (variables.input.profile.updateEmails as DataSource[])[0],
+      ...commonTestProps,
     });
   });
 
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testEditingItemFailsAndCancelResets({
-        testTools,
-        formData: validEmailValue,
-        initialValues: getDataFromInitialProfile(0),
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testEditingItemFailsAndCancelResets({
+      testTools,
+      formData: validEmailValue,
+      initialValues: getDataFromInitialProfile(0),
+      ...commonTestProps,
     });
   });
 
   it('saving unchanged email does not send requests or show verify email notification', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testUnchangedDataIsNotSent({
-        testTools,
-        formData: getDataFromInitialProfile(0),
-        initialValues: initialProfile,
-        ...commonTestProps,
-      });
-      // "verify email" notification should not be rendered when email is not actually saved
-      expect(() => testTools.getElement(verifyEmailSelector)).toThrow();
+    const testTools = await initTests();
+    await testUnchangedDataIsNotSent({
+      testTools,
+      formData: getDataFromInitialProfile(0),
+      initialValues: initialProfile,
+      ...commonTestProps,
     });
+    // "verify email" notification should not be rendered when email is not actually saved
+    expect(() => testTools.getElement(verifyEmailSelector)).toThrow();
   });
 
   it('invalid values are indicated and setting a valid value removes error', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      const testRuns: ValidationTest[] = [
-        {
-          prop: 'email',
-          value: invalidEmailValue.email,
-          inputSelector,
-          errorSelector,
-        },
-      ];
-      await testInvalidValues(
-        {
-          testTools,
-          initialValues: initialProfile,
-          formData: validEmailValue,
-          ...commonTestProps,
-        },
-        testRuns
-      );
-    });
+    const testTools = await initTests();
+    const testRuns: ValidationTest[] = [
+      {
+        prop: 'email',
+        value: invalidEmailValue.email,
+        inputSelector,
+        errorSelector,
+      },
+    ];
+    await testInvalidValues(
+      {
+        testTools,
+        initialValues: initialProfile,
+        formData: validEmailValue,
+        ...commonTestProps,
+      },
+      testRuns
+    );
   });
 
   it(`When there is no email, an add button is rendered and email can be added
       Add button is not shown after it has been clicked and email is saved.`, async () => {
-    await act(async () => {
-      const testTools = await initTests(profileWithoutEmails);
-      await testAddingItem({
-        ...commonTestProps,
-        testTools,
-        formData: validEmailValue,
-        assumedResponse: profileWithEmail,
-        sentDataPicker: variables =>
-          ((variables.input.profile.addEmails as unknown) as DataSource[])[0],
-      });
+    const testTools = await initTests(profileWithoutEmails);
+    await testAddingItem({
+      ...commonTestProps,
+      testTools,
+      formData: validEmailValue,
+      assumedResponse: profileWithEmail,
+      sentDataPicker: variables =>
+        ((variables.input.profile.addEmails as unknown) as DataSource[])[0],
     });
   });
 
   it('When saving fails twice, the second one does result in save success, because data did not change.', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testDoubleFailing({
-        testTools,
-        formData: validEmailValue,
-        assumedResponse: getUpdatedProfile(validEmailValue),
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testDoubleFailing({
+      testTools,
+      formData: validEmailValue,
+      assumedResponse: getUpdatedProfile(validEmailValue),
+      ...commonTestProps,
     });
   });
 });

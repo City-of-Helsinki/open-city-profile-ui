@@ -1,5 +1,4 @@
 import React from 'react';
-import { act } from '@testing-library/react';
 import countries from 'i18n-iso-countries';
 
 import {
@@ -261,153 +260,128 @@ describe('<AddressEditor /> ', () => {
   const profileWithAddress = getProfileWithAddress(validAddressValues);
 
   it("renders user's addresses - also in edit mode. Add button is not shown when address exists.", async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      const testSuite = {
-        testTools,
-        formData: usedAddressNode,
-        ...commonTestProps,
-      };
-      await testDataIsRendered(testSuite);
-      checkAddButton(testSuite, false);
-      verifyTitleAndDescription(testTools, 'unverifiedUserWithOneAddress');
-    });
+    const testTools = await initTests();
+    const testSuite = {
+      testTools,
+      formData: usedAddressNode,
+      ...commonTestProps,
+    };
+    await testDataIsRendered(testSuite);
+    checkAddButton(testSuite, false);
+    verifyTitleAndDescription(testTools, 'unverifiedUserWithOneAddress');
   });
 
   it('sends new data and returns to view mode when saved', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testEditingItem({
-        testTools,
-        formData: newAddressValues,
-        assumedResponse: getUpdatedProfile(newAddressValues),
-        sentDataPicker: variables =>
-          (variables.input.profile.updateAddresses as DataSource[])[0],
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testEditingItem({
+      testTools,
+      formData: newAddressValues,
+      assumedResponse: getUpdatedProfile(newAddressValues),
+      sentDataPicker: variables =>
+        (variables.input.profile.updateAddresses as DataSource[])[0],
+      ...commonTestProps,
     });
   });
 
   it('on send error shows error notification and stays in edit mode. Cancel-button resets data', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testEditingItemFailsAndCancelResets({
-        testTools,
-        formData: newAddressValues,
-        initialValues: usedAddressNode,
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testEditingItemFailsAndCancelResets({
+      testTools,
+      formData: newAddressValues,
+      initialValues: usedAddressNode,
+      ...commonTestProps,
     });
   });
 
   it('When saving fails twice, the second one does result in save success, because data did not change.', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testDoubleFailing({
-        testTools,
-        formData: newAddressValues,
-        initialValues: usedAddressNode,
-        assumedResponse: getUpdatedProfile(newAddressValues),
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testDoubleFailing({
+      testTools,
+      formData: newAddressValues,
+      initialValues: usedAddressNode,
+      assumedResponse: getUpdatedProfile(newAddressValues),
+      ...commonTestProps,
     });
   });
   it('When user saves without making changes, data is not sent, but save success is shown.', async () => {
-    await act(async () => {
-      const testTools = await initTests();
-      await testUnchangedDataIsNotSent({
-        testTools,
-        formData: usedAddressNode,
-        initialValues: usedAddressNode,
-        ...commonTestProps,
-      });
+    const testTools = await initTests();
+    await testUnchangedDataIsNotSent({
+      testTools,
+      formData: usedAddressNode,
+      initialValues: usedAddressNode,
+      ...commonTestProps,
     });
   });
 
   it('invalid values are indicated and setting a valid value removes error', async () => {
-    await act(async () => {
-      const testTools = await initTests();
+    const testTools = await initTests();
 
-      const testRuns: ValidationTest[] = fields.map(prop => ({
-        prop,
-        value: invalidAddressValues[prop],
-        inputSelector: getFieldValueSelector(prop, true),
-        errorSelector: { id: `${dataType}-0-${prop}-error` },
-      }));
+    const testRuns: ValidationTest[] = fields.map(prop => ({
+      prop,
+      value: invalidAddressValues[prop],
+      inputSelector: getFieldValueSelector(prop, true),
+      errorSelector: { id: `${dataType}-0-${prop}-error` },
+    }));
 
-      await testInvalidValues(
-        {
-          testTools,
-          formData: usedAddressNode,
-          initialValues: initialProfile,
-          ...commonTestProps,
-        },
-        testRuns
-      );
-    });
+    await testInvalidValues(
+      {
+        testTools,
+        formData: usedAddressNode,
+        initialValues: initialProfile,
+        ...commonTestProps,
+      },
+      testRuns
+    );
   });
 
   it(`When there is no address, the add button is rendered and an address can be added.
       Add button is not shown after it has been clicked and address is saved.`, async () => {
-    await act(async () => {
-      const testTools = await initTests(profileWithoutAddresses);
-      verifyTitleAndDescription(testTools, 'unverifiedUserWithNoAddress');
-      await testAddingItem({
-        testTools,
-        formData: validAddressValues,
-        assumedResponse: profileWithAddress,
-        sentDataPicker: variables =>
-          ((variables.input.profile
-            .addAddresses as unknown) as DataSource[])[0],
-        ...commonTestProps,
-      });
-      verifyTitleAndDescription(testTools, 'unverifiedUserWithOneAddress');
+    const testTools = await initTests(profileWithoutAddresses);
+    verifyTitleAndDescription(testTools, 'unverifiedUserWithNoAddress');
+    await testAddingItem({
+      testTools,
+      formData: validAddressValues,
+      assumedResponse: profileWithAddress,
+      sentDataPicker: variables =>
+        ((variables.input.profile.addAddresses as unknown) as DataSource[])[0],
+      ...commonTestProps,
     });
+    verifyTitleAndDescription(testTools, 'unverifiedUserWithOneAddress');
   });
 
   it(`When removing an address, a confirmation modal is shown.
       Remove error is handled and shown.
       When removal is complete, add button is shown and a text about no addresses.`, async () => {
-    await act(async () => {
-      const testTools = await initTests(profileWithAddress);
-      await testRemovingItem({
-        testTools,
-        assumedResponse: profileWithoutAddresses,
-        ...commonTestProps,
-      });
+    const testTools = await initTests(profileWithAddress);
+    await testRemovingItem({
+      testTools,
+      assumedResponse: profileWithoutAddresses,
+      ...commonTestProps,
     });
   });
   it(`When a new address is cancelled, nothing is saved and
       add button is shown and a text about no addresses.
       Focus is returned to add button`, async () => {
-    await act(async () => {
-      const testTools = await initTests(profileWithoutAddresses);
-      await testAddingItemWithCancel(
-        {
-          testTools,
-          formData: validAddressValues,
-          ...commonTestProps,
-        },
-        false
-      );
-    });
+    const testTools = await initTests(profileWithoutAddresses);
+    await testAddingItemWithCancel(
+      {
+        testTools,
+        formData: validAddressValues,
+        ...commonTestProps,
+      },
+      false
+    );
   });
   it('When user is logged in with suomi.fi, there is one additional description and different title.', async () => {
-    await act(async () => {
-      const testTools = await initTestsWithVerifiedUser(
-        profileWithoutAddresses
-      );
-      const { clickElement } = testTools;
-      verifyTitleAndDescription(testTools, 'verifiedUserWithoutAddress');
-      await clickElement(commonTestProps.selectors.addButton);
-      // same title + text in edit mode
-      verifyTitleAndDescription(testTools, 'verifiedUserWithoutAddress');
-    });
+    const testTools = await initTestsWithVerifiedUser(profileWithoutAddresses);
+    const { clickElement } = testTools;
+    verifyTitleAndDescription(testTools, 'verifiedUserWithoutAddress');
+    await clickElement(commonTestProps.selectors.addButton);
+    // same title + text in edit mode
+    verifyTitleAndDescription(testTools, 'verifiedUserWithoutAddress');
   });
   it('If verified user has an addresses, title and description are different than without addresses.', async () => {
-    await act(async () => {
-      const testTools = await initTestsWithVerifiedUser(profileWithAddress);
-      verifyTitleAndDescription(testTools, 'verifiedUserWithAddress');
-    });
+    const testTools = await initTestsWithVerifiedUser(profileWithAddress);
+    verifyTitleAndDescription(testTools, 'verifiedUserWithAddress');
   });
 });
