@@ -1,5 +1,5 @@
 // useAuth.test.ts
-import React, { act } from 'react';
+import { act } from 'react';
 import { renderHook } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 import { useOidcClient } from 'hds-react';

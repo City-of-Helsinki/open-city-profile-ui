@@ -7,7 +7,6 @@ import {
   RenderHookResult,
 } from '@testing-library/react';
 import { GraphQLError } from 'graphql';
-import userEvent from '@testing-library/user-event';
 
 import { resetApolloMocks, ResponseProvider } from './MockApolloClientProvider';
 import { AnyObject } from '../../graphql/typings';
