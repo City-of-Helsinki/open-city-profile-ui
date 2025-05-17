@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.25.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.24.0...open-city-profile-ui-v1.25.0) (2025-05-17)
+
+
+### Features
+
+* Update to React 17 and react-router 6  HP-2747 ([#445](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/445)) ([0879b55](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/0879b5584c5ee759fe124760af57f0a5780f638a))
+
 ## [1.24.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.23.0...open-city-profile-ui-v1.24.0) (2025-05-06)
 
 
