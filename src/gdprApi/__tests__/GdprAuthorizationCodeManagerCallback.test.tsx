@@ -82,7 +82,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
     });
   });
 
-  it(`Queue is not resumed when next action is not resumable. 
+  it(`Queue is not resumed when next action is not resumable.
     User is redirected to the start or error page`, async () => {
     initTestQueue(
       getScenarioWhereNextPhaseIsResumeCallback({
