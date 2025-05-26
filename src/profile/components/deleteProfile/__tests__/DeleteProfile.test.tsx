@@ -169,7 +169,6 @@ describe('<DeleteProfile /> ', () => {
     const { clickElement, getElement, waitForElement } = await initTests();
     await clickElement(submitButton);
     await waitForElement(confirmButtonSelector);
-    // showComponent(false);
 
     // Properly wrap state update in act
     await act(() => {
@@ -180,7 +179,6 @@ describe('<DeleteProfile /> ', () => {
     await waitFor(() => {
       expect(() => getElement(submitButton)).toThrow();
     });
-    // showComponent(true);
 
     // Wrap the second state update in act
     await act(() => {

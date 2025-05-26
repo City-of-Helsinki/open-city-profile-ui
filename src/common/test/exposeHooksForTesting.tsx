@@ -117,29 +117,6 @@ export const exposeProfileContext = (
   };
 };
 
-/*
-export function exposeHookOld<T = unknown>(
-  responseProvider: ResponseProvider,
-  hookProvider: () => T,
-  waitForProfileData: boolean
-): RenderHookResult<PropsWithChildren<object>, T> {
-  const ChildWrapper = waitForProfileData
-    ? ProfileContextFetcher
-    : React.Fragment;
-  const wrapper = ({ children }: PropsWithChildren<object>) => (
-    <MockApolloClientProvider responseProvider={responseProvider}>
-      <ProfileProvider>
-        <ChildWrapper>{<>{children}</>}</ChildWrapper>
-      </ProfileProvider>
-    </MockApolloClientProvider>
-  );
-
-  const callback = () => hookProvider();
-
-  return renderHook(callback, { wrapper });
-}
-*/
-
 export function exposeHook<T = unknown>(
   responseProvider: ResponseProvider,
   hookProvider: () => T,
@@ -179,21 +156,6 @@ export function exposeHook<T = unknown>(
     unmount: hookResult.unmount,
   };
 }
-/*
-export const exposeProfileMutationsHookOld = (
-  responseProvider: ResponseProvider,
-  dataType: EditDataType
-): RenderHookResult<PropsWithChildren<object>, MutationReturnType> =>
-  exposeHook<MutationReturnType>(
-    responseProvider,
-    () =>
-      useProfileMutations({
-        dataType,
-      }),
-    true
-  );
-
-  */
 
 export const exposeProfileMutationsHook = (
   responseProvider: ResponseProvider,
