@@ -1,5 +1,4 @@
 import to from 'await-to-js';
-import FakeTimers from '@sinonjs/fake-timers';
 
 import {
   createRedirectorAndCatcherActionProps,
@@ -41,26 +40,27 @@ describe('redirectionHandlers.ts', () => {
 
   const resolvePath = `${expectedPath}?${createNextActionParams(catcher)}`;
   const rejectionPath = `${expectedPath}?${createFailedActionParams(catcher)}`;
-  let clock: ReturnType<typeof FakeTimers.install>;
+
   afterAll(() => {
     mockedWindowControls.restore();
   });
 
   beforeEach(() => {
-    clock = FakeTimers.install();
+    // Setup Vitest fake timers
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
     mockedWindowControls.reset();
     vi.restoreAllMocks();
     vi.resetAllMocks();
-    clock.uninstall();
+    vi.useRealTimers();
   });
 
   describe(`createRedirectorAndCatcherActionProps() creates an action that redirects and
             an action that catches the redirection.`, () => {
     describe(`redirector action`, () => {
-      it('sets the given path and catcher action type to the url. Result is path?next=action.type', async () => {
+      it('sets the given path and catcher action type to the url. Result is path?next=action.type', async () => {
         const { runner, getRedirectorAction } = initTests();
         const action = getRedirectorAction();
         const [, result] = ((await to(
@@ -97,9 +97,12 @@ describe('redirectionHandlers.ts', () => {
         const promise = waitAction.executor(waitAction, runner).catch(x => {
           err = x;
         });
-        await clock.tickAsync(rematchDelay + 1);
-        await clock.tickAsync(thirtySecondsInMs + 1);
+
+        // Use Vitest's timer functions instead of FakeTimers
+        await vi.advanceTimersByTimeAsync(rematchDelay + 1);
+        await vi.advanceTimersByTimeAsync(thirtySecondsInMs + 1);
         await promise;
+
         // err is typed, because of "used before defined error"
         expect(
           ((err as unknown) as Error).message.includes(rejectionPath)
@@ -115,9 +118,12 @@ describe('redirectionHandlers.ts', () => {
         const promise = waitAction.executor(waitAction, runner).catch(x => {
           err = x;
         });
-        await clock.tickAsync(rematchDelay + 1);
-        await clock.tickAsync(thirtySecondsInMs + 1);
+
+        // Use Vitest's timer functions instead of FakeTimers
+        await vi.advanceTimersByTimeAsync(rematchDelay + 1);
+        await vi.advanceTimersByTimeAsync(thirtySecondsInMs + 1);
         await promise;
+
         expect(
           ((err as unknown) as Error).message.includes(rejectionPath)
         ).toBeTruthy();
