@@ -46,7 +46,6 @@ describe('redirectionHandlers.ts', () => {
   });
 
   beforeEach(() => {
-    // Setup Vitest fake timers
     vi.useFakeTimers();
   });
 
@@ -98,7 +97,6 @@ describe('redirectionHandlers.ts', () => {
           err = x;
         });
 
-        // Use Vitest's timer functions instead of FakeTimers
         await vi.advanceTimersByTimeAsync(rematchDelay + 1);
         await vi.advanceTimersByTimeAsync(thirtySecondsInMs + 1);
         await promise;
@@ -119,7 +117,6 @@ describe('redirectionHandlers.ts', () => {
           err = x;
         });
 
-        // Use Vitest's timer functions instead of FakeTimers
         await vi.advanceTimersByTimeAsync(rematchDelay + 1);
         await vi.advanceTimersByTimeAsync(thirtySecondsInMs + 1);
         await promise;
