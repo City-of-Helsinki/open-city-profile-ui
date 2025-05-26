@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { act, waitFor } from '@testing-library/react';
+import React, { useState, act } from 'react';
+import { waitFor } from '@testing-library/react';
 
 import {
   renderComponentWithMocksAndContexts,
@@ -149,35 +149,50 @@ describe('<DeleteProfile /> ', () => {
     initTestQueue(
       getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
     );
-    await act(async () => {
-      const testTools = await initTests();
-      await proceedUIToDeletionConfimed(testTools);
-      await waitFor(() => {
-        expect(queryVariableTracker).toHaveBeenCalledTimes(1);
-      });
-      expect(queryVariableTracker).toHaveBeenCalledWith({
-        language: i18n.language.toUpperCase(),
-      });
-      expect(isActionTriggered(getServiceConnectionsAction.type)).toBeTruthy();
+
+    const testTools = await initTests();
+    await proceedUIToDeletionConfimed(testTools);
+    await waitFor(() => {
+      expect(queryVariableTracker).toHaveBeenCalledTimes(1);
     });
+    expect(queryVariableTracker).toHaveBeenCalledWith({
+      language: i18n.language.toUpperCase(),
+    });
+    expect(isActionTriggered(getServiceConnectionsAction.type)).toBeTruthy();
   });
 
   it(`UI won't get stuck on "loading" -state when re-rendered.`, async () => {
     initTestQueue(
       getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
     );
-    await act(async () => {
-      const { clickElement, getElement, waitForElement } = await initTests();
-      await clickElement(submitButton);
-      await waitForElement(confirmButtonSelector);
+
+    const { clickElement, getElement, waitForElement } = await initTests();
+    await clickElement(submitButton);
+    await waitForElement(confirmButtonSelector);
+
+    // Properly wrap state update in act
+    await act(() => {
       showComponent(false);
-      await waitFor(() => {
-        expect(() => getElement(submitButton)).toThrow();
-      });
-      showComponent(true);
-      await clickElement(submitButton);
-      await waitForElement(confirmButtonSelector);
+      return Promise.resolve(); // Give React time to process
     });
+
+    await waitFor(() => {
+      expect(() => getElement(submitButton)).toThrow();
+    });
+
+    // Wrap the second state update in act
+    await act(() => {
+      showComponent(true);
+      return Promise.resolve();
+    });
+
+    // Wait for component to be fully rendered before clicking
+    await waitFor(() => {
+      expect(() => getElement(submitButton)).not.toThrow();
+    });
+
+    await clickElement(submitButton);
+    await waitForElement(confirmButtonSelector);
   });
 
   it(`When service connection load fails, an error notification is shown with a reload button.
@@ -185,38 +200,34 @@ describe('<DeleteProfile /> ', () => {
     initTestQueue(
       getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
     );
-    await act(async () => {
-      const { clickElement, waitForElement } = await initTests(0);
-      await clickElement(submitButton);
-      await waitForElement(loadIndicator);
-      await waitForElement(reloadServiceConnectionsButtonSelector);
-      expect(isActionTriggered(getServiceConnectionsAction.type)).toBeFalsy();
-      await clickElement(reloadServiceConnectionsButtonSelector);
-      await waitForElement(confirmButtonSelector);
-      await clickElement(confirmButtonSelector);
-      expect(isActionTriggered(getServiceConnectionsAction.type)).toBeTruthy();
-    });
+
+    const { clickElement, waitForElement } = await initTests(0);
+    await clickElement(submitButton);
+    await waitForElement(loadIndicator);
+    await waitForElement(reloadServiceConnectionsButtonSelector);
+    expect(isActionTriggered(getServiceConnectionsAction.type)).toBeFalsy();
+    await clickElement(reloadServiceConnectionsButtonSelector);
+    await waitForElement(confirmButtonSelector);
+    await clickElement(confirmButtonSelector);
+    expect(isActionTriggered(getServiceConnectionsAction.type)).toBeTruthy();
   });
   it(`When deleting starts, an indicator is shown and browser is redirected.`, async () => {
     initTestQueue(
       getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
     );
-    await act(async () => {
-      const testTools = await initTests();
-      const { waitForElement } = testTools;
-      await proceedUIToDeletionConfimed(testTools);
 
-      await waitFor(() => {
-        expect(
-          isActionTriggered(getServiceConnectionsAction.type)
-        ).toBeTruthy();
-      });
-      await waitForElement(deletingProfileSelector);
-      await waitFor(() => {
-        expect(
-          isActionTriggered(keycloakAuthCodeRedirectionAction.type)
-        ).toBeTruthy();
-      });
+    const testTools = await initTests();
+    const { waitForElement } = testTools;
+    await proceedUIToDeletionConfimed(testTools);
+
+    await waitFor(() => {
+      expect(isActionTriggered(getServiceConnectionsAction.type)).toBeTruthy();
+    });
+    await waitForElement(deletingProfileSelector);
+    await waitFor(() => {
+      expect(
+        isActionTriggered(keycloakAuthCodeRedirectionAction.type)
+      ).toBeTruthy();
     });
   });
   it(`When deletion fails with unsuccessful and successful service deletions,
@@ -227,20 +238,18 @@ describe('<DeleteProfile /> ', () => {
         successful: ['Successful service'],
       },
     });
-    await act(async () => {
-      const testTools = await initTests(-1);
-      const { waitForElement } = testTools;
-      await waitForElement(failedServicesListSelector);
-      await waitForElement(serviceConnectionsPageLinkSelector);
-    });
+
+    const testTools = await initTests(-1);
+    const { waitForElement } = testTools;
+    await waitForElement(failedServicesListSelector);
+    await waitForElement(serviceConnectionsPageLinkSelector);
   });
   it(`When deletion returns a generic error, an error message is shown`, async () => {
     initQueueAndLocationForResume({ error: true });
-    await act(async () => {
-      const testTools = await initTests(1);
-      const { waitForElement } = testTools;
-      await waitForElement(errorDescriptionSelector);
-    });
+
+    const testTools = await initTests(1);
+    const { waitForElement } = testTools;
+    await waitForElement(errorDescriptionSelector);
   });
   it(`When deletion fails because of insufficient loa, error message is shown`, async () => {
     initQueueAndLocationForResume({
@@ -253,11 +262,9 @@ describe('<DeleteProfile /> ', () => {
       ],
     });
 
-    await act(async () => {
-      const testTools = await initTests(1);
-      const { waitForElement } = testTools;
+    const testTools = await initTests(1);
+    const { waitForElement } = testTools;
 
-      await waitForElement(errorLoaDescriptionSelector);
-    });
+    await waitForElement(errorLoaDescriptionSelector);
   });
 });

@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import React, { useContext, PropsWithChildren } from 'react';
+import { renderHook, RenderHookResult } from '@testing-library/react';
 import _ from 'lodash';
 
 import {
@@ -19,32 +19,15 @@ import { EditDataType } from '../../profile/helpers/editData';
 import ProfileContextFetcher from './ProfileContextFetcher';
 import { getErrorMessage } from './testingLibraryTools';
 
-export type ElementSelector = {
-  testId?: string;
-  text?: string;
-  valueSelector?: string;
-  id?: string;
-  querySelector?: string;
-  label?: string;
-};
-
-export type RenderHookResultsChildren = {
-  children: React.ReactNodeArray;
-};
-
-export type WaitForElementAndValueProps = {
-  selector: ElementSelector;
-  value: string;
-};
-
 export const exposeProfileContext = (
   responseProvider: ResponseProvider
-): RenderHookResult<RenderHookResultsChildren, ProfileContextData> & {
+): RenderHookResult<PropsWithChildren<object>, ProfileContextData> & {
+  result: { current: ProfileContextData }; // Structure to match old API
   waitForDataChange: () => Promise<ProfileContextData>;
   waitForUpdate: () => Promise<ProfileContextData>;
   waitForErrorChange: () => Promise<ProfileContextData>;
 } => {
-  const wrapper = ({ children }: RenderHookResultsChildren) => (
+  const wrapper = ({ children }: PropsWithChildren<object>) => (
     <MockApolloClientProvider responseProvider={responseProvider}>
       <ProfileProvider>{children}</ProfileProvider>
     </MockApolloClientProvider>
@@ -115,39 +98,76 @@ export const exposeProfileContext = (
     trackErrorChanges(newContextData);
     return newContextData;
   };
+
   const callback = () =>
     // eslint-disable-next-line react-hooks/rules-of-hooks
     tracker(useContext(ProfileContext));
 
-  const result = renderHook(callback, { wrapper });
-  return { ...result, waitForDataChange, waitForUpdate, waitForErrorChange };
+  // Modify how you handle the result to maintain compatibility
+  const hookResult = renderHook(callback, { wrapper });
+
+  // Return with structure matching the old API
+  return {
+    result: hookResult.result,
+    waitForDataChange,
+    waitForUpdate,
+    waitForErrorChange,
+    rerender: hookResult.rerender,
+    unmount: hookResult.unmount,
+  };
 };
 
 export function exposeHook<T = unknown>(
   responseProvider: ResponseProvider,
   hookProvider: () => T,
   waitForProfileData: boolean
-): RenderHookResult<RenderHookResultsChildren, T> {
+): {
+  result: {
+    current: T & { [key: string]: unknown }; // Allow any property to be accessed on current
+  };
+  rerender: (props?: unknown) => void;
+  unmount: () => void;
+  // The test explicitly looks for profileData from the context
+  waitForDataChange?: () => Promise<void>;
+} {
   const ChildWrapper = waitForProfileData
     ? ProfileContextFetcher
     : React.Fragment;
-  const wrapper = ({ children }: RenderHookResultsChildren) => (
+
+  const wrapper = ({ children }: PropsWithChildren<object>) => (
     <MockApolloClientProvider responseProvider={responseProvider}>
       <ProfileProvider>
-        <ChildWrapper>{children}</ChildWrapper>
+        <ChildWrapper>{<>{children}</>}</ChildWrapper>
       </ProfileProvider>
     </MockApolloClientProvider>
   );
 
   const callback = () => hookProvider();
 
-  return renderHook(callback, { wrapper });
+  // Store the renderHook result
+  const hookResult = renderHook(callback, { wrapper });
+
+  // Return with complete implementation
+  return {
+    result: (hookResult.result as unknown) as {
+      current: T & { [key: string]: unknown };
+    },
+    rerender: hookResult.rerender,
+    unmount: hookResult.unmount,
+  };
 }
 
 export const exposeProfileMutationsHook = (
   responseProvider: ResponseProvider,
   dataType: EditDataType
-): RenderHookResult<RenderHookResultsChildren, MutationReturnType> =>
+): {
+  result: {
+    current: MutationReturnType & { [key: string]: unknown }; // Allow any property to be accessed on current
+  };
+  rerender: (props?: unknown) => void;
+  unmount: () => void;
+  waitForDataChange?: () => Promise<void>;
+} =>
   exposeHook<MutationReturnType>(
     responseProvider,
     () =>

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import * as Sentry from '@sentry/react';
 
 import './index.css';
@@ -23,7 +23,8 @@ if (window._env_.REACT_APP_ENVIRONMENT) {
   });
 }
 
-ReactDOM.render(<BrowserApp />, document.getElementById('root'));
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+ReactDOM.createRoot(document.getElementById('root')!).render(<BrowserApp />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

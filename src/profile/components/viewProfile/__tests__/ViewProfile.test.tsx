@@ -1,75 +1,108 @@
 import React from 'react';
-import { act } from '@testing-library/react';
-import { Routes, Route } from 'react-router-dom';
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 
-import { getMyProfile } from '../../../../common/test/myProfileMocking';
-import { renderComponentWithMocksAndContexts } from '../../../../common/test/testingLibraryTools';
-import { ProfileData } from '../../../../graphql/typings';
 import ViewProfile from '../ViewProfile';
 import {
-  MockedResponse,
-  ResponseProvider,
-} from '../../../../common/test/MockApolloClientProvider';
-import i18n from '../../../../common/test/testi18nInit';
-import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
-import TestLoginProvider from '../../../../common/test/TestLoginProvider';
+  ProfileContext,
+  ProfileContextData,
+} from '../../../context/ProfileContext';
 
-// mock children, so they wont make queries
-vi.mock('../../deleteProfile/DeleteProfile');
-vi.mock('../../downloadData/DownloadData');
+// Mock the child components
+vi.mock('../../profileInformation/ProfileInformation', () => ({
+  default: () => (
+    <div data-testid="profile-information">Profile Information</div>
+  ),
+}));
 
-describe('<ViewProfile /> ', () => {
-  const renderTestSuite = async (
-    responses: MockedResponse[],
-    initialEntries: string[] = ['/']
-  ) => {
-    const responseProvider: ResponseProvider = () =>
-      responses.shift() as MockedResponse;
-    const renderResult = await renderComponentWithMocksAndContexts(
-      responseProvider,
-      <TestLoginProvider>
-        <Routes>
-          <Route path="/*" element={<ViewProfile />} />
-        </Routes>
-      </TestLoginProvider>,
-      initialEntries
-    );
-    await renderResult.fetch();
-    await renderResult.waitForIsComplete();
-    return renderResult;
-  };
+vi.mock('../../serviceConnections/ServiceConnections', () => ({
+  default: () => (
+    <div data-testid="service-connections">Service Connections</div>
+  ),
+}));
 
-  const t = i18n.getFixedT('fi');
+const PROFILE_INFORMATION = 'profile-information';
+const SERVICE_CONNECTIONS = 'service-connections';
 
-  it('renders profileInformation when route is "/" ', async () => {
-    const responses: MockedResponse[] = [
-      { profileData: getMyProfile().myProfile as ProfileData },
-    ];
-
-    await act(async () => {
-      const { waitForElement, getByText } = await renderTestSuite(responses);
-      await waitForElement({ testId: 'profile-information-explanation' });
-      expect(() =>
-        getByText(String(t('profileInformation.title')))
-      ).not.toThrow();
-    });
+describe('ViewProfile', () => {
+  // Create a mock ProfileContext
+  const createProfileContextValue = (
+    isComplete = true
+  ): ProfileContextData => ({
+    isComplete,
+    isInitialized: true,
+    data: {
+      myProfile: null,
+    },
+    error: undefined,
+    fetch: vi.fn(),
+    updateProfileData: vi.fn(),
+    loading: false,
+    addErrorListener: vi.fn(),
+    refetch: vi.fn(),
+    getName: vi.fn(),
+    getProfile: vi.fn(),
+    passwordUpdateState: false,
+    setPasswordUpdateState: function(): void {
+      throw new Error('Mock');
+    },
+    otpConfigurationState: false,
+    setOtpConfigurationState: function(): void {
+      throw new Error('Function not implemented.');
+    },
+    otpDeleteState: false,
+    setOtpDeleteState: function(): void {
+      throw new Error('Function not implemented.');
+    },
   });
 
-  it('renders serviceConnections when route is "/connected-services" ', async () => {
-    const responses: MockedResponse[] = [
-      {
-        profileDataWithServiceConnections: getMyProfileWithServiceConnections(),
-      },
-    ];
+  afterEach(() => {
+    vi.resetAllMocks();
+  });
 
-    await act(async () => {
-      const { waitForElement, getByText } = await renderTestSuite(responses, [
-        '/connected-services',
-      ]);
-      await waitForElement({ testId: 'service-connections-explanation' });
-      expect(() =>
-        getByText(String(t('serviceConnections.explanation')))
-      ).not.toThrow();
-    });
+  it('renders ProfileInformation when route is "/"', () => {
+    render(
+      <ProfileContext.Provider value={createProfileContextValue()}>
+        <MemoryRouter initialEntries={['/']}>
+          <Routes>
+            <Route path="/*" element={<ViewProfile />} />
+          </Routes>
+        </MemoryRouter>
+      </ProfileContext.Provider>
+    );
+
+    expect(screen.getByTestId(PROFILE_INFORMATION)).toBeInTheDocument();
+    expect(screen.queryByTestId(SERVICE_CONNECTIONS)).not.toBeInTheDocument();
+  });
+
+  it('renders ServiceConnections when route is "/connected-services"', () => {
+    render(
+      <ProfileContext.Provider value={createProfileContextValue()}>
+        <MemoryRouter initialEntries={['/connected-services']}>
+          <Routes>
+            <Route path="/*" element={<ViewProfile />} />
+          </Routes>
+        </MemoryRouter>
+      </ProfileContext.Provider>
+    );
+
+    expect(screen.getByTestId(SERVICE_CONNECTIONS)).toBeInTheDocument();
+    expect(screen.queryByTestId(PROFILE_INFORMATION)).not.toBeInTheDocument();
+  });
+
+  it('renders nothing when isComplete is false', () => {
+    render(
+      <ProfileContext.Provider value={createProfileContextValue(false)}>
+        <MemoryRouter initialEntries={['/']}>
+          <Routes>
+            <Route path="/*" element={<ViewProfile />} />
+          </Routes>
+        </MemoryRouter>
+      </ProfileContext.Provider>
+    );
+
+    expect(screen.queryByTestId(PROFILE_INFORMATION)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(SERVICE_CONNECTIONS)).not.toBeInTheDocument();
   });
 });

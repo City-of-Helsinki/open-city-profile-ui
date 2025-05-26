@@ -1,4 +1,4 @@
-import { act, cleanup, waitFor } from '@testing-library/react';
+import { cleanup, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
@@ -89,17 +89,15 @@ describe('<ServiceConnections />', () => {
   });
   describe('Loads and lists service connections', () => {
     it('should render all service connections. A load indicator is shown while loading', async () => {
-      await act(async () => {
-        const { getElement, waitForElement } = await renderTestSuite(
-          getDefaultResponse()
-        );
-        await waitForElement({ testId: 'load-indicator' });
-        await waitFor(() =>
-          serviceList.forEach(service => {
-            expect(getElement({ text: service.title as string })).toBeDefined();
-          })
-        );
-      });
+      const { getElement, waitForElement } = await renderTestSuite(
+        getDefaultResponse()
+      );
+      await waitForElement({ testId: 'load-indicator' });
+      await waitFor(() =>
+        serviceList.forEach(service => {
+          expect(getElement({ text: service.title as string })).toBeDefined();
+        })
+      );
     });
 
     it('should render specific text if there are no service connections', async () => {
@@ -109,25 +107,23 @@ describe('<ServiceConnections />', () => {
           profileDataWithServiceConnections: queryResultWithoutServiceConnections,
         },
       ];
-      await act(async () => {
-        const { getElement } = await renderTestSuite(responses);
-        await waitFor(() => {
-          expect(
-            getElement({ text: t('serviceConnections.empty') })
-          ).toBeDefined();
-        });
+
+      const { getElement } = await renderTestSuite(responses);
+      await waitFor(() => {
+        expect(
+          getElement({ text: t('serviceConnections.empty') })
+        ).toBeDefined();
       });
     });
 
     it('should send current language as a variable. Value must be in uppercase', async () => {
       const lang = 'af';
       i18n.language = lang;
-      await act(async () => {
-        const { waitForElement } = await renderTestSuite(getDefaultResponse());
-        await waitForElement({ text: serviceList[0].title as string });
-        expect(queryVariableTracker).toHaveBeenCalledWith({
-          language: lang.toUpperCase(),
-        });
+
+      const { waitForElement } = await renderTestSuite(getDefaultResponse());
+      await waitForElement({ text: serviceList[0].title as string });
+      expect(queryVariableTracker).toHaveBeenCalledWith({
+        language: lang.toUpperCase(),
       });
     });
 
@@ -139,61 +135,57 @@ describe('<ServiceConnections />', () => {
         ...getDefaultResponse(),
       ];
       const t = i18n.getFixedT('fi');
-      await act(async () => {
-        const {
-          getElement,
-          waitForElement,
-          clickElement,
-        } = await renderTestSuite(responses);
 
-        await waitForElement({ testId: 'service-connections-load-error' });
+      const {
+        getElement,
+        waitForElement,
+        clickElement,
+      } = await renderTestSuite(responses);
 
-        await clickElement({
-          querySelector:
-            '[data-testid="service-connections-load-error"] button',
-        });
+      await waitForElement({ testId: 'service-connections-load-error' });
 
-        await waitFor(() => {
-          expect(
-            getElement({ text: t('serviceConnections.title') })
-          ).toBeDefined();
-        });
+      await clickElement({
+        querySelector: '[data-testid="service-connections-load-error"] button',
+      });
+
+      await waitFor(() => {
+        expect(
+          getElement({ text: t('serviceConnections.title') })
+        ).toBeDefined();
       });
     });
 
     it('If a serviceConnection is found in the sessionStorage, it is auto opened', async () => {
       setServiceDataToStorage();
-      await act(async () => {
-        const { getElement, waitForElement } = await renderTestSuite(
-          getDefaultResponse()
-        );
-        await waitFor(() =>
-          serviceList.forEach(service => {
-            expect(getElement({ text: service.title as string })).toBeDefined();
-          })
-        );
-        await waitFor(async () => {
-          await waitForElement(getDeleteButtonSelector(serviceList[0]));
-        });
+
+      const { getElement, waitForElement } = await renderTestSuite(
+        getDefaultResponse()
+      );
+      await waitFor(() =>
+        serviceList.forEach(service => {
+          expect(getElement({ text: service.title as string })).toBeDefined();
+        })
+      );
+      await waitFor(async () => {
+        await waitForElement(getDeleteButtonSelector(serviceList[0]));
       });
     });
   });
   describe('Renders the ServiceConnectionsRemover when a delete button is clicked', () => {
     it('Modal is shown. It is removed when close button is clicked', async () => {
       setServiceDataToStorage();
-      await act(async () => {
-        const {
-          clickElement,
-          waitForElement,
-          waitForElementNotToExist,
-        } = await renderTestSuite(getDefaultResponse());
-        await waitFor(async () => {
-          await clickElement(getDeleteButtonSelector(serviceList[0]));
-        });
-        await waitForElement(getTestId('deleteVerificationText'));
-        await clickElement(getTestId('cancelButton'));
-        await waitForElementNotToExist(getTestId('cancelButton'));
+
+      const {
+        clickElement,
+        waitForElement,
+        waitForElementNotToExist,
+      } = await renderTestSuite(getDefaultResponse());
+      await waitFor(async () => {
+        await clickElement(getDeleteButtonSelector(serviceList[0]));
       });
+      await waitForElement(getTestId('deleteVerificationText'));
+      await clickElement(getTestId('cancelButton'));
+      await waitForElementNotToExist(getTestId('cancelButton'));
     });
   });
 });

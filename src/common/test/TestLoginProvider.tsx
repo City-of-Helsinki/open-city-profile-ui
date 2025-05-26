@@ -6,8 +6,8 @@ const providerProperties: LoginProviderProps = {
   debug: true,
 };
 
-const TestLoginProvider: React.FC = ({ children }) => (
-  <LoginProvider {...providerProperties}>{children}</LoginProvider>
-);
+const TestLoginProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => <LoginProvider {...providerProperties}>{children}</LoginProvider>;
 
 export default TestLoginProvider;

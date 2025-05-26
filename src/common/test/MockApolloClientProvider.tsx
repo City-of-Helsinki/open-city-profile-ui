@@ -130,7 +130,7 @@ export function MockApolloClientProvider({
   responseProvider,
   children,
 }: {
-  children: React.ReactElement | React.ReactNodeArray;
+  children: React.ReactElement | React.ReactNode[];
   responseProvider: ResponseProvider;
 }): React.ReactElement {
   fetchMock.mockIf(/.*\/graphql\/.*$/, async (req: Request) => {

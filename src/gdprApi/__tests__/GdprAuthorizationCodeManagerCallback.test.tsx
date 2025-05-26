@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 
 import {
   renderComponentWithMocksAndContexts,
@@ -20,7 +20,6 @@ import {
 import { keycloakAuthCodeParserAction } from '../actions/authCodeParser';
 import { keycloakAuthCodeCallbackUrlAction } from '../actions/authCodeCallbackUrlDetector';
 import { loadKeycloakConfigAction } from '../actions/loadKeycloakConfig';
-import { getMockCallArgs } from '../../common/test/mockHelper';
 import mockWindowLocation from '../../common/test/mockWindowLocation';
 
 const mockHistoryTracker = vi.fn();
@@ -76,17 +75,15 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
 
   it(`Queue is resumed - if possible`, async () => {
     initTestQueue(getScenarioWhereNextPhaseIsResumeCallback());
-    await act(async () => {
-      await initTests();
-      await waitFor(() => {
-        expect(
-          isActionTriggered(keycloakAuthCodeParserAction.type)
-        ).toBeTruthy();
-      });
+
+    await initTests();
+    await waitFor(() => {
+      expect(isActionTriggered(keycloakAuthCodeParserAction.type)).toBeTruthy();
     });
   });
 
-  it(`Queue is not resumed when next action is not resumable. User is redirected to the start or error page`, async () => {
+  it(`Queue is not resumed when next action is not resumable. 
+    User is redirected to the start or error page`, async () => {
     initTestQueue(
       getScenarioWhereNextPhaseIsResumeCallback({
         overrides: [
@@ -101,14 +98,13 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
         ],
       })
     );
-    await act(async () => {
-      await initTests();
-      await waitFor(() => {
-        expect(isActionTriggered(loadKeycloakConfigAction.type)).toBeFalsy();
-      });
-      await waitFor(() => {
-        expect(getRedirectPath().includes(`${startPagePath}?`)).toBeTruthy();
-      });
+
+    await initTests();
+    await waitFor(() => {
+      expect(isActionTriggered(loadKeycloakConfigAction.type)).toBeFalsy();
+    });
+    await waitFor(() => {
+      expect(getRedirectPath().includes(`${startPagePath}?`)).toBeTruthy();
     });
   });
 
@@ -124,16 +120,13 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
         ],
       })
     );
-    await act(async () => {
-      await initTests();
-      await waitFor(() => {
-        expect(
-          isActionTriggered(keycloakAuthCodeParserAction.type)
-        ).toBeTruthy();
-      });
-      expect(mockHistoryTracker).toHaveBeenCalled();
-      expect(getRedirectPath().includes(`${startPagePath}`)).toBeTruthy();
+
+    await initTests();
+    await waitFor(() => {
+      expect(isActionTriggered(keycloakAuthCodeParserAction.type)).toBeTruthy();
     });
+    expect(mockHistoryTracker).toHaveBeenCalled();
+    expect(getRedirectPath().includes(`${startPagePath}`)).toBeTruthy();
   });
   it(`If queue fails and failed action will not redirect, redirect to start page.`, async () => {
     initTestQueue(
@@ -149,15 +142,14 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
         ],
       })
     );
-    await act(async () => {
-      await initTests();
-      await waitFor(() => {
-        expect(
-          getRedirectPath().includes(
-            `${startPagePath}?error=${loadKeycloakConfigAction.type}`
-          )
-        ).toBeTruthy();
-      });
+
+    await initTests();
+    await waitFor(() => {
+      expect(
+        getRedirectPath().includes(
+          `${startPagePath}?error=${loadKeycloakConfigAction.type}`
+        )
+      ).toBeTruthy();
     });
   });
 });
