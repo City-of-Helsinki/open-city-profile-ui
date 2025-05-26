@@ -51,16 +51,9 @@ import getPhonesFromNode from '../getPhonesFromNode';
 type AddableDataType = Extract<EditDataType, 'addresses' | 'phones'>;
 
 describe('editData.ts ', () => {
-  const singleDataTypes: EditDataType[] = [
-    basicDataType,
-    additionalInformationType,
-    'emails',
-  ];
+  const singleDataTypes: EditDataType[] = [basicDataType, additionalInformationType, 'emails'];
   const addableDataTypes: AddableDataType[] = ['addresses', 'phones'];
-  const allDataTypes: EditDataType[] = [
-    ...singleDataTypes,
-    ...addableDataTypes,
-  ];
+  const allDataTypes: EditDataType[] = [...singleDataTypes, ...addableDataTypes];
   let myProfile: ProfileRoot;
   beforeEach(() => {
     myProfile = getMyProfile();
@@ -85,14 +78,8 @@ describe('editData.ts ', () => {
     return `${valueType}-${updateCounter}`;
   };
 
-  const createUniqueEditDataValue = (
-    target: EditData,
-    dataType: EditDataType
-  ): EditDataValue => {
-    const newValue = pickValue(
-      (target.value as unknown) as EditDataProfileSource,
-      dataType
-    ) as Mutable<EditDataValue>;
+  const createUniqueEditDataValue = (target: EditData, dataType: EditDataType): EditDataValue => {
+    const newValue = pickValue(target.value as unknown as EditDataProfileSource, dataType) as Mutable<EditDataValue>;
     if (dataType === 'emails') {
       (newValue as Mutable<EmailValue>).email = createNewValue(dataType);
     } else if (dataType === 'phones') {
@@ -100,22 +87,15 @@ describe('editData.ts ', () => {
     } else if (dataType === 'addresses') {
       (newValue as Mutable<AddressValue>).address = createNewValue(dataType);
     } else if (dataType === basicDataType) {
-      (newValue as Mutable<BasicDataValue>).firstName = createNewValue(
-        'firstName'
-      );
-      (newValue as Mutable<BasicDataValue>).lastName = createNewValue(
-        'lastName'
-      );
+      (newValue as Mutable<BasicDataValue>).firstName = createNewValue('firstName');
+      (newValue as Mutable<BasicDataValue>).lastName = createNewValue('lastName');
     } else if (dataType === additionalInformationType) {
-      (newValue as Mutable<
-        AdditionalInformationValue
-      >).language = createNewValue('language') as Language;
+      (newValue as Mutable<AdditionalInformationValue>).language = createNewValue('language') as Language;
     }
     return newValue;
   };
 
-  const pickItemIds = (itemList: (EditData | MultiItemProfileNode)[]) =>
-    itemList.map(item => item.id);
+  const pickItemIds = (itemList: (EditData | MultiItemProfileNode)[]) => itemList.map((item) => item.id);
 
   const createTestDataWithNewItem = (dataType: AddableDataType) => {
     const profileDataWithoutItems = {
@@ -138,46 +118,34 @@ describe('editData.ts ', () => {
   };
   const pickMultiItemFormValues = (
     formValues: FormValues | Partial<FormValues>,
-    dataType: EditDataType
+    dataType: EditDataType,
   ): MultiItemProfileNode[] =>
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     formValues[dataType] as MultiItemProfileNode[];
 
-  const getProfileWithOneNode = (
-    dataType: Extract<EditDataType, 'addresses' | 'phones' | 'emails'>
-  ): ProfileRoot => {
-    const profileManipulator = cloneProfileAndProvideManipulationFunctions(
-      myProfile.myProfile as ProfileData
-    );
+  const getProfileWithOneNode = (dataType: Extract<EditDataType, 'addresses' | 'phones' | 'emails'>): ProfileRoot => {
+    const profileManipulator = cloneProfileAndProvideManipulationFunctions(myProfile.myProfile as ProfileData);
     // remove all nodes after index 0
     getNodesByDataType(dataType, myProfile)
       .slice(1)
-      .forEach(node => {
+      .forEach((node) => {
         profileManipulator.remove(dataType, node);
       });
     const modifiedMyProfile = profileManipulator.getProfile();
-    expect(
-      getNodesByDataType(dataType, { myProfile: modifiedMyProfile })
-    ).toHaveLength(1);
+    expect(getNodesByDataType(dataType, { myProfile: modifiedMyProfile })).toHaveLength(1);
     return { myProfile: modifiedMyProfile };
   };
 
-  const getProfileWithNodes = (
-    dataType: Extract<EditDataType, 'addresses' | 'phones' | 'emails'>
-  ): ProfileRoot => {
-    const profileManipulator = cloneProfileAndProvideManipulationFunctions(
-      myProfile.myProfile as ProfileData
-    );
+  const getProfileWithNodes = (dataType: Extract<EditDataType, 'addresses' | 'phones' | 'emails'>): ProfileRoot => {
+    const profileManipulator = cloneProfileAndProvideManipulationFunctions(myProfile.myProfile as ProfileData);
 
     const modifiedMyProfile = profileManipulator.getProfile();
-    expect(
-      getNodesByDataType(dataType, { myProfile: modifiedMyProfile })
-    ).toHaveLength(2);
+    expect(getNodesByDataType(dataType, { myProfile: modifiedMyProfile })).toHaveLength(2);
     return { myProfile: modifiedMyProfile };
   };
 
-  allDataTypes.forEach(dataType => {
+  allDataTypes.forEach((dataType) => {
     it(`Picks correct data from myProfile when dataType is ${dataType}`, () => {
       const { getEditData } = createEditorForDataType(myProfile, dataType);
       const editDataList = getEditData();
@@ -246,10 +214,7 @@ describe('editData.ts ', () => {
     });
     it(`updateItemAndCreateSaveData clones and updates data 
     when dataType is ${dataType} and returns formValues`, () => {
-      const {
-        getEditData,
-        updateItemAndCreateSaveData,
-      } = createEditorForDataType(myProfile, dataType);
+      const { getEditData, updateItemAndCreateSaveData } = createEditorForDataType(myProfile, dataType);
       const editDataList = getEditData();
       const isMultiItem = isMultiItemDataType(dataType);
       editDataList.forEach((target, index) => {
@@ -258,9 +223,7 @@ describe('editData.ts ', () => {
         const newFormValues = updateItemAndCreateSaveData(target, newValue);
         const newEditDataList = getEditData();
         const newTarget = newEditDataList[index];
-        const newFormValue = isMultiItem
-          ? pickMultiItemFormValues(newFormValues, dataType)[index]
-          : newFormValues;
+        const newFormValue = isMultiItem ? pickMultiItemFormValues(newFormValues, dataType)[index] : newFormValues;
 
         // new value does not match old
         expect(newValue).not.toMatchObject(oldValue);
@@ -278,9 +241,7 @@ describe('editData.ts ', () => {
           expect((newFormValue as MultiItemProfileNode).id).toEqual(target.id);
           // node EmailType / AddressType / PhoneType must match editData type where is was stored
           expect(target.type).toBeDefined();
-          expect(
-            pickType(newFormValue as MultiItemProfileNode, dataType)
-          ).toEqual(target.type);
+          expect(pickType(newFormValue as MultiItemProfileNode, dataType)).toEqual(target.type);
         }
 
         // verify cloning is done: editing old data does not affect new data
@@ -292,17 +253,11 @@ describe('editData.ts ', () => {
         expect(target.saving).toEqual(undefined);
 
         // trying to edit an item that is being saved (item.saving !== undefined) will throw
-        expect(() =>
-          updateItemAndCreateSaveData(newTarget, newValue)
-        ).toThrow();
+        expect(() => updateItemAndCreateSaveData(newTarget, newValue)).toThrow();
       });
     });
     it(`updateData updates correct items when dataType is ${dataType}`, () => {
-      const {
-        getEditData,
-        updateItemAndCreateSaveData,
-        updateData,
-      } = createEditorForDataType(myProfile, dataType);
+      const { getEditData, updateItemAndCreateSaveData, updateData } = createEditorForDataType(myProfile, dataType);
       const editDataList = getEditData();
       editDataList.forEach((target, index) => {
         const newValue = createUniqueEditDataValue(target, dataType);
@@ -314,15 +269,11 @@ describe('editData.ts ', () => {
         const didChangeIsFalseWhenDataIsSame = updateData(myProfile);
         expect(didChangeIsFalseWhenDataIsSame).toBeFalsy();
 
-        const profileManipulator = cloneProfileAndProvideManipulationFunctions(
-          myProfile.myProfile as ProfileData
-        );
+        const profileManipulator = cloneProfileAndProvideManipulationFunctions(myProfile.myProfile as ProfileData);
         if (dataType === basicDataType) {
           profileManipulator.setBasicData(newValue as BasicDataValue);
         } else if (dataType === additionalInformationType) {
-          profileManipulator.setAdditionalInformation(
-            newValue as AdditionalInformationValue
-          );
+          profileManipulator.setAdditionalInformation(newValue as AdditionalInformationValue);
         } else {
           profileManipulator.edit(dataType, { ...newValue, id: target.id });
         }
@@ -342,7 +293,7 @@ describe('editData.ts ', () => {
       });
     });
   });
-  addableDataTypes.forEach(dataType => {
+  addableDataTypes.forEach((dataType) => {
     describe(`addItem `, () => {
       it(`creates new ${dataType} item with correct properties`, () => {
         const { newItem } = createTestDataWithNewItem(dataType);
@@ -362,17 +313,12 @@ describe('editData.ts ', () => {
         const updatedList = editor.getEditData();
         const updatedNewItem = updatedList[updatedList.length - 1];
         const itemsInFormValues = pickMultiItemFormValues(saveData, dataType);
-        const newNodeInFormValues =
-          itemsInFormValues[itemsInFormValues.length - 1];
+        const newNodeInFormValues = itemsInFormValues[itemsInFormValues.length - 1];
         expect(newNodeInFormValues.id).toEqual(newItem.id);
         expect(updatedNewItem.value).toMatchObject(newValue);
-        expect(pickValue(newNodeInFormValues, dataType)).toMatchObject(
-          newValue
-        );
+        expect(pickValue(newNodeInFormValues, dataType)).toMatchObject(newValue);
         expect(newItem.type).toBe(nodeTypeDefaultValue);
-        expect(pickType(newNodeInFormValues, dataType)).toBe(
-          nodeTypeDefaultValue
-        );
+        expect(pickType(newNodeInFormValues, dataType)).toBe(nodeTypeDefaultValue);
       });
       it(`creates new ${dataType} item and helper functions detect it correctly`, () => {
         const { newList, newItem } = createTestDataWithNewItem(dataType);
@@ -394,14 +340,10 @@ describe('editData.ts ', () => {
       });
       it(`updateData updates profile data with new item when dataType is ${dataType}. 
       New item does not exist after update`, () => {
-        const { editor, newItem, profileData } = createTestDataWithNewItem(
-          dataType
-        );
+        const { editor, newItem, profileData } = createTestDataWithNewItem(dataType);
         const newValue = createUniqueEditDataValue(newItem, dataType);
         editor.updateItemAndCreateSaveData(newItem, newValue);
-        const profileManipulator = cloneProfileAndProvideManipulationFunctions(
-          profileData
-        );
+        const profileManipulator = cloneProfileAndProvideManipulationFunctions(profileData);
         const newItemId = '999';
         profileManipulator.add(dataType, { ...newValue, id: newItemId });
         editor.updateData({
@@ -409,9 +351,7 @@ describe('editData.ts ', () => {
         });
         const updatedItems = editor.getEditData();
         expect(hasNewItem(updatedItems)).toBeFalsy();
-        expect(updatedItems[updatedItems.length - 1].value).toMatchObject(
-          newValue
-        );
+        expect(updatedItems[updatedItems.length - 1].value).toMatchObject(newValue);
         expect(updatedItems[updatedItems.length - 1].id).toEqual(newItemId);
         expect(pickItemIds(updatedItems)).toEqual([newItemId]);
       });
@@ -420,10 +360,7 @@ describe('editData.ts ', () => {
       it(`removing old ${dataType} item does not remove it until data is updated. 
       Old item removal returns formValues without the removed item. `, () => {
         const profileDataWithOneNode = getProfileWithOneNode(dataType);
-        const editor = createEditorForDataType(
-          profileDataWithOneNode,
-          dataType
-        );
+        const editor = createEditorForDataType(profileDataWithOneNode, dataType);
         const items = editor.getEditData();
         // there can be only one item
         const testIndex = 0;
@@ -441,7 +378,7 @@ describe('editData.ts ', () => {
         expect(saveData[dataType]).toHaveLength(0);
         // update editor without removed item
         const profileManipulator = cloneProfileAndProvideManipulationFunctions(
-          profileDataWithOneNode.myProfile as ProfileData
+          profileDataWithOneNode.myProfile as ProfileData,
         );
         profileManipulator.remove(dataType, removeItem);
         editor.updateData({
@@ -480,9 +417,7 @@ describe('editData.ts ', () => {
       it(`removes new ${dataType} item. 
       New item removal does not return new formValues but 'null'. 
       Item list is immediately updated.`, () => {
-        const { newItem, editor, newList } = createTestDataWithNewItem(
-          dataType
-        );
+        const { newItem, editor, newList } = createTestDataWithNewItem(dataType);
         const formValues = editor.removeItem(newItem);
         const listWithoutNew = editor.getEditData();
         expect(hasNewItem(listWithoutNew)).toBeFalsy();
@@ -491,9 +426,7 @@ describe('editData.ts ', () => {
       });
       it(`removing missing items throw`, () => {
         const { editor } = createTestDataWithNewItem(dataType);
-        expect(() =>
-          editor.removeItem({ id: 'this_wont_exist' } as EditData)
-        ).toThrow();
+        expect(() => editor.removeItem({ id: 'this_wont_exist' } as EditData)).toThrow();
       });
       it(`removing an item twice throws`, () => {
         const { editor } = createTestDataWithNewItem(dataType);
@@ -507,10 +440,7 @@ describe('editData.ts ', () => {
     describe(`Adding a second item to ${dataType} `, () => {
       it(`throws an error`, () => {
         const profileDataWithOneAddressNode = getProfileWithOneNode(dataType);
-        const { addItem } = createEditorForDataType(
-          profileDataWithOneAddressNode,
-          dataType
-        );
+        const { addItem } = createEditorForDataType(profileDataWithOneAddressNode, dataType);
         expect(() => addItem()).toThrow();
       });
     });
@@ -537,11 +467,7 @@ describe('editData.ts ', () => {
         expect(nullList).toBeNull();
         const updatedSource = { ...source, ...newValue };
         sources[0] = updatedSource;
-        const newList = updateItems(
-          editDataList,
-          sources,
-          dataType
-        ) as EditData[];
+        const newList = updateItems(editDataList, sources, dataType) as EditData[];
         expect(newList).toHaveLength(editDataList.length);
         const updatedItem = newList[0];
         // old item has not changed
@@ -560,11 +486,7 @@ describe('editData.ts ', () => {
         const nullList = updateItems(editDataList, sources, dataType);
         expect(nullList).toBeNull();
         source.primary = true;
-        const newList = updateItems(
-          editDataList,
-          sources,
-          dataType
-        ) as EditData[];
+        const newList = updateItems(editDataList, sources, dataType) as EditData[];
         expect(newList).toHaveLength(editDataList.length);
         const updatedItem = newList[0];
         // change saving so item will match updatedItem
@@ -585,10 +507,7 @@ describe('editData.ts ', () => {
       });
       it(`returns new, cloned data when primary changes. Previous and new primary have correct props.`, () => {
         const [oldPrimary, newPrimary] = editDataList;
-        const newEditDataList = setPrimary(
-          editDataList,
-          newPrimary
-        ) as EditData[];
+        const newEditDataList = setPrimary(editDataList, newPrimary) as EditData[];
 
         const [clonedOldPrimary, clonedNewPrimary] = newEditDataList;
         expect(oldPrimary.id).toEqual(clonedOldPrimary.id);
@@ -611,10 +530,7 @@ describe('editData.ts ', () => {
         // there is no function to clear current primary item
         // so clearing it by force
         (currentPrimary as Mutable<EditData>).primary = false;
-        const newEditDataList = setPrimary(
-          editDataList,
-          newPrimary
-        ) as EditData[];
+        const newEditDataList = setPrimary(editDataList, newPrimary) as EditData[];
         const [clonedOldPrimary, clonedNewPrimary] = newEditDataList;
         expect(currentPrimary.id).toEqual(clonedOldPrimary.id);
         expect(newPrimary.id).toEqual(clonedNewPrimary.id);
@@ -624,9 +540,7 @@ describe('editData.ts ', () => {
         expect(clonedNewPrimary.saving).toEqual(saveTypeSetPrimary);
       });
       it(`throws an error when item is not found or setting a saving item as primary`, () => {
-        expect(() =>
-          setPrimary(editDataList, { id: 'notfound' } as EditData)
-        ).toThrow();
+        expect(() => setPrimary(editDataList, { id: 'notfound' } as EditData)).toThrow();
         const [oldPrimary, newPrimary] = editDataList;
         editorFunctions.setPrimary(newPrimary);
         expect(() => editorFunctions.setPrimary(newPrimary)).toThrow();
@@ -638,11 +552,8 @@ describe('editData.ts ', () => {
       const nonPrimaryItem1 = { primary: false, id: '2' } as EditData;
       const nonPrimaryItem2 = { primary: false, id: '3' } as EditData;
 
-      const moveAndVerify = (
-        nonArrangedList: EditData[],
-        assumedResult: EditData[]
-      ): EditData[] => {
-        const currentPrimary = nonArrangedList.filter(item => item.primary)[0];
+      const moveAndVerify = (nonArrangedList: EditData[], assumedResult: EditData[]): EditData[] => {
+        const currentPrimary = nonArrangedList.filter((item) => item.primary)[0];
         const newOrder = movePrimaryAsFirst(nonArrangedList);
         expect(newOrder).toEqual(assumedResult);
         if (currentPrimary) {
@@ -654,17 +565,11 @@ describe('editData.ts ', () => {
       };
 
       it(`returns re-arranged array where primary item is at index 0 and other items are in old order`, () => {
-        moveAndVerify(
-          [nonPrimaryItem1, nonPrimaryItem2, primaryItem],
-          [primaryItem, nonPrimaryItem1, nonPrimaryItem2]
-        );
-        moveAndVerify(
-          [primaryItem, nonPrimaryItem1, nonPrimaryItem2],
-          [primaryItem, nonPrimaryItem1, nonPrimaryItem2]
-        );
+        moveAndVerify([nonPrimaryItem1, nonPrimaryItem2, primaryItem], [primaryItem, nonPrimaryItem1, nonPrimaryItem2]);
+        moveAndVerify([primaryItem, nonPrimaryItem1, nonPrimaryItem2], [primaryItem, nonPrimaryItem1, nonPrimaryItem2]);
         moveAndVerify(
           [nonPrimaryItem1, nonPrimaryItem2, nonPrimaryItem1, nonPrimaryItem2],
-          [nonPrimaryItem1, nonPrimaryItem2, nonPrimaryItem1, nonPrimaryItem2]
+          [nonPrimaryItem1, nonPrimaryItem2, nonPrimaryItem1, nonPrimaryItem2],
         );
         moveAndVerify([], []);
       });
@@ -674,10 +579,7 @@ describe('editData.ts ', () => {
     it(`returns new list when new profile data has no items.'`, () => {
       const emaillessProfileData: ProfileRoot = getMyProfile();
       (emaillessProfileData.myProfile as Mutable<ProfileData>).emails = null;
-      const { updateData, getEditData } = createEditorForDataType(
-        myProfile,
-        'emails'
-      );
+      const { updateData, getEditData } = createEditorForDataType(myProfile, 'emails');
       updateData(emaillessProfileData);
       expect(getEditData()).toHaveLength(0);
     });
@@ -686,11 +588,10 @@ describe('editData.ts ', () => {
   describe(`updateAfterSavingError `, () => {
     it(`resets item.saving to undefined and updates editData list with a clone`, () => {
       const newValue: EditDataValue = { phone: '555-5555' };
-      const {
-        getEditData,
-        updateAfterSavingError,
-        updateItemAndCreateSaveData,
-      } = createEditorForDataType(myProfile, 'phones');
+      const { getEditData, updateAfterSavingError, updateItemAndCreateSaveData } = createEditorForDataType(
+        myProfile,
+        'phones',
+      );
       const editDataList = getEditData();
       const item = editDataList[0] as Mutable<EditData>;
       const changedIsFalsy = updateAfterSavingError(item.id);
@@ -718,9 +619,7 @@ describe('editData.ts ', () => {
       const editDataList = getEditData();
       const [initialPrimary, nextPrimary] = editDataList;
       // items are not being saved yet, so function returns false indication nothing to update
-      const currentPrimaryIsNotRolledBack = updateAfterSavingError(
-        initialPrimary.id
-      );
+      const currentPrimaryIsNotRolledBack = updateAfterSavingError(initialPrimary.id);
       const nextPrimaryIsNotRolledBack = updateAfterSavingError(nextPrimary.id);
       expect(currentPrimaryIsNotRolledBack).toBeFalsy();
       expect(nextPrimaryIsNotRolledBack).toBeFalsy();
@@ -753,54 +652,34 @@ describe('editData.ts ', () => {
     const dataType: EditDataType = 'emails';
     const validEmail = 'valid@domain.com';
     it(`returns the primary email picked from email items. The primaryEmail prop is not used.`, () => {
-      const profileQueryWithoutPrimaryEmailProperty = getMyProfileQueryWithoutSomeNodes(
-        {
-          clearPrimary: true,
-          dataType,
-        }
-      );
-      const { getEditData } = createEditorForDataType(
-        profileQueryWithoutPrimaryEmailProperty,
-        dataType
-      );
-      const item = getEmailEditDataForUI(getEditData());
-      const primaryEmailNode = getPrimaryNode(
+      const profileQueryWithoutPrimaryEmailProperty = getMyProfileQueryWithoutSomeNodes({
+        clearPrimary: true,
         dataType,
-        profileQueryWithoutPrimaryEmailProperty
-      ) as EmailNode;
+      });
+      const { getEditData } = createEditorForDataType(profileQueryWithoutPrimaryEmailProperty, dataType);
+      const item = getEmailEditDataForUI(getEditData());
+      const primaryEmailNode = getPrimaryNode(dataType, profileQueryWithoutPrimaryEmailProperty) as EmailNode;
       expect(item.id).toEqual(primaryEmailNode.id);
       expect(item.primary).toBeTruthy();
     });
     it(`If emails exist, but none have primary = true, an empty editData item is returned`, () => {
-      const profileQueryWithoutPrimaryEmail = getMyProfileQueryWithoutSomeNodes(
-        {
-          noPrimary: true,
-          dataType,
-        }
-      );
+      const profileQueryWithoutPrimaryEmail = getMyProfileQueryWithoutSomeNodes({
+        noPrimary: true,
+        dataType,
+      });
 
-      expect(
-        getPrimaryNode(dataType, profileQueryWithoutPrimaryEmail)
-      ).toBeUndefined();
+      expect(getPrimaryNode(dataType, profileQueryWithoutPrimaryEmail)).toBeUndefined();
 
-      const { getEditData } = createEditorForDataType(
-        profileQueryWithoutPrimaryEmail,
-        dataType
-      );
+      const { getEditData } = createEditorForDataType(profileQueryWithoutPrimaryEmail, dataType);
       const emptyItem = getEmailEditDataForUI(getEditData());
       expect(emptyItem.id).toEqual('');
       expect((emptyItem.value as EmailValue).email).toEqual('');
     });
     it(`All emails are included in the save data. Also those not visible in UI. Item's email is updated.`, () => {
-      const {
-        getEditData,
-        updateItemAndCreateSaveData,
-      } = createEditorForDataType(myProfile, dataType);
+      const { getEditData, updateItemAndCreateSaveData } = createEditorForDataType(myProfile, dataType);
       expect(getEditData()).toHaveLength(2);
       const item = getEmailEditDataForUI(getEditData());
-      const index = getEditData().findIndex(
-        arrayItem => arrayItem.id === item.id
-      );
+      const index = getEditData().findIndex((arrayItem) => arrayItem.id === item.id);
       const saveData = updateItemAndCreateSaveData(item, {
         email: validEmail,
       });
@@ -810,14 +689,11 @@ describe('editData.ts ', () => {
       expect(emailData[index].email).toEqual(validEmail);
     });
     it(`When a new email is added, it has 'primary' set to 'true' and all emails are included in the save data`, () => {
-      const profileQueryWithoutPrimaryEmails = getMyProfileQueryWithoutSomeNodes(
-        { noPrimary: true, dataType }
+      const profileQueryWithoutPrimaryEmails = getMyProfileQueryWithoutSomeNodes({ noPrimary: true, dataType });
+      const { getEditData, addItem, updateItemAndCreateSaveData } = createEditorForDataType(
+        profileQueryWithoutPrimaryEmails,
+        dataType,
       );
-      const {
-        getEditData,
-        addItem,
-        updateItemAndCreateSaveData,
-      } = createEditorForDataType(profileQueryWithoutPrimaryEmails, dataType);
       expect(getEditData()).toHaveLength(2);
       addItem();
       expect(getEditData()).toHaveLength(3);
@@ -837,10 +713,7 @@ describe('editData.ts ', () => {
   describe(`Adding a new email`, () => {
     it(`An error is thrown when adding a new email, but primary node already exists`, () => {
       const profileDataWithOneEmailNode = getProfileWithOneNode('emails');
-      const { addItem } = createEditorForDataType(
-        profileDataWithOneEmailNode,
-        'emails'
-      );
+      const { addItem } = createEditorForDataType(profileDataWithOneEmailNode, 'emails');
       expect(() => addItem()).toThrow();
     });
   });

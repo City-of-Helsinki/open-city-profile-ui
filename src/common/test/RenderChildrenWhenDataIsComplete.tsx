@@ -11,7 +11,7 @@ function RenderChildrenWhenDataIsComplete({
   if (!isComplete) {
     return null;
   }
-  return <div data-testid="component-wrapper">{children}</div>;
+  return <div data-testid='component-wrapper'>{children}</div>;
 }
 
 export default RenderChildrenWhenDataIsComplete;

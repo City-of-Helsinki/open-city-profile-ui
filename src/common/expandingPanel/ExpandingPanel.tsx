@@ -1,18 +1,5 @@
-import React, {
-  PropsWithChildren,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
-import {
-  Button,
-  Card,
-  IconAngleDown,
-  IconAngleUp,
-  useAccordion,
-  ButtonVariant,
-} from 'hds-react';
+import React, { PropsWithChildren, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Button, Card, IconAngleDown, IconAngleUp, useAccordion, ButtonVariant } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
@@ -99,18 +86,11 @@ function ExpandingPanel({
   };
 
   const Icon = isOpen ? IconAngleUp : IconAngleDown;
-  const buttonTestId = dataTestId
-    ? { 'data-testid': `${dataTestId}-toggle-button` }
-    : null;
-  const secondaryButtonTestId = dataTestId
-    ? { 'data-testid': `${dataTestId}-secondary-toggle-button` }
-    : null;
+  const buttonTestId = dataTestId ? { 'data-testid': `${dataTestId}-toggle-button` } : null;
+  const secondaryButtonTestId = dataTestId ? { 'data-testid': `${dataTestId}-secondary-toggle-button` } : null;
 
   return (
-    <div
-      className={classNames(commonStyles['content-box'], styles['container'])}
-      ref={handleContainerRef}
-    >
+    <div className={classNames(commonStyles['content-box'], styles['container'])} ref={handleContainerRef}>
       <div className={styles['title']}>
         <h2>{title}</h2>
         <div className={styles['right-side-information']}>
@@ -122,13 +102,7 @@ function ExpandingPanel({
             {...buttonProps}
             {...buttonTestId}
           >
-            {showInformationText
-              ? t(
-                  isOpen
-                    ? 'expandingPanel.hideInformation'
-                    : 'expandingPanel.showInformation'
-                )
-              : ''}
+            {showInformationText ? t(isOpen ? 'expandingPanel.hideInformation' : 'expandingPanel.showInformation') : ''}
           </Button>
         </div>
       </div>
@@ -143,7 +117,7 @@ function ExpandingPanel({
             iconEnd={<Icon aria-hidden />}
             {...buttonProps}
             {...secondaryButtonTestId}
-            onKeyDown={event => {
+            onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 onCloseButtonActivate();
               }

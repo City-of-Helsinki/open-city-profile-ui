@@ -9,11 +9,11 @@ function toastReducer(state: ToastState, action: ToastActions): ToastState {
       };
     case DELETE_TOAST:
       return {
-        toasts: state.toasts.filter(toast => toast.id !== action.toastId),
+        toasts: state.toasts.filter((toast) => toast.id !== action.toastId),
       };
     case HIDE_TOAST:
       return {
-        toasts: state.toasts.map(toast => {
+        toasts: state.toasts.map((toast) => {
           if (toast.id !== action.toastId) {
             return toast;
           }

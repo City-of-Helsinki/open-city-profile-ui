@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import classNames from 'classnames';
-import { Link, LinkSize } from 'hds-react';
+import { Link } from 'hds-react';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -9,10 +9,7 @@ import profileSectionStyles from '../../../common/profileSection/profileSection.
 import commonStyles from '../../../common/cssHelpers/common.module.css';
 import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
 import getCountry from '../../helpers/getCountry';
-import {
-  PermanentForeignAddress,
-  PermanentAddress,
-} from '../../../graphql/typings';
+import { PermanentForeignAddress, PermanentAddress } from '../../../graphql/typings';
 
 type CommonAddress = {
   streetAddress: PermanentAddress['streetAddress'];
@@ -50,7 +47,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
 
   const containerStyles = classNames(
     commonFormStyles['responsive-flex-box-columns-rows'],
-    commonFormStyles['responsive-width-text-fields']
+    commonFormStyles['responsive-width-text-fields'],
   );
 
   const AddressComponent = (props: AddressProps): React.ReactElement | null => {
@@ -63,31 +60,13 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
     return (
       <React.Fragment key={type}>
         <div className={containerStyles} data-testid={`vpi-address-${type}`}>
-          <LabeledValue
-            label={t('profileForm.address')}
-            value={address.streetAddress}
-          />
+          <LabeledValue label={t('profileForm.address')} value={address.streetAddress} />
           {address.additionalAddress && (
-            <LabeledValue
-              label={t('profileForm.additionalInfo')}
-              value={address.additionalAddress}
-            />
+            <LabeledValue label={t('profileForm.additionalInfo')} value={address.additionalAddress} />
           )}
-          {address.postalCode && (
-            <LabeledValue
-              label={t('profileForm.postalCode')}
-              value={address.postalCode}
-            />
-          )}
-          {address.postOffice && (
-            <LabeledValue
-              label={t('profileForm.postOffice')}
-              value={address.postOffice}
-            />
-          )}
-          {country && (
-            <LabeledValue label={t('profileForm.country')} value={country} />
-          )}
+          {address.postalCode && <LabeledValue label={t('profileForm.postalCode')} value={address.postalCode} />}
+          {address.postOffice && <LabeledValue label={t('profileForm.postOffice')} value={address.postOffice} />}
+          {country && <LabeledValue label={t('profileForm.country')} value={country} />}
         </div>
       </React.Fragment>
     );
@@ -99,11 +78,7 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
         i18nKey={'profileInformation.verifiedDataInformation'}
         components={{
           suomiFiLink: (
-            <Link
-              href={t('profileInformation.verifiedDataInformationLink')}
-              external
-              openInNewTab
-            >
+            <Link href={t('profileInformation.verifiedDataInformationLink')} external openInNewTab>
               {''}
             </Link>
           ),
@@ -114,58 +89,33 @@ function VerifiedPersonalInformation(): React.ReactElement | null {
 
   return (
     <div
-      role="region"
-      aria-labelledby="verified-personal-information-heading"
+      role='region'
+      aria-labelledby='verified-personal-information-heading'
       className={classNames(
         commonStyles['content-box'],
         profileSectionStyles['profile-section'],
         commonStyles['bottom-border'],
-        commonFormStyles['mobile-no-bottom-padding']
+        commonFormStyles['mobile-no-bottom-padding'],
       )}
     >
-      <div
-        className={classNames(
-          commonFormStyles['editor-description-container'],
-          commonFormStyles['bottom-border']
-        )}
-      >
-        <h2
-          id="verified-personal-information-heading"
-          className={commonFormStyles['normal-size']}
-        >
+      <div className={classNames(commonFormStyles['editor-description-container'], commonFormStyles['bottom-border'])}>
+        <h2 id='verified-personal-information-heading' className={commonFormStyles['normal-size']}>
           {t('profileInformation.verifiedBasicData')}
         </h2>
         <LongDescription />
       </div>
       <div className={commonFormStyles['flex-box-columns']}>
-        <div
-          className={classNames(
-            containerStyles,
-            commonFormStyles['mobile-xs-top-padding']
-          )}
-        >
+        <div className={classNames(containerStyles, commonFormStyles['mobile-xs-top-padding'])}>
           <LabeledValue label={t('profileForm.firstName')} value={firstName} />
           <LabeledValue label={t('profileForm.givenName')} value={givenName} />
           <LabeledValue label={t('profileForm.lastName')} value={lastName} />
         </div>
         <div className={containerStyles}>
-          <LabeledValue
-            label={t('profileForm.nationalIdentificationNumber')}
-            value={nationalIdentificationNumber}
-          />
-          <LabeledValue
-            label={t('profileForm.municipalityOfResidence')}
-            value={municipalityOfResidence}
-          />
+          <LabeledValue label={t('profileForm.nationalIdentificationNumber')} value={nationalIdentificationNumber} />
+          <LabeledValue label={t('profileForm.municipalityOfResidence')} value={municipalityOfResidence} />
         </div>
-        <AddressComponent
-          type="permanent"
-          address={permanentAddress as CommonAddress}
-        />
-        <AddressComponent
-          type="foreign"
-          address={permanentForeignAddress as CommonAddress}
-        />
+        <AddressComponent type='permanent' address={permanentAddress as CommonAddress} />
+        <AddressComponent type='foreign' address={permanentForeignAddress as CommonAddress} />
       </div>
     </div>
   );

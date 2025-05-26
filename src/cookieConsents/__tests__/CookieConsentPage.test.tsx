@@ -5,18 +5,12 @@ import CookieConsentPage from '../CookieConsentPage';
 
 // Mock the dependencies
 vi.mock('hds-react', () => ({
-  CookieSettingsPage: vi.fn(() => <div data-testid="cookie-settings-page" />),
+  CookieSettingsPage: vi.fn(() => <div data-testid='cookie-settings-page' />),
 }));
 
 vi.mock('../../common/pageLayout/PageLayout', () => ({
-  default: ({
-    children,
-    title,
-  }: {
-    children: React.ReactNode;
-    title: string;
-  }) => (
-    <div data-testid="page-layout" data-title={title}>
+  default: ({ children, title }: { children: React.ReactNode; title: string }) => (
+    <div data-testid='page-layout' data-title={title}>
       {children}
     </div>
   ),
@@ -40,9 +34,7 @@ describe('CookieConsentPage', () => {
     expect(cookieSettingsPage).toBeInTheDocument();
 
     // Check that the div with the CSS classes exists
-    const contentDiv = container.querySelector(
-      'div[data-testid="page-layout"] > div'
-    );
+    const contentDiv = container.querySelector('div[data-testid="page-layout"] > div');
     expect(contentDiv).toBeInTheDocument();
   });
 });

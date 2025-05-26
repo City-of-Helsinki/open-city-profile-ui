@@ -12,14 +12,7 @@ vi.mock('react-router-dom', async () => {
   return {
     ...actual,
     // Mock the Link component
-    Link: ({
-      children,
-      to,
-      ...rest
-    }: {
-      children: React.ReactNode;
-      to: string;
-    }) => (
+    Link: ({ children, to, ...rest }: { children: React.ReactNode; to: string }) => (
       <a href={to} {...rest}>
         {children}
       </a>
@@ -45,7 +38,7 @@ describe('About Page', () => {
             <AboutPage />
           </I18nextProvider>{' '}
         </TestLoginProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   };
   test('renders AboutPage without errors', () => {
@@ -54,7 +47,7 @@ describe('About Page', () => {
         <TestLoginProvider>
           <AboutPage />
         </TestLoginProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(container).toBeTruthy();
   });

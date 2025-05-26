@@ -2,10 +2,7 @@ import { waitFor } from '@testing-library/react';
 
 import { getMyProfile } from '../../../common/test/myProfileMocking';
 import { cleanComponentMocks } from '../../../common/test/testingLibraryTools';
-import {
-  MockedResponse,
-  ResponseProvider,
-} from '../../../common/test/MockApolloClientProvider';
+import { MockedResponse, ResponseProvider } from '../../../common/test/MockApolloClientProvider';
 import { ProfileData } from '../../../graphql/typings';
 import { exposeProfileContext } from '../../../common/test/exposeHooksForTesting';
 
@@ -24,8 +21,7 @@ vi.mock('@sentry/react', async () => {
 
 describe('ProfileContext', () => {
   function createTestEnv(responses: MockedResponse[]) {
-    const responseProvider: ResponseProvider = () =>
-      responses.shift() as MockedResponse;
+    const responseProvider: ResponseProvider = () => responses.shift() as MockedResponse;
     return exposeProfileContext(responseProvider);
   }
 
@@ -45,9 +41,7 @@ describe('ProfileContext', () => {
   });
 
   it("after fetch(), context indicates 'loading' state and data updates when fetch is finished", async () => {
-    const responses: MockedResponse[] = [
-      { profileData: getMyProfile().myProfile as ProfileData },
-    ];
+    const responses: MockedResponse[] = [{ profileData: getMyProfile().myProfile as ProfileData }];
     const { result, waitForUpdate } = createTestEnv(responses);
     let context = result.current;
 
@@ -89,10 +83,7 @@ describe('ProfileContext', () => {
     expect(context.getProfile()).toBeNull();
   });
   it('Fetch errors are handled and listeners triggered and disposed. Error is reported to Sentry', async () => {
-    const responses: MockedResponse[] = [
-      { errorType: 'graphQLError' },
-      { errorType: 'networkError' },
-    ];
+    const responses: MockedResponse[] = [{ errorType: 'graphQLError' }, { errorType: 'networkError' }];
     const { result, waitForErrorChange } = createTestEnv(responses);
     let context = result.current;
     const errorListener = vi.fn();

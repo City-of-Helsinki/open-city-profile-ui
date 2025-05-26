@@ -1,21 +1,18 @@
 import { ProfileRoot, EmailNode } from '../../graphql/typings';
 
-const getEmailsFromNode = (
-  data?: ProfileRoot,
-  keepPrimary = false
-): EmailNode[] => {
+const getEmailsFromNode = (data?: ProfileRoot, keepPrimary = false): EmailNode[] => {
   const edges = data?.myProfile?.emails?.edges || [];
   return edges
-    .filter(edge => keepPrimary || !edge?.node?.primary)
+    .filter((edge) => keepPrimary || !edge?.node?.primary)
     .map(
-      edge =>
+      (edge) =>
         ({
           email: edge?.node?.email,
           id: edge?.node?.id,
           primary: edge?.node?.primary,
           emailType: edge?.node?.emailType,
           __typename: 'EmailNode',
-        } as EmailNode)
+        }) as EmailNode,
     );
 };
 

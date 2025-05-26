@@ -26,7 +26,7 @@ const useAuth = () => {
           kc_action: 'UPDATE_PASSWORD',
         },
       })
-      .catch(error => {
+      .catch((error) => {
         success = false;
         if (error.message !== NETWORK_ERROR) {
           Sentry.captureException(error);
@@ -45,7 +45,7 @@ const useAuth = () => {
           kc_action: 'CONFIGURE_TOTP',
         },
       })
-      .catch(error => {
+      .catch((error) => {
         success = false;
         if (error.message !== NETWORK_ERROR) {
           Sentry.captureException(error);
@@ -65,7 +65,7 @@ const useAuth = () => {
           kc_action: 'delete_credential:' + id,
         },
       })
-      .catch(error => {
+      .catch((error) => {
         success = false;
         if (error.message !== NETWORK_ERROR) {
           Sentry.captureException(error);

@@ -5,14 +5,10 @@ import { t } from 'i18next';
 import { EditHandling } from '../../hooks/useCommonEditHandling';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 
-function AddButton({
-  editHandler,
-}: {
-  editHandler: EditHandling;
-}): React.ReactElement | null {
+function AddButton({ editHandler }: { editHandler: EditHandling }): React.ReactElement | null {
   const { addButtonId, hasNew, hasData, actionHandler, dataType } = editHandler;
   const isAddButtonDisabled = hasNew();
-  const text = (function() {
+  const text = (function () {
     if (dataType === 'addresses') {
       return t('profileForm.addAddress');
     }

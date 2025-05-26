@@ -1,18 +1,11 @@
 import to from 'await-to-js';
 
 import { GdprServiceConnectionService } from '../../graphql/typings';
-import {
-  ActionExecutor,
-  ActionProps,
-  QueueController,
-} from '../../common/actionQueue/actionQueue';
+import { ActionExecutor, ActionProps, QueueController } from '../../common/actionQueue/actionQueue';
 import { getActionResultAndErrorMessage } from './utils';
 import { getServiceConnectionsResultAndError } from './getServiceConnections';
 
-type Scopes = Pick<
-  GdprServiceConnectionService,
-  'gdprQueryScope' | 'gdprDeleteScope'
->;
+type Scopes = Pick<GdprServiceConnectionService, 'gdprQueryScope' | 'gdprDeleteScope'>;
 
 type ScopesPerOidcType = {
   pureKeyloakServices: Scopes[];
@@ -26,26 +19,19 @@ const gdprQueryScopesType = 'gdprQueryScopes';
 const gdprDeleteScopesType = 'gdprDeleteScopes';
 
 export const getFetchedScopes = (queueController: QueueController) => {
-  const scopeAction =
-    queueController.getByType(gdprQueryScopesType) ||
-    queueController.getByType(gdprDeleteScopesType);
+  const scopeAction = queueController.getByType(gdprQueryScopesType) || queueController.getByType(gdprDeleteScopesType);
   if (!scopeAction) {
     throw new Error('No scope action in queue');
   }
 
-  const { result } = getActionResultAndErrorMessage(
-    scopeAction.type,
-    queueController
-  );
+  const { result } = getActionResultAndErrorMessage(scopeAction.type, queueController);
   if (!result) {
     throw new Error('No scopes fetched');
   }
   return result as ScopesPerType;
 };
 
-export const isKeycloakAuthorisationCodeNeeded = (
-  queueController: QueueController
-) => {
+export const isKeycloakAuthorisationCodeNeeded = (queueController: QueueController) => {
   const scopes = getFetchedScopes(queueController);
   return scopes.keycloakScopes.length > 0;
 };
@@ -59,7 +45,7 @@ const gdprScopesExecutor = async (controller: QueueController) => {
     pureKeyloakServices: [],
   };
 
-  result.forEach(service => {
+  result.forEach((service) => {
     const { gdprDeleteScope, gdprQueryScope } = service;
     const data = {
       gdprDeleteScope,
@@ -74,7 +60,7 @@ const gdprScopesExecutor = async (controller: QueueController) => {
 
 const getScopes = async (
   controller: QueueController,
-  scopeType: 'gdprQueryScope' | 'gdprDeleteScope'
+  scopeType: 'gdprQueryScope' | 'gdprDeleteScope',
 ): Promise<ScopesPerType> => {
   const [error, scopes] = await to(gdprScopesExecutor(controller));
   if (error) {
@@ -83,18 +69,14 @@ const getScopes = async (
   if (!scopes) {
     return Promise.reject('No scopes fetched.');
   }
-  const keycloakScopes = scopes.pureKeyloakServices.map(
-    service => service[scopeType]
-  );
+  const keycloakScopes = scopes.pureKeyloakServices.map((service) => service[scopeType]);
 
   return Promise.resolve({ keycloakScopes });
 };
 
-const gdprQueryScopesExecutor: ActionExecutor = async (action, controller) =>
-  getScopes(controller, 'gdprQueryScope');
+const gdprQueryScopesExecutor: ActionExecutor = async (action, controller) => getScopes(controller, 'gdprQueryScope');
 
-const gdprDeleteScopesExecutor: ActionExecutor = async (action, controller) =>
-  getScopes(controller, 'gdprDeleteScope');
+const gdprDeleteScopesExecutor: ActionExecutor = async (action, controller) => getScopes(controller, 'gdprDeleteScope');
 
 export const getGdprQueryScopesAction: ActionProps = {
   type: gdprQueryScopesType,

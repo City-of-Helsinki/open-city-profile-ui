@@ -24,12 +24,7 @@ export function getAmrStatic(amrArray: Amr | undefined): AMRStatic | null {
   }
 
   // TODO: Should be removed soon
-  if (
-    amr === 'github' ||
-    amr === 'google' ||
-    amr === 'facebook' ||
-    amr === 'yletunnus'
-  ) {
+  if (amr === 'github' || amr === 'google' || amr === 'facebook' || amr === 'yletunnus') {
     return amr;
   }
 
@@ -47,17 +42,13 @@ export function hasHelsinkiAccountAMR(amrArray: Amr | undefined): boolean {
 
 export function hasPasswordLogin(data: ProfileRoot | undefined): boolean {
   return (
-    data?.myProfile?.availableLoginMethods?.some(
-      item => item && item.method === LoginMethodType.PASSWORD
-    ) ?? false
+    data?.myProfile?.availableLoginMethods?.some((item) => item && item.method === LoginMethodType.PASSWORD) ?? false
   );
 }
 
-export function getMFALoginMethod(
-  data: ProfileRoot | undefined
-): MyLoginMethodNodeFragment | undefined {
+export function getMFALoginMethod(data: ProfileRoot | undefined): MyLoginMethodNodeFragment | undefined {
   const loginMethod = data?.myProfile?.availableLoginMethods?.find(
-    item => item && item.method === LoginMethodType.OTP
+    (item) => item && item.method === LoginMethodType.OTP,
   );
 
   return loginMethod || undefined;

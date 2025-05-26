@@ -1,0 +1,7 @@
+build
+coverage
+node_modules
+report
+test-results
+*.test.tsx.snap
+src/graphql/generatedTypes.ts

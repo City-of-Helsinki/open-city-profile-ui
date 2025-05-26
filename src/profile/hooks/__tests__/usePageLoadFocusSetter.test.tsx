@@ -1,25 +1,9 @@
 import React from 'react';
-import {
-  act,
-  render,
-  waitFor,
-  cleanup,
-  screen,
-  fireEvent,
-} from '@testing-library/react';
-import {
-  createMemoryRouter,
-  RouterProvider,
-  Route,
-  Routes,
-  Link,
-} from 'react-router-dom';
+import { act, render, waitFor, cleanup, screen, fireEvent } from '@testing-library/react';
+import { createMemoryRouter, RouterProvider, Route, Routes, Link } from 'react-router-dom';
 
 import { getActiveElement } from '../../../common/test/testingLibraryTools';
-import {
-  pageLoadFocusTargetClassName,
-  usePageLoadFocusSetter,
-} from '../usePageLoadFocusSetter';
+import { pageLoadFocusTargetClassName, usePageLoadFocusSetter } from '../usePageLoadFocusSetter';
 import FocusableH1 from '../../../common/focusableH1/FocusableH1';
 
 const focusableH1 = 'focusableH1';
@@ -29,22 +13,14 @@ const noFocusableElement = 'noFocusableElement';
 const disabledFocus = 'disabledFocus';
 const selectorDefined = 'selectorDefined';
 
-const scenarios = [
-  focusableH1,
-  plainH1,
-  className,
-  noFocusableElement,
-  disabledFocus,
-  selectorDefined,
-] as const;
+const scenarios = [focusableH1, plainH1, className, noFocusableElement, disabledFocus, selectorDefined] as const;
 
-type TestScenario = typeof scenarios[number];
+type TestScenario = (typeof scenarios)[number];
 
 describe('usePageLoadFocusSetter.ts', () => {
   const stripBackLashes = (str: string) => str.replace(/\//g, '');
   const getLinkTestId = (path: string) => `link-to-${stripBackLashes(path)}`;
-  const getElementTestId = (path: string) =>
-    `element-for-${stripBackLashes(path)}`;
+  const getElementTestId = (path: string) => `element-for-${stripBackLashes(path)}`;
 
   const focusTracker = vi.fn();
   const onElemenFocus = (source: TestScenario) => {
@@ -53,7 +29,7 @@ describe('usePageLoadFocusSetter.ts', () => {
 
   const Nav = () => (
     <div>
-      {scenarios.map(path => (
+      {scenarios.map((path) => (
         <Link to={`/${path}`} data-testid={getLinkTestId(path)} key={path}>
           Link to {path}
         </Link>
@@ -61,25 +37,14 @@ describe('usePageLoadFocusSetter.ts', () => {
     </div>
   );
 
-  const TestWrapper = ({
-    scenario,
-    children,
-  }: {
-    scenario: TestScenario;
-    children: React.ReactElement | null;
-  }) => {
-    const selector =
-      scenario === 'selectorDefined' ? '#selectorDefined' : undefined;
+  const TestWrapper = ({ scenario, children }: { scenario: TestScenario; children: React.ReactElement | null }) => {
+    const selector = scenario === 'selectorDefined' ? '#selectorDefined' : undefined;
     const disableFocusing = scenario === 'disabledFocus';
     usePageLoadFocusSetter({ selector, disableFocusing });
     return (
       <div>
         <Nav />
-        <button
-          type="button"
-          tabIndex={0}
-          onFocus={() => focusTracker('invalid')}
-        >
+        <button type='button' tabIndex={0} onFocus={() => focusTracker('invalid')}>
           Focusable button trying to steal focus
         </button>
         {children}
@@ -94,9 +59,7 @@ describe('usePageLoadFocusSetter.ts', () => {
     </main>
   );
 
-  const getTestElement = (
-    scenario: TestScenario
-  ): React.ReactElement | null => {
+  const getTestElement = (scenario: TestScenario): React.ReactElement | null => {
     const onFocus = () => onElemenFocus(scenario);
     const commonProps = {
       onFocus,
@@ -117,17 +80,11 @@ describe('usePageLoadFocusSetter.ts', () => {
       );
     }
     if (scenario === noFocusableElement) {
-      return (
-        <textarea
-          tabIndex={0}
-          {...commonProps}
-          defaultValue="Should not focus me!"
-        />
-      );
+      return <textarea tabIndex={0} {...commonProps} defaultValue='Should not focus me!' />;
     }
     if (scenario === selectorDefined) {
       return (
-        <div {...commonProps} id="selectorDefined">
+        <div {...commonProps} id='selectorDefined'>
           Should focus me by id!
         </div>
       );
@@ -136,31 +93,22 @@ describe('usePageLoadFocusSetter.ts', () => {
     return null;
   };
 
-  const getWrappedTestElement = (
-    scenario: TestScenario
-  ): React.ReactElement => (
+  const getWrappedTestElement = (scenario: TestScenario): React.ReactElement => (
     <TestWrapper scenario={scenario}>{getTestElement(scenario)}</TestWrapper>
   );
 
   const TestApp = () => (
     <div>
       <Routes>
-        <Route path="/" element={<Root />} />
-        {scenarios.map(path => (
-          <Route
-            key={path}
-            path={`/${path}`}
-            element={getWrappedTestElement(path)}
-          />
+        <Route path='/' element={<Root />} />
+        {scenarios.map((path) => (
+          <Route key={path} path={`/${path}`} element={getWrappedTestElement(path)} />
         ))}
       </Routes>
     </div>
   );
 
-  const navigateTo = async (
-    router: ReturnType<typeof createMemoryRouter>,
-    targetPath: string
-  ): Promise<void> => {
+  const navigateTo = async (router: ReturnType<typeof createMemoryRouter>, targetPath: string): Promise<void> => {
     await act(async () => {
       fireEvent.click(screen.getByTestId(getLinkTestId(targetPath)));
     });
@@ -185,7 +133,7 @@ describe('usePageLoadFocusSetter.ts', () => {
   const navigateAndCheckFocus = async (
     scenario: TestScenario | '',
     initialEntries: string[] = [''],
-    shouldFocus = true
+    shouldFocus = true,
   ): Promise<void> => {
     const routes = [
       {

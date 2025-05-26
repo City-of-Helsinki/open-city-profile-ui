@@ -2,25 +2,15 @@ import React, { useContext, PropsWithChildren } from 'react';
 import { renderHook, RenderHookResult } from '@testing-library/react';
 import _ from 'lodash';
 
-import {
-  ProfileContext,
-  ProfileContextData,
-  Provider as ProfileProvider,
-} from '../../profile/context/ProfileContext';
-import {
-  MockApolloClientProvider,
-  ResponseProvider,
-} from './MockApolloClientProvider';
-import {
-  MutationReturnType,
-  useProfileMutations,
-} from '../../profile/hooks/useProfileMutations';
+import { ProfileContext, ProfileContextData, Provider as ProfileProvider } from '../../profile/context/ProfileContext';
+import { MockApolloClientProvider, ResponseProvider } from './MockApolloClientProvider';
+import { MutationReturnType, useProfileMutations } from '../../profile/hooks/useProfileMutations';
 import { EditDataType } from '../../profile/helpers/editData';
 import ProfileContextFetcher from './ProfileContextFetcher';
 import { getErrorMessage } from './testingLibraryTools';
 
 export const exposeProfileContext = (
-  responseProvider: ResponseProvider
+  responseProvider: ResponseProvider,
 ): RenderHookResult<PropsWithChildren<object>, ProfileContextData> & {
   result: { current: ProfileContextData }; // Structure to match old API
   waitForDataChange: () => Promise<ProfileContextData>;
@@ -32,9 +22,7 @@ export const exposeProfileContext = (
       <ProfileProvider>{children}</ProfileProvider>
     </MockApolloClientProvider>
   );
-  const createUpdateProps = (
-    contextData: ProfileContextData
-  ): Record<string, unknown> => ({
+  const createUpdateProps = (contextData: ProfileContextData): Record<string, unknown> => ({
     loading: contextData.loading,
     isComplete: contextData.isComplete,
   });
@@ -43,27 +31,21 @@ export const exposeProfileContext = (
   };
   let lastUpdate: Record<string, unknown> = {};
   let lastData: string | undefined;
-  let updateChangeResolver:
-    | ((newContextData: ProfileContextData) => void)
-    | undefined;
-  let dataChangeResolver:
-    | ((newContextData: ProfileContextData) => void)
-    | undefined;
-  let errorChangeResolver:
-    | ((newContextData: ProfileContextData) => void)
-    | undefined;
+  let updateChangeResolver: ((newContextData: ProfileContextData) => void) | undefined;
+  let dataChangeResolver: ((newContextData: ProfileContextData) => void) | undefined;
+  let errorChangeResolver: ((newContextData: ProfileContextData) => void) | undefined;
 
   //testing-library has waitForNextUpdate but it does not work properly!
   const waitForUpdate = () =>
-    new Promise<ProfileContextData>(resolve => {
+    new Promise<ProfileContextData>((resolve) => {
       updateChangeResolver = resolve;
     });
   const waitForDataChange = () =>
-    new Promise<ProfileContextData>(resolve => {
+    new Promise<ProfileContextData>((resolve) => {
       dataChangeResolver = resolve;
     });
   const waitForErrorChange = () =>
-    new Promise<ProfileContextData>(resolve => {
+    new Promise<ProfileContextData>((resolve) => {
       errorChangeResolver = resolve;
     });
 
@@ -120,7 +102,7 @@ export const exposeProfileContext = (
 export function exposeHook<T = unknown>(
   responseProvider: ResponseProvider,
   hookProvider: () => T,
-  waitForProfileData: boolean
+  waitForProfileData: boolean,
 ): {
   result: {
     current: T & { [key: string]: unknown }; // Allow any property to be accessed on current
@@ -130,9 +112,7 @@ export function exposeHook<T = unknown>(
   // The test explicitly looks for profileData from the context
   waitForDataChange?: () => Promise<void>;
 } {
-  const ChildWrapper = waitForProfileData
-    ? ProfileContextFetcher
-    : React.Fragment;
+  const ChildWrapper = waitForProfileData ? ProfileContextFetcher : React.Fragment;
 
   const wrapper = ({ children }: PropsWithChildren<object>) => (
     <MockApolloClientProvider responseProvider={responseProvider}>
@@ -149,7 +129,7 @@ export function exposeHook<T = unknown>(
 
   // Return with complete implementation
   return {
-    result: (hookResult.result as unknown) as {
+    result: hookResult.result as unknown as {
       current: T & { [key: string]: unknown };
     },
     rerender: hookResult.rerender,
@@ -159,7 +139,7 @@ export function exposeHook<T = unknown>(
 
 export const exposeProfileMutationsHook = (
   responseProvider: ResponseProvider,
-  dataType: EditDataType
+  dataType: EditDataType,
 ): {
   result: {
     current: MutationReturnType & { [key: string]: unknown }; // Allow any property to be accessed on current
@@ -174,5 +154,5 @@ export const exposeProfileMutationsHook = (
       useProfileMutations({
         dataType,
       }),
-    true
+    true,
   );

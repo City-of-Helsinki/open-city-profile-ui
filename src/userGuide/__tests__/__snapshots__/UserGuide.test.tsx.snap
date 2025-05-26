@@ -268,8 +268,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   The Helsinki profile is used by logging in to the City of Helsinki's customer services. The first time you log in, you will be asked to create a Helsinki profile and give your consent to the use of the data required by the service.
                 </p>
                 <p>
-                  You can also create a Helsinki profile at
-                   
+                  You can also create a Helsinki profile at 
                   <a
                     href="https://profiili.hel.fi"
                   >
@@ -390,8 +389,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       After authentication, you will be asked for your email address. A confirmation message will be sent to the email address to verify the authenticity of the address.
                     </p>
                     <p>
-                      If you have already created Helsinki profile with an email address and password, you can use the same email address. In this case, the different authentication methods will be combined, and you will be able to see all the services you use at once.
-                       
+                      If you have already created Helsinki profile with an email address and password, you can use the same email address. In this case, the different authentication methods will be combined, and you will be able to see all the services you use at once. 
                       <b>
                         Please note, however, that you will not be able to unlink them later.
                       </b>
@@ -454,8 +452,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       You will then have a Helsinki profile, and your Suomi.fi login details will be saved in your profile. Different services use your data in different ways, but they will always tell you how they use it when you first log in. The information is also always available in your Helsinki profile.
                     </p>
                     <p>
-                      After creating your Helsinki profile, you will be logged in to the service where you started the sign-up process. You can access your Helsinki profile at
-                       
+                      After creating your Helsinki profile, you will be logged in to the service where you started the sign-up process. You can access your Helsinki profile at 
                       <a
                         href="https://profiili.hel.fi"
                       >
@@ -592,8 +589,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       <i>
                         I have forgotten my password
                       </i>
-                       link. For more information on creating a password, see
-                       
+                       link. For more information on creating a password, see 
                       <a
                         href="#_Forgotten_password"
                       >
@@ -775,11 +771,13 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       </b>
                     </p>
                     <p>
-                      If your Helsinki profile was created with Suomi.fi authentication, you can click on the 
+                      If your Helsinki profile was created with Suomi.fi authentication, you can click on the
+                       
                       <i>
                         I forgot my password
                       </i>
-                       link in the login screen. See the 
+                       link in the login screen. See the
+                       
                       <a
                         href="#_Forgotten_password"
                       >
@@ -879,8 +877,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       How to enable two-factor authentication
                     </h4>
                     <p>
-                      You can activate two-factor authentication on Helsinki profile on the
-                       
+                      You can activate two-factor authentication on Helsinki profile on the 
                       <i>
                         My information
                       </i>
@@ -914,8 +911,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       Follow the setup instructions and download an authentication app of your choice such as Google Authenticator, Microsoft Authenticator or FreeOTP to your mobile device.
                     </p>
                     <p>
-                      Open the authentication app and scan the QR code on the screen. If you cannot scan the code, you can enter it manually by selecting the
-                       
+                      Open the authentication app and scan the QR code on the screen. If you cannot scan the code, you can enter it manually by selecting the 
                       <i>
                         "Can't read the code?"
                       </i>
@@ -971,8 +967,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       >
                         Authentication application not available or code not working
                       </a>
-                       
-                      section.
+                       section.
                     </p>
                     <h4>
                       Disabling two-factor authentication
@@ -1026,16 +1021,14 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       Authentication application not available or code not working
                     </h4>
                     <p>
-                      If you do not have access to your authentication app, for example because you have changed your phone, you can authenticate to your Helsinki profile with a strong suomi.fi-authentication, which will allow you to disable two-factor authentication from the
-                       
+                      If you do not have access to your authentication app, for example because you have changed your phone, you can authenticate to your Helsinki profile with a strong suomi.fi-authentication, which will allow you to disable two-factor authentication from the 
                       <i>
                         My information
                       </i>
                       -page.
                     </p>
                     <p>
-                      If you do not yet have suomi.fi-authentication in your Helsinki profile, you can enable it by authenticating with suomi.fi and creating a strong authentication account via email.
-                       
+                      If you do not yet have suomi.fi-authentication in your Helsinki profile, you can enable it by authenticating with suomi.fi and creating a strong authentication account via email. 
                       <b>
                         Use the same email address
                       </b>
@@ -1046,8 +1039,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       <i>
                         suomi.fi
                       </i>
-                      -authentication with a different email address, you will unfortunately no longer be able to deactivate two-factor authentication.
-                       
+                      -authentication with a different email address, you will unfortunately no longer be able to deactivate two-factor authentication. 
                       <b>
                         Therefore, it is very important to save the initial authentication code.
                       </b>
@@ -1146,7 +1138,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     style="display: none;"
                   >
                     <p>
-                      If you can't remember your password, you can create a new one in the login window using the 
+                      If you can't remember your password, you can create a new one in the login window using the
+                       
                       <i>
                         I forgot my password 
                       </i>
@@ -1310,7 +1303,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     style="display: none;"
                   >
                     <p>
-                      You can change your password to a new one at any time from the Login and authentication section of the 
+                      You can change your password to a new one at any time from the Login and authentication section of the
+                       
                       <i>
                         My information
                       </i>
@@ -1505,8 +1499,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   Viewing and editing your own data
                 </h2>
                 <p>
-                  By logging in to your Helsinki profile at
-                   
+                  By logging in to your Helsinki profile at 
                   <a
                     href="https://profiili.hel.fi"
                   >
@@ -1582,7 +1575,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       <i>
                         Add
                       </i>
-                       button, or the 
+                       button, or the
+                       
                       <i>
                         Edit
                       </i>
@@ -1728,15 +1722,13 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       The services will use the data managed by the Helsinki profile as indicated. The first time you authenticate to a service, you can see what information the service uses.
                     </p>
                     <p>
-                      In your Helsinki profile, you can check this information later and, if you wish, delete your data from the service. It is not possible to delete your data if your service process has not been completed. It is also advisable to
-                       
+                      In your Helsinki profile, you can check this information later and, if you wish, delete your data from the service. It is not possible to delete your data if your service process has not been completed. It is also advisable to 
                       <a
                         href="#_Download_your_information"
                       >
                         download your own information
                       </a>
-                       
-                      before deleting it.
+                       before deleting it.
                     </p>
                     <div>
                       <img
@@ -1859,8 +1851,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       <a
                         href="https://fi.wikipedia.org/wiki/JSON"
                       >
-                        the
-                         
+                        the 
                         <u>
                           JSON file format, see Wikipedia (link opens in a new window)
                         </u>
@@ -2101,7 +2092,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       <i>
                         Delete my information
                       </i>
-                       button. You will then see a pop-up window where you will be asked to confirm that you want to delete your information. After confirming the request, all data will be deleted from the profile and from all services, if no service is pending.
+                       
+                      button. You will then see a pop-up window where you will be asked to confirm that you want to delete your information. After confirming the request, all data will be deleted from the profile and from all services, if no service is pending.
                     </p>
                     <p>
                       Some statutory services may require data to be retained for a limited or permanent period. Depending on the transaction and the service, data may be anonymized in some cases. If a statutory service is required to retain data, the profile or the data used by that service cannot be deleted.
@@ -2775,8 +2767,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 The Helsinki profile is used by logging in to the City of Helsinki's customer services. The first time you log in, you will be asked to create a Helsinki profile and give your consent to the use of the data required by the service.
               </p>
               <p>
-                You can also create a Helsinki profile at
-                 
+                You can also create a Helsinki profile at 
                 <a
                   href="https://profiili.hel.fi"
                 >
@@ -2897,8 +2888,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     After authentication, you will be asked for your email address. A confirmation message will be sent to the email address to verify the authenticity of the address.
                   </p>
                   <p>
-                    If you have already created Helsinki profile with an email address and password, you can use the same email address. In this case, the different authentication methods will be combined, and you will be able to see all the services you use at once.
-                     
+                    If you have already created Helsinki profile with an email address and password, you can use the same email address. In this case, the different authentication methods will be combined, and you will be able to see all the services you use at once. 
                     <b>
                       Please note, however, that you will not be able to unlink them later.
                     </b>
@@ -2961,8 +2951,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     You will then have a Helsinki profile, and your Suomi.fi login details will be saved in your profile. Different services use your data in different ways, but they will always tell you how they use it when you first log in. The information is also always available in your Helsinki profile.
                   </p>
                   <p>
-                    After creating your Helsinki profile, you will be logged in to the service where you started the sign-up process. You can access your Helsinki profile at
-                     
+                    After creating your Helsinki profile, you will be logged in to the service where you started the sign-up process. You can access your Helsinki profile at 
                     <a
                       href="https://profiili.hel.fi"
                     >
@@ -3099,8 +3088,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     <i>
                       I have forgotten my password
                     </i>
-                     link. For more information on creating a password, see
-                     
+                     link. For more information on creating a password, see 
                     <a
                       href="#_Forgotten_password"
                     >
@@ -3282,11 +3270,13 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     </b>
                   </p>
                   <p>
-                    If your Helsinki profile was created with Suomi.fi authentication, you can click on the 
+                    If your Helsinki profile was created with Suomi.fi authentication, you can click on the
+                     
                     <i>
                       I forgot my password
                     </i>
-                     link in the login screen. See the 
+                     link in the login screen. See the
+                     
                     <a
                       href="#_Forgotten_password"
                     >
@@ -3386,8 +3376,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     How to enable two-factor authentication
                   </h4>
                   <p>
-                    You can activate two-factor authentication on Helsinki profile on the
-                     
+                    You can activate two-factor authentication on Helsinki profile on the 
                     <i>
                       My information
                     </i>
@@ -3421,8 +3410,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     Follow the setup instructions and download an authentication app of your choice such as Google Authenticator, Microsoft Authenticator or FreeOTP to your mobile device.
                   </p>
                   <p>
-                    Open the authentication app and scan the QR code on the screen. If you cannot scan the code, you can enter it manually by selecting the
-                     
+                    Open the authentication app and scan the QR code on the screen. If you cannot scan the code, you can enter it manually by selecting the 
                     <i>
                       "Can't read the code?"
                     </i>
@@ -3478,8 +3466,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     >
                       Authentication application not available or code not working
                     </a>
-                     
-                    section.
+                     section.
                   </p>
                   <h4>
                     Disabling two-factor authentication
@@ -3533,16 +3520,14 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     Authentication application not available or code not working
                   </h4>
                   <p>
-                    If you do not have access to your authentication app, for example because you have changed your phone, you can authenticate to your Helsinki profile with a strong suomi.fi-authentication, which will allow you to disable two-factor authentication from the
-                     
+                    If you do not have access to your authentication app, for example because you have changed your phone, you can authenticate to your Helsinki profile with a strong suomi.fi-authentication, which will allow you to disable two-factor authentication from the 
                     <i>
                       My information
                     </i>
                     -page.
                   </p>
                   <p>
-                    If you do not yet have suomi.fi-authentication in your Helsinki profile, you can enable it by authenticating with suomi.fi and creating a strong authentication account via email.
-                     
+                    If you do not yet have suomi.fi-authentication in your Helsinki profile, you can enable it by authenticating with suomi.fi and creating a strong authentication account via email. 
                     <b>
                       Use the same email address
                     </b>
@@ -3553,8 +3538,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     <i>
                       suomi.fi
                     </i>
-                    -authentication with a different email address, you will unfortunately no longer be able to deactivate two-factor authentication.
-                     
+                    -authentication with a different email address, you will unfortunately no longer be able to deactivate two-factor authentication. 
                     <b>
                       Therefore, it is very important to save the initial authentication code.
                     </b>
@@ -3653,7 +3637,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   style="display: none;"
                 >
                   <p>
-                    If you can't remember your password, you can create a new one in the login window using the 
+                    If you can't remember your password, you can create a new one in the login window using the
+                     
                     <i>
                       I forgot my password 
                     </i>
@@ -3817,7 +3802,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   style="display: none;"
                 >
                   <p>
-                    You can change your password to a new one at any time from the Login and authentication section of the 
+                    You can change your password to a new one at any time from the Login and authentication section of the
+                     
                     <i>
                       My information
                     </i>
@@ -4012,8 +3998,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 Viewing and editing your own data
               </h2>
               <p>
-                By logging in to your Helsinki profile at
-                 
+                By logging in to your Helsinki profile at 
                 <a
                   href="https://profiili.hel.fi"
                 >
@@ -4089,7 +4074,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     <i>
                       Add
                     </i>
-                     button, or the 
+                     button, or the
+                     
                     <i>
                       Edit
                     </i>
@@ -4235,15 +4221,13 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     The services will use the data managed by the Helsinki profile as indicated. The first time you authenticate to a service, you can see what information the service uses.
                   </p>
                   <p>
-                    In your Helsinki profile, you can check this information later and, if you wish, delete your data from the service. It is not possible to delete your data if your service process has not been completed. It is also advisable to
-                     
+                    In your Helsinki profile, you can check this information later and, if you wish, delete your data from the service. It is not possible to delete your data if your service process has not been completed. It is also advisable to 
                     <a
                       href="#_Download_your_information"
                     >
                       download your own information
                     </a>
-                     
-                    before deleting it.
+                     before deleting it.
                   </p>
                   <div>
                     <img
@@ -4366,8 +4350,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     <a
                       href="https://fi.wikipedia.org/wiki/JSON"
                     >
-                      the
-                       
+                      the 
                       <u>
                         JSON file format, see Wikipedia (link opens in a new window)
                       </u>
@@ -4608,7 +4591,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     <i>
                       Delete my information
                     </i>
-                     button. You will then see a pop-up window where you will be asked to confirm that you want to delete your information. After confirming the request, all data will be deleted from the profile and from all services, if no service is pending.
+                     
+                    button. You will then see a pop-up window where you will be asked to confirm that you want to delete your information. After confirming the request, all data will be deleted from the profile and from all services, if no service is pending.
                   </p>
                   <p>
                     Some statutory services may require data to be retained for a limited or permanent period. Depending on the transaction and the service, data may be anonymized in some cases. If a statutory service is required to retain data, the profile or the data used by that service cannot be deleted.
@@ -5337,8 +5321,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   Helsinki-profiilia käytetään kirjautumalla Helsingin kaupungin asiointipalveluihin. Ensimmäisellä kirjautumiskerralla sinua pyydetään luomaan Helsinki-profiili ja antamaan suostumus palvelun tarvitsemien tietojen käyttöön.
                 </p>
                 <p>
-                  Voit myös luoda Helsinki-profiilin osoitteessa
-                   
+                  Voit myös luoda Helsinki-profiilin osoitteessa 
                   <a
                     href="https://profiili.hel.fi"
                   >
@@ -5460,8 +5443,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       Tunnistautumisen jälkeen sinulta kysytään sähköpostiosoite. Sähköpostiosoitteeseen lähetetään vahvistusviesti osoitteen aitouden varmistamiseksi.
                     </p>
                     <p>
-                      Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla.
-                       
+                      Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla. 
                       <b>
                         Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
                       </b>
@@ -5840,7 +5822,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       <i>
                         Olen unohtanut salasanani
                       </i>
-                       -linkkiä. Tästä ohjeet seuraavassa osiossa 
+                       -linkkiä. Tästä ohjeet seuraavassa osiossa
+                       
                       <a
                         href="#_Unohtunut_salasana"
                       >
@@ -5940,7 +5923,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       Kaksivaiheisen tunnistautumisen käyttöönotto
                     </h4>
                     <p>
-                      Voit ottaa kaksivaiheisen tunnistautumisen käyttöön Helsinki-profiilin Omat tiedot-sivulla 
+                      Voit ottaa kaksivaiheisen tunnistautumisen käyttöön Helsinki-profiilin Omat tiedot-sivulla
+                       
                       <i>
                         Kirjautuminen ja tunnistautuminen
                       </i>
@@ -5974,8 +5958,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       Seuraa käyttöönoton ohjeita ja lataa mobiililaitteellesi vapaavalintainen todennussovellus kuten Google Authenticator, Microsoft Authenticator tai FreeOTP.
                     </p>
                     <p>
-                      Avaa todennussovellus ja skannaa näytöllä näkyvä QR-koodi. Jos et voi skannata koodia, voit syöttää sen manuaalisesti valitsemalla
-                       
+                      Avaa todennussovellus ja skannaa näytöllä näkyvä QR-koodi. Jos et voi skannata koodia, voit syöttää sen manuaalisesti valitsemalla 
                       <i>
                         "Etkö voi lukea koodia?"
                       </i>
@@ -6024,15 +6007,13 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       </b>
                     </p>
                     <p>
-                      Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja seuraa
-                       
+                      Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja seuraa 
                       <a
                         href="#_Todennus_sovellus_ei"
                       >
                         Todennussovellus ei ole käytettävissä tai koodi ei toimi
                       </a>
-                       
-                      -osion ohjeita.
+                       -osion ohjeita.
                     </p>
                     <h4>
                       Kaksivaiheisen tunnistautumisen käytöstä poisto
@@ -6086,8 +6067,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       Jos sinulla ei ole pääsyä todennussovellukseesi esimerkiksi puhelimen vaihdon myötä, voit tunnistautua Helsinki-profiiliin vahvasti suomi.fi-tunnuksella, jolloin pääset ottamaan kaksivaiheisen tunnistautumisen pois päältä Omat tiedot-sivulta.
                     </p>
                     <p>
-                      Jos sinulla ei vielä ole suomi.fi-tunnistautuminen käytössä, voit ottaa sen käyttöön tunnistautumalla suomi.fi:llä ja luomalla
-                       
+                      Jos sinulla ei vielä ole suomi.fi-tunnistautuminen käytössä, voit ottaa sen käyttöön tunnistautumalla suomi.fi:llä ja luomalla 
                       <b>
                         samalla sähköpostiosoitteella
                       </b>
@@ -6194,8 +6174,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     style="display: none;"
                   >
                     <p>
-                      Jos et muista salasanaasi, voit luoda uuden kirjautumisikkunassa
-                       
+                      Jos et muista salasanaasi, voit luoda uuden kirjautumisikkunassa 
                       <i>
                         Olen unohtanut salasanani
                       </i>
@@ -6355,7 +6334,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     style="display: none;"
                   >
                     <p>
-                      Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta osiosta 
+                      Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta osiosta
+                       
                       <i>
                         Kirjautuminen ja tunnistautuminen.
                       </i>
@@ -6545,8 +6525,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   Omien tietojen katselu ja muokkaaminen
                 </h2>
                 <p>
-                  Kirjautumalla Helsinki-profiiliin osoitteessa
-                   
+                  Kirjautumalla Helsinki-profiiliin osoitteessa 
                   <a
                     href="https://profiili.hel.fi"
                   >
@@ -7761,8 +7740,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 Helsinki-profiilia käytetään kirjautumalla Helsingin kaupungin asiointipalveluihin. Ensimmäisellä kirjautumiskerralla sinua pyydetään luomaan Helsinki-profiili ja antamaan suostumus palvelun tarvitsemien tietojen käyttöön.
               </p>
               <p>
-                Voit myös luoda Helsinki-profiilin osoitteessa
-                 
+                Voit myös luoda Helsinki-profiilin osoitteessa 
                 <a
                   href="https://profiili.hel.fi"
                 >
@@ -7884,8 +7862,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     Tunnistautumisen jälkeen sinulta kysytään sähköpostiosoite. Sähköpostiosoitteeseen lähetetään vahvistusviesti osoitteen aitouden varmistamiseksi.
                   </p>
                   <p>
-                    Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla.
-                     
+                    Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla. 
                     <b>
                       Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
                     </b>
@@ -8264,7 +8241,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     <i>
                       Olen unohtanut salasanani
                     </i>
-                     -linkkiä. Tästä ohjeet seuraavassa osiossa 
+                     -linkkiä. Tästä ohjeet seuraavassa osiossa
+                     
                     <a
                       href="#_Unohtunut_salasana"
                     >
@@ -8364,7 +8342,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     Kaksivaiheisen tunnistautumisen käyttöönotto
                   </h4>
                   <p>
-                    Voit ottaa kaksivaiheisen tunnistautumisen käyttöön Helsinki-profiilin Omat tiedot-sivulla 
+                    Voit ottaa kaksivaiheisen tunnistautumisen käyttöön Helsinki-profiilin Omat tiedot-sivulla
+                     
                     <i>
                       Kirjautuminen ja tunnistautuminen
                     </i>
@@ -8398,8 +8377,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     Seuraa käyttöönoton ohjeita ja lataa mobiililaitteellesi vapaavalintainen todennussovellus kuten Google Authenticator, Microsoft Authenticator tai FreeOTP.
                   </p>
                   <p>
-                    Avaa todennussovellus ja skannaa näytöllä näkyvä QR-koodi. Jos et voi skannata koodia, voit syöttää sen manuaalisesti valitsemalla
-                     
+                    Avaa todennussovellus ja skannaa näytöllä näkyvä QR-koodi. Jos et voi skannata koodia, voit syöttää sen manuaalisesti valitsemalla 
                     <i>
                       "Etkö voi lukea koodia?"
                     </i>
@@ -8448,15 +8426,13 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     </b>
                   </p>
                   <p>
-                    Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja seuraa
-                     
+                    Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja seuraa 
                     <a
                       href="#_Todennus_sovellus_ei"
                     >
                       Todennussovellus ei ole käytettävissä tai koodi ei toimi
                     </a>
-                     
-                    -osion ohjeita.
+                     -osion ohjeita.
                   </p>
                   <h4>
                     Kaksivaiheisen tunnistautumisen käytöstä poisto
@@ -8510,8 +8486,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     Jos sinulla ei ole pääsyä todennussovellukseesi esimerkiksi puhelimen vaihdon myötä, voit tunnistautua Helsinki-profiiliin vahvasti suomi.fi-tunnuksella, jolloin pääset ottamaan kaksivaiheisen tunnistautumisen pois päältä Omat tiedot-sivulta.
                   </p>
                   <p>
-                    Jos sinulla ei vielä ole suomi.fi-tunnistautuminen käytössä, voit ottaa sen käyttöön tunnistautumalla suomi.fi:llä ja luomalla
-                     
+                    Jos sinulla ei vielä ole suomi.fi-tunnistautuminen käytössä, voit ottaa sen käyttöön tunnistautumalla suomi.fi:llä ja luomalla 
                     <b>
                       samalla sähköpostiosoitteella
                     </b>
@@ -8618,8 +8593,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   style="display: none;"
                 >
                   <p>
-                    Jos et muista salasanaasi, voit luoda uuden kirjautumisikkunassa
-                     
+                    Jos et muista salasanaasi, voit luoda uuden kirjautumisikkunassa 
                     <i>
                       Olen unohtanut salasanani
                     </i>
@@ -8779,7 +8753,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   style="display: none;"
                 >
                   <p>
-                    Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta osiosta 
+                    Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta osiosta
+                     
                     <i>
                       Kirjautuminen ja tunnistautuminen.
                     </i>
@@ -8969,8 +8944,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 Omien tietojen katselu ja muokkaaminen
               </h2>
               <p>
-                Kirjautumalla Helsinki-profiiliin osoitteessa
-                 
+                Kirjautumalla Helsinki-profiiliin osoitteessa 
                 <a
                   href="https://profiili.hel.fi"
                 >
@@ -10242,8 +10216,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   Helsingfors-profilen används för att logga in i Helsingfors stads tjänster. Första gången du loggar in blir du ombedd att skapa en Helsingforsprofilen och ge ditt samtycke till att de uppgifter som tjänsten kräver får användas.
                 </p>
                 <p>
-                  Du kan också skapa en Helsingforsprofil på
-                   
+                  Du kan också skapa en Helsingforsprofil på 
                   <a
                     href="https://profiili.hel.fi"
                   >
@@ -10365,8 +10338,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       Efter autentiseringen kommer du att bli ombedd att ange din e-postadress. Ett bekräftelsemeddelande skickas till e-postadressen för att verifiera att adressen är äkta.
                     </p>
                     <p>
-                      För att validera din e-post får du en sexsiffrig kod för den e-postadress du angav, som du måste ange i fältet på skärmen. I så fall kombineras de olika autentiseringsmetoderna och du kan se alla tjänster du använder på en gång.
-                       
+                      För att validera din e-post får du en sexsiffrig kod för den e-postadress du angav, som du måste ange i fältet på skärmen. I så fall kombineras de olika autentiseringsmetoderna och du kan se alla tjänster du använder på en gång. 
                       <b>
                         Observera dock att du inte kommer att kunna koppla bort dem senare.
                       </b>
@@ -10381,8 +10353,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </p>
                     <div>
                       <img
-                        alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
-            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en 
+                        alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att
+            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en
             Helsingfors-profil. Sammanslagningen kan inte tas bort senare."
                         loading="lazy"
                         src="/src/userGuide/assets/05-10-sahkopostiosoite-sv.png"
@@ -10390,8 +10362,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
-            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en 
+                        Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att
+            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en
             Helsingfors-profil. Sammanslagningen kan inte tas bort senare.
                       </p>
                     </div>
@@ -10443,8 +10415,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </p>
                     <div>
                       <img
-                        alt="Innan du kan använda den tjänst du vill ha eller innan du kan skapa Helsingforsprofilen måste du 
-          ge ditt samtycke till att dina uppgifter används. Utan samtycke kan dina uppgifter inte användas och 
+                        alt="Innan du kan använda den tjänst du vill ha eller innan du kan skapa Helsingforsprofilen måste du
+          ge ditt samtycke till att dina uppgifter används. Utan samtycke kan dina uppgifter inte användas och
           därför kan ingen profil skapas."
                         loading="lazy"
                         src="/src/userGuide/assets/08-profiilin-luominen-sv.png"
@@ -10452,8 +10424,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        Innan du kan använda den tjänst du vill ha eller innan du kan skapa Helsingforsprofilen måste du 
-          ge ditt samtycke till att dina uppgifter används. Utan samtycke kan dina uppgifter inte användas och 
+                        Innan du kan använda den tjänst du vill ha eller innan du kan skapa Helsingforsprofilen måste du
+          ge ditt samtycke till att dina uppgifter används. Utan samtycke kan dina uppgifter inte användas och
           därför kan ingen profil skapas.
                       </p>
                     </div>
@@ -10592,8 +10564,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </p>
                     <div>
                       <img
-                        alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
-            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en 
+                        alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att
+            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en
             Helsingfors-profil. Sammanslagningen kan inte tas bort senare."
                         loading="lazy"
                         src="/src/userGuide/assets/05-10-sahkopostiosoite-sv.png"
@@ -10601,8 +10573,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
-            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en 
+                        Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att
+            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en
             Helsingfors-profil. Sammanslagningen kan inte tas bort senare.
                       </p>
                     </div>
@@ -10644,7 +10616,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </p>
                     <div>
                       <img
-                        alt="När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste 
+                        alt="När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste
             också ge ditt samtycke till att dina uppgifter används för att skapa Helsingforsprofilen."
                         loading="lazy"
                         src="/src/userGuide/assets/13-helsinki-tunnus-teko-sv.png"
@@ -10652,7 +10624,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste 
+                        När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste
             också ge ditt samtycke till att dina uppgifter används för att skapa Helsingforsprofilen.
                       </p>
                     </div>
@@ -10750,11 +10722,13 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       </b>
                     </p>
                     <p>
-                      Om din Helsingforsprofil skapades med en Suomi.fi-autentisering kan du klicka på länken 
+                      Om din Helsingforsprofil skapades med en Suomi.fi-autentisering kan du klicka på länken
+                       
                       <i>
                         Jag har glömt mitt lösenord 
                       </i>
-                      på inloggningsskärmen. För instruktioner om hur du gör detta, se avsnittet 
+                      på inloggningsskärmen. För instruktioner om hur du gör detta, se avsnittet
+                       
                       <a
                         href="#_Glömt_lösenord"
                       >
@@ -10991,8 +10965,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       Om du ännu inte har en suomi.fi-autentisering kan du aktivera den genom att logga in med suomi.fi och skapa ett konto för stark autentisering med samma e-postadressen. Med samma e-postadressen kombineras lätt och stark autentisering och du kan inaktivera tvåstegsautentisering.
                     </p>
                     <p>
-                      Om du redan har en suomi.fi-autentisering med en annan e-postadress kan du tyvärr inte längre inaktivera tvåstegsinloggningen.
-                       
+                      Om du redan har en suomi.fi-autentisering med en annan e-postadress kan du tyvärr inte längre inaktivera tvåstegsinloggningen. 
                       <b>
                         Därför är det mycket viktigt att spara den första autentiseringskoden.
                       </b>
@@ -11142,7 +11115,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </div>
                     <div>
                       <img
-                        alt="I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken 
+                        alt="I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken
             kommer att vara giltig i 30 minuter."
                         loading="lazy"
                         src="/src/userGuide/assets/17-salasanan-vaihtoviesti-sv.png"
@@ -11150,13 +11123,13 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken 
+                        I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken
             kommer att vara giltig i 30 minuter.
                       </p>
                     </div>
                     <div>
                       <img
-                        alt="I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst 
+                        alt="I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst
             12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, nummer och specialtecken."
                         loading="lazy"
                         src="/src/userGuide/assets/18-uusi-salasana-sv.png"
@@ -11164,7 +11137,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst 
+                        I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst
             12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, nummer och specialtecken.
                       </p>
                     </div>
@@ -11381,8 +11354,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </p>
                     <div>
                       <img
-                        alt="En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en 
-            kombination av e-post och lösenord och går vidare till nästa tjänst, som kräver en Suomi.fi-autentisering. 
+                        alt="En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en
+            kombination av e-post och lösenord och går vidare till nästa tjänst, som kräver en Suomi.fi-autentisering.
             I detta fall måste du logga ut från den första tjänsten för att kunna autentisera dig till den nya tjänsten."
                         loading="lazy"
                         src="/src/userGuide/assets/19-yhteensopimaton-kirjautuminen-sv.png"
@@ -11390,8 +11363,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en 
-            kombination av e-post och lösenord och går vidare till nästa tjänst, som kräver en Suomi.fi-autentisering. 
+                        En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en
+            kombination av e-post och lösenord och går vidare till nästa tjänst, som kräver en Suomi.fi-autentisering.
             I detta fall måste du logga ut från den första tjänsten för att kunna autentisera dig till den nya tjänsten.
                       </p>
                     </div>
@@ -11445,8 +11418,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   Visa och redigera dina egna uppgifter
                 </h2>
                 <p>
-                  Genom att logga in på din Helsingforsprofil på
-                   
+                  Genom att logga in på din Helsingforsprofil på 
                   <a
                     href="https://profiili.hel.fi"
                   >
@@ -11521,7 +11493,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </p>
                     <div>
                       <img
-                        alt="I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från 
+                        alt="I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från
             Befolkningsregistercentralen och uppdateras också där."
                         loading="lazy"
                         src="/src/userGuide/assets/21-omat-tiedot-sv.png"
@@ -11529,7 +11501,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från 
+                        I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från
             Befolkningsregistercentralen och uppdateras också där.
                       </p>
                     </div>
@@ -11547,9 +11519,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </div>
                     <div>
                       <img
-                        alt="Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress. 
-            Tjänstens kontaktspråk avgör på vilket språk du tar emot meddelanden från tjänsten. Den 
-            autentiseringsmetoden hur du är inloggad i tjänsten, dvs. Suomi.fi-autentisering eller en kombination 
+                        alt="Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress.
+            Tjänstens kontaktspråk avgör på vilket språk du tar emot meddelanden från tjänsten. Den
+            autentiseringsmetoden hur du är inloggad i tjänsten, dvs. Suomi.fi-autentisering eller en kombination
             av e-post och lösenord, dvs. Helsingfors-ID."
                         loading="lazy"
                         src="/src/userGuide/assets/23-omat-yhteystiedot-sv.png"
@@ -11557,9 +11529,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress. 
-            Tjänstens kontaktspråk avgör på vilket språk du tar emot meddelanden från tjänsten. Den 
-            autentiseringsmetoden hur du är inloggad i tjänsten, dvs. Suomi.fi-autentisering eller en kombination 
+                        Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress.
+            Tjänstens kontaktspråk avgör på vilket språk du tar emot meddelanden från tjänsten. Den
+            autentiseringsmetoden hur du är inloggad i tjänsten, dvs. Suomi.fi-autentisering eller en kombination
             av e-post och lösenord, dvs. Helsingfors-ID.
                       </p>
                     </div>
@@ -11652,8 +11624,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       Tjänsterna kommer att använda de uppgifter som hanteras av Helsingforsprofilen enligt vad som anges. Första gången du identifierar dig i en tjänst kan du se vilka uppgifter tjänsten använder.
                     </p>
                     <p>
-                      I din Helsingforsprofil kan du kontrollera denna information senare och, om du vill, radera dina uppgifter från tjänsten. Det är inte möjligt att radera dina uppgifter om du befinner dig mitt i serviceprocessen. Det är också tillrådligt att
-                       
+                      I din Helsingforsprofil kan du kontrollera denna information senare och, om du vill, radera dina uppgifter från tjänsten. Det är inte möjligt att radera dina uppgifter om du befinner dig mitt i serviceprocessen. Det är också tillrådligt att 
                       <a
                         href="#_Ladda_ner_din"
                       >
@@ -11663,8 +11634,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </p>
                     <div>
                       <img
-                        alt="När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av 
-            dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina 
+                        alt="När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av
+            dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina
             tjänster i din Helsingforsprofil."
                         loading="lazy"
                         src="/src/userGuide/assets/24-olemassa-olevan-profiilin-kirjautuminen-sv.png"
@@ -11672,14 +11643,14 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av 
-            dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina 
+                        När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av
+            dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina
             tjänster i din Helsingforsprofil.
                       </p>
                     </div>
                     <div>
                       <img
-                        alt="I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad 
+                        alt="I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad
           dig på och vilka data de använder. Du kan också radera dina uppgifter från enskilda tjänster."
                         loading="lazy"
                         src="/src/userGuide/assets/25-kayttamasi-palvelut-sv.png"
@@ -11687,7 +11658,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad 
+                        I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad
           dig på och vilka data de använder. Du kan också radera dina uppgifter från enskilda tjänster.
                       </p>
                     </div>
@@ -11914,7 +11885,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </div>
                     <div>
                       <img
-                        alt="När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett 
+                        alt="När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett
             popup-bekräftelsemeddelande på skärmen för att förhindra oavsiktlig radering av dina uppgifter."
                         loading="lazy"
                         src="/src/userGuide/assets/28-tietojen-poisto-palvelusta-pop-up-sv.png"
@@ -11922,7 +11893,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett 
+                        När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett
             popup-bekräftelsemeddelande på skärmen för att förhindra oavsiktlig radering av dina uppgifter.
                       </p>
                     </div>
@@ -12012,7 +11983,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     style="display: none;"
                   >
                     <p>
-                      Om du vill radera hela din Helsingforsprofil kan du göra det genom att trycka på knappen 
+                      Om du vill radera hela din Helsingforsprofil kan du göra det genom att trycka på knappen
+                       
                       <i>
                         Radera min information
                       </i>
@@ -12029,7 +12001,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </p>
                     <div>
                       <img
-                        alt="I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken 
+                        alt="I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken
             du kan radera hela din Helsingforsprofil och den information som du har använt i olika tjänster."
                         loading="lazy"
                         src="/src/userGuide/assets/29-tietojen-poisto-sv.png"
@@ -12037,7 +12009,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <p
                         class="image-text"
                       >
-                        I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken 
+                        I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken
             du kan radera hela din Helsingforsprofil och den information som du har använt i olika tjänster.
                       </p>
                     </div>
@@ -12682,8 +12654,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 Helsingfors-profilen används för att logga in i Helsingfors stads tjänster. Första gången du loggar in blir du ombedd att skapa en Helsingforsprofilen och ge ditt samtycke till att de uppgifter som tjänsten kräver får användas.
               </p>
               <p>
-                Du kan också skapa en Helsingforsprofil på
-                 
+                Du kan också skapa en Helsingforsprofil på 
                 <a
                   href="https://profiili.hel.fi"
                 >
@@ -12805,8 +12776,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     Efter autentiseringen kommer du att bli ombedd att ange din e-postadress. Ett bekräftelsemeddelande skickas till e-postadressen för att verifiera att adressen är äkta.
                   </p>
                   <p>
-                    För att validera din e-post får du en sexsiffrig kod för den e-postadress du angav, som du måste ange i fältet på skärmen. I så fall kombineras de olika autentiseringsmetoderna och du kan se alla tjänster du använder på en gång.
-                     
+                    För att validera din e-post får du en sexsiffrig kod för den e-postadress du angav, som du måste ange i fältet på skärmen. I så fall kombineras de olika autentiseringsmetoderna och du kan se alla tjänster du använder på en gång. 
                     <b>
                       Observera dock att du inte kommer att kunna koppla bort dem senare.
                     </b>
@@ -12821,8 +12791,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </p>
                   <div>
                     <img
-                      alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
-            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en 
+                      alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att
+            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en
             Helsingfors-profil. Sammanslagningen kan inte tas bort senare."
                       loading="lazy"
                       src="/src/userGuide/assets/05-10-sahkopostiosoite-sv.png"
@@ -12830,8 +12800,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
-            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en 
+                      Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att
+            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en
             Helsingfors-profil. Sammanslagningen kan inte tas bort senare.
                     </p>
                   </div>
@@ -12883,8 +12853,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </p>
                   <div>
                     <img
-                      alt="Innan du kan använda den tjänst du vill ha eller innan du kan skapa Helsingforsprofilen måste du 
-          ge ditt samtycke till att dina uppgifter används. Utan samtycke kan dina uppgifter inte användas och 
+                      alt="Innan du kan använda den tjänst du vill ha eller innan du kan skapa Helsingforsprofilen måste du
+          ge ditt samtycke till att dina uppgifter används. Utan samtycke kan dina uppgifter inte användas och
           därför kan ingen profil skapas."
                       loading="lazy"
                       src="/src/userGuide/assets/08-profiilin-luominen-sv.png"
@@ -12892,8 +12862,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      Innan du kan använda den tjänst du vill ha eller innan du kan skapa Helsingforsprofilen måste du 
-          ge ditt samtycke till att dina uppgifter används. Utan samtycke kan dina uppgifter inte användas och 
+                      Innan du kan använda den tjänst du vill ha eller innan du kan skapa Helsingforsprofilen måste du
+          ge ditt samtycke till att dina uppgifter används. Utan samtycke kan dina uppgifter inte användas och
           därför kan ingen profil skapas.
                     </p>
                   </div>
@@ -13032,8 +13002,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </p>
                   <div>
                     <img
-                      alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
-            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en 
+                      alt="Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att
+            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en
             Helsingfors-profil. Sammanslagningen kan inte tas bort senare."
                       loading="lazy"
                       src="/src/userGuide/assets/05-10-sahkopostiosoite-sv.png"
@@ -13041,8 +13011,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att 
-            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en 
+                      Din e-postadress kommer att fungera som din inloggning till Helsingfors stads tjänster. Genom att
+            använda samma e-postadress för både Suomi.fi-autentiseringen och Helsingfors ID får du en
             Helsingfors-profil. Sammanslagningen kan inte tas bort senare.
                     </p>
                   </div>
@@ -13084,7 +13054,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </p>
                   <div>
                     <img
-                      alt="När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste 
+                      alt="När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste
             också ge ditt samtycke till att dina uppgifter används för att skapa Helsingforsprofilen."
                       loading="lazy"
                       src="/src/userGuide/assets/13-helsinki-tunnus-teko-sv.png"
@@ -13092,7 +13062,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste 
+                      När du skapar Helsingforsprofilen måste du fortfarande fylla i ditt namn och lösenord. Du måste
             också ge ditt samtycke till att dina uppgifter används för att skapa Helsingforsprofilen.
                     </p>
                   </div>
@@ -13190,11 +13160,13 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     </b>
                   </p>
                   <p>
-                    Om din Helsingforsprofil skapades med en Suomi.fi-autentisering kan du klicka på länken 
+                    Om din Helsingforsprofil skapades med en Suomi.fi-autentisering kan du klicka på länken
+                     
                     <i>
                       Jag har glömt mitt lösenord 
                     </i>
-                    på inloggningsskärmen. För instruktioner om hur du gör detta, se avsnittet 
+                    på inloggningsskärmen. För instruktioner om hur du gör detta, se avsnittet
+                     
                     <a
                       href="#_Glömt_lösenord"
                     >
@@ -13431,8 +13403,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     Om du ännu inte har en suomi.fi-autentisering kan du aktivera den genom att logga in med suomi.fi och skapa ett konto för stark autentisering med samma e-postadressen. Med samma e-postadressen kombineras lätt och stark autentisering och du kan inaktivera tvåstegsautentisering.
                   </p>
                   <p>
-                    Om du redan har en suomi.fi-autentisering med en annan e-postadress kan du tyvärr inte längre inaktivera tvåstegsinloggningen.
-                     
+                    Om du redan har en suomi.fi-autentisering med en annan e-postadress kan du tyvärr inte längre inaktivera tvåstegsinloggningen. 
                     <b>
                       Därför är det mycket viktigt att spara den första autentiseringskoden.
                     </b>
@@ -13582,7 +13553,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </div>
                   <div>
                     <img
-                      alt="I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken 
+                      alt="I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken
             kommer att vara giltig i 30 minuter."
                       loading="lazy"
                       src="/src/userGuide/assets/17-salasanan-vaihtoviesti-sv.png"
@@ -13590,13 +13561,13 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken 
+                      I det e-postmeddelande du får kommer det att finnas en länk för att ange ett nytt lösenord. Länken
             kommer att vara giltig i 30 minuter.
                     </p>
                   </div>
                   <div>
                     <img
-                      alt="I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst 
+                      alt="I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst
             12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, nummer och specialtecken."
                       loading="lazy"
                       src="/src/userGuide/assets/18-uusi-salasana-sv.png"
@@ -13604,7 +13575,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst 
+                      I fönstret för lösenordsändring måste du ange samma lösenord två gånger. Lösenordet måste vara minst
             12 tecken långt. Lösenordet måste innehålla både stora och små bokstäver, nummer och specialtecken.
                     </p>
                   </div>
@@ -13821,8 +13792,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </p>
                   <div>
                     <img
-                      alt="En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en 
-            kombination av e-post och lösenord och går vidare till nästa tjänst, som kräver en Suomi.fi-autentisering. 
+                      alt="En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en
+            kombination av e-post och lösenord och går vidare till nästa tjänst, som kräver en Suomi.fi-autentisering.
             I detta fall måste du logga ut från den första tjänsten för att kunna autentisera dig till den nya tjänsten."
                       loading="lazy"
                       src="/src/userGuide/assets/19-yhteensopimaton-kirjautuminen-sv.png"
@@ -13830,8 +13801,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en 
-            kombination av e-post och lösenord och går vidare till nästa tjänst, som kräver en Suomi.fi-autentisering. 
+                      En inkompatibel inloggningsmetod innebär för exempel att du har loggat in på en tjänst med en
+            kombination av e-post och lösenord och går vidare till nästa tjänst, som kräver en Suomi.fi-autentisering.
             I detta fall måste du logga ut från den första tjänsten för att kunna autentisera dig till den nya tjänsten.
                     </p>
                   </div>
@@ -13885,8 +13856,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 Visa och redigera dina egna uppgifter
               </h2>
               <p>
-                Genom att logga in på din Helsingforsprofil på
-                 
+                Genom att logga in på din Helsingforsprofil på 
                 <a
                   href="https://profiili.hel.fi"
                 >
@@ -13961,7 +13931,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </p>
                   <div>
                     <img
-                      alt="I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från 
+                      alt="I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från
             Befolkningsregistercentralen och uppdateras också där."
                       loading="lazy"
                       src="/src/userGuide/assets/21-omat-tiedot-sv.png"
@@ -13969,7 +13939,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från 
+                      I avsnittet Min information i Helsingforsprofilen kommer officiella uppgifter direkt från
             Befolkningsregistercentralen och uppdateras också där.
                     </p>
                   </div>
@@ -13987,9 +13957,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </div>
                   <div>
                     <img
-                      alt="Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress. 
-            Tjänstens kontaktspråk avgör på vilket språk du tar emot meddelanden från tjänsten. Den 
-            autentiseringsmetoden hur du är inloggad i tjänsten, dvs. Suomi.fi-autentisering eller en kombination 
+                      alt="Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress.
+            Tjänstens kontaktspråk avgör på vilket språk du tar emot meddelanden från tjänsten. Den
+            autentiseringsmetoden hur du är inloggad i tjänsten, dvs. Suomi.fi-autentisering eller en kombination
             av e-post och lösenord, dvs. Helsingfors-ID."
                       loading="lazy"
                       src="/src/userGuide/assets/23-omat-yhteystiedot-sv.png"
@@ -13997,9 +13967,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress. 
-            Tjänstens kontaktspråk avgör på vilket språk du tar emot meddelanden från tjänsten. Den 
-            autentiseringsmetoden hur du är inloggad i tjänsten, dvs. Suomi.fi-autentisering eller en kombination 
+                      Du kan lägga till och redigera dina andra adressuppgifter, ditt telefonnummer och din e-postadress.
+            Tjänstens kontaktspråk avgör på vilket språk du tar emot meddelanden från tjänsten. Den
+            autentiseringsmetoden hur du är inloggad i tjänsten, dvs. Suomi.fi-autentisering eller en kombination
             av e-post och lösenord, dvs. Helsingfors-ID.
                     </p>
                   </div>
@@ -14092,8 +14062,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     Tjänsterna kommer att använda de uppgifter som hanteras av Helsingforsprofilen enligt vad som anges. Första gången du identifierar dig i en tjänst kan du se vilka uppgifter tjänsten använder.
                   </p>
                   <p>
-                    I din Helsingforsprofil kan du kontrollera denna information senare och, om du vill, radera dina uppgifter från tjänsten. Det är inte möjligt att radera dina uppgifter om du befinner dig mitt i serviceprocessen. Det är också tillrådligt att
-                     
+                    I din Helsingforsprofil kan du kontrollera denna information senare och, om du vill, radera dina uppgifter från tjänsten. Det är inte möjligt att radera dina uppgifter om du befinner dig mitt i serviceprocessen. Det är också tillrådligt att 
                     <a
                       href="#_Ladda_ner_din"
                     >
@@ -14103,8 +14072,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </p>
                   <div>
                     <img
-                      alt="När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av 
-            dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina 
+                      alt="När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av
+            dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina
             tjänster i din Helsingforsprofil."
                       loading="lazy"
                       src="/src/userGuide/assets/24-olemassa-olevan-profiilin-kirjautuminen-sv.png"
@@ -14112,14 +14081,14 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av 
-            dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina 
+                      När du identifierar dig för en ny tjänst kommer du att bli ombedd att godkänna den användning av
+            dina uppgifter som tjänsten kräver. Du kan senare återvända till denna information på avsnittet Dina
             tjänster i din Helsingforsprofil.
                     </p>
                   </div>
                   <div>
                     <img
-                      alt="I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad 
+                      alt="I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad
           dig på och vilka data de använder. Du kan också radera dina uppgifter från enskilda tjänster."
                       loading="lazy"
                       src="/src/userGuide/assets/25-kayttamasi-palvelut-sv.png"
@@ -14127,7 +14096,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad 
+                      I avsnittet Dina tjänster i din Helsingforsprofil kan du se alla tjänster som du är autentiserad
           dig på och vilka data de använder. Du kan också radera dina uppgifter från enskilda tjänster.
                     </p>
                   </div>
@@ -14354,7 +14323,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </div>
                   <div>
                     <img
-                      alt="När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett 
+                      alt="När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett
             popup-bekräftelsemeddelande på skärmen för att förhindra oavsiktlig radering av dina uppgifter."
                       loading="lazy"
                       src="/src/userGuide/assets/28-tietojen-poisto-palvelusta-pop-up-sv.png"
@@ -14362,7 +14331,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett 
+                      När du klickar på knappen "Ta bort dina uppgifter från denna tjänst" får du ett
             popup-bekräftelsemeddelande på skärmen för att förhindra oavsiktlig radering av dina uppgifter.
                     </p>
                   </div>
@@ -14452,7 +14421,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   style="display: none;"
                 >
                   <p>
-                    Om du vill radera hela din Helsingforsprofil kan du göra det genom att trycka på knappen 
+                    Om du vill radera hela din Helsingforsprofil kan du göra det genom att trycka på knappen
+                     
                     <i>
                       Radera min information
                     </i>
@@ -14469,7 +14439,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   </p>
                   <div>
                     <img
-                      alt="I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken 
+                      alt="I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken
             du kan radera hela din Helsingforsprofil och den information som du har använt i olika tjänster."
                       loading="lazy"
                       src="/src/userGuide/assets/29-tietojen-poisto-sv.png"
@@ -14477,7 +14447,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <p
                       class="image-text"
                     >
-                      I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken 
+                      I avsnittet Min information i din Helsingforsprofil finns knappen Radera min information, med vilken
             du kan radera hela din Helsingforsprofil och den information som du har använt i olika tjänster.
                     </p>
                   </div>
@@ -15176,8 +15146,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               Helsinki-profiilia käytetään kirjautumalla Helsingin kaupungin asiointipalveluihin. Ensimmäisellä kirjautumiskerralla sinua pyydetään luomaan Helsinki-profiili ja antamaan suostumus palvelun tarvitsemien tietojen käyttöön.
             </p>
             <p>
-              Voit myös luoda Helsinki-profiilin osoitteessa
-               
+              Voit myös luoda Helsinki-profiilin osoitteessa 
               <a
                 href="https://profiili.hel.fi"
               >
@@ -15299,8 +15268,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   Tunnistautumisen jälkeen sinulta kysytään sähköpostiosoite. Sähköpostiosoitteeseen lähetetään vahvistusviesti osoitteen aitouden varmistamiseksi.
                 </p>
                 <p>
-                  Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla.
-                   
+                  Jos olet jo aiemmin luonut Helsinki-profiilin sähköpostiosoitteella ja salasanalla, voit käyttää samaa sähköpostiosoitetta. Tällöin eri tunnistautumistavat yhdistyvät, ja näet jatkossa kaikkien käyttämiesi palvelujen tiedot kerralla. 
                   <b>
                     Huomaa kuitenkin, ettei yhdistämistä voi perua myöhemmin.
                   </b>
@@ -15679,7 +15647,8 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <i>
                     Olen unohtanut salasanani
                   </i>
-                   -linkkiä. Tästä ohjeet seuraavassa osiossa 
+                   -linkkiä. Tästä ohjeet seuraavassa osiossa
+                   
                   <a
                     href="#_Unohtunut_salasana"
                   >
@@ -15779,7 +15748,8 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   Kaksivaiheisen tunnistautumisen käyttöönotto
                 </h4>
                 <p>
-                  Voit ottaa kaksivaiheisen tunnistautumisen käyttöön Helsinki-profiilin Omat tiedot-sivulla 
+                  Voit ottaa kaksivaiheisen tunnistautumisen käyttöön Helsinki-profiilin Omat tiedot-sivulla
+                   
                   <i>
                     Kirjautuminen ja tunnistautuminen
                   </i>
@@ -15813,8 +15783,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   Seuraa käyttöönoton ohjeita ja lataa mobiililaitteellesi vapaavalintainen todennussovellus kuten Google Authenticator, Microsoft Authenticator tai FreeOTP.
                 </p>
                 <p>
-                  Avaa todennussovellus ja skannaa näytöllä näkyvä QR-koodi. Jos et voi skannata koodia, voit syöttää sen manuaalisesti valitsemalla
-                   
+                  Avaa todennussovellus ja skannaa näytöllä näkyvä QR-koodi. Jos et voi skannata koodia, voit syöttää sen manuaalisesti valitsemalla 
                   <i>
                     "Etkö voi lukea koodia?"
                   </i>
@@ -15863,15 +15832,13 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   </b>
                 </p>
                 <p>
-                  Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja seuraa
-                   
+                  Jos sinulla ei ole pääsyä todennussovellukseesi, kirjaudu sisään profiiliin suomi.fi-tunnistautumisella ja seuraa 
                   <a
                     href="#_Todennus_sovellus_ei"
                   >
                     Todennussovellus ei ole käytettävissä tai koodi ei toimi
                   </a>
-                   
-                  -osion ohjeita.
+                   -osion ohjeita.
                 </p>
                 <h4>
                   Kaksivaiheisen tunnistautumisen käytöstä poisto
@@ -15925,8 +15892,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   Jos sinulla ei ole pääsyä todennussovellukseesi esimerkiksi puhelimen vaihdon myötä, voit tunnistautua Helsinki-profiiliin vahvasti suomi.fi-tunnuksella, jolloin pääset ottamaan kaksivaiheisen tunnistautumisen pois päältä Omat tiedot-sivulta.
                 </p>
                 <p>
-                  Jos sinulla ei vielä ole suomi.fi-tunnistautuminen käytössä, voit ottaa sen käyttöön tunnistautumalla suomi.fi:llä ja luomalla
-                   
+                  Jos sinulla ei vielä ole suomi.fi-tunnistautuminen käytössä, voit ottaa sen käyttöön tunnistautumalla suomi.fi:llä ja luomalla 
                   <b>
                     samalla sähköpostiosoitteella
                   </b>
@@ -16033,8 +15999,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 style="display: none;"
               >
                 <p>
-                  Jos et muista salasanaasi, voit luoda uuden kirjautumisikkunassa
-                   
+                  Jos et muista salasanaasi, voit luoda uuden kirjautumisikkunassa 
                   <i>
                     Olen unohtanut salasanani
                   </i>
@@ -16194,7 +16159,8 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                 style="display: none;"
               >
                 <p>
-                  Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta osiosta 
+                  Voit vaihtaa salasanasi uuteen milloin tahansa Omat tiedot-sivulta osiosta
+                   
                   <i>
                     Kirjautuminen ja tunnistautuminen.
                   </i>
@@ -16384,8 +16350,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               Omien tietojen katselu ja muokkaaminen
             </h2>
             <p>
-              Kirjautumalla Helsinki-profiiliin osoitteessa
-               
+              Kirjautumalla Helsinki-profiiliin osoitteessa 
               <a
                 href="https://profiili.hel.fi"
               >

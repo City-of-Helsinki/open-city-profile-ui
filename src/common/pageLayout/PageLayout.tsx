@@ -24,14 +24,9 @@ function PageLayout(props: Props): React.ReactElement {
   const { trackPageView } = useMatomo();
   const statisticsConsent = useGroupConsent('statistics');
   const { t } = useTranslation();
-  const {
-    focusElementSelector,
-    disableFocusing = false,
-    title = 'appName',
-  } = props;
+  const { focusElementSelector, disableFocusing = false, title = 'appName' } = props;
 
-  const pageTitle =
-    props.title !== 'appName' ? `${t(title)} - ${t('appName')}` : t('appName');
+  const pageTitle = props.title !== 'appName' ? `${t(title)} - ${t('appName')}` : t('appName');
 
   useEffect(() => {
     if (statisticsConsent) {
@@ -57,10 +52,7 @@ function PageLayout(props: Props): React.ReactElement {
           closeButtonLabelText: t('nav.signout'),
         }}
       />
-      <main
-        id={MAIN_CONTENT_ID}
-        className={classNames(styles.content, props.className)}
-      >
+      <main id={MAIN_CONTENT_ID} className={classNames(styles.content, props.className)}>
         {props.children}
       </main>
       <Footer />

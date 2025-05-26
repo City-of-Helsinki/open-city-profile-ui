@@ -1,19 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  Notification,
-  IconDownload,
-  NotificationSize,
-} from 'hds-react';
+import { Button, Notification, IconDownload, NotificationSize } from 'hds-react';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import contentStyles from '../../../common/cssHelpers/content.module.css';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import { useScrollIntoView } from '../../hooks/useScrollIntoView';
-import useAuthCodeQueues, {
-  AuthCodeQueuesProps,
-} from '../../../gdprApi/useAuthCodeQueues';
+import useAuthCodeQueues, { AuthCodeQueuesProps } from '../../../gdprApi/useAuthCodeQueues';
 import config from '../../../config';
 import { isInsufficientLoaResult } from '../../../gdprApi/actions/getDownloadData';
 import { QueueController } from '../../../common/actionQueue/actionQueue';
@@ -21,29 +14,19 @@ import { QueueController } from '../../../common/actionQueue/actionQueue';
 function DownloadData(): React.ReactElement {
   const [errorMessage, setErrorMessage] = useState<string>();
 
-  const onError: AuthCodeQueuesProps['onError'] = useCallback(
-    (controller: QueueController) => {
-      const failed = controller.getFailed();
-      const message = (failed && failed.errorMessage) || 'unknown';
+  const onError: AuthCodeQueuesProps['onError'] = useCallback((controller: QueueController) => {
+    const failed = controller.getFailed();
+    const message = (failed && failed.errorMessage) || 'unknown';
 
-      setErrorMessage(message);
-    },
-    []
-  );
+    setErrorMessage(message);
+  }, []);
 
-  const {
-    startOrRestart,
-    canStart,
-    shouldRestart,
-    hasError,
-    isLoading,
-    shouldResumeWithAuthCodes,
-    resume,
-  } = useAuthCodeQueues({
-    startPagePath: config.downloadPath,
-    queueName: 'downloadProfile',
-    onError,
-  });
+  const { startOrRestart, canStart, shouldRestart, hasError, isLoading, shouldResumeWithAuthCodes, resume } =
+    useAuthCodeQueues({
+      startPagePath: config.downloadPath,
+      queueName: 'downloadProfile',
+      onError,
+    });
   const canUserDoSomething = canStart() || shouldRestart();
   const { t } = useTranslation();
   const onDownloadClick = () => {
@@ -69,17 +52,12 @@ function DownloadData(): React.ReactElement {
                 size={NotificationSize.Small}
                 label={t('downloadData.extrapanelTextforLightAuthentication')}
                 type={'error'}
-                data-testid="download-profile-insufficient-loa-error"
+                data-testid='download-profile-insufficient-loa-error'
               >
                 {t('downloadData.extrapanelTextforLightAuthentication')}
               </Notification>
             ) : (
-              <Notification
-                size={NotificationSize.Small}
-                label=" "
-                type={'error'}
-                data-testid="download-profile-error"
-              >
+              <Notification size={NotificationSize.Small} label=' ' type={'error'} data-testid='download-profile-error'>
                 {t('notification.defaultErrorText')}
               </Notification>
             ))}
@@ -87,7 +65,7 @@ function DownloadData(): React.ReactElement {
             iconStart={<IconDownload />}
             onClick={onDownloadClick}
             disabled={!canUserDoSomething}
-            id="download-profile-button"
+            id='download-profile-button'
           >
             {!canUserDoSomething ? t('loading') : t('downloadData.button')}
           </Button>

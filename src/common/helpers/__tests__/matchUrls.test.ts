@@ -17,23 +17,23 @@ describe('matchUrls', () => {
   it('should return true when path is empty', () => {
     const emptyPaths = ['', '/', '?', '/?', '#', '/#', '?#', '/?#'];
     const crossCheckPaths = (paths: string[]) => {
-      paths.forEach(path => {
+      paths.forEach((path) => {
         expect(matchUrls(path)).toBeTruthy();
         expect(matchUrls(path, path)).toBeTruthy();
-        paths.forEach(otherPath => {
+        paths.forEach((otherPath) => {
           expect(matchUrls(path, otherPath)).toBeTruthy();
         });
       });
     };
     crossCheckPaths(emptyPaths);
     mockedWindowControls.setOrigin(secureDomain);
-    crossCheckPaths(emptyPaths.map(p => `${secureDomain}${p}`));
+    crossCheckPaths(emptyPaths.map((p) => `${secureDomain}${p}`));
     mockedWindowControls.setOrigin(insecureDomain);
-    crossCheckPaths(emptyPaths.map(p => `${insecureDomain}${p}`));
+    crossCheckPaths(emptyPaths.map((p) => `${insecureDomain}${p}`));
   });
   it('should return true when anchors mismatch', () => {
     const shouldMatchEachOther = ['/path', '/path#anchor1', '/path#anchor2'];
-    shouldMatchEachOther.forEach(path => {
+    shouldMatchEachOther.forEach((path) => {
       mockedWindowControls.setPath(shouldMatchEachOther[0]);
       expect(matchUrls(path)).toBeTruthy();
       expect(matchUrls(path, path)).toBeTruthy();
@@ -52,57 +52,35 @@ describe('matchUrls', () => {
     mockedWindowControls.setOrigin(secureDomain);
     mockedWindowControls.setPath(path);
     expect(matchUrls(path, `${insecureDomain}${path}`)).toBeFalsy();
-    expect(
-      matchUrls(`${secureDomain}${path}`, `${insecureDomain}${path}`)
-    ).toBeFalsy();
+    expect(matchUrls(`${secureDomain}${path}`, `${insecureDomain}${path}`)).toBeFalsy();
   });
   it('should return true when paths have mismatching backslashes and exactPaths option is false', () => {
-    const shouldMatchEachOther = [
-      '/pathA/pathB',
-      '/pathA/pathB/',
-      'pathA/pathB/',
-    ];
-    shouldMatchEachOther.forEach(path => {
+    const shouldMatchEachOther = ['/pathA/pathB', '/pathA/pathB/', 'pathA/pathB/'];
+    shouldMatchEachOther.forEach((path) => {
       mockedWindowControls.setPath(shouldMatchEachOther[0]);
       expect(matchUrls(path, undefined, { exactPaths: false })).toBeTruthy();
-      expect(
-        matchUrls(path, shouldMatchEachOther[1], { exactPaths: false })
-      ).toBeTruthy();
-      expect(
-        matchUrls(path, shouldMatchEachOther[2], { exactPaths: false })
-      ).toBeTruthy();
+      expect(matchUrls(path, shouldMatchEachOther[1], { exactPaths: false })).toBeTruthy();
+      expect(matchUrls(path, shouldMatchEachOther[2], { exactPaths: false })).toBeTruthy();
     });
   });
   it('should return false when paths have mismatching backslashes and exactPaths option is true (default)', () => {
-    const shouldNotMatchEachOther = [
-      '/pathA/pathB',
-      '/pathA/pathB/',
-      'pathA/pathB/',
-      'pathA/pathB/?',
-      'pathA/pathB/#',
-    ];
+    const shouldNotMatchEachOther = ['/pathA/pathB', '/pathA/pathB/', 'pathA/pathB/', 'pathA/pathB/?', 'pathA/pathB/#'];
     mockedWindowControls.setPath(shouldNotMatchEachOther[0]);
     expect(matchUrls(shouldNotMatchEachOther[1])).toBeFalsy();
-    expect(
-      matchUrls(shouldNotMatchEachOther[0], shouldNotMatchEachOther[1])
-    ).toBeFalsy();
-    expect(
-      matchUrls(shouldNotMatchEachOther[2], shouldNotMatchEachOther[0])
-    ).toBeFalsy();
+    expect(matchUrls(shouldNotMatchEachOther[0], shouldNotMatchEachOther[1])).toBeFalsy();
+    expect(matchUrls(shouldNotMatchEachOther[2], shouldNotMatchEachOther[0])).toBeFalsy();
     // note [2] and [1] match because slashes are added when merging missing origins to the path.
   });
   it('should return false when paths mismatch', () => {
     const shouldNotMatchEachOther = ['/pathA', '/pathAB', '/path', '/'];
-    shouldNotMatchEachOther.forEach(pathA => {
-      shouldNotMatchEachOther.forEach(pathB => {
+    shouldNotMatchEachOther.forEach((pathA) => {
+      shouldNotMatchEachOther.forEach((pathB) => {
         if (pathA === pathB) {
           return;
         }
         expect(matchUrls(pathA, pathB)).toBeFalsy();
         expect(matchUrls(`${secureDomain}${pathA}`, pathB)).toBeFalsy();
-        expect(
-          matchUrls(`${secureDomain}${pathA}`, `${secureDomain}${pathB}`)
-        ).toBeFalsy();
+        expect(matchUrls(`${secureDomain}${pathA}`, `${secureDomain}${pathB}`)).toBeFalsy();
       });
     });
   });
@@ -110,13 +88,13 @@ describe('matchUrls', () => {
     const path = '/path';
     const params = ['a=AA', 'b=Bee', 'one=1', 'x=%2f%20'];
     const hasAllParams = `${path}?extra=1&${params.join('&')}#anchor=1`;
-    params.forEach(param => {
+    params.forEach((param) => {
       expect(matchUrls(`${path}?${param}`, hasAllParams)).toBeTruthy();
       expect(matchUrls(path, hasAllParams)).toBeTruthy();
       expect(
         matchUrls(`${path}/?${param}#anchor=2`, hasAllParams, {
           exactPaths: false,
-        })
+        }),
       ).toBeTruthy();
     });
   });

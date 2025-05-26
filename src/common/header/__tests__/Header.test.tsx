@@ -20,7 +20,7 @@ it('language is changed from header language selector', async () => {
   const { getByText } = render(
     <TestLoginProvider>
       <Header />
-    </TestLoginProvider>
+    </TestLoginProvider>,
   );
 
   const ariaCurrent = 'aria-current';

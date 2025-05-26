@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  ButtonVariant,
-  Dialog,
-  DialogProps,
-  IconError,
-  ButtonPresetTheme,
-} from 'hds-react';
+import { Button, ButtonVariant, Dialog, DialogProps, IconError, ButtonPresetTheme } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import { ApolloError } from '@apollo/client';
 
@@ -20,10 +13,7 @@ export type Props = {
   onClose: () => void;
 };
 
-function DeleteProfileError({
-  error,
-  onClose,
-}: Props): React.ReactElement | null {
+function DeleteProfileError({ error, onClose }: Props): React.ReactElement | null {
   const { t } = useTranslation();
 
   if (!error) {
@@ -37,13 +27,7 @@ function DeleteProfileError({
   });
   const id = 'delete-profile-error-modal';
   const closeButtonText = t('notification.closeButtonText');
-  const {
-    titleId,
-    descriptionId,
-    dialogTargetElement,
-    closeButtonLabelText,
-    close,
-  } = getModalProps({
+  const { titleId, descriptionId, dialogTargetElement, closeButtonLabelText, close } = getModalProps({
     id,
     onClose,
     closeButtonText,
@@ -57,7 +41,7 @@ function DeleteProfileError({
   return (
     <Dialog
       id={id}
-      variant="danger"
+      variant='danger'
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
       isOpen={!!error}
@@ -67,7 +51,7 @@ function DeleteProfileError({
       <Dialog.Header
         id={titleId}
         title={t('deleteProfileModal.deletionErrorTitle')}
-        iconStart={<IconError color="var(--color-error)" aria-hidden="true" />}
+        iconStart={<IconError color='var(--color-error)' aria-hidden='true' />}
       />
       <Dialog.Content>
         {errorIsListOfServices ? (

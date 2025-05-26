@@ -1,13 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Footer as HDSFooter,
-  IconPhone,
-  Logo,
-  logoFiDark,
-  logoSvDark,
-  LogoSize,
-} from 'hds-react';
+import { Footer as HDSFooter, IconPhone, Logo, logoFiDark, logoSvDark, LogoSize } from 'hds-react';
 import { Link } from 'react-router-dom';
 
 import getLanguageCode from '../helpers/getLanguageCode';
@@ -20,8 +13,7 @@ const Footer = () => {
   const logoSrcFromLanguage = lang === 'sv' ? logoSvDark : logoFiDark;
 
   const createAriaLabel = (title: string) => {
-    const titleWithoutLastDot =
-      title.slice(-1) === '.' ? title.substring(0, title.length - 1) : title;
+    const titleWithoutLastDot = title.slice(-1) === '.' ? title.substring(0, title.length - 1) : title;
     return t('opensInNewWindow', {
       title: titleWithoutLastDot,
     });
@@ -43,11 +35,7 @@ const Footer = () => {
       <HDSFooter.Utilities>
         <HDSFooter.UtilityGroup
           headingLink={
-            <HDSFooter.GroupHeading
-              label={t('footer.needHelp')}
-              className={styles['utility-group-heading']}
-              as="h3"
-            />
+            <HDSFooter.GroupHeading label={t('footer.needHelp')} className={styles['utility-group-heading']} as='h3' />
           }
           className={styles['utility-group']}
         >
@@ -72,7 +60,7 @@ const Footer = () => {
             <HDSFooter.GroupHeading
               label={t('footer.otherContactInformation')}
               className={styles['utility-group-heading']}
-              as="h3"
+              as='h3'
             />
           }
           className={styles['utility-group']}
@@ -82,14 +70,14 @@ const Footer = () => {
             external
             href={t('footer.contactUsLink')}
             label={t('footer.contactUs')}
-            target="_blank"
+            target='_blank'
           />
           <HDSFooter.Link
             aria-label={createAriaLabel(t('footer.feedback'))}
             external
             href={t('footer.feedbackLink')}
             label={t('footer.feedback')}
-            target="_blank"
+            target='_blank'
           />
         </HDSFooter.UtilityGroup>
       </HDSFooter.Utilities>
@@ -97,13 +85,7 @@ const Footer = () => {
         copyrightHolder={t('cityOfHelsinki')}
         copyrightText={t('footer.reserveRights')}
         backToTopLabel={t('footer.backToTop')}
-        logo={
-          <Logo
-            src={logoSrcFromLanguage}
-            size={LogoSize.Medium}
-            alt={t('cityOfHelsinki')}
-          />
-        }
+        logo={<Logo src={logoSrcFromLanguage} size={LogoSize.Medium} alt={t('cityOfHelsinki')} />}
         logoHref={logoHref}
       >
         <HDSFooter.Link
@@ -111,19 +93,11 @@ const Footer = () => {
           external
           href={t('profileForm.termsFileDescriptionLink')}
           label={t('footer.privacy')}
-          target="_blank"
+          target='_blank'
         />
-        <HDSFooter.Link
-          as={Link}
-          to="/accessibility"
-          label={t('footer.accessibility')}
-        />
-        <HDSFooter.Link
-          as={Link}
-          to={config.cookiePagePath}
-          label={t('cookies.pageName')}
-        />
-        <HDSFooter.Link as={Link} to="/about" label={t('footer.about')} />
+        <HDSFooter.Link as={Link} to='/accessibility' label={t('footer.accessibility')} />
+        <HDSFooter.Link as={Link} to={config.cookiePagePath} label={t('cookies.pageName')} />
+        <HDSFooter.Link as={Link} to='/about' label={t('footer.about')} />
       </HDSFooter.Base>
     </HDSFooter>
   );

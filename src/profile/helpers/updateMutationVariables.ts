@@ -47,7 +47,7 @@ type PhoneInputs = {
 
 type CreatePartialProfileUpdateData = (
   formValues: Partial<FormValues>,
-  profile?: ProfileRoot
+  profile?: ProfileRoot,
 ) => UpdateMyProfileMutationVariables;
 
 const getPrimaryValue = (primary: Primary, profile?: ProfileRoot) => {
@@ -71,11 +71,7 @@ const getEmptyObject = (primary: Primary) => {
   }
 };
 
-export const getNodesFromProfile = (
-  primary: Primary,
-  profile?: ProfileRoot,
-  keepPrimary = false
-): InsertableNode[] => {
+export const getNodesFromProfile = (primary: Primary, profile?: ProfileRoot, keepPrimary = false): InsertableNode[] => {
   switch (primary) {
     case 'primaryPhone':
       return getPhonesFromNode(profile, keepPrimary);
@@ -125,48 +121,41 @@ const getObjectFields = (value: AddressNode | EmailNode | PhoneNode) => {
 function formMutationArrays<T extends AddressNode | EmailNode | PhoneNode>(
   formValueArray: T[],
   primary: Primary,
-  profile?: ProfileRoot
+  profile?: ProfileRoot,
 ): Record<string, unknown> {
-  const profileValues = [
-    getPrimaryValue(primary, profile),
-    ...getNodesFromProfile(primary, profile),
-  ];
+  const profileValues = [getPrimaryValue(primary, profile), ...getNodesFromProfile(primary, profile)];
 
   // Filter empty values (e.g user added new phone and pressed save without typing anything)
-  const formValues: T[] = formValueArray.filter(
-    value => !_.isEqual(value, getEmptyObject(primary))
-  );
+  const formValues: T[] = formValueArray.filter((value) => !_.isEqual(value, getEmptyObject(primary)));
 
   // Form array that contains values that needs to be updated.
   // Filter values that are not changed.
   const updateValues = formValues
-    .filter(value => {
-      const profileValue = profileValues.find(
-        profileValueItem => profileValueItem?.id === value.id
-      );
+    .filter((value) => {
+      const profileValue = profileValues.find((profileValueItem) => profileValueItem?.id === value.id);
 
       return value.id && !_.isEqual(value, profileValue);
     })
-    .map(value => getObjectFields(value));
+    .map((value) => getObjectFields(value));
 
   // From array that contains values that are new
   // Filter values that contain id
   const addValues = formValues
-    .filter(value => !value.id)
-    .map(value => {
+    .filter((value) => !value.id)
+    .map((value) => {
       const val = getObjectFields(value);
       // @ts-expect-error: Sending empty id will cause backend error so we remove it
       delete val.id;
       return val;
     });
 
-  const formValueIDs = formValues.map(value => value.id);
+  const formValueIDs = formValues.map((value) => value.id);
 
   // Form array that contains values that are to be removed
   // Checks new array against old one. If value is missing from new one, add it to array
   const removeValues = profileValues
-    .filter(value => value?.id && !formValueIDs.includes(value.id))
-    .map(value => value.id);
+    .filter((value) => value?.id && !formValueIDs.includes(value.id))
+    .map((value) => value.id);
 
   switch (primary) {
     case 'primaryAddress': {
@@ -204,10 +193,7 @@ function formMutationArrays<T extends AddressNode | EmailNode | PhoneNode>(
   }
 }
 
-const updateMutationVariables: CreatePartialProfileUpdateData = (
-  formValues,
-  profile
-) => {
+const updateMutationVariables: CreatePartialProfileUpdateData = (formValues, profile) => {
   const phoneData = formValues.phones
     ? formMutationArrays<PhoneNode>(formValues.phones, 'primaryPhone', profile)
     : null;
@@ -215,18 +201,10 @@ const updateMutationVariables: CreatePartialProfileUpdateData = (
     ? formMutationArrays<EmailNode>(formValues.emails, 'primaryEmail', profile)
     : null;
   const addressData = formValues.addresses
-    ? formMutationArrays<AddressNode>(
-        formValues.addresses,
-        'primaryAddress',
-        profile
-      )
+    ? formMutationArrays<AddressNode>(formValues.addresses, 'primaryAddress', profile)
     : null;
 
-  const updateNameProps = _.pick(formValues, [
-    'firstName',
-    'nickname',
-    'lastName',
-  ]);
+  const updateNameProps = _.pick(formValues, ['firstName', 'nickname', 'lastName']);
   const updateNameCount = Object.keys(updateNameProps).length;
 
   const userData = updateNameCount > 0 ? updateNameProps : null;

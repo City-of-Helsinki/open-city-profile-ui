@@ -24,7 +24,7 @@ describe('graphql client', () => {
         data: {
           profile: null,
         },
-      })
+      }),
     );
 
     try {
@@ -39,9 +39,6 @@ describe('graphql client', () => {
     } catch (e) {}
 
     const fetchOptions = fetchMock.mock.calls[0][1] as RequestInit;
-    expect(fetchOptions.headers).toHaveProperty(
-      'authorization',
-      'Bearer foo.bar.baz'
-    );
+    expect(fetchOptions.headers).toHaveProperty('authorization', 'Bearer foo.bar.baz');
   });
 });
