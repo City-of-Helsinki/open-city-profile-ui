@@ -33,15 +33,11 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
   const { t } = useTranslation();
   const location = useLocation();
 
-  const getContentFromPropsOrUrl = (
-    pageProps?: ErrorPageProps
-  ): ErrorPageContent => {
+  const getContentFromPropsOrUrl = (pageProps?: ErrorPageProps): ErrorPageContent => {
     if (pageProps && pageProps.content) {
       return pageProps.content;
     }
-    const contentFromUrl = queryParamsToObject<ErrorPageQueryParams>(
-      location.search
-    );
+    const contentFromUrl = queryParamsToObject<ErrorPageQueryParams>(location.search);
     return {
       message: contentFromUrl.message,
       title: contentFromUrl.title,
@@ -50,12 +46,7 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
     };
   };
 
-  const {
-    message,
-    title,
-    hideLoginButton,
-    hideFrontPageLink,
-  } = getContentFromPropsOrUrl(props);
+  const { message, title, hideLoginButton, hideFrontPageLink } = getContentFromPropsOrUrl(props);
   const notificationMessage = message || t('notification.defaultErrorText');
   const notificationTitle = title || t('notification.defaultErrorTitle');
   const { isAuthenticated } = useAuth();
@@ -63,10 +54,8 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
   return (
     <PageLayout
       title={notificationTitle}
-      data-testid="error-page-layout"
-      focusElementSelector={
-        '*[data-testid="error-page-notification"] *[role="heading"]'
-      }
+      data-testid='error-page-layout'
+      focusElementSelector={'*[data-testid="error-page-notification"] *[role="heading"]'}
     >
       <div
         className={classNames([
@@ -75,15 +64,11 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
           styles.wrapper,
         ])}
       >
-        <Notification
-          type="error"
-          label={notificationTitle}
-          data-testid="error-page-notification"
-        >
+        <Notification type='error' label={notificationTitle} data-testid='error-page-notification'>
           <p>{notificationMessage}</p>
           {hideFrontPageLink !== true && (
             <p>
-              <Link to="/" data-testid="error-page-frontpage-link">
+              <Link to='/' data-testid='error-page-frontpage-link'>
                 {t('nav.goToHomePage')}
               </Link>
             </p>

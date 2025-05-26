@@ -4,8 +4,7 @@ import { getSuccessfulQueue } from '../test.util';
 
 describe('actionQueueStorage', () => {
   const storageKey = 'test-key';
-  const manuallySetSessionStorage = (data: string) =>
-    sessionStorage.setItem(storageKey, data);
+  const manuallySetSessionStorage = (data: string) => sessionStorage.setItem(storageKey, data);
   const getStoredVersion = (action: Action) =>
     Object.entries(action).reduce((obj, [key, value]) => {
       const droppedProps = ['executor', 'options'];
@@ -49,9 +48,7 @@ describe('actionQueueStorage', () => {
       manuallySetSessionStorage(data);
       const fetchedData = getStoredQueue(storageKey);
       expect(fetchedData).toMatchObject([{ ...storedData }]);
-      expect((fetchedData as ActionQueue)[0].result).toMatchObject(
-        complexObject
-      );
+      expect((fetchedData as ActionQueue)[0].result).toMatchObject(complexObject);
       expect((fetchedData as ActionQueue)[0].data).toMatchObject(complexObject);
     });
     it('Returns undefined, if stored value is invalid JSON object', () => {
@@ -68,12 +65,10 @@ describe('actionQueueStorage', () => {
         errorMessage: undefined,
       };
       storeQueue(storageKey, [actionWithUndefinedProps]);
-      expect(getStoredQueue(storageKey)).toMatchObject([
-        getStoredVersion(actionWithUndefinedProps),
-      ]);
+      expect(getStoredQueue(storageKey)).toMatchObject([getStoredVersion(actionWithUndefinedProps)]);
     });
     it('Returns true when save was successful', () => {
-      const actionsWithOptionsAndData = getSuccessfulQueue().map(action => ({
+      const actionsWithOptionsAndData = getSuccessfulQueue().map((action) => ({
         ...action,
         options: {
           idleWhenActive: true,
@@ -86,23 +81,21 @@ describe('actionQueueStorage', () => {
       const queue = createQueueFromProps(actionsWithOptionsAndData);
       expect(storeQueue(storageKey, queue)).toBeTruthy();
       const restoredQueue = getStoredQueue(storageKey) as StoredQueue;
-      expect(restoredQueue).toMatchObject(
-        queue.map(action => getStoredVersion(action))
-      );
+      expect(restoredQueue).toMatchObject(queue.map((action) => getStoredVersion(action)));
       const action0 = restoredQueue[0] as Action;
       expect(action0.options).toBeUndefined();
       expect(action0.executor).toBeUndefined();
     });
     it('Returns false when save failed', () => {
       const queue = [
-        ({
+        {
           ...defaultAction,
           result: {
             toJSON: () => {
               throw new Error('UPS');
             },
           },
-        } as unknown) as Action,
+        } as unknown as Action,
       ];
       expect(storeQueue(storageKey, queue)).toBeFalsy();
     });
@@ -112,15 +105,9 @@ describe('actionQueueStorage', () => {
         result: 'not stored',
       };
       expect(storeQueue(storageKey, [action])).toBeTruthy();
-      expect((getStoredQueue(storageKey) as ActionQueue)[0].result).toBe(
-        action.result
-      );
-      expect(
-        storeQueue(storageKey, [{ ...action, options: { noStorage: true } }])
-      ).toBeTruthy();
-      expect(
-        (getStoredQueue(storageKey) as ActionQueue)[0].result
-      ).toBeUndefined();
+      expect((getStoredQueue(storageKey) as ActionQueue)[0].result).toBe(action.result);
+      expect(storeQueue(storageKey, [{ ...action, options: { noStorage: true } }])).toBeTruthy();
+      expect((getStoredQueue(storageKey) as ActionQueue)[0].result).toBeUndefined();
     });
   });
 });

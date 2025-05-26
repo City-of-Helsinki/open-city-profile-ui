@@ -8,13 +8,8 @@ import classNames from 'classnames';
 import Explanation from '../../../common/explanation/Explanation';
 import styles from './ServiceConnections.module.css';
 import commonContentStyles from '../../../common/cssHelpers/content.module.css';
-import {
-  ServiceConnectionsQueryVariables,
-  ServiceConnectionsRoot,
-} from '../../../graphql/typings';
-import getServiceConnectionData, {
-  ServiceConnectionData,
-} from '../../helpers/getServiceConnectionData';
+import { ServiceConnectionsQueryVariables, ServiceConnectionsRoot } from '../../../graphql/typings';
+import getServiceConnectionData, { ServiceConnectionData } from '../../helpers/getServiceConnectionData';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import ServiceConnection from './ServiceConnection';
 import ServiceConnectionRemover from './ServiceConnectionRemover';
@@ -23,47 +18,31 @@ import { authCodeQueuesStorageKey } from '../../../gdprApi/useAuthCodeQueues';
 import { SERVICE_CONNECTIONS } from '../../graphql/ServiceConnectionsQuery';
 
 function ServiceConnections(): React.ReactElement {
-  const [deletingServiceName, setSeletingServiceName] = useState<
-    string | undefined
-  >(() => {
+  const [deletingServiceName, setSeletingServiceName] = useState<string | undefined>(() => {
     const storedData = getStoredQueueData(authCodeQueuesStorageKey);
     return storedData ? (storedData.serviceName as string) : undefined;
   });
   const { t, i18n } = useTranslation();
-  const { data, loading, refetch, error } = useQuery<
-    ServiceConnectionsRoot,
-    ServiceConnectionsQueryVariables
-  >(SERVICE_CONNECTIONS, {
-    variables: createServiceConnectionsQueryVariables(i18n.language),
-    notifyOnNetworkStatusChange: true,
-    onError: (loadError: Error) => {
-      Sentry.captureException(loadError);
+  const { data, loading, refetch, error } = useQuery<ServiceConnectionsRoot, ServiceConnectionsQueryVariables>(
+    SERVICE_CONNECTIONS,
+    {
+      variables: createServiceConnectionsQueryVariables(i18n.language),
+      notifyOnNetworkStatusChange: true,
+      onError: (loadError: Error) => {
+        Sentry.captureException(loadError);
+      },
     },
-  });
-  const ContentWrapper = ({
-    children,
-  }: {
-    children: React.ReactNode;
-  }): React.ReactElement => (
-    <div
-      className={classNames([
-        commonContentStyles['common-bottom-padding'],
-        commonContentStyles['content'],
-      ])}
-    >
-      <div className={classNames([commonContentStyles['common-content-area']])}>
-        {children}
-      </div>
+  );
+  const ContentWrapper = ({ children }: { children: React.ReactNode }): React.ReactElement => (
+    <div className={classNames([commonContentStyles['common-bottom-padding'], commonContentStyles['content']])}>
+      <div className={classNames([commonContentStyles['common-content-area']])}>{children}</div>
     </div>
   );
 
   if (loading) {
     return (
       <ContentWrapper>
-        <div
-          className={styles['load-indicator']}
-          data-testid={'load-indicator'}
-        >
+        <div className={styles['load-indicator']} data-testid={'load-indicator'}>
           <LoadingSpinner small />
           <span>{t('loading')}</span>
         </div>
@@ -104,27 +83,20 @@ function ServiceConnections(): React.ReactElement {
   const onDeleteAborted = () => {
     setSeletingServiceName(undefined);
   };
-  const getServiceData = (name: string) =>
-    services.find(s => s.name === name) as ServiceConnectionData;
+  const getServiceData = (name: string) => services.find((s) => s.name === name) as ServiceConnectionData;
 
-  const deletingServiceData = deletingServiceName
-    ? getServiceData(deletingServiceName)
-    : undefined;
+  const deletingServiceData = deletingServiceName ? getServiceData(deletingServiceName) : undefined;
 
   return (
     <ContentWrapper>
       <Explanation
         heading={t('serviceConnections.title')}
-        text={
-          hasNoServices
-            ? t('serviceConnections.empty')
-            : t('serviceConnections.explanation')
-        }
-        dataTestId="service-connections-explanation"
+        text={hasNoServices ? t('serviceConnections.empty') : t('serviceConnections.explanation')}
+        dataTestId='service-connections-explanation'
         useHeadingHeroStyle
       />
       <div className={styles['panel-container']}>
-        {services.map(service => (
+        {services.map((service) => (
           <ServiceConnection
             key={service.name}
             service={service}

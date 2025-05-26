@@ -19,8 +19,7 @@ export const genericErrorTypes = {
   CANNOT_EXECUTE_ACTION_IS_ACTIVE: 'CANNOT_EXECUTE_ACTION_IS_ACTIVE',
   CANNOT_EXECUTE_ACTION_IS_NOT_NEXT: 'CANNOT_EXECUTE_ACTION_IS_NOT_NEXT',
   CANNOT_EXECUTE_ACTION_IS_INVALID: 'CANNOT_EXECUTE_ACTION_IS_INVALID',
-  CANNOT_EXECUTE_ANOTHER_ACTION_IS_ACTIVE:
-    'CANNOT_EXECUTE_ANOTHER_ACTION_IS_ACTIVE',
+  CANNOT_EXECUTE_ANOTHER_ACTION_IS_ACTIVE: 'CANNOT_EXECUTE_ANOTHER_ACTION_IS_ACTIVE',
   CANNOT_EXECUTE_ACTION_IS_COMPLETE: 'CANNOT_EXECUTE_ACTION_IS_COMPLETE',
   UNKNOWN_ACTION_TYPE: 'UNKNOWN_ACTION_TYPE',
 } as const;
@@ -33,11 +32,7 @@ export const actionLogTypes = {
   reset: 'reset',
 } as const;
 
-export type Logger = (
-  type: LogType,
-  action: Action | undefined,
-  queueController: QueueController
-) => void;
+export type Logger = (type: LogType, action: Action | undefined, queueController: QueueController) => void;
 
 export type InitialQueue = ActionProps[];
 export type ActionStatus =
@@ -66,9 +61,7 @@ export function isGenericError(loggedType: LogType) {
   return Object.keys(genericErrorTypes).includes(loggedType);
 }
 
-export function getActionType(
-  typeOrAction: Action | ActionProps | ActionType
-): ActionType {
+export function getActionType(typeOrAction: Action | ActionProps | ActionType): ActionType {
   return typeof typeOrAction === 'string' ? typeOrAction : typeOrAction.type;
 }
 
@@ -77,29 +70,25 @@ export function getActionType(
 export function canQueueContinueFrom(
   runner: QueueRunner,
   actionOrType: Action | ActionType,
-  acceptPending = false
+  acceptPending = false,
 ): boolean {
   const status = runner.getActionStatus(actionOrType);
   return status === 'next' || (acceptPending && status === 'pending');
 }
 
-export const resumeQueueFromAction = (
-  runner: QueueRunner,
-  actionOrType: Action | ActionType
-) => !!runner.resume(getActionType(actionOrType));
+export const resumeQueueFromAction = (runner: QueueRunner, actionOrType: Action | ActionType) =>
+  !!runner.resume(getActionType(actionOrType));
 
 export function createActionQueueRunner(
   initialQueueProps: InitialQueue,
-  logger: Logger = () => undefined
+  logger: Logger = () => undefined,
 ): QueueRunner {
   let pendingPromise: ActionExecutorPromise | undefined = undefined;
   let isDisposed = false;
-  const queueController = createQueueController(
-    createQueueFromProps(initialQueueProps)
-  );
+  const queueController = createQueueController(createQueueFromProps(initialQueueProps));
 
   // returns status of an action and what can be done with given action
-  const getActionStatus: QueueRunner['getActionStatus'] = typeOrAction => {
+  const getActionStatus: QueueRunner['getActionStatus'] = (typeOrAction) => {
     const action = queueController.getByType(getActionType(typeOrAction));
     if (!action || !action.type) {
       return 'invalid';
@@ -116,11 +105,7 @@ export function createActionQueueRunner(
     }
     const next = queueController.getNext();
     if (next) {
-      if (
-        action.active &&
-        getOption(action, 'idleWhenActive') &&
-        pendingPromise
-      ) {
+      if (action.active && getOption(action, 'idleWhenActive') && pendingPromise) {
         return 'pending';
       }
       return next.type === action.type ? 'next' : 'not-next';
@@ -139,8 +124,7 @@ export function createActionQueueRunner(
 
     const type = String(action.type);
     // log is called with the action, this gets the latest version from queue
-    const getCurrentActionVersion = () =>
-      queueController.getByType(type) as Action;
+    const getCurrentActionVersion = () => queueController.getByType(type) as Action;
 
     queueController.activateAction(type);
     logger('started', getCurrentActionVersion(), queueController);
@@ -150,29 +134,22 @@ export function createActionQueueRunner(
       logger('completed', getCurrentActionVersion(), queueController);
     }
 
-    const completeAction = (
-      propsForCompleteAction: Pick<ActionUpdateProps, 'errorMessage' | 'result'>
-    ) => {
+    const completeAction = (propsForCompleteAction: Pick<ActionUpdateProps, 'errorMessage' | 'result'>) => {
       pendingPromise = undefined;
       if (completeImmediately) {
         return;
       }
-      const logType: LogType = propsForCompleteAction.errorMessage
-        ? 'error'
-        : 'completed';
+      const logType: LogType = propsForCompleteAction.errorMessage ? 'error' : 'completed';
       if (logType === 'completed') {
         queueController.completeAction(type, propsForCompleteAction.result);
       } else {
-        queueController.setActionFailed(
-          type,
-          propsForCompleteAction.errorMessage
-        );
+        queueController.setActionFailed(type, propsForCompleteAction.errorMessage);
       }
       logger(logType, getCurrentActionVersion(), queueController);
     };
 
     promise
-      .then(value => {
+      .then((value) => {
         // promise can end after disposal
         if (isDisposed) {
           return;
@@ -184,7 +161,7 @@ export function createActionQueueRunner(
           execute(next);
         }
       })
-      .catch(e => {
+      .catch((e) => {
         if (isDisposed) {
           return;
         }
@@ -197,9 +174,7 @@ export function createActionQueueRunner(
 
   // returns an error why an action cannot be executed
   // or undefined if it can be executed
-  const getActionExecutionError = (
-    actionStatus: ActionStatus
-  ): GenericErrorType | undefined => {
+  const getActionExecutionError = (actionStatus: ActionStatus): GenericErrorType | undefined => {
     if (actionStatus === 'pending' || actionStatus === 'next') {
       return undefined;
     }
@@ -220,11 +195,7 @@ export function createActionQueueRunner(
   const resume = (startFrom: ActionType) => {
     const action = queueController.getByType(startFrom);
     if (!action) {
-      return logger(
-        genericErrorTypes.UNKNOWN_ACTION_TYPE,
-        undefined,
-        queueController
-      );
+      return logger(genericErrorTypes.UNKNOWN_ACTION_TYPE, undefined, queueController);
     }
     const actionstatus = getActionStatus(action);
     const exectionError = getActionExecutionError(actionstatus);

@@ -2,19 +2,10 @@ import {
   GdprServiceConnectionsQueryMyProfileServiceConnectionsFragment,
   GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment,
 } from '../../graphql/generatedTypes';
-import {
-  Mutable,
-  Service,
-  ServiceAllowedFieldsEdge,
-  ServiceConnectionsRoot,
-} from '../../graphql/typings';
+import { Mutable, Service, ServiceAllowedFieldsEdge, ServiceConnectionsRoot } from '../../graphql/typings';
 
-export default function getMyProfileWithServiceConnections(
-  addGdprQueryServiceData = false
-): ServiceConnectionsRoot {
-  const generateAllowedDataFieldEdge = (
-    fieldName: string
-  ): ServiceAllowedFieldsEdge => ({
+export default function getMyProfileWithServiceConnections(addGdprQueryServiceData = false): ServiceConnectionsRoot {
+  const generateAllowedDataFieldEdge = (fieldName: string): ServiceAllowedFieldsEdge => ({
     node: {
       fieldName,
       label: `${fieldName} Label`,
@@ -34,8 +25,7 @@ export default function getMyProfileWithServiceConnections(
               service: {
                 name: 'Profiili service name',
                 title: 'Profiili käyttöliittymä',
-                description:
-                  'Henkilön omien profiilitietojen hallintakäyttöliittymä.',
+                description: 'Henkilön omien profiilitietojen hallintakäyttöliittymä.',
                 isPureKeycloak: true,
                 allowedDataFields: {
                   edges: [
@@ -86,14 +76,13 @@ export default function getMyProfileWithServiceConnections(
     },
   };
   if (addGdprQueryServiceData) {
-    const connections = (data.myProfile
-      .serviceConnections as unknown) as GdprServiceConnectionsQueryMyProfileServiceConnectionsFragment;
-    connections.edges.forEach(edge => {
-      const service = edge?.node?.service as Mutable<
-        GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment
-      >;
+    const connections = data.myProfile
+      .serviceConnections as unknown as GdprServiceConnectionsQueryMyProfileServiceConnectionsFragment;
+    connections.edges.forEach((edge) => {
+      const service = edge?.node
+        ?.service as Mutable<GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment>;
       if (service) {
-        const serviceData = (service as unknown) as Service;
+        const serviceData = service as unknown as Service;
         service.gdprQueryScope = `${serviceData.name} gdprQueryScope`;
         service.gdprDeleteScope = `${serviceData.name} gdprDeleteScope`;
       }

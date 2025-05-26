@@ -33,8 +33,7 @@ function DeleteServiceConnectionModal(props: {
   const isPendingUserConfirmation = status === STATUS_PENDING_CONFIRMATION;
   const isFinished = isDone || hasError;
 
-  const shouldShowModal =
-    isLoading || isError || isPendingUserConfirmation || isFinished;
+  const shouldShowModal = isLoading || isError || isPendingUserConfirmation || isFinished;
 
   const getModalTitle = () => {
     if (hasError) {
@@ -79,7 +78,7 @@ function DeleteServiceConnectionModal(props: {
       return (
         <Loading
           isLoading
-          dataTestId="service-connection-delete-load-indicator"
+          dataTestId='service-connection-delete-load-indicator'
           loadingText={t('notification.removing')}
           alignLeft
         />
@@ -89,19 +88,14 @@ function DeleteServiceConnectionModal(props: {
       if (cannotDelete) {
         return (
           <>
-            <p data-testid="service-connection-delete-forbidden-text">
+            <p data-testid='service-connection-delete-forbidden-text'>
               {t('serviceConnections.connectionRemovalForbidden')}
             </p>
             <Trans
-              i18nKey="serviceConnections.contactServiceToDelete"
+              i18nKey='serviceConnections.contactServiceToDelete'
               components={{
                 linkToExternalServiceList: (
-                  <Link
-                    href={t('deleteProfileModal.urlToServiceList')}
-                    external
-                    openInNewTab
-                    size={LinkSize.Medium}
-                  >
+                  <Link href={t('deleteProfileModal.urlToServiceList')} external openInNewTab size={LinkSize.Medium}>
                     {''}
                   </Link>
                 ),
@@ -113,21 +107,19 @@ function DeleteServiceConnectionModal(props: {
 
       if (isInsufficientLoa) {
         return (
-          <p data-testid="service-connection-insufficient-load-text">
+          <p data-testid='service-connection-insufficient-load-text'>
             {t('serviceConnections.explanationforLightAuthentication')}
           </p>
         );
       }
 
       return (
-        <p data-testid="service-connection-delete-failed-text">
-          {t('serviceConnections.connectionRemovalError')}
-        </p>
+        <p data-testid='service-connection-delete-failed-text'>{t('serviceConnections.connectionRemovalError')}</p>
       );
     }
     if (isDone) {
       return (
-        <p data-testid="service-connection-delete-successful-text">
+        <p data-testid='service-connection-delete-successful-text'>
           {t('serviceConnections.connectionRemovalSuccess', {
             serviceName: service.title,
           })}
@@ -135,7 +127,7 @@ function DeleteServiceConnectionModal(props: {
       );
     }
     return (
-      <p data-testid="service-connection-delete-verification-text">
+      <p data-testid='service-connection-delete-verification-text'>
         {t('serviceConnections.connectionRemovalVerification', {
           serviceName: service.title,
         })}
@@ -148,7 +140,7 @@ function DeleteServiceConnectionModal(props: {
   }
   return (
     <ConfirmationModal
-      variant="danger"
+      variant='danger'
       hasError={hasError}
       isOpen={shouldShowModal}
       onClose={onCloseConfirmationModal}

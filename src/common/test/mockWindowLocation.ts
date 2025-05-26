@@ -8,14 +8,13 @@ export type MockedWindowLocationActions = {
   setOrigin: (path: string) => void;
 };
 export default function mockWindowLocation(): MockedWindowLocationActions {
-  const globalWin = (global as unknown) as Window;
+  const globalWin = global as unknown as Window;
   let oldWindowLocation: Location | undefined = globalWin.location;
   let baseUrl = 'http://localhost';
   let path = '';
   let search = '';
 
-  const unload = () =>
-    setTimeout(() => window.dispatchEvent(new Event('unload')), 20);
+  const unload = () => setTimeout(() => window.dispatchEvent(new Event('unload')), 20);
   const tracker = vi.fn(unload);
   const location = Object.defineProperties(
     {},
@@ -41,7 +40,7 @@ export default function mockWindowLocation(): MockedWindowLocationActions {
       origin: {
         get: () => baseUrl,
       },
-    }
+    },
   );
   Reflect.deleteProperty(globalWin, 'location');
   Reflect.defineProperty(globalWin, 'location', {
@@ -50,7 +49,7 @@ export default function mockWindowLocation(): MockedWindowLocationActions {
     writable: true,
   });
 
-  const getCalls = () => (tracker.mock.calls as unknown) as string[];
+  const getCalls = () => tracker.mock.calls as unknown as string[];
 
   return {
     restore: () => {

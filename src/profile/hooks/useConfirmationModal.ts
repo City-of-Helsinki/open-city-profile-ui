@@ -2,10 +2,7 @@ import { useRef, useState } from 'react';
 
 import { Props as ModalComponentProps } from '../components/modals/confirmationModal/ConfirmationModal';
 
-type AsyncModalProps = Pick<
-  ModalComponentProps,
-  'title' | 'content' | 'actionButtonText'
->;
+type AsyncModalProps = Pick<ModalComponentProps, 'title' | 'content' | 'actionButtonText'>;
 
 type AsyncModalPromiseControls = {
   resolve?: (result: boolean) => void;
@@ -33,7 +30,7 @@ export function useConfirmationModal(): AsyncModalReturnType {
     setIsOpen(componentPropsRef.current.isOpen);
   };
 
-  const showModal: AsyncModalReturnType['showModal'] = props => {
+  const showModal: AsyncModalReturnType['showModal'] = (props) => {
     const currentControls = controlsRef.current;
     if (currentControls.reject) {
       currentControls.reject(true);

@@ -67,23 +67,13 @@ describe('useActionQueue', () => {
 
   const TestUseActionQueueHook = (props: TestComponentProps = {}) => {
     const { fail, storageKey } = props;
-    const queue = useMemo(
-      () =>
-        fail ? getFailingQueueWithResult() : getSuccessfulQueueWithResult(),
-      [fail]
-    );
+    const queue = useMemo(() => (fail ? getFailingQueueWithResult() : getSuccessfulQueueWithResult()), [fail]);
     const [renderCount, rerender] = useState(0);
     const forceRender = () => {
-      rerender(n => n + 1);
+      rerender((n) => n + 1);
     };
     const { state, getQueueRunner, reset } = useActionQueue(queue, storageKey);
-    const {
-      lastActionType,
-      isComplete,
-      lastLogType,
-      hasError,
-      isActive,
-    } = state;
+    const { lastActionType, isComplete, lastLogType, hasError, isActive } = state;
 
     const next = getQueueRunner().getNext();
     const active = getQueueRunner().getActive();
@@ -98,9 +88,7 @@ describe('useActionQueue', () => {
         <span id={elementIds.renderCount}>{renderCount}</span>
         <span id={elementIds.nextAction}>{next ? next.type : ''}</span>
         <span id={elementIds.activeAction}>{active ? active.type : ''}</span>
-        <span id={elementIds.queueDump}>
-          {JSON.stringify(getQueueRunner().getQueue())}
-        </span>
+        <span id={elementIds.queueDump}>{JSON.stringify(getQueueRunner().getQueue())}</span>
         <button
           id={elementIds.startButton}
           onClick={() => {
@@ -143,7 +131,7 @@ describe('useActionQueue', () => {
   const UnmountingHookWrapper = (props: TestComponentProps = {}) => {
     const [shouldRender, updateShouldRender] = useState(true);
     const toggleComponent = () => {
-      updateShouldRender(bool => !bool);
+      updateShouldRender((bool) => !bool);
     };
     return (
       <div>
@@ -163,35 +151,25 @@ describe('useActionQueue', () => {
     const result = render(<UnmountingHookWrapper {...props} />);
     const { container } = result;
 
-    const getElementById = (id: string) =>
-      container.querySelector(`#${id}`) as HTMLElement;
+    const getElementById = (id: string) => container.querySelector(`#${id}`) as HTMLElement;
 
-    const getRenderCount = () =>
-      parseInt(getElementById(elementIds.renderCount).innerHTML, 10);
+    const getRenderCount = () => parseInt(getElementById(elementIds.renderCount).innerHTML, 10);
 
-    const getLastActionType = () =>
-      getElementById(elementIds.lastActionType).innerHTML || undefined;
+    const getLastActionType = () => getElementById(elementIds.lastActionType).innerHTML || undefined;
 
-    const getLastLogType = () =>
-      getElementById(elementIds.lastLogType).innerHTML || undefined;
+    const getLastLogType = () => getElementById(elementIds.lastLogType).innerHTML || undefined;
 
-    const getIsComplete = () =>
-      getElementById(elementIds.isComplete).innerHTML === 'true';
+    const getIsComplete = () => getElementById(elementIds.isComplete).innerHTML === 'true';
 
-    const getHasError = () =>
-      getElementById(elementIds.hasError).innerHTML === 'true';
+    const getHasError = () => getElementById(elementIds.hasError).innerHTML === 'true';
 
-    const getIsActive = () =>
-      getElementById(elementIds.isActive).innerHTML === 'true';
+    const getIsActive = () => getElementById(elementIds.isActive).innerHTML === 'true';
 
-    const getActiveActionType = () =>
-      getElementById(elementIds.activeAction).innerHTML || undefined;
+    const getActiveActionType = () => getElementById(elementIds.activeAction).innerHTML || undefined;
 
-    const getNextActionType = () =>
-      getElementById(elementIds.nextAction).innerHTML || undefined;
+    const getNextActionType = () => getElementById(elementIds.nextAction).innerHTML || undefined;
 
-    const getQueue = () =>
-      JSON.parse(getElementById(elementIds.queueDump).innerHTML);
+    const getQueue = () => JSON.parse(getElementById(elementIds.queueDump).innerHTML);
 
     const start = () => {
       const button = getElementById(elementIds.startButton);
@@ -294,22 +272,16 @@ describe('useActionQueue', () => {
     start();
 
     await waitFor(() => {
-      expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingActionSource1.type })
-      );
+      expect(getState()).toMatchObject(getActionStartedState({ type: resolvingActionSource1.type }));
     });
     completeActionExecutor(resolvingActionSource1.type);
     await waitFor(() => {
-      expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingActionSource2.type })
-      );
+      expect(getState()).toMatchObject(getActionStartedState({ type: resolvingActionSource2.type }));
     });
 
     completeActionExecutor(resolvingActionSource2.type);
     await waitFor(() => {
-      expect(getState()).toMatchObject(
-        getActionCompleteState({ type: resolvingActionSource2.type })
-      );
+      expect(getState()).toMatchObject(getActionCompleteState({ type: resolvingActionSource2.type }));
     });
   });
   it('Failing queue changes state accordingly ', async () => {
@@ -326,7 +298,7 @@ describe('useActionQueue', () => {
         getActionCompleteState({
           type: rejectingActionSource.type,
           errorMessage: (rejectingActionSource.rejectValue as Error).message,
-        })
+        }),
       );
     });
   });
@@ -335,45 +307,30 @@ describe('useActionQueue', () => {
     start();
 
     await waitFor(() => {
-      expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingActionSource1.type })
-      );
+      expect(getState()).toMatchObject(getActionStartedState({ type: resolvingActionSource1.type }));
     });
     await rerender();
     await rerender();
     await waitFor(() => {
-      expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingActionSource1.type })
-      );
+      expect(getState()).toMatchObject(getActionStartedState({ type: resolvingActionSource1.type }));
     });
     await rerender();
     await rerender();
     completeActionExecutor(resolvingActionSource1.type);
     await waitFor(() => {
-      expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingActionSource2.type })
-      );
+      expect(getState()).toMatchObject(getActionStartedState({ type: resolvingActionSource2.type }));
     });
     completeActionExecutor(resolvingActionSource2.type);
     await waitFor(() => {
-      expect(getState()).toMatchObject(
-        getActionCompleteState({ type: resolvingActionSource2.type })
-      );
+      expect(getState()).toMatchObject(getActionCompleteState({ type: resolvingActionSource2.type }));
     });
   });
   it('Unmounting stops the queue and when mounting again, the queue is in its initial state.', async () => {
-    const {
-      start,
-      getState,
-      toggleComponentMounting,
-      rerender,
-    } = renderTestComponent();
+    const { start, getState, toggleComponentMounting, rerender } = renderTestComponent();
     start();
 
     await waitFor(() => {
-      expect(getState()).toMatchObject(
-        getActionStartedState({ type: resolvingActionSource1.type })
-      );
+      expect(getState()).toMatchObject(getActionStartedState({ type: resolvingActionSource1.type }));
     });
     await toggleComponentMounting();
     // completing an action after queue is cleared has no effect.
@@ -401,9 +358,7 @@ describe('useActionQueue', () => {
     expect(getNextActionType()).toBeUndefined();
   });
   it('Discards stored queue if it is older than 2 minutes.', async () => {
-    const queueInComponent = createQueueFromProps(
-      getSuccessfulQueueWithResult()
-    );
+    const queueInComponent = createQueueFromProps(getSuccessfulQueueWithResult());
     const queueInStorage = cloneArray(queueInComponent);
     queueInStorage[0].updatedAt = Date.now() - 60 * 1000 * 2 - 1;
     queueInStorage[0].result = 'this should not be set';

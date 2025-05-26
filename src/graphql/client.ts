@@ -6,14 +6,11 @@ import i18n from '../i18n/i18nInit';
 import pickProfileApiToken from '../auth/pickProfileApiToken';
 
 function delay(time: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, time));
+  return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 // After login and in some other cases, the API tokens are not immediately available.
-async function waitForApiToken(
-  maxRetries = 10,
-  interval = 200
-): Promise<string> {
+async function waitForApiToken(maxRetries = 10, interval = 200): Promise<string> {
   let retries = 0;
 
   while (retries < maxRetries) {

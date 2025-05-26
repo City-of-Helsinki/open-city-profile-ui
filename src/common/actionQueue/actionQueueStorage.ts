@@ -1,11 +1,5 @@
 import { AnyObject } from '../../graphql/typings';
-import {
-  Action,
-  ActionQueue,
-  ActionUpdateProps,
-  getData,
-  getOption,
-} from './actionQueue';
+import { Action, ActionQueue, ActionUpdateProps, getData, getOption } from './actionQueue';
 
 type ActionStorageProps = ActionUpdateProps & Pick<Action, 'type' | 'data'>;
 export type StoredQueue = ActionStorageProps[];
@@ -19,31 +13,20 @@ export function getStoredQueue(storageKey: string): StoredQueue | undefined {
 }
 
 function createStorageVersion(queue: ActionQueue): StoredQueue {
-  return queue.map(
-    (action): ActionStorageProps => {
-      const {
-        result,
-        updatedAt,
-        complete,
-        errorMessage,
-        type,
-        active,
-        data,
-      } = action;
+  return queue.map((action): ActionStorageProps => {
+    const { result, updatedAt, complete, errorMessage, type, active, data } = action;
 
-      const storageResult =
-        getOption(action, 'noStorage') === true ? undefined : result;
-      return {
-        updatedAt,
-        complete,
-        errorMessage,
-        type,
-        active,
-        result: storageResult,
-        data,
-      };
-    }
-  );
+    const storageResult = getOption(action, 'noStorage') === true ? undefined : result;
+    return {
+      updatedAt,
+      complete,
+      errorMessage,
+      type,
+      active,
+      result: storageResult,
+      data,
+    };
+  });
 }
 
 function createStorageValue(queue: ActionQueue) {

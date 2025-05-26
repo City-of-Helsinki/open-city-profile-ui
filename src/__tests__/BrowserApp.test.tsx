@@ -7,7 +7,7 @@ import BrowserApp from '../BrowserApp';
 describe('BrowserApp', () => {
   const pushTracker = vi.fn();
   beforeAll(() => {
-    ((global.window as unknown) as { _paq: { push: Mock } })._paq = {
+    (global.window as unknown as { _paq: { push: Mock } })._paq = {
       push: pushTracker,
     };
   });

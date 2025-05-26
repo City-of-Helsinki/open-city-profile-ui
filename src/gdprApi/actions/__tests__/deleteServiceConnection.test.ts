@@ -39,9 +39,7 @@ describe('deleteServiceConnection.ts', () => {
         data: returnNoData
           ? undefined
           : {
-              ...getServiceConnectionDeleteResult(
-                returnForbidden ? ['ERROR'] : undefined
-              ),
+              ...getServiceConnectionDeleteResult(returnForbidden ? ['ERROR'] : undefined),
             },
       };
       if (returnError === true) {
@@ -58,10 +56,7 @@ describe('deleteServiceConnection.ts', () => {
       'https://api.hel.fi/auth/helsinkiprofile': 'foo.bar.baz',
     });
 
-    const queue = [
-      keycloakAuthCodeParserAction,
-      createDeleteServiceConnectionAction(serviceName),
-    ];
+    const queue = [keycloakAuthCodeParserAction, createDeleteServiceConnectionAction(serviceName)];
     const runner = createActionQueueRunner(queue);
 
     runner.updateActionAndQueue(keycloakAuthCodeParserAction.type, {
@@ -111,37 +106,25 @@ describe('deleteServiceConnection.ts', () => {
 
     it('When result has no "success" flag, promise is rejected', async () => {
       const { runner, getAction } = initTests({ returnForbidden: true });
-      const [errorMessage] = await to(
-        getAction().executor(getAction(), runner)
-      );
-      expect(
-        isForbiddenResult(({ errorMessage } as unknown) as ActionResults)
-      ).toBeTruthy();
+      const [errorMessage] = await to(getAction().executor(getAction(), runner));
+      expect(isForbiddenResult({ errorMessage } as unknown as ActionResults)).toBeTruthy();
     });
     it('Errors are handled', async () => {
       const { runner, getAction } = initTests({ returnError: true });
-      const [errorMessage, result] = await to(
-        getAction().executor(getAction(), runner)
-      );
+      const [errorMessage, result] = await to(getAction().executor(getAction(), runner));
       expect(result).toBeUndefined();
       expect(errorMessage).toBeDefined();
 
-      expect(
-        isForbiddenResult(({ errorMessage } as unknown) as ActionResults)
-      ).toBeFalsy();
+      expect(isForbiddenResult({ errorMessage } as unknown as ActionResults)).toBeFalsy();
       expect(isSuccessResult({ result } as ActionResults)).toBeFalsy();
     });
     it('Empty result rejects too', async () => {
       const { runner, getAction } = initTests({ returnNoData: true });
-      const [errorMessage, result] = await to(
-        getAction().executor(getAction(), runner)
-      );
+      const [errorMessage, result] = await to(getAction().executor(getAction(), runner));
       expect(result).toBeUndefined();
       expect(errorMessage).toBeDefined();
 
-      expect(
-        isForbiddenResult(({ errorMessage } as unknown) as ActionResults)
-      ).toBeFalsy();
+      expect(isForbiddenResult({ errorMessage } as unknown as ActionResults)).toBeFalsy();
       expect(isSuccessResult({ result } as ActionResults)).toBeFalsy();
     });
     it('Result should not be stored to sessionStorage', async () => {

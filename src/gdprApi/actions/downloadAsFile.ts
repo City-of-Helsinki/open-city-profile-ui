@@ -1,17 +1,11 @@
 import FileSaver from 'file-saver';
 
-import {
-  ActionExecutor,
-  ActionProps,
-} from '../../common/actionQueue/actionQueue';
+import { ActionExecutor, ActionProps } from '../../common/actionQueue/actionQueue';
 import { getDownloadDataResultOrError } from './getDownloadData';
 
 const downloadAsFile = 'downloadAsFile';
 
-const downloadAsFileExecutor: ActionExecutor = async (
-  action,
-  queueController
-) => {
+const downloadAsFileExecutor: ActionExecutor = async (action, queueController) => {
   const data = getDownloadDataResultOrError(queueController).result;
   if (!data) {
     return Promise.reject('No profile data');

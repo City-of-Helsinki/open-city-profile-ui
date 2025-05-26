@@ -2,10 +2,7 @@ import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import ErrorPage, {
-  ErrorPageContent,
-  ErrorPageQueryParams,
-} from '../ErrorPage';
+import ErrorPage, { ErrorPageContent, ErrorPageQueryParams } from '../ErrorPage';
 import i18n from '../../../../common/test/testi18nInit';
 import config from '../../../../config';
 import TestLoginProvider from '../../../../common/test/TestLoginProvider';
@@ -41,31 +38,15 @@ describe('<ErrorPage /> ', () => {
     }
   };
 
-  const getErrorsFromElementAndParamsMatch = (
-    params: ErrorPageQueryParams | ErrorPageContent
-  ): string => {
-    const titleElementCount = getElementCount(
-      () => result.getAllByText(params.title || genericTitle).length
-    );
-    const messageElementCount = getElementCount(
-      () => result.getAllByText(params.message || genericMessage).length
-    );
-    const loginButtonCount = getElementCount(
-      () => result.getAllByTestId('error-page-login-button').length
-    );
-    const frontPageLinkCount = getElementCount(
-      () => result.getAllByTestId('error-page-frontpage-link').length
-    );
+  const getErrorsFromElementAndParamsMatch = (params: ErrorPageQueryParams | ErrorPageContent): string => {
+    const titleElementCount = getElementCount(() => result.getAllByText(params.title || genericTitle).length);
+    const messageElementCount = getElementCount(() => result.getAllByText(params.message || genericMessage).length);
+    const loginButtonCount = getElementCount(() => result.getAllByTestId('error-page-login-button').length);
+    const frontPageLinkCount = getElementCount(() => result.getAllByTestId('error-page-frontpage-link').length);
 
-    const expectedLoginButtonCount =
-      params.hideLoginButton === false || params.hideLoginButton === undefined
-        ? 1
-        : 0;
+    const expectedLoginButtonCount = params.hideLoginButton === false || params.hideLoginButton === undefined ? 1 : 0;
     const expectedFrontPageLinkCount =
-      params.hideFrontPageLink === false ||
-      params.hideFrontPageLink === undefined
-        ? 1
-        : 0;
+      params.hideFrontPageLink === false || params.hideFrontPageLink === undefined ? 1 : 0;
     if (titleElementCount !== 1) {
       return `There should be only one element with given title, but found ${titleElementCount}`;
     }
@@ -95,7 +76,7 @@ describe('<ErrorPage /> ', () => {
         <MemoryRouter>
           <ErrorPage />
         </MemoryRouter>
-      </TestLoginProvider>
+      </TestLoginProvider>,
     );
     expect(getErrorsFromElementAndParamsMatch({})).toBe('');
   });
@@ -114,7 +95,7 @@ describe('<ErrorPage /> ', () => {
         <MemoryRouter>
           <ErrorPage />
         </MemoryRouter>
-      </TestLoginProvider>
+      </TestLoginProvider>,
     );
     expect(getErrorsFromElementAndParamsMatch({ title })).toBe('');
   });
@@ -135,7 +116,7 @@ describe('<ErrorPage /> ', () => {
         <MemoryRouter>
           <ErrorPage />
         </MemoryRouter>
-      </TestLoginProvider>
+      </TestLoginProvider>,
     );
     expect(getErrorsFromElementAndParamsMatch({ title, message })).toBe('');
   });
@@ -158,14 +139,14 @@ describe('<ErrorPage /> ', () => {
         <TestLoginProvider>
           <ErrorPage />
         </TestLoginProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(
       getErrorsFromElementAndParamsMatch({
         title,
         message,
         hideLoginButton,
-      })
+      }),
     ).toBe('');
   });
   it(`renders
@@ -191,7 +172,7 @@ describe('<ErrorPage /> ', () => {
         <MemoryRouter>
           <ErrorPage />
         </MemoryRouter>
-      </TestLoginProvider>
+      </TestLoginProvider>,
     );
     expect(
       getErrorsFromElementAndParamsMatch({
@@ -199,7 +180,7 @@ describe('<ErrorPage /> ', () => {
         message,
         hideLoginButton,
         hideFrontPageLink,
-      })
+      }),
     ).toBe('');
   });
   it(`renders
@@ -226,13 +207,12 @@ describe('<ErrorPage /> ', () => {
         <TestLoginProvider>
           <ErrorPage />
         </TestLoginProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(
       getErrorsFromElementAndParamsMatch({
-        hideLoginButton:
-          'user is authenticated so this must be set to expect 0 login buttons',
-      })
+        hideLoginButton: 'user is authenticated so this must be set to expect 0 login buttons',
+      }),
     ).toBe('');
   });
   it(`uses "content"-prop and creates content from that even if url params are set`, async () => {
@@ -257,7 +237,7 @@ describe('<ErrorPage /> ', () => {
         <MemoryRouter>
           <ErrorPage content={content} />
         </MemoryRouter>
-      </TestLoginProvider>
+      </TestLoginProvider>,
     );
     expect(getErrorsFromElementAndParamsMatch(content)).toBe('');
   });
@@ -279,7 +259,7 @@ describe('<ErrorPage /> ', () => {
         <MemoryRouter>
           <ErrorPage content={content} />
         </MemoryRouter>
-      </TestLoginProvider>
+      </TestLoginProvider>,
     );
     expect(getErrorsFromElementAndParamsMatch(content)).toBe('');
   });

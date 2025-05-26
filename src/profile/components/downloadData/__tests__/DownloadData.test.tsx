@@ -10,14 +10,8 @@ import DownloadData from '../DownloadData';
 import i18n from '../../../../common/test/testi18nInit';
 import mockWindowLocation from '../../../../common/test/mockWindowLocation';
 import config from '../../../../config';
-import {
-  ActionMockData,
-  initMockQueue,
-} from '../../../../common/actionQueue/mock.util';
-import {
-  AuthCodeQueuesProps,
-  authCodeQueuesStorageKey,
-} from '../../../../gdprApi/useAuthCodeQueues';
+import { ActionMockData, initMockQueue } from '../../../../common/actionQueue/mock.util';
+import { AuthCodeQueuesProps, authCodeQueuesStorageKey } from '../../../../gdprApi/useAuthCodeQueues';
 import {
   getScenarioForScopes,
   getScenarioWhichGoesFromStartToAuthRedirectAutomatically,
@@ -53,8 +47,7 @@ describe('<DownloadData /> ', () => {
 
   const t = i18n.getFixedT('fi');
 
-  const initTests = async () =>
-    renderComponentWithMocksAndContexts(vi.fn(), <DownloadData />);
+  const initTests = async () => renderComponentWithMocksAndContexts(vi.fn(), <DownloadData />);
 
   const submitButton: ElementSelector = {
     id: 'download-profile-button',
@@ -99,7 +92,7 @@ describe('<DownloadData /> ', () => {
             rejectValue: new Error('Failed'),
           },
         ],
-      })
+      }),
     );
 
     const { clickElement, waitForElement } = await initTests();
@@ -118,7 +111,7 @@ describe('<DownloadData /> ', () => {
             rejectValue: new Error('insufficientLoa'),
           },
         ],
-      })
+      }),
     );
 
     const { clickElement, waitForElement } = await initTests();

@@ -85,15 +85,9 @@ export type ServiceAllowedFieldsNode = ServiceConnectionsQueryEdgesNodeServiceAl
 export type ServiceAllowedFieldsEdge = ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesFragment;
 export type GdprServiceConnectionsRoot = GdprServiceConnectionsQuery;
 // eslint-disable-next-line max-len
-export type GdprServiceConnectionService = GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment;
+export type GdprServiceConnectionService =
+  GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment;
 
-export {
-  PhoneType,
-  EmailType,
-  AddressType,
-  Language,
-  TranslationLanguage,
-  LoginMethodType,
-} from './generatedTypes';
+export { PhoneType, EmailType, AddressType, Language, TranslationLanguage, LoginMethodType } from './generatedTypes';
 
 export type AnyObject<T = unknown> = Record<string, T>;

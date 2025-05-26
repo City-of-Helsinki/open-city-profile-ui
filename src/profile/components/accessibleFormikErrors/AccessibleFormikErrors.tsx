@@ -22,11 +22,9 @@ const AccessibleFormikErrors = (props: Props): React.ReactElement | null => {
   const formFields = getFormFields(props.dataType);
   const errorsToText = () =>
     errorList
-      .map(errorKey => {
+      .map((errorKey) => {
         const errorMessage = formik.errors[errorKey];
-        const { message, options } = getErrorMessageWithOptions(
-          errorMessage as string
-        );
+        const { message, options } = getErrorMessageWithOptions(errorMessage as string);
         const formField: FormField = formFields[errorKey];
         if (!formField) {
           return '';
@@ -49,11 +47,7 @@ const AccessibleFormikErrors = (props: Props): React.ReactElement | null => {
   }
 
   return (
-    <div
-      role="alert"
-      className={commonFormStyles['visually-hidden']}
-      data-testid={`${props.dataType}-error-list`}
-    >
+    <div role='alert' className={commonFormStyles['visually-hidden']} data-testid={`${props.dataType}-error-list`}>
       {t('validation.errorTitleForScreenReaders')} {currentErrorText}
     </div>
   );

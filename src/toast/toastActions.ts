@@ -1,9 +1,4 @@
-import {
-  Toast,
-  ToastPushAction,
-  ToastDeleteAction,
-  ToastHideAction,
-} from './types';
+import { Toast, ToastPushAction, ToastDeleteAction, ToastHideAction } from './types';
 
 export const PUSH_TOAST = 'PUSH_TOAST';
 export const DELETE_TOAST = 'DELETE_TOAST';

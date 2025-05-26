@@ -3,17 +3,14 @@ import { render, RenderResult } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { Provider as ProfileProvider } from '../../profile/context/ProfileContext';
-import {
-  MockApolloClientProvider,
-  ResponseProvider,
-} from './MockApolloClientProvider';
+import { MockApolloClientProvider, ResponseProvider } from './MockApolloClientProvider';
 import ToastProvider from '../../toast/__mocks__/ToastProvider';
 import ProfileContextAsHTML from './ProfileContextAsHTML';
 
 function renderComponentTestDOM(
   responseProvider: ResponseProvider,
   children: React.ReactElement,
-  initialEntries: string[] = ['/']
+  initialEntries: string[] = ['/'],
 ): RenderResult {
   return render(
     <MemoryRouter initialEntries={initialEntries}>
@@ -23,8 +20,8 @@ function renderComponentTestDOM(
           <ProfileContextAsHTML />
         </ProfileProvider>
       </MockApolloClientProvider>
-      <div id="modal-container" />
-    </MemoryRouter>
+      <div id='modal-container' />
+    </MemoryRouter>,
   );
 }
 

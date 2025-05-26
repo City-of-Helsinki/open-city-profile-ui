@@ -13,12 +13,11 @@
     "plugin:import/typescript",
     "plugin:jsx-a11y/recommended",
     "plugin:vitest-globals/recommended",
-    "plugin:prettier/recommended" // this should always be the last item on this array
+    "prettier"
   ],
   "plugins": [
     "react",
     "@typescript-eslint",
-    "prettier",
     "import",
     "sonarjs",
     "jsx-a11y"
@@ -93,10 +92,6 @@
       }
     ],
     "sonarjs/no-duplicate-string": "error",
-    "arrow-parens": [
-      "error",
-      "as-needed"
-    ],
     "arrow-body-style": [
       "error",
       "as-needed"
@@ -108,7 +103,7 @@
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "jsx-a11y/no-autofocus": "off",
     "import/no-named-as-default": "off",
-    "import/no-named-as-default-member": "off"
+    "import/no-named-as-default-member": "off",
   },
   "settings": {
     "react": {

@@ -45,19 +45,15 @@ function ServiceConnection({
           <p>
             <strong>{t('serviceConnections.servicePersonalData')}</strong>
           </p>
-          {getAllowedDataFieldsFromService(service).map(node => (
+          {getAllowedDataFieldsFromService(service).map((node) => (
             <CheckedLabel
               key={node.fieldName}
               value={node.label || node.fieldName}
               className={styles['allowed-data-field']}
             />
           ))}
-          <p className={styles['created-at']}>
-            {t('serviceConnections.created')}
-          </p>
-          <p className={styles['date-and-time']}>
-            {getDateTime(service.connectionCreatedAt)}
-          </p>
+          <p className={styles['created-at']}>{t('serviceConnections.created')}</p>
+          <p className={styles['date-and-time']}>{getDateTime(service.connectionCreatedAt)}</p>
         </div>
         <Button
           onClick={() => onDeletion(service)}

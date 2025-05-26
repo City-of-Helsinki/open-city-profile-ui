@@ -1,20 +1,10 @@
-import {
-  Button,
-  IconPenLine,
-  IconMinusCircle,
-  IconStarFill,
-  IconStar,
-  ButtonVariant,
-} from 'hds-react';
+import { Button, IconPenLine, IconMinusCircle, IconStarFill, IconStar, ButtonVariant } from 'hds-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import { EditData, EditDataValue } from '../../helpers/editData';
-import {
-  Action,
-  ActionListenerReturnType,
-} from '../../hooks/useProfileDataEditor';
+import { Action, ActionListenerReturnType } from '../../hooks/useProfileDataEditor';
 
 type Props = {
   handler: ActionHandler;
@@ -36,36 +26,20 @@ export type ActionAriaLabels = {
   primary?: string;
 };
 
-export type ActionHandler = (
-  action: Action,
-  newValue?: Partial<EditDataValue>
-) => ActionListenerReturnType;
+export type ActionHandler = (action: Action, newValue?: Partial<EditDataValue>) => ActionListenerReturnType;
 
 function EditButtons(props: Props): React.ReactElement {
-  const {
-    actions,
-    handler,
-    editButtonId,
-    removeButtonId,
-    disabled,
-    testId,
-    ariaLabels,
-  } = props;
+  const { actions, handler, editButtonId, removeButtonId, disabled, testId, ariaLabels } = props;
   const { t } = useTranslation();
   const { primary, removable, setPrimary } = actions;
   const editButtonIdAttr = editButtonId ? { id: editButtonId } : undefined;
   return (
     <div className={commonFormStyles['edit-buttons-container']}>
       {setPrimary && primary && (
-        <div
-          className={commonFormStyles['primary-container']}
-          data-testid={`${testId}-primary-indicator`}
-        >
-          <IconStarFill aria-hidden="true" />
-          <span aria-hidden="true">{t('profileForm.primary')}</span>
-          <span className={commonFormStyles['visually-hidden']}>
-            {ariaLabels.primary}
-          </span>
+        <div className={commonFormStyles['primary-container']} data-testid={`${testId}-primary-indicator`}>
+          <IconStarFill aria-hidden='true' />
+          <span aria-hidden='true'>{t('profileForm.primary')}</span>
+          <span className={commonFormStyles['visually-hidden']}>{ariaLabels.primary}</span>
         </div>
       )}
       {setPrimary && !primary && (
