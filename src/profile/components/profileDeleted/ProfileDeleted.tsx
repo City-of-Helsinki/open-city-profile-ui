@@ -17,7 +17,7 @@ function ProfileDeleted(): React.ReactElement {
   useEffect(() => {
     if (timeUntilLogout > 0) {
       const interval = setInterval(() => {
-        setTimeUntilLogout(time => time - 1);
+        setTimeUntilLogout((time) => time - 1);
       }, 1000);
       return () => clearInterval(interval);
     } else {

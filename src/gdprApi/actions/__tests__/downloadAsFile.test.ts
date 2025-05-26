@@ -53,8 +53,6 @@ describe('downloadAsFile.ts', () => {
     await to(getAction().executor(getAction(), runner));
     const data = getFileData() as Blob;
     // data.text() does not exist in jsDom so cannot compare contents.
-    expect(data.size).toBe(
-      new Blob([(storedData.downloadMyProfile as unknown) as BlobPart]).size
-    );
+    expect(data.size).toBe(new Blob([storedData.downloadMyProfile as unknown as BlobPart]).size);
   });
 });

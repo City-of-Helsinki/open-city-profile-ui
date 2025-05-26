@@ -23,7 +23,7 @@ const renderComponent = () =>
   render(
     <MemoryRouter>
       <PasswordChangeCallback />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 
 const getNavigateCallArgument = () => mockNavigate.mock.calls[0][0];
@@ -37,7 +37,7 @@ describe('<PasswordChangeCallback />', () => {
     renderComponent();
 
     await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
     });
   });
 
@@ -45,7 +45,7 @@ describe('<PasswordChangeCallback />', () => {
     renderComponent();
 
     await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
     expect(getNavigateCallArgument()).toBe('/');

@@ -7,9 +7,7 @@ import { Link, LinkProps } from '../Link';
 import i18n from '../../../i18n/i18nInit';
 
 describe('<Link /> ', () => {
-  const renderComponentAndReturnElement = (
-    props: LinkProps & { isTransTest?: boolean }
-  ): HTMLElement => {
+  const renderComponentAndReturnElement = (props: LinkProps & { isTransTest?: boolean }): HTMLElement => {
     const { children, isTransTest, ...rest } = props;
     const id = 'new-window-link';
     const result = render(
@@ -29,7 +27,7 @@ describe('<Link /> ', () => {
             </Link>,
           ]}
         />
-      )
+      ),
     );
     return result.container.querySelector(`#${id}`) as HTMLElement;
   };
@@ -50,7 +48,7 @@ describe('<Link /> ', () => {
     });
     const hasIcon = element.innerHTML.includes('<svg');
     expect(element.getAttribute(ariaLabelAttribute)).toEqual(
-      `${title}. ${openInNewTabTranslation} ${externalLinkTranslation}`
+      `${title}. ${openInNewTabTranslation} ${externalLinkTranslation}`,
     );
     expect(element.getAttribute('href')).toEqual(href);
     expect(element.textContent).toEqual(title);
@@ -65,9 +63,7 @@ describe('<Link /> ', () => {
       href,
       openInNewTab: true,
     });
-    expect(element.getAttribute(ariaLabelAttribute)).toEqual(
-      `${titleWithoutDot}. ${openInNewTabTranslation}`
-    );
+    expect(element.getAttribute(ariaLabelAttribute)).toEqual(`${titleWithoutDot}. ${openInNewTabTranslation}`);
   });
 
   it('Aria-label can be overridden with props', async () => {
@@ -105,7 +101,7 @@ describe('<Link /> ', () => {
 
   it('Icon is rendered, if iconReplacement is set', async () => {
     const IconReplacement = () => (
-      <div className="icon-replacement">
+      <div className='icon-replacement'>
         <IconAlertCircle />
       </div>
     );

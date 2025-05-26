@@ -1,19 +1,12 @@
 import to from 'await-to-js';
 import FakeTimers from '@sinonjs/fake-timers';
 
-import {
-  createRedirectorAndCatcherActionProps,
-  getStartPagePathFromQueue,
-} from '../redirectionHandlers';
+import { createRedirectorAndCatcherActionProps, getStartPagePathFromQueue } from '../redirectionHandlers';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import { Action, getData } from '../../../common/actionQueue/actionQueue';
 import mockWindowLocation from '../../../common/test/mockWindowLocation';
 import { AnyObject } from '../../../graphql/typings';
-import {
-  createFailedActionParams,
-  createNextActionParams,
-  thirtySecondsInMs,
-} from '../utils';
+import { createFailedActionParams, createNextActionParams, thirtySecondsInMs } from '../utils';
 import { baseAction } from '../../../common/actionQueue/test.util';
 
 describe('redirectionHandlers.ts', () => {
@@ -21,11 +14,7 @@ describe('redirectionHandlers.ts', () => {
   const wrongPath = '/wrong-path';
   const redirectorType = 'a-redirector';
   const catcherType = 'a-catcher';
-  const [redirector, catcher] = createRedirectorAndCatcherActionProps(
-    expectedPath,
-    redirectorType,
-    catcherType
-  );
+  const [redirector, catcher] = createRedirectorAndCatcherActionProps(expectedPath, redirectorType, catcherType);
   // this must match the value in redirectionHandlers action;
   const rematchDelay = 2000;
   const mockedWindowControls = mockWindowLocation();
@@ -63,9 +52,7 @@ describe('redirectionHandlers.ts', () => {
       it('sets the given path and catcher action type to the url. Result is path?next=action.type', async () => {
         const { runner, getRedirectorAction } = initTests();
         const action = getRedirectorAction();
-        const [, result] = ((await to(
-          action.executor(action, runner)
-        )) as unknown) as [undefined, AnyObject];
+        const [, result] = (await to(action.executor(action, runner))) as unknown as [undefined, AnyObject];
         expect(result.isRedirectionRequest).toBeTruthy();
         expect(result.path as string).toBe(resolvePath);
       });
@@ -77,9 +64,7 @@ describe('redirectionHandlers.ts', () => {
         const { runner, getCatcherAction } = initTests();
 
         mockedWindowControls.setPath(expectedPath);
-        mockedWindowControls.setSearch(
-          createNextActionParams(getCatcherAction())
-        );
+        mockedWindowControls.setSearch(createNextActionParams(getCatcherAction()));
         const waitAction = getCatcherAction();
         const promise = waitAction.executor(waitAction, runner);
         const waitResult = await promise;
@@ -90,20 +75,16 @@ describe('redirectionHandlers.ts', () => {
         const { runner, getCatcherAction } = initTests();
 
         mockedWindowControls.setPath(expectedPath);
-        mockedWindowControls.setSearch(
-          createNextActionParams({ type: 'wrongAction' } as Action)
-        );
+        mockedWindowControls.setSearch(createNextActionParams({ type: 'wrongAction' } as Action));
         const waitAction = getCatcherAction();
-        const promise = waitAction.executor(waitAction, runner).catch(x => {
+        const promise = waitAction.executor(waitAction, runner).catch((x) => {
           err = x;
         });
         await clock.tickAsync(rematchDelay + 1);
         await clock.tickAsync(thirtySecondsInMs + 1);
         await promise;
         // err is typed, because of "used before defined error"
-        expect(
-          ((err as unknown) as Error).message.includes(rejectionPath)
-        ).toBeTruthy();
+        expect((err as unknown as Error).message.includes(rejectionPath)).toBeTruthy();
       });
       it('Rejects when path in the url does not match', async () => {
         let err;
@@ -112,15 +93,13 @@ describe('redirectionHandlers.ts', () => {
         const waitAction = getCatcherAction();
         mockedWindowControls.setPath(wrongPath);
         mockedWindowControls.setSearch(createNextActionParams(waitAction));
-        const promise = waitAction.executor(waitAction, runner).catch(x => {
+        const promise = waitAction.executor(waitAction, runner).catch((x) => {
           err = x;
         });
         await clock.tickAsync(rematchDelay + 1);
         await clock.tickAsync(thirtySecondsInMs + 1);
         await promise;
-        expect(
-          ((err as unknown) as Error).message.includes(rejectionPath)
-        ).toBeTruthy();
+        expect((err as unknown as Error).message.includes(rejectionPath)).toBeTruthy();
       });
     });
   });
@@ -156,7 +135,7 @@ describe('redirectionHandlers.ts', () => {
       const queue = [redirectorWithoutPath, catcher, actionWithPath];
       const runner = createActionQueueRunner(queue);
       expect(getStartPagePathFromQueue(runner, actionWithPath.type)).toBe(
-        getData(actionWithPath as Action, 'startPagePath')
+        getData(actionWithPath as Action, 'startPagePath'),
       );
     });
     it('returns undefined if not found', async () => {

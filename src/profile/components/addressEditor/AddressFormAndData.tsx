@@ -11,9 +11,7 @@ import { createFormFieldHelpers } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
 import FormButtons from '../formButtons/FormButtons';
 import EditButtons from '../editButtons/EditButtons';
-import FormikDropdown, {
-  OptionType,
-} from '../../../common/formikDropdown/FormikDropdown';
+import FormikDropdown, { OptionType } from '../../../common/formikDropdown/FormikDropdown';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import getCountry from '../../helpers/getCountry';
@@ -30,11 +28,7 @@ import EditingNotifications from '../editingNotifications/EditingNotifications';
 
 type FormikValues = AddressValue;
 
-function AddressFormAndData({
-  editHandler,
-}: {
-  editHandler: EditHandling;
-}): React.ReactElement {
+function AddressFormAndData({ editHandler }: { editHandler: EditHandling }): React.ReactElement {
   const {
     getData,
     hasData,
@@ -66,12 +60,7 @@ function AddressFormAndData({
   };
 
   const Explanation = () => (
-    <div
-      className={classNames(
-        commonFormStyles['editor-description-container'],
-        commonFormStyles['bottom-border']
-      )}
-    >
+    <div className={classNames(commonFormStyles['editor-description-container'], commonFormStyles['bottom-border'])}>
       <h2>{title}</h2>
       <DescriptionElement />
     </div>
@@ -81,18 +70,10 @@ function AddressFormAndData({
     return (
       <div className={classNames(commonFormStyles['flex-box-columns'])}>
         <Explanation />
-        <div
-          className={classNames(
-            commonFormStyles['edit-buttons'],
-            commonFormStyles['form-buttons']
-          )}
-        >
+        <div className={classNames(commonFormStyles['edit-buttons'], commonFormStyles['form-buttons'])}>
           <AddButton editHandler={editHandler} />
         </div>
-        <EditingNotifications
-          content={notificationContent.content}
-          dataType={dataType}
-        />
+        <EditingNotifications content={notificationContent.content} dataType={dataType} />
       </div>
     );
   }
@@ -104,7 +85,7 @@ function AddressFormAndData({
   const applicationLanguage = getLanguageCode(i18n.languages[0]);
   const countryList = countries.getNames(applicationLanguage);
   const countryOptions = Object.keys(countryList)
-    .map(key => ({
+    .map((key) => ({
       value: key,
       label: countryList[key],
     }))
@@ -118,14 +99,10 @@ function AddressFormAndData({
       return 0;
     });
   const defaultCountryOption = countryOptions[0];
-  const initialCountryOption = countryOptions.find(
-    option => option.value === countryCode
-  ) as OptionType;
+  const initialCountryOption = countryOptions.find((option) => option.value === countryCode) as OptionType;
   const formFields = getFormFields(dataType);
 
-  const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
-    FormikValues
-  >(t, isNew);
+  const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<FormikValues>(t, isNew);
 
   const { primary, saving } = data;
   const disableButtons = !!currentAction || !!saving;
@@ -141,7 +118,7 @@ function AddressFormAndData({
           postalCode,
           countryCode,
         }}
-        onSubmit={async values => {
+        onSubmit={async (values) => {
           await actionHandler('save', values);
         }}
         validationSchema={addressSchema}
@@ -151,14 +128,9 @@ function AddressFormAndData({
             <Explanation />
             <RequiredFieldsNote />
             <FocusKeeper targetId={`${testId}-address`}>
-              <div
-                className={classNames(
-                  containerStyle,
-                  commonFormStyles['editor-form-fields']
-                )}
-              >
+              <div className={classNames(containerStyle, commonFormStyles['editor-form-fields'])}>
                 <Field
-                  name="address"
+                  name='address'
                   id={`${testId}-address`}
                   maxLength={formFields.address.max as number}
                   as={TextInput}
@@ -171,7 +143,7 @@ function AddressFormAndData({
                   className={formFieldStyle}
                 />
                 <Field
-                  name="postalCode"
+                  name='postalCode'
                   id={`${testId}-postalCode`}
                   maxLength={formFields.postalCode.max as number}
                   as={TextInput}
@@ -183,7 +155,7 @@ function AddressFormAndData({
                   className={formFieldStyle}
                 />
                 <Field
-                  name="city"
+                  name='city'
                   id={`${testId}-city`}
                   maxLength={formFields.city.max as number}
                   as={TextInput}
@@ -196,7 +168,7 @@ function AddressFormAndData({
                 />
                 <div className={commonFormStyles['form-field']}>
                   <FormikDropdown
-                    name="countryCode"
+                    name='countryCode'
                     id={`${testId}-countryCode`}
                     options={countryOptions}
                     label={`${t(formFields.countryCode.translationKey)} *`}
@@ -204,35 +176,21 @@ function AddressFormAndData({
                     invalid={hasFieldError(formikProps, 'countryCode')}
                     error={getFieldErrorMessage(formikProps, 'countryCode')}
                     aria-describedby={`${dataType}-countryCode-helper`}
-                    toggleButtonAriaLabel={t(
-                      'profileInformation.ariaShowOptions'
-                    )}
+                    toggleButtonAriaLabel={t('profileInformation.ariaShowOptions')}
                     allowSearch
-                    onChange={option =>
-                      formikProps.setFieldValue(
-                        'countryCode',
-                        option ? option.value : ''
-                      )
-                    }
+                    onChange={(option) => formikProps.setFieldValue('countryCode', option ? option.value : '')}
                     initialOption={initialCountryOption}
                   />
                 </div>
               </div>
-              <AccessibleFormikErrors
-                formikProps={formikProps}
-                dataType={dataType}
-              />
+              <AccessibleFormikErrors formikProps={formikProps} dataType={dataType} />
               <EditingNotifications
                 content={notificationContent.content}
                 dataType={dataType}
                 noSpacing
                 topSpacingMobile
               />
-              <FormButtons
-                handler={actionHandler}
-                disabled={disableButtons}
-                testId={testId}
-              />
+              <FormButtons handler={actionHandler} disabled={disableButtons} testId={testId} />
               <SaveIndicator action={currentAction} testId={testId} />
             </FocusKeeper>
           </Form>
@@ -242,22 +200,12 @@ function AddressFormAndData({
   }
   return (
     <div className={classNames(commonFormStyles['flex-box-columns'])}>
-      <div
-        className={classNames(
-          commonFormStyles['editor-description-container'],
-          commonFormStyles['bottom-border']
-        )}
-      >
+      <div className={classNames(commonFormStyles['editor-description-container'], commonFormStyles['bottom-border'])}>
         <h2>{title}</h2>
         <DescriptionElement />
       </div>
       <div className={classNames(containerStyle)}>
-        <div
-          className={classNames(
-            containerStyle,
-            commonFormStyles['editor-text-fields']
-          )}
-        >
+        <div className={classNames(containerStyle, commonFormStyles['editor-text-fields'])}>
           <LabeledValue
             label={t(formFields.address.translationKey)}
             value={value.address}
@@ -268,11 +216,7 @@ function AddressFormAndData({
             value={value.postalCode}
             testId={`${testId}-postalCode`}
           />
-          <LabeledValue
-            label={t(formFields.city.translationKey)}
-            value={value.city}
-            testId={`${testId}-city`}
-          />
+          <LabeledValue label={t(formFields.city.translationKey)} value={value.city} testId={`${testId}-city`} />
           <LabeledValue
             label={t(formFields.countryCode.translationKey)}
             value={getCountry(value.countryCode, lang)}
@@ -296,10 +240,7 @@ function AddressFormAndData({
           <SaveIndicator action={currentAction} testId={testId} />
         </div>
       </div>
-      <EditingNotifications
-        content={notificationContent.content}
-        dataType={dataType}
-      />
+      <EditingNotifications content={notificationContent.content} dataType={dataType} />
     </div>
   );
 }

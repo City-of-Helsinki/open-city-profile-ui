@@ -1,25 +1,10 @@
-import {
-  useMutation,
-  FetchResult,
-  Reference,
-  ApolloCache,
-} from '@apollo/client';
+import { useMutation, FetchResult, Reference, ApolloCache } from '@apollo/client';
 import { useContext } from 'react';
 import { Modifiers } from '@apollo/client/cache/core/types/common';
 
 import { UpdateMyProfileMutationVariables } from '../../graphql/generatedTypes';
-import {
-  ProfileRoot,
-  UpdateProfileRoot,
-  UpdateProfileData,
-  AnyObject,
-} from '../../graphql/typings';
-import {
-  FormValues,
-  EditDataType,
-  basicDataType,
-  additionalInformationType,
-} from '../helpers/editData';
+import { ProfileRoot, UpdateProfileRoot, UpdateProfileData, AnyObject } from '../../graphql/typings';
+import { FormValues, EditDataType, basicDataType, additionalInformationType } from '../helpers/editData';
 import { updateMutationVariables } from '../helpers/updateMutationVariables';
 import { ProfileContext, ProfileContextData } from '../context/ProfileContext';
 import { UPDATE_PROFILE } from '../../profile/graphql/UpdateMyProfileMutation';
@@ -28,30 +13,20 @@ import { MY_PROFILE } from '../../profile/graphql/MyProfileQuery';
 export type QueryResult = FetchResult<ProfileRoot, AnyObject, AnyObject>;
 export type UpdateResult = FetchResult<UpdateProfileRoot>;
 
-type UpdateProfileFunction = (
-  formValues: Partial<FormValues>,
-  profile?: ProfileRoot
-) => Promise<UpdateResult>;
+type UpdateProfileFunction = (formValues: Partial<FormValues>, profile?: ProfileRoot) => Promise<UpdateResult>;
 
 export type MutationReturnType = {
   profileData?: ProfileRoot;
   update: UpdateProfileFunction;
 };
 
-type UpdatableProfileDataKeys = keyof Omit<
-  UpdateProfileData,
-  '__typename' | 'id'
->;
+type UpdatableProfileDataKeys = keyof Omit<UpdateProfileData, '__typename' | 'id'>;
 
 type ValuesOfUpdateProfileData = UpdateProfileData[UpdatableProfileDataKeys];
 
-type CacheUpdateFunction = (
-  data?: UpdateProfileData
-) => ValuesOfUpdateProfileData;
+type CacheUpdateFunction = (data?: UpdateProfileData) => ValuesOfUpdateProfileData;
 
-type CacheUpdateProps = Partial<
-  Record<UpdatableProfileDataKeys, CacheUpdateFunction>
->;
+type CacheUpdateProps = Partial<Record<UpdatableProfileDataKeys, CacheUpdateFunction>>;
 
 // cache is updated with cache.modify({fields...})
 // where properties of the "fields" object are fields to update
@@ -59,20 +34,14 @@ type CacheUpdateProps = Partial<
 // example: fields:{ phones:()=>listOfPhones, primaryPhone:()=>newPrimaryPhone}
 // this helper function creates those objects from listed "fields"
 // and returns same field from given data source "updatedProfile"
-function updateFieldCreator(
-  fields: UpdatableProfileDataKeys[],
-  updatedProfile: UpdateProfileData
-): CacheUpdateProps {
+function updateFieldCreator(fields: UpdatableProfileDataKeys[], updatedProfile: UpdateProfileData): CacheUpdateProps {
   return fields.reduce((currentValue, nextField) => {
     currentValue[nextField] = () => updatedProfile[nextField];
     return currentValue;
   }, {} as CacheUpdateProps);
 }
 
-function getCacheUpdateFields(
-  dataType: EditDataType,
-  updatedProfile: UpdateProfileData
-): CacheUpdateProps {
+function getCacheUpdateFields(dataType: EditDataType, updatedProfile: UpdateProfileData): CacheUpdateProps {
   const fields: UpdatableProfileDataKeys[] = [];
   if (dataType === 'phones') {
     fields.push(dataType, 'primaryPhone');
@@ -93,13 +62,10 @@ function updateCache(
   result: UpdateResult,
   dataType: EditDataType,
   profileData: ProfileRoot | null | undefined,
-  updateProfileData: ProfileContextData['updateProfileData']
+  updateProfileData: ProfileContextData['updateProfileData'],
 ) {
-  const updatedProfile: UpdateProfileData | null | undefined =
-    result.data?.updateMyProfile?.profile;
-  const identity =
-    profileData &&
-    cache.identify((profileData.myProfile as unknown) as Reference);
+  const updatedProfile: UpdateProfileData | null | undefined = result.data?.updateMyProfile?.profile;
+  const identity = profileData && cache.identify(profileData.myProfile as unknown as Reference);
   if (!updatedProfile || !identity) {
     throw new Error('Unable to update cache');
   }
@@ -113,18 +79,10 @@ function updateCache(
   updateProfileData(newData as ProfileRoot);
 }
 
-export function useProfileMutations({
-  dataType,
-}: {
-  dataType: EditDataType;
-}): MutationReturnType {
+export function useProfileMutations({ dataType }: { dataType: EditDataType }): MutationReturnType {
   const { data: profileData, updateProfileData } = useContext(ProfileContext);
-  const [updateProfile] = useMutation<
-    UpdateProfileRoot,
-    UpdateMyProfileMutationVariables
-  >(UPDATE_PROFILE, {
-    update: (cache, result) =>
-      updateCache(cache, result, dataType, profileData, updateProfileData),
+  const [updateProfile] = useMutation<UpdateProfileRoot, UpdateMyProfileMutationVariables>(UPDATE_PROFILE, {
+    update: (cache, result) => updateCache(cache, result, dataType, profileData, updateProfileData),
   });
 
   const update: UpdateProfileFunction = (formValues, profile) => {

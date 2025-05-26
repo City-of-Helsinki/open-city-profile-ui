@@ -22,10 +22,7 @@ export const DELETE_PROFILE = gql`
     }
   }
 
-  mutation GdprDeleteMyProfile(
-    $input: DeleteMyProfileMutationInput!
-    $language: TranslationLanguage!
-  ) {
+  mutation GdprDeleteMyProfile($input: DeleteMyProfileMutationInput!, $language: TranslationLanguage!) {
     deleteMyProfile(input: $input) {
       ...GdprDeleteMyProfileMutationDeleteMyProfile
     }

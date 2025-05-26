@@ -3,17 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './gdprAuthorizationCodeManagerCallback.module.css';
-import useAuthCodeQueues, {
-  AuthCodeQueuesProps,
-  authCodeQueuesStorageKey,
-} from './useAuthCodeQueues';
+import useAuthCodeQueues, { AuthCodeQueuesProps, authCodeQueuesStorageKey } from './useAuthCodeQueues';
 import { getStoredQueueData } from '../common/actionQueue/actionQueueStorage';
 import { useErrorPageRedirect } from '../profile/hooks/useErrorPageRedirect';
 import { Action, QueueController } from '../common/actionQueue/actionQueue';
-import {
-  createPagePathWithFailedActionParams,
-  didFailedActionRedirect,
-} from './actions/utils';
+import { createPagePathWithFailedActionParams, didFailedActionRedirect } from './actions/utils';
 
 function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
   const redirectToErrorPage = useErrorPageRedirect();
@@ -21,7 +15,7 @@ function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
   const navigate = useNavigate();
   const storedData = useMemo<Partial<AuthCodeQueuesProps>>(
     () => getStoredQueueData(authCodeQueuesStorageKey) || {},
-    []
+    [],
   );
 
   const redirectAfterError = useCallback(
@@ -33,8 +27,8 @@ function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
             createPagePathWithFailedActionParams(
               path,
               failedAction || ({ type: 'unknown' } as Action),
-              'Failed GDPR callback'
-            )
+              'Failed GDPR callback',
+            ),
           );
         } else {
           redirectToErrorPage({
@@ -43,14 +37,14 @@ function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
         }
       }
     },
-    [redirectToErrorPage, t, navigate, storedData.startPagePath]
+    [redirectToErrorPage, t, navigate, storedData.startPagePath],
   );
 
   const onError = useCallback(
     (controller: QueueController) => {
       redirectAfterError(controller.getFailed());
     },
-    [redirectAfterError]
+    [redirectAfterError],
   );
 
   const memoizedProps = useMemo<AuthCodeQueuesProps>(
@@ -58,8 +52,8 @@ function GdprAuthorizationCodeManagerCallback(): React.ReactElement {
       ({
         ...storedData,
         onError,
-      } as AuthCodeQueuesProps),
-    [storedData, onError]
+      }) as AuthCodeQueuesProps,
+    [storedData, onError],
   );
 
   const { shouldHandleCallback, resume } = useAuthCodeQueues(memoizedProps);

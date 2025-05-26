@@ -9,12 +9,7 @@ import { getFormFields } from '../../../profile/helpers/formProperties';
 import { basicDataType, EditDataType } from '../../../profile/helpers/editData';
 
 describe('<AccessibilityFieldHelpers /> ', () => {
-  const dataTypesWhereUsed: EditDataType[] = [
-    basicDataType,
-    'addresses',
-    'phones',
-    'emails',
-  ];
+  const dataTypesWhereUsed: EditDataType[] = [basicDataType, 'addresses', 'phones', 'emails'];
 
   const changeLanguageButtonId = 'change-language';
   const currentLanguageIndicatorId = 'current-language';
@@ -27,45 +22,34 @@ describe('<AccessibilityFieldHelpers /> ', () => {
     return (
       <I18nextProvider i18n={i18n}>
         <AccessibilityFieldHelpers dataType={dataType} />
-        <button
-          id={changeLanguageButtonId}
-          onClick={() => changeLanguage('sv')}
-        />
+        <button id={changeLanguageButtonId} onClick={() => changeLanguage('sv')} />
         <span id={currentLanguageIndicatorId}>{i18n.language}</span>
       </I18nextProvider>
     );
   };
 
-  dataTypesWhereUsed.forEach(dataType => {
+  dataTypesWhereUsed.forEach((dataType) => {
     it(`renders helper texts for dataType '${dataType}' `, async () => {
-      const { findById } = createDomHelpersWithTesting(
-        render(<TestComponent dataType={dataType} />)
-      );
+      const { findById } = createDomHelpersWithTesting(render(<TestComponent dataType={dataType} />));
       const keys = Object.keys(getFormFields(dataType));
       // cannot use forEach with async/await
       for (const key of keys) {
         const addressElement = await findById(`${dataType}-${key}-helper`);
         expect(addressElement).toBeDefined();
-        expect(
-          (addressElement as HTMLElement).innerHTML.length > 0
-        ).toBeTruthy();
+        expect((addressElement as HTMLElement).innerHTML.length > 0).toBeTruthy();
       }
     });
   });
 
   it('helper texts change when language changes', async () => {
     const dataType = 'addresses';
-    const { findById, click } = createDomHelpersWithTesting(
-      render(<TestComponent dataType={dataType} />)
-    );
+    const { findById, click } = createDomHelpersWithTesting(render(<TestComponent dataType={dataType} />));
 
     const pickRenderedTexts = async () => {
       const keys = Object.keys(getFormFields(dataType));
       const texts: Record<string, string> = {};
       for (const key of keys) {
-        const addressElement = (await findById(
-          `${dataType}-${key}-helper`
-        )) as HTMLElement;
+        const addressElement = (await findById(`${dataType}-${key}-helper`)) as HTMLElement;
         texts[key] = addressElement.innerHTML;
       }
       return texts;

@@ -4,16 +4,11 @@ import { TFunction } from 'i18next';
 export const trackingCookieId = 'matomo';
 
 export function getCookieContent(
-  t: TFunction
-): Pick<
-  ContentSource,
-  'requiredCookies' | 'optionalCookies' | 'texts' | 'siteName'
-> {
+  t: TFunction,
+): Pick<ContentSource, 'requiredCookies' | 'optionalCookies' | 'texts' | 'siteName'> {
   const securityCookieDescription = t('cookies.securityCookieDescription');
   const loadBalancerCookieName = t('cookies.loadBalancerCookieName');
-  const loadBalancerCookieDescription = t(
-    'cookies.loadBalancerCookieDescription'
-  );
+  const loadBalancerCookieDescription = t('cookies.loadBalancerCookieDescription');
   const languageCookieDescription = t('cookies.languageCookieDescription');
   const trackingCookieDescription = t('cookies.trackingCookieDescription');
   const consentStorageDescription = t('cookies.consentStorageDescription');

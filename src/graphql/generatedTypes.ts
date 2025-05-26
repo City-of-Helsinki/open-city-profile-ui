@@ -11,15 +11,15 @@ export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export interface Scalars {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  DateTime: { input: any; output: any; }
-  JSONString: { input: any; output: any; }
-  UUID: { input: any; output: any; }
-  _Any: { input: any; output: any; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  DateTime: { input: any; output: any };
+  JSONString: { input: any; output: any };
+  UUID: { input: any; output: any };
+  _Any: { input: any; output: any };
 }
 
 export interface AddServiceConnectionMutationInput {
@@ -34,7 +34,7 @@ export enum AddressType {
   /** Other address */
   OTHER = 'OTHER',
   /** Work address */
-  WORK = 'WORK'
+  WORK = 'WORK',
 }
 
 export interface ClaimProfileMutationInput {
@@ -46,7 +46,7 @@ export interface ClaimProfileMutationInput {
 /** An enumeration. */
 export enum ContactMethod {
   EMAIL = 'EMAIL',
-  SMS = 'SMS'
+  SMS = 'SMS',
 }
 
 export interface CreateAddressInput {
@@ -192,14 +192,14 @@ export enum EmailType {
   /** Personal email */
   PERSONAL = 'PERSONAL',
   /** Work email */
-  WORK = 'WORK'
+  WORK = 'WORK',
 }
 
 /** An enumeration. */
 export enum Language {
   ENGLISH = 'ENGLISH',
   FINNISH = 'FINNISH',
-  SWEDISH = 'SWEDISH'
+  SWEDISH = 'SWEDISH',
 }
 
 export enum LoginMethodType {
@@ -208,7 +208,7 @@ export enum LoginMethodType {
   /** Salasana */
   PASSWORD = 'PASSWORD',
   /** Suomi.fi */
-  SUOMI_FI = 'SUOMI_FI'
+  SUOMI_FI = 'SUOMI_FI',
 }
 
 export enum PhoneType {
@@ -220,7 +220,7 @@ export enum PhoneType {
   /** Other phone */
   OTHER = 'OTHER',
   /** Work phone */
-  WORK = 'WORK'
+  WORK = 'WORK',
 }
 
 /**
@@ -309,14 +309,14 @@ export enum ServiceType {
    * Youth Membership
    * @deprecated The whole ServiceType enum is deprecated and shouldn't be used anymore. There are different replacements in various places, depending on how this type was used.
    */
-  YOUTH_MEMBERSHIP = 'YOUTH_MEMBERSHIP'
+  YOUTH_MEMBERSHIP = 'YOUTH_MEMBERSHIP',
 }
 
 /** An enumeration. */
 export enum TranslationLanguage {
   EN = 'EN',
   FI = 'FI',
-  SV = 'SV'
+  SV = 'SV',
 }
 
 export interface UpdateAddressInput {
@@ -448,113 +448,797 @@ export interface VerifiedPersonalInformationInput {
   readonly temporaryAddress?: InputMaybe<VerifiedPersonalInformationAddressInput>;
 }
 
-export type GdprDeleteMyProfileMutationDeleteMyProfileResultsErrorsFragment = { readonly __typename: 'ServiceConnectionDeletionError', readonly code: string };
+export type GdprDeleteMyProfileMutationDeleteMyProfileResultsErrorsFragment = {
+  readonly __typename: 'ServiceConnectionDeletionError';
+  readonly code: string;
+};
 
-export type GdprDeleteMyProfileMutationDeleteMyProfileResultsFragment = { readonly __typename: 'ServiceConnectionDeletionResult', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError', readonly code: string }>, readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null } };
+export type GdprDeleteMyProfileMutationDeleteMyProfileResultsFragment = {
+  readonly __typename: 'ServiceConnectionDeletionResult';
+  readonly success: boolean;
+  readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError'; readonly code: string }>;
+  readonly service: { readonly __typename: 'ServiceNode'; readonly name: string; readonly title: string | null };
+};
 
-export type GdprDeleteMyProfileMutationDeleteMyProfileFragment = { readonly __typename: 'DeleteMyProfileMutationPayload', readonly results: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionResult', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError', readonly code: string }>, readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null } }> };
+export type GdprDeleteMyProfileMutationDeleteMyProfileFragment = {
+  readonly __typename: 'DeleteMyProfileMutationPayload';
+  readonly results: ReadonlyArray<{
+    readonly __typename: 'ServiceConnectionDeletionResult';
+    readonly success: boolean;
+    readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError'; readonly code: string }>;
+    readonly service: { readonly __typename: 'ServiceNode'; readonly name: string; readonly title: string | null };
+  }>;
+};
 
 export type GdprDeleteMyProfileMutationVariables = Exact<{
   input: DeleteMyProfileMutationInput;
   language: TranslationLanguage;
 }>;
 
+export type GdprDeleteMyProfileMutation = {
+  readonly deleteMyProfile: {
+    readonly __typename: 'DeleteMyProfileMutationPayload';
+    readonly results: ReadonlyArray<{
+      readonly __typename: 'ServiceConnectionDeletionResult';
+      readonly success: boolean;
+      readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError'; readonly code: string }>;
+      readonly service: { readonly __typename: 'ServiceNode'; readonly name: string; readonly title: string | null };
+    }>;
+  } | null;
+};
 
-export type GdprDeleteMyProfileMutation = { readonly deleteMyProfile: { readonly __typename: 'DeleteMyProfileMutationPayload', readonly results: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionResult', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError', readonly code: string }>, readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null } }> } | null };
-
-export type GdprDeleteMyServiceDataMutationFragment = { readonly __typename: 'ServiceConnectionDeletionResult', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError', readonly code: string }> };
+export type GdprDeleteMyServiceDataMutationFragment = {
+  readonly __typename: 'ServiceConnectionDeletionResult';
+  readonly success: boolean;
+  readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError'; readonly code: string }>;
+};
 
 export type GdprDeleteMyServiceDataMutationVariables = Exact<{
   input: DeleteMyServiceDataMutationInput;
 }>;
 
+export type GdprDeleteMyServiceDataMutation = {
+  readonly deleteMyServiceData: {
+    readonly __typename: 'DeleteMyServiceDataMutationPayload';
+    readonly result: {
+      readonly __typename: 'ServiceConnectionDeletionResult';
+      readonly success: boolean;
+      readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError'; readonly code: string }>;
+    };
+  } | null;
+};
 
-export type GdprDeleteMyServiceDataMutation = { readonly deleteMyServiceData: { readonly __typename: 'DeleteMyServiceDataMutationPayload', readonly result: { readonly __typename: 'ServiceConnectionDeletionResult', readonly success: boolean, readonly errors: ReadonlyArray<{ readonly __typename: 'ServiceConnectionDeletionError', readonly code: string }> } } | null };
+export type GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment = {
+  readonly __typename: 'ServiceNode';
+  readonly name: string;
+  readonly gdprQueryScope: string;
+  readonly gdprDeleteScope: string;
+};
 
-export type GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment = { readonly __typename: 'ServiceNode', readonly name: string, readonly gdprQueryScope: string, readonly gdprDeleteScope: string };
+export type GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeFragment = {
+  readonly __typename: 'ServiceConnectionType';
+  readonly service: {
+    readonly __typename: 'ServiceNode';
+    readonly name: string;
+    readonly gdprQueryScope: string;
+    readonly gdprDeleteScope: string;
+  };
+};
 
-export type GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeFragment = { readonly __typename: 'ServiceConnectionType', readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly gdprQueryScope: string, readonly gdprDeleteScope: string } };
+export type GdprServiceConnectionsQueryMyProfileServiceConnectionsFragment = {
+  readonly __typename: 'ServiceConnectionTypeConnection';
+  readonly edges: ReadonlyArray<{
+    readonly __typename: 'ServiceConnectionTypeEdge';
+    readonly node: {
+      readonly __typename: 'ServiceConnectionType';
+      readonly service: {
+        readonly __typename: 'ServiceNode';
+        readonly name: string;
+        readonly gdprQueryScope: string;
+        readonly gdprDeleteScope: string;
+      };
+    } | null;
+  } | null>;
+};
 
-export type GdprServiceConnectionsQueryMyProfileServiceConnectionsFragment = { readonly __typename: 'ServiceConnectionTypeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'ServiceConnectionTypeEdge', readonly node: { readonly __typename: 'ServiceConnectionType', readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly gdprQueryScope: string, readonly gdprDeleteScope: string } } | null } | null> };
+export type GdprServiceConnectionsQueryMyProfileFragment = {
+  readonly __typename: 'ProfileNode';
+  readonly id: string;
+  readonly serviceConnections: {
+    readonly __typename: 'ServiceConnectionTypeConnection';
+    readonly edges: ReadonlyArray<{
+      readonly __typename: 'ServiceConnectionTypeEdge';
+      readonly node: {
+        readonly __typename: 'ServiceConnectionType';
+        readonly service: {
+          readonly __typename: 'ServiceNode';
+          readonly name: string;
+          readonly gdprQueryScope: string;
+          readonly gdprDeleteScope: string;
+        };
+      } | null;
+    } | null>;
+  } | null;
+};
 
-export type GdprServiceConnectionsQueryMyProfileFragment = { readonly __typename: 'ProfileNode', readonly id: string, readonly serviceConnections: { readonly __typename: 'ServiceConnectionTypeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'ServiceConnectionTypeEdge', readonly node: { readonly __typename: 'ServiceConnectionType', readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly gdprQueryScope: string, readonly gdprDeleteScope: string } } | null } | null> } | null };
+export type GdprServiceConnectionsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GdprServiceConnectionsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GdprServiceConnectionsQuery = { readonly myProfile: { readonly __typename: 'ProfileNode', readonly id: string, readonly serviceConnections: { readonly __typename: 'ServiceConnectionTypeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'ServiceConnectionTypeEdge', readonly node: { readonly __typename: 'ServiceConnectionType', readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly gdprQueryScope: string, readonly gdprDeleteScope: string } } | null } | null> } | null } | null };
+export type GdprServiceConnectionsQuery = {
+  readonly myProfile: {
+    readonly __typename: 'ProfileNode';
+    readonly id: string;
+    readonly serviceConnections: {
+      readonly __typename: 'ServiceConnectionTypeConnection';
+      readonly edges: ReadonlyArray<{
+        readonly __typename: 'ServiceConnectionTypeEdge';
+        readonly node: {
+          readonly __typename: 'ServiceConnectionType';
+          readonly service: {
+            readonly __typename: 'ServiceNode';
+            readonly name: string;
+            readonly gdprQueryScope: string;
+            readonly gdprDeleteScope: string;
+          };
+        } | null;
+      } | null>;
+    } | null;
+  } | null;
+};
 
 export type DownloadMyProfileQueryVariables = Exact<{
   authorizationCode: Scalars['String']['input'];
 }>;
 
-
 export type DownloadMyProfileQuery = { readonly downloadMyProfile: any | null };
 
-export type MyProfileQueryVerifiedPersonalInformationPermanentForeignAddressFragment = { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string };
+export type MyProfileQueryVerifiedPersonalInformationPermanentForeignAddressFragment = {
+  readonly __typename: 'VerifiedPersonalInformationForeignAddressNode';
+  readonly streetAddress: string;
+  readonly additionalAddress: string;
+  readonly countryCode: string;
+};
 
-export type MyProfileQueryVerifiedPersonalInformationPermanentAddressFragment = { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string };
+export type MyProfileQueryVerifiedPersonalInformationPermanentAddressFragment = {
+  readonly __typename: 'VerifiedPersonalInformationAddressNode';
+  readonly streetAddress: string;
+  readonly postalCode: string;
+  readonly postOffice: string;
+};
 
-export type MyProfileQueryVerifiedPersonalInformationFragment = { readonly __typename: 'VerifiedPersonalInformationNode', readonly firstName: string, readonly lastName: string, readonly givenName: string, readonly nationalIdentificationNumber: string, readonly municipalityOfResidence: string, readonly municipalityOfResidenceNumber: string, readonly permanentAddress: { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string } | null, readonly permanentForeignAddress: { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string } | null };
+export type MyProfileQueryVerifiedPersonalInformationFragment = {
+  readonly __typename: 'VerifiedPersonalInformationNode';
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly givenName: string;
+  readonly nationalIdentificationNumber: string;
+  readonly municipalityOfResidence: string;
+  readonly municipalityOfResidenceNumber: string;
+  readonly permanentAddress: {
+    readonly __typename: 'VerifiedPersonalInformationAddressNode';
+    readonly streetAddress: string;
+    readonly postalCode: string;
+    readonly postOffice: string;
+  } | null;
+  readonly permanentForeignAddress: {
+    readonly __typename: 'VerifiedPersonalInformationForeignAddressNode';
+    readonly streetAddress: string;
+    readonly additionalAddress: string;
+    readonly countryCode: string;
+  } | null;
+};
 
-export type MyProfileQueryPrimaryAddressFragment = { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null };
+export type MyProfileQueryPrimaryAddressFragment = {
+  readonly __typename: 'AddressNode';
+  readonly id: string;
+  readonly primary: boolean;
+  readonly address: string;
+  readonly postalCode: string;
+  readonly city: string;
+  readonly countryCode: string;
+  readonly addressType: AddressType | null;
+};
 
-export type MyProfileQueryPrimaryEmailFragment = { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null };
+export type MyProfileQueryPrimaryEmailFragment = {
+  readonly __typename: 'EmailNode';
+  readonly id: string;
+  readonly email: string;
+  readonly primary: boolean;
+  readonly emailType: EmailType | null;
+};
 
-export type MyProfileQueryPrimaryPhoneFragment = { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null };
+export type MyProfileQueryPrimaryPhoneFragment = {
+  readonly __typename: 'PhoneNode';
+  readonly id: string;
+  readonly phone: string;
+  readonly primary: boolean;
+  readonly phoneType: PhoneType | null;
+};
 
-export type MyProfileQueryAddressesEdgesNodeFragment = { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null };
+export type MyProfileQueryAddressesEdgesNodeFragment = {
+  readonly __typename: 'AddressNode';
+  readonly primary: boolean;
+  readonly id: string;
+  readonly address: string;
+  readonly postalCode: string;
+  readonly city: string;
+  readonly countryCode: string;
+  readonly addressType: AddressType | null;
+};
 
-export type MyProfileQueryEmailsEdgesNodeFragment = { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null };
+export type MyProfileQueryEmailsEdgesNodeFragment = {
+  readonly __typename: 'EmailNode';
+  readonly primary: boolean;
+  readonly id: string;
+  readonly email: string;
+  readonly emailType: EmailType | null;
+};
 
-export type MyProfileQueryPhonesEdgesNodeFragment = { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null };
+export type MyProfileQueryPhonesEdgesNodeFragment = {
+  readonly __typename: 'PhoneNode';
+  readonly primary: boolean;
+  readonly id: string;
+  readonly phone: string;
+  readonly phoneType: PhoneType | null;
+};
 
-export type MyLoginMethodNodeFragment = { readonly __typename: 'LoginMethodNode', readonly method: LoginMethodType, readonly createdAt: any | null, readonly credentialId: string | null, readonly userLabel: string | null };
+export type MyLoginMethodNodeFragment = {
+  readonly __typename: 'LoginMethodNode';
+  readonly method: LoginMethodType;
+  readonly createdAt: any | null;
+  readonly credentialId: string | null;
+  readonly userLabel: string | null;
+};
 
-export type MyProfileQueryAddressesEdgesFragment = { readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null };
+export type MyProfileQueryAddressesEdgesFragment = {
+  readonly __typename: 'AddressNodeEdge';
+  readonly node: {
+    readonly __typename: 'AddressNode';
+    readonly primary: boolean;
+    readonly id: string;
+    readonly address: string;
+    readonly postalCode: string;
+    readonly city: string;
+    readonly countryCode: string;
+    readonly addressType: AddressType | null;
+  } | null;
+};
 
-export type MyProfileQueryEmailsEdgesFragment = { readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null };
+export type MyProfileQueryEmailsEdgesFragment = {
+  readonly __typename: 'EmailNodeEdge';
+  readonly node: {
+    readonly __typename: 'EmailNode';
+    readonly primary: boolean;
+    readonly id: string;
+    readonly email: string;
+    readonly emailType: EmailType | null;
+  } | null;
+};
 
-export type MyProfileQueryPhonesEdgesFragment = { readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null };
+export type MyProfileQueryPhonesEdgesFragment = {
+  readonly __typename: 'PhoneNodeEdge';
+  readonly node: {
+    readonly __typename: 'PhoneNode';
+    readonly primary: boolean;
+    readonly id: string;
+    readonly phone: string;
+    readonly phoneType: PhoneType | null;
+  } | null;
+};
 
-export type MyProfileQueryAddressesFragment = { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> };
+export type MyProfileQueryAddressesFragment = {
+  readonly __typename: 'AddressNodeConnection';
+  readonly edges: ReadonlyArray<{
+    readonly __typename: 'AddressNodeEdge';
+    readonly node: {
+      readonly __typename: 'AddressNode';
+      readonly primary: boolean;
+      readonly id: string;
+      readonly address: string;
+      readonly postalCode: string;
+      readonly city: string;
+      readonly countryCode: string;
+      readonly addressType: AddressType | null;
+    } | null;
+  } | null>;
+};
 
-export type MyProfileQueryEmailsFragment = { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> };
+export type MyProfileQueryEmailsFragment = {
+  readonly __typename: 'EmailNodeConnection';
+  readonly edges: ReadonlyArray<{
+    readonly __typename: 'EmailNodeEdge';
+    readonly node: {
+      readonly __typename: 'EmailNode';
+      readonly primary: boolean;
+      readonly id: string;
+      readonly email: string;
+      readonly emailType: EmailType | null;
+    } | null;
+  } | null>;
+};
 
-export type MyProfileQueryPhonesFragment = { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> };
+export type MyProfileQueryPhonesFragment = {
+  readonly __typename: 'PhoneNodeConnection';
+  readonly edges: ReadonlyArray<{
+    readonly __typename: 'PhoneNodeEdge';
+    readonly node: {
+      readonly __typename: 'PhoneNode';
+      readonly primary: boolean;
+      readonly id: string;
+      readonly phone: string;
+      readonly phoneType: PhoneType | null;
+    } | null;
+  } | null>;
+};
 
-export type MyProfileQueryFragment = { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly availableLoginMethods: ReadonlyArray<{ readonly __typename: 'LoginMethodNode', readonly method: LoginMethodType, readonly createdAt: any | null, readonly credentialId: string | null, readonly userLabel: string | null } | null> | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null, readonly verifiedPersonalInformation: { readonly __typename: 'VerifiedPersonalInformationNode', readonly firstName: string, readonly lastName: string, readonly givenName: string, readonly nationalIdentificationNumber: string, readonly municipalityOfResidence: string, readonly municipalityOfResidenceNumber: string, readonly permanentAddress: { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string } | null, readonly permanentForeignAddress: { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string } | null } | null };
+export type MyProfileQueryFragment = {
+  readonly __typename: 'ProfileNode';
+  readonly id: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly nickname: string;
+  readonly language: Language | null;
+  readonly availableLoginMethods: ReadonlyArray<{
+    readonly __typename: 'LoginMethodNode';
+    readonly method: LoginMethodType;
+    readonly createdAt: any | null;
+    readonly credentialId: string | null;
+    readonly userLabel: string | null;
+  } | null> | null;
+  readonly primaryAddress: {
+    readonly __typename: 'AddressNode';
+    readonly id: string;
+    readonly primary: boolean;
+    readonly address: string;
+    readonly postalCode: string;
+    readonly city: string;
+    readonly countryCode: string;
+    readonly addressType: AddressType | null;
+  } | null;
+  readonly addresses: {
+    readonly __typename: 'AddressNodeConnection';
+    readonly edges: ReadonlyArray<{
+      readonly __typename: 'AddressNodeEdge';
+      readonly node: {
+        readonly __typename: 'AddressNode';
+        readonly primary: boolean;
+        readonly id: string;
+        readonly address: string;
+        readonly postalCode: string;
+        readonly city: string;
+        readonly countryCode: string;
+        readonly addressType: AddressType | null;
+      } | null;
+    } | null>;
+  } | null;
+  readonly primaryEmail: {
+    readonly __typename: 'EmailNode';
+    readonly id: string;
+    readonly email: string;
+    readonly primary: boolean;
+    readonly emailType: EmailType | null;
+  } | null;
+  readonly emails: {
+    readonly __typename: 'EmailNodeConnection';
+    readonly edges: ReadonlyArray<{
+      readonly __typename: 'EmailNodeEdge';
+      readonly node: {
+        readonly __typename: 'EmailNode';
+        readonly primary: boolean;
+        readonly id: string;
+        readonly email: string;
+        readonly emailType: EmailType | null;
+      } | null;
+    } | null>;
+  } | null;
+  readonly primaryPhone: {
+    readonly __typename: 'PhoneNode';
+    readonly id: string;
+    readonly phone: string;
+    readonly primary: boolean;
+    readonly phoneType: PhoneType | null;
+  } | null;
+  readonly phones: {
+    readonly __typename: 'PhoneNodeConnection';
+    readonly edges: ReadonlyArray<{
+      readonly __typename: 'PhoneNodeEdge';
+      readonly node: {
+        readonly __typename: 'PhoneNode';
+        readonly primary: boolean;
+        readonly id: string;
+        readonly phone: string;
+        readonly phoneType: PhoneType | null;
+      } | null;
+    } | null>;
+  } | null;
+  readonly verifiedPersonalInformation: {
+    readonly __typename: 'VerifiedPersonalInformationNode';
+    readonly firstName: string;
+    readonly lastName: string;
+    readonly givenName: string;
+    readonly nationalIdentificationNumber: string;
+    readonly municipalityOfResidence: string;
+    readonly municipalityOfResidenceNumber: string;
+    readonly permanentAddress: {
+      readonly __typename: 'VerifiedPersonalInformationAddressNode';
+      readonly streetAddress: string;
+      readonly postalCode: string;
+      readonly postOffice: string;
+    } | null;
+    readonly permanentForeignAddress: {
+      readonly __typename: 'VerifiedPersonalInformationForeignAddressNode';
+      readonly streetAddress: string;
+      readonly additionalAddress: string;
+      readonly countryCode: string;
+    } | null;
+  } | null;
+};
 
-export type MyProfileQueryVariables = Exact<{ [key: string]: never; }>;
+export type MyProfileQueryVariables = Exact<{ [key: string]: never }>;
 
+export type MyProfileQuery = {
+  readonly myProfile: {
+    readonly __typename: 'ProfileNode';
+    readonly id: string;
+    readonly firstName: string;
+    readonly lastName: string;
+    readonly nickname: string;
+    readonly language: Language | null;
+    readonly availableLoginMethods: ReadonlyArray<{
+      readonly __typename: 'LoginMethodNode';
+      readonly method: LoginMethodType;
+      readonly createdAt: any | null;
+      readonly credentialId: string | null;
+      readonly userLabel: string | null;
+    } | null> | null;
+    readonly primaryAddress: {
+      readonly __typename: 'AddressNode';
+      readonly id: string;
+      readonly primary: boolean;
+      readonly address: string;
+      readonly postalCode: string;
+      readonly city: string;
+      readonly countryCode: string;
+      readonly addressType: AddressType | null;
+    } | null;
+    readonly addresses: {
+      readonly __typename: 'AddressNodeConnection';
+      readonly edges: ReadonlyArray<{
+        readonly __typename: 'AddressNodeEdge';
+        readonly node: {
+          readonly __typename: 'AddressNode';
+          readonly primary: boolean;
+          readonly id: string;
+          readonly address: string;
+          readonly postalCode: string;
+          readonly city: string;
+          readonly countryCode: string;
+          readonly addressType: AddressType | null;
+        } | null;
+      } | null>;
+    } | null;
+    readonly primaryEmail: {
+      readonly __typename: 'EmailNode';
+      readonly id: string;
+      readonly email: string;
+      readonly primary: boolean;
+      readonly emailType: EmailType | null;
+    } | null;
+    readonly emails: {
+      readonly __typename: 'EmailNodeConnection';
+      readonly edges: ReadonlyArray<{
+        readonly __typename: 'EmailNodeEdge';
+        readonly node: {
+          readonly __typename: 'EmailNode';
+          readonly primary: boolean;
+          readonly id: string;
+          readonly email: string;
+          readonly emailType: EmailType | null;
+        } | null;
+      } | null>;
+    } | null;
+    readonly primaryPhone: {
+      readonly __typename: 'PhoneNode';
+      readonly id: string;
+      readonly phone: string;
+      readonly primary: boolean;
+      readonly phoneType: PhoneType | null;
+    } | null;
+    readonly phones: {
+      readonly __typename: 'PhoneNodeConnection';
+      readonly edges: ReadonlyArray<{
+        readonly __typename: 'PhoneNodeEdge';
+        readonly node: {
+          readonly __typename: 'PhoneNode';
+          readonly primary: boolean;
+          readonly id: string;
+          readonly phone: string;
+          readonly phoneType: PhoneType | null;
+        } | null;
+      } | null>;
+    } | null;
+    readonly verifiedPersonalInformation: {
+      readonly __typename: 'VerifiedPersonalInformationNode';
+      readonly firstName: string;
+      readonly lastName: string;
+      readonly givenName: string;
+      readonly nationalIdentificationNumber: string;
+      readonly municipalityOfResidence: string;
+      readonly municipalityOfResidenceNumber: string;
+      readonly permanentAddress: {
+        readonly __typename: 'VerifiedPersonalInformationAddressNode';
+        readonly streetAddress: string;
+        readonly postalCode: string;
+        readonly postOffice: string;
+      } | null;
+      readonly permanentForeignAddress: {
+        readonly __typename: 'VerifiedPersonalInformationForeignAddressNode';
+        readonly streetAddress: string;
+        readonly additionalAddress: string;
+        readonly countryCode: string;
+      } | null;
+    } | null;
+  } | null;
+};
 
-export type MyProfileQuery = { readonly myProfile: { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly availableLoginMethods: ReadonlyArray<{ readonly __typename: 'LoginMethodNode', readonly method: LoginMethodType, readonly createdAt: any | null, readonly credentialId: string | null, readonly userLabel: string | null } | null> | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null, readonly verifiedPersonalInformation: { readonly __typename: 'VerifiedPersonalInformationNode', readonly firstName: string, readonly lastName: string, readonly givenName: string, readonly nationalIdentificationNumber: string, readonly municipalityOfResidence: string, readonly municipalityOfResidenceNumber: string, readonly permanentAddress: { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string } | null, readonly permanentForeignAddress: { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string } | null } | null } | null };
+export type NameQueryVariables = Exact<{ [key: string]: never }>;
 
-export type NameQueryVariables = Exact<{ [key: string]: never; }>;
+export type NameQuery = {
+  readonly myProfile: {
+    readonly __typename: 'ProfileNode';
+    readonly firstName: string;
+    readonly lastName: string;
+    readonly nickname: string;
+  } | null;
+};
 
+export type ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesNodeFragment = {
+  readonly __typename: 'AllowedDataFieldNode';
+  readonly fieldName: string;
+  readonly label: string | null;
+};
 
-export type NameQuery = { readonly myProfile: { readonly __typename: 'ProfileNode', readonly firstName: string, readonly lastName: string, readonly nickname: string } | null };
+export type ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesFragment = {
+  readonly __typename: 'AllowedDataFieldNodeEdge';
+  readonly node: {
+    readonly __typename: 'AllowedDataFieldNode';
+    readonly fieldName: string;
+    readonly label: string | null;
+  } | null;
+};
 
-export type ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesNodeFragment = { readonly __typename: 'AllowedDataFieldNode', readonly fieldName: string, readonly label: string | null };
+export type ServiceConnectionsQueryEdgesNodeServiceFragment = {
+  readonly __typename: 'ServiceNode';
+  readonly name: string;
+  readonly title: string | null;
+  readonly description: string | null;
+  readonly allowedDataFields: {
+    readonly __typename: 'AllowedDataFieldNodeConnection';
+    readonly edges: ReadonlyArray<{
+      readonly __typename: 'AllowedDataFieldNodeEdge';
+      readonly node: {
+        readonly __typename: 'AllowedDataFieldNode';
+        readonly fieldName: string;
+        readonly label: string | null;
+      } | null;
+    } | null>;
+  };
+};
 
-export type ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesFragment = { readonly __typename: 'AllowedDataFieldNodeEdge', readonly node: { readonly __typename: 'AllowedDataFieldNode', readonly fieldName: string, readonly label: string | null } | null };
-
-export type ServiceConnectionsQueryEdgesNodeServiceFragment = { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null, readonly description: string | null, readonly allowedDataFields: { readonly __typename: 'AllowedDataFieldNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AllowedDataFieldNodeEdge', readonly node: { readonly __typename: 'AllowedDataFieldNode', readonly fieldName: string, readonly label: string | null } | null } | null> } };
-
-export type ServiceConnectionsQueryEdgesNodeFragment = { readonly __typename: 'ServiceConnectionType', readonly createdAt: any, readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null, readonly description: string | null, readonly allowedDataFields: { readonly __typename: 'AllowedDataFieldNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AllowedDataFieldNodeEdge', readonly node: { readonly __typename: 'AllowedDataFieldNode', readonly fieldName: string, readonly label: string | null } | null } | null> } } };
+export type ServiceConnectionsQueryEdgesNodeFragment = {
+  readonly __typename: 'ServiceConnectionType';
+  readonly createdAt: any;
+  readonly service: {
+    readonly __typename: 'ServiceNode';
+    readonly name: string;
+    readonly title: string | null;
+    readonly description: string | null;
+    readonly allowedDataFields: {
+      readonly __typename: 'AllowedDataFieldNodeConnection';
+      readonly edges: ReadonlyArray<{
+        readonly __typename: 'AllowedDataFieldNodeEdge';
+        readonly node: {
+          readonly __typename: 'AllowedDataFieldNode';
+          readonly fieldName: string;
+          readonly label: string | null;
+        } | null;
+      } | null>;
+    };
+  };
+};
 
 export type ServiceConnectionsQueryVariables = Exact<{
   language: TranslationLanguage;
 }>;
 
+export type ServiceConnectionsQuery = {
+  readonly myProfile: {
+    readonly __typename: 'ProfileNode';
+    readonly id: string;
+    readonly serviceConnections: {
+      readonly __typename: 'ServiceConnectionTypeConnection';
+      readonly edges: ReadonlyArray<{
+        readonly __typename: 'ServiceConnectionTypeEdge';
+        readonly node: {
+          readonly __typename: 'ServiceConnectionType';
+          readonly createdAt: any;
+          readonly service: {
+            readonly __typename: 'ServiceNode';
+            readonly name: string;
+            readonly title: string | null;
+            readonly description: string | null;
+            readonly allowedDataFields: {
+              readonly __typename: 'AllowedDataFieldNodeConnection';
+              readonly edges: ReadonlyArray<{
+                readonly __typename: 'AllowedDataFieldNodeEdge';
+                readonly node: {
+                  readonly __typename: 'AllowedDataFieldNode';
+                  readonly fieldName: string;
+                  readonly label: string | null;
+                } | null;
+              } | null>;
+            };
+          };
+        } | null;
+      } | null>;
+    } | null;
+  } | null;
+};
 
-export type ServiceConnectionsQuery = { readonly myProfile: { readonly __typename: 'ProfileNode', readonly id: string, readonly serviceConnections: { readonly __typename: 'ServiceConnectionTypeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'ServiceConnectionTypeEdge', readonly node: { readonly __typename: 'ServiceConnectionType', readonly createdAt: any, readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly title: string | null, readonly description: string | null, readonly allowedDataFields: { readonly __typename: 'AllowedDataFieldNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AllowedDataFieldNodeEdge', readonly node: { readonly __typename: 'AllowedDataFieldNode', readonly fieldName: string, readonly label: string | null } | null } | null> } } } | null } | null> } | null } | null };
-
-export type UpdateMyProfileMutationFragment = { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null };
+export type UpdateMyProfileMutationFragment = {
+  readonly __typename: 'ProfileNode';
+  readonly id: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly nickname: string;
+  readonly language: Language | null;
+  readonly primaryAddress: {
+    readonly __typename: 'AddressNode';
+    readonly id: string;
+    readonly primary: boolean;
+    readonly address: string;
+    readonly postalCode: string;
+    readonly city: string;
+    readonly countryCode: string;
+    readonly addressType: AddressType | null;
+  } | null;
+  readonly addresses: {
+    readonly __typename: 'AddressNodeConnection';
+    readonly edges: ReadonlyArray<{
+      readonly __typename: 'AddressNodeEdge';
+      readonly node: {
+        readonly __typename: 'AddressNode';
+        readonly primary: boolean;
+        readonly id: string;
+        readonly address: string;
+        readonly postalCode: string;
+        readonly city: string;
+        readonly countryCode: string;
+        readonly addressType: AddressType | null;
+      } | null;
+    } | null>;
+  } | null;
+  readonly primaryEmail: {
+    readonly __typename: 'EmailNode';
+    readonly id: string;
+    readonly email: string;
+    readonly primary: boolean;
+    readonly emailType: EmailType | null;
+  } | null;
+  readonly emails: {
+    readonly __typename: 'EmailNodeConnection';
+    readonly edges: ReadonlyArray<{
+      readonly __typename: 'EmailNodeEdge';
+      readonly node: {
+        readonly __typename: 'EmailNode';
+        readonly primary: boolean;
+        readonly id: string;
+        readonly email: string;
+        readonly emailType: EmailType | null;
+      } | null;
+    } | null>;
+  } | null;
+  readonly primaryPhone: {
+    readonly __typename: 'PhoneNode';
+    readonly id: string;
+    readonly phone: string;
+    readonly primary: boolean;
+    readonly phoneType: PhoneType | null;
+  } | null;
+  readonly phones: {
+    readonly __typename: 'PhoneNodeConnection';
+    readonly edges: ReadonlyArray<{
+      readonly __typename: 'PhoneNodeEdge';
+      readonly node: {
+        readonly __typename: 'PhoneNode';
+        readonly primary: boolean;
+        readonly id: string;
+        readonly phone: string;
+        readonly phoneType: PhoneType | null;
+      } | null;
+    } | null>;
+  } | null;
+};
 
 export type UpdateMyProfileMutationVariables = Exact<{
   input: UpdateMyProfileMutationInput;
 }>;
 
-
-export type UpdateMyProfileMutation = { readonly updateMyProfile: { readonly __typename: 'UpdateMyProfileMutationPayload', readonly profile: { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null } | null } | null };
+export type UpdateMyProfileMutation = {
+  readonly updateMyProfile: {
+    readonly __typename: 'UpdateMyProfileMutationPayload';
+    readonly profile: {
+      readonly __typename: 'ProfileNode';
+      readonly id: string;
+      readonly firstName: string;
+      readonly lastName: string;
+      readonly nickname: string;
+      readonly language: Language | null;
+      readonly primaryAddress: {
+        readonly __typename: 'AddressNode';
+        readonly id: string;
+        readonly primary: boolean;
+        readonly address: string;
+        readonly postalCode: string;
+        readonly city: string;
+        readonly countryCode: string;
+        readonly addressType: AddressType | null;
+      } | null;
+      readonly addresses: {
+        readonly __typename: 'AddressNodeConnection';
+        readonly edges: ReadonlyArray<{
+          readonly __typename: 'AddressNodeEdge';
+          readonly node: {
+            readonly __typename: 'AddressNode';
+            readonly primary: boolean;
+            readonly id: string;
+            readonly address: string;
+            readonly postalCode: string;
+            readonly city: string;
+            readonly countryCode: string;
+            readonly addressType: AddressType | null;
+          } | null;
+        } | null>;
+      } | null;
+      readonly primaryEmail: {
+        readonly __typename: 'EmailNode';
+        readonly id: string;
+        readonly email: string;
+        readonly primary: boolean;
+        readonly emailType: EmailType | null;
+      } | null;
+      readonly emails: {
+        readonly __typename: 'EmailNodeConnection';
+        readonly edges: ReadonlyArray<{
+          readonly __typename: 'EmailNodeEdge';
+          readonly node: {
+            readonly __typename: 'EmailNode';
+            readonly primary: boolean;
+            readonly id: string;
+            readonly email: string;
+            readonly emailType: EmailType | null;
+          } | null;
+        } | null>;
+      } | null;
+      readonly primaryPhone: {
+        readonly __typename: 'PhoneNode';
+        readonly id: string;
+        readonly phone: string;
+        readonly primary: boolean;
+        readonly phoneType: PhoneType | null;
+      } | null;
+      readonly phones: {
+        readonly __typename: 'PhoneNodeConnection';
+        readonly edges: ReadonlyArray<{
+          readonly __typename: 'PhoneNodeEdge';
+          readonly node: {
+            readonly __typename: 'PhoneNode';
+            readonly primary: boolean;
+            readonly id: string;
+            readonly phone: string;
+            readonly phoneType: PhoneType | null;
+          } | null;
+        } | null>;
+      } | null;
+    } | null;
+  } | null;
+};

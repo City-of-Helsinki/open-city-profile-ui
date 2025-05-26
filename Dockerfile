@@ -39,7 +39,7 @@ ENV PATH=/app/node_modules/.bin:$PATH
 RUN yarn config set network-timeout 300000
 RUN yarn && yarn cache clean --force
 
-COPY --chown=default:root index.html vite.config.mts .eslintrc.json .eslintignore tsconfig.json .prettierrc.json .env* /app/
+COPY --chown=default:root index.html vite.config.mts .eslintrc .eslintignore tsconfig.json .prettierrc .env* /app/
 COPY --chown=default:root ./src /app/src
 # =============================
 FROM appbase AS development

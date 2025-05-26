@@ -8,21 +8,13 @@ import {
   ElementSelector,
 } from '../../../../common/test/testingLibraryTools';
 import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
-import getServiceConnectionData, {
-  ServiceConnectionData,
-} from '../../../helpers/getServiceConnectionData';
+import getServiceConnectionData, { ServiceConnectionData } from '../../../helpers/getServiceConnectionData';
 import i18n from '../../../../common/test/testi18nInit';
 import mockWindowLocation from '../../../../common/test/mockWindowLocation';
 import { Action } from '../../../../common/actionQueue/actionQueue';
 import config from '../../../../config';
-import {
-  ActionMockData,
-  initMockQueue,
-} from '../../../../common/actionQueue/mock.util';
-import {
-  AuthCodeQueuesProps,
-  authCodeQueuesStorageKey,
-} from '../../../../gdprApi/useAuthCodeQueues';
+import { ActionMockData, initMockQueue } from '../../../../common/actionQueue/mock.util';
+import { AuthCodeQueuesProps, authCodeQueuesStorageKey } from '../../../../gdprApi/useAuthCodeQueues';
 import ServiceConnectionRemover from '../ServiceConnectionRemover';
 // eslint-disable-next-line max-len
 import { getScenarioWhereDeleteServiceConnectionIsResumable } from '../../../../gdprApi/actions/__mocks__/queueScenarios';
@@ -37,9 +29,7 @@ describe('<ServiceConnectionRemover /> ', () => {
   const onAbortTracker = vi.fn();
   const mockedWindowControls = mockWindowLocation();
 
-  const defaultServiceConnectionData = getServiceConnectionData(
-    getMyProfileWithServiceConnections()
-  )[0];
+  const defaultServiceConnectionData = getServiceConnectionData(getMyProfileWithServiceConnections())[0];
 
   const testIds = {
     confirmButton: 'confirmation-modal-confirm-button',
@@ -56,23 +46,12 @@ describe('<ServiceConnectionRemover /> ', () => {
     testId: testIds[key],
   });
 
-  const TestingComponent = ({
-    service,
-  }: {
-    service: ServiceConnectionData;
-  }) => (
-    <ServiceConnectionRemover
-      service={service}
-      onDeletion={onDeleteTracker}
-      onAbort={onAbortTracker}
-    />
+  const TestingComponent = ({ service }: { service: ServiceConnectionData }) => (
+    <ServiceConnectionRemover service={service} onDeletion={onDeleteTracker} onAbort={onAbortTracker} />
   );
 
   const renderTestSuite = (service: ServiceConnectionData) =>
-    renderComponentWithMocksAndContexts(
-      vi.fn(),
-      <TestingComponent service={service} />
-    );
+    renderComponentWithMocksAndContexts(vi.fn(), <TestingComponent service={service} />);
 
   const authCodeQueueProps: AuthCodeQueuesProps = {
     queueName: 'deleteServiceConnection',
@@ -85,16 +64,14 @@ describe('<ServiceConnectionRemover /> ', () => {
   };
 
   const initQueueAndLocationForResume = (
-    ...args: Parameters<
-      typeof getScenarioWhereDeleteServiceConnectionIsResumable
-    >
+    ...args: Parameters<typeof getScenarioWhereDeleteServiceConnectionIsResumable>
   ) => {
     initTestQueue(getScenarioWhereDeleteServiceConnectionIsResumable(...args));
     mockedWindowControls.setPath(config.serviceConnectionsPath);
     mockedWindowControls.setSearch(
       createNextActionParams({
         type: defaultRedirectionCatcherActionType,
-      } as Action)
+      } as Action),
     );
   };
 
@@ -105,9 +82,7 @@ describe('<ServiceConnectionRemover /> ', () => {
     vi.resetAllMocks();
   });
 
-  const initTests = async (
-    service?: ServiceConnectionData
-  ): Promise<TestTools> =>
+  const initTests = async (service?: ServiceConnectionData): Promise<TestTools> =>
     renderTestSuite(service || defaultServiceConnectionData);
 
   it(`Renders the confirmation modal on initial render.
@@ -159,9 +134,7 @@ describe('<ServiceConnectionRemover /> ', () => {
       ],
     });
 
-    const { clickElement, waitForElement } = await initTests(
-      defaultServiceConnectionData
-    );
+    const { clickElement, waitForElement } = await initTests(defaultServiceConnectionData);
 
     await waitForElement(getTestId('loadIndicator'));
     await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
@@ -185,9 +158,7 @@ describe('<ServiceConnectionRemover /> ', () => {
       ],
     });
 
-    const { clickElement, waitForElement } = await initTests(
-      defaultServiceConnectionData
-    );
+    const { clickElement, waitForElement } = await initTests(defaultServiceConnectionData);
 
     await waitForElement({ text: t(ERROR_MODAL_TITLE_TEXT) });
     await waitForElement({

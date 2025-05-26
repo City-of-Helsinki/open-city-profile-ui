@@ -6,10 +6,7 @@ import { Mock } from 'vitest';
 import { AnyObject } from '../../graphql/typings';
 import { getMockCallArgs } from '../../common/test/mockHelper';
 
-export async function setCookieConsents(
-  result: RenderResult,
-  consents: AnyObject<boolean>
-) {
+export async function setCookieConsents(result: RenderResult, consents: AnyObject<boolean>) {
   const el = await result.findByTestId('cookie-consents');
   if (!el) {
     throw new Error('No cookie-consents element');
@@ -48,11 +45,7 @@ export function verifyTrackingCookiesAreNotSet(mockFn: Mock) {
   expect(calls).toEqual([]);
 }
 
-function CookieModalAndPageMock({
-  contentSource,
-}: {
-  contentSource: ContentSource;
-}) {
+function CookieModalAndPageMock({ contentSource }: { contentSource: ContentSource }) {
   const getConsents = (): AnyObject<boolean> => {
     const el = document.querySelector('*[data-testid="cookie-consents"]');
     if (!el || !el.textContent) {
@@ -71,18 +64,10 @@ function CookieModalAndPageMock({
     }
   };
   return (
-    <div data-testid="mock-cookie-modal-and-page">
-      <button
-        type="button"
-        data-testid="trigger-on-consents-parsed"
-        onClick={onConsentsParsedClick}
-      ></button>
-      <button
-        type="button"
-        data-testid="trigger-on-all-consents-given"
-        onClick={onAllConsentsGivenClick}
-      ></button>
-      <span data-testid="cookie-consents"></span>
+    <div data-testid='mock-cookie-modal-and-page'>
+      <button type='button' data-testid='trigger-on-consents-parsed' onClick={onConsentsParsedClick}></button>
+      <button type='button' data-testid='trigger-on-all-consents-given' onClick={onAllConsentsGivenClick}></button>
+      <span data-testid='cookie-consents'></span>
     </div>
   );
 }

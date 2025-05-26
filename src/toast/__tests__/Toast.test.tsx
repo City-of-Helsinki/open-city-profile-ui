@@ -14,7 +14,7 @@ function TestInvoker({ toast }: { toast: Toast }) {
   };
 
   return (
-    <button id="create" onClick={handleClick}>
+    <button id='create' onClick={handleClick}>
       test create
     </button>
   );
@@ -34,7 +34,7 @@ describe('Toast', () => {
     render(
       <ToastProvider>
         <TestInvoker {...defaultProps} />
-      </ToastProvider>
+      </ToastProvider>,
     );
 
   beforeAll(() => {

@@ -12,18 +12,12 @@ import {
   ElementSelector,
 } from '../../../../common/test/testingLibraryTools';
 import { PhoneNode, ProfileData } from '../../../../graphql/typings';
-import {
-  MockedResponse,
-  ResponseProvider,
-} from '../../../../common/test/MockApolloClientProvider';
+import { MockedResponse, ResponseProvider } from '../../../../common/test/MockApolloClientProvider';
 import { PhoneValue, EditDataType } from '../../../helpers/editData';
 import i18n from '../../../../common/test/testi18nInit';
 import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
 import getPhonesFromNode from '../../../helpers/getPhonesFromNode';
-import {
-  getCountryCallingCodes,
-  splitNumberAndCountryCallingCode,
-} from '../../../../i18n/countryCallingCodes.utils';
+import { getCountryCallingCodes, splitNumberAndCountryCallingCode } from '../../../../i18n/countryCallingCodes.utils';
 import PhoneNumberEditor from '../PhoneNumberEditor';
 import {
   DataSource,
@@ -53,13 +47,12 @@ describe('<PhoneNumberEditor /> ', () => {
   const initialProfile = getMyProfile().myProfile as ProfileData;
   const dataType: EditDataType = 'phones';
   const renderTestSuite = () => {
-    const responseProvider: ResponseProvider = () =>
-      responses.shift() as MockedResponse;
+    const responseProvider: ResponseProvider = () => responses.shift() as MockedResponse;
     return renderComponentWithMocksAndContexts(
       responseProvider,
       <RenderChildrenWhenDataIsComplete>
         <PhoneNumberEditor />
-      </RenderChildrenWhenDataIsComplete>
+      </RenderChildrenWhenDataIsComplete>,
     );
   };
 
@@ -102,11 +95,7 @@ describe('<PhoneNumberEditor /> ', () => {
     cleanComponentMocks();
   });
 
-  const getFieldValueSelector = (
-    field: PhoneFieldKey,
-    targetIsInput = false,
-    index = 0
-  ): ElementSelector => {
+  const getFieldValueSelector = (field: PhoneFieldKey, targetIsInput = false, index = 0): ElementSelector => {
     if (field === 'countryCallingCode' && targetIsInput) {
       return {
         id: `${dataType}-${index}-${field}-input`,
@@ -123,22 +112,14 @@ describe('<PhoneNumberEditor /> ', () => {
     if (!countryCode) {
       return '';
     }
-    const countryCallingCodeOptions = getCountryCallingCodes('fi').filter(
-      option => option.value === countryCode
-    );
-    return countryCallingCodeOptions && countryCallingCodeOptions.length
-      ? countryCallingCodeOptions[0].label
-      : '';
+    const countryCallingCodeOptions = getCountryCallingCodes('fi').filter((option) => option.value === countryCode);
+    return countryCallingCodeOptions && countryCallingCodeOptions.length ? countryCallingCodeOptions[0].label : '';
   };
 
-  const dataSourceToInputDataSource = (
-    dataSource: PhoneNumberDataSource
-  ): PhoneNumberInputDataSource =>
+  const dataSourceToInputDataSource = (dataSource: PhoneNumberDataSource): PhoneNumberInputDataSource =>
     splitNumberAndCountryCallingCode(dataSource.phone as string);
 
-  const inputDataSourceToDataSource = (
-    formValues: PhoneNumberInputDataSource
-  ): PhoneValue => ({
+  const inputDataSourceToDataSource = (formValues: PhoneNumberInputDataSource): PhoneValue => ({
     phone: `${formValues.countryCallingCode}${formValues.number}`,
   });
 
@@ -147,7 +128,7 @@ describe('<PhoneNumberEditor /> ', () => {
   // this function parses their combinations to {number,countryCallingConde}
   // combinations are possible in test runs
   const multipleValuesToInputDataSource = (
-    dataSource: Partial<PhoneNumberInputDataSource & PhoneValue>
+    dataSource: Partial<PhoneNumberInputDataSource & PhoneValue>,
   ): PhoneNumberInputDataSource => {
     if (!dataSource.phone) {
       return dataSource as PhoneNumberInputDataSource;
@@ -161,10 +142,7 @@ describe('<PhoneNumberEditor /> ', () => {
     };
   };
 
-  const convertInputFieldValue = (
-    source: PhoneNumberInputDataSource,
-    field: PhoneInputKey
-  ): string => {
+  const convertInputFieldValue = (source: PhoneNumberInputDataSource, field: PhoneInputKey): string => {
     const value = source[field];
 
     if (field === 'number') {
@@ -177,58 +155,37 @@ describe('<PhoneNumberEditor /> ', () => {
     return getCountryCallingCodeLabel(value);
   };
 
-  const convertFieldValue = (
-    source: PhoneNumberDataSource,
-    field: PhoneValueKey
-  ): string => {
+  const convertFieldValue = (source: PhoneNumberDataSource, field: PhoneValueKey): string => {
     const value = source[field];
     return value || '';
   };
 
-  const verifyValuesFromElements = async (
-    testTools: TestTools,
-    source: DataSource,
-    targetIsInput = false
-  ) => {
+  const verifyValuesFromElements = async (testTools: TestTools, source: DataSource, targetIsInput = false) => {
     const { getTextOrInputValue } = testTools;
     const fieldList = targetIsInput ? inputFields : textFields;
-    const usedSource = targetIsInput
-      ? dataSourceToInputDataSource(source as PhoneNumberDataSource)
-      : source;
+    const usedSource = targetIsInput ? dataSourceToInputDataSource(source as PhoneNumberDataSource) : source;
     for (const field of fieldList) {
       const expectedValue = targetIsInput
-        ? convertInputFieldValue(
-            usedSource as PhoneNumberInputDataSource,
-            field as PhoneInputKey
-          )
-        : convertFieldValue(
-            usedSource as PhoneNumberDataSource,
-            field as PhoneValueKey
-          );
+        ? convertInputFieldValue(usedSource as PhoneNumberInputDataSource, field as PhoneInputKey)
+        : convertFieldValue(usedSource as PhoneNumberDataSource, field as PhoneValueKey);
 
-      await expect(
-        getTextOrInputValue(getFieldValueSelector(field, targetIsInput, 0))
-      ).resolves.toBe(expectedValue);
+      await expect(getTextOrInputValue(getFieldValueSelector(field, targetIsInput, 0))).resolves.toBe(expectedValue);
     }
   };
 
   const setValuesToInputs = async (
     testTools: TestTools,
     source: DataSource,
-    selectedFields: PhoneInputKey[] = inputFields
+    selectedFields: PhoneInputKey[] = inputFields,
   ) => {
     const { setInputValue, comboBoxSelector, getTextOrInputValue } = testTools;
     for (const field of selectedFields) {
-      const usedSource = multipleValuesToInputDataSource(
-        source as PhoneNumberInputDataSource
-      );
+      const usedSource = multipleValuesToInputDataSource(source as PhoneNumberInputDataSource);
       const newValue = usedSource[field];
       if (field === 'countryCallingCode') {
         // comboBoxSelector will throw an error if attempting to set a value which is already set
         const label = getCountryCallingCodeLabel(newValue);
-        const currentValue = await getTextOrInputValue(
-          getFieldValueSelector(field, true)
-        );
+        const currentValue = await getTextOrInputValue(getFieldValueSelector(field, true));
         if (currentValue !== label) {
           await comboBoxSelector(`${dataType}-0-${field}`, label);
         }
@@ -249,19 +206,14 @@ describe('<PhoneNumberEditor /> ', () => {
     notificationMessages: getNotificationMessages(t),
   };
 
-  const initTests = async (
-    profileData: ProfileData = initialProfile
-  ): Promise<TestTools> => {
+  const initTests = async (profileData: ProfileData = initialProfile): Promise<TestTools> => {
     responses.push({ profileData });
     const testTools = await renderTestSuite();
     await testTools.fetch();
     return Promise.resolve(testTools);
   };
 
-  const initialPhoneInProfile = getPhonesFromNode(
-    { myProfile: initialProfile },
-    true
-  )[0];
+  const initialPhoneInProfile = getPhonesFromNode({ myProfile: initialProfile }, true)[0];
 
   const phoneNodes = getPhonesFromNode({ myProfile: initialProfile }, true);
   const usedPhoneNode = phoneNodes[0];
@@ -299,8 +251,7 @@ describe('<PhoneNumberEditor /> ', () => {
       testTools,
       formData: newNumberAsPhoneValue,
       assumedResponse: getUpdatedProfile(newNumberAsPhoneValue),
-      sentDataPicker: variables =>
-        (variables.input.profile.updatePhones as DataSource[])[0],
+      sentDataPicker: (variables) => (variables.input.profile.updatePhones as DataSource[])[0],
       ...commonTestProps,
     });
   });
@@ -318,7 +269,7 @@ describe('<PhoneNumberEditor /> ', () => {
   it('invalid values are indicated and setting a valid value removes error', async () => {
     const testTools = await initTests();
 
-    const testRuns: ValidationTest[] = inputFields.map(prop => ({
+    const testRuns: ValidationTest[] = inputFields.map((prop) => ({
       prop,
       value: invalidFormValues[prop],
       inputSelector: getFieldValueSelector(prop, true),
@@ -332,7 +283,7 @@ describe('<PhoneNumberEditor /> ', () => {
         initialValues: initialProfile,
         ...commonTestProps,
       },
-      testRuns
+      testRuns,
     );
   });
 
@@ -343,8 +294,7 @@ describe('<PhoneNumberEditor /> ', () => {
       testTools,
       formData: validNumberAsPhoneValue,
       assumedResponse: getProfileWithPhone(validNumberAsPhoneValue),
-      sentDataPicker: variables =>
-        ((variables.input.profile.addPhones as unknown) as DataSource[])[0],
+      sentDataPicker: (variables) => (variables.input.profile.addPhones as unknown as DataSource[])[0],
       ...commonTestProps,
     });
   });
@@ -352,9 +302,7 @@ describe('<PhoneNumberEditor /> ', () => {
   it(`When removing an phonenumber, a confirmation modal is shown.
       Remove error is handled and shown.
       When removal is complete, add button is shown and a text about no phones.`, async () => {
-    const testTools = await initTests(
-      getProfileWithPhone(validNumberAsPhoneValue)
-    );
+    const testTools = await initTests(getProfileWithPhone(validNumberAsPhoneValue));
     await testRemovingItem({
       testTools,
       assumedResponse: profileWithoutPhones,
@@ -372,7 +320,7 @@ describe('<PhoneNumberEditor /> ', () => {
         formData: validNumberAsPhoneValue,
         ...commonTestProps,
       },
-      true
+      true,
     );
   });
 

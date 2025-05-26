@@ -15,7 +15,7 @@ function DeleteProfileContent({ data }: Props): React.ReactElement | null {
   const description =
     data?.myProfile?.serviceConnections?.edges?.length !== 0 ? (
       <Trans
-        i18nKey="deleteProfileModal.explanation"
+        i18nKey='deleteProfileModal.explanation'
         components={{
           linkToMyInformation: <Link href={'/'}>{''}</Link>,
         }}

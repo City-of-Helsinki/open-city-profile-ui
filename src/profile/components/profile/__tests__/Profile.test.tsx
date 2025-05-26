@@ -2,30 +2,22 @@ import React from 'react';
 import { cleanup } from '@testing-library/react';
 
 import { getMyProfile } from '../../../../common/test/myProfileMocking';
-import {
-  ElementSelector,
-  renderComponentWithMocksAndContexts,
-} from '../../../../common/test/testingLibraryTools';
+import { ElementSelector, renderComponentWithMocksAndContexts } from '../../../../common/test/testingLibraryTools';
 import { ProfileData } from '../../../../graphql/typings';
 import Profile from '../Profile';
-import {
-  MockedResponse,
-  resetApolloMocks,
-  ResponseProvider,
-} from '../../../../common/test/MockApolloClientProvider';
+import { MockedResponse, resetApolloMocks, ResponseProvider } from '../../../../common/test/MockApolloClientProvider';
 import TestLoginProvider from '../../../../common/test/TestLoginProvider';
 
 describe('<Profile />', () => {
   const renderTestSuite = (responses: MockedResponse[]) => {
-    const responseProvider: ResponseProvider = () =>
-      responses.shift() as MockedResponse;
+    const responseProvider: ResponseProvider = () => responses.shift() as MockedResponse;
     return renderComponentWithMocksAndContexts(
       responseProvider,
       <React.Fragment>
         <TestLoginProvider>
           <Profile />
         </TestLoginProvider>
-      </React.Fragment>
+      </React.Fragment>,
     );
   };
 
@@ -45,15 +37,9 @@ describe('<Profile />', () => {
   };
 
   it('should render load indicator and then ViewProfile when profile exists', async () => {
-    const responses: MockedResponse[] = [
-      { profileData: getMyProfile().myProfile as ProfileData },
-    ];
+    const responses: MockedResponse[] = [{ profileData: getMyProfile().myProfile as ProfileData }];
 
-    const {
-      getElement,
-      waitForIsComplete,
-      waitForElement,
-    } = await renderTestSuite(responses);
+    const { getElement, waitForIsComplete, waitForElement } = await renderTestSuite(responses);
     getElement(selectors.loadIndicator);
     await waitForIsComplete();
     await waitForElement(selectors.profileHeading);
@@ -66,9 +52,7 @@ describe('<Profile />', () => {
       },
     ];
 
-    const { waitForIsComplete, waitForElement } = await renderTestSuite(
-      responses
-    );
+    const { waitForIsComplete, waitForElement } = await renderTestSuite(responses);
     await waitForIsComplete();
     await waitForElement(selectors.profileHeading);
   });

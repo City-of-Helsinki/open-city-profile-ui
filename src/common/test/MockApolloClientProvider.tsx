@@ -25,9 +25,7 @@ export type MockedResponse = {
   profileDataWithServiceConnections?: ServiceConnectionsRoot;
   errorType?: 'networkError' | 'graphQLError';
   withAllowedPermissionError?: boolean;
-  deleteMyProfile?: null | Partial<
-    GdprDeleteMyProfileMutationDeleteMyProfileFragment
-  >;
+  deleteMyProfile?: null | Partial<GdprDeleteMyProfileMutationDeleteMyProfileFragment>;
   deleteMyServiceData?: null | Partial<GdprDeleteMyServiceDataMutationFragment>;
   downloadMyProfile?: null | unknown;
 };
@@ -38,15 +36,13 @@ export type ResponseProvider = (
     | ServiceConnectionsQueryVariables
     | GdprDeleteMyProfileMutationVariables
     | DownloadMyProfileQueryVariables
-    | GdprDeleteMyServiceDataMutationVariables
+    | GdprDeleteMyServiceDataMutationVariables,
 ) => MockedResponse;
 
 type ErrorReturnType = { error: Error };
 type ResponseReturnType = ExecutionResult<ProfileData> | ErrorReturnType;
 
-const getResponseData = (
-  response: MockedResponse
-): Record<string, unknown> | undefined => {
+const getResponseData = (response: MockedResponse): Record<string, unknown> | undefined => {
   const {
     errorType,
     profileData,
@@ -70,10 +66,7 @@ const getResponseData = (
     return { downloadMyProfile: JSON.stringify({ key: 'value' }) };
   }
   if (profileDataWithServiceConnections) {
-    return (profileDataWithServiceConnections as unknown) as Record<
-      string,
-      unknown
-    >;
+    return profileDataWithServiceConnections as unknown as Record<string, unknown>;
   }
   if (createMyProfile) {
     return {
@@ -82,28 +75,21 @@ const getResponseData = (
       },
     };
   }
-  return profileData !== undefined
-    ? { myProfile: profileData }
-    : { updateMyProfile: { profile: updatedProfileData } };
+  return profileData !== undefined ? { myProfile: profileData } : { updateMyProfile: { profile: updatedProfileData } };
 };
 
 const createAllowedPermissionError = (): GraphQLError =>
-  (({
+  ({
     path: ['myProfile', 'verifiedPersonalInformation'],
     extensions: { code: 'PERMISSION_DENIED_ERROR' },
-  } as unknown) as GraphQLError);
+  }) as unknown as GraphQLError;
 
-const addAllowedPermissionErrorToResponse = (
-  data: ProfileData
-): ExecutionResult<ProfileData> => ({
+const addAllowedPermissionErrorToResponse = (data: ProfileData): ExecutionResult<ProfileData> => ({
   data,
   errors: [createAllowedPermissionError()],
 });
 
-const createResponse = (
-  response: MockedResponse,
-  data: unknown
-): ResponseReturnType => {
+const createResponse = (response: MockedResponse, data: unknown): ResponseReturnType => {
   const { errorType, withAllowedPermissionError } = response;
   if (!errorType) {
     return withAllowedPermissionError
@@ -117,9 +103,7 @@ const createResponse = (
       };
 };
 
-const createMockedProfileResponse = (
-  response: MockedResponse
-): ResponseReturnType => {
+const createMockedProfileResponse = (response: MockedResponse): ResponseReturnType => {
   if (!response) {
     throw new Error('No response provided');
   }
@@ -136,11 +120,7 @@ export function MockApolloClientProvider({
   fetchMock.mockIf(/.*\/graphql\/.*$/, async (req: Request) => {
     const payload = await req.json();
     const response = createMockedProfileResponse(
-      responseProvider(
-        payload
-          ? (payload.variables as UpdateMyProfileMutationVariables)
-          : undefined
-      )
+      responseProvider(payload ? (payload.variables as UpdateMyProfileMutationVariables) : undefined),
     );
     if ((response as ErrorReturnType).error) {
       return Promise.reject({
@@ -155,10 +135,10 @@ export function MockApolloClientProvider({
 }
 
 export const createApolloErrorWithAllowedPermissionError = (): ApolloError =>
-  (({
+  ({
     message: 'This is a fake ApolloError with allowed permission error',
     graphQLErrors: [createAllowedPermissionError()],
-  } as unknown) as ApolloError);
+  }) as unknown as ApolloError;
 
 export function resetApolloMocks(): void {
   fetchMock.resetMocks();

@@ -38,15 +38,13 @@ function FormikDropdown(props: Props): React.ReactElement {
       if (!value) {
         return undefined;
       }
-      return singleSelectProps.options.find(
-        (option: OptionType) => option.value === value
-      );
+      return singleSelectProps.options.find((option: OptionType) => option.value === value);
     },
-    [singleSelectProps.options]
+    [singleSelectProps.options],
   );
 
   const [selectedOption, setSelectedOption] = useState<OptionType | undefined>(
-    currentOption || initialOption || defaultOption
+    currentOption || initialOption || defaultOption,
   );
 
   useEffect(() => {
@@ -57,11 +55,7 @@ function FormikDropdown(props: Props): React.ReactElement {
       return;
     }
     const selectedInCurrentOptions = findOptionByValue(selectedOption?.value);
-    if (
-      selectedOption &&
-      selectedInCurrentOptions &&
-      selectedInCurrentOptions.label !== selectedOption.label
-    ) {
+    if (selectedOption && selectedInCurrentOptions && selectedInCurrentOptions.label !== selectedOption.label) {
       setSelectedOption(selectedInCurrentOptions);
     }
     lastCheckedLanguage.current = i18n.language;
@@ -73,7 +67,7 @@ function FormikDropdown(props: Props): React.ReactElement {
     value: currentOption || selectedOption,
     // eslint-disable-next-line no-undef
     virtualized: import.meta.env.NODE_ENV !== 'test' && virtualized,
-    getA11yStatusMessage: selectionProps =>
+    getA11yStatusMessage: (selectionProps) =>
       selectionProps.selectedItem
         ? t('profileInformation.ariaSelectedOption', {
             value: selectionProps.selectedItem.label,
@@ -81,7 +75,7 @@ function FormikDropdown(props: Props): React.ReactElement {
         : t('profileInformation.ariaNoSelectedItemForLabel', {
             label: singleSelectProps.label,
           }),
-    onChange: value => {
+    onChange: (value) => {
       if (onChangeCallback) {
         onChangeCallback(value);
       }
@@ -93,17 +87,14 @@ function FormikDropdown(props: Props): React.ReactElement {
   }
   if (currentOption && allowSearch) {
     throw new Error(
-      'Cannot enable allowSearch and use search input when option is locked from outside via currentOption'
+      'Cannot enable allowSearch and use search input when option is locked from outside via currentOption',
     );
   }
   return (
     <Field name={props.name}>
       {() =>
         allowSearch ? (
-          <Combobox
-            {...commonProps}
-            toggleButtonAriaLabel={toggleButtonAriaLabel as string}
-          />
+          <Combobox {...commonProps} toggleButtonAriaLabel={toggleButtonAriaLabel as string} />
         ) : (
           <Select {...commonProps} />
         )

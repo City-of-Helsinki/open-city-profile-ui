@@ -24,14 +24,12 @@ function ProfileInformation(): React.ReactElement {
           heading={t('profileInformation.title')}
           text={
             <Trans
-              i18nKey="profileInformation.description"
+              i18nKey='profileInformation.description'
               values={{ linkToServicesText: t('nav.services') }}
-              components={[
-                <Link key="linkToServices" to="/connected-services" />,
-              ]}
+              components={[<Link key='linkToServices' to='/connected-services' />]}
             />
           }
-          dataTestId="profile-information-explanation"
+          dataTestId='profile-information-explanation'
           useHeadingHeroStyle
         />
         {data && (
@@ -49,9 +47,7 @@ function ProfileInformation(): React.ReactElement {
           commonContentStyles['common-bottom-padding'],
         ])}
       >
-        <div
-          className={classNames([commonContentStyles['common-content-area']])}
-        >
+        <div className={classNames([commonContentStyles['common-content-area']])}>
           <DownloadData />
           <DeleteProfile />
         </div>

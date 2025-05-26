@@ -8,16 +8,14 @@ export type DeleteResultLists = {
   failures: DeleteResultServiceTitles;
 };
 
-export default function parseDeleteProfileResult(
-  returnedData?: GdprDeleteMyProfileMutation
-): DeleteResultLists {
+export default function parseDeleteProfileResult(returnedData?: GdprDeleteMyProfileMutation): DeleteResultLists {
   const successful: DeleteResultServiceTitles = [];
   const failures: DeleteResultServiceTitles = [];
   const results = returnedData?.deleteMyProfile?.results;
   if (!results) {
     return { successful: [], failures: [] };
   }
-  results.forEach(result => {
+  results.forEach((result) => {
     if (!result || !result.service || !result.success) {
       failures.push(result && result.service ? result.service.title : null);
     } else {

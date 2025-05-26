@@ -21,11 +21,7 @@ describe('authCodeRedirectionInitialization.ts', () => {
     noKeycloakScopes?: boolean;
     noKeycloakUrl?: boolean;
   } = {}) => {
-    const queue = [
-      getGdprQueryScopesAction,
-      loadKeycloakConfigAction,
-      keycloakRedirectionInitializationAction,
-    ];
+    const queue = [getGdprQueryScopesAction, loadKeycloakConfigAction, keycloakRedirectionInitializationAction];
     const runner = createActionQueueRunner(queue);
     runner.updateActionAndQueue(getGdprQueryScopesAction.type, {
       result: {
@@ -39,17 +35,10 @@ describe('authCodeRedirectionInitialization.ts', () => {
     });
     return {
       runner,
-      getKeycloadAction: () =>
-        runner.getByType(
-          keycloakRedirectionInitializationAction.type
-        ) as Action,
+      getKeycloadAction: () => runner.getByType(keycloakRedirectionInitializationAction.type) as Action,
     };
   };
-  const checkResult = (
-    result: unknown,
-    expectedOidcUri: string,
-    minStateLength = 10
-  ) =>
+  const checkResult = (result: unknown, expectedOidcUri: string, minStateLength = 10) =>
     (result as AuthorizationUrlParams).oidcUri === expectedOidcUri &&
     (result as AuthorizationUrlParams).state.length >= minStateLength;
 
@@ -60,9 +49,7 @@ describe('authCodeRedirectionInitialization.ts', () => {
   it('Resolves oidc authorization url and state for the query for given oidc server', async () => {
     const { runner, getKeycloadAction } = initTests();
     const keycloadAction = getKeycloadAction();
-    const [, resultForKeycloak] = await to(
-      keycloadAction.executor(keycloadAction, runner)
-    );
+    const [, resultForKeycloak] = await to(keycloadAction.executor(keycloadAction, runner));
     expect(checkResult(resultForKeycloak, mockKeycloakEndPoint)).toBeTruthy();
   });
   it('Resolves empty oidc authorization url and state when given oidc server is not needed', async () => {
@@ -71,9 +58,7 @@ describe('authCodeRedirectionInitialization.ts', () => {
     });
     const keycloadAction = getKeycloadAction();
 
-    const [, resultForKeycloak] = await to(
-      keycloadAction.executor(keycloadAction, runner)
-    );
+    const [, resultForKeycloak] = await to(keycloadAction.executor(keycloadAction, runner));
     expect(checkResult(resultForKeycloak, '', 0)).toBeTruthy();
   });
   it('Rejects if oidcUri is empty', async () => {
@@ -85,19 +70,14 @@ describe('authCodeRedirectionInitialization.ts', () => {
   it('getAuthCodeRedirectionInitializationResult() returns props related to given action', async () => {
     const { runner, getKeycloadAction } = initTests();
 
-    expect(
-      getAuthCodeRedirectionInitializationResult(getKeycloadAction(), runner)
-    ).toBeUndefined();
+    expect(getAuthCodeRedirectionInitializationResult(getKeycloadAction(), runner)).toBeUndefined();
 
     runner.resume(getKeycloadAction().type);
     await waitFor(() => {
       expect(runner.isFinished()).toBeTruthy();
     });
     expect(
-      checkResult(
-        getAuthCodeRedirectionInitializationResult(getKeycloadAction(), runner),
-        mockKeycloakEndPoint
-      )
+      checkResult(getAuthCodeRedirectionInitializationResult(getKeycloadAction(), runner), mockKeycloakEndPoint),
     ).toBeTruthy();
   });
 });

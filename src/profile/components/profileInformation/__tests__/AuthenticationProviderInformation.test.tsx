@@ -13,9 +13,9 @@ const helsinkiAccountAMR = 'helsinki_tunnus-test';
 
 vi.spyOn(useProfile, 'default').mockImplementation(
   () =>
-    (({
+    ({
       profile: mockProfileCreator(),
-    } as unknown) as useProfile.ProfileState)
+    }) as unknown as useProfile.ProfileState,
 );
 
 const mockLoginMethodNodeFragment: MyLoginMethodNodeFragment = {
@@ -33,7 +33,7 @@ describe('<AuthenticationProviderInformation /> ', () => {
     render(
       <TestLoginProvider>
         <AuthenticationProviderInformation {...defaultProps} />
-      </TestLoginProvider>
+      </TestLoginProvider>,
     );
 
   describe('renders correctly when AMR is helsinkiAccountAMR', () => {
@@ -47,7 +47,7 @@ describe('<AuthenticationProviderInformation /> ', () => {
 
     it('should render helsinki account information as expected based on config', () => {
       vi.spyOn(authenticationProviderUtil, 'getAmrStatic').mockImplementation(
-        () => 'helsinkiAccount' as useProfile.AMRStatic
+        () => 'helsinkiAccount' as useProfile.AMRStatic,
       );
 
       const { container } = getWrapper();
@@ -57,7 +57,7 @@ describe('<AuthenticationProviderInformation /> ', () => {
   describe('renders correctly when AMR is tunnistusSuomifiAMR', () => {
     it('should render suomi.fi information as expected based on config', () => {
       vi.spyOn(authenticationProviderUtil, 'getAmrStatic').mockImplementation(
-        () => 'tunnistusSuomifi' as useProfile.AMRStatic
+        () => 'tunnistusSuomifi' as useProfile.AMRStatic,
       );
 
       const { container } = getWrapper();
@@ -67,10 +67,7 @@ describe('<AuthenticationProviderInformation /> ', () => {
 
   describe('renders correctly according to Login method', () => {
     it('should render change password button when password is used', () => {
-      vi.spyOn(
-        authenticationProviderUtil,
-        'hasPasswordLogin'
-      ).mockImplementation(() => true);
+      vi.spyOn(authenticationProviderUtil, 'hasPasswordLogin').mockImplementation(() => true);
 
       const { container, getByTestId } = getWrapper();
       expect(getByTestId('change-password-button')).toBeVisible();
@@ -78,10 +75,7 @@ describe('<AuthenticationProviderInformation /> ', () => {
     });
 
     it('should not render change password button when password is not used', () => {
-      vi.spyOn(
-        authenticationProviderUtil,
-        'hasPasswordLogin'
-      ).mockImplementation(() => false);
+      vi.spyOn(authenticationProviderUtil, 'hasPasswordLogin').mockImplementation(() => false);
 
       const { container, queryByTestId } = getWrapper();
       expect(queryByTestId('change-password-button')).not.toBeInTheDocument();
@@ -91,15 +85,9 @@ describe('<AuthenticationProviderInformation /> ', () => {
 
   describe('renders correctly according to MFA setting', () => {
     it('should render enable MFA button', () => {
-      vi.spyOn(
-        authenticationProviderUtil,
-        'hasPasswordLogin'
-      ).mockImplementation(() => true);
+      vi.spyOn(authenticationProviderUtil, 'hasPasswordLogin').mockImplementation(() => true);
 
-      vi.spyOn(
-        authenticationProviderUtil,
-        'getMFALoginMethod'
-      ).mockImplementation(() => undefined);
+      vi.spyOn(authenticationProviderUtil, 'getMFALoginMethod').mockImplementation(() => undefined);
 
       const { container, queryByTestId } = getWrapper();
       expect(queryByTestId('enable-totp-button')).toBeVisible();
@@ -108,15 +96,9 @@ describe('<AuthenticationProviderInformation /> ', () => {
     });
 
     it('should render "disable MFA button" when MFA is already configured', () => {
-      vi.spyOn(
-        authenticationProviderUtil,
-        'hasPasswordLogin'
-      ).mockImplementation(() => true);
+      vi.spyOn(authenticationProviderUtil, 'hasPasswordLogin').mockImplementation(() => true);
 
-      vi.spyOn(
-        authenticationProviderUtil,
-        'getMFALoginMethod'
-      ).mockImplementation(() => mockLoginMethodNodeFragment);
+      vi.spyOn(authenticationProviderUtil, 'getMFALoginMethod').mockImplementation(() => mockLoginMethodNodeFragment);
 
       const { container, queryByTestId } = getWrapper();
       expect(queryByTestId('enable-totp-button')).not.toBeInTheDocument();
