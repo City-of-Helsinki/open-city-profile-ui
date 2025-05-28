@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
   QueueState,
@@ -89,6 +89,14 @@ function useAuthCodeQueues({
     nextPhase: undefined,
   });
 
+  // Add reactive state to ensure component re-renders on state changes
+  const [reactiveState, setReactiveState] = useState({
+    hasError: queueComponentState.current.hasError || false,
+    isComplete: queueComponentState.current.isComplete || false,
+    isLoading:
+      queueComponentState.current.runningStatus === runningStatuses.running,
+  });
+
   const queue = useMemo(
     () => getQueue({ startPagePath, serviceName, queueName, language }),
     [startPagePath, serviceName, queueName, language]
@@ -138,12 +146,12 @@ function useAuthCodeQueues({
    */
 
   const resolveNextPhase = useCallback(
-    (runningStatus: RunningStatus): NextPhase => {
-      if (runningStatus === runningStatuses.complete) {
+    (currentRunningStatus: RunningStatus): NextPhase => {
+      if (currentRunningStatus === runningStatuses.complete) {
         return nextPhases.restart;
       }
       const next = queueRunner.getNext();
-      const couldResume = !!next && runningStatus === 'idle';
+      const couldResume = !!next && currentRunningStatus === 'idle';
       const isNextResumable = couldResume ? isResumable(next) : false;
       if (isNextResumable) {
         if (isResumableGdprCallback(next as Action)) {
@@ -156,14 +164,14 @@ function useAuthCodeQueues({
       if (internalRedirections.check()) {
         return nextPhases.waitForInternalRedirect;
       }
-      if (runningStatus === runningStatuses.error) {
+      if (currentRunningStatus === runningStatuses.error) {
         return nextPhases.restart;
       }
       if (isQueueWaitingForAuthCodeRedirection(queueRunner)) {
         return nextPhases.waitForAuthCodeRedirect;
       }
 
-      if (runningStatus === runningStatuses.idle) {
+      if (currentRunningStatus === runningStatuses.idle) {
         if (queueRunner.getComplete().length) {
           return nextPhases.stoppedInMidQueue;
         }
@@ -177,15 +185,17 @@ function useAuthCodeQueues({
 
   const handleChange = useCallback(
     (newState: QueueState) => {
-      const runningStatus = resolverunningStatus(newState);
-      const nextPhase = resolveNextPhase(runningStatus);
+      const currentRunningStatus = resolverunningStatus(newState);
+      const nextPhase = resolveNextPhase(currentRunningStatus);
       const oldIsComplete = queueComponentState.current.isComplete;
+
       queueComponentState.current = {
         ...queueComponentState.current,
         ...newState,
-        runningStatus,
+        runningStatus: currentRunningStatus,
         nextPhase,
       };
+
       if (queueComponentState.current.isComplete && !oldIsComplete) {
         storeQueue(authCodeQueuesStorageKey, null);
         const callback = newState.hasError ? onError : onCompleted;
@@ -193,11 +203,22 @@ function useAuthCodeQueues({
           callback(queueRunner, newState);
         }
       }
+
+      // Update reactive state to trigger component re-renders
+      setReactiveState({
+        hasError: queueComponentState.current.hasError || false,
+        isComplete: queueComponentState.current.isComplete || false,
+        isLoading:
+          queueComponentState.current.runningStatus === runningStatuses.running,
+      });
     },
     [resolverunningStatus, resolveNextPhase, queueRunner, onCompleted, onError]
   );
 
-  handleChange(state);
+  // Move state update to useEffect to prevent it from running on every render
+  useEffect(() => {
+    handleChange(state);
+  }, [state, handleChange]);
 
   const startOrRestart = useCallback(() => {
     internalRedirections.reset();
@@ -205,14 +226,18 @@ function useAuthCodeQueues({
     queueRunner.start();
   }, [queueRunner, queueHookProps, internalRedirections]);
 
-  const canStart = () =>
-    queueComponentState.current.runningStatus === 'idle' &&
-    queueComponentState.current.nextPhase === nextPhases.start;
+  const canStart = useCallback(() => {
+    const { runningStatus, nextPhase } = queueComponentState.current;
+    return runningStatus === 'idle' && nextPhase === nextPhases.start;
+  }, []);
 
-  const shouldRestart = () =>
-    queueComponentState.current.nextPhase === nextPhases.restart ||
-    (queueComponentState.current.runningStatus === 'idle' &&
-      queueComponentState.current.nextPhase === nextPhases.stoppedInMidQueue);
+  const shouldRestart = useCallback(() => {
+    const { runningStatus, nextPhase } = queueComponentState.current;
+    return (
+      nextPhase === nextPhases.restart ||
+      (runningStatus === 'idle' && nextPhase === nextPhases.stoppedInMidQueue)
+    );
+  }, []);
 
   const resumeGdprCallback = useCallback(() => {
     if (queueComponentState.current.nextPhase !== nextPhases.resumeCallback) {
@@ -230,28 +255,47 @@ function useAuthCodeQueues({
     return resumeQueueFromRedirectionCatcher(queueRunner);
   }, [queueRunner]);
 
-  const resume = () => resumeWithAuthCodes() || resumeGdprCallback();
+  const resume = useCallback(
+    () => resumeWithAuthCodes() || resumeGdprCallback(),
+    [resumeWithAuthCodes, resumeGdprCallback]
+  );
 
-  const shouldResumeWithAuthCodes = () =>
-    queueComponentState.current.nextPhase === nextPhases.resumeWithAuthCodes;
+  const shouldResumeWithAuthCodes = useCallback(() => {
+    const { nextPhase } = queueComponentState.current;
+    return nextPhase === nextPhases.resumeWithAuthCodes;
+  }, []);
 
-  const shouldHandleCallback = () =>
-    queueComponentState.current.runningStatus === 'idle' &&
-    queueComponentState.current.nextPhase === nextPhases.resumeCallback;
+  const shouldHandleCallback = useCallback(() => {
+    const { runningStatus, nextPhase } = queueComponentState.current;
+    return runningStatus === 'idle' && nextPhase === nextPhases.resumeCallback;
+  }, []);
 
-  return {
-    startOrRestart,
-    resume,
-    canStart,
-    shouldRestart,
-    shouldResumeWithAuthCodes,
-    shouldHandleCallback,
-    hasError: queueComponentState.current.hasError,
-    isComplete: queueComponentState.current.isComplete,
-    isLoading:
-      queueComponentState.current.runningStatus === runningStatuses.running,
-    state: queueComponentState.current,
-  };
+  // Create the return value with stable callbacks and the reactive state
+  return useMemo(
+    () => ({
+      startOrRestart,
+      resume,
+      canStart,
+      shouldRestart,
+      shouldResumeWithAuthCodes,
+      shouldHandleCallback,
+      hasError: reactiveState.hasError,
+      isComplete: reactiveState.isComplete,
+      isLoading: reactiveState.isLoading,
+      state: queueComponentState.current,
+    }),
+    [
+      startOrRestart,
+      resume,
+      canStart,
+      shouldRestart,
+      shouldResumeWithAuthCodes,
+      shouldHandleCallback,
+      reactiveState.hasError,
+      reactiveState.isComplete,
+      reactiveState.isLoading,
+    ]
+  );
 }
 
 export default useAuthCodeQueues;
