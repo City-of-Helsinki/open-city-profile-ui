@@ -11,13 +11,9 @@ export interface OtpConfigurationCallbackProps {
   action?: 'delete';
 }
 
-function OtpConfigurationCallback({
-  action,
-}: OtpConfigurationCallbackProps): React.ReactElement | null {
+function OtpConfigurationCallback({ action }: OtpConfigurationCallbackProps): React.ReactElement | null {
   const { t } = useTranslation();
-  const { setOtpConfigurationState, setOtpDeleteState } = useContext(
-    ProfileContext
-  );
+  const { setOtpConfigurationState, setOtpDeleteState } = useContext(ProfileContext);
   const location = useLocation();
   const navigate = useNavigate();
 

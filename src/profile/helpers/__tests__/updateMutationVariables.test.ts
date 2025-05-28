@@ -17,21 +17,16 @@ import { FormValues } from '../editData';
 type ClonedObject = Record<string, unknown>;
 type ReplacerFunction = (key: string, value: unknown) => unknown;
 
-const JSONReplacer: ReplacerFunction = (
-  key: string,
-  value: unknown
-): unknown => {
+const JSONReplacer: ReplacerFunction = (key: string, value: unknown): unknown => {
   if (key === 'id' && value === '') {
     return undefined;
   }
   return key.indexOf('_') === 0 || key === 'id' ? undefined : value;
 };
 
-const cloneObject = <T>(source: T, replacer?: ReplacerFunction): T =>
-  JSON.parse(JSON.stringify(source, replacer));
+const cloneObject = <T>(source: T, replacer?: ReplacerFunction): T => JSON.parse(JSON.stringify(source, replacer));
 
-const cloneAndReplace = <T>(source: T): ClonedObject =>
-  cloneObject<T>(source, JSONReplacer) as ClonedObject;
+const cloneAndReplace = <T>(source: T): ClonedObject => cloneObject<T>(source, JSONReplacer) as ClonedObject;
 
 const getAddressAsComparisonObject = (source: Address): Partial<Address> => {
   const clone = cloneAndReplace<Address>(source);
@@ -88,9 +83,7 @@ const newPhone = {
   __typename: 'PhoneNode',
 } as Phone;
 
-const primaryAddress = cloneObject(
-  myProfile.myProfile?.primaryAddress as Address
-);
+const primaryAddress = cloneObject(myProfile.myProfile?.primaryAddress as Address);
 const updatedSecondaryAddress = {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
@@ -122,10 +115,7 @@ const multiNodeFormParts: FormParts = [
 const nameFormParts: FormParts = ['firstName', 'nickname', 'lastName'];
 
 const getFormValues = (parts: FormParts): Partial<FormValues> => {
-  const myProfileNamesAndLanguage = _.pick(myProfile.myProfile, [
-    ...nameFormParts,
-    'language',
-  ]);
+  const myProfileNamesAndLanguage = _.pick(myProfile.myProfile, [...nameFormParts, 'language']);
   const formValues = {
     ...myProfileNamesAndLanguage,
     primaryEmail,
@@ -146,10 +136,7 @@ describe('Update variables for basic data (names) are formed correctly', () => {
   });
 
   it('Variables in update data match formValues even if not changed', () => {
-    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
-      formValues,
-      myProfile
-    );
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(formValues, myProfile);
     expect(variables.input.profile).toEqual(formValues);
   });
 
@@ -159,26 +146,19 @@ describe('Update variables for basic data (names) are formed correctly', () => {
       nickname: 'test-nickname',
       lastName: 'test-lastName',
     };
-    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
-      newData,
-      myProfile
-    );
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(newData, myProfile);
     expect(variables.input.profile).toEqual(newData);
 
     const partialData1 = {
       firstName: 'test-firstName',
     };
-    expect(
-      updateMutationVariables(partialData1, myProfile).input.profile
-    ).toEqual(partialData1);
+    expect(updateMutationVariables(partialData1, myProfile).input.profile).toEqual(partialData1);
 
     const partialData2 = {
       nickname: 'test-nickname',
       lastName: 'test-lastName',
     };
-    expect(
-      updateMutationVariables(partialData2, myProfile).input.profile
-    ).toEqual(partialData2);
+    expect(updateMutationVariables(partialData2, myProfile).input.profile).toEqual(partialData2);
   });
 });
 
@@ -190,10 +170,7 @@ describe('Update variable for language is formed correctly', () => {
   });
 
   it('Variable in update data match formValues even if not changed', () => {
-    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
-      formValues,
-      myProfile
-    );
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(formValues, myProfile);
     expect(variables.input.profile).toEqual(formValues);
   });
 
@@ -201,10 +178,7 @@ describe('Update variable for language is formed correctly', () => {
     const newData = {
       language: Language.SWEDISH,
     };
-    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
-      newData,
-      myProfile
-    );
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(newData, myProfile);
     expect(variables.input.profile).toEqual(newData);
   });
 });
@@ -217,10 +191,7 @@ describe('MultiItemArrays are formed correctly', () => {
   });
 
   it('Names and language do not exist in update variables when not in formValues', () => {
-    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
-      formValues,
-      myProfile
-    );
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(formValues, myProfile);
     expect(variables.input.profile.firstName).toBeUndefined();
     expect(variables.input.profile.nickname).toBeUndefined();
     expect(variables.input.profile.lastName).toBeUndefined();
@@ -228,22 +199,13 @@ describe('MultiItemArrays are formed correctly', () => {
   });
 
   it('add arrays are formed correctly with new data', () => {
-    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
-      formValues,
-      myProfile
-    );
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(formValues, myProfile);
 
-    expect(variables.input.profile.addAddresses).toEqual([
-      getAddressAsComparisonObject(newAddress),
-    ]);
+    expect(variables.input.profile.addAddresses).toEqual([getAddressAsComparisonObject(newAddress)]);
 
-    expect(variables.input.profile.addEmails).toEqual([
-      getEmailAsComparisonObject(newEmail),
-    ]);
+    expect(variables.input.profile.addEmails).toEqual([getEmailAsComparisonObject(newEmail)]);
 
-    expect(variables.input.profile.addPhones).toEqual([
-      getPhoneAsComparisonObject(newPhone),
-    ]);
+    expect(variables.input.profile.addPhones).toEqual([getPhoneAsComparisonObject(newPhone)]);
   });
 
   it('add arrays are empty when using existing data', () => {
@@ -254,7 +216,7 @@ describe('MultiItemArrays are formed correctly', () => {
         emails: [primaryEmail, updatedSecondaryEmail],
         phones: [primaryPhone, updatedSecondaryPhone],
       },
-      myProfile
+      myProfile,
     );
 
     expect(variables.input.profile.addPhones).toEqual([]);
@@ -263,19 +225,10 @@ describe('MultiItemArrays are formed correctly', () => {
   });
 
   it('update arrays are formed correctly with updated data objects', () => {
-    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
-      formValues,
-      myProfile
-    );
-    expect(variables.input.profile.updateAddresses).toEqual([
-      getAddressAsComparisonObject(updatedSecondaryAddress),
-    ]);
-    expect(variables.input.profile.updateEmails).toEqual([
-      getEmailAsComparisonObject(updatedSecondaryEmail),
-    ]);
-    expect(variables.input.profile.updatePhones).toEqual([
-      getPhoneAsComparisonObject(updatedSecondaryPhone),
-    ]);
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(formValues, myProfile);
+    expect(variables.input.profile.updateAddresses).toEqual([getAddressAsComparisonObject(updatedSecondaryAddress)]);
+    expect(variables.input.profile.updateEmails).toEqual([getEmailAsComparisonObject(updatedSecondaryEmail)]);
+    expect(variables.input.profile.updatePhones).toEqual([getPhoneAsComparisonObject(updatedSecondaryPhone)]);
   });
 
   it('update arrays are empty when using unchanged or new data', () => {
@@ -286,7 +239,7 @@ describe('MultiItemArrays are formed correctly', () => {
         emails: [primaryEmail, newEmail],
         phones: [primaryPhone, newPhone],
       },
-      myProfile
+      myProfile,
     );
 
     expect(variables.input.profile.updateAddresses).toEqual([]);
@@ -297,27 +250,15 @@ describe('MultiItemArrays are formed correctly', () => {
   it('remove arrays are formed correctly with existing data', () => {
     const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
       { ...formValues, addresses: [], emails: [], phones: [] },
-      myProfile
+      myProfile,
     );
-    expect(variables.input.profile.removeAddresses).toEqual([
-      primaryAddress.id,
-      updatedSecondaryAddress.id,
-    ]);
-    expect(variables.input.profile.removeEmails).toEqual([
-      primaryEmail.id,
-      updatedSecondaryEmail.id,
-    ]);
-    expect(variables.input.profile.removePhones).toEqual([
-      primaryPhone.id,
-      updatedSecondaryPhone.id,
-    ]);
+    expect(variables.input.profile.removeAddresses).toEqual([primaryAddress.id, updatedSecondaryAddress.id]);
+    expect(variables.input.profile.removeEmails).toEqual([primaryEmail.id, updatedSecondaryEmail.id]);
+    expect(variables.input.profile.removePhones).toEqual([primaryPhone.id, updatedSecondaryPhone.id]);
   });
 
   it('remove arrays do not exists when data is not changed', () => {
-    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
-      formValues,
-      myProfile
-    );
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(formValues, myProfile);
 
     expect(variables.input.profile.removeAddresses).toBeFalsy();
     expect(variables.input.profile.removeEmails).toBeFalsy();
@@ -329,18 +270,11 @@ describe('Full profile can be updated ', () => {
   let formValues: Partial<FormValues>;
 
   beforeEach(() => {
-    formValues = getFormValues([
-      ...multiNodeFormParts,
-      ...nameFormParts,
-      'language',
-    ]);
+    formValues = getFormValues([...multiNodeFormParts, ...nameFormParts, 'language']);
   });
 
   it('Variables include all formValues or corresponding update property', () => {
-    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(
-      formValues,
-      myProfile
-    );
+    const variables: UpdateMyProfileMutationVariables = updateMutationVariables(formValues, myProfile);
     expect(variables.input.profile.firstName).toBeDefined();
     expect(variables.input.profile.nickname).toBeDefined();
     expect(variables.input.profile.lastName).toBeDefined();

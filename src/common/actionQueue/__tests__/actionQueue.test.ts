@@ -41,14 +41,10 @@ describe('actionQueue', () => {
       expect(queue[1]).not.toEqual(props);
     });
     it('Throws when passing actions without a type', () => {
-      expect(() =>
-        createQueueFromProps([{ ...resolvingAction, type: '' }])
-      ).toThrow();
+      expect(() => createQueueFromProps([{ ...resolvingAction, type: '' }])).toThrow();
     });
     it('Throws when passing actions with same types', () => {
-      expect(() =>
-        createQueueFromProps([resolvingAction, resolvingAction])
-      ).toThrow();
+      expect(() => createQueueFromProps([resolvingAction, resolvingAction])).toThrow();
     });
   });
   describe('createQueueController', () => {
@@ -59,31 +55,23 @@ describe('actionQueue', () => {
     ]);
     describe('calling the function', () => {
       it('Throws when passing actions without a type', () => {
-        expect(() =>
-          createQueueController(
-            createQueueWithCommonActions([{ ...resolvingAction, type: '' }])
-          )
-        ).toThrow();
+        expect(() => createQueueController(createQueueWithCommonActions([{ ...resolvingAction, type: '' }]))).toThrow();
       });
       it('Throws when passing actions with same types', () => {
         expect(() =>
-          createQueueController(
-            cloneArray(createQueueWithCommonActions([{ ...resolvingAction }]))
-          )
+          createQueueController(cloneArray(createQueueWithCommonActions([{ ...resolvingAction }]))),
         ).toThrow();
       });
     });
     describe('getQueue()', () => {
       it('Returns only a copy of actions. Queue cannot be mutated externally and stored actions are preserved.', () => {
-        const controller = createQueueController(
-          createQueueWithCommonActions()
-        );
+        const controller = createQueueController(createQueueWithCommonActions());
         const copiedQueue = controller.getQueue();
-        copiedQueue.forEach(action => {
+        copiedQueue.forEach((action) => {
           expect(verifyAction(action)).toBeTruthy();
           action.result = 'foo';
         });
-        controller.getQueue().forEach(action => {
+        controller.getQueue().forEach((action) => {
           expect(action.result).toBeUndefined();
         });
       });
@@ -127,9 +115,7 @@ describe('actionQueue', () => {
         // values are reset
         expect(resetFinishedAction.type).toBe(finishedAction.type);
         expect(resetFinishedAction.executor).toBe(finishedAction.executor);
-        expect(resetFinishedAction.updatedAt).not.toBe(
-          finishedAction.updatedAt
-        );
+        expect(resetFinishedAction.updatedAt).not.toBe(finishedAction.updatedAt);
         expect(resetFinishedAction.complete).toBeFalsy();
         expect(resetFinishedAction.active).toBeFalsy();
         expect(resetFinishedAction.result).toBeUndefined();
@@ -186,10 +172,8 @@ describe('actionQueue', () => {
       it('Returns one matching action or undefined', () => {
         const testQueue = createQueueWithCommonActions();
         const controller = createQueueController(testQueue);
-        testQueue.forEach(action => {
-          expect(action).toMatchObject(
-            controller.getByType(action.type) as Action
-          );
+        testQueue.forEach((action) => {
+          expect(action).toMatchObject(controller.getByType(action.type) as Action);
         });
         expect(controller.getByType('')).toBeUndefined();
         expect(controller.getByType('abc')).toBeUndefined();
@@ -313,9 +297,7 @@ describe('actionQueue', () => {
           },
         ]);
         const controller = createQueueController(testQueue);
-        expect((controller.getActive() as Action).type).toBe(
-          'completeAndActive'
-        );
+        expect((controller.getActive() as Action).type).toBe('completeAndActive');
 
         controller.updateActionAndQueue('completeAndActive', { active: false });
         expect((controller.getActive() as Action).type).toBe('active');
@@ -390,12 +372,8 @@ describe('actionQueue', () => {
           },
         ]);
         const controller = createQueueController(testQueue);
-        const getCompleteTypes = () =>
-          controller.getComplete().map(action => action.type);
-        expect(getCompleteTypes()).toMatchObject([
-          'completeAndActive',
-          'idleWhenActive',
-        ]);
+        const getCompleteTypes = () => controller.getComplete().map((action) => action.type);
+        expect(getCompleteTypes()).toMatchObject(['completeAndActive', 'idleWhenActive']);
 
         controller.updateActionAndQueue('completeAndActive', {
           complete: false,
@@ -464,38 +442,20 @@ describe('actionQueue', () => {
       });
     });
     describe('action updaters', () => {
-      const createUpdateScenarioForTwoActions = (): [
-        QueueController,
-        Action,
-        Action,
-        Action
-      ] => {
-        const controller = createQueueController(
-          createQueueWithCommonActions()
-        );
+      const createUpdateScenarioForTwoActions = (): [QueueController, Action, Action, Action] => {
+        const controller = createQueueController(createQueueWithCommonActions());
         const queue = controller.getQueue();
         return [controller, { ...queue[0] }, { ...queue[1] }, { ...queue[2] }];
       };
-      const checkUpdatedQueueProps = (
-        action: Action,
-        newQueue: ActionQueue,
-        expectedProps: Partial<Action>
-      ) => {
-        expect(
-          newQueue.find(queueAction => queueAction.type === action.type)
-        ).toMatchObject(expectedProps);
+      const checkUpdatedQueueProps = (action: Action, newQueue: ActionQueue, expectedProps: Partial<Action>) => {
+        expect(newQueue.find((queueAction) => queueAction.type === action.type)).toMatchObject(expectedProps);
       };
 
       describe('completeAction()', () => {
         it(`Sets action.complete to true and action.result to passed result. 
           Passed target can be action or action.type. 
           Returns an updated queue.`, () => {
-          const [
-            controller,
-            targetAction1,
-            targetAction2,
-            targetAction3,
-          ] = createUpdateScenarioForTwoActions();
+          const [controller, targetAction1, targetAction2, targetAction3] = createUpdateScenarioForTwoActions();
 
           const setActionAsComplete = (action: Action) => {
             const result = `${action.type} result`;
@@ -511,23 +471,13 @@ describe('actionQueue', () => {
           setActionAsComplete(targetAction3);
         });
         it(`Throws when action is already complete, errorneous or invalid`, () => {
-          const [
-            controller,
-            targetAction1,
-            targetAction2,
-            targetAction3,
-          ] = createUpdateScenarioForTwoActions();
+          const [controller, targetAction1, targetAction2, targetAction3] = createUpdateScenarioForTwoActions();
 
-          const attemptCompleteAction = (
-            action: Action,
-            presetPropsForError?: Partial<ActionUpdateProps>
-          ) => {
+          const attemptCompleteAction = (action: Action, presetPropsForError?: Partial<ActionUpdateProps>) => {
             if (presetPropsForError) {
               controller.updateActionAndQueue(action.type, presetPropsForError);
             }
-            expect(() =>
-              controller.completeAction(action.type, 'result')
-            ).toThrow();
+            expect(() => controller.completeAction(action.type, 'result')).toThrow();
           };
 
           attemptCompleteAction(targetAction1, {
@@ -545,12 +495,7 @@ describe('actionQueue', () => {
         it(`Sets action.complete to true and action.errorMessage to passed string. 
           Passed target can be action or action.type. 
           Returns an updated queue.`, () => {
-          const [
-            controller,
-            targetAction1,
-            targetAction2,
-            targetAction3,
-          ] = createUpdateScenarioForTwoActions();
+          const [controller, targetAction1, targetAction2, targetAction3] = createUpdateScenarioForTwoActions();
 
           const setActionAsFailed = (action: Action) => {
             const errorMessage = `${action.type} failed`;
@@ -566,23 +511,13 @@ describe('actionQueue', () => {
           setActionAsFailed(targetAction3);
         });
         it(`Throws when action is already complete, errorneous or invalid`, () => {
-          const [
-            controller,
-            targetAction1,
-            targetAction2,
-            targetAction3,
-          ] = createUpdateScenarioForTwoActions();
+          const [controller, targetAction1, targetAction2, targetAction3] = createUpdateScenarioForTwoActions();
 
-          const attemptCompleteAction = (
-            action: Action,
-            presetPropsForError?: Partial<ActionUpdateProps>
-          ) => {
+          const attemptCompleteAction = (action: Action, presetPropsForError?: Partial<ActionUpdateProps>) => {
             if (presetPropsForError) {
               controller.updateActionAndQueue(action.type, presetPropsForError);
             }
-            expect(() =>
-              controller.setActionFailed(action.type, 'result')
-            ).toThrow();
+            expect(() => controller.setActionFailed(action.type, 'result')).toThrow();
           };
 
           attemptCompleteAction(targetAction1, {
@@ -600,12 +535,7 @@ describe('actionQueue', () => {
         it(`Sets action.active to true. 
           Passed target can be action or action.type. 
           Returns an updated queue.`, () => {
-          const [
-            controller,
-            targetAction1,
-            targetAction2,
-            targetAction3,
-          ] = createUpdateScenarioForTwoActions();
+          const [controller, targetAction1, targetAction2, targetAction3] = createUpdateScenarioForTwoActions();
 
           const setActionAsComplete = (action: Action) => {
             const newQueue = controller.activateAction(action);
@@ -619,17 +549,9 @@ describe('actionQueue', () => {
           setActionAsComplete(targetAction3);
         });
         it(`Throws when action is already active, finished or invalid`, () => {
-          const [
-            controller,
-            targetAction1,
-            targetAction2,
-            targetAction3,
-          ] = createUpdateScenarioForTwoActions();
+          const [controller, targetAction1, targetAction2, targetAction3] = createUpdateScenarioForTwoActions();
 
-          const attemptActivateAction = (
-            action: Action,
-            presetPropsForError?: Partial<ActionUpdateProps>
-          ) => {
+          const attemptActivateAction = (action: Action, presetPropsForError?: Partial<ActionUpdateProps>) => {
             if (presetPropsForError) {
               controller.updateActionAndQueue(action.type, presetPropsForError);
             }
@@ -671,16 +593,12 @@ describe('actionQueue', () => {
       };
 
       expect(getOption(actionWithAllOptions, 'noStorage')).toBeTruthy();
-      expect(
-        getOption(actionWithAllOptions, 'syncronousCompletion')
-      ).toBeTruthy();
+      expect(getOption(actionWithAllOptions, 'syncronousCompletion')).toBeTruthy();
       expect(getOption(actionWithAllOptions, 'idleWhenActive')).toBeTruthy();
 
       expect(getOption(actionWithNoOptionsProp, 'idleWhenActive')).toBeFalsy();
       expect(getOption(actionWithoutOptions, 'noStorage')).toBeFalsy();
-      expect(
-        getOption(actionWithoutOptions, 'syncronousCompletion')
-      ).toBeFalsy();
+      expect(getOption(actionWithoutOptions, 'syncronousCompletion')).toBeFalsy();
     });
     it('getData() returns action.data or undefined', () => {
       const data = { prop: 1 };
@@ -724,44 +642,22 @@ describe('actionQueue', () => {
       expect(hasMatchingDataProperty(actionWithData, 'prop', 1)).toBeTruthy();
       expect(hasMatchingDataProperty(actionWithData, 'prop', true)).toBeFalsy();
 
-      expect(
-        hasMatchingDataProperty(actionWithData, 'truthy', true)
-      ).toBeTruthy();
-      expect(
-        hasMatchingDataProperty(actionWithData, 'truthy', false)
-      ).toBeFalsy();
+      expect(hasMatchingDataProperty(actionWithData, 'truthy', true)).toBeTruthy();
+      expect(hasMatchingDataProperty(actionWithData, 'truthy', false)).toBeFalsy();
 
-      expect(
-        hasMatchingDataProperty(actionWithData, 'falsy', false)
-      ).toBeTruthy();
-      expect(
-        hasMatchingDataProperty(actionWithData, 'falsy', true)
-      ).toBeFalsy();
+      expect(hasMatchingDataProperty(actionWithData, 'falsy', false)).toBeTruthy();
+      expect(hasMatchingDataProperty(actionWithData, 'falsy', true)).toBeFalsy();
 
-      expect(
-        hasMatchingDataProperty(actionWithData, 'nullish', null)
-      ).toBeTruthy();
-      expect(
-        hasMatchingDataProperty(actionWithData, 'nullish', undefined)
-      ).toBeFalsy();
+      expect(hasMatchingDataProperty(actionWithData, 'nullish', null)).toBeTruthy();
+      expect(hasMatchingDataProperty(actionWithData, 'nullish', undefined)).toBeFalsy();
 
-      expect(
-        hasMatchingDataProperty(actionWithData, 'notFound', undefined)
-      ).toBeTruthy();
+      expect(hasMatchingDataProperty(actionWithData, 'notFound', undefined)).toBeTruthy();
 
-      expect(
-        hasMatchingDataProperty(actionWithDataObject, 'data', data)
-      ).toBeTruthy();
-      expect(
-        hasMatchingDataProperty(actionWithDataObject, 'prop2', 'hello')
-      ).toBeTruthy();
+      expect(hasMatchingDataProperty(actionWithDataObject, 'data', data)).toBeTruthy();
+      expect(hasMatchingDataProperty(actionWithDataObject, 'prop2', 'hello')).toBeTruthy();
 
-      expect(
-        hasMatchingDataProperty(actionWithoutData, 'complete', false)
-      ).toBeFalsy();
-      expect(
-        hasMatchingDataProperty(actionWithoutData, 'type', 'actionWithoutData')
-      ).toBeFalsy();
+      expect(hasMatchingDataProperty(actionWithoutData, 'complete', false)).toBeFalsy();
+      expect(hasMatchingDataProperty(actionWithoutData, 'type', 'actionWithoutData')).toBeFalsy();
     });
     it(`verifyQueuesMatch() makes sure two queues have matching number and order of actions. 
         Used when merging stored queues.`, () => {
@@ -771,12 +667,7 @@ describe('actionQueue', () => {
       expect(verifyQueuesMatch(queue, [...queue, ...queue])).toBeFalsy();
       expect(verifyQueuesMatch([{ type: 'x' }], [{ type: 'x' }])).toBeTruthy();
       expect(verifyQueuesMatch([{ type: 'x' }], [{ type: 'y' }])).toBeFalsy();
-      expect(
-        verifyQueuesMatch(
-          [{ type: 'x' }, { type: 'y' }],
-          [{ type: 'y' }, { type: 'x' }]
-        )
-      ).toBeFalsy();
+      expect(verifyQueuesMatch([{ type: 'x' }, { type: 'y' }], [{ type: 'y' }, { type: 'x' }])).toBeFalsy();
     });
   });
 });

@@ -4,10 +4,7 @@ import { waitFor } from '@testing-library/react';
 import { getGdprQueryScopesAction } from '../getGdprScopes';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import { Action } from '../../../common/actionQueue/actionQueue';
-import {
-  keycloakAuthCodeParserAction,
-  getStoredKeycloakAuthCode,
-} from '../authCodeParser';
+import { keycloakAuthCodeParserAction, getStoredKeycloakAuthCode } from '../authCodeParser';
 import { keycloakRedirectionInitializationAction } from '../authCodeRedirectionInitialization';
 import mockWindowLocation from '../../../common/test/mockWindowLocation';
 
@@ -26,11 +23,7 @@ describe('authCodeParser.ts', () => {
     noKeycloakProps?: boolean;
     useWrongKeycloakState?: boolean;
   } = {}) => {
-    const queue = [
-      getGdprQueryScopesAction,
-      keycloakRedirectionInitializationAction,
-      keycloakAuthCodeParserAction,
-    ];
+    const queue = [getGdprQueryScopesAction, keycloakRedirectionInitializationAction, keycloakAuthCodeParserAction];
     const runner = createActionQueueRunner(queue);
     runner.updateActionAndQueue(getGdprQueryScopesAction.type, {
       result: {
@@ -43,16 +36,13 @@ describe('authCodeParser.ts', () => {
         ? undefined
         : {
             oidcUri: 'keycloak',
-            state: useWrongKeycloakState
-              ? wrongKeycloakState
-              : correctKeycloakState,
+            state: useWrongKeycloakState ? wrongKeycloakState : correctKeycloakState,
           },
       complete: true,
     });
     return {
       runner,
-      getKeycloadAction: () =>
-        runner.getByType(keycloakAuthCodeParserAction.type) as Action,
+      getKeycloadAction: () => runner.getByType(keycloakAuthCodeParserAction.type) as Action,
     };
   };
   const setReturnUrl = (authCode: string, state: string) => {
@@ -74,17 +64,13 @@ describe('authCodeParser.ts', () => {
       // set return the keycloak parser is expecting
       setReturnUrl(keycloakAuthCode, correctKeycloakState);
 
-      const [, resultForKeycloak] = await to(
-        getKeycloadAction().executor(getKeycloadAction(), runner)
-      );
+      const [, resultForKeycloak] = await to(getKeycloadAction().executor(getKeycloadAction(), runner));
       expect(resultForKeycloak).toBe(keycloakAuthCode);
 
       // set return that keycloak parser is not expecting
       setReturnUrl('somethingwrong', wrongKeycloakState);
 
-      const [error2, resultForKeycloak2] = await to(
-        getKeycloadAction().executor(getKeycloadAction(), runner)
-      );
+      const [error2, resultForKeycloak2] = await to(getKeycloadAction().executor(getKeycloadAction(), runner));
       expect(error2).toBeDefined();
       expect(resultForKeycloak2).toBeUndefined();
     });
@@ -96,9 +82,7 @@ describe('authCodeParser.ts', () => {
       // set return the keycloak parser is expecting
       setReturnUrl(keycloakAuthCode, correctKeycloakState);
 
-      const [, resultForKeycloak] = await to(
-        getKeycloadAction().executor(getKeycloadAction(), runner)
-      );
+      const [, resultForKeycloak] = await to(getKeycloadAction().executor(getKeycloadAction(), runner));
       expect(resultForKeycloak).toBe('dummyKeycloakAuthCode');
     });
 
@@ -109,9 +93,7 @@ describe('authCodeParser.ts', () => {
       // set return the keycloak parser is expecting
       setReturnUrl(keycloakAuthCode, correctKeycloakState);
 
-      const [keycloakError] = await to(
-        getKeycloadAction().executor(getKeycloadAction(), runner)
-      );
+      const [keycloakError] = await to(getKeycloadAction().executor(getKeycloadAction(), runner));
       expect(keycloakError).toBeDefined();
     });
     it('Rejects the stored state is not found', async () => {
@@ -121,9 +103,7 @@ describe('authCodeParser.ts', () => {
       // set return the keycloak parser is expecting
       setReturnUrl(keycloakAuthCode, correctKeycloakState);
 
-      const [keycloakError] = await to(
-        getKeycloadAction().executor(getKeycloadAction(), runner)
-      );
+      const [keycloakError] = await to(getKeycloadAction().executor(getKeycloadAction(), runner));
       expect(keycloakError).toBeDefined();
     });
   });

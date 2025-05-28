@@ -34,14 +34,7 @@ function BasicData(): React.ReactElement | null {
     disableEditButtons: false,
   });
 
-  const {
-    notificationContent,
-    actionHandler,
-    getData,
-    hasData,
-    editButtonId,
-    isEditing,
-  } = editHandler;
+  const { notificationContent, actionHandler, getData, hasData, editButtonId, isEditing } = editHandler;
 
   const { content } = notificationContent;
 
@@ -52,9 +45,7 @@ function BasicData(): React.ReactElement | null {
   const { firstName, nickname, lastName } = value as BasicDataValue;
   const formFields = getFormFields(basicDataType);
 
-  const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
-    FormikValues
-  >(t, true);
+  const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<FormikValues>(t, true);
 
   const ariaLabels = createActionAriaLabels(basicDataType, '', t);
 
@@ -64,7 +55,7 @@ function BasicData(): React.ReactElement | null {
     return (
       <Formik
         initialValues={{ firstName, nickname, lastName }}
-        onSubmit={async values => actionHandler('save', values)}
+        onSubmit={async (values) => actionHandler('save', values)}
         validationSchema={basicDataSchema}
       >
         {(formikProps: FormikProps<FormikValues>) => (
@@ -75,15 +66,10 @@ function BasicData(): React.ReactElement | null {
             <RequiredFieldsNote />
             <Form>
               <FocusKeeper targetId={`${basicDataType}-firstName`}>
-                <div
-                  className={classNames(
-                    containerStyle,
-                    commonFormStyles['editor-form-fields']
-                  )}
-                >
+                <div className={classNames(containerStyle, commonFormStyles['editor-form-fields'])}>
                   <Field
                     className={formFieldStyle}
-                    name="firstName"
+                    name='firstName'
                     id={`${basicDataType}-firstName`}
                     maxLength={formFields.firstName.max as number}
                     as={TextInput}
@@ -91,12 +77,12 @@ function BasicData(): React.ReactElement | null {
                     aria-invalid={hasFieldError(formikProps, 'firstName')}
                     errorText={getFieldErrorMessage(formikProps, 'firstName')}
                     label={`${t(formFields.firstName.translationKey)} *`}
-                    aria-labelledby="basic-data-firstName-helper"
+                    aria-labelledby='basic-data-firstName-helper'
                     autoFocus
                   />
                   <Field
                     className={formFieldStyle}
-                    name="nickname"
+                    name='nickname'
                     id={`${basicDataType}-nickname`}
                     maxLength={formFields.nickname.max as number}
                     as={TextInput}
@@ -104,11 +90,11 @@ function BasicData(): React.ReactElement | null {
                     aria-invalid={hasFieldError(formikProps, 'nickname')}
                     errorText={getFieldErrorMessage(formikProps, 'nickname')}
                     label={t(formFields.nickname.translationKey)}
-                    aria-labelledby="basic-data-nickname-helper"
+                    aria-labelledby='basic-data-nickname-helper'
                   />
                   <Field
                     className={formFieldStyle}
-                    name="lastName"
+                    name='lastName'
                     id={`${basicDataType}-lastName`}
                     maxLength={formFields.lastName.max as number}
                     as={TextInput}
@@ -120,25 +106,10 @@ function BasicData(): React.ReactElement | null {
                   />
                 </div>
                 <AccessibilityFieldHelpers dataType={basicDataType} />
-                <AccessibleFormikErrors
-                  formikProps={formikProps}
-                  dataType={basicDataType}
-                />
-                <EditingNotifications
-                  content={content}
-                  dataType={basicDataType}
-                  noSpacing
-                  topSpacingMobile
-                />
-                <FormButtons
-                  handler={actionHandler}
-                  disabled={!!saving}
-                  testId={basicDataType}
-                />
-                <SaveIndicator
-                  action={saveTypeToAction(saving)}
-                  testId={basicDataType}
-                />
+                <AccessibleFormikErrors formikProps={formikProps} dataType={basicDataType} />
+                <EditingNotifications content={content} dataType={basicDataType} noSpacing topSpacingMobile />
+                <FormButtons handler={actionHandler} disabled={!!saving} testId={basicDataType} />
+                <SaveIndicator action={saveTypeToAction(saving)} testId={basicDataType} />
               </FocusKeeper>
             </Form>
           </ProfileSection>
@@ -153,12 +124,7 @@ function BasicData(): React.ReactElement | null {
         <h2>{t('profileForm.basicData')}</h2>
       </div>
       <div className={classNames(containerStyle)}>
-        <div
-          className={classNames(
-            containerStyle,
-            commonFormStyles['editor-text-fields']
-          )}
-        >
+        <div className={classNames(containerStyle, commonFormStyles['editor-text-fields'])}>
           <LabeledValue
             label={t(formFields.firstName.translationKey)}
             value={firstName}

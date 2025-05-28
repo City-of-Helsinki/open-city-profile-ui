@@ -3,10 +3,7 @@ import to from 'await-to-js';
 import { getGdprQueryScopesAction } from '../getGdprScopes';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import { Action, ActionProps } from '../../../common/actionQueue/actionQueue';
-import {
-  getLoadKeycloakConfigResult,
-  loadKeycloakConfigAction,
-} from '../loadKeycloakConfig';
+import { getLoadKeycloakConfigResult, loadKeycloakConfigAction } from '../loadKeycloakConfig';
 
 describe('loadKeycloakConfig.ts', () => {
   const fakeResult = '/authorization_endpoint/';
@@ -22,9 +19,7 @@ describe('loadKeycloakConfig.ts', () => {
     noKeycloakScopes?: boolean;
   } = {}) => {
     fetchMock.mockIf(/.*\/\.well-known\/.*$/, async () => {
-      const body = !returnMalformed
-        ? JSON.stringify({ authorization_endpoint: fakeResult })
-        : '{/malformed';
+      const body = !returnMalformed ? JSON.stringify({ authorization_endpoint: fakeResult }) : '{/malformed';
       if (returnError === true) {
         return Promise.reject({
           body: JSON.stringify({

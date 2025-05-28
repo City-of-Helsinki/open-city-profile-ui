@@ -11,7 +11,7 @@ const renderComponent = () =>
       <MemoryRouter initialEntries={['/']}>
         <Login />
       </MemoryRouter>
-    </TestLoginProvider>
+    </TestLoginProvider>,
   );
 
 describe('<Login />', () => {
@@ -19,8 +19,6 @@ describe('<Login />', () => {
     renderComponent();
 
     expect(screen.getByText('login.title')).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: 'login.login' })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'login.login' })).toBeInTheDocument();
   });
 });

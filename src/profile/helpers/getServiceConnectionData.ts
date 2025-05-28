@@ -1,14 +1,10 @@
 import { ServiceConnectionsRoot, Service } from '../../graphql/typings';
 
-export type ServiceConnectionData = Pick<
-  Service,
-  'title' | 'description' | 'allowedDataFields' | 'name'
-> & { connectionCreatedAt: Date };
+export type ServiceConnectionData = Pick<Service, 'title' | 'description' | 'allowedDataFields' | 'name'> & {
+  connectionCreatedAt: Date;
+};
 
-function createServiceConnectionData(
-  service: Service,
-  createdAt: Date
-): ServiceConnectionData {
+function createServiceConnectionData(service: Service, createdAt: Date): ServiceConnectionData {
   const { title, description, allowedDataFields, name } = service;
   return {
     name,
@@ -19,17 +15,12 @@ function createServiceConnectionData(
   };
 }
 
-export default function getServiceConnectionData(
-  data?: ServiceConnectionsRoot
-): ServiceConnectionData[] {
+export default function getServiceConnectionData(data?: ServiceConnectionsRoot): ServiceConnectionData[] {
   if (data?.myProfile?.serviceConnections) {
     return data.myProfile.serviceConnections.edges
-      .map(edge => {
+      .map((edge) => {
         if (edge?.node) {
-          return createServiceConnectionData(
-            edge.node.service,
-            edge.node.createdAt
-          );
+          return createServiceConnectionData(edge.node.service, edge.node.createdAt);
         }
         return false;
       })

@@ -1,30 +1,14 @@
 import { useCallback, useMemo, useRef } from 'react';
 
-import {
-  QueueState,
-  useActionQueue,
-} from '../common/actionQueue/useActionQueue';
-import {
-  isResumableRedirectionCatcher,
-  resumeQueueFromRedirectionCatcher,
-} from './actions/redirectionHandlers';
+import { QueueState, useActionQueue } from '../common/actionQueue/useActionQueue';
+import { isResumableRedirectionCatcher, resumeQueueFromRedirectionCatcher } from './actions/redirectionHandlers';
 import { isQueueWaitingForAuthCodeRedirection } from './actions/authCodeRedirectionHandler';
 import { useInternalRedirect } from './actions/utils';
-import {
-  isResumableGdprCallback,
-  resumeQueueFromNextCallbackDetector,
-} from './actions/authCodeCallbackUrlDetector';
-import {
-  actionLogTypes,
-  isGenericError,
-} from '../common/actionQueue/actionQueueRunner';
+import { isResumableGdprCallback, resumeQueueFromNextCallbackDetector } from './actions/authCodeCallbackUrlDetector';
+import { actionLogTypes, isGenericError } from '../common/actionQueue/actionQueueRunner';
 import { QueueProps, getQueue } from './actions/queues';
 import { storeQueue } from '../common/actionQueue/actionQueueStorage';
-import {
-  Action,
-  QueueController,
-  isResumable,
-} from '../common/actionQueue/actionQueue';
+import { Action, QueueController, isResumable } from '../common/actionQueue/actionQueue';
 
 export type RunningStatus = keyof typeof runningStatuses;
 
@@ -91,7 +75,7 @@ function useAuthCodeQueues({
 
   const queue = useMemo(
     () => getQueue({ startPagePath, serviceName, queueName, language }),
-    [startPagePath, serviceName, queueName, language]
+    [startPagePath, serviceName, queueName, language],
   );
   const queueHookProps = useActionQueue(queue, authCodeQueuesStorageKey);
   const { state } = queueHookProps;
@@ -105,25 +89,20 @@ function useAuthCodeQueues({
    * - complete: all actions are complete or one has failed.
    */
 
-  const resolverunningStatus = useCallback(
-    (targetState: QueueState): RunningStatus => {
-      if (targetState.lastLogType === actionLogTypes.error) {
-        return runningStatuses.error;
-      }
-      if (targetState.lastLogType && isGenericError(targetState.lastLogType)) {
-        return runningStatuses.error;
-      }
+  const resolverunningStatus = useCallback((targetState: QueueState): RunningStatus => {
+    if (targetState.lastLogType === actionLogTypes.error) {
+      return runningStatuses.error;
+    }
+    if (targetState.lastLogType && isGenericError(targetState.lastLogType)) {
+      return runningStatuses.error;
+    }
 
-      if (targetState.isComplete) {
-        return 'complete';
-      }
+    if (targetState.isComplete) {
+      return 'complete';
+    }
 
-      return targetState.isActive
-        ? runningStatuses.running
-        : runningStatuses.idle;
-    },
-    []
-  );
+    return targetState.isActive ? runningStatuses.running : runningStatuses.idle;
+  }, []);
 
   /**
    * Next possible phases:
@@ -172,7 +151,7 @@ function useAuthCodeQueues({
 
       return nextPhases.waitForAction;
     },
-    [queueRunner, internalRedirections]
+    [queueRunner, internalRedirections],
   );
 
   const handleChange = useCallback(
@@ -194,7 +173,7 @@ function useAuthCodeQueues({
         }
       }
     },
-    [resolverunningStatus, resolveNextPhase, queueRunner, onCompleted, onError]
+    [resolverunningStatus, resolveNextPhase, queueRunner, onCompleted, onError],
   );
 
   handleChange(state);
@@ -206,8 +185,7 @@ function useAuthCodeQueues({
   }, [queueRunner, queueHookProps, internalRedirections]);
 
   const canStart = () =>
-    queueComponentState.current.runningStatus === 'idle' &&
-    queueComponentState.current.nextPhase === nextPhases.start;
+    queueComponentState.current.runningStatus === 'idle' && queueComponentState.current.nextPhase === nextPhases.start;
 
   const shouldRestart = () =>
     queueComponentState.current.nextPhase === nextPhases.restart ||
@@ -222,9 +200,7 @@ function useAuthCodeQueues({
   }, [queueRunner]);
 
   const resumeWithAuthCodes = useCallback(() => {
-    if (
-      queueComponentState.current.nextPhase !== nextPhases.resumeWithAuthCodes
-    ) {
+    if (queueComponentState.current.nextPhase !== nextPhases.resumeWithAuthCodes) {
       return false;
     }
     return resumeQueueFromRedirectionCatcher(queueRunner);
@@ -232,8 +208,7 @@ function useAuthCodeQueues({
 
   const resume = () => resumeWithAuthCodes() || resumeGdprCallback();
 
-  const shouldResumeWithAuthCodes = () =>
-    queueComponentState.current.nextPhase === nextPhases.resumeWithAuthCodes;
+  const shouldResumeWithAuthCodes = () => queueComponentState.current.nextPhase === nextPhases.resumeWithAuthCodes;
 
   const shouldHandleCallback = () =>
     queueComponentState.current.runningStatus === 'idle' &&
@@ -248,8 +223,7 @@ function useAuthCodeQueues({
     shouldHandleCallback,
     hasError: queueComponentState.current.hasError,
     isComplete: queueComponentState.current.isComplete,
-    isLoading:
-      queueComponentState.current.runningStatus === runningStatuses.running,
+    isLoading: queueComponentState.current.runningStatus === runningStatuses.running,
     state: queueComponentState.current,
   };
 }

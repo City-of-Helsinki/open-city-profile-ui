@@ -26,12 +26,9 @@ When the redirection happens, the queue is stored and this action is the next,
 when browser returns from the oidc server.
 */
 
-const keycloakAuthCodeCallbackUrlDetectorType =
-  'keycloakAuthCodeCallbackUrlDetectorType';
+const keycloakAuthCodeCallbackUrlDetectorType = 'keycloakAuthCodeCallbackUrlDetectorType';
 
-export const getNextAuthCodeCallbackDetector = (
-  controller: QueueController
-) => {
+export const getNextAuthCodeCallbackDetector = (controller: QueueController) => {
   const nextAction = controller.getNext();
   if (!nextAction) {
     return undefined;
@@ -42,9 +39,8 @@ export const getNextAuthCodeCallbackDetector = (
   return undefined;
 };
 
-export const isQueueWaitingForAuthCodeCallback = (
-  controller: QueueController
-) => !!getNextAuthCodeCallbackDetector(controller);
+export const isQueueWaitingForAuthCodeCallback = (controller: QueueController) =>
+  !!getNextAuthCodeCallbackDetector(controller);
 
 export const resumeQueueFromNextCallbackDetector = (runner: QueueRunner) => {
   const actionType = getNextAuthCodeCallbackDetector(runner);
@@ -67,10 +63,7 @@ export const isResumableGdprCallback = (action: Action) => {
   return isOnActionRequiredPath(action);
 };
 
-const authCodeCallbackUrlDetectorExecutor: ActionExecutor = async (
-  action,
-  controller
-) => {
+const authCodeCallbackUrlDetectorExecutor: ActionExecutor = async (action, controller) => {
   if (!isAuthCodeActionNeeded(action, controller)) {
     return Promise.resolve(false);
   }
@@ -83,10 +76,7 @@ const authCodeCallbackUrlDetectorExecutor: ActionExecutor = async (
     // be in first call's gdpr callback Url when this action is executed again.
     // State is checked to make sure the callback url is for this action.
     const { state } = parseAuthorizationCallbackUrl();
-    const storedUrlProps = getAuthCodeRedirectionInitializationResult(
-      action,
-      controller
-    );
+    const storedUrlProps = getAuthCodeRedirectionInitializationResult(action, controller);
     return state && storedUrlProps && storedUrlProps.state !== state;
   };
   if (isWrongPathOrState()) {
@@ -94,7 +84,7 @@ const authCodeCallbackUrlDetectorExecutor: ActionExecutor = async (
       controller,
       action,
       'Gdpr redirection to server timed out.',
-      thirtySecondsInMs
+      thirtySecondsInMs,
     );
   }
   return Promise.resolve(true);

@@ -6,12 +6,7 @@ export type FormField = {
   comboBox?: boolean;
 };
 
-type DataType =
-  | 'basic-data'
-  | 'additional-information'
-  | 'addresses'
-  | 'phones'
-  | 'emails';
+type DataType = 'basic-data' | 'additional-information' | 'addresses' | 'phones' | 'emails';
 
 export type DataTypeFormFields = Record<string, FormField>;
 type FormFieldsByDataType = Record<DataType, Record<string, FormField>>;
@@ -84,5 +79,4 @@ export const formFieldsByDataType: FormFieldsByDataType = {
   },
 };
 
-export const getFormFields = (dataType: DataType): DataTypeFormFields =>
-  formFieldsByDataType[dataType];
+export const getFormFields = (dataType: DataType): DataTypeFormFields => formFieldsByDataType[dataType];

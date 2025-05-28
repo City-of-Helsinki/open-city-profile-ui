@@ -7,34 +7,24 @@ import { deleteProfileType } from '../deleteProfile';
 import { deleteServiceConnectionType } from '../deleteServiceConnection';
 import { downloadAsFileAction } from '../downloadAsFile';
 import { getDownloadDataAction } from '../getDownloadData';
-import {
-  getGdprDeleteScopesAction,
-  getGdprQueryScopesAction,
-} from '../getGdprScopes';
+import { getGdprDeleteScopesAction, getGdprQueryScopesAction } from '../getGdprScopes';
 import { getServiceConnectionsAction } from '../getServiceConnections';
 import { loadKeycloakConfigAction } from '../loadKeycloakConfig';
 import { queueInfoActionType } from '../queueInfo';
-import {
-  defaultRedirectionCatcherActionType,
-  defaultRedirectorActionType,
-} from '../redirectionHandlers';
+import { defaultRedirectionCatcherActionType, defaultRedirectorActionType } from '../redirectionHandlers';
 import { ActionMockData } from '../../../common/actionQueue/mock.util';
 
-type ScenarioProps = Pick<
-  ActionMockData,
-  'store' | 'storeAsActive' | 'runOriginal' | 'autoTrigger'
-> & { overrides?: ActionMockData[] };
+type ScenarioProps = Pick<ActionMockData, 'store' | 'storeAsActive' | 'runOriginal' | 'autoTrigger'> & {
+  overrides?: ActionMockData[];
+};
 
 export const keycloakState = 'keycloak-state';
 export const keycloakCode = 'keycloak-code';
 export const keycloakOidcUri = 'keycloak.hel.ninja';
 
-export function modifyScenario(
-  props: ActionMockData[],
-  newProps: ActionMockData[]
-): ActionMockData[] {
-  return props.map(item => {
-    const overrides = newProps.find(p => p.type === item.type);
+export function modifyScenario(props: ActionMockData[], newProps: ActionMockData[]): ActionMockData[] {
+  return props.map((item) => {
+    const overrides = newProps.find((p) => p.type === item.type);
     if (overrides) {
       return {
         ...item,
@@ -61,13 +51,9 @@ export function getScenarioForScopes({
       ...rest,
     },
     {
-      type: hasDeleteScopes
-        ? getGdprDeleteScopesAction.type
-        : getGdprQueryScopesAction.type,
+      type: hasDeleteScopes ? getGdprDeleteScopesAction.type : getGdprQueryScopesAction.type,
       resolveValue: {
-        keycloakScopes: hasKeycloakScopes
-          ? ['keycloak-scope1', 'keycloak-scope2']
-          : [],
+        keycloakScopes: hasKeycloakScopes ? ['keycloak-scope1', 'keycloak-scope2'] : [],
       },
       ...rest,
     },
@@ -172,9 +158,7 @@ export function getScenarioForDownloadData({
   return list;
 }
 
-export function getScenarioForAutoTriggeringQueueInfo({
-  ...rest
-}: ScenarioProps = {}): ActionMockData[] {
+export function getScenarioForAutoTriggeringQueueInfo({ ...rest }: ScenarioProps = {}): ActionMockData[] {
   return [
     {
       type: queueInfoActionType,
@@ -236,9 +220,7 @@ export function getScenarioForDeleteProfile({
 // next action is keycloakAuthCodeCallbackUrlAction
 // actions before it are stored and complete
 // keycloak auth code is not needed, because there are no keylocak scopes
-export function getScenarioWhichGoesFromStartToAuthRedirectAutomatically({
-  overrides,
-}: ScenarioProps = {}) {
+export function getScenarioWhichGoesFromStartToAuthRedirectAutomatically({ overrides }: ScenarioProps = {}) {
   const list = [
     ...getScenarioForScopes({ autoTrigger: true }),
     ...getScenarioForKeycloakAuth({
@@ -260,9 +242,7 @@ export function getScenarioWhichGoesFromStartToAuthRedirectAutomatically({
 // next action is keycloakAuthCodeCallbackUrlAction
 // actions before it are stored and complete
 // keycloak auth code is not needed, because there are no keylocak scopes
-export function getScenarioWhereNextPhaseIsResumeCallback({
-  overrides,
-}: ScenarioProps = {}) {
+export function getScenarioWhereNextPhaseIsResumeCallback({ overrides }: ScenarioProps = {}) {
   const list = [
     ...getScenarioForScopes({ store: true, hasKeycloakScopes: false }),
     ...getScenarioForKeycloakAuth({
@@ -295,9 +275,7 @@ export function getScenarioWhereNextPhaseIsResumeCallback({
 
 // auth codes are fetched, user has been redirected back to download page
 // next action is waitForStartPageRedirectionAction
-export function getScenarioWhereNextPhaseIsResumeDownload({
-  overrides,
-}: ScenarioProps = {}) {
+export function getScenarioWhereNextPhaseIsResumeDownload({ overrides }: ScenarioProps = {}) {
   const list = [
     ...getScenarioForScopes({ store: true, hasKeycloakScopes: false }),
     ...getScenarioForKeycloakAuth({ store: true }),
@@ -321,9 +299,7 @@ export function getScenarioWhereNextPhaseIsResumeDownload({
 
 // next action is keycloakAuthCodeCallbackUrlAction
 // url must be set to gdprcallback url with state=keycloak-state&(code does not matter)
-export function getScenarioWhereKeycloakAuthCodeNotInUrl({
-  overrides,
-}: ScenarioProps = {}) {
+export function getScenarioWhereKeycloakAuthCodeNotInUrl({ overrides }: ScenarioProps = {}) {
   const list = [
     ...getScenarioForScopes({ store: true }),
     ...getScenarioForKeycloakAuth({
@@ -350,9 +326,7 @@ export function getScenarioWhereKeycloakAuthCodeNotInUrl({
   }
   return list;
 }
-export function getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully({
-  overrides,
-}: ScenarioProps = {}) {
+export function getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully({ overrides }: ScenarioProps = {}) {
   const list = [
     ...getScenarioForScopes(),
     ...getScenarioForKeycloakAuth(),
@@ -472,5 +446,5 @@ export function getScenarioWithoutScopesWillAutoComplete() {
         },
       },
     ],
-  }).map(data => ({ ...data, autoTrigger: true }));
+  }).map((data) => ({ ...data, autoTrigger: true }));
 }

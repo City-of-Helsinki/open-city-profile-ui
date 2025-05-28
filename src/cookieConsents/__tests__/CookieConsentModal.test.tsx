@@ -20,9 +20,7 @@ vi.mock('hds-react', async () => {
 
   return {
     ...module,
-    CookieModal: (props: { contentSource: ContentSource }) => (
-      <MockCookieModal contentSource={props.contentSource} />
-    ),
+    CookieModal: (props: { contentSource: ContentSource }) => <MockCookieModal contentSource={props.contentSource} />,
   };
 });
 
@@ -47,7 +45,7 @@ describe('CookieConsentModal', () => {
   const initialEnv = window._env_.REACT_APP_ENVIRONMENT;
   const renderComponent = () => render(<CookieConsentModal />);
   beforeAll(() => {
-    ((global.window as unknown) as { _paq: { push: Mock } })._paq = {
+    (global.window as unknown as { _paq: { push: Mock } })._paq = {
       push: pushTracker,
     };
     window._env_.REACT_APP_ENVIRONMENT = 'production';
@@ -65,9 +63,7 @@ describe('CookieConsentModal', () => {
       await setCookieConsents(result, { [trackingCookieId]: false });
       await triggerOnConsentsParsed(result);
       verifyTrackingCookiesAreForgotten(pushTracker);
-      expect(() =>
-        result.getByTestId('mock-cookie-modal-and-page')
-      ).not.toThrow();
+      expect(() => result.getByTestId('mock-cookie-modal-and-page')).not.toThrow();
     });
     it('and tracking is not yet set, if consent is given.', async () => {
       const result = renderComponent();

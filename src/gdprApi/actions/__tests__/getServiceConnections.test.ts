@@ -1,17 +1,10 @@
 import to from 'await-to-js';
 import * as hdsReact from 'hds-react';
 
-import {
-  createActionForGettingSpecificServiceConnection,
-  getServiceConnectionsAction,
-} from '../getServiceConnections';
+import { createActionForGettingSpecificServiceConnection, getServiceConnectionsAction } from '../getServiceConnections';
 import getMyProfileWithServiceConnections from '../../../common/test/getMyProfileWithServiceConnections';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
-import {
-  Action,
-  QueueController,
-  getOption,
-} from '../../../common/actionQueue/actionQueue';
+import { Action, QueueController, getOption } from '../../../common/actionQueue/actionQueue';
 
 describe('getServiceConnections.ts', () => {
   const serviceConnections = getMyProfileWithServiceConnections(true);
@@ -43,15 +36,12 @@ describe('getServiceConnections.ts', () => {
     });
 
     const queue = [
-      serviceName
-        ? createActionForGettingSpecificServiceConnection(serviceName)
-        : getServiceConnectionsAction,
+      serviceName ? createActionForGettingSpecificServiceConnection(serviceName) : getServiceConnectionsAction,
     ];
     const runner = createActionQueueRunner(queue);
     return {
       runner,
-      getAction: () =>
-        runner.getByType(getServiceConnectionsAction.type) as Action,
+      getAction: () => runner.getByType(getServiceConnectionsAction.type) as Action,
     };
   };
   afterEach(() => {
@@ -63,17 +53,13 @@ describe('getServiceConnections.ts', () => {
     it('Fetches serviceConnections', async () => {
       const { getAction } = initTests();
       const action = getAction();
-      const [, result] = await to(
-        action.executor(action, {} as QueueController)
-      );
+      const [, result] = await to(action.executor(action, {} as QueueController));
       expect(result).toHaveLength(2);
     });
     it('Empty data rejects the promise', async () => {
       const { getAction } = initTests({ returnNoData: true });
       const action = getAction();
-      const [error] = await to(
-        action.executor({} as Action, {} as QueueController)
-      );
+      const [error] = await to(action.executor({} as Action, {} as QueueController));
       expect(error).toBeDefined();
     });
     it('Errors are handled', async () => {
@@ -90,17 +76,13 @@ describe('getServiceConnections.ts', () => {
     });
   });
   describe('If action.data has a service name, only that service connection is returned', () => {
-    const serviceName =
-      serviceConnections.myProfile?.serviceConnections?.edges[0]?.node?.service
-        .name;
+    const serviceName = serviceConnections.myProfile?.serviceConnections?.edges[0]?.node?.service.name;
     it('Fetches serviceConnections', async () => {
       const { getAction } = initTests({
         serviceName,
       });
       const action = getAction();
-      const [, result] = await to(
-        action.executor(action, {} as QueueController)
-      );
+      const [, result] = await to(action.executor(action, {} as QueueController));
       expect(serviceName).toBeDefined();
       expect(result).toHaveLength(1);
     });

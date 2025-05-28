@@ -10,12 +10,10 @@ export function useErrorPageRedirect(): RedirectFunction {
   const navigate = useNavigate();
 
   return useCallback(
-    params => {
-      const queryParams = new URLSearchParams(
-        params as URLSearchParams
-      ).toString();
+    (params) => {
+      const queryParams = new URLSearchParams(params as URLSearchParams).toString();
       navigate(`${config.errorPagePath}?${queryParams}`, { replace: true });
     },
-    [navigate]
+    [navigate],
   );
 }

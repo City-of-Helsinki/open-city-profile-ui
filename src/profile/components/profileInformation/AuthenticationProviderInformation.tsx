@@ -17,9 +17,7 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
   const { t } = useTranslation();
   const notificationRef = useRef<HTMLDivElement>(null);
 
-  const { data, passwordUpdateState, setPasswordUpdateState } = useContext(
-    ProfileContext
-  );
+  const { data, passwordUpdateState, setPasswordUpdateState } = useContext(ProfileContext);
 
   const hasPassword = hasPasswordLogin(data);
   const { getAmr } = useOidcClient();
@@ -56,32 +54,21 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
   return (
     <ProfileSection>
       <div className={commonFormStyles['flex-box-columns']}>
-        <div
-          className={classNames(
-            commonFormStyles['editor-description-container']
-          )}
-        >
+        <div className={classNames(commonFormStyles['editor-description-container'])}>
           <h2>{t('profileInformation.loginAndAuthentication')}</h2>
           <span>{authenticationMethodReferenceName}</span>
         </div>
 
         {hasPassword && (
           <Fragment>
-            <div
-              className={classNames(
-                commonFormStyles[flexBoxColumns],
-                commonFormStyles['password-container']
-              )}
-            >
+            <div className={classNames(commonFormStyles[flexBoxColumns], commonFormStyles['password-container'])}>
               <div
                 className={classNames(
                   commonFormStyles['editor-title-and-value'],
-                  commonFormStyles['responsive-flex-box-columns-rows']
+                  commonFormStyles['responsive-flex-box-columns-rows'],
                 )}
               >
-                <h3 className={commonFormStyles['subtitle-size']}>
-                  {t('profileInformation.password')}
-                </h3>
+                <h3 className={commonFormStyles['subtitle-size']}>{t('profileInformation.password')}</h3>
               </div>
               <div className={commonFormStyles['edit-buttons']}>
                 <div className={commonFormStyles['edit-buttons-container']}>
@@ -96,12 +83,7 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
                 </div>
               </div>
             </div>
-            <EditingNotifications
-              ref={notificationRef}
-              content={content}
-              dataType={'password'}
-              bottomSpacing
-            />
+            <EditingNotifications ref={notificationRef} content={content} dataType={'password'} bottomSpacing />
 
             {config.mfa && <OtpInformation />}
           </Fragment>

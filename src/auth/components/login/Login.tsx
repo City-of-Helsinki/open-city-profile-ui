@@ -16,12 +16,7 @@ function Login(): React.ReactElement {
   return (
     <PageLayout title={'login.login'}>
       <div className={styles.wrapper}>
-        <div
-          className={classNames([
-            commonContentStyles['common-content-area'],
-            styles.content,
-          ])}
-        >
+        <div className={classNames([commonContentStyles['common-content-area'], styles.content])}>
           <HelsinkiLogo />
           <FocusableH1>{t('login.title')}</FocusableH1>
           <p className={styles.ingress}>{t('login.description')}</p>

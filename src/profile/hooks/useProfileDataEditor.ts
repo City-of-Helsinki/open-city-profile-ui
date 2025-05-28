@@ -23,13 +23,11 @@ export type ProfileDataEditorReturnType = {
 
 export type Action = SaveType | 'edit' | 'cancel' | 'save' | 'add';
 
-export type ActionListenerReturnType = Promise<
-  void | UpdateResult | { success: boolean }
->;
+export type ActionListenerReturnType = Promise<void | UpdateResult | { success: boolean }>;
 export type ActionListener = (
   action: Action,
   data: EditData,
-  value?: Partial<EditDataValue>
+  value?: Partial<EditDataValue>,
 ) => ActionListenerReturnType;
 
 export function saveTypeToAction(saveType?: SaveType): Action | undefined {
@@ -45,18 +43,12 @@ export function saveTypeToAction(saveType?: SaveType): Action | undefined {
   return undefined;
 }
 
-export function useProfileDataEditor({
-  dataType,
-}: {
-  dataType: EditDataType;
-}): ProfileDataEditorReturnType {
+export function useProfileDataEditor({ dataType }: { dataType: EditDataType }): ProfileDataEditorReturnType {
   const { profileData, update: updateProfile } = useProfileMutations({
     dataType,
   });
   if (!profileData) {
-    throw new Error(
-      'No profile data for useProfileDataEditor. Hook used before data has been fetched.'
-    );
+    throw new Error('No profile data for useProfileDataEditor. Hook used before data has been fetched.');
   }
   const {
     getEditData,
@@ -71,7 +63,7 @@ export function useProfileDataEditor({
   } = useMemo(
     () => createEditorForDataType(profileData, dataType),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [],
   );
 
   const [, setUpdateTime] = useState<number>(Date.now());
@@ -87,7 +79,7 @@ export function useProfileDataEditor({
 
   const executeMutationUpdateAndHandleResult = async (
     formValues: Partial<FormValues>,
-    targetId: string
+    targetId: string,
   ): Promise<UpdateResult> => {
     const [err, success] = await to(updateProfile(formValues, profileData));
     if (err) {
@@ -107,7 +99,7 @@ export function useProfileDataEditor({
     return executeMutationUpdateAndHandleResult(formValues, item.id);
   };
 
-  const reset: ProfileDataEditorReturnType['reset'] = item => {
+  const reset: ProfileDataEditorReturnType['reset'] = (item) => {
     const success = resetItem(item);
     success && triggerUpdate();
   };

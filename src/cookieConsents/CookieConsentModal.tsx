@@ -4,18 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
 import getLanguageCode from '../common/helpers/getLanguageCode';
-import {
-  handleOnAllConsentsGiven,
-  handleOnConsentsParsed,
-} from '../common/helpers/tracking/matomoTracking';
+import { handleOnAllConsentsGiven, handleOnConsentsParsed } from '../common/helpers/tracking/matomoTracking';
 import config from '../config';
 import { getCookieContent } from './cookieContentSource';
 
 function CookieConsentModal(): React.ReactElement | null {
   const { i18n } = useTranslation();
-  const currentLanguage = getLanguageCode(
-    i18n.language
-  ) as ContentSource['currentLanguage'];
+  const currentLanguage = getLanguageCode(i18n.language) as ContentSource['currentLanguage'];
   const { t, changeLanguage } = i18n;
   const location = useLocation();
   const currentPath = location.pathname;
@@ -31,7 +26,7 @@ function CookieConsentModal(): React.ReactElement | null {
       onAllConsentsGiven: handleOnAllConsentsGiven,
       onConsentsParsed: handleOnConsentsParsed,
     }),
-    [currentLanguage, changeLanguage, t]
+    [currentLanguage, changeLanguage, t],
   );
 
   if (disallowedPaths.includes(currentPath)) {

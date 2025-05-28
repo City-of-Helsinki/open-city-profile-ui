@@ -11,9 +11,7 @@ import getLanguageCode from '../common/helpers/getLanguageCode';
 
 function CookieConsentPage(): React.ReactElement | null {
   const { i18n } = useTranslation();
-  const currentLanguage = getLanguageCode(
-    i18n.language
-  ) as ContentSource['currentLanguage'];
+  const currentLanguage = getLanguageCode(i18n.language) as ContentSource['currentLanguage'];
   const { t } = i18n;
   const contentSource: ContentSource = useMemo(
     () => ({
@@ -21,7 +19,7 @@ function CookieConsentPage(): React.ReactElement | null {
       currentLanguage,
       onAllConsentsGiven: handleOnAllConsentsGiven,
     }),
-    [currentLanguage, t]
+    [currentLanguage, t],
   );
 
   return (

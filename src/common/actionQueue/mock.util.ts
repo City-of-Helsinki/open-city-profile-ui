@@ -1,18 +1,9 @@
-import {
-  Action,
-  ActionExecutor,
-  ActionProps,
-  ActionType,
-  createQueueFromProps,
-} from './actionQueue';
+import { Action, ActionExecutor, ActionProps, ActionType, createQueueFromProps } from './actionQueue';
 import { storeQueue } from './actionQueueStorage';
 import { ActionSourceForTesting } from './test.util';
 import { QueueProps, getQueue } from '../../gdprApi/actions/queues';
 
-export type ActionMockData = Pick<
-  ActionSourceForTesting,
-  'type' | 'resolveValue' | 'rejectValue'
-> & {
+export type ActionMockData = Pick<ActionSourceForTesting, 'type' | 'resolveValue' | 'rejectValue'> & {
   isTriggered?: boolean;
   isComplete?: boolean;
   store?: boolean;
@@ -60,7 +51,7 @@ export const completeActionExecutor = (type: ActionType) => {
   trigger();
 };
 
-const createManualExecutor = (): ActionExecutor => action =>
+const createManualExecutor = (): ActionExecutor => (action) =>
   new Promise((resolve, reject) => {
     const type = action.type;
     const trigger = () => {
@@ -77,10 +68,7 @@ const createManualExecutor = (): ActionExecutor => action =>
     mockedExecutorTriggers.set(type, trigger);
   });
 
-export const runOrCreateExecutor: ActionExecutor = async (
-  action,
-  controller
-) => {
+export const runOrCreateExecutor: ActionExecutor = async (action, controller) => {
   const { type } = action;
   const data = mockActionData.get(type);
   if (data && data.runOriginal) {
@@ -119,30 +107,22 @@ export const createTriggerableExecutor = (actionProps: ActionProps) => {
   storeOriginalExecutor(actionProps);
   return {
     ...actionProps,
-    executor: (...args: Parameters<ActionExecutor>) =>
-      runOrCreateExecutor(...args),
+    executor: (...args: Parameters<ActionExecutor>) => runOrCreateExecutor(...args),
   };
 };
 
 export const createActionWithTriggerableExecutor = (source: ActionMockData) => {
   const { type } = source;
   setMockActionData(source);
-  const action = createQueueFromProps([
-    { type, executor: () => Promise.resolve(true) },
-  ])[0];
+  const action = createQueueFromProps([{ type, executor: () => Promise.resolve(true) }])[0];
   storeOriginalExecutor(action);
   return createTriggerableExecutor(action);
 };
 
 // store the queue actions from actual downloadDataQueue with new props
-const setStoredState = (
-  overrideQueueProps: Partial<Action>[],
-  queueProps: QueueProps,
-  storageKey: string
-) => {
-  const queue = getQueue(queueProps).map(action => {
-    const overrides =
-      overrideQueueProps.find(op => op.type === action.type) || {};
+const setStoredState = (overrideQueueProps: Partial<Action>[], queueProps: QueueProps, storageKey: string) => {
+  const queue = getQueue(queueProps).map((action) => {
+    const overrides = overrideQueueProps.find((op) => op.type === action.type) || {};
     return {
       ...action,
       ...overrides,
@@ -153,13 +133,9 @@ const setStoredState = (
 };
 
 // set mocked responses and stored data
-export const initMockQueue = (
-  props: ActionMockData[],
-  queueProps: QueueProps,
-  storageKey: string
-) => {
+export const initMockQueue = (props: ActionMockData[], queueProps: QueueProps, storageKey: string) => {
   const storedProps: Partial<Action>[] = [];
-  props.forEach(data => {
+  props.forEach((data) => {
     setMockActionData(data);
     if (data.store) {
       storedProps.push({

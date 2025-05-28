@@ -12,10 +12,7 @@ import PageLayout from '../common/pageLayout/PageLayout';
 function AccessibilityStatement(): React.ReactElement {
   const { i18n } = useTranslation();
   const selectStatement = () => {
-    const lang =
-      i18n.languages[0].length > 2
-        ? i18n.languages[0].substring(0, 2)
-        : i18n.languages[0];
+    const lang = i18n.languages[0].length > 2 ? i18n.languages[0].substring(0, 2) : i18n.languages[0];
 
     switch (lang) {
       case 'fi':

@@ -4,11 +4,7 @@ import countries from 'i18n-iso-countries';
 import fi from 'i18n-iso-countries/langs/fi.json';
 import en from 'i18n-iso-countries/langs/en.json';
 import sv from 'i18n-iso-countries/langs/sv.json';
-import {
-  LoginProvider,
-  LoginProviderProps,
-  WithAuthentication,
-} from 'hds-react';
+import { LoginProvider, LoginProviderProps, WithAuthentication } from 'hds-react';
 import { ApolloProvider } from '@apollo/client';
 import { UserManagerSettings } from 'oidc-client-ts';
 
@@ -85,26 +81,14 @@ function App(): React.ReactElement {
           <MatomoProvider value={matomoTracker}>
             <ProfileProvider>
               <Routes>
-                <Route path="/callback" element={<OidcCallback />} />
+                <Route path='/callback' element={<OidcCallback />} />
+                <Route path='/gdpr-callback' element={<GdprAuthorizationCodeManagerCallback />} />
+                <Route path='/password-change-callback' element={<PasswordChangeCallback />} />
+                <Route path='/otp-configuration-callback' element={<OtpConfigurationCallback />} />
+                <Route path='/delete-credential-callback' element={<OtpConfigurationCallback action='delete' />} />
+                <Route path='/login' element={<Login />} />
                 <Route
-                  path="/gdpr-callback"
-                  element={<GdprAuthorizationCodeManagerCallback />}
-                />
-                <Route
-                  path="/password-change-callback"
-                  element={<PasswordChangeCallback />}
-                />
-                <Route
-                  path="/otp-configuration-callback"
-                  element={<OtpConfigurationCallback />}
-                />
-                <Route
-                  path="/delete-credential-callback"
-                  element={<OtpConfigurationCallback action="delete" />}
-                />
-                <Route path="/login" element={<Login />} />
-                <Route
-                  path="/*"
+                  path='/*'
                   element={
                     <WithAuthentication
                       AuthorisedComponent={() => <Profile />}
@@ -113,21 +97,15 @@ function App(): React.ReactElement {
                   }
                 />
 
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/guide" element={<UserGuide />} />
-                <Route
-                  path="/accessibility"
-                  element={<AccessibilityStatement />}
-                />
-                <Route path="/profile-deleted" element={<ProfileDeleted />} />
+                <Route path='/about' element={<AboutPage />} />
+                <Route path='/guide' element={<UserGuide />} />
+                <Route path='/accessibility' element={<AccessibilityStatement />} />
+                <Route path='/profile-deleted' element={<ProfileDeleted />} />
                 <Route path={config.errorPagePath} element={<ErrorPage />} />
                 <Route path={config.autoSSOLoginPath} element={<LoginSSO />} />
-                <Route
-                  path={config.cookiePagePath}
-                  element={<CookieConsentPage />}
-                />
+                <Route path={config.cookiePagePath} element={<CookieConsentPage />} />
 
-                <Route path="*" element={<PageNotFound />} />
+                <Route path='*' element={<PageNotFound />} />
               </Routes>
             </ProfileProvider>
           </MatomoProvider>

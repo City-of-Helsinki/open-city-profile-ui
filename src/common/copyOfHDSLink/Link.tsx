@@ -79,15 +79,9 @@ type LinkToIconSizeMappingType = {
   S: 'xs';
 };
 
-export const getTextFromReactChildren = (
-  children: string | React.ReactNode
-): string | null => {
-  const stringChild =
-    Array.isArray(children) && typeof children[0] === 'string'
-      ? children[0]
-      : null;
-  const stringChildren =
-    !stringChild && typeof children === 'string' ? children : null;
+export const getTextFromReactChildren = (children: string | React.ReactNode): string | null => {
+  const stringChild = Array.isArray(children) && typeof children[0] === 'string' ? children[0] : null;
+  const stringChildren = !stringChild && typeof children === 'string' ? children : null;
   return stringChild || stringChildren;
 };
 
@@ -110,20 +104,14 @@ export const Link = ({
   const { t } = useTranslation();
   const composeAriaLabel = () => {
     let childrenText = getTextFromReactChildren(children);
-    const newTabText = openInNewTab
-      ? openInNewTabAriaLabel || t('openInNewTabAriaLabel')
-      : '';
-    const externalText = external
-      ? openInExternalDomainAriaLabel || t('openInExternalDomainAriaLabel')
-      : '';
+    const newTabText = openInNewTab ? openInNewTabAriaLabel || t('openInNewTabAriaLabel') : '';
+    const externalText = external ? openInExternalDomainAriaLabel || t('openInExternalDomainAriaLabel') : '';
 
     if (childrenText && childrenText.slice(-1) !== '.') {
       childrenText = `${childrenText}.`;
     }
 
-    return [childrenText, newTabText, externalText]
-      .filter(text => text)
-      .join(' ');
+    return [childrenText, newTabText, externalText].filter((text) => text).join(' ');
   };
 
   const mapLinkSizeToExternalIconSize: LinkToIconSizeMappingType = {
@@ -141,7 +129,7 @@ export const Link = ({
         styles.link,
         styles[`link${size}`],
         disableVisitedStyles ? styles.disableVisitedStyles : '',
-        className
+        className,
       )}
       href={href}
       style={style}
@@ -150,7 +138,7 @@ export const Link = ({
       {...rest}
     >
       {iconLeft && (
-        <span className={styles.iconLeft} aria-hidden="true">
+        <span className={styles.iconLeft} aria-hidden='true'>
           {iconLeft}
         </span>
       )}
@@ -160,9 +148,7 @@ export const Link = ({
           size={mapLinkSizeToExternalIconSize[size]}
           className={classNames(
             styles.icon,
-            size === 'L'
-              ? styles.verticalAlignBigIcon
-              : styles.verticalAlignSmallOrMediumIcon
+            size === 'L' ? styles.verticalAlignBigIcon : styles.verticalAlignSmallOrMediumIcon,
           )}
           aria-hidden
         />

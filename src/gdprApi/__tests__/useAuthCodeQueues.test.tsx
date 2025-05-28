@@ -14,14 +14,8 @@ import { getGdprQueryScopesAction } from '../actions/getGdprScopes';
 import mockWindowLocation from '../../common/test/mockWindowLocation';
 import config from '../../config';
 import { keycloakAuthCodeCallbackUrlAction } from '../actions/authCodeCallbackUrlDetector';
-import {
-  defaultRedirectorActionType,
-  defaultRedirectionCatcherActionType,
-} from '../actions/redirectionHandlers';
-import {
-  createFailedActionParams,
-  createNextActionParams,
-} from '../actions/utils';
+import { defaultRedirectorActionType, defaultRedirectionCatcherActionType } from '../actions/redirectionHandlers';
+import { createFailedActionParams, createNextActionParams } from '../actions/utils';
 import { keycloakAuthCodeParserAction } from '../actions/authCodeParser';
 import { loadKeycloakConfigAction } from '../actions/loadKeycloakConfig';
 import {
@@ -118,7 +112,7 @@ describe('useAuthCodeQueues', () => {
   const TestUseAuthCodeQueuesHook = () => {
     const [renderCount, rerender] = useState(0);
     const forceRender = () => {
-      rerender(n => n + 1);
+      rerender((n) => n + 1);
     };
     const {
       startOrRestart,
@@ -144,9 +138,7 @@ describe('useAuthCodeQueues', () => {
     return (
       <div>
         <span id={elementIds.stateDump}>{JSON.stringify(state)}</span>
-        <span id={elementIds.functionResults}>
-          {JSON.stringify(functionResults)}
-        </span>
+        <span id={elementIds.functionResults}>{JSON.stringify(functionResults)}</span>
         <span id={elementIds.renderCount}>{renderCount}</span>
 
         <button
@@ -179,7 +171,7 @@ describe('useAuthCodeQueues', () => {
   const UnmountingHookWrapper = () => {
     const [shouldRender, updateShouldRender] = useState(true);
     const toggleComponent = () => {
-      updateShouldRender(bool => !bool);
+      updateShouldRender((bool) => !bool);
     };
     return (
       <div>
@@ -200,21 +192,14 @@ describe('useAuthCodeQueues', () => {
     const result = render(<UnmountingHookWrapper />);
     const { container } = result;
 
-    const getElementById = (id: string) =>
-      container.querySelector(`#${id}`) as HTMLElement;
+    const getElementById = (id: string) => container.querySelector(`#${id}`) as HTMLElement;
 
-    const getRenderCount = () =>
-      parseInt(getElementById(elementIds.renderCount).innerHTML, 10);
+    const getRenderCount = () => parseInt(getElementById(elementIds.renderCount).innerHTML, 10);
 
-    const getState = () =>
-      JSON.parse(
-        getElementById(elementIds.stateDump).innerHTML
-      ) as QueueComponentState;
+    const getState = () => JSON.parse(getElementById(elementIds.stateDump).innerHTML) as QueueComponentState;
 
     const getFunctionResults = () =>
-      JSON.parse(
-        getElementById(elementIds.functionResults).innerHTML
-      ) as HookFunctionResults;
+      JSON.parse(getElementById(elementIds.functionResults).innerHTML) as HookFunctionResults;
 
     const start = () => {
       const button = getElementById(elementIds.startButton);
@@ -284,7 +269,7 @@ describe('useAuthCodeQueues', () => {
               rejectValue: rejectionError,
             },
           ],
-        })
+        }),
       );
       const { start, getFunctionResults, getState } = renderTestComponent();
       expect(getState()).toMatchObject({
@@ -296,9 +281,7 @@ describe('useAuthCodeQueues', () => {
 
       await waitFor(() => {
         expect(getFunctionResults().isLoading).toBeTruthy();
-        expect(
-          isActionTriggered(getServiceConnectionsAction.type)
-        ).toBeTruthy();
+        expect(isActionTriggered(getServiceConnectionsAction.type)).toBeTruthy();
       });
 
       completeActionExecutor(getServiceConnectionsAction.type);
@@ -308,9 +291,7 @@ describe('useAuthCodeQueues', () => {
       completeActionExecutor(getGdprQueryScopesAction.type);
       await waitFor(() => {
         expect(getFunctionResults().hasError).toBeTruthy();
-        expect(
-          isActionCompleted(getServiceConnectionsAction.type)
-        ).toBeTruthy();
+        expect(isActionCompleted(getServiceConnectionsAction.type)).toBeTruthy();
         expect(getFunctionResults().isLoading).toBeFalsy();
       });
       expect(getState()).toMatchObject({
@@ -329,9 +310,7 @@ describe('useAuthCodeQueues', () => {
       mockedWindowControls.setPath(config.gdprCallbackPath);
     });
     it('When codes are fetched, next action will redirect back to start page.', async () => {
-      mockedWindowControls.setSearch(
-        `state=${keycloakState}&code=${keycloakCode}`
-      );
+      mockedWindowControls.setSearch(`state=${keycloakState}&code=${keycloakCode}`);
       initTestQueue(getScenarioWhereNextPhaseIsResumeCallback());
       const { resume, getState, getFunctionResults } = renderTestComponent();
       await waitFor(() => {
@@ -351,9 +330,7 @@ describe('useAuthCodeQueues', () => {
         });
       });
       await waitFor(() => {
-        expect(mockNavigate).toHaveBeenLastCalledWith(
-          '/?next=redirectionCatcher'
-        );
+        expect(mockNavigate).toHaveBeenLastCalledWith('/?next=redirectionCatcher');
         expect(getState()).toMatchObject({
           nextPhase: nextPhases.waitForInternalRedirect,
         });
@@ -387,23 +364,17 @@ describe('useAuthCodeQueues', () => {
       completeActionExecutor(keycloakAuthCodeCallbackUrlAction.type);
 
       await waitFor(async () => {
-        expect(
-          isActionCompleted(keycloakAuthCodeCallbackUrlAction.type)
-        ).toBeTruthy();
+        expect(isActionCompleted(keycloakAuthCodeCallbackUrlAction.type)).toBeTruthy();
       });
 
       await waitFor(async () => {
-        expect(
-          isActionCompleted(keycloakAuthCodeParserAction.type)
-        ).toBeTruthy();
+        expect(isActionCompleted(keycloakAuthCodeParserAction.type)).toBeTruthy();
       });
       await waitFor(async () => {
         expect(mockNavigate).toHaveBeenCalledTimes(1);
         const lastCall = getMockCallArgs(mockNavigate, 0)[0] as string;
 
-        expect(
-          lastCall.includes(`/?error=${keycloakAuthCodeParserAction.type}`)
-        ).toBeTruthy();
+        expect(lastCall.includes(`/?error=${keycloakAuthCodeParserAction.type}`)).toBeTruthy();
       });
 
       await waitFor(async () => {
@@ -424,7 +395,7 @@ describe('useAuthCodeQueues', () => {
       mockedWindowControls.setSearch(
         createNextActionParams({
           type: defaultRedirectionCatcherActionType,
-        } as Action)
+        } as Action),
       );
       initTestQueue(getScenarioWhereNextPhaseIsResumeDownload());
 
@@ -452,9 +423,7 @@ describe('useAuthCodeQueues', () => {
     });
     it('when storage has a queue with failed auth code retrieval, nextPhase is "restart"', async () => {
       mockedWindowControls.setPath(config.downloadPath);
-      mockedWindowControls.setSearch(
-        createFailedActionParams(keycloakAuthCodeCallbackUrlAction as Action)
-      );
+      mockedWindowControls.setSearch(createFailedActionParams(keycloakAuthCodeCallbackUrlAction as Action));
       initTestQueue(
         getScenarioWhereNextPhaseIsResumeCallback({
           overrides: [
@@ -464,7 +433,7 @@ describe('useAuthCodeQueues', () => {
               store: true,
             },
           ],
-        })
+        }),
       );
 
       const { getState, start, getFunctionResults } = renderTestComponent();
@@ -492,7 +461,7 @@ describe('useAuthCodeQueues', () => {
       mockedWindowControls.setSearch(
         createNextActionParams({
           type: defaultRedirectionCatcherActionType,
-        } as Action)
+        } as Action),
       );
       initTestQueue(
         getScenarioWhereNextPhaseIsResumeDownload({
@@ -504,7 +473,7 @@ describe('useAuthCodeQueues', () => {
               autoTrigger: true,
             },
           ],
-        })
+        }),
       );
 
       const { resume, getState, getFunctionResults } = renderTestComponent();
@@ -530,22 +499,10 @@ describe('useAuthCodeQueues', () => {
   });
   describe('Testing whole download queue action by action.', () => {
     it('phases change and re-rendering or unmounting (in correct phases) wont affect anything', async () => {
-      initTestQueue(
-        getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully()
-      );
-      const {
-        start,
-        getState,
-        rerender,
-        toggleComponentMounting,
-        resume,
-        getFunctionResults,
-      } = renderTestComponent();
+      initTestQueue(getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully());
+      const { start, getState, rerender, toggleComponentMounting, resume, getFunctionResults } = renderTestComponent();
 
-      const checkCurrentActionAndManuallyCompleteIt = async (
-        actionType: ActionType,
-        nextActionType?: ActionType
-      ) => {
+      const checkCurrentActionAndManuallyCompleteIt = async (actionType: ActionType, nextActionType?: ActionType) => {
         await waitFor(() => {
           expect(isActionTriggered(actionType)).toBeTruthy();
         });
@@ -574,10 +531,7 @@ describe('useAuthCodeQueues', () => {
         start();
       });
 
-      await checkCurrentActionAndManuallyCompleteIt(
-        getServiceConnectionsAction.type,
-        getGdprQueryScopesAction.type
-      );
+      await checkCurrentActionAndManuallyCompleteIt(getServiceConnectionsAction.type, getGdprQueryScopesAction.type);
       expect(getState()).toMatchObject({
         runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAction,
@@ -601,10 +555,7 @@ describe('useAuthCodeQueues', () => {
         isLoading: true,
       });
 
-      await checkCurrentActionAndManuallyCompleteIt(
-        getGdprQueryScopesAction.type,
-        loadKeycloakConfigAction.type
-      );
+      await checkCurrentActionAndManuallyCompleteIt(getGdprQueryScopesAction.type, loadKeycloakConfigAction.type);
       expect(getState()).toMatchObject({
         runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAction,
@@ -612,7 +563,7 @@ describe('useAuthCodeQueues', () => {
 
       await checkCurrentActionAndManuallyCompleteIt(
         loadKeycloakConfigAction.type,
-        keycloakRedirectionInitializationAction.type
+        keycloakRedirectionInitializationAction.type,
       );
       expect(getState()).toMatchObject({
         runningStatus: runningStatuses.running,
@@ -621,7 +572,7 @@ describe('useAuthCodeQueues', () => {
 
       await checkCurrentActionAndManuallyCompleteIt(
         keycloakRedirectionInitializationAction.type,
-        keycloakAuthCodeRedirectionAction.type
+        keycloakAuthCodeRedirectionAction.type,
       );
 
       await rerender();
@@ -633,7 +584,7 @@ describe('useAuthCodeQueues', () => {
 
       await checkCurrentActionAndManuallyCompleteIt(
         keycloakAuthCodeRedirectionAction.type,
-        keycloakAuthCodeCallbackUrlAction.type
+        keycloakAuthCodeCallbackUrlAction.type,
       );
 
       await toggleComponentMounting();
@@ -654,7 +605,7 @@ describe('useAuthCodeQueues', () => {
 
       await checkCurrentActionAndManuallyCompleteIt(
         keycloakAuthCodeCallbackUrlAction.type,
-        keycloakAuthCodeParserAction.type
+        keycloakAuthCodeParserAction.type,
       );
 
       expect(getState()).toMatchObject({
@@ -662,10 +613,7 @@ describe('useAuthCodeQueues', () => {
         nextPhase: nextPhases.waitForAction,
       });
 
-      await checkCurrentActionAndManuallyCompleteIt(
-        keycloakAuthCodeParserAction.type,
-        defaultRedirectorActionType
-      );
+      await checkCurrentActionAndManuallyCompleteIt(keycloakAuthCodeParserAction.type, defaultRedirectorActionType);
 
       await act(async () => {
         // Empty act to let things settle
@@ -675,18 +623,14 @@ describe('useAuthCodeQueues', () => {
         nextPhase: nextPhases.waitForInternalRedirect,
       });
 
-      await checkCurrentActionAndManuallyCompleteIt(
-        defaultRedirectionCatcherActionType
-      );
+      await checkCurrentActionAndManuallyCompleteIt(defaultRedirectionCatcherActionType);
 
       expect(getState()).toMatchObject({
         runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForInternalRedirect,
       });
 
-      expect(mockNavigate).toHaveBeenLastCalledWith(
-        '/?next=redirectionCatcher'
-      );
+      expect(mockNavigate).toHaveBeenLastCalledWith('/?next=redirectionCatcher');
 
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -698,7 +642,7 @@ describe('useAuthCodeQueues', () => {
       mockedWindowControls.setSearch(
         createNextActionParams({
           type: defaultRedirectionCatcherActionType,
-        } as Action)
+        } as Action),
       );
       await toggleComponentMounting();
 
@@ -714,20 +658,14 @@ describe('useAuthCodeQueues', () => {
 
       resume();
 
-      await checkCurrentActionAndManuallyCompleteIt(
-        defaultRedirectionCatcherActionType,
-        getDownloadDataAction.type
-      );
+      await checkCurrentActionAndManuallyCompleteIt(defaultRedirectionCatcherActionType, getDownloadDataAction.type);
 
       expect(getState()).toMatchObject({
         runningStatus: runningStatuses.running,
         nextPhase: nextPhases.waitForAction,
       });
 
-      await checkCurrentActionAndManuallyCompleteIt(
-        getDownloadDataAction.type,
-        downloadAsFileAction.type
-      );
+      await checkCurrentActionAndManuallyCompleteIt(getDownloadDataAction.type, downloadAsFileAction.type);
 
       expect(getState()).toMatchObject({
         runningStatus: runningStatuses.running,
@@ -777,15 +715,8 @@ describe('useAuthCodeQueues', () => {
   });
   describe('If queue is restored (from storage) in some unintended and unresumable position', () => {
     it('nextPhase is "stoppedInMidQueue", and queue can be restarted.', async () => {
-      initTestQueue(
-        getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully()
-      );
-      const {
-        start,
-        getState,
-        toggleComponentMounting,
-        getFunctionResults,
-      } = renderTestComponent();
+      initTestQueue(getScenarioWhereEveryActionCanBeManuallyCompletetedSuccessfully());
+      const { start, getState, toggleComponentMounting, getFunctionResults } = renderTestComponent();
 
       expect(getState()).toMatchObject({
         runningStatus: runningStatuses.idle,
@@ -795,24 +726,18 @@ describe('useAuthCodeQueues', () => {
         start();
       });
       await act(async () => {
-        expect(
-          getState().runningStatus === runningStatuses.running
-        ).toBeTruthy();
+        expect(getState().runningStatus === runningStatuses.running).toBeTruthy();
         expect(getState().nextPhase === nextPhases.waitForAction).toBeTruthy();
       });
       completeActionExecutor(getServiceConnectionsAction.type);
       await waitFor(async () => {
-        expect(
-          getState().lastActionType === getGdprQueryScopesAction.type
-        ).toBeTruthy();
+        expect(getState().lastActionType === getGdprQueryScopesAction.type).toBeTruthy();
       });
       await toggleComponentMounting();
       await toggleComponentMounting();
       await waitFor(async () => {
         expect(getState().runningStatus === runningStatuses.idle).toBeTruthy();
-        expect(
-          getState().nextPhase === nextPhases.stoppedInMidQueue
-        ).toBeTruthy();
+        expect(getState().nextPhase === nextPhases.stoppedInMidQueue).toBeTruthy();
       });
       expect(getFunctionResults()).toMatchObject({
         ...hookFunctionResultsAsFalse,
@@ -821,12 +746,8 @@ describe('useAuthCodeQueues', () => {
       cleanMockData();
       start();
       await act(async () => {
-        expect(
-          getState().runningStatus === runningStatuses.running
-        ).toBeTruthy();
-        expect(
-          getState().lastActionType === getServiceConnectionsAction.type
-        ).toBeTruthy();
+        expect(getState().runningStatus === runningStatuses.running).toBeTruthy();
+        expect(getState().lastActionType === getServiceConnectionsAction.type).toBeTruthy();
       });
     });
   });
@@ -836,7 +757,7 @@ describe('useAuthCodeQueues', () => {
       mockedWindowControls.setSearch(
         createNextActionParams({
           type: defaultRedirectionCatcherActionType,
-        } as Action)
+        } as Action),
       );
       initTestQueue(getScenarioWhereNextPhaseIsResumeDownload());
       const { resume, getState, rerender } = renderTestComponent();
@@ -874,14 +795,9 @@ describe('useAuthCodeQueues', () => {
               rejectValue: rejectionError,
             },
           ],
-        })
+        }),
       );
-      const {
-        start,
-        getState,
-        rerender,
-        toggleComponentMounting,
-      } = renderTestComponent();
+      const { start, getState, rerender, toggleComponentMounting } = renderTestComponent();
       expect(onCompleted).toHaveBeenCalledTimes(0);
       expect(onError).toHaveBeenCalledTimes(0);
 
@@ -950,7 +866,7 @@ describe('useAuthCodeQueues', () => {
               rejectValue: rejectionError,
             },
           ],
-        })
+        }),
       );
       const { start } = renderTestComponent();
 

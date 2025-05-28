@@ -20,9 +20,7 @@ vi.mock('hds-react', async () => {
 
   return {
     ...module,
-    CookiePage: (props: { contentSource: ContentSource }) => (
-      <MockCookieModal contentSource={props.contentSource} />
-    ),
+    CookiePage: (props: { contentSource: ContentSource }) => <MockCookieModal contentSource={props.contentSource} />,
   };
 });
 
@@ -35,10 +33,10 @@ describe('CookieConsentPage', () => {
         <MemoryRouter initialEntries={['/']}>
           <CookieConsentPage />
         </MemoryRouter>
-      </TestLoginProvider>
+      </TestLoginProvider>,
     );
   beforeAll(() => {
-    ((global.window as unknown) as { _paq: { push: Mock } })._paq = {
+    (global.window as unknown as { _paq: { push: Mock } })._paq = {
       push: pushTracker,
     };
     window._env_.REACT_APP_ENVIRONMENT = 'production';
@@ -55,9 +53,7 @@ describe('CookieConsentPage', () => {
       const result = renderComponent();
       await triggerOnConsentsParsed(result);
       expect(pushTracker).toHaveBeenCalledTimes(0);
-      expect(() =>
-        result.getByTestId('mock-cookie-modal-and-page')
-      ).not.toThrow();
+      expect(() => result.getByTestId('mock-cookie-modal-and-page')).not.toThrow();
     });
   });
 
