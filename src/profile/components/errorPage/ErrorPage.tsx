@@ -76,14 +76,14 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
         ])}
       >
         <Notification
-          type={'error'}
+          type="error"
           label={notificationTitle}
-          data-testid={'error-page-notification'}
+          data-testid="error-page-notification"
         >
           <p>{notificationMessage}</p>
           {hideFrontPageLink !== true && (
             <p>
-              <Link to="/" data-testid={'error-page-frontpage-link'}>
+              <Link to="/" data-testid="error-page-frontpage-link">
                 {t('nav.goToHomePage')}
               </Link>
             </p>
@@ -94,7 +94,7 @@ function ErrorPage(props?: ErrorPageProps): React.ReactElement {
             <LoginButton
               data-testid={'error-page-login-button'}
               errorText={t('authentication.genericError.message')}
-              loggingInText="Logging in"
+              loggingInText={t('nav.loggingIn')}
             >
               {t('login.login')}
             </LoginButton>
