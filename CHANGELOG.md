@@ -3,6 +3,26 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.25.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.24.0...open-city-profile-ui-v1.25.0) (2025-05-30)
+
+
+### Features
+
+* React v18 & react router v7 - HP-2747 ([#447](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/447)) ([6f5d4b4](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/6f5d4b495e0871b78f6237bb0d4ba513c0495686))
+* Update to React 17 and react-router 6  HP-2747 ([#445](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/445)) ([0879b55](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/0879b5584c5ee759fe124760af57f0a5780f638a))
+
+
+### Bug Fixes
+
+* React 18 related error modal fixes HP-2886 ([#451](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/451)) ([5afeede](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/5afeede799fc87233e2482db5b85a55eefaa10bc))
+
+
+### Dependencies
+
+* Remove @sinonjs/fake-timers HP-2833 ([92ea932](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/92ea932896e0c473dbd5e3cd5b3189cd6b76d0a9))
+* Upgrade @sentry/react HP-2833 ([ce3ef44](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/ce3ef445f9a0b8b25c9cd8aae96a28d5e270c1ff))
+* Upgrade vitest HP-2833 ([1588cf7](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/1588cf7d96865af112faebf9fd5f51114cec161b))
+
 ## [1.24.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.23.0...open-city-profile-ui-v1.24.0) (2025-05-06)
 
 
