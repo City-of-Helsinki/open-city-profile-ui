@@ -1,5 +1,12 @@
 import React from 'react';
-import { Button, Dialog, DialogProps, IconError } from 'hds-react';
+import {
+  Button,
+  ButtonVariant,
+  Dialog,
+  DialogProps,
+  IconError,
+  ButtonPresetTheme,
+} from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import { ApolloError } from '@apollo/client';
 
@@ -60,7 +67,7 @@ function DeleteProfileError({
       <Dialog.Header
         id={titleId}
         title={t('deleteProfileModal.deletionErrorTitle')}
-        iconLeft={<IconError color="var(--color-error)" aria-hidden="true" />}
+        iconStart={<IconError color="var(--color-error)" aria-hidden="true" />}
       />
       <Dialog.Content>
         {errorIsListOfServices ? (
@@ -77,12 +84,12 @@ function DeleteProfileError({
       </Dialog.Content>
       <Dialog.ActionButtons>
         <Button
-          theme="black"
-          variant="secondary"
+          theme={ButtonPresetTheme.Black}
+          variant={ButtonVariant.Secondary}
           onClick={onClose}
           data-testid={`${id}-close-button`}
         >
-          {closeButtonLabelText}
+          {closeButtonLabelText ?? ''}
         </Button>
       </Dialog.ActionButtons>
     </Dialog>

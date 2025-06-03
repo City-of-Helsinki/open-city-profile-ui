@@ -11,6 +11,7 @@ import {
   IconAngleDown,
   IconAngleUp,
   useAccordion,
+  ButtonVariant,
 } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -119,8 +120,8 @@ function ExpandingPanel({
           <Button
             ref={titleButtonRef}
             title={title}
-            variant={'supplementary'}
-            iconRight={<Icon aria-hidden />}
+            variant={ButtonVariant.Supplementary}
+            iconEnd={<Icon aria-hidden />}
             {...buttonProps}
             {...buttonTestId}
           >
@@ -139,8 +140,8 @@ function ExpandingPanel({
         <div className={styles['close-button-container']}>
           <Button
             title={title}
-            variant={'supplementary'}
-            iconRight={<Icon aria-hidden />}
+            variant={ButtonVariant.Supplementary}
+            iconEnd={<Icon aria-hidden />}
             {...buttonProps}
             {...secondaryButtonTestId}
             onKeyDown={event => {

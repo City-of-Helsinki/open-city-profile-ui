@@ -190,7 +190,7 @@ function EmailEditor(): React.ReactElement | null {
           <Notification
             type={'alert'}
             label={t('profileInformation.verifyEmailTitle')}
-            dataTestId={'verify-email-notification'}
+            data-testid={'verify-email-notification'}
           >
             {t('profileInformation.verifyEmailText')}
           </Notification>

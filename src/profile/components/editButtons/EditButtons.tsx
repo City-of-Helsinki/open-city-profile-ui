@@ -4,6 +4,7 @@ import {
   IconMinusCircle,
   IconStarFill,
   IconStar,
+  ButtonVariant,
 } from 'hds-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -69,8 +70,8 @@ function EditButtons(props: Props): React.ReactElement {
       )}
       {setPrimary && !primary && (
         <Button
-          variant="supplementary"
-          iconLeft={<IconStar />}
+          variant={ButtonVariant.Supplementary}
+          iconStart={<IconStar />}
           onClick={async () => {
             await handler('set-primary');
           }}
@@ -82,7 +83,7 @@ function EditButtons(props: Props): React.ReactElement {
         </Button>
       )}
       <Button
-        iconLeft={<IconPenLine />}
+        iconStart={<IconPenLine />}
         onClick={async () => {
           await handler('edit');
         }}
@@ -94,8 +95,8 @@ function EditButtons(props: Props): React.ReactElement {
       </Button>
       {removable && (
         <Button
-          variant="secondary"
-          iconLeft={<IconMinusCircle />}
+          variant={ButtonVariant.Secondary}
+          iconStart={<IconMinusCircle />}
           onClick={async () => {
             await handler('remove');
           }}

@@ -6298,20 +6298,20 @@ hasown@^2.0.0, hasown@^2.0.1, hasown@^2.0.2:
   dependencies:
     function-bind "^1.1.2"
 
-hds-core@3.12.0, hds-core@^3.12.0:
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-3.12.0.tgz#ac47ec2e5c03d5685cdbf27b1c4a7b8ac24fe3d8"
-  integrity sha512-k7veK50ddSxDg97aT/WN7Wf1wCxKoZaJQNTkQvUbrbjDVN5dRUXcOyxcB7ygsSoGWHj4Rv4K2To4gUwrWG4B3A==
+hds-core@4.5.0, hds-core@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-4.5.0.tgz#fb1005b4c5573e0da12468a6c584b6befd581fda"
+  integrity sha512-KSPo1z+0pg9aPu9mBCvXSckfa+Sbju76Rg9kdO9tyeLjKWGKft4OnGbc4fyOyhK95ipGl7132FYIk2yp0PTB5g==
 
-hds-design-tokens@^3.12.0:
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-3.12.0.tgz#1a0b5b73cb1d9da8fffbc76154cf436a3032b4b1"
-  integrity sha512-Pu9oESUoKgYtmlKrdRKcAHodyxJw8fm0qizsqNhfsfZE5Ln88ZkoaCoZLCC4Cyh7sfsCEZh9/1yuoO0Kktf8+Q==
+hds-design-tokens@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-4.5.0.tgz#bae40c70e1055cf15451e27c614157318ac22506"
+  integrity sha512-p/YhAMccXGJD4T85rnl9I6CLRKcIZfr6NvLrs7UAhhwnkfItXBbPR6CovhfMqPc2+MEooZ97PB+b5U6rjNJU2A==
 
-hds-react@^3.12.0:
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-3.12.0.tgz#cc09dadee2f0ce0a645b402dde80475e970701b1"
-  integrity sha512-g28KjAbZ/yGW4rxnrb+cJD+CVn8FdClkytSd4oJwC1UmSUuF0C8dQLITPDEbEEVfYFnbbuU+bGQZ79/0tWcUSA==
+hds-react@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-4.5.0.tgz#353631bfda925b11accc027b14db0faa5ad32922"
+  integrity sha512-c/p1rl1le6g58A4ArS2AbFhTh/lYLBcA9GJH+v+Qu1MT1Bf0EEhAlCacQ8LzvzoF/7h36n0A2MS0bAMtFrRCXg==
   dependencies:
     "@apollo/client" "^3.10.1"
     "@babel/runtime" "7.17.9"
@@ -6329,7 +6329,7 @@ hds-react@^3.12.0:
     date-fns "2.16.1"
     downshift "6.0.6"
     graphql "^16.8.1"
-    hds-core "3.12.0"
+    hds-core "4.5.0"
     jwt-decode "^3.1.2"
     kashe "1.0.4"
     lodash "^4.17.21"

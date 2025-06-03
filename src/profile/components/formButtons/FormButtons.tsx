@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'hds-react';
+import { Button, ButtonVariant } from 'hds-react';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import { ActionHandler } from '../editButtons/EditButtons';
@@ -32,7 +32,7 @@ function FormButtons(props: Props): React.ReactElement {
         {t('profileForm.submit')}
       </Button>
       <Button
-        variant="secondary"
+        variant={ButtonVariant.Secondary}
         onClick={async () => {
           await handler('cancel');
         }}

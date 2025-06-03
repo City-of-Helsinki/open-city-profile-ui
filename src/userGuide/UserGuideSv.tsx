@@ -78,7 +78,7 @@ function UserGuideSv(): ReactElement {
         href="/Helsingforsprofilens-hjalp.pdf"
         download="Helsingforsprofilens-hjalp.pdf"
         className={styles['download-link']}
-        iconLeft={<IconDownload />}
+        iconStart={<IconDownload />}
         useButtonStyles
       >
         Helsingforsprofilens hjälp (.pdf)

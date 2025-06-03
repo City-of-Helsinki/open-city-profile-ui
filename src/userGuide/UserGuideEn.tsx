@@ -71,7 +71,7 @@ function UserGuideEn(): ReactElement {
         download="Helsinki-profile-userguide.pdf"
         className={styles['download-link']}
         useButtonStyles
-        iconLeft={<IconDownload />}
+        iconStart={<IconDownload />}
       >
         Helsinki profile guide (.pdf)
       </Link>

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Accordion, AccordionProps } from 'hds-react';
+import { Accordion, AccordionProps, AccordionSize } from 'hds-react';
 
 import { useMobile } from '../profile/hooks/useMobile';
 
@@ -32,7 +32,7 @@ function UserGuideAccordion({
 
   const accordionProps: AccordionProps = {
     style: accordionStyle,
-    size: isMobile ? 's' : 'l',
+    size: isMobile ? AccordionSize.Small : AccordionSize.Large,
     card: true,
     language,
     theme,

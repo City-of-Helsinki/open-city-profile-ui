@@ -8,9 +8,9 @@ import {
   logoFi,
   logoSv,
   LanguageSelectorProps,
-  useCookies,
   useOidcClientTracking,
   isLoggingInSignal,
+  useGroupConsent,
 } from 'hds-react';
 
 import { MAIN_CONTENT_ID } from '../constants';
@@ -19,10 +19,10 @@ import useMatomo from '../matomo/hooks/useMatomo';
 
 const useTrackLoginToMatomo = () => {
   const [lastSignal] = useOidcClientTracking();
-  const { getAllConsents } = useCookies();
+  const statisticsConsent = useGroupConsent('statistics');
   const { trackEvent } = useMatomo();
 
-  if (isLoggingInSignal(lastSignal) && getAllConsents().matomo) {
+  if (isLoggingInSignal(lastSignal) && statisticsConsent) {
     trackEvent({ category: 'action', action: 'Log in' });
   }
 };
@@ -33,7 +33,7 @@ function Header(): React.ReactElement {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const { getAllConsents } = useCookies();
+  const statisticsConsent = useGroupConsent('statistics');
   const { trackEvent } = useMatomo();
 
   const { getProfile } = useContext(ProfileContext);
@@ -46,7 +46,7 @@ function Header(): React.ReactElement {
   const onClick = (path: string, e?: MouseEvent) => {
     e?.preventDefault();
     navigate(path);
-    if (getAllConsents().matomo) {
+    if (statisticsConsent) {
       trackEvent({ category: 'nav', action: `${path} click` });
     }
   };
@@ -81,7 +81,7 @@ function Header(): React.ReactElement {
 
   const changeLanguageAction = (langCode: string) => {
     if (langCode !== lang) {
-      if (getAllConsents().matomo) {
+      if (statisticsConsent) {
         trackEvent({
           category: 'action',
           action: `Language selected ${langCode}`,
