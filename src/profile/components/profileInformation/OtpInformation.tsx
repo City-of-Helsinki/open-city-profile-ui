@@ -6,6 +6,7 @@ import {
   IconCheckCircle,
   IconAlertCircle,
   IconCrossCircle,
+  ButtonVariant,
 } from 'hds-react';
 import classNames from 'classnames';
 
@@ -89,12 +90,12 @@ function OtpInformation(): React.ReactElement | null {
             </h3>
 
             {!MFALoginMethod && (
-              <StatusLabel iconLeft={<IconAlertCircle />}>
+              <StatusLabel iconStart={<IconAlertCircle />}>
                 {t('mfa.disabled')}
               </StatusLabel>
             )}
             {MFALoginMethod && (
-              <StatusLabel type="success" iconLeft={<IconCheckCircle />}>
+              <StatusLabel type="success" iconStart={<IconCheckCircle />}>
                 {t('mfa.dateEnabled')} {formatDate(MFALoginMethod.createdAt)}
               </StatusLabel>
             )}
@@ -115,8 +116,8 @@ function OtpInformation(): React.ReactElement | null {
             {MFALoginMethod && (
               <Button
                 data-testid={'disable-totp-button'}
-                iconLeft={<IconCrossCircle />}
-                variant="secondary"
+                iconStart={<IconCrossCircle />}
+                variant={ButtonVariant.Secondary}
                 onClick={() => {
                   disableTOTP(MFALoginMethod.credentialId);
                 }}

@@ -1,51 +1,71 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Select, SingleSelectProps, Combobox } from 'hds-react';
+import {
+  Select,
+  SelectProps,
+  Option,
+  Texts,
+  SupportedLanguage,
+} from 'hds-react';
 import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 
+export function defaultFilter(option: Option, filterStr: string) {
+  return option.label.toLowerCase().indexOf(filterStr.toLowerCase()) > -1;
+}
+
+// Define the component props using more specific generic types
 type Props = {
   name: string;
-  defaultOption: OptionType;
-  initialOption?: OptionType;
-  currentOption?: OptionType;
-  toggleButtonAriaLabel?: string;
+  defaultOption: Option;
+  initialOption?: Option;
+  currentOption?: Option;
   allowSearch?: boolean;
   virtualized?: boolean;
-} & Exclude<SingleSelectProps<OptionType>, 'defaultOption' | 'value'>;
-
-export type OptionType = {
-  value: string;
-  label: string;
-};
+  className?: string;
+  label?: string;
+  error?: string;
+  onChange?: (clickedOption: Option) => void;
+} & Omit<
+  SelectProps<React.ReactElement>,
+  'defaultValue' | 'onChange' | 'value'
+>;
 
 function FormikDropdown(props: Props): React.ReactElement {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const {
     defaultOption,
     initialOption,
     currentOption,
     allowSearch,
-    toggleButtonAriaLabel,
     onChange: onChangeCallback,
     virtualized,
-    ...singleSelectProps
+    className,
+    label,
+    error,
+    ...selectProps
   } = props;
 
   const lastCheckedLanguage = useRef<string>(i18n.language);
 
+  // Find the option by value with proper typing
   const findOptionByValue = useCallback(
-    (value?: string): OptionType | undefined => {
-      if (!value) {
+    (value?: string): Option | undefined => {
+      if (!value || !selectProps.options) {
         return undefined;
       }
-      return singleSelectProps.options.find(
-        (option: OptionType) => option.value === value
+
+      // Search for option with matching value
+      // Type assertion is needed because HDS's options could be a mix of types
+      const foundOption = selectProps.options.find(
+        option => 'value' in (option as any) && (option as any).value === value
       );
+
+      return foundOption as Option | undefined;
     },
-    [singleSelectProps.options]
+    [selectProps.options]
   );
 
-  const [selectedOption, setSelectedOption] = useState<OptionType | undefined>(
+  const [selectedOption, setSelectedOption] = useState<Option | undefined>(
     currentOption || initialOption || defaultOption
   );
 
@@ -67,47 +87,49 @@ function FormikDropdown(props: Props): React.ReactElement {
     lastCheckedLanguage.current = i18n.language;
   }, [i18n.language, selectedOption, findOptionByValue, currentOption]);
 
-  const commonProps: SingleSelectProps<OptionType> = {
-    ...singleSelectProps,
-    multiselect: false,
-    value: currentOption || selectedOption,
-    // eslint-disable-next-line no-undef
-    virtualized: import.meta.env.NODE_ENV !== 'test' && virtualized,
-    getA11yStatusMessage: selectionProps =>
-      selectionProps.selectedItem
-        ? t('profileInformation.ariaSelectedOption', {
-            value: selectionProps.selectedItem.label,
-          })
-        : t('profileInformation.ariaNoSelectedItemForLabel', {
-            label: singleSelectProps.label,
-          }),
-    onChange: value => {
-      if (onChangeCallback) {
-        onChangeCallback(value);
+  const handleChange = useCallback(
+    (selectedOptions: Option[], clickedOption: Option | null) => {
+      // Use the clicked option directly
+      if (onChangeCallback && clickedOption) {
+        onChangeCallback(clickedOption);
       }
-      setSelectedOption(value);
+
+      setSelectedOption(clickedOption || undefined);
     },
+    [onChangeCallback]
+  );
+
+  // Get the current value directly from the option
+  const currentValue = (currentOption || selectedOption)?.value;
+
+  const defaultTexts: Partial<Texts> = {
+    label,
+    error,
+    language: i18n.language as SupportedLanguage,
   };
-  if (allowSearch && !toggleButtonAriaLabel) {
-    throw new Error('Combobox requires toggleButtonAriaLabel');
-  }
-  if (currentOption && allowSearch) {
-    throw new Error(
-      'Cannot enable allowSearch and use search input when option is locked from outside via currentOption'
-    );
-  }
+
+  // Use the original HDS options array to avoid type issues
+  const options = selectProps.options || [];
+
+  // For test compatibility, create an ID that matches the test expectations
+  const selectId = selectProps.id || `${props.name}-select`;
+
   return (
     <Field name={props.name}>
-      {() =>
-        allowSearch ? (
-          <Combobox
-            {...commonProps}
-            toggleButtonAriaLabel={toggleButtonAriaLabel as string}
-          />
-        ) : (
-          <Select {...commonProps} />
-        )
-      }
+      {() => (
+        <Select
+          {...selectProps}
+          className={className}
+          clearable={false}
+          id={selectId}
+          options={options}
+          value={currentValue}
+          onChange={handleChange}
+          texts={defaultTexts}
+          filter={allowSearch ? defaultFilter : undefined}
+          virtualize={import.meta.env.NODE_ENV !== 'test' && virtualized}
+        />
+      )}
     </Field>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'hds-react';
+import { Link, LinkSize } from 'hds-react';
 
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import { ServiceConnectionData } from '../../helpers/getServiceConnectionData';
@@ -100,7 +100,7 @@ function DeleteServiceConnectionModal(props: {
                     href={t('deleteProfileModal.urlToServiceList')}
                     external
                     openInNewTab
-                    size="M"
+                    size={LinkSize.Medium}
                   >
                     {''}
                   </Link>

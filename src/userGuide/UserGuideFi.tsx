@@ -72,7 +72,7 @@ function UserGuideFi(): ReactElement {
         className={styles['download-link']}
         href="/Helsinki-profiili-ohjeet.pdf"
         download="Helsinki-profiili-ohjeet.pdf"
-        iconLeft={<IconDownload />}
+        iconStart={<IconDownload />}
         useButtonStyles
       >
         Helsinki-profiilin ohje (.pdf)

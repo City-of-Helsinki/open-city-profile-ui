@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { Notification } from 'hds-react';
+import { Notification, NotificationSize } from 'hds-react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -57,7 +57,7 @@ const EditingNotifications = forwardRef<HTMLDivElement, Props>(
       >
         <Notification
           type={content.error ? 'error' : 'success'}
-          size={'small'}
+          size={NotificationSize.Small}
           label={
             content.error
               ? t('notification.genericError')

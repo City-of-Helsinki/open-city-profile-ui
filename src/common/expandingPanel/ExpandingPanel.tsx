@@ -11,6 +11,7 @@ import {
   IconAngleDown,
   IconAngleUp,
   useAccordion,
+  ButtonVariant,
 } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -98,9 +99,6 @@ function ExpandingPanel({
   };
 
   const Icon = isOpen ? IconAngleUp : IconAngleDown;
-  const buttonText = isOpen
-    ? t('expandingPanel.hideInformation')
-    : t('expandingPanel.showInformation');
   const buttonTestId = dataTestId
     ? { 'data-testid': `${dataTestId}-toggle-button` }
     : null;
@@ -119,16 +117,18 @@ function ExpandingPanel({
           <Button
             ref={titleButtonRef}
             title={title}
-            variant={'supplementary'}
-            iconRight={<Icon aria-hidden />}
+            variant={ButtonVariant.Supplementary}
+            iconEnd={<Icon aria-hidden />}
             {...buttonProps}
             {...buttonTestId}
           >
-            {showInformationText && (
-              <span className={styles['show-information']} aria-hidden>
-                {buttonText}
-              </span>
-            )}
+            {showInformationText
+              ? t(
+                  isOpen
+                    ? 'expandingPanel.hideInformation'
+                    : 'expandingPanel.showInformation'
+                )
+              : ''}
           </Button>
         </div>
       </div>
@@ -139,8 +139,8 @@ function ExpandingPanel({
         <div className={styles['close-button-container']}>
           <Button
             title={title}
-            variant={'supplementary'}
-            iconRight={<Icon aria-hidden />}
+            variant={ButtonVariant.Supplementary}
+            iconEnd={<Icon aria-hidden />}
             {...buttonProps}
             {...secondaryButtonTestId}
             onKeyDown={event => {

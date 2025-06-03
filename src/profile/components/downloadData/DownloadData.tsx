@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Notification, IconDownload } from 'hds-react';
+import {
+  Button,
+  Notification,
+  IconDownload,
+  NotificationSize,
+} from 'hds-react';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import contentStyles from '../../../common/cssHelpers/content.module.css';
@@ -61,25 +66,25 @@ function DownloadData(): React.ReactElement {
           {hasError &&
             (isInsufficientLoaResult({ errorMessage, result: undefined }) ? (
               <Notification
-                size="small"
+                size={NotificationSize.Small}
                 label={t('downloadData.extrapanelTextforLightAuthentication')}
                 type={'error'}
-                dataTestId="download-profile-insufficient-loa-error"
+                data-testid="download-profile-insufficient-loa-error"
               >
                 {t('downloadData.extrapanelTextforLightAuthentication')}
               </Notification>
             ) : (
               <Notification
-                size="small"
+                size={NotificationSize.Small}
                 label=" "
                 type={'error'}
-                dataTestId="download-profile-error"
+                data-testid="download-profile-error"
               >
                 {t('notification.defaultErrorText')}
               </Notification>
             ))}
           <Button
-            iconLeft={<IconDownload />}
+            iconStart={<IconDownload />}
             onClick={onDownloadClick}
             disabled={!canUserDoSomething}
             id="download-profile-button"

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { Button, Notification } from 'hds-react';
+import { Button, Notification, ButtonVariant } from 'hds-react';
 
 import PageLayout from '../../../common/pageLayout/PageLayout';
 import ViewProfile from '../viewProfile/ViewProfile';
@@ -62,7 +62,7 @@ function Profile(): React.ReactElement {
                 <Button
                   onClick={() => logout()}
                   data-testid={'profile-check-error-logout-button'}
-                  variant={'secondary'}
+                  variant={ButtonVariant.Secondary}
                 >
                   {t('nav.signout')}
                 </Button>

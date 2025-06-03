@@ -312,43 +312,47 @@ export const renderComponentWithMocksAndContexts = async (
   };
 
   const comboBoxSelector: ComboBoxSelector = async (selectorPrefix, value) => {
-    const inputSelector = { id: `${selectorPrefix}-input` };
-    const currentValue = await getTextOrInputValue(inputSelector);
-    if (currentValue) {
-      await setInputValue({
-        selector: inputSelector,
-        newValue: '',
-      });
-      await waitForElementAndValue({
-        selector: inputSelector,
-        value: '',
-      });
-    } else {
-      await clickElement({
-        id: `${selectorPrefix}-toggle-button`,
-      });
-    }
-    // click toggle-button to blur input and show error when value is empty
+    // First click to open the dropdown
+    await clickElement({
+      id: `${selectorPrefix}-main-button`,
+    });
+
+    // If no value is provided, just close the dropdown and return
     if (!value) {
       await clickElement({
-        id: `${selectorPrefix}-toggle-button`,
+        id: `${selectorPrefix}-main-button`,
       });
       return;
     }
-    if (currentValue === value) {
-      throw new Error(
-        'Do not try to change value to same value. Change cannot be detected reliably.'
-      );
-    }
-    // menu is auto-opened when input changes
-    // click the element with value as text
+
+    // Click the option with the given text
     await clickElement({ text: value });
-    await waitForElementAndValue({
-      selector: inputSelector,
-      value,
+
+    // Verify the selection was made by checking the button text
+    await waitFor(async () => {
+      const button = getElement({
+        id: `${selectorPrefix}-main-button`,
+      }) as HTMLElement;
+      if (!button) {
+        throw new Error(
+          `Button with id "${selectorPrefix}-main-button" not found`
+        );
+      }
+      const spanElement = button.querySelector(
+        'div[aria-hidden="true"] > span'
+      ) as HTMLElement;
+
+      if (
+        !spanElement ||
+        !spanElement.textContent ||
+        !spanElement.textContent.includes(value)
+      ) {
+        throw new Error(
+          `Button text "${spanElement?.textContent ||
+            ''}" doesn't include "${value}"`
+        );
+      }
     });
-    // wait for combobox input to have the value
-    await waitForElement({ valueSelector: value });
   };
 
   return Promise.resolve({
