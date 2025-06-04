@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import './common/test/testi18nInit';
@@ -11,6 +12,15 @@ import '@testing-library/jest-dom/vitest';
 require('../public/test-env-config');
 
 window.scrollTo = vi.fn<any>();
+
+// Mock ResizeObserver for HDS components
+class MockResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+window.ResizeObserver = MockResizeObserver;
 
 const fetchMocker = createFetchMock(vi);
 fetchMocker.enableMocks();

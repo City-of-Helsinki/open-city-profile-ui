@@ -99,9 +99,6 @@ function ExpandingPanel({
   };
 
   const Icon = isOpen ? IconAngleUp : IconAngleDown;
-  const buttonText = isOpen
-    ? t('expandingPanel.hideInformation')
-    : t('expandingPanel.showInformation');
   const buttonTestId = dataTestId
     ? { 'data-testid': `${dataTestId}-toggle-button` }
     : null;
@@ -125,11 +122,13 @@ function ExpandingPanel({
             {...buttonProps}
             {...buttonTestId}
           >
-            {showInformationText && (
-              <span className={styles['show-information']} aria-hidden>
-                {buttonText}
-              </span>
-            )}
+            {showInformationText
+              ? t(
+                  isOpen
+                    ? 'expandingPanel.hideInformation'
+                    : 'expandingPanel.showInformation'
+                )
+              : ''}
           </Button>
         </div>
       </div>
