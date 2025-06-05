@@ -1,4 +1,4 @@
-import { PhoneInput } from 'hds-react';
+import { PhoneInput, Option } from 'hds-react';
 import React from 'react';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -16,9 +16,7 @@ import { getFormFields } from '../../helpers/formProperties';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
 import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
-import FormikDropdown, {
-  OptionType,
-} from '../../../common/formikDropdown/FormikDropdown';
+import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import {
   getDefaultCountryCallingCode,
@@ -108,12 +106,12 @@ function PhoneNumberFormAndData({
     );
     const initialCountryCallingCodeOption = countryCallingCodes.find(
       option => option.value === countryCallingCode
-    ) as OptionType;
+    ) as Option;
 
     const defaultCountryCallingCodeValue = getDefaultCountryCallingCode();
     const defaultCountryCallingCodeOption = countryCallingCodes.find(
       option => option.value === defaultCountryCallingCodeValue
-    ) as OptionType;
+    ) as Option;
 
     return (
       <Formik
@@ -154,18 +152,17 @@ function PhoneNumberFormAndData({
                       defaultOption={defaultCountryCallingCodeOption}
                       disabled={!!saving}
                       invalid={hasFieldError(formikProps, 'countryCallingCode')}
-                      error={getFieldErrorMessage(
-                        formikProps,
-                        'countryCallingCode'
-                      )}
+                      error={(
+                        getFieldErrorMessage(
+                          formikProps,
+                          'countryCallingCode'
+                        ) ?? ''
+                      ).toString()}
                       aria-describedby={`${dataType}-countryCallingCode-helper`}
-                      toggleButtonAriaLabel={t(
-                        'profileInformation.ariaShowOptions'
-                      )}
-                      onChange={option => {
+                      onChange={(clickedOption: Option) => {
                         formikProps.setFieldValue(
                           'countryCallingCode',
-                          option ? option.value : ''
+                          clickedOption ? clickedOption.value : ''
                         );
                       }}
                       allowSearch

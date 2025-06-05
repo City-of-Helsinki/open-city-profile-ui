@@ -77,7 +77,7 @@ function ServiceConnections(): React.ReactElement {
         <Notification
           type={'error'}
           label={t('notification.genericError')}
-          dataTestId={'service-connections-load-error'}
+          data-testid={'service-connections-load-error'}
         >
           <p>{t('notification.defaultErrorText')}</p>
           <Button

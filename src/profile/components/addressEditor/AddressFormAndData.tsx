@@ -1,4 +1,4 @@
-import { TextInput } from 'hds-react';
+import { TextInput, Option } from 'hds-react';
 import React from 'react';
 import { Field, Formik, FormikProps, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -11,9 +11,7 @@ import { createFormFieldHelpers } from '../../helpers/formik';
 import { addressSchema } from '../../../common/schemas/schemas';
 import FormButtons from '../formButtons/FormButtons';
 import EditButtons from '../editButtons/EditButtons';
-import FormikDropdown, {
-  OptionType,
-} from '../../../common/formikDropdown/FormikDropdown';
+import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import getCountry from '../../helpers/getCountry';
@@ -120,7 +118,7 @@ function AddressFormAndData({
   const defaultCountryOption = countryOptions[0];
   const initialCountryOption = countryOptions.find(
     option => option.value === countryCode
-  ) as OptionType;
+  ) as Option;
   const formFields = getFormFields(dataType);
 
   const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<
@@ -200,15 +198,14 @@ function AddressFormAndData({
                     id={`${testId}-countryCode`}
                     options={countryOptions}
                     label={`${t(formFields.countryCode.translationKey)} *`}
-                    defaultOption={defaultCountryOption}
+                    defaultOption={defaultCountryOption as Option}
                     invalid={hasFieldError(formikProps, 'countryCode')}
-                    error={getFieldErrorMessage(formikProps, 'countryCode')}
+                    error={(
+                      getFieldErrorMessage(formikProps, 'countryCode') ?? ''
+                    ).toString()}
                     aria-describedby={`${dataType}-countryCode-helper`}
-                    toggleButtonAriaLabel={t(
-                      'profileInformation.ariaShowOptions'
-                    )}
                     allowSearch
-                    onChange={option =>
+                    onChange={(option: Option) =>
                       formikProps.setFieldValue(
                         'countryCode',
                         option ? option.value : ''

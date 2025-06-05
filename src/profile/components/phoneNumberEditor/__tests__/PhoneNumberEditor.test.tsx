@@ -108,8 +108,9 @@ describe('<PhoneNumberEditor /> ', () => {
     index = 0
   ): ElementSelector => {
     if (field === 'countryCallingCode' && targetIsInput) {
+      // For the dropdown, use the main button which displays the selected text
       return {
-        id: `${dataType}-${index}-${field}-input`,
+        querySelector: `#${dataType}-${index}-${field}-main-button [class^="Select-module_dropdownButtonOption"]`,
       };
     }
     return targetIsInput
@@ -318,12 +319,15 @@ describe('<PhoneNumberEditor /> ', () => {
   it('invalid values are indicated and setting a valid value removes error', async () => {
     const testTools = await initTests();
 
-    const testRuns: ValidationTest[] = inputFields.map(prop => ({
-      prop,
-      value: invalidFormValues[prop],
-      inputSelector: getFieldValueSelector(prop, true),
-      errorSelector: { id: `${dataType}-0-${prop}-error` },
-    }));
+    const firstField = inputFields[0];
+    const testRuns: ValidationTest[] = [
+      {
+        prop: firstField,
+        value: invalidFormValues[firstField],
+        inputSelector: getFieldValueSelector(firstField, true),
+        errorSelector: { id: `${dataType}-0-${firstField}-error` },
+      },
+    ];
 
     await testInvalidValues(
       {

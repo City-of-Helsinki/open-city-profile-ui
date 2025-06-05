@@ -63,13 +63,15 @@ describe('<AdditionalInformation /> ', () => {
 
     const selectLanguage = async (language: Language) => {
       const index = findLanguageIndex(language);
-      await clickElement({ id: `${languageSelectionIdPrefix}-toggle-button` });
-      await clickElement({ id: `${languageSelectionIdPrefix}-item-${index}` });
+      await clickElement({ id: `${languageSelectionIdPrefix}-main-button` });
+      await clickElement({
+        id: `${languageSelectionIdPrefix}-option-${index}`,
+      });
     };
 
     const getSelectedLanguageIndex = async () => {
       const buttonText = (await getTextOrInputValue({
-        id: `${languageSelectionIdPrefix}-toggle-button`,
+        id: `${languageSelectionIdPrefix}-main-button`,
       })) as string;
       return profileConstants.LANGUAGES.findIndex(language => {
         const translation = t(`LANGUAGE_OPTIONS.${language}`);

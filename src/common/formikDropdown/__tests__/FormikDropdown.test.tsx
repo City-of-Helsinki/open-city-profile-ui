@@ -336,12 +336,6 @@ describe('<FormikDropdown /> ', () => {
           throw new Error('onChange value mismatch');
         }
       });
-
-      // Additionally, ensure the Formik internal state has been updated
-      // by waiting a tick in the event loop to give Formik time to process the change.
-      // This is crucial especially for the first iteration of any loop that changes multiple options.
-      // Without this delay, the first form submit may still have the previous value.
-      await new Promise(resolve => setTimeout(resolve, 0));
     };
 
     it('Changing UI language changes the value of the input, but option.value remains the same', async () => {
