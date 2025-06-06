@@ -8,6 +8,8 @@ import {
   LoginProvider,
   LoginProviderProps,
   WithAuthentication,
+  CookieBanner,
+  CookieConsentContextProvider,
 } from 'hds-react';
 import { ApolloProvider } from '@apollo/client';
 import { UserManagerSettings } from 'oidc-client-ts';
@@ -32,6 +34,7 @@ import MatomoTracker from './common/matomo/MatomoTracker';
 import { MatomoProvider } from './common/matomo/matomo-context';
 import PasswordChangeCallback from './passwordChange/PasswordChangeCallback';
 import OtpConfigurationCallback from './otpConfiguration/OtpConfigurationCallback';
+import useCookieConsentSettings from './cookieConsents/useCookieConsentSettings';
 
 countries.registerLocale(fi);
 countries.registerLocale(en);
@@ -78,62 +81,70 @@ function App(): React.ReactElement {
     sessionPollerSettings: { pollIntervalInMs: 60000 },
   };
 
+  const cookieConsentProps = useCookieConsentSettings();
+
   return (
-    <LoginProvider {...loginProviderProps}>
-      <ApolloProvider client={graphqlClient}>
-        <ToastProvider>
-          <MatomoProvider value={matomoTracker}>
-            <ProfileProvider>
-              <Routes>
-                <Route path="/callback" element={<OidcCallback />} />
-                <Route
-                  path="/gdpr-callback"
-                  element={<GdprAuthorizationCodeManagerCallback />}
-                />
-                <Route
-                  path="/password-change-callback"
-                  element={<PasswordChangeCallback />}
-                />
-                <Route
-                  path="/otp-configuration-callback"
-                  element={<OtpConfigurationCallback />}
-                />
-                <Route
-                  path="/delete-credential-callback"
-                  element={<OtpConfigurationCallback action="delete" />}
-                />
-                <Route path="/login" element={<Login />} />
-                <Route
-                  path="/*"
-                  element={
-                    <WithAuthentication
-                      AuthorisedComponent={() => <Profile />}
-                      UnauthorisedComponent={() => <Login />}
-                    />
-                  }
-                />
+    <CookieConsentContextProvider {...cookieConsentProps}>
+      <LoginProvider {...loginProviderProps}>
+        <ApolloProvider client={graphqlClient}>
+          <ToastProvider>
+            <MatomoProvider value={matomoTracker}>
+              <ProfileProvider>
+                <CookieBanner />
+                <Routes>
+                  <Route path="/callback" element={<OidcCallback />} />
+                  <Route
+                    path="/gdpr-callback"
+                    element={<GdprAuthorizationCodeManagerCallback />}
+                  />
+                  <Route
+                    path="/password-change-callback"
+                    element={<PasswordChangeCallback />}
+                  />
+                  <Route
+                    path="/otp-configuration-callback"
+                    element={<OtpConfigurationCallback />}
+                  />
+                  <Route
+                    path="/delete-credential-callback"
+                    element={<OtpConfigurationCallback action="delete" />}
+                  />
+                  <Route path="/login" element={<Login />} />
+                  <Route
+                    path="/*"
+                    element={
+                      <WithAuthentication
+                        AuthorisedComponent={() => <Profile />}
+                        UnauthorisedComponent={() => <Login />}
+                      />
+                    }
+                  />
 
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/guide" element={<UserGuide />} />
-                <Route
-                  path="/accessibility"
-                  element={<AccessibilityStatement />}
-                />
-                <Route path="/profile-deleted" element={<ProfileDeleted />} />
-                <Route path={config.errorPagePath} element={<ErrorPage />} />
-                <Route path={config.autoSSOLoginPath} element={<LoginSSO />} />
-                <Route
-                  path={config.cookiePagePath}
-                  element={<CookieConsentPage />}
-                />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/guide" element={<UserGuide />} />
+                  <Route
+                    path="/accessibility"
+                    element={<AccessibilityStatement />}
+                  />
+                  <Route path="/profile-deleted" element={<ProfileDeleted />} />
+                  <Route path={config.errorPagePath} element={<ErrorPage />} />
+                  <Route
+                    path={config.autoSSOLoginPath}
+                    element={<LoginSSO />}
+                  />
+                  <Route
+                    path={config.cookiePagePath}
+                    element={<CookieConsentPage />}
+                  />
 
-                <Route path="*" element={<PageNotFound />} />
-              </Routes>
-            </ProfileProvider>
-          </MatomoProvider>
-        </ToastProvider>
-      </ApolloProvider>
-    </LoginProvider>
+                  <Route path="*" element={<PageNotFound />} />
+                </Routes>
+              </ProfileProvider>
+            </MatomoProvider>
+          </ToastProvider>
+        </ApolloProvider>
+      </LoginProvider>
+    </CookieConsentContextProvider>
   );
 }
 
