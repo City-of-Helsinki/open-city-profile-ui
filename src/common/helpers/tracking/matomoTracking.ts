@@ -1,11 +1,10 @@
-import { trackingCookieId } from '../../../cookieConsents/cookieContentSource';
-
 type TrackingEvent = string[];
 type Tracker = { push: (event: TrackingEvent) => void };
 
 const disableEvents = ['requireConsent', 'requireCookieConsent'];
 const enableEvents = ['setConsentGiven', 'setCookieConsentGiven'];
 const forgetEvents = ['forgetConsentGiven'];
+export const trackingCookieId = 'matomo';
 
 function getTrackingObject(): Tracker {
   if (!window._paq) {

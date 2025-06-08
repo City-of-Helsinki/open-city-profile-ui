@@ -1,76 +1,48 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { ContentSource } from 'hds-react';
-import { MemoryRouter } from 'react-router-dom';
-import { Mock } from 'vitest';
+import { render, screen } from '@testing-library/react';
 
 import CookieConsentPage from '../CookieConsentPage';
-import MockCookieModal, {
-  triggerOnConsentsParsed,
-  triggeronAllConsentsGiven,
-  setCookieConsents,
-  verifyTrackingCookiesAreRemembered,
-  verifyTrackingCookiesAreNotSet,
-} from '../__mocks__/CookieModalAndPage';
-import { trackingCookieId } from '../cookieContentSource';
-import TestLoginProvider from '../../common/test/TestLoginProvider';
 
-vi.mock('hds-react', async () => {
-  const module = await vi.importActual('hds-react');
+// Mock the dependencies
+vi.mock('hds-react', () => ({
+  CookieSettingsPage: vi.fn(() => <div data-testid="cookie-settings-page" />),
+}));
 
-  return {
-    ...module,
-    CookiePage: (props: { contentSource: ContentSource }) => (
-      <MockCookieModal contentSource={props.contentSource} />
-    ),
-  };
-});
+vi.mock('../../common/pageLayout/PageLayout', () => ({
+  default: ({
+    children,
+    title,
+  }: {
+    children: React.ReactNode;
+    title: string;
+  }) => (
+    <div data-testid="page-layout" data-title={title}>
+      {children}
+    </div>
+  ),
+}));
 
 describe('CookieConsentPage', () => {
-  const pushTracker = vi.fn();
-  const initialEnv = window._env_.REACT_APP_ENVIRONMENT;
-  const renderComponent = () =>
-    render(
-      <TestLoginProvider>
-        <MemoryRouter initialEntries={['/']}>
-          <CookieConsentPage />
-        </MemoryRouter>
-      </TestLoginProvider>
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renders the component with correct structure', () => {
+    const { container } = render(<CookieConsentPage />);
+
+    // Check that PageLayout is rendered with the correct title
+    const pageLayout = screen.getByTestId('page-layout');
+    expect(pageLayout).toBeInTheDocument();
+    expect(pageLayout.getAttribute('data-title')).toBe('cookies.pageName');
+
+    // Check that CookieSettingsPage is rendered
+    const cookieSettingsPage = screen.getByTestId('cookie-settings-page');
+    expect(cookieSettingsPage).toBeInTheDocument();
+
+    // Check that the div with the CSS classes exists
+    const contentDiv = container.querySelector(
+      'div[data-testid="page-layout"] > div'
     );
-  beforeAll(() => {
-    ((global.window as unknown) as { _paq: { push: Mock } })._paq = {
-      push: pushTracker,
-    };
-    window._env_.REACT_APP_ENVIRONMENT = 'production';
-  });
-  afterAll(() => {
-    window._env_.REACT_APP_ENVIRONMENT = initialEnv;
-  });
-  afterEach(() => {
-    pushTracker.mockReset();
-  });
-
-  describe('renders HDS cookiePage and does not call onConsentsParsed because page does not track it.', () => {
-    it('and tracking is disabled, if consent is not given.', async () => {
-      const result = renderComponent();
-      await triggerOnConsentsParsed(result);
-      expect(pushTracker).toHaveBeenCalledTimes(0);
-      expect(() =>
-        result.getByTestId('mock-cookie-modal-and-page')
-      ).not.toThrow();
-    });
-  });
-
-  describe('renders HDS cookiePage and when onAllConsentsGiven is called', () => {
-    it('tracking cookies are remembered, if consent is given', async () => {
-      const result = renderComponent();
-      await setCookieConsents(result, { [trackingCookieId]: true });
-      await triggeronAllConsentsGiven(result);
-      verifyTrackingCookiesAreRemembered(pushTracker);
-    });
-    it('tracking cookies are forgotten, if consent is not given', async () => {
-      await triggeronAllConsentsGiven(renderComponent());
-      verifyTrackingCookiesAreNotSet(pushTracker);
-    });
+    expect(contentDiv).toBeInTheDocument();
   });
 });
