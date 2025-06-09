@@ -16,6 +16,10 @@ const useCookieConsentSettings = () => {
       const hasStatisticsConsent = acceptedGroups.indexOf('statistics') > -1;
 
       if (hasStatisticsConsent) {
+        // never enable tracking in non-prod
+        if (window._env_.REACT_APP_ENVIRONMENT !== 'production') {
+          return;
+        }
         //  start tracking
         window._paq.push(['setConsentGiven']);
         window._paq.push(['setCookieConsentGiven']);
