@@ -206,7 +206,7 @@
           }
         },
         {
-          "name": "city-of-helsinki-cookie-consents",
+          "name": "city-of-helsinki-consent-version",
           "host": ".profiili.hel.fi",
           "storageType": 1,
           "description": {
