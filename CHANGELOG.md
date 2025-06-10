@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.25.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.25.0...open-city-profile-ui-v1.25.1) (2025-06-10)
+
+
+### Bug Fixes
+
+* Update swedish userguide pdf ([#452](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/452)) ([e52e1fc](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/e52e1fcb32e0c57ec1d5fa816a33c19eeb255a52))
+
 ## [1.25.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.24.0...open-city-profile-ui-v1.25.0) (2025-05-30)
 
 
