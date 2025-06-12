@@ -1,29 +1,11 @@
-import { ContentSource, CookiePage } from 'hds-react';
-import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { CookieSettingsPage } from 'hds-react';
+import React from 'react';
 import classNames from 'classnames';
 
 import PageLayout from '../common/pageLayout/PageLayout';
-import { getCookieContent } from './cookieContentSource';
 import commonContentStyles from '../common/cssHelpers/content.module.css';
-import { handleOnAllConsentsGiven } from '../common/helpers/tracking/matomoTracking';
-import getLanguageCode from '../common/helpers/getLanguageCode';
 
 function CookieConsentPage(): React.ReactElement | null {
-  const { i18n } = useTranslation();
-  const currentLanguage = getLanguageCode(
-    i18n.language
-  ) as ContentSource['currentLanguage'];
-  const { t } = i18n;
-  const contentSource: ContentSource = useMemo(
-    () => ({
-      ...getCookieContent(t),
-      currentLanguage,
-      onAllConsentsGiven: handleOnAllConsentsGiven,
-    }),
-    [currentLanguage, t]
-  );
-
   return (
     <PageLayout title={'cookies.pageName'}>
       <div
@@ -32,7 +14,7 @@ function CookieConsentPage(): React.ReactElement | null {
           commonContentStyles['common-bottom-padding'],
         ])}
       >
-        <CookiePage contentSource={contentSource} />
+        <CookieSettingsPage />
       </div>
     </PageLayout>
   );

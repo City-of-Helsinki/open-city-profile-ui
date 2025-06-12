@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Logo, logoFi, logoSv } from 'hds-react';
+import { Logo, logoFi, logoSv, LogoSize } from 'hds-react';
 
 import styles from './HelsinkiLogo.module.css';
 import getLanguageCode from '../helpers/getLanguageCode';
@@ -15,7 +15,7 @@ function HelsinkiLogo(): React.ReactElement {
     <div className={styles.logoWrapper}>
       <Logo
         src={logoSrc}
-        size="full"
+        size={LogoSize.Full}
         alt={altText}
         data-testid={'helsinki-logo'}
       />

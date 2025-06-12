@@ -1,4 +1,4 @@
-import { Link } from 'hds-react';
+import { Link, LinkSize } from 'hds-react';
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
@@ -23,7 +23,7 @@ function DeleteFailureList(
               <Link
                 key="linkToServices"
                 href={'/connected-services'}
-                size="M"
+                size={LinkSize.Medium}
                 data-testid="delete-profile-service-connections-page-link"
               >
                 {''}
@@ -54,7 +54,7 @@ function DeleteFailureList(
               href={t('deleteProfileModal.urlToServiceList')}
               external
               openInNewTab
-              size="M"
+              size={LinkSize.Medium}
             >
               {''}
             </Link>

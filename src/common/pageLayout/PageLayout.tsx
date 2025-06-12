@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { useCookies, SessionEndedHandler } from 'hds-react';
+import { SessionEndedHandler, useGroupConsent } from 'hds-react';
 
 import { MAIN_CONTENT_ID } from '../constants';
 import Header from '../header/Header';
@@ -22,7 +22,7 @@ type Props = React.PropsWithChildren<{
 function PageLayout(props: Props): React.ReactElement {
   const location = useLocation();
   const { trackPageView } = useMatomo();
-  const { getAllConsents } = useCookies();
+  const statisticsConsent = useGroupConsent('statistics');
   const { t } = useTranslation();
   const {
     focusElementSelector,
@@ -34,14 +34,14 @@ function PageLayout(props: Props): React.ReactElement {
     props.title !== 'appName' ? `${t(title)} - ${t('appName')}` : t('appName');
 
   useEffect(() => {
-    if (getAllConsents().matomo) {
+    if (statisticsConsent) {
       trackPageView({
         documentTitle: pageTitle,
         href: window.location.href,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getAllConsents, location.pathname, location.search]);
+  }, [statisticsConsent, location.pathname, location.search]);
 
   usePageLoadFocusSetter({ disableFocusing, selector: focusElementSelector });
 

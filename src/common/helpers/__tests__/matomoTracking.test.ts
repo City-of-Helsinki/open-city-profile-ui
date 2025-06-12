@@ -9,8 +9,8 @@ import {
   areTrackingCookiesEnabled,
   handleOnAllConsentsGiven,
   handleOnConsentsParsed,
+  trackingCookieId,
 } from '../../../common/helpers/tracking/matomoTracking';
-import { trackingCookieId } from '../../../cookieConsents/cookieContentSource';
 
 describe('matomoTracking', () => {
   let mockTracker: { push: Mock };

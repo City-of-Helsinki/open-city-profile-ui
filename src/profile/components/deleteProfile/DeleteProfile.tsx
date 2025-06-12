@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ApolloError, useLazyQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/react';
-import { Button, Notification, useCookies } from 'hds-react';
+import { Button, Notification, useGroupConsent } from 'hds-react';
 import { useNavigate } from 'react-router-dom';
 
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
@@ -44,7 +44,7 @@ function DeleteProfile(): React.ReactElement {
   >(notStartedLoadState);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const { getAllConsents } = useCookies();
+  const statisticsConsent = useGroupConsent('statistics');
   const { trackEvent } = useMatomo();
   const [resultError, setResultError] = useState<
     ApolloError | Error | undefined | DeleteResultLists
@@ -58,7 +58,7 @@ function DeleteProfile(): React.ReactElement {
         successful: [],
       };
       if (!failures.length) {
-        if (getAllConsents().matomo) {
+        if (statisticsConsent) {
           trackEvent({ category: 'action', action: 'Delete profile' });
         }
         navigate('/profile-deleted');
@@ -66,7 +66,7 @@ function DeleteProfile(): React.ReactElement {
         setResultError({ failures, successful });
       }
     },
-    [getAllConsents, navigate, trackEvent]
+    [navigate, statisticsConsent, trackEvent]
   );
   const onError: AuthCodeQueuesProps['onError'] = useCallback(
     (controller: QueueController) => {

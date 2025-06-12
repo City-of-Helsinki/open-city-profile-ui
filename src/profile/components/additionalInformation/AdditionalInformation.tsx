@@ -3,13 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikProps } from 'formik';
 import to from 'await-to-js';
 import classNames from 'classnames';
+import { Option } from 'hds-react';
 
 import profileConstants from '../../constants/profileConstants';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
-import FormikDropdown, {
-  OptionType,
-} from '../../../common/formikDropdown/FormikDropdown';
+import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
 import { useProfileDataEditor } from '../../hooks/useProfileDataEditor';
 import {
   additionalInformationType,
@@ -39,12 +38,12 @@ function AdditionalInformation(): React.ReactElement | null {
   const editData = editDataList[0];
   const { value, saving } = editData;
   const { language } = value as AdditionalInformationValue;
-  const languageOptions: OptionType[] = profileConstants.LANGUAGES.map(
+  const languageOptions: Option[] = profileConstants.LANGUAGES.map(
     languageOption => ({
       value: languageOption,
       label: t(`LANGUAGE_OPTIONS.${languageOption}`),
     })
-  );
+  ) as Option[];
   const currentOption = languageOptions.find(
     option => option.value === language
   );
@@ -96,7 +95,7 @@ function AdditionalInformation(): React.ReactElement | null {
                   defaultOption={defaultOption}
                   currentOption={currentOption}
                   disabled={!!saving}
-                  onChange={option => {
+                  onChange={(option: Option) => {
                     const languageValue = option.value as FormValues['language'];
                     formikProps.setFieldValue('language', languageValue);
                     updateLanguage(languageValue);

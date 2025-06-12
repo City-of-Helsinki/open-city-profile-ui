@@ -6,6 +6,7 @@ import {
   Logo,
   logoFiDark,
   logoSvDark,
+  LogoSize,
 } from 'hds-react';
 import { Link } from 'react-router-dom';
 
@@ -99,7 +100,7 @@ const Footer = () => {
         logo={
           <Logo
             src={logoSrcFromLanguage}
-            size="medium"
+            size={LogoSize.Medium}
             alt={t('cityOfHelsinki')}
           />
         }

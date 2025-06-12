@@ -4,8 +4,9 @@ import { Formik, FormikProps, Form } from 'formik';
 import { waitFor } from '@testing-library/react';
 import to from 'await-to-js';
 import { Mock } from 'vitest';
+import { Option } from 'hds-react';
 
-import FormikDropdown, { OptionType } from '../FormikDropdown';
+import FormikDropdown from '../FormikDropdown';
 import i18nModule from '../../../i18n/i18nInit';
 import {
   getDefaultCountryCallingCode,
@@ -13,7 +14,6 @@ import {
 } from '../../../i18n/countryCallingCodes.utils';
 import getLanguageCode from '../../helpers/getLanguageCode';
 import {
-  getElementAttribute,
   renderComponentWithMocksAndContexts,
   TestTools,
 } from '../../test/testingLibraryTools';
@@ -32,16 +32,16 @@ describe('<FormikDropdown /> ', () => {
   const formikId = 'formik-dropdown';
   const onChangeListener = vi.fn();
   const onSubmitListener = vi.fn();
-  let injectNewCurrentOption: (newCurrentOption: OptionType) => void;
-  let optionsInComponent: OptionType[];
+  let injectNewCurrentOption: (newCurrentOption: Option) => void;
+  let optionsInComponent: Option[];
   const svLanguageCode = 'sv';
   const fiLanguageCode = 'fi';
 
   const selectors = {
     toggleButton: {
-      id: `${formikId}-toggle-button`,
+      id: `${formikId}-main-button`,
     },
-    input: { id: `${formikId}-input` },
+    input: { id: `${formikId}-input-element` },
     submitButton: { id: `submit-button` },
     languageSwitchers: {
       fi: {
@@ -56,8 +56,8 @@ describe('<FormikDropdown /> ', () => {
     },
   };
 
-  const findOptionByValue = (options: OptionType[], value: string) =>
-    options.find(option => option.value === value) as OptionType;
+  const findOptionByValue = (options: Option[], value: string) =>
+    options.find(option => option.value === value) as Option;
 
   const renderAndReturnTestTools = async (
     testScenarioProps: RenderProps
@@ -70,12 +70,11 @@ describe('<FormikDropdown /> ', () => {
         initialValue,
         currentValue,
         allowSearch,
-        toggleButtonAriaLabel,
       } = formikWrapperProps;
       const { i18n } = useTranslation();
       const options = getMemoizedCountryCallingCodes(
         getLanguageCode(i18n.language)
-      );
+      ) as Option[];
       optionsInComponent = options;
       const defaultOption = findOptionByValue(options, defaultValue);
       const initialOption = initialValue
@@ -87,7 +86,7 @@ describe('<FormikDropdown /> ', () => {
       const changeLanguage = (code: string) => {
         i18n.changeLanguage(code);
       };
-      const [currentOption, reRender] = useState<OptionType | undefined>(
+      const [currentOption, reRender] = useState<Option | undefined>(
         currentOptionFromValue
       );
       injectNewCurrentOption = newCurrentOption => {
@@ -118,12 +117,7 @@ describe('<FormikDropdown /> ', () => {
                   label={'label'}
                   allowSearch={allowSearch !== false}
                   virtualized
-                  toggleButtonAriaLabel={
-                    toggleButtonAriaLabel === undefined
-                      ? 'toggleButtonAriaLabel'
-                      : toggleButtonAriaLabel
-                  }
-                  onChange={option => {
+                  onChange={(option: Option) => {
                     const value = option ? option.value : '';
                     formikProps.setFieldValue('value', value);
                     onChangeListener(value);
@@ -162,14 +156,16 @@ describe('<FormikDropdown /> ', () => {
     expectedLabel?: string
   ) =>
     waitFor(async () => {
-      const inputValue = await getElementAttribute(
-        () => getElement(selectors.input),
-        'value'
-      );
+      const button = getElement(selectors.toggleButton) as HTMLElement;
+      const spanElement = button.querySelector(
+        'div[aria-hidden="true"] > span'
+      ) as HTMLElement;
+      const buttonText = spanElement.innerHTML;
+
       const testValue =
         expectedLabel ||
         findOptionByValue(optionsInComponent, expectedValue).label;
-      expect(inputValue).toBe(testValue);
+      expect(buttonText).toBe(testValue);
     });
 
   const checkToggleButtonText = async (
@@ -178,9 +174,10 @@ describe('<FormikDropdown /> ', () => {
   ) =>
     waitFor(async () => {
       const button = getElement(selectors.toggleButton) as HTMLElement;
-      expect((button.querySelector('span') as HTMLElement).innerHTML).toBe(
-        expectedText
-      );
+      const spanElement = button.querySelector(
+        'div[aria-hidden="true"] > span'
+      ) as HTMLElement;
+      expect(spanElement.innerHTML).toBe(expectedText);
     });
 
   const getLastMockCallArgs = (func: Mock) =>
@@ -327,7 +324,7 @@ describe('<FormikDropdown /> ', () => {
 
     const changeDropdownOption = async (
       testTools: TestTools,
-      option: OptionType
+      option: Option
     ) => {
       await testTools.comboBoxSelector(formikId, option.label);
       await checkInputValue(testTools.getElement, option.value, option.label);
@@ -339,12 +336,6 @@ describe('<FormikDropdown /> ', () => {
           throw new Error('onChange value mismatch');
         }
       });
-
-      // Additionally, ensure the Formik internal state has been updated
-      // by waiting a tick in the event loop to give Formik time to process the change.
-      // This is crucial especially for the first iteration of any loop that changes multiple options.
-      // Without this delay, the first form submit may still have the previous value.
-      await new Promise(resolve => setTimeout(resolve, 0));
     };
 
     it('Changing UI language changes the value of the input, but option.value remains the same', async () => {

@@ -60,13 +60,11 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
             class="edit-buttons-container"
           >
             <button
-              class="Button-module_button__1msFE button_hds-button__2A0je Button-module_primary__2LfKB button_hds-button--primary__2NVvO"
+              class="Button-module_button__1msFE Button-module_primary__2LfKB"
               data-testid="change-password-button"
               type="button"
             >
-              <span
-                class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
-              >
+              <span>
                 profileInformation.changePassword
               </span>
             </button>
@@ -86,16 +84,16 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
               mfa.title
             </h3>
             <span
-              class="StatusLabel-module_statusLabel__3R2J2 status-label_hds-status-label__1L8YI StatusLabel-module_statusLabelWithIcon__5lKVk status-label_hds-status-label--with-icon__3bHf6"
+              class="StatusLabel-module_statusLabel__1iSa6 StatusLabel-module_statusLabelWithIcon__3nZbg"
             >
               <span
                 aria-hidden="true"
-                class="StatusLabel-module_statusLabelIcon__2SAou status-label_hds-status-label-icon__3K58a"
+                class="StatusLabel-module_statusLabelIcon__2wChn"
               >
                 <svg
                   aria-hidden="true"
                   aria-label="alert-circle"
-                  class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
+                  class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik"
                   role="img"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
@@ -119,13 +117,11 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
             class="edit-buttons-container"
           >
             <button
-              class="Button-module_button__1msFE button_hds-button__2A0je Button-module_primary__2LfKB button_hds-button--primary__2NVvO"
+              class="Button-module_button__1msFE Button-module_primary__2LfKB"
               data-testid="enable-totp-button"
               type="button"
             >
-              <span
-                class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
-              >
+              <span>
                 mfa.enable
               </span>
             </button>
@@ -174,13 +170,11 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
             class="edit-buttons-container"
           >
             <button
-              class="Button-module_button__1msFE button_hds-button__2A0je Button-module_primary__2LfKB button_hds-button--primary__2NVvO"
+              class="Button-module_button__1msFE Button-module_primary__2LfKB"
               data-testid="change-password-button"
               type="button"
             >
-              <span
-                class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
-              >
+              <span>
                 profileInformation.changePassword
               </span>
             </button>
@@ -200,16 +194,16 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
               mfa.title
             </h3>
             <span
-              class="StatusLabel-module_statusLabel__3R2J2 status-label_hds-status-label__1L8YI StatusLabel-module_success__2BfdX status-label_hds-status-label--success__3jiST StatusLabel-module_statusLabelWithIcon__5lKVk status-label_hds-status-label--with-icon__3bHf6"
+              class="StatusLabel-module_statusLabel__1iSa6 StatusLabel-module_success__1mEVZ StatusLabel-module_statusLabelWithIcon__3nZbg"
             >
               <span
                 aria-hidden="true"
-                class="StatusLabel-module_statusLabelIcon__2SAou status-label_hds-status-label-icon__3K58a"
+                class="StatusLabel-module_statusLabelIcon__2wChn"
               >
                 <svg
                   aria-hidden="true"
                   aria-label="check-circle"
-                  class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
+                  class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik"
                   role="img"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
@@ -235,18 +229,18 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
             class="edit-buttons-container"
           >
             <button
-              class="Button-module_button__1msFE button_hds-button__2A0je Button-module_secondary__1nABp button_hds-button--secondary__1NOWS"
+              class="Button-module_button__1msFE Button-module_secondary__1nABp"
               data-testid="disable-totp-button"
               type="button"
             >
               <div
                 aria-hidden="true"
-                class="Button-module_icon__O-h7R button_hds-icon__17j8Z"
+                class="Button-module_icon__O-h7R"
               >
                 <svg
                   aria-hidden="true"
                   aria-label="cross-circle"
-                  class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
+                  class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik"
                   role="img"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
@@ -259,9 +253,7 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
                   />
                 </svg>
               </div>
-              <span
-                class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
-              >
+              <span>
                 mfa.disable
               </span>
             </button>
@@ -310,13 +302,11 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
             class="edit-buttons-container"
           >
             <button
-              class="Button-module_button__1msFE button_hds-button__2A0je Button-module_primary__2LfKB button_hds-button--primary__2NVvO"
+              class="Button-module_button__1msFE Button-module_primary__2LfKB"
               data-testid="change-password-button"
               type="button"
             >
-              <span
-                class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
-              >
+              <span>
                 profileInformation.changePassword
               </span>
             </button>
@@ -336,16 +326,16 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
               mfa.title
             </h3>
             <span
-              class="StatusLabel-module_statusLabel__3R2J2 status-label_hds-status-label__1L8YI StatusLabel-module_statusLabelWithIcon__5lKVk status-label_hds-status-label--with-icon__3bHf6"
+              class="StatusLabel-module_statusLabel__1iSa6 StatusLabel-module_statusLabelWithIcon__3nZbg"
             >
               <span
                 aria-hidden="true"
-                class="StatusLabel-module_statusLabelIcon__2SAou status-label_hds-status-label-icon__3K58a"
+                class="StatusLabel-module_statusLabelIcon__2wChn"
               >
                 <svg
                   aria-hidden="true"
                   aria-label="alert-circle"
-                  class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_s__2WGWe icon_hds-icon--size-s__2Lkik"
+                  class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik"
                   role="img"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
@@ -369,13 +359,11 @@ exports[`<AuthenticationProviderInformation />  > renders correctly according to
             class="edit-buttons-container"
           >
             <button
-              class="Button-module_button__1msFE button_hds-button__2A0je Button-module_primary__2LfKB button_hds-button--primary__2NVvO"
+              class="Button-module_button__1msFE Button-module_primary__2LfKB"
               data-testid="enable-totp-button"
               type="button"
             >
-              <span
-                class="Button-module_label__a4np1 button_hds-button__label__2EQa-"
-              >
+              <span>
                 mfa.enable
               </span>
             </button>

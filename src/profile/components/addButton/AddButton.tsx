@@ -1,4 +1,4 @@
-import { Button, IconPlusCircle } from 'hds-react';
+import { Button, ButtonVariant, IconPlusCircle } from 'hds-react';
 import React from 'react';
 import { t } from 'i18next';
 
@@ -26,11 +26,11 @@ function AddButton({
   }
   return (
     <Button
-      iconLeft={<IconPlusCircle />}
+      iconStart={<IconPlusCircle />}
       onClick={async () => {
         actionHandler('add');
       }}
-      variant="secondary"
+      variant={ButtonVariant.Secondary}
       disabled={isAddButtonDisabled}
       className={commonFormStyles['responsive-button']}
       id={addButtonId}

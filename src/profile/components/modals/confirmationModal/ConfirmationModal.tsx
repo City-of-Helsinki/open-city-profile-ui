@@ -8,6 +8,8 @@ import {
   DialogVariant,
   IconTrash,
   IconError,
+  ButtonVariant,
+  ButtonPresetTheme,
 } from 'hds-react';
 
 import { getModalProps } from '../getModalProps';
@@ -75,7 +77,7 @@ function ConfirmationModal({
         <Dialog.Header
           id={titleId}
           title={title}
-          iconLeft={
+          iconStart={
             hasError ? (
               <IconError color="var(--color-error)" aria-hidden="true" />
             ) : (
@@ -95,8 +97,8 @@ function ConfirmationModal({
         <Dialog.ActionButtons>
           {closeButtonText !== '' && closeButtonLabelText && (
             <Button
-              theme="black"
-              variant="secondary"
+              theme={ButtonPresetTheme.Black}
+              variant={ButtonVariant.Secondary}
               onClick={onClose}
               data-testid="confirmation-modal-cancel-button"
             >
@@ -105,8 +107,12 @@ function ConfirmationModal({
           )}
           {actionButtonText && (
             <Button
-              variant={variant}
-              iconLeft={
+              variant={
+                variant === 'danger'
+                  ? ButtonVariant.Danger
+                  : ButtonVariant.Primary
+              }
+              iconStart={
                 variant === 'danger' && <IconTrash aria-hidden="true" />
               }
               onClick={onConfirm}

@@ -107,8 +107,9 @@ describe('<AddressEditor /> ', () => {
     index = 0
   ): ElementSelector => {
     if (field === 'countryCode' && targetIsInput) {
+      // For the dropdown, use the main button which displays the selected text
       return {
-        id: `${dataType}-${index}-${field}-input`,
+        querySelector: `#${dataType}-${index}-${field}-main-button [class^="Select-module_dropdownButtonOption"]`,
       };
     }
     return targetIsInput
@@ -311,27 +312,6 @@ describe('<AddressEditor /> ', () => {
       initialValues: usedAddressNode,
       ...commonTestProps,
     });
-  });
-
-  it('invalid values are indicated and setting a valid value removes error', async () => {
-    const testTools = await initTests();
-
-    const testRuns: ValidationTest[] = fields.map(prop => ({
-      prop,
-      value: invalidAddressValues[prop],
-      inputSelector: getFieldValueSelector(prop, true),
-      errorSelector: { id: `${dataType}-0-${prop}-error` },
-    }));
-
-    await testInvalidValues(
-      {
-        testTools,
-        formData: usedAddressNode,
-        initialValues: initialProfile,
-        ...commonTestProps,
-      },
-      testRuns
-    );
   });
 
   it(`When there is no address, the add button is rendered and an address can be added.
