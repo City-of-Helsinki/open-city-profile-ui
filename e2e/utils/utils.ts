@@ -122,3 +122,14 @@ export const createProfile = async (page: Page, mailbox: Mailbox) => {
   await page.locator('input[value="Luo profiili"]').click();
   await expect(page.getByLabel(PROFILE_NAME)).toBeVisible();
 };
+
+// Accept cookies. Makes it easier to focus on the actual test cases
+export const acceptCookies = async (page: Page) => {
+  await page.goto(PROFILE_URL);
+  const title = page.getByRole('heading', {
+    name: 'Profiili käyttää evästeitä',
+  });
+  await expect(title).toBeVisible();
+  await page.getByRole('button', { name: 'Hyväksy kaikki evästeet' }).click();
+  await expect(title).toBeHidden();
+};
