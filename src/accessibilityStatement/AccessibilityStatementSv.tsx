@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
+import { Link } from 'hds-react';
 
-import { Link } from '../common/copyOfHDSLink/Link';
 import FocusableH1 from '../common/focusableH1/FocusableH1';
 
 function AccessibilityStatementSv(): React.ReactElement {

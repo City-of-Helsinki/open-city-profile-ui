@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import classNames from 'classnames';
+import { Link, LinkSize } from 'hds-react';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
@@ -12,7 +13,6 @@ import {
   PermanentForeignAddress,
   PermanentAddress,
 } from '../../../graphql/typings';
-import { Link } from '../../../common/copyOfHDSLink/Link';
 
 type CommonAddress = {
   streetAddress: PermanentAddress['streetAddress'];
