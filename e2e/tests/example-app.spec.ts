@@ -4,6 +4,7 @@ import {
   clickServiceConnectionsLink,
   loginToExampleApp,
   loginToProfileWithSuomiFi,
+  acceptCookies,
 } from '../utils/utils';
 
 const TEST_SSN = '241298-999N';
@@ -54,6 +55,7 @@ test.describe('Example app tests', () => {
 
 test.describe('Profile tests', () => {
   test.beforeEach(async ({ page }) => {
+    await acceptCookies(page);
     await loginToProfileWithSuomiFi(page, TEST_SSN);
   });
 

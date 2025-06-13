@@ -8,6 +8,7 @@ import {
   clickProfileLoginButton,
   clickKeycloakLoginButton,
   clickServiceConnectionsLink,
+  acceptCookies,
 } from '../utils/utils';
 import {
   LINKED_EVENTS_URL,
@@ -85,6 +86,7 @@ test.skip('2 - Connect profile to Linked Events', async ({ page }) => {
 });
 
 test('3 - Delete profile', async ({ page }) => {
+  await acceptCookies(page);
   await loginToProfileWithEmail(page, mailbox.emailAddress);
   await page.locator('#delete-profile-button').click();
   await expect(
