@@ -15,8 +15,15 @@ import { ServiceConnectionsQueryVariables } from '../../../../graphql/typings';
 import mockWindowLocation from '../../../../common/test/mockWindowLocation';
 import { Action } from '../../../../common/actionQueue/actionQueue';
 import config from '../../../../config';
-import { ActionMockData, initMockQueue, isActionTriggered } from '../../../../common/actionQueue/mock.util';
-import { AuthCodeQueuesProps, authCodeQueuesStorageKey } from '../../../../gdprApi/useAuthCodeQueues';
+import {
+  ActionMockData,
+  initMockQueue,
+  isActionTriggered,
+} from '../../../../common/actionQueue/mock.util';
+import {
+  AuthCodeQueuesProps,
+  authCodeQueuesStorageKey,
+} from '../../../../gdprApi/useAuthCodeQueues';
 import {
   getScenarioWhereDeleteProfileCanStartAndProceedToRedirection,
   getScenarioWhereDeleteProfileIsResumable,
@@ -51,7 +58,10 @@ describe('<DeleteProfile /> ', () => {
         : { profileDataWithServiceConnections: serviceConnections };
     };
 
-    return renderComponentWithMocksAndContexts(responseProvider, <ComponentRendererWithForceUpdate />);
+    return renderComponentWithMocksAndContexts(
+      responseProvider,
+      <ComponentRendererWithForceUpdate />
+    );
   };
 
   const loadIndicator: ElementSelector = {
@@ -108,13 +118,15 @@ describe('<DeleteProfile /> ', () => {
     initMockQueue(props, authCodeQueueProps, authCodeQueuesStorageKey);
   };
 
-  const initQueueAndLocationForResume = (...args: Parameters<typeof getScenarioWhereDeleteProfileIsResumable>) => {
+  const initQueueAndLocationForResume = (
+    ...args: Parameters<typeof getScenarioWhereDeleteProfileIsResumable>
+  ) => {
     initTestQueue(getScenarioWhereDeleteProfileIsResumable(...args));
     mockedWindowControls.setPath(config.deletePath);
     mockedWindowControls.setSearch(
       createNextActionParams({
         type: defaultRedirectionCatcherActionType,
-      } as Action),
+      } as Action)
     );
   };
 
@@ -134,7 +146,9 @@ describe('<DeleteProfile /> ', () => {
   it(`Submitting starts to load serviceConnections.
       When loaded, a confirmation dialog is shown and after confirmation
       queue is started.`, async () => {
-    initTestQueue(getScenarioWhereDeleteProfileCanStartAndProceedToRedirection());
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
 
     const testTools = await initTests();
     await proceedUIToDeletionConfimed(testTools);
@@ -148,7 +162,9 @@ describe('<DeleteProfile /> ', () => {
   });
 
   it(`UI won't get stuck on "loading" -state when re-rendered.`, async () => {
-    initTestQueue(getScenarioWhereDeleteProfileCanStartAndProceedToRedirection());
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
 
     const { clickElement, getElement, waitForElement } = await initTests();
     await clickElement(submitButton);
@@ -181,7 +197,9 @@ describe('<DeleteProfile /> ', () => {
 
   it(`When service connection load fails, an error notification is shown with a reload button.
           After successful reload, the queue is started.`, async () => {
-    initTestQueue(getScenarioWhereDeleteProfileCanStartAndProceedToRedirection());
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
 
     const { clickElement, waitForElement } = await initTests(0);
     await clickElement(submitButton);
@@ -194,7 +212,9 @@ describe('<DeleteProfile /> ', () => {
     expect(isActionTriggered(getServiceConnectionsAction.type)).toBeTruthy();
   });
   it(`When deleting starts, an indicator is shown and browser is redirected.`, async () => {
-    initTestQueue(getScenarioWhereDeleteProfileCanStartAndProceedToRedirection());
+    initTestQueue(
+      getScenarioWhereDeleteProfileCanStartAndProceedToRedirection()
+    );
 
     const testTools = await initTests();
     const { waitForElement } = testTools;
@@ -205,7 +225,9 @@ describe('<DeleteProfile /> ', () => {
     });
     await waitForElement(deletingProfileSelector);
     await waitFor(() => {
-      expect(isActionTriggered(keycloakAuthCodeRedirectionAction.type)).toBeTruthy();
+      expect(
+        isActionTriggered(keycloakAuthCodeRedirectionAction.type)
+      ).toBeTruthy();
     });
   });
   it(`When deletion fails with unsuccessful and successful service deletions,

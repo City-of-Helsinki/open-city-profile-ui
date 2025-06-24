@@ -39,4 +39,7 @@ export type ToastHideAction = {
   toastId: string;
 };
 
-export type ToastActions = ToastPushAction | ToastDeleteAction | ToastHideAction;
+export type ToastActions =
+  | ToastPushAction
+  | ToastDeleteAction
+  | ToastHideAction;

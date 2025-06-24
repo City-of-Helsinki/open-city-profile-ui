@@ -44,11 +44,15 @@ export function disableTrackingCookies() {
 // At the moment all tracking is disabled / enabled at the same time.
 // Tracking with cookies and without cookies are bundled in to one tracking type.
 // That's why only single cookie consent is checked here.
-export function areTrackingCookiesEnabled(cookies: Record<string, boolean>): boolean {
+export function areTrackingCookiesEnabled(
+  cookies: Record<string, boolean>
+): boolean {
   return cookies[trackingCookieId] === true;
 }
 
-export function handleOnAllConsentsGiven(cookies: Record<string, boolean>): void {
+export function handleOnAllConsentsGiven(
+  cookies: Record<string, boolean>
+): void {
   if (cookies[trackingCookieId]) {
     enableTrackingCookies();
   }

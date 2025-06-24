@@ -15,13 +15,20 @@ import {
 } from '../../../../common/test/testingLibraryTools';
 import { EmailNode, ProfileData } from '../../../../graphql/typings';
 import EmailEditor from '../EmailEditor';
-import { MockedResponse, ResponseProvider } from '../../../../common/test/MockApolloClientProvider';
+import {
+  MockedResponse,
+  ResponseProvider,
+} from '../../../../common/test/MockApolloClientProvider';
 import { EditDataType, EmailValue } from '../../../helpers/editData';
 import i18n from '../../../../common/test/testi18nInit';
 import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
 import getEmailsFromNode from '../../../helpers/getEmailsFromNode';
 import { mockProfileCreator } from '../../../../common/test/userMocking';
-import { AMRStatic, ProfileState, tunnistusSuomifiAMR } from '../../../../auth/useProfile';
+import {
+  AMRStatic,
+  ProfileState,
+  tunnistusSuomifiAMR,
+} from '../../../../auth/useProfile';
 import * as useProfile from '../../../../auth/useProfile';
 import {
   CommonTestSuite,
@@ -56,12 +63,13 @@ describe('<EmailEditor /> ', () => {
   const responses: MockedResponse[] = [];
   const initialProfile = getMyProfile().myProfile as ProfileData;
   const renderTestSuite = () => {
-    const responseProvider: ResponseProvider = () => responses.shift() as MockedResponse;
+    const responseProvider: ResponseProvider = () =>
+      responses.shift() as MockedResponse;
     return renderComponentWithMocksAndContexts(
       responseProvider,
       <RenderChildrenWhenDataIsComplete>
         <EmailEditor />
-      </RenderChildrenWhenDataIsComplete>,
+      </RenderChildrenWhenDataIsComplete>
     );
   };
   const dataType: EditDataType = 'emails';
@@ -88,10 +96,15 @@ describe('<EmailEditor /> ', () => {
     cleanComponentMocks();
   });
 
-  const verifyEmailValue = async (testTools: TestTools, source: DataSource, targetIsInput = false) => {
+  const verifyEmailValue = async (
+    testTools: TestTools,
+    source: DataSource,
+    targetIsInput = false
+  ) => {
     const { getTextOrInputValue } = testTools;
     const { email } = source as Partial<EmailValue | EmailNode>;
-    const getSelector = (): ElementSelector => (targetIsInput ? inputSelector : valueSelector);
+    const getSelector = (): ElementSelector =>
+      targetIsInput ? inputSelector : valueSelector;
     await expect(getTextOrInputValue(getSelector())).resolves.toBe(email);
   };
 
@@ -104,7 +117,9 @@ describe('<EmailEditor /> ', () => {
     });
   };
 
-  const initTests = async (profileData: ProfileData = initialProfile): Promise<TestTools> => {
+  const initTests = async (
+    profileData: ProfileData = initialProfile
+  ): Promise<TestTools> => {
     responses.push({ profileData });
     const testTools = await renderTestSuite();
     await testTools.fetch();
@@ -117,7 +132,9 @@ describe('<EmailEditor /> ', () => {
   };
 
   const getUpdatedProfile = (newValue: EmailValue) =>
-    cloneProfileAndProvideManipulationFunctions(initialProfile).add(dataType, newValue).getProfile();
+    cloneProfileAndProvideManipulationFunctions(initialProfile)
+      .add(dataType, newValue)
+      .getProfile();
 
   const commonTestProps: Exclude<CommonTestSuite, 'sentDataPicker'> = {
     selectors: getElementSelectors(dataType),
@@ -131,7 +148,9 @@ describe('<EmailEditor /> ', () => {
     noNodes: true,
     dataType,
   });
-  const profileWithEmail = cloneProfileAndProvideManipulationFunctions(profileWithoutEmails)
+  const profileWithEmail = cloneProfileAndProvideManipulationFunctions(
+    profileWithoutEmails
+  )
     .add(dataType, { ...validEmailValue, id: '666', primary: true })
     .getProfile();
 
@@ -151,7 +170,8 @@ describe('<EmailEditor /> ', () => {
       testTools,
       formData: validEmailValue,
       assumedResponse: getUpdatedProfile(validEmailValue),
-      sentDataPicker: (variables) => (variables.input.profile.updateEmails as DataSource[])[0],
+      sentDataPicker: (variables) =>
+        (variables.input.profile.updateEmails as DataSource[])[0],
       ...commonTestProps,
     });
     // "verify email" notification should not be rendered with current amr
@@ -165,7 +185,7 @@ describe('<EmailEditor /> ', () => {
           profile: mockProfileCreator({
             amr: [tunnistusSuomifiAMR],
           }),
-        }) as unknown as ProfileState,
+        }) as unknown as ProfileState
     );
 
     const { getAmr } = useOidcClient();
@@ -182,7 +202,8 @@ describe('<EmailEditor /> ', () => {
           value: t('profileInformation.verifyEmailText'),
         },
       },
-      sentDataPicker: (variables) => (variables.input.profile.updateEmails as DataSource[])[0],
+      sentDataPicker: (variables) =>
+        (variables.input.profile.updateEmails as DataSource[])[0],
       ...commonTestProps,
     });
   });
@@ -226,7 +247,7 @@ describe('<EmailEditor /> ', () => {
         formData: validEmailValue,
         ...commonTestProps,
       },
-      testRuns,
+      testRuns
     );
   });
 
@@ -238,7 +259,8 @@ describe('<EmailEditor /> ', () => {
       testTools,
       formData: validEmailValue,
       assumedResponse: profileWithEmail,
-      sentDataPicker: (variables) => (variables.input.profile.addEmails as unknown as DataSource[])[0],
+      sentDataPicker: (variables) =>
+        (variables.input.profile.addEmails as unknown as DataSource[])[0],
     });
   });
 

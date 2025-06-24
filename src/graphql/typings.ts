@@ -37,7 +37,8 @@ export type ProfileData = MyProfileQueryFragment;
 export type UpdateProfileRoot = UpdateMyProfileMutation;
 export type UpdateProfileData = UpdateMyProfileMutationFragment;
 
-export type VerifiedPersonalInformation = MyProfileQueryVerifiedPersonalInformationFragment;
+export type VerifiedPersonalInformation =
+  MyProfileQueryVerifiedPersonalInformationFragment;
 
 export type Addresses = MyProfileQueryAddressesFragment;
 export type AddressEdge = MyProfileQueryAddressesEdgesFragment;
@@ -72,22 +73,33 @@ export type MutablePhones = Mutable<Phones> & {
 
 export type ProfileInput = ProfileInputInterface;
 
-export type PermanentForeignAddress = MyProfileQueryVerifiedPersonalInformationPermanentForeignAddressFragment;
-export type PermanentAddress = MyProfileQueryVerifiedPersonalInformationPermanentAddressFragment;
+export type PermanentForeignAddress =
+  MyProfileQueryVerifiedPersonalInformationPermanentForeignAddressFragment;
+export type PermanentAddress =
+  MyProfileQueryVerifiedPersonalInformationPermanentAddressFragment;
 
 export type ServiceConnectionsRoot = ServiceConnectionsQuery;
 export type ServiceConnectionsNode = ServiceConnectionsQueryEdgesNodeFragment;
 export type Service = ServiceConnectionsQueryEdgesNodeServiceFragment;
 export type ServiceConnectionsQueryVariables = ServiceConnectionsQueryVars;
 // eslint-disable-next-line max-len
-export type ServiceAllowedFieldsNode = ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesNodeFragment;
+export type ServiceAllowedFieldsNode =
+  ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesNodeFragment;
 // eslint-disable-next-line max-len
-export type ServiceAllowedFieldsEdge = ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesFragment;
+export type ServiceAllowedFieldsEdge =
+  ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesFragment;
 export type GdprServiceConnectionsRoot = GdprServiceConnectionsQuery;
 // eslint-disable-next-line max-len
 export type GdprServiceConnectionService =
   GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment;
 
-export { PhoneType, EmailType, AddressType, Language, TranslationLanguage, LoginMethodType } from './generatedTypes';
+export {
+  PhoneType,
+  EmailType,
+  AddressType,
+  Language,
+  TranslationLanguage,
+  LoginMethodType,
+} from './generatedTypes';
 
 export type AnyObject<T = unknown> = Record<string, T>;

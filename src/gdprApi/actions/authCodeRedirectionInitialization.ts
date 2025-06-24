@@ -1,23 +1,42 @@
 import { v4 as uuidv4 } from 'uuid';
 import to from 'await-to-js';
 
-import { Action, ActionExecutor, ActionProps, QueueController } from '../../common/actionQueue/actionQueue';
+import {
+  Action,
+  ActionExecutor,
+  ActionProps,
+  QueueController,
+} from '../../common/actionQueue/actionQueue';
 import { getLoadKeycloakConfigResult } from './loadKeycloakConfig';
-import { AuthorizationUrlParams, getActionResultAndErrorMessage, isAuthCodeActionNeeded } from './utils';
+import {
+  AuthorizationUrlParams,
+  getActionResultAndErrorMessage,
+  isAuthCodeActionNeeded,
+} from './utils';
 
 type RedirectionProps = Pick<AuthorizationUrlParams, 'state' | 'oidcUri'>;
 
-const keycloakRedirectionInitializationType = 'keycloakRedirectionInitializationType';
+const keycloakRedirectionInitializationType =
+  'keycloakRedirectionInitializationType';
 
-export const getAuthCodeRedirectionInitializationResult = (action: Action, queueController: QueueController) =>
-  getActionResultAndErrorMessage<RedirectionProps>(keycloakRedirectionInitializationType, queueController).result;
+export const getAuthCodeRedirectionInitializationResult = (
+  action: Action,
+  queueController: QueueController
+) =>
+  getActionResultAndErrorMessage<RedirectionProps>(
+    keycloakRedirectionInitializationType,
+    queueController
+  ).result;
 
-const authCodeRedirectionInitializationExecutor: ActionExecutor = async (action, controller) => {
+const authCodeRedirectionInitializationExecutor: ActionExecutor = async (
+  action,
+  controller
+) => {
   if (!isAuthCodeActionNeeded(action, controller)) {
     return Promise.resolve({ state: '', oidcUri: '' });
   }
   const [error, oidcUri] = await to(
-    Promise.resolve(getLoadKeycloakConfigResult(controller)), // tunnistus
+    Promise.resolve(getLoadKeycloakConfigResult(controller)) // tunnistus
   );
 
   if (error || !oidcUri) {

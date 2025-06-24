@@ -11,16 +11,20 @@ const trimSlashes = (path: string) => path.replace(/^\/|\/$/g, '');
 function matchUrls(
   urlToFind: string,
   currentUrl?: string,
-  { exactPaths = true }: { exactPaths?: boolean } = {},
+  { exactPaths = true }: { exactPaths?: boolean } = {}
 ): boolean {
-  const current = new URL(currentUrl ? addOriginIfMissing(currentUrl) : window.location.href);
+  const current = new URL(
+    currentUrl ? addOriginIfMissing(currentUrl) : window.location.href
+  );
   const expectedMatch = new URL(addOriginIfMissing(urlToFind));
   if (current.origin !== expectedMatch.origin) {
     return false;
   }
   if (current.pathname !== expectedMatch.pathname) {
     if (!exactPaths) {
-      if (trimSlashes(current.pathname) !== trimSlashes(expectedMatch.pathname)) {
+      if (
+        trimSlashes(current.pathname) !== trimSlashes(expectedMatch.pathname)
+      ) {
         return false;
       }
     } else {
@@ -30,7 +34,9 @@ function matchUrls(
   if (expectedMatch.search) {
     const expectedParams = new URLSearchParams(expectedMatch.search);
     const currentParams = new URLSearchParams(current.search);
-    const hasMismatch = Array.from(expectedParams).some(([param, value]) => value !== currentParams.get(param));
+    const hasMismatch = Array.from(expectedParams).some(
+      ([param, value]) => value !== currentParams.get(param)
+    );
     if (hasMismatch) {
       return false;
     }

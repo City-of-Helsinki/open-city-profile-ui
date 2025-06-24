@@ -4,7 +4,9 @@ import { Trans, useTranslation } from 'react-i18next';
 
 import { DeleteResultLists } from '../../helpers/parseDeleteProfileResult';
 
-function DeleteFailureList(props: DeleteResultLists): React.ReactElement | null {
+function DeleteFailureList(
+  props: DeleteResultLists
+): React.ReactElement | null {
   const { successful, failures } = props;
   const { t } = useTranslation();
   if (!failures.length) {
@@ -15,20 +17,20 @@ function DeleteFailureList(props: DeleteResultLists): React.ReactElement | null 
       {!!successful.length && (
         <>
           <Trans
-            i18nKey='deleteProfileModal.deleteServiceFromPage'
+            i18nKey="deleteProfileModal.deleteServiceFromPage"
             values={{ linkToServicesText: t('nav.services') }}
             components={[
               <Link
-                key='linkToServices'
+                key="linkToServices"
                 href={'/connected-services'}
                 size={LinkSize.Medium}
-                data-testid='delete-profile-service-connections-page-link'
+                data-testid="delete-profile-service-connections-page-link"
               >
                 {''}
               </Link>,
             ]}
           />
-          <ul data-testid='delete-profile-success-list'>
+          <ul data-testid="delete-profile-success-list">
             {successful.map((serviceTitle) => (
               <li key={serviceTitle}>{serviceTitle}</li>
             ))}
@@ -38,17 +40,22 @@ function DeleteFailureList(props: DeleteResultLists): React.ReactElement | null 
 
       <p>{t('deleteProfileModal.unableToDeleteServices')}</p>
 
-      <ul data-testid='delete-profile-failure-list'>
+      <ul data-testid="delete-profile-failure-list">
         {failures.map((serviceTitle) => (
           <li key={serviceTitle}>{serviceTitle}</li>
         ))}
       </ul>
 
       <Trans
-        i18nKey='deleteProfileModal.contactServiceToDelete'
+        i18nKey="deleteProfileModal.contactServiceToDelete"
         components={{
           linkToExternalServiceList: (
-            <Link href={t('deleteProfileModal.urlToServiceList')} external openInNewTab size={LinkSize.Medium}>
+            <Link
+              href={t('deleteProfileModal.urlToServiceList')}
+              external
+              openInNewTab
+              size={LinkSize.Medium}
+            >
               {''}
             </Link>
           ),

@@ -48,12 +48,18 @@ function canStartLoading(currentStatus?: Status): boolean {
   return !isLoading(currentStatus) && !isLoadComplete(currentStatus);
 }
 
-function resolveChangedStatus(currentStatus: Status, profileContext: ProfileContextData): Status | undefined {
+function resolveChangedStatus(
+  currentStatus: Status,
+  profileContext: ProfileContextData
+): Status | undefined {
   if (isLoadComplete(currentStatus)) {
     return undefined;
   }
 
-  if (profileContext.error && !parseGraphQLError(profileContext.error).isAllowedError) {
+  if (
+    profileContext.error &&
+    !parseGraphQLError(profileContext.error).isAllowedError
+  ) {
     return STATUS_FAILED;
   }
 
@@ -96,7 +102,7 @@ export function useProfileLoadTracker(): useProfileLoaderHookReturnType {
     hasExistingProfile: () => {
       if (!isLoadComplete(statusRef.current)) {
         throw new Error(
-          'hasExistingProfile cannot be used before profile load is complete. Check it with isProfileLoadComplete()',
+          'hasExistingProfile cannot be used before profile load is complete. Check it with isProfileLoadComplete()'
         );
       }
       return !!profileContext.getProfile();

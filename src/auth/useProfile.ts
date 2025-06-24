@@ -4,7 +4,13 @@ import { useOidcClient } from 'hds-react';
 
 export const tunnistusSuomifiAMR = 'suomi_fi';
 
-export type AMRStatic = 'github' | 'google' | 'facebook' | 'yletunnus' | 'helsinkiAccount' | 'tunnistusSuomifi';
+export type AMRStatic =
+  | 'github'
+  | 'google'
+  | 'facebook'
+  | 'yletunnus'
+  | 'helsinkiAccount'
+  | 'tunnistusSuomifi';
 
 export interface Profile {
   amr: NonNullable<User['profile']['amr']>;

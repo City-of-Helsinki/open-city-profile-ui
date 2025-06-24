@@ -7,9 +7,15 @@ import { MatomoTrackerInstance } from '../types';
 function useMatomo(): MatomoTrackerInstance {
   const instance = useContext(MatomoContext);
 
-  const trackPageView = useCallback((params?: TrackPageViewParams) => instance?.trackPageView(params), [instance]);
+  const trackPageView = useCallback(
+    (params?: TrackPageViewParams) => instance?.trackPageView(params),
+    [instance]
+  );
 
-  const trackEvent = useCallback((params: TrackEventParams) => instance?.trackEvent(params), [instance]);
+  const trackEvent = useCallback(
+    (params: TrackEventParams) => instance?.trackEvent(params),
+    [instance]
+  );
 
   return { trackPageView, trackEvent };
 }

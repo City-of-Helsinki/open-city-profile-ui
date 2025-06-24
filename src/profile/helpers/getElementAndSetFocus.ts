@@ -1,4 +1,7 @@
-export default function getElementAndSetFocus(selector: string, setFocusableAttributeIfNeeded = true): boolean {
+export default function getElementAndSetFocus(
+  selector: string,
+  setFocusableAttributeIfNeeded = true
+): boolean {
   const element = document.querySelector(selector) as HTMLElement;
   if (element) {
     if (document.activeElement === element) {

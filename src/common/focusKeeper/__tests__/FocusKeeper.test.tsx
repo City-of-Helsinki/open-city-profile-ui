@@ -20,18 +20,21 @@ describe('<focusTrapper /> ', () => {
     };
     const result = render(
       <div>
-        <FocusKeeper targetId={'target'} className='focus-keeper'>
-          <input type='text' id='target' onFocus={focusListener} />
-          <input type='text' id='second' />
+        <FocusKeeper targetId={'target'} className="focus-keeper">
+          <input type="text" id="target" onFocus={focusListener} />
+          <input type="text" id="second" />
         </FocusKeeper>
-      </div>,
+      </div>
     );
     // FocusKeeper has two elements that trap focus and redirect focus to target element.
     // one trapper before and one after the content to trap
     const getTrapperElement = (pos: 'before' | 'after') => {
       const focusKeeperSelector = 'div.focus-keeper';
-      const trapperSelector = pos === 'before' ? '> div:first-child' : '> div:last-child';
-      return result.container.querySelector(`${focusKeeperSelector} ${trapperSelector}`) as HTMLElement;
+      const trapperSelector =
+        pos === 'before' ? '> div:first-child' : '> div:last-child';
+      return result.container.querySelector(
+        `${focusKeeperSelector} ${trapperSelector}`
+      ) as HTMLElement;
     };
     const focusTrapperBeforeContent = getTrapperElement('before');
     const focusTrapperAfterContent = getTrapperElement('after');

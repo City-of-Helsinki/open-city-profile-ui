@@ -13,7 +13,12 @@ function HelsinkiLogo(): React.ReactElement {
 
   return (
     <div className={styles.logoWrapper}>
-      <Logo src={logoSrc} size={LogoSize.Full} alt={altText} data-testid={'helsinki-logo'} />
+      <Logo
+        src={logoSrc}
+        size={LogoSize.Full}
+        alt={altText}
+        data-testid={'helsinki-logo'}
+      />
     </div>
   );
 }

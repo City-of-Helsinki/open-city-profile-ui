@@ -9,7 +9,10 @@ import {
 } from '../../../common/test/MockApolloClientProvider';
 import { getMyProfile } from '../../../common/test/myProfileMocking';
 import { ProfileRoot } from '../../../graphql/typings';
-import { useProfileLoadTracker, useProfileLoaderHookReturnType } from '../useProfileLoadTracker';
+import {
+  useProfileLoadTracker,
+  useProfileLoaderHookReturnType,
+} from '../useProfileLoadTracker';
 import { exposeHook } from '../../../common/test/exposeHooksForTesting';
 import * as profileQueryModule from '../useProfileQuery';
 
@@ -23,13 +26,19 @@ type RenderResult = {
   waitForDataChange?: () => Promise<void>;
 };
 
-type UseProfileQueryReturnType = ReturnType<(typeof profileQueryModule)['useProfileQuery']>;
+type UseProfileQueryReturnType = ReturnType<
+  (typeof profileQueryModule)['useProfileQuery']
+>;
 
 describe('useProfileLoader.ts ', () => {
   let mockUseProfileQueryResult: UseProfileQueryReturnType;
   const successfulProfileLoadData = { data: getMyProfile() };
-  const fetchProfileMock = vi.fn().mockImplementation(async () => Promise.resolve());
-  const refetchProfileMock = vi.fn().mockImplementation(async () => Promise.resolve(successfulProfileLoadData));
+  const fetchProfileMock = vi
+    .fn()
+    .mockImplementation(async () => Promise.resolve());
+  const refetchProfileMock = vi
+    .fn()
+    .mockImplementation(async () => Promise.resolve(successfulProfileLoadData));
 
   const timeoutInMs = 60;
   const advanceTimers = () => vi.advanceTimersByTime(timeoutInMs + 1);
@@ -46,7 +55,9 @@ describe('useProfileLoader.ts ', () => {
   });
 
   // Update mockUseProfileQueryResult returned from useProfile hook (mocked)
-  const updateMockUseProfileQueryResult = (props: Partial<UseProfileQueryReturnType>) => {
+  const updateMockUseProfileQueryResult = (
+    props: Partial<UseProfileQueryReturnType>
+  ) => {
     mockUseProfileQueryResult = {
       ...mockUseProfileQueryResult,
       ...props,
@@ -58,7 +69,7 @@ describe('useProfileLoader.ts ', () => {
     const renderHookResult = exposeHook<useProfileLoaderHookReturnType>(
       () => ({}) as MockedResponse,
       () => useProfileLoadTracker(),
-      false,
+      false
     );
     return Promise.resolve(renderHookResult);
   };
@@ -67,7 +78,13 @@ describe('useProfileLoader.ts ', () => {
   // and not skip the loading phase.
   // First { loading: true } is set
   // and data / error after that
-  const mockProfileLoadProcess = ({ data, error }: { data?: ProfileRoot; error?: ApolloError }) => {
+  const mockProfileLoadProcess = ({
+    data,
+    error,
+  }: {
+    data?: ProfileRoot;
+    error?: ApolloError;
+  }) => {
     const loadingPromise = new Promise((resolve) => {
       setTimeout(() => {
         updateMockUseProfileQueryResult({ loading: true });
@@ -114,7 +131,9 @@ describe('useProfileLoader.ts ', () => {
     addAllowedGraphQLError: boolean;
   }) => {
     const renderHookResult = await initTests();
-    const result = profileExist ? { data: loadSuccess ? getMyProfile() : undefined } : { data: { myProfile: null } };
+    const result = profileExist
+      ? { data: loadSuccess ? getMyProfile() : undefined }
+      : { data: { myProfile: null } };
     const errorObj = addAllowedGraphQLError
       ? createApolloErrorWithAllowedPermissionError()
       : ({} as unknown as ApolloError);
@@ -129,7 +148,9 @@ describe('useProfileLoader.ts ', () => {
   beforeEach(() => {
     mockUseProfileQueryResult = createUseProfileQueryResultMock();
 
-    vi.spyOn(profileQueryModule, 'useProfileQuery').mockImplementation(() => mockUseProfileQueryResult);
+    vi.spyOn(profileQueryModule, 'useProfileQuery').mockImplementation(
+      () => mockUseProfileQueryResult
+    );
 
     vi.useFakeTimers();
   });

@@ -6,7 +6,11 @@ import { createActionQueueRunner } from '../../../common/actionQueue/actionQueue
 import { Action, getOption } from '../../../common/actionQueue/actionQueue';
 import { keycloakAuthCodeParserAction } from '../authCodeParser';
 import { getMockCalls } from '../../../common/test/mockHelper';
-import { createDeleteProfileAction, deleteProfileType, getDeleteProfileResultOrError } from '../deleteProfile';
+import {
+  createDeleteProfileAction,
+  deleteProfileType,
+  getDeleteProfileResultOrError,
+} from '../deleteProfile';
 import { getDeleteMyProfileMutationResult } from '../../../common/test/getDeleteMyProfileMutationResult';
 import { DeleteResultLists } from '../../../profile/helpers/parseDeleteProfileResult';
 
@@ -27,7 +31,9 @@ describe('deleteProfile.ts', () => {
     fetchMock.mockIf(/.*\/graphql\/.*$/, async (req: Request) => {
       const payload = await req.json();
       queryTracker(payload);
-      const result = getDeleteMyProfileMutationResult(returnFailed ? ['error'] : undefined);
+      const result = getDeleteMyProfileMutationResult(
+        returnFailed ? ['error'] : undefined
+      );
       const response = {
         data: returnNoData ? undefined : result,
       };
@@ -45,7 +51,10 @@ describe('deleteProfile.ts', () => {
       'https://api.hel.fi/auth/helsinkiprofile': 'foo.bar.baz',
     });
 
-    const queue = [keycloakAuthCodeParserAction, createDeleteProfileAction(language)];
+    const queue = [
+      keycloakAuthCodeParserAction,
+      createDeleteProfileAction(language),
+    ];
     const runner = createActionQueueRunner(queue);
 
     runner.updateActionAndQueue(keycloakAuthCodeParserAction.type, {
@@ -77,7 +86,10 @@ describe('deleteProfile.ts', () => {
     it('Runs the mutation and returns two arrays', async () => {
       const { runner, getAction } = initTests();
       const action = getAction();
-      const [, result] = (await to(action.executor(action, runner))) as [unknown, DeleteResultLists];
+      const [, result] = (await to(action.executor(action, runner))) as [
+        unknown,
+        DeleteResultLists,
+      ];
       expect(result.successful).toHaveLength(2);
       expect(result.failures).toHaveLength(0);
     });
@@ -96,19 +108,26 @@ describe('deleteProfile.ts', () => {
     it('When result has failed services, promise is not rejected', async () => {
       const { runner, getAction } = initTests({ returnFailed: true });
       const action = getAction();
-      const [, result] = (await to(action.executor(action, runner))) as [unknown, DeleteResultLists];
+      const [, result] = (await to(action.executor(action, runner))) as [
+        unknown,
+        DeleteResultLists,
+      ];
       expect(result.successful).toHaveLength(1);
       expect(result.failures).toHaveLength(1);
     });
     it('Errors are handled', async () => {
       const { runner, getAction } = initTests({ returnError: true });
-      const [error, result] = await to(getAction().executor(getAction(), runner));
+      const [error, result] = await to(
+        getAction().executor(getAction(), runner)
+      );
       expect(result).toBeUndefined();
       expect(!!error).toBeTruthy();
     });
     it('Empty result rejects too', async () => {
       const { runner, getAction } = initTests({ returnNoData: true });
-      const [error, result] = await to(getAction().executor(getAction(), runner));
+      const [error, result] = await to(
+        getAction().executor(getAction(), runner)
+      );
       expect(result).toBeUndefined();
       expect(!!error).toBeTruthy();
     });
@@ -122,7 +141,8 @@ describe('deleteProfile.ts', () => {
       await waitFor(() => {
         expect(runner.isFinished()).toBeTruthy();
       });
-      const resultArray = getDeleteProfileResultOrError(runner).result as DeleteResultLists;
+      const resultArray = getDeleteProfileResultOrError(runner)
+        .result as DeleteResultLists;
       expect(resultArray.successful).toHaveLength(2);
       expect(resultArray.failures).toHaveLength(0);
     });

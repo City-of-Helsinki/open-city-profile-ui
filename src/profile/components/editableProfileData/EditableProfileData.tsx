@@ -18,11 +18,19 @@ function EditableProfileData() {
   const userIsVerified = !!useVerifiedPersonalInformation();
   const { t } = useTranslation();
   const heading = t('profileInformation.contactInformation');
-  const regionProps = userIsVerified ? { role: 'region', 'aria-label': heading } : {};
+  const regionProps = userIsVerified
+    ? { role: 'region', 'aria-label': heading }
+    : {};
   return (
     <div {...regionProps}>
       {userIsVerified && (
-        <span aria-hidden className={classNames(commonFormStyles['visually-h2'], commonFormStyles['bottom-border'])}>
+        <span
+          aria-hidden
+          className={classNames(
+            commonFormStyles['visually-h2'],
+            commonFormStyles['bottom-border']
+          )}
+        >
           {heading}
         </span>
       )}

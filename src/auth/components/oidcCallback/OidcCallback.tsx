@@ -1,7 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { LoadingSpinner, LoginCallbackHandler, OidcClientError } from 'hds-react';
+import {
+  LoadingSpinner,
+  LoginCallbackHandler,
+  OidcClientError,
+} from 'hds-react';
 import * as Sentry from '@sentry/react';
 
 import { useErrorPageRedirect } from '../../../profile/hooks/useErrorPageRedirect';

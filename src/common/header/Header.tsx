@@ -51,7 +51,9 @@ function Header(): React.ReactElement {
     }
   };
 
-  const availableLanguages = i18n.options.resources ? Object.keys(i18n.options.resources) : [];
+  const availableLanguages = i18n.options.resources
+    ? Object.keys(i18n.options.resources)
+    : [];
 
   const languageLabel = (langCode: string): string => {
     switch (langCode) {
@@ -66,11 +68,13 @@ function Header(): React.ReactElement {
     }
   };
 
-  const languageOptions: LanguageOption[] = availableLanguages.map((i18nLang) => ({
-    value: i18nLang,
-    label: languageLabel(i18nLang),
-    isPrimary: false,
-  }));
+  const languageOptions: LanguageOption[] = availableLanguages.map(
+    (i18nLang) => ({
+      value: i18nLang,
+      label: languageLabel(i18nLang),
+      isPrimary: false,
+    })
+  );
 
   const lang = i18n.resolvedLanguage;
   const logoSrcFromLanguage = lang === 'sv' ? logoSv : logoFi;
@@ -88,14 +92,20 @@ function Header(): React.ReactElement {
   };
 
   // List all languages as primary languages
-  const sortLanguageOptions: LanguageSelectorProps['sortLanguageOptions'] = (options: LanguageOption[]) => [
-    options,
-    [],
-  ];
+  const sortLanguageOptions: LanguageSelectorProps['sortLanguageOptions'] = (
+    options: LanguageOption[]
+  ) => [options, []];
 
   return (
-    <HDSHeader onDidChangeLanguage={changeLanguageAction} languages={languageOptions} defaultLanguage={lang}>
-      <HDSHeader.SkipLink skipTo={`#${MAIN_CONTENT_ID}`} label={t('skipToContent')} />
+    <HDSHeader
+      onDidChangeLanguage={changeLanguageAction}
+      languages={languageOptions}
+      defaultLanguage={lang}
+    >
+      <HDSHeader.SkipLink
+        skipTo={`#${MAIN_CONTENT_ID}`}
+        label={t('skipToContent')}
+      />
       <HDSHeader.ActionBar
         title={t('appName')}
         titleAriaLabel={t('nav.titleAriaLabel')}
@@ -106,7 +116,7 @@ function Header(): React.ReactElement {
         <HDSHeader.LanguageSelector sortLanguageOptions={sortLanguageOptions} />
         <HDSHeader.LoginButton
           label={t('nav.signin')}
-          id='action-bar-login-action'
+          id="action-bar-login-action"
           errorLabel={t('nav.loginFailed')}
           errorText={t('authentication.genericError.message')}
           errorCloseAriaLabel={t('nav.closeLoginError')}
@@ -114,13 +124,17 @@ function Header(): React.ReactElement {
           fixedRightPosition
           redirectWithLanguage
         />
-        <HDSHeader.UserMenuButton id='user-menu' fixedRightPosition data-testid='user-menu-button'>
+        <HDSHeader.UserMenuButton
+          id="user-menu"
+          fixedRightPosition
+          data-testid="user-menu-button"
+        >
           <HDSHeader.LogoutSubmenuButton
             label={t('nav.signout')}
             errorLabel={t('nav.logoutFailed')}
             errorText={t('authentication.genericError.message')}
             errorCloseAriaLabel={t('nav.closeLoginError')}
-            id='logout-button'
+            id="logout-button"
             loggingOutText={t('nav.loggingOut')}
             redirectWithLanguage
           />

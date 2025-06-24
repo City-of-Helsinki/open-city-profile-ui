@@ -34,7 +34,7 @@ export const thirtySecondsInMs = 30 * 1000;
 
 export function getActionResultAndErrorMessage<T = JSONStringifyableResult>(
   actionType: ActionType,
-  controller: QueueController,
+  controller: QueueController
 ): { result: T | undefined; errorMessage: string | undefined } {
   const action = controller.getByType(actionType);
   if (!action) {
@@ -50,7 +50,10 @@ export function getActionResultAndErrorMessage<T = JSONStringifyableResult>(
   };
 }
 
-export function isAuthCodeActionNeeded(action: Action, controller: QueueController): boolean {
+export function isAuthCodeActionNeeded(
+  action: Action,
+  controller: QueueController
+): boolean {
   return isKeycloakAuthorisationCodeNeeded(controller);
 }
 
@@ -60,7 +63,9 @@ export function delayRedirection(uri: string) {
   }, 60);
 }
 
-export function makeAuthorizationUrl(urlParams: AuthorizationUrlParams): string {
+export function makeAuthorizationUrl(
+  urlParams: AuthorizationUrlParams
+): string {
   const { oidcUri, clientId, scopes, redirectUri, state } = urlParams;
   const scope = scopes.join(' ');
   const params = new URLSearchParams();
@@ -78,7 +83,9 @@ export function isGdprCallbackUrl(): boolean {
   return window.location.pathname === config.gdprCallbackPath;
 }
 
-export function createInternalRedirectionRequest(path: string): RedirectionRequest {
+export function createInternalRedirectionRequest(
+  path: string
+): RedirectionRequest {
   return {
     isRedirectionRequest: true,
     path,
@@ -89,7 +96,11 @@ function createInternalRedirectionRequestForError(path: string): string {
   return JSON.stringify(createInternalRedirectionRequest(path));
 }
 
-export function createFailedActionParams(action: Action | ActionProps, message = '', append = false) {
+export function createFailedActionParams(
+  action: Action | ActionProps,
+  message = '',
+  append = false
+) {
   const params = new URLSearchParams(append ? window.location.search : '');
   params.append('error', action.type);
   if (message) {
@@ -98,19 +109,29 @@ export function createFailedActionParams(action: Action | ActionProps, message =
   return params.toString();
 }
 
-export function createPagePathWithFailedActionParams(path: string, action?: Action | ActionProps, errorText?: string) {
+export function createPagePathWithFailedActionParams(
+  path: string,
+  action?: Action | ActionProps,
+  errorText?: string
+) {
   if (!action) {
     return path;
   }
   return `${path}?${createFailedActionParams(action, errorText)}`;
 }
 
-export function parseRequestPath(source: AnyObject | undefined): string | undefined {
-  return typeof source === 'object' && source.isRedirectionRequest ? (source.path as string) : undefined;
+export function parseRequestPath(
+  source: AnyObject | undefined
+): string | undefined {
+  return typeof source === 'object' && source.isRedirectionRequest
+    ? (source.path as string)
+    : undefined;
 }
 
 export function getInternalRequestPathFromResult(action: Action) {
-  const result = action.complete ? (action.result as RedirectionRequest) : undefined;
+  const result = action.complete
+    ? (action.result as RedirectionRequest)
+    : undefined;
   return parseRequestPath(result);
 }
 
@@ -127,17 +148,20 @@ export function getInternalRequestPathFromError(action: Action) {
 }
 
 export function getInternalRequestPathFromAction(action: Action) {
-  return getInternalRequestPathFromResult(action) || getInternalRequestPathFromError(action);
+  return (
+    getInternalRequestPathFromResult(action) ||
+    getInternalRequestPathFromError(action)
+  );
 }
 
 export function rejectExecutorWithRedirection(
   path: string,
   action: Action | ActionProps,
   errorText?: string,
-  timeout = 0,
+  timeout = 0
 ): ActionExecutorPromise {
   const errorMessage = createInternalRedirectionRequestForError(
-    createPagePathWithFailedActionParams(path, action, errorText),
+    createPagePathWithFailedActionParams(path, action, errorText)
   );
   const error = new Error(errorMessage);
   if (timeout) {
@@ -153,14 +177,14 @@ export function rejectExecutorWithStartPageRedirection(
   controller: QueueController,
   action: Action | ActionProps,
   errorText?: string,
-  timeout = 0,
+  timeout = 0
 ): ActionExecutorPromise {
   const path = getStartPagePathFromQueue(controller);
   if (!path) {
     throw new Error('The queue has not start page path action');
   }
   const errorMessage = createInternalRedirectionRequestForError(
-    createPagePathWithFailedActionParams(path, action, errorText),
+    createPagePathWithFailedActionParams(path, action, errorText)
   );
   const error = new Error(errorMessage);
   if (timeout) {
@@ -186,7 +210,10 @@ export function parseAuthorizationCallbackUrl(): {
   };
 }
 
-export function createNextActionParams(action: Action | ActionProps, append = false) {
+export function createNextActionParams(
+  action: Action | ActionProps,
+  append = false
+) {
   const params = new URLSearchParams(append ? window.location.search : '');
   params.append('next', action.type);
   return params.toString();
@@ -197,8 +224,13 @@ export function getNextActionFromUrl() {
   return params.get('next') || '';
 }
 
-export function resolveExecutorWithRedirection(path: string, nextAction: Action | ActionProps): ActionExecutorPromise {
-  const result = createInternalRedirectionRequest(`${path}?${createNextActionParams(nextAction)}`);
+export function resolveExecutorWithRedirection(
+  path: string,
+  nextAction: Action | ActionProps
+): ActionExecutorPromise {
+  const result = createInternalRedirectionRequest(
+    `${path}?${createNextActionParams(nextAction)}`
+  );
   return Promise.resolve(result);
 }
 
@@ -240,8 +272,12 @@ export function useInternalRedirect(controller: QueueController): {
         }
       }
       const completedActions = controller.getComplete();
-      const lastCompleteAction = completedActions.length ? completedActions[completedActions.length - 1] : undefined;
-      const path = lastCompleteAction ? getInternalRequestPathFromAction(lastCompleteAction) : undefined;
+      const lastCompleteAction = completedActions.length
+        ? completedActions[completedActions.length - 1]
+        : undefined;
+      const path = lastCompleteAction
+        ? getInternalRequestPathFromAction(lastCompleteAction)
+        : undefined;
       if (!path) {
         return false;
       }
@@ -258,6 +294,7 @@ export function useInternalRedirect(controller: QueueController): {
 
 export function didFailedActionRedirect(action: Action) {
   return (
-    hasMatchingDataProperty(action, 'redirectsOnError', true) || getInternalRequestPathFromError(action) !== undefined
+    hasMatchingDataProperty(action, 'redirectsOnError', true) ||
+    getInternalRequestPathFromError(action) !== undefined
   );
 }

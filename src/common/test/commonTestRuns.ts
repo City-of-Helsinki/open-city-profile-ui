@@ -50,7 +50,11 @@ export type ValidationTest = {
 };
 
 export type CommonTestSuite = {
-  valueVerifier?: (testTools: TestTools, source: DataSource, targetIsInput?: boolean) => Promise<void>;
+  valueVerifier?: (
+    testTools: TestTools,
+    source: DataSource,
+    targetIsInput?: boolean
+  ) => Promise<void>;
   valueSetter?: (testTools: TestTools, source: DataSource) => Promise<void>;
   responses?: MockedResponse[];
   notificationMessages?: NotificationMessages;
@@ -93,7 +97,9 @@ export function getElementSelectors(dataType: EditDataType): Selectors {
   };
 }
 
-export function getNotificationMessages(t: TFunction): TestSuite['notificationMessages'] {
+export function getNotificationMessages(
+  t: TFunction
+): TestSuite['notificationMessages'] {
   return {
     error: t('notification.saveError'),
     success: t('notification.saveSuccess'),
@@ -103,7 +109,13 @@ export function getNotificationMessages(t: TFunction): TestSuite['notificationMe
   };
 }
 
-async function clickElementBySelector({ testTools, selector }: { testTools: TestTools; selector: ElementSelector }) {
+async function clickElementBySelector({
+  testTools,
+  selector,
+}: {
+  testTools: TestTools;
+  selector: ElementSelector;
+}) {
   const { clickElement } = testTools;
   await clickElement(selector);
 }
@@ -145,7 +157,10 @@ function checkElement({
   }
 }
 
-export function checkAddButton({ testTools, selectors }: TestSuite, shouldBeFound: boolean) {
+export function checkAddButton(
+  { testTools, selectors }: TestSuite,
+  shouldBeFound: boolean
+) {
   return checkElement({
     testTools,
     selector: selectors.addButton,
@@ -153,7 +168,10 @@ export function checkAddButton({ testTools, selectors }: TestSuite, shouldBeFoun
   });
 }
 
-function checkNoDataText({ testTools, selectors }: TestSuite, shouldBeFound: boolean) {
+function checkNoDataText(
+  { testTools, selectors }: TestSuite,
+  shouldBeFound: boolean
+) {
   return checkElement({
     testTools,
     selector: selectors.noDataText,
@@ -161,7 +179,13 @@ function checkNoDataText({ testTools, selectors }: TestSuite, shouldBeFound: boo
   });
 }
 
-async function verifyFocusedElement({ testTools, selector }: { testTools: TestTools; selector: ElementSelector }) {
+async function verifyFocusedElement({
+  testTools,
+  selector,
+}: {
+  testTools: TestTools;
+  selector: ElementSelector;
+}) {
   const { getElement } = testTools;
   await waitForElementFocus(() => getElement(selector));
 }
@@ -177,7 +201,7 @@ async function verifyAddButtonHasFocus({ testTools, selectors }: TestSuite) {
 async function waitForInvalidElement(
   { testTools, selectors }: TestSuite,
   test: ValidationTest,
-  testForErrors: boolean,
+  testForErrors: boolean
 ) {
   const { errorSelector, inputSelector } = test;
   const { getElement } = testTools;
@@ -185,7 +209,11 @@ async function waitForInvalidElement(
   const errorElementGetter = () => getElement(errorSelector);
   const errorListElementGetter = () => getElement(selectors.errorList);
 
-  await waitForElementAttributeValue(elementGetter, 'aria-invalid', testForErrors);
+  await waitForElementAttributeValue(
+    elementGetter,
+    'aria-invalid',
+    testForErrors
+  );
   // getElement throws if element is not found
   if (testForErrors) {
     expect(errorElementGetter).not.toThrow();
@@ -198,7 +226,7 @@ async function waitForInvalidElement(
 
 async function submitForm(
   { testTools, selectors, submitProps, notificationMessages }: TestSuite,
-  options: SubmitOptions,
+  options: SubmitOptions
 ) {
   const { submit } = testTools;
   const props = { ...submitProps };
@@ -208,10 +236,17 @@ async function submitForm(
       value: String(notificationMessages?.saving),
     };
   }
-  if ((options.checkSaveSuccess || options.checkSaveError) && !submitProps?.waitForAfterSaveNotification) {
+  if (
+    (options.checkSaveSuccess || options.checkSaveError) &&
+    !submitProps?.waitForAfterSaveNotification
+  ) {
     props.waitForAfterSaveNotification = {
       selector: selectors.notification,
-      value: String(options.checkSaveSuccess ? notificationMessages?.success : notificationMessages?.error),
+      value: String(
+        options.checkSaveSuccess
+          ? notificationMessages?.success
+          : notificationMessages?.error
+      ),
     };
   }
   if (options.checkSaveError) {
@@ -220,7 +255,10 @@ async function submitForm(
   return submit(props);
 }
 
-async function submitWithoutDefaultChecks(suite: TestSuite, options: SubmitOptions) {
+async function submitWithoutDefaultChecks(
+  suite: TestSuite,
+  options: SubmitOptions
+) {
   const { testTools, notificationMessages, selectors } = suite;
   const { waitForElementAndValue } = testTools;
   await clickSubmitButton(suite);
@@ -233,7 +271,11 @@ async function submitWithoutDefaultChecks(suite: TestSuite, options: SubmitOptio
   if (options.checkSaveSuccess || options.checkSaveError) {
     await waitForElementAndValue({
       selector: selectors.notification,
-      value: String(options.checkSaveSuccess ? notificationMessages?.success : notificationMessages?.error),
+      value: String(
+        options.checkSaveSuccess
+          ? notificationMessages?.success
+          : notificationMessages?.error
+      ),
     });
   }
 }
@@ -241,12 +283,16 @@ async function submitWithoutDefaultChecks(suite: TestSuite, options: SubmitOptio
 async function verifyValues(
   { testTools, valueVerifier, formData }: TestSuite,
   targetIsInput: boolean,
-  values?: DataSource,
+  values?: DataSource
 ) {
   if (!valueVerifier) {
     throw new Error('valueVerifier not found');
   }
-  await valueVerifier(testTools, values || (formData as DataSource), targetIsInput);
+  await valueVerifier(
+    testTools,
+    values || (formData as DataSource),
+    targetIsInput
+  );
 }
 
 async function verifyValuesAreReset(tools: TestSuite) {
@@ -264,7 +310,10 @@ async function confirmRemoval(tools: TestSuite) {
   await clickElement(selectors.confirmRemovalButton);
 }
 
-async function checkNotification(tools: TestSuite, messageKey: keyof NotificationMessages) {
+async function checkNotification(
+  tools: TestSuite,
+  messageKey: keyof NotificationMessages
+) {
   const { testTools, selectors, notificationMessages } = tools;
   if (!notificationMessages) {
     throw new Error('notificationMessages not found');
@@ -342,7 +391,10 @@ async function addResponse({ assumedResponse, responses }: TestSuite) {
   return Promise.resolve();
 }
 
-async function addErrorResponse({ responses }: TestSuite, response?: MockedResponse) {
+async function addErrorResponse(
+  { responses }: TestSuite,
+  response?: MockedResponse
+) {
   if (!responses) {
     throw new Error('responses not found');
   }
@@ -350,7 +402,7 @@ async function addErrorResponse({ responses }: TestSuite, response?: MockedRespo
   responses.push(
     response || {
       errorType: 'networkError',
-    },
+    }
   );
   return Promise.resolve();
 }
@@ -397,7 +449,10 @@ export async function testEditingItemFailsAndCancelResets(suite: TestSuite) {
   await verifyValuesAreReset(suite);
 }
 
-export async function testInvalidValues(suite: TestSuite, validationTests: ValidationTest[]) {
+export async function testInvalidValues(
+  suite: TestSuite,
+  validationTests: ValidationTest[]
+) {
   await clickEditButton(suite);
 
   // cannot use forEach with async/await
@@ -457,7 +512,10 @@ export async function testRemovingItem(suite: TestSuite) {
   checkNoDataText(suite, true);
 }
 
-export async function testAddingItemWithCancel(suite: TestSuite, noDataTextIsHiddenWhenEditing: boolean) {
+export async function testAddingItemWithCancel(
+  suite: TestSuite,
+  noDataTextIsHiddenWhenEditing: boolean
+) {
   await clickAddButton(suite);
   checkAddButton(suite, false);
   checkNoDataText(suite, !noDataTextIsHiddenWhenEditing);

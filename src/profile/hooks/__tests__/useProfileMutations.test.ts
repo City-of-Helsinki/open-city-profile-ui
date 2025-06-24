@@ -1,8 +1,14 @@
 import { waitFor } from '@testing-library/react';
 import _ from 'lodash';
 
-import { createResultPropertyTracker, cleanComponentMocks } from '../../../common/test/testingLibraryTools';
-import { ResponseProvider, MockedResponse } from '../../../common/test/MockApolloClientProvider';
+import {
+  createResultPropertyTracker,
+  cleanComponentMocks,
+} from '../../../common/test/testingLibraryTools';
+import {
+  ResponseProvider,
+  MockedResponse,
+} from '../../../common/test/MockApolloClientProvider';
 import {
   getMyProfile,
   cloneProfileAndProvideManipulationFunctions,
@@ -39,15 +45,22 @@ describe('useProfileMutations.ts ', () => {
     waitForDataChange: () => Promise<void>;
   };
 
-  const getProfileDataForTracker = (mutationsResult: MutationReturnType): string =>
+  const getProfileDataForTracker = (
+    mutationsResult: MutationReturnType
+  ): string =>
     JSON.stringify((mutationsResult && mutationsResult.profileData) || {});
 
   const render = (): RenderResult => {
-    const renderHookResult = exposeProfileMutationsHook(responseProvider, 'basic-data');
-    const [waitForDataChange] = createResultPropertyTracker<MutationReturnType>({
-      renderHookResult,
-      valuePicker: getProfileDataForTracker,
-    });
+    const renderHookResult = exposeProfileMutationsHook(
+      responseProvider,
+      'basic-data'
+    );
+    const [waitForDataChange] = createResultPropertyTracker<MutationReturnType>(
+      {
+        renderHookResult,
+        valuePicker: getProfileDataForTracker,
+      }
+    );
 
     return {
       ...renderHookResult,
@@ -64,7 +77,7 @@ describe('useProfileMutations.ts ', () => {
     const { result, waitForDataChange } = renderHookResult;
     await waitForDataChange();
     profileManipulator = cloneProfileAndProvideManipulationFunctions(
-      result.current.profileData?.myProfile as ProfileData,
+      result.current.profileData?.myProfile as ProfileData
     );
     return Promise.resolve(renderHookResult);
   };
@@ -88,7 +101,9 @@ describe('useProfileMutations.ts ', () => {
       const additionalInformation = { language: Language.SWEDISH };
 
       // create graphQL response for the update
-      profileManipulator.setBasicData(basicData).setAdditionalInformation(additionalInformation);
+      profileManipulator
+        .setBasicData(basicData)
+        .setAdditionalInformation(additionalInformation);
 
       // add the graphQL response
       responses.push({
@@ -96,7 +111,10 @@ describe('useProfileMutations.ts ', () => {
       });
 
       // convert graphQL to formValues and use it in update
-      await result.current.update(profileManipulator.getFormValues(), getMyProfile());
+      await result.current.update(
+        profileManipulator.getFormValues(),
+        getMyProfile()
+      );
 
       await waitFor(() => {
         profileData = (result.current.profileData as ProfileRoot).myProfile;
@@ -115,7 +133,9 @@ describe('useProfileMutations.ts ', () => {
       const renderHookResult = await initTests();
       const { result } = renderHookResult;
       profileRoot = result.current.profileData as ProfileRoot;
-      expect(getAddressesFromNode(profileRoot, true)[0].address).toEqual('Testikatu 55');
+      expect(getAddressesFromNode(profileRoot, true)[0].address).toEqual(
+        'Testikatu 55'
+      );
 
       // create update objects
       const address0 = {
@@ -143,7 +163,10 @@ describe('useProfileMutations.ts ', () => {
       });
 
       // convert graphQL to formValues and use it in update
-      await result.current.update(profileManipulator.getFormValues(), getMyProfile());
+      await result.current.update(
+        profileManipulator.getFormValues(),
+        getMyProfile()
+      );
 
       await waitFor(() => {
         // verify updated data has correct values
@@ -156,9 +179,13 @@ describe('useProfileMutations.ts ', () => {
 
       // verify variables sent to the server
       const inputVariables = updateVariables[1]?.input.profile;
-      expect(_.get(inputVariables, 'updateAddresses[0]')).toMatchObject(address0);
+      expect(_.get(inputVariables, 'updateAddresses[0]')).toMatchObject(
+        address0
+      );
       expect(_.get(inputVariables, 'removeAddresses[0]')).toEqual('234');
-      expect(_.get(inputVariables, 'addAddresses[0].address')).toEqual(newAddress.address);
+      expect(_.get(inputVariables, 'addAddresses[0].address')).toEqual(
+        newAddress.address
+      );
     });
     it('Emails are found and updated', async () => {
       let profileRoot;
@@ -166,7 +193,9 @@ describe('useProfileMutations.ts ', () => {
       const renderHookResult = await initTests();
       const { result } = renderHookResult;
       profileRoot = result.current.profileData as ProfileRoot;
-      expect(getEmailsFromNode(profileRoot, true)[0].email).toEqual('ensimmainen@testi.fi');
+      expect(getEmailsFromNode(profileRoot, true)[0].email).toEqual(
+        'ensimmainen@testi.fi'
+      );
 
       const newEmail = {
         id: '456',
@@ -187,7 +216,10 @@ describe('useProfileMutations.ts ', () => {
       });
 
       // convert graphQL to formValues and use it in update
-      await result.current.update(profileManipulator.getFormValues(), getMyProfile());
+      await result.current.update(
+        profileManipulator.getFormValues(),
+        getMyProfile()
+      );
 
       await waitFor(() => {
         // verify updated data has correct values
@@ -202,7 +234,9 @@ describe('useProfileMutations.ts ', () => {
       const inputVariables = updateVariables[1]?.input.profile;
       expect(_.get(inputVariables, 'removeEmails[0]')).toEqual('123');
       expect(_.get(inputVariables, 'updateEmails')).toHaveLength(0);
-      expect(_.get(inputVariables, 'addEmails[0].email')).toEqual(newEmail.email);
+      expect(_.get(inputVariables, 'addEmails[0].email')).toEqual(
+        newEmail.email
+      );
     });
     it('Phones are found and updated', async () => {
       let profileRoot;
@@ -210,7 +244,9 @@ describe('useProfileMutations.ts ', () => {
       const renderHookResult = await initTests();
       const { result } = renderHookResult;
       profileRoot = result.current.profileData as ProfileRoot;
-      expect(getPhonesFromNode(profileRoot, true)[0].phone).toEqual('+358501234567');
+      expect(getPhonesFromNode(profileRoot, true)[0].phone).toEqual(
+        '+358501234567'
+      );
 
       // create update objects
       const phone1 = {
@@ -224,7 +260,10 @@ describe('useProfileMutations.ts ', () => {
       };
 
       // create graphQL response for the update
-      profileManipulator.edit('phones', phone1).remove('phones', { id: '123' }).add('phones', newPhone);
+      profileManipulator
+        .edit('phones', phone1)
+        .remove('phones', { id: '123' })
+        .add('phones', newPhone);
 
       // add the graphQL response
       responses.push({
@@ -232,7 +271,10 @@ describe('useProfileMutations.ts ', () => {
       });
 
       // convert graphQL to formValues and use it in update
-      await result.current.update(profileManipulator.getFormValues(), getMyProfile());
+      await result.current.update(
+        profileManipulator.getFormValues(),
+        getMyProfile()
+      );
 
       await waitFor(() => {
         // verify updated data has correct values
@@ -247,7 +289,9 @@ describe('useProfileMutations.ts ', () => {
       const inputVariables = updateVariables[1]?.input.profile;
       expect(_.get(inputVariables, 'updatePhones[0]')).toMatchObject(phone1);
       expect(_.get(inputVariables, 'removePhones[0]')).toEqual('123');
-      expect(_.get(inputVariables, 'addPhones[0].phone')).toEqual(newPhone.phone);
+      expect(_.get(inputVariables, 'addPhones[0].phone')).toEqual(
+        newPhone.phone
+      );
     });
   });
   describe('Handles errors ', () => {
@@ -259,15 +303,22 @@ describe('useProfileMutations.ts ', () => {
       responses.push({
         errorType: 'graphQLError',
       });
-      const profileDataBeforeUpdate = JSON.stringify(result.current.profileData);
+      const profileDataBeforeUpdate = JSON.stringify(
+        result.current.profileData
+      );
       profileManipulator.remove('phones', { id: '123' });
       try {
-        await result.current.update(profileManipulator.getFormValues(), getMyProfile());
+        await result.current.update(
+          profileManipulator.getFormValues(),
+          getMyProfile()
+        );
         expect('this should never run').toBeFalsy();
         // eslint-disable-next-line no-empty
       } catch (e) {}
 
-      expect(JSON.stringify(result.current.profileData)).toEqual(profileDataBeforeUpdate);
+      expect(JSON.stringify(result.current.profileData)).toEqual(
+        profileDataBeforeUpdate
+      );
     });
   });
 });

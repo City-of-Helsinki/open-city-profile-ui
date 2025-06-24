@@ -8,6 +8,6 @@ it('renders without crashing', () => {
   render(
     <MemoryRouter initialEntries={['/']}>
       <App />
-    </MemoryRouter>,
+    </MemoryRouter>
   );
 });

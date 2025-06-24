@@ -11,7 +11,12 @@ interface UserGuideAccordionProps {
   language: Language;
 }
 
-function UserGuideAccordion({ children, id, heading, language }: UserGuideAccordionProps): React.ReactElement {
+function UserGuideAccordion({
+  children,
+  id,
+  heading,
+  language,
+}: UserGuideAccordionProps): React.ReactElement {
   const isMobile = useMobile();
 
   const accordionStyle = {
@@ -34,7 +39,13 @@ function UserGuideAccordion({ children, id, heading, language }: UserGuideAccord
   };
 
   return (
-    <Accordion headingLevel={3} id={id} heading={heading} language={language} {...accordionProps}>
+    <Accordion
+      headingLevel={3}
+      id={id}
+      heading={heading}
+      language={language}
+      {...accordionProps}
+    >
       {children}
     </Accordion>
   );

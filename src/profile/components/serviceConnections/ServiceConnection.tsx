@@ -52,8 +52,12 @@ function ServiceConnection({
               className={styles['allowed-data-field']}
             />
           ))}
-          <p className={styles['created-at']}>{t('serviceConnections.created')}</p>
-          <p className={styles['date-and-time']}>{getDateTime(service.connectionCreatedAt)}</p>
+          <p className={styles['created-at']}>
+            {t('serviceConnections.created')}
+          </p>
+          <p className={styles['date-and-time']}>
+            {getDateTime(service.connectionCreatedAt)}
+          </p>
         </div>
         <Button
           onClick={() => onDeletion(service)}

@@ -10,14 +10,18 @@ import {
 import { ResponseProvider } from '../../../../common/test/MockApolloClientProvider';
 import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
 import ServiceConnection from '../ServiceConnection';
-import getServiceConnectionData, { ServiceConnectionData } from '../../../helpers/getServiceConnectionData';
+import getServiceConnectionData, {
+  ServiceConnectionData,
+} from '../../../helpers/getServiceConnectionData';
 import encodeServiceName from '../../../helpers/encodeServiceName';
 
 describe('<ServiceConnection /> ', () => {
   const onDeleteTracker = vi.fn();
 
   const queryResultWithServiceConnection = getMyProfileWithServiceConnections();
-  const serviceConnectionDataList = getServiceConnectionData(queryResultWithServiceConnection);
+  const serviceConnectionDataList = getServiceConnectionData(
+    queryResultWithServiceConnection
+  );
   const defaultServiceConnectionData = serviceConnectionDataList[0];
 
   const testIds = {
@@ -25,43 +29,68 @@ describe('<ServiceConnection /> ', () => {
     rerenderButton: 'rerender-button',
   };
 
-  const getDeleteButtonSelector = (service: ServiceConnectionData): ElementSelector => ({
+  const getDeleteButtonSelector = (
+    service: ServiceConnectionData
+  ): ElementSelector => ({
     testId: `delete-service-connection-${encodeServiceName(service)}-button`,
   });
 
-  const getServiceInformationSelector = (service: ServiceConnectionData): ElementSelector => ({
+  const getServiceInformationSelector = (
+    service: ServiceConnectionData
+  ): ElementSelector => ({
     testId: `service-connection-${encodeServiceName(service)}-information`,
   });
 
-  const getExpandableSelector = (service: ServiceConnectionData): ElementSelector => ({
+  const getExpandableSelector = (
+    service: ServiceConnectionData
+  ): ElementSelector => ({
     querySelector: `button[title="${service.title}"]`,
   });
 
-  const getSecondaryExpandableSelector = (service: ServiceConnectionData): ElementSelector => ({
+  const getSecondaryExpandableSelector = (
+    service: ServiceConnectionData
+  ): ElementSelector => ({
     testId: `${encodeServiceName(service)}-secondary-toggle-button`,
   });
 
-  const TestingComponent = ({ service, isActive }: { service: ServiceConnectionData; isActive: boolean }) => {
+  const TestingComponent = ({
+    service,
+    isActive,
+  }: {
+    service: ServiceConnectionData;
+    isActive: boolean;
+  }) => {
     // useDeleteServiceConnection is mocked, so nothing will force re-render
     const [, forceRender] = useState<number>(0);
     return (
       <div>
-        <ServiceConnection service={service} isActive={isActive} onDeletion={onDeleteTracker} />
-        <button type='button' data-testid={testIds.rerenderButton} onClick={() => forceRender(Date.now())}>
+        <ServiceConnection
+          service={service}
+          isActive={isActive}
+          onDeletion={onDeleteTracker}
+        />
+        <button
+          type="button"
+          data-testid={testIds.rerenderButton}
+          onClick={() => forceRender(Date.now())}
+        >
           Rerender
         </button>
       </div>
     );
   };
 
-  const renderTestSuite = (service: ServiceConnectionData, isActive: boolean) => {
+  const renderTestSuite = (
+    service: ServiceConnectionData,
+    isActive: boolean
+  ) => {
     const responseProvider: ResponseProvider = () => ({
       errorType: 'networkError',
     });
 
     return renderComponentWithMocksAndContexts(
       responseProvider,
-      <TestingComponent service={service} isActive={isActive} />,
+      <TestingComponent service={service} isActive={isActive} />
     );
   };
 
@@ -71,47 +100,83 @@ describe('<ServiceConnection /> ', () => {
     vi.resetAllMocks();
   });
 
-  const initTests = async (service?: ServiceConnectionData, isActive = false): Promise<TestTools> =>
+  const initTests = async (
+    service?: ServiceConnectionData,
+    isActive = false
+  ): Promise<TestTools> =>
     renderTestSuite(service || defaultServiceConnectionData, isActive);
 
   it(`Shows the service title and the accordion can be expanded.
       Expanding shows service connection info and a remove button.`, async () => {
     const { clickElement, getByText, waitForElement } = await initTests();
-    expect(getByText(defaultServiceConnectionData.title as string)).toBeDefined();
-    expect(getByText(defaultServiceConnectionData.description as string)).toBeDefined();
+    expect(
+      getByText(defaultServiceConnectionData.title as string)
+    ).toBeDefined();
+    expect(
+      getByText(defaultServiceConnectionData.description as string)
+    ).toBeDefined();
     await clickElement(getExpandableSelector(defaultServiceConnectionData));
     await waitForElement(getDeleteButtonSelector(defaultServiceConnectionData));
-    await waitForElement(getServiceInformationSelector(defaultServiceConnectionData));
+    await waitForElement(
+      getServiceInformationSelector(defaultServiceConnectionData)
+    );
   });
   it(`If "isActive"-prop is true, the accordion is initially open and delete button and data are visible`, async () => {
-    const { waitForElement } = await initTests(defaultServiceConnectionData, true);
+    const { waitForElement } = await initTests(
+      defaultServiceConnectionData,
+      true
+    );
 
     await waitForElement(getDeleteButtonSelector(defaultServiceConnectionData));
-    await waitForElement(getServiceInformationSelector(defaultServiceConnectionData));
+    await waitForElement(
+      getServiceInformationSelector(defaultServiceConnectionData)
+    );
   });
   it(`Clicking secondary close button should close accordion and focus on primary button`, async () => {
-    const { clickElement, waitForElement, getElement } = await initTests(defaultServiceConnectionData, true);
+    const { clickElement, waitForElement, getElement } = await initTests(
+      defaultServiceConnectionData,
+      true
+    );
 
-    await waitForElement(getServiceInformationSelector(defaultServiceConnectionData));
-    await waitForElement(getSecondaryExpandableSelector(defaultServiceConnectionData));
+    await waitForElement(
+      getServiceInformationSelector(defaultServiceConnectionData)
+    );
+    await waitForElement(
+      getSecondaryExpandableSelector(defaultServiceConnectionData)
+    );
 
-    await clickElement(getSecondaryExpandableSelector(defaultServiceConnectionData));
+    await clickElement(
+      getSecondaryExpandableSelector(defaultServiceConnectionData)
+    );
 
     await waitFor(async () => {
-      expect(getElement(getExpandableSelector(defaultServiceConnectionData))).toHaveFocus();
+      expect(
+        getElement(getExpandableSelector(defaultServiceConnectionData))
+      ).toHaveFocus();
     });
   });
 
   it(`Keydown on secondary close button should close accordion and focus on primary button`, async () => {
-    const { keydownEnterElement, waitForElement, getElement } = await initTests(defaultServiceConnectionData, true);
+    const { keydownEnterElement, waitForElement, getElement } = await initTests(
+      defaultServiceConnectionData,
+      true
+    );
 
-    await waitForElement(getServiceInformationSelector(defaultServiceConnectionData));
-    await waitForElement(getSecondaryExpandableSelector(defaultServiceConnectionData));
+    await waitForElement(
+      getServiceInformationSelector(defaultServiceConnectionData)
+    );
+    await waitForElement(
+      getSecondaryExpandableSelector(defaultServiceConnectionData)
+    );
 
-    await keydownEnterElement(getSecondaryExpandableSelector(defaultServiceConnectionData));
+    await keydownEnterElement(
+      getSecondaryExpandableSelector(defaultServiceConnectionData)
+    );
 
     await waitFor(async () => {
-      expect(getElement(getExpandableSelector(defaultServiceConnectionData))).toHaveFocus();
+      expect(
+        getElement(getExpandableSelector(defaultServiceConnectionData))
+      ).toHaveFocus();
     });
   });
   it(`Clicking the remove button calls the onDeletion() with service data`, async () => {

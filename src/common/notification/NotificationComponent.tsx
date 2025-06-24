@@ -25,7 +25,9 @@ function NotificationComponent(props: Props): React.ReactElement | null {
         closeButtonLabelText={t('notification.closeButtonText') || ''}
         onClose={props.onClose}
       >
-        <div className={styles['message-wrapper']}>{props.children || t('notification.defaultErrorText')}</div>
+        <div className={styles['message-wrapper']}>
+          {props.children || t('notification.defaultErrorText')}
+        </div>
       </Notification>
     </div>
   );

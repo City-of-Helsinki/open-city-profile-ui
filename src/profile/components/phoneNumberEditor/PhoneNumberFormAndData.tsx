@@ -28,7 +28,11 @@ import EditingNotifications from '../editingNotifications/EditingNotifications';
 
 type PhoneFormikValue = { number: string; countryCallingCode: string };
 
-function PhoneNumberFormAndData({ editHandler }: { editHandler: EditHandling }): React.ReactElement {
+function PhoneNumberFormAndData({
+  editHandler,
+}: {
+  editHandler: EditHandling;
+}): React.ReactElement {
   const {
     getData,
     hasData,
@@ -53,9 +57,17 @@ function PhoneNumberFormAndData({ editHandler }: { editHandler: EditHandling }):
     return (
       <div className={flexBoxColumnsStyle}>
         <div className={containerStyle}>
-          <div className={classNames(flexBoxColumnsStyle, commonFormStyles['editor-title-and-value'])}>
+          <div
+            className={classNames(
+              flexBoxColumnsStyle,
+              commonFormStyles['editor-title-and-value']
+            )}
+          >
             <h3 className={headingStyle}>{title}</h3>
-            <span data-testid={`${dataType}-no-data`} className={commonFormStyles['text-value']}>
+            <span
+              data-testid={`${dataType}-no-data`}
+              className={commonFormStyles['text-value']}
+            >
               {t('profileInformation.noPhone')}
             </span>
           </div>
@@ -65,7 +77,11 @@ function PhoneNumberFormAndData({ editHandler }: { editHandler: EditHandling }):
             </div>
           </div>
         </div>
-        <EditingNotifications content={notificationContent.content} dataType={dataType} bottomSpacingDesktop />
+        <EditingNotifications
+          content={notificationContent.content}
+          dataType={dataType}
+          bottomSpacingDesktop
+        />
       </div>
     );
   }
@@ -77,18 +93,23 @@ function PhoneNumberFormAndData({ editHandler }: { editHandler: EditHandling }):
   const dropdownId = `${testId}-countryCallingCode`;
   const formFields = getFormFields(dataType);
   const disableButtons = !!currentAction || !!saving;
-  const { hasFieldError, getFieldErrorMessage } = createFormFieldHelpers<PhoneFormikValue>(t, isNew);
+  const { hasFieldError, getFieldErrorMessage } =
+    createFormFieldHelpers<PhoneFormikValue>(t, isNew);
   const ariaLabels = createActionAriaLabels(dataType, inputValue, t);
   if (isEditing) {
-    const countryCallingCodes = getMemoizedCountryCallingCodes(getLanguageCode(i18n.languages[0]));
-    const { countryCallingCode, number } = splitNumberAndCountryCallingCode((value as PhoneValue).phone || '');
+    const countryCallingCodes = getMemoizedCountryCallingCodes(
+      getLanguageCode(i18n.languages[0])
+    );
+    const { countryCallingCode, number } = splitNumberAndCountryCallingCode(
+      (value as PhoneValue).phone || ''
+    );
     const initialCountryCallingCodeOption = countryCallingCodes.find(
-      (option) => option.value === countryCallingCode,
+      (option) => option.value === countryCallingCode
     ) as Option;
 
     const defaultCountryCallingCodeValue = getDefaultCountryCallingCode();
     const defaultCountryCallingCodeOption = countryCallingCodes.find(
-      (option) => option.value === defaultCountryCallingCodeValue,
+      (option) => option.value === defaultCountryCallingCodeValue
     ) as Option;
 
     return (
@@ -105,12 +126,22 @@ function PhoneNumberFormAndData({ editHandler }: { editHandler: EditHandling }):
         validationSchema={phoneSchema}
       >
         {(formikProps: FormikProps<PhoneFormikValue>) => (
-          <div className={classNames(flexBoxColumnsStyle, commonFormStyles['common-editor-bottom-padding'])}>
+          <div
+            className={classNames(
+              flexBoxColumnsStyle,
+              commonFormStyles['common-editor-bottom-padding']
+            )}
+          >
             <h3 className={headingStyle}>{title}</h3>
             <Form>
               <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
                 <div className={flexBoxColumnsStyle}>
-                  <div className={classNames(containerStyle, commonFormStyles['editor-form-fields'])}>
+                  <div
+                    className={classNames(
+                      containerStyle,
+                      commonFormStyles['editor-form-fields']
+                    )}
+                  >
                     <FormikDropdown
                       className={classNames(commonFormStyles['form-field'])}
                       name={'countryCallingCode'}
@@ -120,10 +151,18 @@ function PhoneNumberFormAndData({ editHandler }: { editHandler: EditHandling }):
                       defaultOption={defaultCountryCallingCodeOption}
                       disabled={!!saving}
                       invalid={hasFieldError(formikProps, 'countryCallingCode')}
-                      error={(getFieldErrorMessage(formikProps, 'countryCallingCode') ?? '').toString()}
+                      error={(
+                        getFieldErrorMessage(
+                          formikProps,
+                          'countryCallingCode'
+                        ) ?? ''
+                      ).toString()}
                       aria-describedby={`${dataType}-countryCallingCode-helper`}
                       onChange={(clickedOption: Option) => {
-                        formikProps.setFieldValue('countryCallingCode', clickedOption ? clickedOption.value : '');
+                        formikProps.setFieldValue(
+                          'countryCallingCode',
+                          clickedOption ? clickedOption.value : ''
+                        );
                       }}
                       allowSearch
                       virtualized
@@ -131,7 +170,7 @@ function PhoneNumberFormAndData({ editHandler }: { editHandler: EditHandling }):
                     />
                     <Field
                       className={commonFormStyles['form-field']}
-                      name='number'
+                      name="number"
                       id={inputId}
                       maxLength={formFields.number.max as number}
                       as={PhoneInput}
@@ -141,19 +180,31 @@ function PhoneNumberFormAndData({ editHandler }: { editHandler: EditHandling }):
                       aria-labelledby={`${dataType}-number-helper`}
                       disabled={!!saving}
                       label={t('profileForm.phone')}
-                      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        formikProps.setFieldValue('number', event.target.value.replace(/\D/g, ''));
+                      onChange={(
+                        event: React.ChangeEvent<HTMLInputElement>
+                      ) => {
+                        formikProps.setFieldValue(
+                          'number',
+                          event.target.value.replace(/\D/g, '')
+                        );
                       }}
                     />
                   </div>
-                  <AccessibleFormikErrors formikProps={formikProps} dataType={dataType} />
+                  <AccessibleFormikErrors
+                    formikProps={formikProps}
+                    dataType={dataType}
+                  />
                   <EditingNotifications
                     content={notificationContent.content}
                     dataType={dataType}
                     noSpacing
                     topSpacingMobile
                   />
-                  <FormButtons handler={actionHandler} disabled={disableButtons} testId={testId} />
+                  <FormButtons
+                    handler={actionHandler}
+                    disabled={disableButtons}
+                    testId={testId}
+                  />
                 </div>
                 <SaveIndicator action={currentAction} testId={testId} />
               </FocusKeeper>
@@ -166,9 +217,17 @@ function PhoneNumberFormAndData({ editHandler }: { editHandler: EditHandling }):
   return (
     <div className={flexBoxColumnsStyle}>
       <div className={classNames(containerStyle)}>
-        <div className={classNames(flexBoxColumnsStyle, commonFormStyles['editor-title-and-value'])}>
+        <div
+          className={classNames(
+            flexBoxColumnsStyle,
+            commonFormStyles['editor-title-and-value']
+          )}
+        >
           <h3 className={headingStyle}>{title}</h3>
-          <span className={commonFormStyles['text-value']} data-testid={`${testId}-value`}>
+          <span
+            className={commonFormStyles['text-value']}
+            data-testid={`${testId}-value`}
+          >
             {inputValue || '–'}
           </span>
         </div>
@@ -189,7 +248,11 @@ function PhoneNumberFormAndData({ editHandler }: { editHandler: EditHandling }):
         </div>
         <SaveIndicator action={currentAction} testId={testId} />
       </div>
-      <EditingNotifications content={notificationContent.content} dataType={dataType} bottomSpacingDesktop />
+      <EditingNotifications
+        content={notificationContent.content}
+        dataType={dataType}
+        bottomSpacingDesktop
+      />
     </div>
   );
 }

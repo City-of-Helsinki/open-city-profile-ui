@@ -14,7 +14,8 @@ import { useProfileLoadTracker } from '../../hooks/useProfileLoadTracker';
 function Profile(): React.ReactElement {
   const { t } = useTranslation();
   const location = useLocation();
-  const { isProfileLoadComplete, didProfileLoadFail, reloadProfile } = useProfileLoadTracker();
+  const { isProfileLoadComplete, didProfileLoadFail, reloadProfile } =
+    useProfileLoadTracker();
 
   const { logout } = useAuth();
 
@@ -37,13 +38,22 @@ function Profile(): React.ReactElement {
     if (didProfileLoadFail()) {
       return (
         <PageLayout title={'notification.defaultErrorTitle'}>
-          <div className={styles['error-wrapper']} data-testid='profile-check-error-layout'>
+          <div
+            className={styles['error-wrapper']}
+            data-testid="profile-check-error-layout"
+          >
             <div className={responsive['max-width-centered']}>
-              <Notification type={'error'} label={t('notification.defaultErrorTitle')}>
+              <Notification
+                type={'error'}
+                label={t('notification.defaultErrorTitle')}
+              >
                 {t('profile.loadErrorText')}
               </Notification>
               <div className={styles['error-button-wrapper']}>
-                <Button onClick={() => reloadProfile()} data-testid={'profile-check-error-reload-button'}>
+                <Button
+                  onClick={() => reloadProfile()}
+                  data-testid={'profile-check-error-reload-button'}
+                >
                   {t('profile.reload')}
                 </Button>
                 <Button

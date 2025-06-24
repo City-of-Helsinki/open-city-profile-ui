@@ -14,7 +14,10 @@ import {
   ElementSelector,
 } from '../../../../common/test/testingLibraryTools';
 import { AddressNode, ProfileData } from '../../../../graphql/typings';
-import { MockedResponse, ResponseProvider } from '../../../../common/test/MockApolloClientProvider';
+import {
+  MockedResponse,
+  ResponseProvider,
+} from '../../../../common/test/MockApolloClientProvider';
 import { AddressValue, EditDataType } from '../../../helpers/editData';
 import i18n from '../../../../common/test/testi18nInit';
 import RenderChildrenWhenDataIsComplete from '../../../../common/test/RenderChildrenWhenDataIsComplete';
@@ -43,12 +46,13 @@ describe('<AddressEditor /> ', () => {
   const initialProfile = getMyProfile().myProfile as ProfileData;
   const dataType: EditDataType = 'addresses';
   const renderTestSuite = () => {
-    const responseProvider: ResponseProvider = () => responses.shift() as MockedResponse;
+    const responseProvider: ResponseProvider = () =>
+      responses.shift() as MockedResponse;
     return renderComponentWithMocksAndContexts(
       responseProvider,
       <RenderChildrenWhenDataIsComplete>
         <AddressEditor />
-      </RenderChildrenWhenDataIsComplete>,
+      </RenderChildrenWhenDataIsComplete>
     );
   };
 
@@ -88,7 +92,11 @@ describe('<AddressEditor /> ', () => {
     cleanComponentMocks();
   });
 
-  const getFieldValueSelector = (field: AddressValueKey, targetIsInput = false, index = 0): ElementSelector => {
+  const getFieldValueSelector = (
+    field: AddressValueKey,
+    targetIsInput = false,
+    index = 0
+  ): ElementSelector => {
     if (field === 'countryCode' && targetIsInput) {
       // For the dropdown, use the main button which displays the selected text
       return {
@@ -102,7 +110,10 @@ describe('<AddressEditor /> ', () => {
       : { testId: `${dataType}-${index}-${field}-value` };
   };
 
-  const convertFieldValue = (source: AddressDataSource, field: AddressValueKey): string => {
+  const convertFieldValue = (
+    source: AddressDataSource,
+    field: AddressValueKey
+  ): string => {
     const value = source[field];
     if (field !== 'countryCode') {
       return value || '';
@@ -113,21 +124,35 @@ describe('<AddressEditor /> ', () => {
     return countryList[value] || '';
   };
 
-  const verifyValuesFromElements = async (testTools: TestTools, source: DataSource, targetIsInput = false) => {
+  const verifyValuesFromElements = async (
+    testTools: TestTools,
+    source: DataSource,
+    targetIsInput = false
+  ) => {
     const { getTextOrInputValue } = testTools;
     for (const field of fields) {
-      const expectedValue = convertFieldValue(source as AddressDataSource, field);
-      await expect(getTextOrInputValue(getFieldValueSelector(field, targetIsInput, 0))).resolves.toBe(expectedValue);
+      const expectedValue = convertFieldValue(
+        source as AddressDataSource,
+        field
+      );
+      await expect(
+        getTextOrInputValue(getFieldValueSelector(field, targetIsInput, 0))
+      ).resolves.toBe(expectedValue);
     }
   };
 
-  const setValuesToInputs = async (testTools: TestTools, source: DataSource) => {
+  const setValuesToInputs = async (
+    testTools: TestTools,
+    source: DataSource
+  ) => {
     const { setInputValue, comboBoxSelector, getTextOrInputValue } = testTools;
     for (const field of fields) {
       const newValue = convertFieldValue(source as AddressDataSource, field);
       if (field === 'countryCode') {
         // comboBoxSelector will throw an error if attempting to set a value which is already set
-        const currentValue = await getTextOrInputValue(getFieldValueSelector(field, true));
+        const currentValue = await getTextOrInputValue(
+          getFieldValueSelector(field, true)
+        );
         if (currentValue !== newValue) {
           await comboBoxSelector(`${dataType}-0-${field}`, newValue);
         }
@@ -146,11 +171,12 @@ describe('<AddressEditor /> ', () => {
       | 'verifiedUserWithoutAddress'
       | 'verifiedUserWithAddress'
       | 'unverifiedUserWithNoAddress'
-      | 'unverifiedUserWithOneAddress',
+      | 'unverifiedUserWithOneAddress'
   ) => {
     const noAddressText = 'profileInformation.addressDescriptionNoAddress';
     const unverifiedUserTitle = 'profileInformation.address';
-    const verifiedUserTitle = 'profileInformation.addressTitleWhenHasVerifiedData';
+    const verifiedUserTitle =
+      'profileInformation.addressTitleWhenHasVerifiedData';
 
     const verifyZeroTextInstanceExists = (translationKey: string) => {
       if (testTools.queryByText(String(t(translationKey)))) {
@@ -165,7 +191,9 @@ describe('<AddressEditor /> ', () => {
 
     if (scenario === 'verifiedUserWithoutAddress') {
       verifyOneTextInstanceExists(verifiedUserTitle);
-      verifyOneTextInstanceExists('profileInformation.addressDescriptionNoWeakAddress');
+      verifyOneTextInstanceExists(
+        'profileInformation.addressDescriptionNoWeakAddress'
+      );
     } else if (scenario === 'verifiedUserWithAddress') {
       verifyOneTextInstanceExists(verifiedUserTitle);
       verifyOneTextInstanceExists('profileInformation.addressDescription');
@@ -178,22 +206,32 @@ describe('<AddressEditor /> ', () => {
     }
   };
 
-  const initTests = async (profileData: ProfileData = initialProfile): Promise<TestTools> => {
+  const initTests = async (
+    profileData: ProfileData = initialProfile
+  ): Promise<TestTools> => {
     responses.push({ profileData });
     const testTools = await renderTestSuite();
     await testTools.fetch();
     return Promise.resolve(testTools);
   };
 
-  const initTestsWithVerifiedUser = async (profileData: ProfileData = initialProfile): Promise<TestTools> =>
+  const initTestsWithVerifiedUser = async (
+    profileData: ProfileData = initialProfile
+  ): Promise<TestTools> =>
     initTests({
       ...profileData,
       verifiedPersonalInformation: getVerifiedData(),
     });
 
-  const initialAddressInProfile = getAddressesFromNode({ myProfile: initialProfile }, true)[0];
+  const initialAddressInProfile = getAddressesFromNode(
+    { myProfile: initialProfile },
+    true
+  )[0];
 
-  const addressNodes = getAddressesFromNode({ myProfile: initialProfile }, true);
+  const addressNodes = getAddressesFromNode(
+    { myProfile: initialProfile },
+    true
+  );
 
   const usedAddressNode = addressNodes[0];
 
@@ -231,7 +269,8 @@ describe('<AddressEditor /> ', () => {
       testTools,
       formData: newAddressValues,
       assumedResponse: getUpdatedProfile(newAddressValues),
-      sentDataPicker: (variables) => (variables.input.profile.updateAddresses as DataSource[])[0],
+      sentDataPicker: (variables) =>
+        (variables.input.profile.updateAddresses as DataSource[])[0],
       ...commonTestProps,
     });
   });
@@ -274,7 +313,8 @@ describe('<AddressEditor /> ', () => {
       testTools,
       formData: validAddressValues,
       assumedResponse: profileWithAddress,
-      sentDataPicker: (variables) => (variables.input.profile.addAddresses as unknown as DataSource[])[0],
+      sentDataPicker: (variables) =>
+        (variables.input.profile.addAddresses as unknown as DataSource[])[0],
       ...commonTestProps,
     });
     verifyTitleAndDescription(testTools, 'unverifiedUserWithOneAddress');
@@ -300,7 +340,7 @@ describe('<AddressEditor /> ', () => {
         formData: validAddressValues,
         ...commonTestProps,
       },
-      false,
+      false
     );
   });
   it('When user is logged in with suomi.fi, there is one additional description and different title.', async () => {

@@ -1,12 +1,22 @@
 import React from 'react';
 import { waitFor } from '@testing-library/react';
 
-import { renderComponentWithMocksAndContexts, cleanComponentMocks } from '../../common/test/testingLibraryTools';
+import {
+  renderComponentWithMocksAndContexts,
+  cleanComponentMocks,
+} from '../../common/test/testingLibraryTools';
 import config from '../../config';
 import GdprAuthorizationCodeManagerCallback from '../GdprAuthorizationCodeManagerCallback';
-import { ActionMockData, isActionTriggered, initMockQueue } from '../../common/actionQueue/mock.util';
+import {
+  ActionMockData,
+  isActionTriggered,
+  initMockQueue,
+} from '../../common/actionQueue/mock.util';
 import { getScenarioWhereNextPhaseIsResumeCallback } from '../actions/__mocks__/queueScenarios';
-import { AuthCodeQueuesProps, authCodeQueuesStorageKey } from '../useAuthCodeQueues';
+import {
+  AuthCodeQueuesProps,
+  authCodeQueuesStorageKey,
+} from '../useAuthCodeQueues';
 import { keycloakAuthCodeParserAction } from '../actions/authCodeParser';
 import { keycloakAuthCodeCallbackUrlAction } from '../actions/authCodeCallbackUrlDetector';
 import { loadKeycloakConfigAction } from '../actions/loadKeycloakConfig';
@@ -44,7 +54,11 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
     initMockQueue(props, downloadQueueProps, authCodeQueuesStorageKey);
   };
 
-  const initTests = async () => renderComponentWithMocksAndContexts(vi.fn(), <GdprAuthorizationCodeManagerCallback />);
+  const initTests = async () =>
+    renderComponentWithMocksAndContexts(
+      vi.fn(),
+      <GdprAuthorizationCodeManagerCallback />
+    );
 
   const getRedirectPath = () => mockHistoryTracker.mock.calls[0][0];
 
@@ -82,7 +96,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
             store: true,
           },
         ],
-      }),
+      })
     );
 
     await initTests();
@@ -104,7 +118,7 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
             runOriginal: true,
           },
         ],
-      }),
+      })
     );
 
     await initTests();
@@ -126,12 +140,16 @@ describe('<GdprAuthorizationCodeManagerCallback /> ', () => {
             runOriginal: false,
           },
         ],
-      }),
+      })
     );
 
     await initTests();
     await waitFor(() => {
-      expect(getRedirectPath().includes(`${startPagePath}?error=${loadKeycloakConfigAction.type}`)).toBeTruthy();
+      expect(
+        getRedirectPath().includes(
+          `${startPagePath}?error=${loadKeycloakConfigAction.type}`
+        )
+      ).toBeTruthy();
     });
   });
 });

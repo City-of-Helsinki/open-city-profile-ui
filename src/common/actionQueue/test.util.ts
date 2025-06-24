@@ -15,10 +15,17 @@ export type ActionSourceForTesting = Pick<ActionProps, 'type'> & {
   executionDelay?: number;
 };
 
-export function convertSourceToActionProps({ type, rejectValue, resolveValue }: ActionSourceForTesting): ActionProps {
+export function convertSourceToActionProps({
+  type,
+  rejectValue,
+  resolveValue,
+}: ActionSourceForTesting): ActionProps {
   return {
     type,
-    executor: () => (resolveValue ? Promise.resolve(resolveValue) : Promise.reject(rejectValue)),
+    executor: () =>
+      resolveValue
+        ? Promise.resolve(resolveValue)
+        : Promise.reject(rejectValue),
   };
 }
 
@@ -59,12 +66,17 @@ export const resolvingAction: Action = {
 
 export function verifyAction(action: Partial<Action>): boolean {
   // Max number of allowed conditional operators is 3 in SonarCloud so splitted these
-  const booleansAreSet = typeof action.complete === 'boolean' && typeof action.active === 'boolean';
+  const booleansAreSet =
+    typeof action.complete === 'boolean' && typeof action.active === 'boolean';
 
-  const resultsAreUndefined = typeof action.errorMessage === 'undefined' && typeof action.result === 'undefined';
+  const resultsAreUndefined =
+    typeof action.errorMessage === 'undefined' &&
+    typeof action.result === 'undefined';
 
   const basePropsAreSet =
-    typeof action.executor === 'function' && typeof action.updatedAt === 'number' && typeof action.type === 'string';
+    typeof action.executor === 'function' &&
+    typeof action.updatedAt === 'number' &&
+    typeof action.type === 'string';
 
   return booleansAreSet && resultsAreUndefined && basePropsAreSet;
 }
@@ -73,7 +85,9 @@ export function cloneArray(array: ActionQueue) {
   return array.map((item) => ({ ...item }));
 }
 
-export function createQueueWithCommonActions(additionalActions: Array<ActionProps | Action> = []) {
+export function createQueueWithCommonActions(
+  additionalActions: Array<ActionProps | Action> = []
+) {
   return createQueueFromProps([
     ...[
       convertSourceToActionProps(resolvingActionSource1),
@@ -103,7 +117,9 @@ function mergeProps(queue: InitialQueue, extraProps?: Partial<Action>[]) {
   return queue;
 }
 
-export function getSuccessfulQueue(extraProps?: Partial<Action>[]): InitialQueue {
+export function getSuccessfulQueue(
+  extraProps?: Partial<Action>[]
+): InitialQueue {
   const queue = [
     {
       ...convertSourceToActionProps(resolvingActionSource1),
@@ -134,7 +150,7 @@ export function pickUpdateActionProps(
   action: Partial<Action>,
   addType = true,
   filterUndefined = true,
-  ignoreUpdatedAt = false,
+  ignoreUpdatedAt = false
 ): Partial<ActionUpdateProps> & { type?: ActionType } {
   const { complete, active, result, errorMessage, updatedAt, type } = action;
   return {
@@ -145,6 +161,7 @@ export function pickUpdateActionProps(
     ...(addType && { type }),
     // json strigify drops "undefined" values, so those props are not present in parsed objects
     ...(!filterUndefined && typeof result !== 'undefined' && { result }),
-    ...(!filterUndefined && typeof errorMessage !== 'undefined' && { errorMessage }),
+    ...(!filterUndefined &&
+      typeof errorMessage !== 'undefined' && { errorMessage }),
   };
 }

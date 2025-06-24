@@ -3,7 +3,10 @@ import { render, waitFor } from '@testing-library/react';
 import { User } from 'oidc-client-ts';
 import * as hdsReact from 'hds-react';
 
-import { mockUserCreator, MockedUserOverrides } from '../../common/test/userMocking';
+import {
+  mockUserCreator,
+  MockedUserOverrides,
+} from '../../common/test/userMocking';
 import useProfile, { Profile } from '../useProfile';
 import TestLoginProvider from '../../common/test/TestLoginProvider';
 
@@ -23,7 +26,11 @@ describe('useProfile', () => {
   const profileElementId = 'profile';
   const noProfile = { noProfile: true };
 
-  const TestProfileComponent = ({ callCounter }: { callCounter: () => number }) => {
+  const TestProfileComponent = ({
+    callCounter,
+  }: {
+    callCounter: () => number;
+  }) => {
     const { profile, loading, error } = useProfile();
     const hasLoadStarted = callCounter() > 0;
     const isFinished = hasLoadStarted && loading === false;
@@ -38,14 +45,21 @@ describe('useProfile', () => {
     return (
       <div>
         <span id={statusIndicatorElementId}>{status}</span>
-        <span id={profileElementId}>{JSON.stringify(profile ? profile : noProfile)}</span>
+        <span id={profileElementId}>
+          {JSON.stringify(profile ? profile : noProfile)}
+        </span>
       </div>
     );
   };
 
-  const renderTestComponent = (overrides?: MockedUserOverrides, error = false): DataGetters => {
+  const renderTestComponent = (
+    overrides?: MockedUserOverrides,
+    error = false
+  ): DataGetters => {
     const userData = mockUserCreator(overrides);
-    const mockedGetUser = vi.fn().mockImplementation(() => (error ? null : userData));
+    const mockedGetUser = vi
+      .fn()
+      .mockImplementation(() => (error ? null : userData));
 
     vi.spyOn(hdsReact, 'useOidcClient').mockReturnValue({
       getUser: mockedGetUser,
@@ -65,14 +79,18 @@ describe('useProfile', () => {
 
     const result = render(
       <TestLoginProvider>
-        <TestProfileComponent callCounter={() => mockedGetUser.mock.calls.length} />
-      </TestLoginProvider>,
+        <TestProfileComponent
+          callCounter={() => mockedGetUser.mock.calls.length}
+        />
+      </TestLoginProvider>
     );
 
     const { container } = result;
-    const getElementById = (id: string) => container.querySelector(`#${id}`) as HTMLElement;
+    const getElementById = (id: string) =>
+      container.querySelector(`#${id}`) as HTMLElement;
     return {
-      getInfo: () => getElementById(statusIndicatorElementId).innerHTML as Status,
+      getInfo: () =>
+        getElementById(statusIndicatorElementId).innerHTML as Status,
       getProfile: () => {
         const data = getElementById(profileElementId).innerHTML;
         return JSON.parse(data);
@@ -89,9 +107,10 @@ describe('useProfile', () => {
   it('should return the profile which the authService.getUser() provides where amr is always an array', async () => {
     const amr = 'string-arm';
 
-    const { getInfo, getProfile, getMockedUserData, hasCalledGetUser } = renderTestComponent({
-      profileOverrides: { amr },
-    });
+    const { getInfo, getProfile, getMockedUserData, hasCalledGetUser } =
+      renderTestComponent({
+        profileOverrides: { amr },
+      });
 
     const userData = getMockedUserData();
     await waitFor(() => expect(getInfo()).toEqual(loadedStatus));

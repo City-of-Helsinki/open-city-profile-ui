@@ -1,6 +1,10 @@
 import to from 'await-to-js';
 
-import { ActionExecutor, ActionProps, QueueController } from '../../common/actionQueue/actionQueue';
+import {
+  ActionExecutor,
+  ActionProps,
+  QueueController,
+} from '../../common/actionQueue/actionQueue';
 import { getActionResultAndErrorMessage } from './utils';
 import { isKeycloakAuthorisationCodeNeeded } from './getGdprScopes';
 import config from '../../config';
@@ -8,13 +12,21 @@ import config from '../../config';
 const loadKeycloakConfigType = 'loadKeycloakConfig';
 
 export const getLoadKeycloakConfigResult = (queueController: QueueController) =>
-  getActionResultAndErrorMessage<string>(loadKeycloakConfigType, queueController).result;
+  getActionResultAndErrorMessage<string>(
+    loadKeycloakConfigType,
+    queueController
+  ).result;
 
-const loadKeycloakConfigExecutor: ActionExecutor = async (action, controller) => {
+const loadKeycloakConfigExecutor: ActionExecutor = async (
+  action,
+  controller
+) => {
   if (!isKeycloakAuthorisationCodeNeeded(controller)) {
     return Promise.resolve(false);
   }
-  const [err, response] = await to(fetch(`${config.keycloakAuthority}.well-known/openid-configuration`));
+  const [err, response] = await to(
+    fetch(`${config.keycloakAuthority}.well-known/openid-configuration`)
+  );
   if (err) {
     return Promise.reject(err);
   }

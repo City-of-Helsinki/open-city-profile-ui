@@ -9,7 +9,10 @@ export type MatomoProviderProps = {
 
 const MatomoContext = createContext<MatomoTrackerInstance | null>(null);
 
-export const MatomoProvider: React.FC<MatomoProviderProps> = ({ children, value }) => {
+export const MatomoProvider: React.FC<MatomoProviderProps> = ({
+  children,
+  value,
+}) => {
   const Context = MatomoContext;
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

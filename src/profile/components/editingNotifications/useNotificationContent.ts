@@ -19,12 +19,18 @@ function useNotificationContent(): ContentHandlers {
   const tryAgainKey = 'notification.tryAgain';
   const getActionMessage = (action: Action, error: boolean): string => {
     if (action === 'remove') {
-      return error ? `${t('notification.removeError')} ${t(tryAgainKey)}.` : t('notification.removeSuccess');
+      return error
+        ? `${t('notification.removeError')} ${t(tryAgainKey)}.`
+        : t('notification.removeSuccess');
     }
     if (action === 'save') {
-      return error ? `${t('notification.saveError')} ${t(tryAgainKey)}.` : t('notification.saveSuccess');
+      return error
+        ? `${t('notification.saveError')} ${t(tryAgainKey)}.`
+        : t('notification.saveSuccess');
     }
-    return error ? `${t('notification.genericError')} ${t(tryAgainKey)}.` : t('notification.genericSuccess');
+    return error
+      ? `${t('notification.genericError')} ${t(tryAgainKey)}.`
+      : t('notification.genericSuccess');
   };
   const setSuccessMessage: ContentHandlers['setSuccessMessage'] = (action) => {
     setMessage({

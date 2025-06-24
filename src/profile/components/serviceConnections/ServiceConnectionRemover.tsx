@@ -2,9 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { ServiceConnectionData } from '../../helpers/getServiceConnectionData';
 import DeleteServiceConnectionModal from './DeleteServiceConnectionModal';
-import useAuthCodeQueues, { AuthCodeQueuesProps } from '../../../gdprApi/useAuthCodeQueues';
+import useAuthCodeQueues, {
+  AuthCodeQueuesProps,
+} from '../../../gdprApi/useAuthCodeQueues';
 import config from '../../../config';
-import { isForbiddenResult, isInsufficientLoaResult } from '../../../gdprApi/actions/deleteServiceConnection';
+import {
+  isForbiddenResult,
+  isInsufficientLoaResult,
+} from '../../../gdprApi/actions/deleteServiceConnection';
 import { QueueController } from '../../../common/actionQueue/actionQueue';
 
 export const STATUS_NONE = 0;
@@ -35,12 +40,22 @@ function ServiceConnectionRemover(props: {
 }): React.ReactElement | null {
   const [errorMessage, setErrorMessage] = useState<string>();
   const { service, onDeletion, onAbort } = props;
-  const onError: AuthCodeQueuesProps['onError'] = useCallback((controller: QueueController) => {
-    const failed = controller.getFailed();
-    const message = (failed && failed.errorMessage) || 'unknown';
-    setErrorMessage(message);
-  }, []);
-  const { isLoading, startOrRestart, hasError, isComplete, shouldResumeWithAuthCodes, resume } = useAuthCodeQueues({
+  const onError: AuthCodeQueuesProps['onError'] = useCallback(
+    (controller: QueueController) => {
+      const failed = controller.getFailed();
+      const message = (failed && failed.errorMessage) || 'unknown';
+      setErrorMessage(message);
+    },
+    []
+  );
+  const {
+    isLoading,
+    startOrRestart,
+    hasError,
+    isComplete,
+    shouldResumeWithAuthCodes,
+    resume,
+  } = useAuthCodeQueues({
     startPagePath: config.serviceConnectionsPath,
     queueName: 'deleteServiceConnection',
     serviceName: service.name,
@@ -50,7 +65,11 @@ function ServiceConnectionRemover(props: {
   const isDeleted = isComplete && !hasError;
 
   const [deletionStatus, setDeletionStatus] = useState<DeletionStatus>(
-    isLoading ? STATUS_LOADING : isDeleted ? STATUS_DONE : STATUS_PENDING_CONFIRMATION,
+    isLoading
+      ? STATUS_LOADING
+      : isDeleted
+        ? STATUS_DONE
+        : STATUS_PENDING_CONFIRMATION
   );
 
   const getModalStatus = () => {
@@ -101,7 +120,12 @@ function ServiceConnectionRemover(props: {
   });
 
   return (
-    <DeleteServiceConnectionModal status={modalStatus} onClose={onClose} onConfirm={onConfirm} service={service} />
+    <DeleteServiceConnectionModal
+      status={modalStatus}
+      onClose={onClose}
+      onConfirm={onConfirm}
+      service={service}
+    />
   );
 }
 

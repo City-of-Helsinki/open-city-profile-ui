@@ -19,14 +19,16 @@ describe('<DeleteProfileError /> ', () => {
   const basicError = new Error('Error');
 
   const resultsWithUnsuccessfulDeletions = parseDeleteProfileResult(
-    getDeleteMyProfileMutationResult(['', 'errorCode']),
+    getDeleteMyProfileMutationResult(['', 'errorCode'])
   );
 
   const onClose = vi.fn();
   const t = i18n.getFixedT('fi');
 
   const renderAndReturnHelpers = (error?: Props['error']) =>
-    createDomHelpersWithTesting(render(<DeleteProfileError onClose={onClose} error={error} />));
+    createDomHelpersWithTesting(
+      render(<DeleteProfileError onClose={onClose} error={error} />)
+    );
 
   beforeEach(() => {
     vi.resetAllMocks();
@@ -38,21 +40,31 @@ describe('<DeleteProfileError /> ', () => {
     expect(modal).toBeDefined();
     const title = (await findById(testIds.title)) as HTMLElement;
     const description = (await findById(testIds.description)) as HTMLElement;
-    expect(title.innerHTML.includes(t('deleteProfileModal.deletionErrorTitle'))).toBeTruthy();
-    expect(description.innerHTML.includes(t('deleteProfile.deleteFailed'))).toBeTruthy();
+    expect(
+      title.innerHTML.includes(t('deleteProfileModal.deletionErrorTitle'))
+    ).toBeTruthy();
+    expect(
+      description.innerHTML.includes(t('deleteProfile.deleteFailed'))
+    ).toBeTruthy();
     expect(onClose.mock.calls).toHaveLength(0);
   });
 
   it('When results include failed services, a list is displayed', async () => {
-    const { findById, findByTestId } = renderAndReturnHelpers(resultsWithUnsuccessfulDeletions);
+    const { findById, findByTestId } = renderAndReturnHelpers(
+      resultsWithUnsuccessfulDeletions
+    );
     const description = (await findById(testIds.description)) as HTMLElement;
     expect(description).toBeNull();
     const successList = await findByTestId(testIds.successList);
     const failureList = await findByTestId(testIds.failureList);
     expect(successList).not.toBeNull();
     expect(failureList).not.toBeNull();
-    expect(failureList?.childNodes).toHaveLength(resultsWithUnsuccessfulDeletions.failures.length);
-    expect(successList?.childNodes).toHaveLength(resultsWithUnsuccessfulDeletions.successful.length);
+    expect(failureList?.childNodes).toHaveLength(
+      resultsWithUnsuccessfulDeletions.failures.length
+    );
+    expect(successList?.childNodes).toHaveLength(
+      resultsWithUnsuccessfulDeletions.successful.length
+    );
   });
   it('When results does not include failed services, a list is not displayed', async () => {
     const { findById, findByTestId } = renderAndReturnHelpers({
