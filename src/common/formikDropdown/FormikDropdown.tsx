@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Select, SelectProps, Option, Texts, SupportedLanguage } from 'hds-react';
+import {
+  Select,
+  SelectProps,
+  Option,
+  Texts,
+  SupportedLanguage,
+} from 'hds-react';
 import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 
@@ -19,7 +25,10 @@ type Props = {
   label?: string;
   error?: string;
   onChange?: (clickedOption: Option) => void;
-} & Omit<SelectProps<React.ReactElement>, 'defaultValue' | 'onChange' | 'value'>;
+} & Omit<
+  SelectProps<React.ReactElement>,
+  'defaultValue' | 'onChange' | 'value'
+>;
 
 function FormikDropdown(props: Props): React.ReactElement {
   const { i18n } = useTranslation();
@@ -49,16 +58,17 @@ function FormikDropdown(props: Props): React.ReactElement {
       // Type assertion is needed because HDS's options could be a mix of types
       const foundOption = selectProps.options.find(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (option) => 'value' in (option as any) && (option as any).value === value,
+        (option) =>
+          'value' in (option as any) && (option as any).value === value
       );
 
       return foundOption as Option | undefined;
     },
-    [selectProps.options],
+    [selectProps.options]
   );
 
   const [selectedOption, setSelectedOption] = useState<Option | undefined>(
-    currentOption || initialOption || defaultOption,
+    currentOption || initialOption || defaultOption
   );
 
   useEffect(() => {
@@ -69,7 +79,11 @@ function FormikDropdown(props: Props): React.ReactElement {
       return;
     }
     const selectedInCurrentOptions = findOptionByValue(selectedOption?.value);
-    if (selectedOption && selectedInCurrentOptions && selectedInCurrentOptions.label !== selectedOption.label) {
+    if (
+      selectedOption &&
+      selectedInCurrentOptions &&
+      selectedInCurrentOptions.label !== selectedOption.label
+    ) {
       setSelectedOption(selectedInCurrentOptions);
     }
     lastCheckedLanguage.current = i18n.language;
@@ -84,7 +98,7 @@ function FormikDropdown(props: Props): React.ReactElement {
 
       setSelectedOption(clickedOption || undefined);
     },
-    [onChangeCallback],
+    [onChangeCallback]
   );
 
   // Get the current value directly from the option

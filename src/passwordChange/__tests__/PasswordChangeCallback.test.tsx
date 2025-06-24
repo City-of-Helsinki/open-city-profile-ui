@@ -23,7 +23,7 @@ const renderComponent = () =>
   render(
     <MemoryRouter>
       <PasswordChangeCallback />
-    </MemoryRouter>,
+    </MemoryRouter>
   );
 
 const getNavigateCallArgument = () => mockNavigate.mock.calls[0][0];

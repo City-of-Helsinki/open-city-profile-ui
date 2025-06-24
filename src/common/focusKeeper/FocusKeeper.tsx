@@ -28,7 +28,7 @@ const FocusKeeper = (props: Props): React.ReactElement => {
     <div
       className={commonFormStyles['visually-hidden']}
       tabIndex={0}
-      role='button'
+      role="button"
       aria-hidden
       onFocus={moveFocusToTarget}
     ></div>

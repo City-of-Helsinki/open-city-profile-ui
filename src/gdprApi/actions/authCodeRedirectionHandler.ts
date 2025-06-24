@@ -17,7 +17,9 @@ import { getAuthCodeRedirectionInitializationResult } from './authCodeRedirectio
 
 const keycloakAuthCodeRedirectionType = 'keycloakAuthCodeRedirection';
 
-export const isQueueWaitingForAuthCodeRedirection = (controller: QueueController) => {
+export const isQueueWaitingForAuthCodeRedirection = (
+  controller: QueueController
+) => {
   const activeAction = controller.getActive();
   if (!activeAction) {
     return false;
@@ -25,15 +27,27 @@ export const isQueueWaitingForAuthCodeRedirection = (controller: QueueController
   return activeAction.type === keycloakAuthCodeRedirectionType;
 };
 
-export const getAuthCodeRedirectionResult = (action: Action, queueController: QueueController) =>
-  getActionResultAndErrorMessage<boolean>(keycloakAuthCodeRedirectionType, queueController).result;
+export const getAuthCodeRedirectionResult = (
+  action: Action,
+  queueController: QueueController
+) =>
+  getActionResultAndErrorMessage<boolean>(
+    keycloakAuthCodeRedirectionType,
+    queueController
+  ).result;
 
-const authCodeRedirectionHandlerExecutor: ActionExecutor = async (action, controller) => {
+const authCodeRedirectionHandlerExecutor: ActionExecutor = async (
+  action,
+  controller
+) => {
   if (!isAuthCodeActionNeeded(action, controller)) {
     return Promise.resolve(false);
   }
 
-  const stateAndUri = getAuthCodeRedirectionInitializationResult(action, controller);
+  const stateAndUri = getAuthCodeRedirectionInitializationResult(
+    action,
+    controller
+  );
 
   if (!stateAndUri || !stateAndUri.state || !stateAndUri.oidcUri) {
     return Promise.reject('No state or oidcUri found');

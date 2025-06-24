@@ -3,8 +3,18 @@ import to from 'await-to-js';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 
-import { basicDataType, EditData, EditDataType, EditDataValue, isNewItem } from '../helpers/editData';
-import { Action, ActionListener, useProfileDataEditor } from './useProfileDataEditor';
+import {
+  basicDataType,
+  EditData,
+  EditDataType,
+  EditDataValue,
+  isNewItem,
+} from '../helpers/editData';
+import {
+  Action,
+  ActionListener,
+  useProfileDataEditor,
+} from './useProfileDataEditor';
 import { ActionHandler } from '../components/editButtons/EditButtons';
 import { useFocusSetter } from './useFocusSetter';
 import useNotificationContent from '../components/editingNotifications/useNotificationContent';
@@ -13,7 +23,10 @@ import { AnyObject } from '../../graphql/typings';
 
 type EditHandlingProps = {
   data?: EditData;
-  dataType: Extract<EditDataType, 'addresses' | 'phones' | 'emails' | 'basic-data'>;
+  dataType: Extract<
+    EditDataType,
+    'addresses' | 'phones' | 'emails' | 'basic-data'
+  >;
   disableEditButtons: boolean;
 };
 
@@ -38,16 +51,22 @@ export interface ActionRejection {
   removeCancelled: boolean;
 }
 
-export const useCommonEditHandling = (props: EditHandlingProps): EditHandling => {
+export const useCommonEditHandling = (
+  props: EditHandlingProps
+): EditHandling => {
   const { dataType } = props;
-  const { editDataList, save, reset, add, hasNew, remove } = useProfileDataEditor({
-    dataType,
-  });
+  const { editDataList, save, reset, add, hasNew, remove } =
+    useProfileDataEditor({
+      dataType,
+    });
 
   const data = editDataList[0];
 
   const isNew = data ? isNewItem(data) : false;
-  const testId = dataType === 'emails' || dataType === basicDataType ? dataType : `${dataType}-0`;
+  const testId =
+    dataType === 'emails' || dataType === basicDataType
+      ? dataType
+      : `${dataType}-0`;
   const [isEditing, setEditing] = useState(isNew);
   const [currentAction, setCurrentAction] = useState<Action>(undefined);
   const [editButtonId, setFocusToEditButton] = useFocusSetter({
@@ -61,7 +80,8 @@ export const useCommonEditHandling = (props: EditHandlingProps): EditHandling =>
 
   const notificationContent = useNotificationContent();
 
-  const { setErrorMessage, setSuccessMessage, clearMessage } = notificationContent;
+  const { setErrorMessage, setSuccessMessage, clearMessage } =
+    notificationContent;
 
   const { showModal, modalProps } = useConfirmationModal();
 
@@ -69,7 +89,11 @@ export const useCommonEditHandling = (props: EditHandlingProps): EditHandling =>
     targetId: `${dataType}-add-button`,
   });
 
-  const executeActionAndNotifyUser: ActionListener = async (action, item, newValue) => {
+  const executeActionAndNotifyUser: ActionListener = async (
+    action,
+    item,
+    newValue
+  ) => {
     const func = action === 'save' ? save : remove;
     const [err] = await to(func(item, newValue as EditDataValue));
     if (err) {
@@ -99,8 +123,11 @@ export const useCommonEditHandling = (props: EditHandlingProps): EditHandling =>
     const [rejected] = await to(
       showModal({
         actionButtonText: t('confirmationModal.remove'),
-        title: dataType === 'phones' ? t('confirmationModal.removePhone') : t('confirmationModal.removeAddress'),
-      }),
+        title:
+          dataType === 'phones'
+            ? t('confirmationModal.removePhone')
+            : t('confirmationModal.removeAddress'),
+      })
     );
     if (rejected) {
       setFocusToRemoveButton();

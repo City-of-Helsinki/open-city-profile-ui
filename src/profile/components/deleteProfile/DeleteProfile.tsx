@@ -6,7 +6,10 @@ import { Button, Notification, useGroupConsent } from 'hds-react';
 import { useNavigate } from 'react-router-dom';
 
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
-import { ServiceConnectionsQueryVariables, ServiceConnectionsRoot } from '../../../graphql/typings';
+import {
+  ServiceConnectionsQueryVariables,
+  ServiceConnectionsRoot,
+} from '../../../graphql/typings';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import contentStyles from '../../../common/cssHelpers/content.module.css';
 import ModalServicesContent from '../modals/deleteProfileContent/DeleteProfileContent';
@@ -17,7 +20,9 @@ import { useScrollIntoView } from '../../hooks/useScrollIntoView';
 import { DeleteResultLists } from '../../helpers/parseDeleteProfileResult';
 import createServiceConnectionsQueryVariables from '../../helpers/createServiceConnectionsQueryVariables';
 import Loading from '../../../common/loading/Loading';
-import useAuthCodeQueues, { AuthCodeQueuesProps } from '../../../gdprApi/useAuthCodeQueues';
+import useAuthCodeQueues, {
+  AuthCodeQueuesProps,
+} from '../../../gdprApi/useAuthCodeQueues';
 import config from '../../../config';
 import { getDeleteProfileResultOrError } from '../../../gdprApi/actions/deleteProfile';
 import reportErrorsToSentry from '../../../common/sentry/reportErrorsToSentry';
@@ -32,16 +37,23 @@ function DeleteProfile(): React.ReactElement {
   const loadedLoadState = 'loaded';
   const errorLoadState = 'error';
   const [dataLoadState, setDataLoadState] = useState<
-    typeof notStartedLoadState | typeof loadingLoadState | typeof loadedLoadState | typeof errorLoadState
+    | typeof notStartedLoadState
+    | typeof loadingLoadState
+    | typeof loadedLoadState
+    | typeof errorLoadState
   >(notStartedLoadState);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const statisticsConsent = useGroupConsent('statistics');
   const { trackEvent } = useMatomo();
-  const [resultError, setResultError] = useState<ApolloError | Error | undefined | DeleteResultLists>(undefined);
+  const [resultError, setResultError] = useState<
+    ApolloError | Error | undefined | DeleteResultLists
+  >(undefined);
   const onCompleted: AuthCodeQueuesProps['onCompleted'] = useCallback(
     (controller: QueueController) => {
-      const { failures, successful } = (getDeleteProfileResultOrError(controller).result as DeleteResultLists) || {
+      const { failures, successful } = (getDeleteProfileResultOrError(
+        controller
+      ).result as DeleteResultLists) || {
         failures: [],
         successful: [],
       };
@@ -54,17 +66,20 @@ function DeleteProfile(): React.ReactElement {
         setResultError({ failures, successful });
       }
     },
-    [navigate, statisticsConsent, trackEvent],
+    [navigate, statisticsConsent, trackEvent]
   );
-  const onError: AuthCodeQueuesProps['onError'] = useCallback((controller: QueueController) => {
-    const failed = controller.getFailed();
-    const error = new Error(failed ? failed.errorMessage : 'Unknown error');
+  const onError: AuthCodeQueuesProps['onError'] = useCallback(
+    (controller: QueueController) => {
+      const failed = controller.getFailed();
+      const error = new Error(failed ? failed.errorMessage : 'Unknown error');
 
-    if (error) {
-      Sentry.captureException(error);
-    }
-    setResultError(error);
-  }, []);
+      if (error) {
+        Sentry.captureException(error);
+      }
+      setResultError(error);
+    },
+    []
+  );
 
   const {
     startOrRestart,
@@ -118,7 +133,7 @@ function DeleteProfile(): React.ReactElement {
         setDataLoadState(loadingLoadState);
       }
     },
-    [getServiceConnections, setDataLoadState, dataLoadState, serviceConnections],
+    [getServiceConnections, setDataLoadState, dataLoadState, serviceConnections]
   );
 
   const handleDeleteClick = () => {
@@ -148,12 +163,24 @@ function DeleteProfile(): React.ReactElement {
   }, [shouldResumeWithAuthCodes, resume]);
 
   const LoadIndicator = ({ text }: { text: string }) => (
-    <Loading isLoading loadingText={text} dataTestId='delete-profile-load-indicator' alignLeft />
+    <Loading
+      isLoading
+      loadingText={text}
+      dataTestId="delete-profile-load-indicator"
+      alignLeft
+    />
   );
   const ServiceConnectionLoadError = () => (
     <>
-      <Notification label={t('deleteProfile.deleteFailed')} type={'error'}></Notification>
-      <Button type='button' onClick={() => loadServiceConnections(true)} data-testid='reload-service-connections'>
+      <Notification
+        label={t('deleteProfile.deleteFailed')}
+        type={'error'}
+      ></Notification>
+      <Button
+        type="button"
+        onClick={() => loadServiceConnections(true)}
+        data-testid="reload-service-connections"
+      >
         {t('notification.tryAgain')}
       </Button>
     </>
@@ -177,19 +204,26 @@ function DeleteProfile(): React.ReactElement {
     <ProfileSection data-test-id={'delete-profile'} borderless>
       <div className={commonFormStyles['editor-description-container']}>
         <h2>{t('deleteProfile.title')}</h2>
-        <p dangerouslySetInnerHTML={{ __html: t('deleteProfile.explanation') }} />
+        <p
+          dangerouslySetInnerHTML={{ __html: t('deleteProfile.explanation') }}
+        />
       </div>
       <div className={commonFormStyles['uneditable-box-content']}>
         <div className={contentStyles['common-child-vertical-spacing']}>
-          {dataLoadState === loadingLoadState || dataLoadState === errorLoadState ? (
+          {dataLoadState === loadingLoadState ||
+          dataLoadState === errorLoadState ? (
             <LoadStateIndicator />
           ) : (
-            <Button type='button' onClick={handleDeleteClick} id={removeButtonId}>
+            <Button
+              type="button"
+              onClick={handleDeleteClick}
+              id={removeButtonId}
+            >
               {t('deleteProfile.delete')}
             </Button>
           )}
           <ConfirmationModal
-            variant='danger'
+            variant="danger"
             isOpen={showConfirmationModal}
             onClose={handleConfirmationModal}
             onConfirm={handleProfileDelete}
@@ -197,7 +231,10 @@ function DeleteProfile(): React.ReactElement {
             title={t('deleteProfileModal.title')}
             actionButtonText={t('deleteProfileModal.delete')}
           />
-          <DeleteProfileError error={resultError} onClose={() => setResultError(undefined)} />
+          <DeleteProfileError
+            error={resultError}
+            onClose={() => setResultError(undefined)}
+          />
         </div>
       </div>
     </ProfileSection>

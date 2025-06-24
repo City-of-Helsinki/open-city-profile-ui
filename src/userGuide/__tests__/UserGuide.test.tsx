@@ -11,7 +11,14 @@ vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
     ...actual,
-    Link: ({ children, to, ...rest }: { children: React.ReactNode; to: string }) => (
+    Link: ({
+      children,
+      to,
+      ...rest
+    }: {
+      children: React.ReactNode;
+      to: string;
+    }) => (
       <a href={to} {...rest}>
         {children}
       </a>
@@ -37,7 +44,7 @@ describe('User guide', () => {
             <UserGuide />
           </I18nextProvider>
         </TestLoginProvider>
-      </MemoryRouter>,
+      </MemoryRouter>
     );
   };
 
@@ -47,7 +54,7 @@ describe('User guide', () => {
         <TestLoginProvider>
           <UserGuide />
         </TestLoginProvider>
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     expect(container).toBeTruthy();
     expect(container).toMatchSnapshot();

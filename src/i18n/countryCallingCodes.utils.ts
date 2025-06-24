@@ -8,16 +8,27 @@ export type CountryCallingCodeOption = { value: string; label: string };
 type ParsedNumber = { countryCallingCode: string; number: string };
 type SearchResult = { countryAlpha2Code?: string; countryCallingCode?: string };
 
-export function getCallingCodesForCountryCode(list: AnyObject, cc2: string): string[] {
+export function getCallingCodesForCountryCode(
+  list: AnyObject,
+  cc2: string
+): string[] {
   return list[cc2] as string[];
 }
 
-export function getCountryCallingCodes(uiLang: string): CountryCallingCodeOption[] {
+export function getCountryCallingCodes(
+  uiLang: string
+): CountryCallingCodeOption[] {
   const countryList = countries.getNames(uiLang);
   const resultList: CountryCallingCodeOption[] = [];
-  const log = new Map<string, { countries: string[]; option: CountryCallingCodeOption }>();
+  const log = new Map<
+    string,
+    { countries: string[]; option: CountryCallingCodeOption }
+  >();
   Object.keys(countryList).forEach((key) => {
-    const countryCallingCodesList = getCallingCodesForCountryCode(countryCallingCodes, key);
+    const countryCallingCodesList = getCallingCodesForCountryCode(
+      countryCallingCodes,
+      key
+    );
     if (!countryCallingCodesList) {
       return;
     }
@@ -52,21 +63,27 @@ export function getCountryCallingCodes(uiLang: string): CountryCallingCodeOption
 
 export const getMemoizedCountryCallingCodes = _.memoize(getCountryCallingCodes);
 
-export function getCountryAndCallingCodeForNumber(phoneNumber: string): SearchResult {
+export function getCountryAndCallingCodeForNumber(
+  phoneNumber: string
+): SearchResult {
   if (phoneNumber.indexOf('+') !== 0) {
     return {};
   }
   const results: SearchResult[] = [];
-  Object.entries(countryCallingCodes).forEach(([countryAlpha2Code, countryCallingCodeList]) => {
-    const countryCallingCode = countryCallingCodeList.find((value) => phoneNumber.indexOf(value) === 0);
+  Object.entries(countryCallingCodes).forEach(
+    ([countryAlpha2Code, countryCallingCodeList]) => {
+      const countryCallingCode = countryCallingCodeList.find(
+        (value) => phoneNumber.indexOf(value) === 0
+      );
 
-    if (countryCallingCode) {
-      results.push({
-        countryAlpha2Code,
-        countryCallingCode,
-      });
+      if (countryCallingCode) {
+        results.push({
+          countryAlpha2Code,
+          countryCallingCode,
+        });
+      }
     }
-  });
+  );
   if (results.length === 0) {
     return {};
   }
@@ -95,9 +112,13 @@ export function getDefaultCountryCallingCode(): string {
   return countryCallingCodes['FI'][0];
 }
 
-export function splitNumberAndCountryCallingCode(phoneNumber: string): ParsedNumber {
+export function splitNumberAndCountryCallingCode(
+  phoneNumber: string
+): ParsedNumber {
   const { countryCallingCode } = getCountryAndCallingCodeForNumber(phoneNumber);
-  const number = countryCallingCode ? phoneNumber.substring(countryCallingCode.length) : phoneNumber;
+  const number = countryCallingCode
+    ? phoneNumber.substring(countryCallingCode.length)
+    : phoneNumber;
   return {
     countryCallingCode: countryCallingCode || getDefaultCountryCallingCode(),
     number,

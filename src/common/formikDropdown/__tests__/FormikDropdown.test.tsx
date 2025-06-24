@@ -8,9 +8,15 @@ import { Option } from 'hds-react';
 
 import FormikDropdown from '../FormikDropdown';
 import i18nModule from '../../../i18n/i18nInit';
-import { getDefaultCountryCallingCode, getMemoizedCountryCallingCodes } from '../../../i18n/countryCallingCodes.utils';
+import {
+  getDefaultCountryCallingCode,
+  getMemoizedCountryCallingCodes,
+} from '../../../i18n/countryCallingCodes.utils';
 import getLanguageCode from '../../helpers/getLanguageCode';
-import { renderComponentWithMocksAndContexts, TestTools } from '../../test/testingLibraryTools';
+import {
+  renderComponentWithMocksAndContexts,
+  TestTools,
+} from '../../test/testingLibraryTools';
 import { MockedResponse } from '../../test/MockApolloClientProvider';
 import countryCallingCodes from '../../../i18n/countryCallingCodes.json';
 
@@ -53,19 +59,32 @@ describe('<FormikDropdown /> ', () => {
   const findOptionByValue = (options: Option[], value: string) =>
     options.find((option) => option.value === value) as Option;
 
-  const renderAndReturnTestTools = async (testScenarioProps: RenderProps): Promise<TestTools> => {
-    const FormikWrapper = (formikWrapperProps: RenderProps): React.ReactElement => {
-      const { defaultValue, initialValue, currentValue, allowSearch } = formikWrapperProps;
+  const renderAndReturnTestTools = async (
+    testScenarioProps: RenderProps
+  ): Promise<TestTools> => {
+    const FormikWrapper = (
+      formikWrapperProps: RenderProps
+    ): React.ReactElement => {
+      const { defaultValue, initialValue, currentValue, allowSearch } =
+        formikWrapperProps;
       const { i18n } = useTranslation();
-      const options = getMemoizedCountryCallingCodes(getLanguageCode(i18n.language)) as Option[];
+      const options = getMemoizedCountryCallingCodes(
+        getLanguageCode(i18n.language)
+      ) as Option[];
       optionsInComponent = options;
       const defaultOption = findOptionByValue(options, defaultValue);
-      const initialOption = initialValue ? findOptionByValue(options, initialValue) : undefined;
-      const currentOptionFromValue = currentValue ? findOptionByValue(options, currentValue) : undefined;
+      const initialOption = initialValue
+        ? findOptionByValue(options, initialValue)
+        : undefined;
+      const currentOptionFromValue = currentValue
+        ? findOptionByValue(options, currentValue)
+        : undefined;
       const changeLanguage = (code: string) => {
         i18n.changeLanguage(code);
       };
-      const [currentOption, reRender] = useState<Option | undefined>(currentOptionFromValue);
+      const [currentOption, reRender] = useState<Option | undefined>(
+        currentOptionFromValue
+      );
       injectNewCurrentOption = (newCurrentOption) => {
         reRender(newCurrentOption);
       };
@@ -73,7 +92,10 @@ describe('<FormikDropdown /> ', () => {
         <div>
           <Formik
             initialValues={{
-              value: currentOption?.value || initialOption?.value || defaultOption.value,
+              value:
+                currentOption?.value ||
+                initialOption?.value ||
+                defaultOption.value,
             }}
             onSubmit={async (values) => {
               onSubmitListener(values);
@@ -97,14 +119,20 @@ describe('<FormikDropdown /> ', () => {
                     onChangeListener(value);
                   }}
                 />
-                <button type='submit' id={selectors.submitButton.id}>
+                <button type="submit" id={selectors.submitButton.id}>
                   Submit
                 </button>
               </Form>
             )}
           </Formik>
-          <button id={selectors.languageSwitchers.fi.id} onClick={() => changeLanguage(fiLanguageCode)} />
-          <button id={selectors.languageSwitchers.sv.id} onClick={() => changeLanguage(svLanguageCode)} />
+          <button
+            id={selectors.languageSwitchers.fi.id}
+            onClick={() => changeLanguage(fiLanguageCode)}
+          />
+          <button
+            id={selectors.languageSwitchers.sv.id}
+            onClick={() => changeLanguage(svLanguageCode)}
+          />
           <span id={selectors.currentLanguage.id}>{i18n.language}</span>
         </div>
       );
@@ -114,30 +142,47 @@ describe('<FormikDropdown /> ', () => {
       () => ({}) as MockedResponse,
       <I18nextProvider i18n={i18nModule}>
         <FormikWrapper {...testScenarioProps} />
-      </I18nextProvider>,
+      </I18nextProvider>
     );
   };
 
-  const checkInputValue = async (getElement: TestTools['getElement'], expectedValue: string, expectedLabel?: string) =>
+  const checkInputValue = async (
+    getElement: TestTools['getElement'],
+    expectedValue: string,
+    expectedLabel?: string
+  ) =>
     waitFor(async () => {
       const button = getElement(selectors.toggleButton) as HTMLElement;
-      const spanElement = button.querySelector('div[aria-hidden="true"] > span') as HTMLElement;
+      const spanElement = button.querySelector(
+        'div[aria-hidden="true"] > span'
+      ) as HTMLElement;
       const buttonText = spanElement.innerHTML;
 
-      const testValue = expectedLabel || findOptionByValue(optionsInComponent, expectedValue).label;
+      const testValue =
+        expectedLabel ||
+        findOptionByValue(optionsInComponent, expectedValue).label;
       expect(buttonText).toBe(testValue);
     });
 
-  const checkToggleButtonText = async (getElement: TestTools['getElement'], expectedText: string) =>
+  const checkToggleButtonText = async (
+    getElement: TestTools['getElement'],
+    expectedText: string
+  ) =>
     waitFor(async () => {
       const button = getElement(selectors.toggleButton) as HTMLElement;
-      const spanElement = button.querySelector('div[aria-hidden="true"] > span') as HTMLElement;
+      const spanElement = button.querySelector(
+        'div[aria-hidden="true"] > span'
+      ) as HTMLElement;
       expect(spanElement.innerHTML).toBe(expectedText);
     });
 
-  const getLastMockCallArgs = (func: Mock) => func.mock.calls[func.mock.calls.length - 1];
+  const getLastMockCallArgs = (func: Mock) =>
+    func.mock.calls[func.mock.calls.length - 1];
 
-  const submitFormAndReturnData = async (testTools: TestTools, expectedValue?: string): Promise<{ value: string }> => {
+  const submitFormAndReturnData = async (
+    testTools: TestTools,
+    expectedValue?: string
+  ): Promise<{ value: string }> => {
     const { clickElement } = testTools;
     await clickElement(selectors.submitButton);
 
@@ -150,7 +195,9 @@ describe('<FormikDropdown /> ', () => {
       if (expectedValue) {
         const submittedValue = getLastMockCallArgs(onSubmitListener)[0].value;
         if (submittedValue !== expectedValue) {
-          throw new Error(`Expected submitted value to be ${expectedValue} but got ${submittedValue}`);
+          throw new Error(
+            `Expected submitted value to be ${expectedValue} but got ${submittedValue}`
+          );
         }
       }
     });
@@ -178,7 +225,7 @@ describe('<FormikDropdown /> ', () => {
           defaultValue: 'thisDoesNotMatter',
           allowSearch: true,
           toggleButtonAriaLabel: '',
-        }),
+        })
       );
       expect(err).toBeDefined();
     });
@@ -189,7 +236,7 @@ describe('<FormikDropdown /> ', () => {
           defaultValue: 'thisDoesNotMatter',
           currentValue: 'thisDoesNotMatter',
           allowSearch: true,
-        }),
+        })
       );
       expect(err).toBeDefined();
     });
@@ -202,12 +249,15 @@ describe('<FormikDropdown /> ', () => {
 
     const renderAndVerifyInputAndFormValue = async (
       testScenarioProps: RenderProps,
-      expectedValue: string,
+      expectedValue: string
     ): Promise<TestTools> => {
       const testTools = await renderAndReturnTestTools(testScenarioProps);
       const { getElement } = testTools;
       if (testScenarioProps.currentValue) {
-        const buttonText = findOptionByValue(optionsInComponent, currentTestValue);
+        const buttonText = findOptionByValue(
+          optionsInComponent,
+          currentTestValue
+        );
         await checkToggleButtonText(getElement, buttonText.label);
       } else {
         await checkInputValue(getElement, expectedValue);
@@ -219,14 +269,17 @@ describe('<FormikDropdown /> ', () => {
 
     it(`input value equals the label of the default option when
         initial or current options are not set`, async () => {
-      await renderAndVerifyInputAndFormValue({ defaultValue: defaultTestValue }, defaultTestValue);
+      await renderAndVerifyInputAndFormValue(
+        { defaultValue: defaultTestValue },
+        defaultTestValue
+      );
     });
 
     it(`input value equals the label of the initial option when
         default option exists, but current does not`, async () => {
       await renderAndVerifyInputAndFormValue(
         { defaultValue: defaultTestValue, initialValue: initialTestValue },
-        initialTestValue,
+        initialTestValue
       );
     });
 
@@ -240,7 +293,7 @@ describe('<FormikDropdown /> ', () => {
           currentValue: currentTestValue,
           allowSearch: false,
         },
-        currentTestValue,
+        currentTestValue
       );
 
       expect(() => getElement(selectors.input)).toThrow();
@@ -250,20 +303,25 @@ describe('<FormikDropdown /> ', () => {
   describe('reacts to UI changes', () => {
     const changeLanguage = async (
       testTools: TestTools,
-      targetLanguage: typeof fiLanguageCode | typeof svLanguageCode,
+      targetLanguage: typeof fiLanguageCode | typeof svLanguageCode
     ) => {
       const { getElement, clickElement } = testTools;
       const switcherSelector = selectors.languageSwitchers[targetLanguage];
       await clickElement(switcherSelector);
       await waitFor(() => {
-        const languageElement = getElement(selectors.currentLanguage) as HTMLElement;
+        const languageElement = getElement(
+          selectors.currentLanguage
+        ) as HTMLElement;
         if (languageElement.innerHTML !== targetLanguage) {
           throw new Error('Language has not changed');
         }
       });
     };
 
-    const changeDropdownOption = async (testTools: TestTools, option: Option) => {
+    const changeDropdownOption = async (
+      testTools: TestTools,
+      option: Option
+    ) => {
       await testTools.comboBoxSelector(formikId, option.label);
       await checkInputValue(testTools.getElement, option.value, option.label);
 
@@ -281,12 +339,22 @@ describe('<FormikDropdown /> ', () => {
       const testTools = await renderAndReturnTestTools({
         defaultValue,
       });
-      const selectedOptionBeforeChange = findOptionByValue(optionsInComponent, defaultValue);
+      const selectedOptionBeforeChange = findOptionByValue(
+        optionsInComponent,
+        defaultValue
+      );
       await changeLanguage(testTools, svLanguageCode);
-      const selectedOption = findOptionByValue(optionsInComponent, defaultValue);
+      const selectedOption = findOptionByValue(
+        optionsInComponent,
+        defaultValue
+      );
       expect(selectedOption.label).not.toBe(selectedOptionBeforeChange.label);
       expect(selectedOption.value).toBe(selectedOptionBeforeChange.value);
-      await checkInputValue(testTools.getElement, defaultValue, selectedOption.label);
+      await checkInputValue(
+        testTools.getElement,
+        defaultValue,
+        selectedOption.label
+      );
       const values = await submitFormAndReturnData(testTools);
       expect(values).toEqual({ value: selectedOptionBeforeChange.value });
     });
@@ -313,7 +381,9 @@ describe('<FormikDropdown /> ', () => {
         await waitFor(async () => {
           const values = await submitFormAndReturnData(testTools);
           if (values.value !== newOption.value) {
-            throw new Error(`Expected form value to be ${newOption.value} but got ${values.value}`);
+            throw new Error(
+              `Expected form value to be ${newOption.value} but got ${values.value}`
+            );
           }
         });
       }
@@ -340,7 +410,10 @@ describe('<FormikDropdown /> ', () => {
       const values = await submitFormAndReturnData(testTools);
       expect(values).toEqual({ value: newOption.value });
       await checkToggleButtonText(getElement, currentOption.label);
-      const injectedOption = findOptionByValue(optionsInComponent, injectedValue);
+      const injectedOption = findOptionByValue(
+        optionsInComponent,
+        injectedValue
+      );
 
       injectNewCurrentOption(injectedOption);
       await checkToggleButtonText(getElement, injectedOption.label);

@@ -24,15 +24,22 @@ type QueryReturnType = {
   If errorPolicy is 'ignore', graphQL errors are not populated and cannot be detected.
   Work-around: useEffect will trigger onError when error changes.
 */
-export function useProfileQuery(props?: { onError: (queryError: ApolloError) => void }): QueryReturnType {
+export function useProfileQuery(props?: {
+  onError: (queryError: ApolloError) => void;
+}): QueryReturnType {
   const errorToTriggerRef = useRef<ApolloError | undefined>(undefined);
   const storeTriggeredError = (newRef: ApolloError | undefined) => {
     errorToTriggerRef.current = newRef;
   };
-  const [fetch, { data, error, loading, refetch }] = useLazyQuery<ProfileRoot>(MY_PROFILE, {
-    errorPolicy: 'all',
-  });
-  const dependencySafeOnError = useMemoizedFn(props && props.onError ? props.onError : _.noop);
+  const [fetch, { data, error, loading, refetch }] = useLazyQuery<ProfileRoot>(
+    MY_PROFILE,
+    {
+      errorPolicy: 'all',
+    }
+  );
+  const dependencySafeOnError = useMemoizedFn(
+    props && props.onError ? props.onError : _.noop
+  );
   useEffect(() => {
     if (!errorToTriggerRef.current && error) {
       dependencySafeOnError(error);

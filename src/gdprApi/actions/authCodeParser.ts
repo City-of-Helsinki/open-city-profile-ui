@@ -17,21 +17,28 @@ const keycloakAuthCodeParserType = 'keycloakAuthCodeParser';
 const dummyKeycloakAuthCode = 'dummyKeycloakAuthCode';
 
 export const getStoredKeycloakAuthCode = (queueController: QueueController) =>
-  getActionResultAndErrorMessage<string>(keycloakAuthCodeParserType, queueController).result;
+  getActionResultAndErrorMessage<string>(
+    keycloakAuthCodeParserType,
+    queueController
+  ).result;
 
 const authCodeParserExecutor: ActionExecutor = async (action, controller) => {
   if (!isAuthCodeActionNeeded(action, controller)) {
     return Promise.resolve(dummyKeycloakAuthCode);
   }
 
-  const rejector = (message: string) => rejectExecutorWithStartPageRedirection(controller, action, message);
+  const rejector = (message: string) =>
+    rejectExecutorWithStartPageRedirection(controller, action, message);
 
   const { code, state } = parseAuthorizationCallbackUrl();
   if (!code || !state) {
     return rejector('No code or state found in callback url');
   }
 
-  const storedUrlProps = getAuthCodeRedirectionInitializationResult(action, controller);
+  const storedUrlProps = getAuthCodeRedirectionInitializationResult(
+    action,
+    controller
+  );
   if (!storedUrlProps) {
     return rejector('Stored state not found');
   }

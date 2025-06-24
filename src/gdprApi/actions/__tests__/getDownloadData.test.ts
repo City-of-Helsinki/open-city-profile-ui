@@ -2,7 +2,10 @@ import to from 'await-to-js';
 import { waitFor } from '@testing-library/react';
 import * as hdsReact from 'hds-react';
 
-import { getDownloadDataAction, getDownloadDataResultOrError } from '../getDownloadData';
+import {
+  getDownloadDataAction,
+  getDownloadDataResultOrError,
+} from '../getDownloadData';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
 import { Action, getOption } from '../../../common/actionQueue/actionQueue';
 import { keycloakAuthCodeParserAction } from '../authCodeParser';
@@ -104,7 +107,9 @@ describe('getDownloadData.ts', () => {
       await waitFor(() => {
         expect(runner.isFinished()).toBeTruthy();
       });
-      expect(getDownloadDataResultOrError(runner).result).toMatchObject(successfulResponse);
+      expect(getDownloadDataResultOrError(runner).result).toMatchObject(
+        successfulResponse
+      );
     });
   });
 });

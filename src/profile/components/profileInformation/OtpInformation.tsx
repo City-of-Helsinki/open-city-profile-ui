@@ -1,6 +1,13 @@
 import React, { Fragment, useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, StatusLabel, IconCheckCircle, IconAlertCircle, IconCrossCircle, ButtonVariant } from 'hds-react';
+import {
+  Button,
+  StatusLabel,
+  IconCheckCircle,
+  IconAlertCircle,
+  IconCrossCircle,
+  ButtonVariant,
+} from 'hds-react';
 import classNames from 'classnames';
 
 import { getMFALoginMethod, formatDate } from './authenticationProviderUtil';
@@ -14,8 +21,13 @@ function OtpInformation(): React.ReactElement | null {
   const { t } = useTranslation();
   const notificationRef = useRef<HTMLDivElement>(null);
 
-  const { data, otpConfigurationState, setOtpConfigurationState, otpDeleteState, setOtpDeleteState } =
-    useContext(ProfileContext);
+  const {
+    data,
+    otpConfigurationState,
+    setOtpConfigurationState,
+    otpDeleteState,
+    setOtpDeleteState,
+  } = useContext(ProfileContext);
 
   const MFALoginMethod = getMFALoginMethod(data);
 
@@ -48,20 +60,42 @@ function OtpInformation(): React.ReactElement | null {
       setOtpDeleteState(false);
       scrollNotification();
     }
-  }, [showOtpSuccess, setOtpConfigurationState, setSuccessMessage, otpDeleteState, setOtpDeleteState]);
+  }, [
+    showOtpSuccess,
+    setOtpConfigurationState,
+    setSuccessMessage,
+    otpDeleteState,
+    setOtpDeleteState,
+  ]);
 
   const flexBoxColumns = 'responsive-flex-box-columns-rows';
 
   return (
     <Fragment>
-      <div className={classNames(commonFormStyles[flexBoxColumns], commonFormStyles['password-container'])}>
-        <div className={classNames(commonFormStyles['editor-title-and-value'], commonFormStyles[flexBoxColumns])}>
+      <div
+        className={classNames(
+          commonFormStyles[flexBoxColumns],
+          commonFormStyles['password-container']
+        )}
+      >
+        <div
+          className={classNames(
+            commonFormStyles['editor-title-and-value'],
+            commonFormStyles[flexBoxColumns]
+          )}
+        >
           <div>
-            <h3 className={commonFormStyles['subtitle-size']}>{t('mfa.title')}</h3>
+            <h3 className={commonFormStyles['subtitle-size']}>
+              {t('mfa.title')}
+            </h3>
 
-            {!MFALoginMethod && <StatusLabel iconStart={<IconAlertCircle />}>{t('mfa.disabled')}</StatusLabel>}
+            {!MFALoginMethod && (
+              <StatusLabel iconStart={<IconAlertCircle />}>
+                {t('mfa.disabled')}
+              </StatusLabel>
+            )}
             {MFALoginMethod && (
-              <StatusLabel type='success' iconStart={<IconCheckCircle />}>
+              <StatusLabel type="success" iconStart={<IconCheckCircle />}>
                 {t('mfa.dateEnabled')} {formatDate(MFALoginMethod.createdAt)}
               </StatusLabel>
             )}
@@ -94,7 +128,11 @@ function OtpInformation(): React.ReactElement | null {
           </div>
         </div>
       </div>
-      <EditingNotifications ref={notificationRef} content={content} dataType={'totp'} />
+      <EditingNotifications
+        ref={notificationRef}
+        content={content}
+        dataType={'totp'}
+      />
     </Fragment>
   );
 }

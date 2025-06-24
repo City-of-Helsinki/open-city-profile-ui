@@ -14,7 +14,8 @@ export default function mockWindowLocation(): MockedWindowLocationActions {
   let path = '';
   let search = '';
 
-  const unload = () => setTimeout(() => window.dispatchEvent(new Event('unload')), 20);
+  const unload = () =>
+    setTimeout(() => window.dispatchEvent(new Event('unload')), 20);
   const tracker = vi.fn(unload);
   const location = Object.defineProperties(
     {},
@@ -40,7 +41,7 @@ export default function mockWindowLocation(): MockedWindowLocationActions {
       origin: {
         get: () => baseUrl,
       },
-    },
+    }
   );
   Reflect.deleteProperty(globalWin, 'location');
   Reflect.defineProperty(globalWin, 'location', {

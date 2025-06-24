@@ -7,9 +7,20 @@ interface Props extends ToastType {
   onClose: () => void;
 }
 
-function Toast({ title, type, onClose, hidden, description }: Props): React.ReactElement {
+function Toast({
+  title,
+  type,
+  onClose,
+  hidden,
+  description,
+}: Props): React.ReactElement {
   return (
-    <Notification show={!hidden} labelText={title} type={type} onClose={onClose}>
+    <Notification
+      show={!hidden}
+      labelText={title}
+      type={type}
+      onClose={onClose}
+    >
       {description}
     </Notification>
   );

@@ -2,10 +2,22 @@ import { cleanup, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
-import { MockedResponse, resetApolloMocks, ResponseProvider } from '../../../../common/test/MockApolloClientProvider';
-import { ElementSelector, renderComponentWithMocksAndContexts } from '../../../../common/test/testingLibraryTools';
-import { AnyObject, ServiceConnectionsQueryVariables } from '../../../../graphql/typings';
-import getServiceConnectionData, { ServiceConnectionData } from '../../../helpers/getServiceConnectionData';
+import {
+  MockedResponse,
+  resetApolloMocks,
+  ResponseProvider,
+} from '../../../../common/test/MockApolloClientProvider';
+import {
+  ElementSelector,
+  renderComponentWithMocksAndContexts,
+} from '../../../../common/test/testingLibraryTools';
+import {
+  AnyObject,
+  ServiceConnectionsQueryVariables,
+} from '../../../../graphql/typings';
+import getServiceConnectionData, {
+  ServiceConnectionData,
+} from '../../../helpers/getServiceConnectionData';
 import ServiceConnections from '../ServiceConnections';
 import i18n from '../../../../common/test/testi18nInit';
 import encodeServiceName from '../../../helpers/encodeServiceName';
@@ -21,15 +33,25 @@ describe('<ServiceConnections />', () => {
       queryVariableTracker(payload as ServiceConnectionsQueryVariables);
       return responses.shift() as MockedResponse;
     };
-    return renderComponentWithMocksAndContexts(responseProvider, <ServiceConnections />);
+    return renderComponentWithMocksAndContexts(
+      responseProvider,
+      <ServiceConnections />
+    );
   };
 
   const queryResultWithServiceConnection = getMyProfileWithServiceConnections();
-  const serviceList = getServiceConnectionData(queryResultWithServiceConnection);
-  const queryResultWithoutServiceConnections = getMyProfileWithServiceConnections();
-  (queryResultWithoutServiceConnections.myProfile as unknown as AnyObject).serviceConnections = null;
+  const serviceList = getServiceConnectionData(
+    queryResultWithServiceConnection
+  );
+  const queryResultWithoutServiceConnections =
+    getMyProfileWithServiceConnections();
+  (
+    queryResultWithoutServiceConnections.myProfile as unknown as AnyObject
+  ).serviceConnections = null;
 
-  const getDefaultResponse = () => [{ profileDataWithServiceConnections: queryResultWithServiceConnection }];
+  const getDefaultResponse = () => [
+    { profileDataWithServiceConnections: queryResultWithServiceConnection },
+  ];
 
   const testIds = {
     confirmButton: 'confirmation-modal-confirm-button',
@@ -42,7 +64,9 @@ describe('<ServiceConnections />', () => {
     testId: testIds[key],
   });
 
-  const getDeleteButtonSelector = (service: ServiceConnectionData): ElementSelector => ({
+  const getDeleteButtonSelector = (
+    service: ServiceConnectionData
+  ): ElementSelector => ({
     testId: `delete-service-connection-${encodeServiceName(service)}-button`,
   });
 
@@ -57,7 +81,7 @@ describe('<ServiceConnections />', () => {
             serviceName: serviceList[0].name,
           },
         },
-      ]),
+      ])
     );
   };
 
@@ -68,12 +92,13 @@ describe('<ServiceConnections />', () => {
   });
   describe('Loads and lists service connections', () => {
     it('should render all service connections. A load indicator is shown while loading', async () => {
-      const { getElement, waitForElement } = await renderTestSuite(getDefaultResponse());
+      const { getElement, waitForElement } =
+        await renderTestSuite(getDefaultResponse());
       await waitForElement({ testId: 'load-indicator' });
       await waitFor(() =>
         serviceList.forEach((service) => {
           expect(getElement({ text: service.title as string })).toBeDefined();
-        }),
+        })
       );
     });
 
@@ -81,13 +106,16 @@ describe('<ServiceConnections />', () => {
       const t = i18n.getFixedT('fi');
       const responses: MockedResponse[] = [
         {
-          profileDataWithServiceConnections: queryResultWithoutServiceConnections,
+          profileDataWithServiceConnections:
+            queryResultWithoutServiceConnections,
         },
       ];
 
       const { getElement } = await renderTestSuite(responses);
       await waitFor(() => {
-        expect(getElement({ text: t('serviceConnections.empty') })).toBeDefined();
+        expect(
+          getElement({ text: t('serviceConnections.empty') })
+        ).toBeDefined();
       });
     });
 
@@ -111,7 +139,8 @@ describe('<ServiceConnections />', () => {
       ];
       const t = i18n.getFixedT('fi');
 
-      const { getElement, waitForElement, clickElement } = await renderTestSuite(responses);
+      const { getElement, waitForElement, clickElement } =
+        await renderTestSuite(responses);
 
       await waitForElement({ testId: 'service-connections-load-error' });
 
@@ -120,18 +149,21 @@ describe('<ServiceConnections />', () => {
       });
 
       await waitFor(() => {
-        expect(getElement({ text: t('serviceConnections.title') })).toBeDefined();
+        expect(
+          getElement({ text: t('serviceConnections.title') })
+        ).toBeDefined();
       });
     });
 
     it('If a serviceConnection is found in the sessionStorage, it is auto opened', async () => {
       setServiceDataToStorage();
 
-      const { getElement, waitForElement } = await renderTestSuite(getDefaultResponse());
+      const { getElement, waitForElement } =
+        await renderTestSuite(getDefaultResponse());
       await waitFor(() =>
         serviceList.forEach((service) => {
           expect(getElement({ text: service.title as string })).toBeDefined();
-        }),
+        })
       );
       await waitFor(async () => {
         await waitForElement(getDeleteButtonSelector(serviceList[0]));
@@ -142,7 +174,8 @@ describe('<ServiceConnections />', () => {
     it('Modal is shown. It is removed when close button is clicked', async () => {
       setServiceDataToStorage();
 
-      const { clickElement, waitForElement, waitForElementNotToExist } = await renderTestSuite(getDefaultResponse());
+      const { clickElement, waitForElement, waitForElementNotToExist } =
+        await renderTestSuite(getDefaultResponse());
       await waitFor(async () => {
         await clickElement(getDeleteButtonSelector(serviceList[0]));
       });

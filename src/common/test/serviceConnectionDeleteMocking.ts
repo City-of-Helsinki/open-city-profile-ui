@@ -1,4 +1,7 @@
-import { GdprDeleteMyServiceDataMutation, GdprDeleteMyServiceDataMutationFragment } from '../../graphql/generatedTypes';
+import {
+  GdprDeleteMyServiceDataMutation,
+  GdprDeleteMyServiceDataMutationFragment,
+} from '../../graphql/generatedTypes';
 
 export function getServiceConnectionDeleteResult(errorCodes?: string[]) {
   const success = !errorCodes;

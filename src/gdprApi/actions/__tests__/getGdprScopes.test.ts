@@ -7,16 +7,25 @@ import {
   isKeycloakAuthorisationCodeNeeded,
 } from '../getGdprScopes';
 import { createActionQueueRunner } from '../../../common/actionQueue/actionQueueRunner';
-import { Action, ActionProps, JSONStringifyableResult, QueueController } from '../../../common/actionQueue/actionQueue';
+import {
+  Action,
+  ActionProps,
+  JSONStringifyableResult,
+  QueueController,
+} from '../../../common/actionQueue/actionQueue';
 import { getServiceConnectionsAction } from '../getServiceConnections';
 import getMyProfileWithServiceConnections from '../../../common/test/getMyProfileWithServiceConnections';
 import { getServiceConnectionsServices } from '../../utils';
 import { getActionResultAndErrorMessage } from '../utils';
 
 describe('getGdprScopes.ts', () => {
-  const serviceConnections = getServiceConnectionsServices(getMyProfileWithServiceConnections(true));
-  const getScopes = (isPureKeycloak: boolean, scope: 'gdprQueryScope' | 'gdprDeleteScope') =>
-    serviceConnections.map((service) => service[scope]);
+  const serviceConnections = getServiceConnectionsServices(
+    getMyProfileWithServiceConnections(true)
+  );
+  const getScopes = (
+    isPureKeycloak: boolean,
+    scope: 'gdprQueryScope' | 'gdprDeleteScope'
+  ) => serviceConnections.map((service) => service[scope]);
 
   const initTests = async ({
     scopeType = 'query',
@@ -36,11 +45,20 @@ describe('getGdprScopes.ts', () => {
       executor: () =>
         returnError
           ? Promise.reject(new Error('Error'))
-          : Promise.resolve(returnNoData ? [] : (serviceConnections as unknown as JSONStringifyableResult)),
+          : Promise.resolve(
+              returnNoData
+                ? []
+                : (serviceConnections as unknown as JSONStringifyableResult)
+            ),
     };
-    const gdprAction = scopeType === 'query' ? getGdprQueryScopesAction : getGdprDeleteScopesAction;
+    const gdprAction =
+      scopeType === 'query'
+        ? getGdprQueryScopesAction
+        : getGdprDeleteScopesAction;
 
-    const queue = noServiceConnectionsAction ? [gdprAction] : [fakeServiceConnectionsAction, gdprAction];
+    const queue = noServiceConnectionsAction
+      ? [gdprAction]
+      : [fakeServiceConnectionsAction, gdprAction];
 
     const runner = createActionQueueRunner(queue);
     if (!noAutoStart) {
@@ -52,7 +70,8 @@ describe('getGdprScopes.ts', () => {
     return {
       runner,
       action: runner.getByType(getGdprQueryScopesAction.type) as Action,
-      getResultAndError: () => getActionResultAndErrorMessage(gdprAction.type, runner),
+      getResultAndError: () =>
+        getActionResultAndErrorMessage(gdprAction.type, runner),
     };
   };
   afterEach(() => {
@@ -133,7 +152,10 @@ describe('getGdprScopes.ts', () => {
   });
   describe(`isKeycloakAuthorisationCodeNeeded() 
             Checks from scopes, if authorization code is needed from oidc server.`, () => {
-    const updateServiceConnectionsResult = (controller: QueueController, result: JSONStringifyableResult) => {
+    const updateServiceConnectionsResult = (
+      controller: QueueController,
+      result: JSONStringifyableResult
+    ) => {
       controller.updateActionAndQueue(getGdprQueryScopesAction.type, {
         complete: true,
         result,

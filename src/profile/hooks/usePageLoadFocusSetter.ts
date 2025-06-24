@@ -16,7 +16,10 @@ export function getLinkRedirectState(): RedirectState['state'] {
   };
 }
 
-export function usePageLoadFocusSetter(props?: { selector?: string; disableFocusing?: boolean }): void {
+export function usePageLoadFocusSetter(props?: {
+  selector?: string;
+  disableFocusing?: boolean;
+}): void {
   const location = useLocation();
   const navType = useNavigationType(); // "POP", "PUSH", "REPLACE"
   const { disableFocusing = false, selector } = props || {};
@@ -34,7 +37,8 @@ export function usePageLoadFocusSetter(props?: { selector?: string; disableFocus
       if (selector) {
         getElementAndSetFocus(selector);
       } else {
-        getElementAndSetFocus(`.${pageLoadFocusTargetClassName}`) || getElementAndSetFocus('h1');
+        getElementAndSetFocus(`.${pageLoadFocusTargetClassName}`) ||
+          getElementAndSetFocus('h1');
       }
     }
   }, [disableFocusing, location, navType, selector]);

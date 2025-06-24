@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { cloneProfileAndProvideManipulationFunctions, getMyProfile } from '../../../../common/test/myProfileMocking';
+import {
+  cloneProfileAndProvideManipulationFunctions,
+  getMyProfile,
+} from '../../../../common/test/myProfileMocking';
 import {
   renderComponentWithMocksAndContexts,
   TestTools,
@@ -8,7 +11,10 @@ import {
 } from '../../../../common/test/testingLibraryTools';
 import { ProfileData } from '../../../../graphql/typings';
 import BasicData from '../BasicData';
-import { MockedResponse, ResponseProvider } from '../../../../common/test/MockApolloClientProvider';
+import {
+  MockedResponse,
+  ResponseProvider,
+} from '../../../../common/test/MockApolloClientProvider';
 import { basicDataType, BasicDataValue } from '../../../helpers/editData';
 import i18n from '../../../../common/test/testi18nInit';
 import { getFormFields } from '../../../helpers/formProperties';
@@ -29,12 +35,13 @@ describe('<BasicData /> ', () => {
   const responses: MockedResponse[] = [];
   const initialProfile = getMyProfile().myProfile as ProfileData;
   const renderTestSuite = () => {
-    const responseProvider: ResponseProvider = () => responses.shift() as MockedResponse;
+    const responseProvider: ResponseProvider = () =>
+      responses.shift() as MockedResponse;
     return renderComponentWithMocksAndContexts(
       responseProvider,
       <RenderChildrenWhenDataIsComplete>
         <BasicData />
-      </RenderChildrenWhenDataIsComplete>,
+      </RenderChildrenWhenDataIsComplete>
     );
   };
   const t = i18n.getFixedT('fi');
@@ -53,14 +60,28 @@ describe('<BasicData /> ', () => {
   });
 
   // verify rendered data
-  const verifyValues = async (testTools: TestTools, source: DataSource, targetIsInput = false) => {
+  const verifyValues = async (
+    testTools: TestTools,
+    source: DataSource,
+    targetIsInput = false
+  ) => {
     const { getTextOrInputValue } = testTools;
-    const { firstName, nickname, lastName } = source as Partial<BasicDataValue | ProfileData>;
+    const { firstName, nickname, lastName } = source as Partial<
+      BasicDataValue | ProfileData
+    >;
     const getSelector = (name: string): Record<string, string> =>
-      targetIsInput ? { id: `${basicDataType}-${name}` } : { testId: `${basicDataType}-${name}-value` };
-    await expect(getTextOrInputValue(getSelector('firstName'))).resolves.toBe(firstName);
-    await expect(getTextOrInputValue(getSelector('nickname'))).resolves.toBe(nickname);
-    await expect(getTextOrInputValue(getSelector('lastName'))).resolves.toBe(lastName);
+      targetIsInput
+        ? { id: `${basicDataType}-${name}` }
+        : { testId: `${basicDataType}-${name}-value` };
+    await expect(getTextOrInputValue(getSelector('firstName'))).resolves.toBe(
+      firstName
+    );
+    await expect(getTextOrInputValue(getSelector('nickname'))).resolves.toBe(
+      nickname
+    );
+    await expect(getTextOrInputValue(getSelector('lastName'))).resolves.toBe(
+      lastName
+    );
   };
 
   // set new data to input fields
@@ -81,7 +102,9 @@ describe('<BasicData /> ', () => {
     });
   };
 
-  const initTests = async (profileData = initialProfile): Promise<TestTools> => {
+  const initTests = async (
+    profileData = initialProfile
+  ): Promise<TestTools> => {
     responses.push({ profileData });
     const testTools = await renderTestSuite();
     await testTools.fetch();
@@ -89,7 +112,9 @@ describe('<BasicData /> ', () => {
   };
 
   const getUpdatedProfile = (update: BasicDataValue) =>
-    cloneProfileAndProvideManipulationFunctions(initialProfile).setBasicData(update).getProfile();
+    cloneProfileAndProvideManipulationFunctions(initialProfile)
+      .setBasicData(update)
+      .getProfile();
 
   const commonTestProps: CommonTestSuite = {
     selectors: getElementSelectors(basicDataType),
@@ -171,7 +196,7 @@ describe('<BasicData /> ', () => {
         initialValues: initialProfile,
         ...commonTestProps,
       },
-      testRuns,
+      testRuns
     );
   });
 
@@ -179,8 +204,10 @@ describe('<BasicData /> ', () => {
     const testTools = await initTests({ ...initialProfile, nickname: '' });
     const { findByTestId } = testTools;
 
-    expect((await findByTestId(`${basicDataType}-nickname-label`)).parentElement?.getAttribute('aria-hidden')).toEqual(
-      'true',
-    );
+    expect(
+      (
+        await findByTestId(`${basicDataType}-nickname-label`)
+      ).parentElement?.getAttribute('aria-hidden')
+    ).toEqual('true');
   });
 });

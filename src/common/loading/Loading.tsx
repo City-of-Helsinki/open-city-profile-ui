@@ -15,10 +15,12 @@ function Loading(props: Props): React.ReactElement {
     <>
       {isLoading ? (
         <div
-          className={alignLeft ? styles['wrapper-left-aligned'] : styles.wrapper}
+          className={
+            alignLeft ? styles['wrapper-left-aligned'] : styles.wrapper
+          }
           data-testid={dataTestId || 'load-indicator'}
-          aria-live='polite'
-          aria-busy='true'
+          aria-live="polite"
+          aria-busy="true"
         >
           <div className={styles.content}>
             <LoadingSpinner small />

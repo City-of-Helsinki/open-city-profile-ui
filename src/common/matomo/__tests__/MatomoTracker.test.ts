@@ -29,7 +29,9 @@ describe('MatomoTracker', () => {
   });
 
   it('should throw error if urlBase missing', () => {
-    expect(() => new MatomoTracker({ siteId: 'test123' } as MatomoTrackerOptions)).toThrowError();
+    expect(
+      () => new MatomoTracker({ siteId: 'test123' } as MatomoTrackerOptions)
+    ).toThrowError();
   });
 
   it('should throw error if siteId missing', () => {
@@ -37,7 +39,7 @@ describe('MatomoTracker', () => {
       () =>
         new MatomoTracker({
           urlBase: 'https://www.test.fi',
-        } as MatomoTrackerOptions),
+        } as MatomoTrackerOptions)
     ).toThrowError();
   });
 });

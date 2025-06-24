@@ -37,7 +37,8 @@ vi.mock('../authCodeRedirectionInitialization', async () => {
   return {
     __esModule: true,
     ...module,
-    getAuthCodeRedirectionInitializationResult: () => mockGetAuthCodeRedirectionInitializationResult(),
+    getAuthCodeRedirectionInitializationResult: () =>
+      mockGetAuthCodeRedirectionInitializationResult(),
   };
 });
 
@@ -49,7 +50,11 @@ describe('authCodeRedirectionAction.ts', () => {
   }: {
     noKeycloakScopes?: boolean;
   } = {}) => {
-    const queue = [getGdprQueryScopesAction, keycloakAuthCodeRedirectionAction, keycloakAuthCodeCallbackUrlAction];
+    const queue = [
+      getGdprQueryScopesAction,
+      keycloakAuthCodeRedirectionAction,
+      keycloakAuthCodeCallbackUrlAction,
+    ];
     const runner = createActionQueueRunner(queue);
     runner.updateActionAndQueue(getGdprQueryScopesAction.type, {
       result: {
@@ -60,7 +65,8 @@ describe('authCodeRedirectionAction.ts', () => {
 
     return {
       runner,
-      getKeycloadAction: () => runner.getByType(keycloakAuthCodeCallbackUrlAction.type) as Action,
+      getKeycloadAction: () =>
+        runner.getByType(keycloakAuthCodeCallbackUrlAction.type) as Action,
     };
   };
 
@@ -79,7 +85,9 @@ describe('authCodeRedirectionAction.ts', () => {
       mockedWindowControls.setPath(config.gdprCallbackPath);
       const { runner, getKeycloadAction } = initTests();
       const keycloadAction = getKeycloadAction();
-      const [, resultForKeycloak] = await to(keycloadAction.executor(keycloadAction, runner));
+      const [, resultForKeycloak] = await to(
+        keycloadAction.executor(keycloadAction, runner)
+      );
       expect(resultForKeycloak).toBeTruthy();
     });
     it('Resolves to false, if authcode action is  not needed', async () => {
@@ -88,7 +96,9 @@ describe('authCodeRedirectionAction.ts', () => {
         noKeycloakScopes: true,
       });
       const keycloadAction = getKeycloadAction();
-      const [, resultForKeycloak] = await to(keycloadAction.executor(keycloadAction, runner));
+      const [, resultForKeycloak] = await to(
+        keycloadAction.executor(keycloadAction, runner)
+      );
       expect(resultForKeycloak).toBeFalsy();
     });
     it('Rejects after a timeout, when executed and current path is not for the gdpr callback, ', async () => {
@@ -127,7 +137,9 @@ describe('authCodeRedirectionAction.ts', () => {
         complete: true,
       });
       expect(isQueueWaitingForAuthCodeCallback(runner)).toBeTruthy();
-      expect(getNextAuthCodeCallbackDetector(runner)).toBe(getKeycloadAction().type);
+      expect(getNextAuthCodeCallbackDetector(runner)).toBe(
+        getKeycloadAction().type
+      );
       runner.updateActionAndQueue(getKeycloadAction().type, {
         complete: true,
       });
@@ -143,7 +155,9 @@ describe('authCodeRedirectionAction.ts', () => {
         complete: true,
       });
 
-      expect(resumeQueueFromNextCallbackDetector(runner)).toBe(getKeycloadAction().type);
+      expect(resumeQueueFromNextCallbackDetector(runner)).toBe(
+        getKeycloadAction().type
+      );
       await waitFor(() => {
         expect(runner.isFinished()).toBeTruthy();
       });

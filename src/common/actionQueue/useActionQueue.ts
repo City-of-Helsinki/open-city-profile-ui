@@ -9,7 +9,13 @@ import {
   mergeQueues,
   verifyQueuesMatch,
 } from './actionQueue';
-import { LogType, Logger, QueueRunner, createActionQueueRunner, isGenericError } from './actionQueueRunner';
+import {
+  LogType,
+  Logger,
+  QueueRunner,
+  createActionQueueRunner,
+  isGenericError,
+} from './actionQueueRunner';
 import { StoredQueue, getStoredQueue, storeQueue } from './actionQueueStorage';
 
 export type QueueState = {
@@ -28,7 +34,10 @@ export type HookFunctions = {
   state: QueueState;
 };
 
-export function useActionQueue(initialQueueProps: InitialQueue, storageKey?: string): HookFunctions {
+export function useActionQueue(
+  initialQueueProps: InitialQueue,
+  storageKey?: string
+): HookFunctions {
   const [, update] = useState(0);
   const queueStateRef = useRef<QueueState>({
     lastActionType: undefined,
@@ -62,7 +71,11 @@ export function useActionQueue(initialQueueProps: InitialQueue, storageKey?: str
       },
     };
 
-    const getNewState = (controller: QueueController, type?: LogType, action?: Action): QueueState => {
+    const getNewState = (
+      controller: QueueController,
+      type?: LogType,
+      action?: Action
+    ): QueueState => {
       const newState = {
         ...queueStateRef.current,
       };
@@ -98,7 +111,10 @@ export function useActionQueue(initialQueueProps: InitialQueue, storageKey?: str
       if (!storedQueue) {
         return primaryQueue;
       }
-      if (!verifyQueuesMatch(primaryQueue, storedQueue) || !storageFunctions.verifyQueueIsCurrent(storedQueue)) {
+      if (
+        !verifyQueuesMatch(primaryQueue, storedQueue) ||
+        !storageFunctions.verifyQueueIsCurrent(storedQueue)
+      ) {
         return primaryQueue;
       }
       return mergeQueues(primaryQueue, storedQueue).map((props) => {
@@ -111,7 +127,10 @@ export function useActionQueue(initialQueueProps: InitialQueue, storageKey?: str
       });
     };
 
-    const runner = createActionQueueRunner(resolveQueue(initialQueueProps) as InitialQueue, logger);
+    const runner = createActionQueueRunner(
+      resolveQueue(initialQueueProps) as InitialQueue,
+      logger
+    );
     const dispose = () => {
       runner.dispose();
     };
@@ -119,7 +138,8 @@ export function useActionQueue(initialQueueProps: InitialQueue, storageKey?: str
       runner.reset();
     };
 
-    const isValid: HookFunctions['isValid'] = () => runner.getQueue().length > 0;
+    const isValid: HookFunctions['isValid'] = () =>
+      runner.getQueue().length > 0;
 
     queueStateRef.current = getNewState(runner);
     return {
@@ -134,7 +154,7 @@ export function useActionQueue(initialQueueProps: InitialQueue, storageKey?: str
     () => () => {
       functions.getQueueRunner().dispose();
     },
-    [functions],
+    [functions]
   );
   return {
     ...functions,

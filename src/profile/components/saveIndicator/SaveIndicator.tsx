@@ -15,9 +15,14 @@ const SaveIndicator = (props: Props): React.ReactElement | null => {
   if (!action) {
     return null;
   }
-  const translationKey = action === 'remove' ? 'notification.removing' : 'notification.saving';
+  const translationKey =
+    action === 'remove' ? 'notification.removing' : 'notification.saving';
   return (
-    <div role='alert' className={commonFormStyles['visually-hidden']} data-testid={`${testId}-save-indicator`}>
+    <div
+      role="alert"
+      className={commonFormStyles['visually-hidden']}
+      data-testid={`${testId}-save-indicator`}
+    >
       {t(translationKey)}
     </div>
   );

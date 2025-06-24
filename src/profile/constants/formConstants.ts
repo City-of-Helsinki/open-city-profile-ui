@@ -1,4 +1,11 @@
-import { AddressNode, EmailNode, PhoneNode, AddressType, EmailType, PhoneType } from '../../graphql/typings';
+import {
+  AddressNode,
+  EmailNode,
+  PhoneNode,
+  AddressType,
+  EmailType,
+  PhoneType,
+} from '../../graphql/typings';
 
 type FormConstants = {
   EMPTY_VALUES: {

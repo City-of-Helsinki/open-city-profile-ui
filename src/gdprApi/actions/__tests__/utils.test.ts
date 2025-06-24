@@ -17,7 +17,11 @@ import {
   rejectExecutorWithStartPageRedirection,
 } from '../utils';
 import { keycloakRedirectionInitializationAction } from '../authCodeRedirectionInitialization';
-import { Action, createQueueController, createQueueFromProps } from '../../../common/actionQueue/actionQueue';
+import {
+  Action,
+  createQueueController,
+  createQueueFromProps,
+} from '../../../common/actionQueue/actionQueue';
 import { getGdprQueryScopesAction } from '../getGdprScopes';
 import mockWindowLocation from '../../../common/test/mockWindowLocation';
 import { createRedirectorAndCatcherActionProps } from '../redirectionHandlers';
@@ -45,20 +49,36 @@ describe('utils.ts', () => {
   describe('getActionResultAndErrorMessage()', () => {
     it('returns result and error message of given action', async () => {
       const { runner } = initTests({ fail: true });
-      const resolvingAction1Before = getActionResultAndErrorMessage(resolvingActionSource1.type, runner);
+      const resolvingAction1Before = getActionResultAndErrorMessage(
+        resolvingActionSource1.type,
+        runner
+      );
       expect(resolvingAction1Before.result).toBeUndefined();
       expect(resolvingAction1Before.errorMessage).toBeUndefined();
       runner.start();
       await waitFor(() => {
         expect(runner.isFinished()).toBeTruthy();
       });
-      const resolvingAction1After = getActionResultAndErrorMessage(resolvingActionSource1.type, runner);
-      expect(resolvingAction1After.result).toBe(resolvingActionSource1.resolveValue);
+      const resolvingAction1After = getActionResultAndErrorMessage(
+        resolvingActionSource1.type,
+        runner
+      );
+      expect(resolvingAction1After.result).toBe(
+        resolvingActionSource1.resolveValue
+      );
       expect(resolvingAction1After.errorMessage).toBeUndefined();
-      const rejectingActionAfter = getActionResultAndErrorMessage(rejectingActionSource.type, runner);
+      const rejectingActionAfter = getActionResultAndErrorMessage(
+        rejectingActionSource.type,
+        runner
+      );
       expect(rejectingActionAfter.result).toBeUndefined();
-      expect(rejectingActionAfter.errorMessage).toBe((rejectingActionSource.rejectValue as Error).message);
-      const notRunExecutedAction = getActionResultAndErrorMessage(resolvingActionSource2.type, runner);
+      expect(rejectingActionAfter.errorMessage).toBe(
+        (rejectingActionSource.rejectValue as Error).message
+      );
+      const notRunExecutedAction = getActionResultAndErrorMessage(
+        resolvingActionSource2.type,
+        runner
+      );
       expect(notRunExecutedAction.result).toBeUndefined();
       expect(notRunExecutedAction.errorMessage).toBeUndefined();
     });
@@ -76,7 +96,10 @@ describe('utils.ts', () => {
     }: {
       noKeycloakScopes?: boolean;
     } = {}) => {
-      const queue = [getGdprQueryScopesAction, keycloakRedirectionInitializationAction];
+      const queue = [
+        getGdprQueryScopesAction,
+        keycloakRedirectionInitializationAction,
+      ];
       const runner = createActionQueueRunner(queue);
       runner.updateActionAndQueue(getGdprQueryScopesAction.type, {
         result: {
@@ -91,27 +114,50 @@ describe('utils.ts', () => {
     };
     it(`returns true when Keycloak scopes exist and action is Keycloak related`, async () => {
       const { runner } = initAuthCodeTests();
-      expect(isAuthCodeActionNeeded(keycloakRedirectionInitializationAction as Action, runner)).toBeTruthy();
+      expect(
+        isAuthCodeActionNeeded(
+          keycloakRedirectionInitializationAction as Action,
+          runner
+        )
+      ).toBeTruthy();
     });
     it(`returns false when Keycloak scopes does not exist`, async () => {
       const { runner } = initAuthCodeTests({ noKeycloakScopes: true });
-      expect(isAuthCodeActionNeeded(keycloakRedirectionInitializationAction as Action, runner)).toBeFalsy();
+      expect(
+        isAuthCodeActionNeeded(
+          keycloakRedirectionInitializationAction as Action,
+          runner
+        )
+      ).toBeFalsy();
     });
   });
   describe('createFailedActionParams()', () => {
     it('creates url params with failed action type and an optional message', async () => {
-      expect(createFailedActionParams(keycloakRedirectionInitializationAction as Action)).toBe(
-        `error=${keycloakRedirectionInitializationAction.type}`,
-      );
-      expect(createFailedActionParams(keycloakRedirectionInitializationAction as Action, 'errorMessage')).toBe(
-        `error=${keycloakRedirectionInitializationAction.type}&message=errorMessage`,
+      expect(
+        createFailedActionParams(
+          keycloakRedirectionInitializationAction as Action
+        )
+      ).toBe(`error=${keycloakRedirectionInitializationAction.type}`);
+      expect(
+        createFailedActionParams(
+          keycloakRedirectionInitializationAction as Action,
+          'errorMessage'
+        )
+      ).toBe(
+        `error=${keycloakRedirectionInitializationAction.type}&message=errorMessage`
       );
     });
     it('if third argument is true, new params are appended to existing', async () => {
       const existingParams = 'param1=1&param2=2';
       mockedWindowControls.setSearch(existingParams);
-      expect(createFailedActionParams(keycloakRedirectionInitializationAction as Action, 'errorMessage', true)).toBe(
-        `${existingParams}&error=${keycloakRedirectionInitializationAction.type}&message=errorMessage`,
+      expect(
+        createFailedActionParams(
+          keycloakRedirectionInitializationAction as Action,
+          'errorMessage',
+          true
+        )
+      ).toBe(
+        `${existingParams}&error=${keycloakRedirectionInitializationAction.type}&message=errorMessage`
       );
     });
   });
@@ -131,14 +177,17 @@ describe('utils.ts', () => {
         and an error message in the error.message`, async () => {
       const path = '/startPage';
       const queue = createQueueController(
-        createQueueFromProps([...createRedirectorAndCatcherActionProps(path), keycloakRedirectionInitializationAction]),
+        createQueueFromProps([
+          ...createRedirectorAndCatcherActionProps(path),
+          keycloakRedirectionInitializationAction,
+        ])
       );
       const [error] = await to(
         rejectExecutorWithStartPageRedirection(
           queue,
           keycloakRedirectionInitializationAction as Action,
-          'errorMessage',
-        ),
+          'errorMessage'
+        )
       );
       expect(JSON.parse(error?.message as string)).toMatchObject({
         isRedirectionRequest: true,
@@ -146,13 +195,15 @@ describe('utils.ts', () => {
       });
     });
     it(`throws if there is no startPagePath provided by any action`, async () => {
-      const queue = createQueueController(createQueueFromProps([keycloakRedirectionInitializationAction]));
+      const queue = createQueueController(
+        createQueueFromProps([keycloakRedirectionInitializationAction])
+      );
       expect(() =>
         rejectExecutorWithStartPageRedirection(
           queue,
           keycloakRedirectionInitializationAction as Action,
-          'errorMessage',
-        ),
+          'errorMessage'
+        )
       ).toThrow();
     });
   });

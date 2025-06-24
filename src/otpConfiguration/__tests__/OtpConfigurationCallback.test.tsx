@@ -2,7 +2,9 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { act, render } from '@testing-library/react';
 
-import OtpConfigurationCallback, { OtpConfigurationCallbackProps } from '../OtpConfigurationCallback';
+import OtpConfigurationCallback, {
+  OtpConfigurationCallbackProps,
+} from '../OtpConfigurationCallback';
 
 // Mock navigate function
 const navigateMock = vi.fn();
@@ -18,7 +20,7 @@ const renderComponent = (props: OtpConfigurationCallbackProps) =>
   render(
     <BrowserRouter>
       <OtpConfigurationCallback {...props} />
-    </BrowserRouter>,
+    </BrowserRouter>
   );
 
 const getNavigateCallArgument = () => navigateMock.mock.calls[0][0];
@@ -38,7 +40,9 @@ describe('<OtpConfigurationCallback />', () => {
   });
 
   it('render without error', async () => {
-    renderComponent(mockedDefaultProps as unknown as OtpConfigurationCallbackProps);
+    renderComponent(
+      mockedDefaultProps as unknown as OtpConfigurationCallbackProps
+    );
 
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
@@ -46,7 +50,9 @@ describe('<OtpConfigurationCallback />', () => {
   });
 
   it('should redirect user', async () => {
-    renderComponent(mockedDefaultProps as unknown as OtpConfigurationCallbackProps);
+    renderComponent(
+      mockedDefaultProps as unknown as OtpConfigurationCallbackProps
+    );
 
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
@@ -62,7 +68,9 @@ describe('<OtpConfigurationCallback /> delete', () => {
   });
 
   it('render without error', async () => {
-    renderComponent(mockedDeleteProps as unknown as OtpConfigurationCallbackProps);
+    renderComponent(
+      mockedDeleteProps as unknown as OtpConfigurationCallbackProps
+    );
 
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
@@ -70,7 +78,9 @@ describe('<OtpConfigurationCallback /> delete', () => {
   });
 
   it('should redirect user', async () => {
-    renderComponent(mockedDeleteProps as unknown as OtpConfigurationCallbackProps);
+    renderComponent(
+      mockedDeleteProps as unknown as OtpConfigurationCallbackProps
+    );
 
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));

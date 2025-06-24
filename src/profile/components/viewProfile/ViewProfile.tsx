@@ -12,8 +12,8 @@ function ViewProfile(): React.ReactElement {
     <React.Fragment>
       {isComplete && (
         <Routes>
-          <Route path='/connected-services' element={<ServiceConnections />} />
-          <Route path='/*' element={<ProfileInformation />} />
+          <Route path="/connected-services" element={<ServiceConnections />} />
+          <Route path="/*" element={<ProfileInformation />} />
         </Routes>
       )}
     </React.Fragment>

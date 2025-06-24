@@ -8,7 +8,9 @@ export type DeleteResultLists = {
   failures: DeleteResultServiceTitles;
 };
 
-export default function parseDeleteProfileResult(returnedData?: GdprDeleteMyProfileMutation): DeleteResultLists {
+export default function parseDeleteProfileResult(
+  returnedData?: GdprDeleteMyProfileMutation
+): DeleteResultLists {
   const successful: DeleteResultServiceTitles = [];
   const failures: DeleteResultServiceTitles = [];
   const results = returnedData?.deleteMyProfile?.results;

@@ -1,7 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import ConfirmationModal, { Props as ModalComponentProps } from '../ConfirmationModal';
+import ConfirmationModal, {
+  Props as ModalComponentProps,
+} from '../ConfirmationModal';
 import { createDomHelpersWithTesting } from '../../../../../common/test/testingLibraryTools';
 import i18n from '../../../../../common/test/testi18nInit';
 
@@ -30,10 +32,11 @@ describe('<ConfirmationModal /> ', () => {
         actionButtonText={actionButtonText}
         title={title}
         content={content}
-      />,
+      />
     );
 
-  const renderAndReturnHelpers = (props: RenderProps) => createDomHelpersWithTesting(renderModal(props));
+  const renderAndReturnHelpers = (props: RenderProps) =>
+    createDomHelpersWithTesting(renderModal(props));
 
   beforeEach(() => {
     vi.resetAllMocks();
@@ -52,7 +55,9 @@ describe('<ConfirmationModal /> ', () => {
     expect(title).toBeNull();
   });
   it('Renders content and description when content is defined', async () => {
-    const ContentWithTestId = () => <div data-testid={testIds.content}>THIS_IS_CONTENT</div>;
+    const ContentWithTestId = () => (
+      <div data-testid={testIds.content}>THIS_IS_CONTENT</div>
+    );
     const { findByTestId, findById } = renderAndReturnHelpers({
       content: () => <ContentWithTestId />,
     });
@@ -67,7 +72,9 @@ describe('<ConfirmationModal /> ', () => {
     expect(content).toBeNull();
   });
   it('Confirm button calls onConfirm', async () => {
-    const ContentWithTestId = () => <div data-testid={testIds.content}>THIS_IS_CONTENT</div>;
+    const ContentWithTestId = () => (
+      <div data-testid={testIds.content}>THIS_IS_CONTENT</div>
+    );
     const { findByTestId, click } = renderAndReturnHelpers({
       content: () => <ContentWithTestId />,
     });
@@ -78,12 +85,16 @@ describe('<ConfirmationModal /> ', () => {
     expect(onClose.mock.calls).toHaveLength(0);
   });
   it('Cancel button calls onClose', async () => {
-    const ContentWithTestId = () => <div data-testid={testIds.content}>THIS_IS_CONTENT</div>;
+    const ContentWithTestId = () => (
+      <div data-testid={testIds.content}>THIS_IS_CONTENT</div>
+    );
     const { findByTestId, click } = renderAndReturnHelpers({
       content: () => <ContentWithTestId />,
     });
     const cancelButton = (await findByTestId(testIds.cancel)) as HTMLElement;
-    expect(cancelButton.innerHTML.includes(t('confirmationModal.cancel'))).toBeTruthy();
+    expect(
+      cancelButton.innerHTML.includes(t('confirmationModal.cancel'))
+    ).toBeTruthy();
     await click(cancelButton);
     expect(onClose.mock.calls).toHaveLength(1);
     expect(onConfirm.mock.calls).toHaveLength(0);

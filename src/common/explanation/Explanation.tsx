@@ -13,7 +13,13 @@ type Props = {
   useHeadingHeroStyle?: boolean;
 };
 
-function Explanation({ className, heading, text, dataTestId, useHeadingHeroStyle }: Props): React.ReactElement {
+function Explanation({
+  className,
+  heading,
+  text,
+  dataTestId,
+  useHeadingHeroStyle,
+}: Props): React.ReactElement {
   usePageLoadFocusSetter();
   return (
     <div

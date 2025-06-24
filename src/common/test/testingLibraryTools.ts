@@ -1,5 +1,11 @@
 import React, { PropsWithChildren } from 'react';
-import { fireEvent, RenderResult, waitFor, cleanup, RenderHookResult } from '@testing-library/react';
+import {
+  fireEvent,
+  RenderResult,
+  waitFor,
+  cleanup,
+  RenderHookResult,
+} from '@testing-library/react';
 import { GraphQLError } from 'graphql';
 
 import { resetApolloMocks, ResponseProvider } from './MockApolloClientProvider';
@@ -22,7 +28,10 @@ type WaitForElementAndValueProps = {
 
 type ElementGetterResult = HTMLElement | Element | null;
 
-type ComboBoxSelector = (selectorPrefix: string, value: string) => Promise<void>;
+type ComboBoxSelector = (
+  selectorPrefix: string,
+  value: string
+) => Promise<void>;
 
 export type TestTools = RenderResult & {
   getElement: (selector: ElementSelector) => HTMLElement | null;
@@ -30,10 +39,14 @@ export type TestTools = RenderResult & {
   waitForDataChange: (previousChangeTime?: number) => Promise<void>;
   waitForElement: (selector: ElementSelector) => Promise<void>;
   waitForElementNotToExist: (selector: ElementSelector) => Promise<void>;
-  getTextOrInputValue: (selector: ElementSelector) => Promise<string | undefined>;
+  getTextOrInputValue: (
+    selector: ElementSelector
+  ) => Promise<string | undefined>;
   fetch: () => Promise<void>;
   clickElement: (selector: ElementSelector) => Promise<HTMLElement | null>;
-  keydownEnterElement: (selector: ElementSelector) => Promise<HTMLElement | null>;
+  keydownEnterElement: (
+    selector: ElementSelector
+  ) => Promise<HTMLElement | null>;
   submit: (props?: {
     waitForOnSaveNotification?: WaitForElementAndValueProps;
     waitForAfterSaveNotification?: WaitForElementAndValueProps;
@@ -66,7 +79,7 @@ export const submitButtonSelector: ElementSelector = {
 
 export const getElementAttribute = async (
   elementGetter: () => ElementGetterResult,
-  attribute: string,
+  attribute: string
 ): Promise<string | null> =>
   waitFor(async () => {
     const element = elementGetter();
@@ -79,12 +92,14 @@ export const getElementAttribute = async (
 export const waitForElementAttributeValue = async (
   elementGetter: () => ElementGetterResult,
   attribute: string,
-  value: string | boolean,
+  value: string | boolean
 ): Promise<void> => {
   await waitFor(async () => {
     const attributeValue = await getElementAttribute(elementGetter, attribute);
     const booleanMatch = typeof value === 'boolean';
-    const match = booleanMatch ? (String(attributeValue) === 'true') === value : attributeValue === value;
+    const match = booleanMatch
+      ? (String(attributeValue) === 'true') === value
+      : attributeValue === value;
 
     if (!match) {
       throw new Error('Attribute value mismatch');
@@ -92,10 +107,14 @@ export const waitForElementAttributeValue = async (
   });
 };
 
-export const getActiveElement = (anyElement?: ElementGetterResult): Element | null =>
+export const getActiveElement = (
+  anyElement?: ElementGetterResult
+): Element | null =>
   anyElement ? anyElement.ownerDocument.activeElement : null;
 
-export const waitForElementFocus = async (elementGetter: () => ElementGetterResult): Promise<void> =>
+export const waitForElementFocus = async (
+  elementGetter: () => ElementGetterResult
+): Promise<void> =>
   waitFor(() => {
     const target = elementGetter();
     if (target) {
@@ -106,16 +125,26 @@ export const waitForElementFocus = async (elementGetter: () => ElementGetterResu
 export const renderComponentWithMocksAndContexts = async (
   responseProvider: ResponseProvider,
   children: React.ReactElement,
-  initialEntries?: string[],
+  initialEntries?: string[]
 ): Promise<TestTools> => {
-  const renderResult = renderComponentTestDOM(responseProvider, children, initialEntries);
+  const renderResult = renderComponentTestDOM(
+    responseProvider,
+    children,
+    initialEntries
+  );
   const getLastTime = (targetElement: string): number => {
-    const lastUpdateElement = renderResult.getByTestId(`context-as-html-${targetElement}`);
-    return lastUpdateElement ? parseInt(lastUpdateElement.textContent || '-1', 10) : -1;
+    const lastUpdateElement = renderResult.getByTestId(
+      `context-as-html-${targetElement}`
+    );
+    return lastUpdateElement
+      ? parseInt(lastUpdateElement.textContent || '-1', 10)
+      : -1;
   };
 
   const getIsComplete = (): boolean => {
-    const isCompleteElement = renderResult.getByTestId('context-as-html-isComplete');
+    const isCompleteElement = renderResult.getByTestId(
+      'context-as-html-isComplete'
+    );
     return isCompleteElement ? Boolean(isCompleteElement.textContent) : false;
   };
 
@@ -128,7 +157,9 @@ export const renderComponentWithMocksAndContexts = async (
     });
   };
 
-  const waitForDataChange: TestTools['waitForDataChange'] = async (previousChangeTime) => {
+  const waitForDataChange: TestTools['waitForDataChange'] = async (
+    previousChangeTime
+  ) => {
     const latest = previousChangeTime || getLastTime('dataUpdateTime');
     await waitFor(() => {
       const time = getLastTime('dataUpdateTime');
@@ -144,7 +175,14 @@ export const renderComponentWithMocksAndContexts = async (
     return waitForDataChange();
   };
 
-  const getElement: TestTools['getElement'] = ({ label, id, testId, valueSelector, text, querySelector }) => {
+  const getElement: TestTools['getElement'] = ({
+    label,
+    id,
+    testId,
+    valueSelector,
+    text,
+    querySelector,
+  }) => {
     if (label) {
       return renderResult.getByLabelText(label);
     }
@@ -172,13 +210,16 @@ export const renderComponentWithMocksAndContexts = async (
     });
   };
 
-  const waitForElementNotToExist: TestTools['waitForElementNotToExist'] = async (selector) => {
-    await waitFor(() => {
-      expect(() => getElement(selector)).toThrow();
-    });
-  };
+  const waitForElementNotToExist: TestTools['waitForElementNotToExist'] =
+    async (selector) => {
+      await waitFor(() => {
+        expect(() => getElement(selector)).toThrow();
+      });
+    };
 
-  const getTextOrInputValue: TestTools['getTextOrInputValue'] = async (selector) => {
+  const getTextOrInputValue: TestTools['getTextOrInputValue'] = async (
+    selector
+  ) => {
     let value: string | undefined;
     await waitFor(
       () => {
@@ -191,7 +232,7 @@ export const renderComponentWithMocksAndContexts = async (
           }
         }
       },
-      { timeout: 150 },
+      { timeout: 150 }
     );
     return value;
   };
@@ -204,7 +245,9 @@ export const renderComponentWithMocksAndContexts = async (
     return button;
   };
 
-  const keydownEnterElement: TestTools['keydownEnterElement'] = async (selector) => {
+  const keydownEnterElement: TestTools['keydownEnterElement'] = async (
+    selector
+  ) => {
     const button = getElement(selector) as HTMLElement;
 
     await waitFor(() => {
@@ -216,9 +259,12 @@ export const renderComponentWithMocksAndContexts = async (
     return button;
   };
 
-  const isDisabled: TestTools['isDisabled'] = (element) => !!element && element.getAttribute('disabled') !== null;
+  const isDisabled: TestTools['isDisabled'] = (element) =>
+    !!element && element.getAttribute('disabled') !== null;
 
-  const waitForElementAndValue: TestTools['waitForElementAndValue'] = async (props) => {
+  const waitForElementAndValue: TestTools['waitForElementAndValue'] = async (
+    props
+  ) => {
     const { selector, value } = props;
     return waitFor(async () => {
       const elementValue = await getTextOrInputValue(selector);
@@ -226,7 +272,9 @@ export const renderComponentWithMocksAndContexts = async (
         return;
       }
       if (!elementValue || !elementValue.includes(value)) {
-        throw new Error(`element value (${elementValue}) does not include given value ${value}`);
+        throw new Error(
+          `element value (${elementValue}) does not include given value ${value}`
+        );
       }
     });
   };
@@ -238,7 +286,8 @@ export const renderComponentWithMocksAndContexts = async (
     optionalSubmitButtonSelector,
   } = {}) => {
     const previousDataChangeTime = getLastTime('dataUpdateTime');
-    const currentSubmitButtonSelector = optionalSubmitButtonSelector || submitButtonSelector;
+    const currentSubmitButtonSelector =
+      optionalSubmitButtonSelector || submitButtonSelector;
     await clickElement(currentSubmitButtonSelector);
     await waitFor(() => {
       if (!isDisabled(getElement(currentSubmitButtonSelector))) {
@@ -267,7 +316,7 @@ export const renderComponentWithMocksAndContexts = async (
       async () => {
         await waitForElementAndValue({ selector, value: newValue });
       },
-      { timeout: 60 },
+      { timeout: 60 }
     );
   };
 
@@ -294,12 +343,22 @@ export const renderComponentWithMocksAndContexts = async (
         id: `${selectorPrefix}-main-button`,
       }) as HTMLElement;
       if (!button) {
-        throw new Error(`Button with id "${selectorPrefix}-main-button" not found`);
+        throw new Error(
+          `Button with id "${selectorPrefix}-main-button" not found`
+        );
       }
-      const spanElement = button.querySelector('div[aria-hidden="true"] > span') as HTMLElement;
+      const spanElement = button.querySelector(
+        'div[aria-hidden="true"] > span'
+      ) as HTMLElement;
 
-      if (!spanElement || !spanElement.textContent || !spanElement.textContent.includes(value)) {
-        throw new Error(`Button text "${spanElement?.textContent || ''}" doesn't include "${value}"`);
+      if (
+        !spanElement ||
+        !spanElement.textContent ||
+        !spanElement.textContent.includes(value)
+      ) {
+        throw new Error(
+          `Button text "${spanElement?.textContent || ''}" doesn't include "${value}"`
+        );
       }
     });
   };
@@ -330,7 +389,8 @@ export const createResultPropertyTracker = <T>({
   renderHookResult: RenderHookResult<React.PropsWithChildren<object>, T>;
   valuePicker: (props: T) => string | undefined | AnyObject;
 }): [() => Promise<void>] => {
-  const currentPicker = (): PropsWithChildren<object> => renderHookResult.result.current;
+  const currentPicker = (): PropsWithChildren<object> =>
+    renderHookResult.result.current;
   const waitForChange = () => {
     const initialValue = valuePicker(currentPicker() as T);
     return waitFor(() => {
@@ -353,13 +413,15 @@ export const getErrorMessage = (error?: Error | GraphQLError): string => {
     networkError: string | { body: string };
   };
   if (retypedError.networkError) {
-    return typeof retypedError.networkError !== 'string' ? retypedError.networkError.body : retypedError.networkError;
+    return typeof retypedError.networkError !== 'string'
+      ? retypedError.networkError.body
+      : retypedError.networkError;
   }
   return retypedError.message;
 };
 
 export const createDomHelpersWithTesting = (
-  renderResult: RenderResult,
+  renderResult: RenderResult
 ): {
   findByTestId: (testId: string) => Promise<HTMLElement | null>;
   findById: (id: string) => Promise<HTMLElement | null>;

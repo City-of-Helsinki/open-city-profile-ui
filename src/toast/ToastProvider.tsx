@@ -74,10 +74,14 @@ function ToastProvider({ children }: Props): React.ReactElement {
       {ReactDOM.createPortal(
         <div className={styles['toast-container']}>
           {toasts.map((toast) => (
-            <Toast key={toast.id} {...toast} onClose={() => handleCloseToast(toast.id)} />
+            <Toast
+              key={toast.id}
+              {...toast}
+              onClose={() => handleCloseToast(toast.id)}
+            />
           ))}
         </div>,
-        toastRoot,
+        toastRoot
       )}
       {children}
     </ToastContext.Provider>

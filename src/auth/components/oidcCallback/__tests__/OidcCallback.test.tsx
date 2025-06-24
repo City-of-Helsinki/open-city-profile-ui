@@ -21,8 +21,12 @@ vi.mock('hds-react', async () => {
       onError: (error?: { message: string }) => void;
     }) => (
       <div>
-        <button onClick={() => onSuccess({ profile: { name: 'Test User' } })}>Trigger Success</button>
-        <button onClick={() => onError({ message: 'Some error' })}>Trigger Error</button>
+        <button onClick={() => onSuccess({ profile: { name: 'Test User' } })}>
+          Trigger Success
+        </button>
+        <button onClick={() => onError({ message: 'Some error' })}>
+          Trigger Error
+        </button>
         <button onClick={() => onError()}>Trigger Empty Error</button>
         <div>oidc.authenticating</div>
       </div>
@@ -41,7 +45,7 @@ const renderComponent = () => {
       <BrowserRouter>
         <OidcCallback />
       </BrowserRouter>
-    </TestLoginProvider>,
+    </TestLoginProvider>
   );
 };
 
@@ -81,7 +85,9 @@ describe('OidcCallback', () => {
     errorButton.click();
 
     await waitFor(() => {
-      expect(getNavigateCallArgument()).toContain('authentication.genericError.message');
+      expect(getNavigateCallArgument()).toContain(
+        'authentication.genericError.message'
+      );
     });
   });
 
@@ -93,7 +99,9 @@ describe('OidcCallback', () => {
     errorButton.click();
 
     await waitFor(() => {
-      expect(getNavigateCallArgument()).toContain('authentication.genericError.message');
+      expect(getNavigateCallArgument()).toContain(
+        'authentication.genericError.message'
+      );
     });
   });
 });

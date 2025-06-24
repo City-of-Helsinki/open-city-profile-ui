@@ -8,7 +8,10 @@ import {
   hasMatchingDataProperty,
   isResumable,
 } from '../../common/actionQueue/actionQueue';
-import { QueueRunner, resumeQueueFromAction } from '../../common/actionQueue/actionQueueRunner';
+import {
+  QueueRunner,
+  resumeQueueFromAction,
+} from '../../common/actionQueue/actionQueueRunner';
 import matchUrls from '../../common/helpers/matchUrls';
 import {
   createNextActionParams,
@@ -23,21 +26,25 @@ export const defaultRedirectionCatcherActionType = 'redirectionCatcher';
 
 export const resumeQueueFromRedirectionCatcher = (
   runner: QueueRunner,
-  catcherActionType = defaultRedirectionCatcherActionType,
+  catcherActionType = defaultRedirectionCatcherActionType
 ) => resumeQueueFromAction(runner, catcherActionType);
 
 export const isResumableRedirectionCatcher = (action: Action) => {
-  if (!isResumable(action) || !hasMatchingDataProperty(action, 'isRedirectionCatcher', true)) {
+  if (
+    !isResumable(action) ||
+    !hasMatchingDataProperty(action, 'isRedirectionCatcher', true)
+  ) {
     return false;
   }
   return isOnActionRequiredPath(action);
 };
 
-export const isWaitingForRedirectionCatcher = (action: Action) => action.active && !isOnActionRequiredPath(action);
+export const isWaitingForRedirectionCatcher = (action: Action) =>
+  action.active && !isOnActionRequiredPath(action);
 
 export const getStartPagePathFromQueue = (
   controller: QueueController,
-  redirectorActionType = defaultRedirectorActionType,
+  redirectorActionType = defaultRedirectorActionType
 ): string | undefined => {
   const redirector = controller.getByType(redirectorActionType);
   if (redirector) {
@@ -60,7 +67,7 @@ const createRedirectionCatcherExecutor =
       matchUrls(
         `${targetPath}?${createNextActionParams({
           type: catcherActionType,
-        } as ActionProps)}`,
+        } as ActionProps)}`
       );
     if (checkMatch()) {
       return Promise.resolve(true);
@@ -78,14 +85,14 @@ const createRedirectionCatcherExecutor =
           targetPath,
           action,
           `Redirection to ${targetPath} page timed out.`,
-          thirtySecondsInMs,
+          thirtySecondsInMs
         );
   };
 
 export const createRedirectorAndCatcherActionProps = (
   targetPath: string,
   redirectorActionType: ActionType = defaultRedirectorActionType,
-  catcherActionType: ActionType = defaultRedirectionCatcherActionType,
+  catcherActionType: ActionType = defaultRedirectionCatcherActionType
 ): [ActionProps, ActionProps] => {
   const catcherProps: ActionProps = {
     type: catcherActionType,

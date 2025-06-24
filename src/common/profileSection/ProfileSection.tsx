@@ -13,8 +13,10 @@ function ProfileSection({ children, borderless }: Props): React.ReactElement {
   return (
     <section
       className={classNames(
-        borderless ? commonStyles['borderless-content-box'] : commonStyles['content-box'],
-        styles['profile-section'],
+        borderless
+          ? commonStyles['borderless-content-box']
+          : commonStyles['content-box'],
+        styles['profile-section']
       )}
     >
       {children}

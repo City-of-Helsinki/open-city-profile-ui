@@ -15,7 +15,8 @@ describe('useMatomo', () => {
       trackPageView({ href: 'https://www.hel.fi' });
     }, [trackPageView]);
 
-    const mockTrackEvent = () => trackEvent({ category: 'action', action: 'Test click track event' });
+    const mockTrackEvent = () =>
+      trackEvent({ category: 'action', action: 'Test click track event' });
 
     return (
       <div>
@@ -31,7 +32,7 @@ describe('useMatomo', () => {
       () =>
         ({
           trackPageView: trackPageViewMock,
-        }) as unknown as MatomoTracker.default,
+        }) as unknown as MatomoTracker.default
     );
 
     // eslint-disable-next-line new-cap
@@ -66,7 +67,7 @@ describe('useMatomo', () => {
         ({
           trackPageView: trackPageViewMock,
           trackEvent: trackEventMock,
-        }) as unknown as MatomoTracker.default,
+        }) as unknown as MatomoTracker.default
     );
 
     // eslint-disable-next-line new-cap

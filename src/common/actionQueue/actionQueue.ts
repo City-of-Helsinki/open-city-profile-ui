@@ -1,7 +1,10 @@
 export type ActionType = string;
 
 export type ActionExecutorPromise = Promise<JSONStringifyableResult>;
-export type ActionExecutor = (action: Action, controller: QueueController) => ActionExecutorPromise;
+export type ActionExecutor = (
+  action: Action,
+  controller: QueueController
+) => ActionExecutorPromise;
 
 export type ActionOptions = {
   idleWhenActive?: boolean;
@@ -42,7 +45,10 @@ export type QueueController = {
   getQueue: () => ActionQueue;
   clean: () => void;
   reset: () => void;
-  updateActionAndQueue: (type: ActionType, props: Partial<Exclude<ActionUpdateProps, 'updatedAt'>>) => ActionQueue;
+  updateActionAndQueue: (
+    type: ActionType,
+    props: Partial<Exclude<ActionUpdateProps, 'updatedAt'>>
+  ) => ActionQueue;
   getNext: () => Action | undefined;
   getActive: () => Action | undefined;
   getFailed: () => Action | undefined;
@@ -51,8 +57,14 @@ export type QueueController = {
   getComplete: () => Action[];
   isFinished: () => boolean;
   activateAction: (actionOrActionType: Action | ActionType) => ActionQueue;
-  completeAction: (actionOrActionType: Action | ActionType, result: Action['result']) => ActionQueue;
-  setActionFailed: (actionOrActionType: Action | ActionType, errorMessage: Action['errorMessage']) => ActionQueue;
+  completeAction: (
+    actionOrActionType: Action | ActionType,
+    result: Action['result']
+  ) => ActionQueue;
+  setActionFailed: (
+    actionOrActionType: Action | ActionType,
+    errorMessage: Action['errorMessage']
+  ) => ActionQueue;
 };
 
 type ActionFilter = (action: Action) => boolean;
@@ -60,7 +72,7 @@ type ActionFilter = (action: Action) => boolean;
 // Merges two sets of action props in to a new action
 function restore(
   currentProps: Partial<Action | ActionProps | ActionUpdateProps>,
-  props: Partial<ActionProps | ActionUpdateProps>,
+  props: Partial<ActionProps | ActionUpdateProps>
 ): Action {
   return {
     ...currentProps,
@@ -119,22 +131,34 @@ function checkTypesAreUniqueAndSet(list: Array<ActionProps | Action>) {
   });
 }
 
-export function getOption(action: Action, optionName: keyof ActionOptions): boolean {
+export function getOption(
+  action: Action,
+  optionName: keyof ActionOptions
+): boolean {
   if (!action.options) {
     return false;
   }
   return !!action.options[optionName];
 }
 
-export function getData(action: Action, propertyName?: string): JSONStringifyableResult | undefined {
+export function getData(
+  action: Action,
+  propertyName?: string
+): JSONStringifyableResult | undefined {
   const { data } = action;
   if (!data) {
     return undefined;
   }
-  return propertyName && typeof data === 'object' ? Reflect.get(data, propertyName) : data;
+  return propertyName && typeof data === 'object'
+    ? Reflect.get(data, propertyName)
+    : data;
 }
 
-export function hasMatchingDataProperty(action: Action, propertyName: string, assumedValue: unknown): boolean {
+export function hasMatchingDataProperty(
+  action: Action,
+  propertyName: string,
+  assumedValue: unknown
+): boolean {
   return getData(action, propertyName) === assumedValue;
 }
 
@@ -143,7 +167,10 @@ export function isResumable(action: Action): boolean {
 }
 
 // Checks both queues have the same number of actions in the same order
-export function verifyQueuesMatch(primaryQueue: ActionSource[], secondaryQueue: ActionSource[]) {
+export function verifyQueuesMatch(
+  primaryQueue: ActionSource[],
+  secondaryQueue: ActionSource[]
+) {
   if (primaryQueue.length !== secondaryQueue.length) {
     return false;
   }
@@ -155,7 +182,10 @@ export function verifyQueuesMatch(primaryQueue: ActionSource[], secondaryQueue: 
 
 // Merges queues if they match
 // Otherwise rejects the secondary queue and returns only the primary
-export function mergeQueues(primaryQueue: ActionSource[], newProps: ActionSource[]): Partial<Action>[] {
+export function mergeQueues(
+  primaryQueue: ActionSource[],
+  newProps: ActionSource[]
+): Partial<Action>[] {
   if (!verifyQueuesMatch(primaryQueue, newProps)) {
     return primaryQueue;
   }
@@ -167,7 +197,9 @@ export function mergeQueues(primaryQueue: ActionSource[], newProps: ActionSource
     };
   });
 }
-export function createQueueFromProps(props: Array<Action | ActionProps>): ActionQueue {
+export function createQueueFromProps(
+  props: Array<Action | ActionProps>
+): ActionQueue {
   checkTypesAreUniqueAndSet(props);
   return props.map((actionOrProps) => {
     if (hasOnlyActionProps(actionOrProps)) {
@@ -177,7 +209,8 @@ export function createQueueFromProps(props: Array<Action | ActionProps>): Action
   });
 }
 
-const activeFilter: ActionFilter = (action) => action.active && !getOption(action, 'idleWhenActive');
+const activeFilter: ActionFilter = (action) =>
+  action.active && !getOption(action, 'idleWhenActive');
 
 const idleFilter: ActionFilter = (action) => {
   if (action.complete) {
@@ -189,22 +222,31 @@ const idleFilter: ActionFilter = (action) => {
 
 const completeFilter: ActionFilter = (action) => action.complete;
 
-const errorFilter: ActionFilter = (action) => action.complete && !!action.errorMessage;
+const errorFilter: ActionFilter = (action) =>
+  action.complete && !!action.errorMessage;
 
 // QueueController handles the queue updates and prevents mutating the queue directly
-export function createQueueController(initialQueue: ActionQueue): QueueController {
+export function createQueueController(
+  initialQueue: ActionQueue
+): QueueController {
   let queue: ActionQueue = initialQueue;
 
   const filterQueue = (f: ActionFilter): Action[] => queue.filter(f);
 
-  const getByType = (type: ActionType) => queue.filter((f) => f.type === type)[0];
+  const getByType = (type: ActionType) =>
+    queue.filter((f) => f.type === type)[0];
   checkTypesAreUniqueAndSet(initialQueue);
 
   const getNext = () => queue.find(idleFilter);
 
-  const isFinished = () => !!filterQueue(errorFilter).length || filterQueue(completeFilter).length === queue.length;
+  const isFinished = () =>
+    !!filterQueue(errorFilter).length ||
+    filterQueue(completeFilter).length === queue.length;
 
-  const checkIfActionCanUpdate = (action: Action, newProps: Partial<ActionUpdateProps>) => {
+  const checkIfActionCanUpdate = (
+    action: Action,
+    newProps: Partial<ActionUpdateProps>
+  ) => {
     if (completeFilter(action) || errorFilter(action) || !action.type) {
       return false;
     }
@@ -212,9 +254,16 @@ export function createQueueController(initialQueue: ActionQueue): QueueControlle
   };
 
   const getCurrentActionVersion = (actionOrActionType: Action | ActionType) =>
-    getByType(typeof actionOrActionType === 'string' ? actionOrActionType : actionOrActionType.type);
+    getByType(
+      typeof actionOrActionType === 'string'
+        ? actionOrActionType
+        : actionOrActionType.type
+    );
 
-  const updateActionAndQueue: QueueController['updateActionAndQueue'] = (type, props) => {
+  const updateActionAndQueue: QueueController['updateActionAndQueue'] = (
+    type,
+    props
+  ) => {
     const item = getByType(type);
     if (!item) {
       throw new Error(`Unable to update item. Item of type ${type} not found.`);
@@ -230,7 +279,10 @@ export function createQueueController(initialQueue: ActionQueue): QueueControlle
     return queue;
   };
 
-  const updateIfPossible = (actionOrActionType: Action | ActionType, newProps: Partial<ActionUpdateProps>) => {
+  const updateIfPossible = (
+    actionOrActionType: Action | ActionType,
+    newProps: Partial<ActionUpdateProps>
+  ) => {
     const action = getCurrentActionVersion(actionOrActionType);
 
     if (!action) {
@@ -240,7 +292,9 @@ export function createQueueController(initialQueue: ActionQueue): QueueControlle
     if (checkIfActionCanUpdate(action, newProps)) {
       return updateActionAndQueue(action.type, newProps);
     } else {
-      throw new Error(`Action cannot be updated to ${JSON.stringify(newProps)}`);
+      throw new Error(
+        `Action cannot be updated to ${JSON.stringify(newProps)}`
+      );
     }
   };
 
@@ -266,7 +320,8 @@ export function createQueueController(initialQueue: ActionQueue): QueueControlle
     getNext,
     getByType,
     isFinished,
-    activateAction: (actionOrActionType) => updateIfPossible(actionOrActionType, { active: true }),
+    activateAction: (actionOrActionType) =>
+      updateIfPossible(actionOrActionType, { active: true }),
     setActionFailed: (actionOrActionType, errorMessage) =>
       updateIfPossible(actionOrActionType, {
         errorMessage,

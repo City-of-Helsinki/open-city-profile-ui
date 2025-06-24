@@ -9,7 +9,9 @@ interface Props {
 }
 
 function ToastProvider({ children }: Props): React.ReactElement {
-  const [toastProps, setToastProps] = useState<ToastType | undefined>(undefined);
+  const [toastProps, setToastProps] = useState<ToastType | undefined>(
+    undefined
+  );
 
   const createToast = React.useCallback((toast: LaxToast = {}): string => {
     const toastWithDefaults: ToastType = {
@@ -35,8 +37,10 @@ function ToastProvider({ children }: Props): React.ReactElement {
       }}
     >
       {children}
-      <div data-testid='mock-toasts'>
-        <div data-testid={`mock-toast-type-${toastProps ? toastProps.type : 'none'}`} />
+      <div data-testid="mock-toasts">
+        <div
+          data-testid={`mock-toast-type-${toastProps ? toastProps.type : 'none'}`}
+        />
       </div>
       ,
     </ToastContext.Provider>

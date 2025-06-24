@@ -41,13 +41,21 @@ function ConfirmationModal({
 }: Props): React.ReactElement {
   const { t } = useTranslation();
   const id = 'confirmation-modal';
-  const { titleId, descriptionId, dialogTargetElement, close, closeButtonLabelText } = getModalProps({
+  const {
+    titleId,
+    descriptionId,
+    dialogTargetElement,
+    close,
+    closeButtonLabelText,
+  } = getModalProps({
     id,
     onClose,
     closeButtonText: closeButtonText || t('confirmationModal.cancel'),
   });
   const ContentComponent: React.FC<unknown> =
-    typeof content === 'string' || typeof content === 'undefined' ? () => <>{content || null}</> : content;
+    typeof content === 'string' || typeof content === 'undefined'
+      ? () => <>{content || null}</>
+      : content;
   const dialogCloseProps = closeButtonLabelText
     ? ({
         close,
@@ -71,9 +79,9 @@ function ConfirmationModal({
           title={title}
           iconStart={
             hasError ? (
-              <IconError color='var(--color-error)' aria-hidden='true' />
+              <IconError color="var(--color-error)" aria-hidden="true" />
             ) : (
-              <IconAlertCircle aria-hidden='true' />
+              <IconAlertCircle aria-hidden="true" />
             )
           }
         />
@@ -92,17 +100,23 @@ function ConfirmationModal({
               theme={ButtonPresetTheme.Black}
               variant={ButtonVariant.Secondary}
               onClick={onClose}
-              data-testid='confirmation-modal-cancel-button'
+              data-testid="confirmation-modal-cancel-button"
             >
               {closeButtonLabelText}
             </Button>
           )}
           {actionButtonText && (
             <Button
-              variant={variant === 'danger' ? ButtonVariant.Danger : ButtonVariant.Primary}
-              iconStart={variant === 'danger' && <IconTrash aria-hidden='true' />}
+              variant={
+                variant === 'danger'
+                  ? ButtonVariant.Danger
+                  : ButtonVariant.Primary
+              }
+              iconStart={
+                variant === 'danger' && <IconTrash aria-hidden="true" />
+              }
               onClick={onConfirm}
-              data-testid='confirmation-modal-confirm-button'
+              data-testid="confirmation-modal-confirm-button"
             >
               {actionButtonText}
             </Button>

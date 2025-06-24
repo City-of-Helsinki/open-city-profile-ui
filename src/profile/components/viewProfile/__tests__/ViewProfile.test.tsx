@@ -4,15 +4,22 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 
 import ViewProfile from '../ViewProfile';
-import { ProfileContext, ProfileContextData } from '../../../context/ProfileContext';
+import {
+  ProfileContext,
+  ProfileContextData,
+} from '../../../context/ProfileContext';
 
 // Mock the child components
 vi.mock('../../profileInformation/ProfileInformation', () => ({
-  default: () => <div data-testid='profile-information'>Profile Information</div>,
+  default: () => (
+    <div data-testid="profile-information">Profile Information</div>
+  ),
 }));
 
 vi.mock('../../serviceConnections/ServiceConnections', () => ({
-  default: () => <div data-testid='service-connections'>Service Connections</div>,
+  default: () => (
+    <div data-testid="service-connections">Service Connections</div>
+  ),
 }));
 
 const PROFILE_INFORMATION = 'profile-information';
@@ -20,7 +27,9 @@ const SERVICE_CONNECTIONS = 'service-connections';
 
 describe('ViewProfile', () => {
   // Create a mock ProfileContext
-  const createProfileContextValue = (isComplete = true): ProfileContextData => ({
+  const createProfileContextValue = (
+    isComplete = true
+  ): ProfileContextData => ({
     isComplete,
     isInitialized: true,
     data: {
@@ -57,10 +66,10 @@ describe('ViewProfile', () => {
       <ProfileContext.Provider value={createProfileContextValue()}>
         <MemoryRouter initialEntries={['/']}>
           <Routes>
-            <Route path='/*' element={<ViewProfile />} />
+            <Route path="/*" element={<ViewProfile />} />
           </Routes>
         </MemoryRouter>
-      </ProfileContext.Provider>,
+      </ProfileContext.Provider>
     );
 
     expect(screen.getByTestId(PROFILE_INFORMATION)).toBeInTheDocument();
@@ -72,10 +81,10 @@ describe('ViewProfile', () => {
       <ProfileContext.Provider value={createProfileContextValue()}>
         <MemoryRouter initialEntries={['/connected-services']}>
           <Routes>
-            <Route path='/*' element={<ViewProfile />} />
+            <Route path="/*" element={<ViewProfile />} />
           </Routes>
         </MemoryRouter>
-      </ProfileContext.Provider>,
+      </ProfileContext.Provider>
     );
 
     expect(screen.getByTestId(SERVICE_CONNECTIONS)).toBeInTheDocument();
@@ -87,10 +96,10 @@ describe('ViewProfile', () => {
       <ProfileContext.Provider value={createProfileContextValue(false)}>
         <MemoryRouter initialEntries={['/']}>
           <Routes>
-            <Route path='/*' element={<ViewProfile />} />
+            <Route path="/*" element={<ViewProfile />} />
           </Routes>
         </MemoryRouter>
-      </ProfileContext.Provider>,
+      </ProfileContext.Provider>
     );
 
     expect(screen.queryByTestId(PROFILE_INFORMATION)).not.toBeInTheDocument();

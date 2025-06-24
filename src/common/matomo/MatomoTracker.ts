@@ -66,7 +66,13 @@ class MatomoTracker {
 
   // Tracks events
   // https://matomo.org/docs/event-tracking/#tracking-events
-  trackEvent({ category, action, name, value, ...otherParams }: TrackEventParams): void {
+  trackEvent({
+    category,
+    action,
+    name,
+    value,
+    ...otherParams
+  }: TrackEventParams): void {
     if (category && action) {
       this.track({
         data: [TRACK_TYPES.TRACK_EVENT, category, action, name, value],
@@ -77,7 +83,11 @@ class MatomoTracker {
     }
   }
 
-  track({ data = [], documentTitle = document.title, href }: TrackParams): void {
+  track({
+    data = [],
+    documentTitle = document.title,
+    href,
+  }: TrackParams): void {
     if (data.length) {
       this.pushInstruction('setCustomUrl', href ?? window.location.href);
       this.pushInstruction('setDocumentTitle', documentTitle);

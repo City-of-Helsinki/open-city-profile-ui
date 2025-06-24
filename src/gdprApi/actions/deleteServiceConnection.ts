@@ -1,6 +1,11 @@
 import to from 'await-to-js';
 
-import { ActionExecutor, ActionProps, QueueController, getData } from '../../common/actionQueue/actionQueue';
+import {
+  ActionExecutor,
+  ActionProps,
+  QueueController,
+  getData,
+} from '../../common/actionQueue/actionQueue';
 import graphqlClient from '../../graphql/client';
 import {
   DeleteMyServiceDataMutationInput,
@@ -26,19 +31,30 @@ const resultTypes = {
   insufficientLoa: 'insufficientLoa',
 } as const;
 
-export const getDeleteServiceConnectionResultOrError = (queueController: QueueController) =>
-  getActionResultAndErrorMessage<DeleteServiceConnectionResult>(deleteServiceConnectionType, queueController);
+export const getDeleteServiceConnectionResultOrError = (
+  queueController: QueueController
+) =>
+  getActionResultAndErrorMessage<DeleteServiceConnectionResult>(
+    deleteServiceConnectionType,
+    queueController
+  );
 
-export const isForbiddenResult = (resultOrError: ReturnType<typeof getDeleteServiceConnectionResultOrError>) =>
-  resultOrError.errorMessage === resultTypes.forbidden;
+export const isForbiddenResult = (
+  resultOrError: ReturnType<typeof getDeleteServiceConnectionResultOrError>
+) => resultOrError.errorMessage === resultTypes.forbidden;
 
-export const isInsufficientLoaResult = (resultOrError: ReturnType<typeof getDeleteServiceConnectionResultOrError>) =>
-  resultOrError.errorMessage === resultTypes.insufficientLoa;
+export const isInsufficientLoaResult = (
+  resultOrError: ReturnType<typeof getDeleteServiceConnectionResultOrError>
+) => resultOrError.errorMessage === resultTypes.insufficientLoa;
 
-export const isSuccessResult = (resultOrError: ReturnType<typeof getDeleteServiceConnectionResultOrError>) =>
-  resultOrError.result === resultTypes.success;
+export const isSuccessResult = (
+  resultOrError: ReturnType<typeof getDeleteServiceConnectionResultOrError>
+) => resultOrError.result === resultTypes.success;
 
-const deleteServiceConnectionExecutor: ActionExecutor = async (action, queueController) => {
+const deleteServiceConnectionExecutor: ActionExecutor = async (
+  action,
+  queueController
+) => {
   const authorizationCode = getStoredKeycloakAuthCode(queueController);
   if (!authorizationCode) {
     return Promise.reject(resultTypes.noAuthCodes);
@@ -51,17 +67,23 @@ const deleteServiceConnectionExecutor: ActionExecutor = async (action, queueCont
   };
 
   const [error, result] = await to(
-    graphqlClient.mutate<GdprDeleteMyServiceDataMutation, GdprDeleteMyServiceDataMutationVariables>({
+    graphqlClient.mutate<
+      GdprDeleteMyServiceDataMutation,
+      GdprDeleteMyServiceDataMutationVariables
+    >({
       mutation: DELETE_SERVICE_DATA,
       fetchPolicy: 'no-cache',
       variables: {
         input,
       },
-    }),
+    })
   );
 
   if (error) {
-    if (!parseGraphQLError(error).isInsufficientLoaError && !parseGraphQLError(error).isAllowedError) {
+    if (
+      !parseGraphQLError(error).isInsufficientLoaError &&
+      !parseGraphQLError(error).isAllowedError
+    ) {
       reportErrorsToSentry(error);
     }
 
@@ -81,7 +103,9 @@ const deleteServiceConnectionExecutor: ActionExecutor = async (action, queueCont
   return Promise.resolve(resultTypes.success);
 };
 
-export function createDeleteServiceConnectionAction(serviceName: string): ActionProps {
+export function createDeleteServiceConnectionAction(
+  serviceName: string
+): ActionProps {
   return {
     type: deleteServiceConnectionType,
     executor: deleteServiceConnectionExecutor,

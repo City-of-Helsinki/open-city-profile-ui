@@ -1,5 +1,13 @@
 import { ApolloError } from '@apollo/client';
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useMemoizedFn } from 'ahooks';
 
 import { ProfileRoot } from '../../graphql/typings';
@@ -67,13 +75,19 @@ export const Provider = (props: ContextProps): React.ReactElement => {
   const { children } = props;
 
   const errorListeners = useRef({ listeners: new Set<ErrorListener>() });
-  const triggerListeners: (triggeredError: ApolloError | Error) => void = useCallback((errorObject) => {
-    errorListeners.current.listeners.forEach((listener) => listener(errorObject));
-  }, []);
-  const addErrorListener: ProfileContextData['addErrorListener'] = useCallback((f) => {
-    errorListeners.current.listeners.add(f);
-    return () => errorListeners.current.listeners.delete(f);
-  }, []);
+  const triggerListeners: (triggeredError: ApolloError | Error) => void =
+    useCallback((errorObject) => {
+      errorListeners.current.listeners.forEach((listener) =>
+        listener(errorObject)
+      );
+    }, []);
+  const addErrorListener: ProfileContextData['addErrorListener'] = useCallback(
+    (f) => {
+      errorListeners.current.listeners.add(f);
+      return () => errorListeners.current.listeners.delete(f);
+    },
+    []
+  );
 
   const { data, loading, error, fetch, refetch } = useProfileQuery({
     onError: (queryError: ApolloError) => {
@@ -92,13 +106,14 @@ export const Provider = (props: ContextProps): React.ReactElement => {
     loading: false,
   });
 
-  const updateProfileData: ProfileContextData['updateProfileData'] = useCallback(
-    (newProfileData) => {
-      loadTracker.current.complete = true;
-      updateData(newProfileData);
-    },
-    [updateData],
-  );
+  const updateProfileData: ProfileContextData['updateProfileData'] =
+    useCallback(
+      (newProfileData) => {
+        loadTracker.current.complete = true;
+        updateData(newProfileData);
+      },
+      [updateData]
+    );
 
   const fetchDataIfNotLoaded: ProfileContextData['fetch'] = useCallback(() => {
     if (loadTracker.current.started) {
@@ -109,13 +124,16 @@ export const Provider = (props: ContextProps): React.ReactElement => {
     fetch();
   }, [fetch, loadTracker]);
 
-  const refetchDataIfPossible: ProfileContextData['refetch'] = useCallback(() => {
-    if (!refetch) {
-      return Promise.reject(new Error('Cannot refetch before first fetch is done. Fetch first.'));
-    }
-    loadTracker.current.loading = true;
-    return refetch();
-  }, [refetch]);
+  const refetchDataIfPossible: ProfileContextData['refetch'] =
+    useCallback(() => {
+      if (!refetch) {
+        return Promise.reject(
+          new Error('Cannot refetch before first fetch is done. Fetch first.')
+        );
+      }
+      loadTracker.current.loading = true;
+      return refetch();
+    }, [refetch]);
 
   if (loadTracker.current.loading && loading === false && data) {
     loadTracker.current.loading = false;
@@ -142,7 +160,8 @@ export const Provider = (props: ContextProps): React.ReactElement => {
       if (!profileData || !profileData.myProfile) {
         return '';
       }
-      const verifiedPersonalInformation = getVerifiedPersonalInformation(profileData);
+      const verifiedPersonalInformation =
+        getVerifiedPersonalInformation(profileData);
       if (verifiedPersonalInformation) {
         return `${
           preferNickOrGivenName && verifiedPersonalInformation.givenName
@@ -151,10 +170,13 @@ export const Provider = (props: ContextProps): React.ReactElement => {
         } ${verifiedPersonalInformation.lastName}`;
       } else {
         const source = profileData.myProfile;
-        return preferNickOrGivenName && source.nickname ? source.nickname : `${source.firstName} ${source.lastName}`;
+        return preferNickOrGivenName && source.nickname
+          ? source.nickname
+          : `${source.firstName} ${source.lastName}`;
       }
     },
-    getProfile: () => (profileData && profileData.myProfile ? profileData : null),
+    getProfile: () =>
+      profileData && profileData.myProfile ? profileData : null,
     passwordUpdateState,
     setPasswordUpdateState,
     otpConfigurationState,
@@ -163,23 +185,31 @@ export const Provider = (props: ContextProps): React.ReactElement => {
     setOtpDeleteState,
   };
 
-  return <ProfileContext.Provider value={contextData}>{children}</ProfileContext.Provider>;
+  return (
+    <ProfileContext.Provider value={contextData}>
+      {children}
+    </ProfileContext.Provider>
+  );
 };
 
 export const useProfileErrorListener = (listener: ErrorListener): void => {
   const { addErrorListener } = useContext(ProfileContext);
 
   const rerenderFreeFunc = useMemoizedFn(listener);
-  const disposeListener = useMemo(() => addErrorListener(rerenderFreeFunc), [addErrorListener, rerenderFreeFunc]);
+  const disposeListener = useMemo(
+    () => addErrorListener(rerenderFreeFunc),
+    [addErrorListener, rerenderFreeFunc]
+  );
 
   useEffect(
     () => () => {
       disposeListener();
     },
-    [disposeListener],
+    [disposeListener]
   );
 };
 
-export const useVerifiedPersonalInformation = () => getVerifiedPersonalInformation(useContext(ProfileContext).data);
+export const useVerifiedPersonalInformation = () =>
+  getVerifiedPersonalInformation(useContext(ProfileContext).data);
 
 export const { Consumer } = ProfileContext;
