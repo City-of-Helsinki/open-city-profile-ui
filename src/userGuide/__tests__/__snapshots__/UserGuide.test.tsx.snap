@@ -282,7 +282,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-79"
                   id="_Suomi.fi_identification"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -513,7 +513,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-80"
                   id="_Email_identification"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -716,7 +716,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-81"
                   id="_Combining_identification_methods"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -822,7 +822,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-82"
                   id="_Kaksivaiheinen_tunnistautuminen"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -1095,7 +1095,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-83"
                   id="_Forgotten_password"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -1259,7 +1259,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-84"
                   id="_Changing_password"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -1384,7 +1384,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-85"
                   id="_Problem_with_identification"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -1517,7 +1517,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-86"
                   id="_Editing_profile_information"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -1674,7 +1674,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-87"
                   id="_Processing_of_your"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -1803,7 +1803,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-88"
                   id="_Download_your_information"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -1927,7 +1927,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-89"
                   id="_Deleting_your_information"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -2046,7 +2046,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-90"
                   id="_Deleting_your_Helsinki_profile"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -2789,7 +2789,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-79"
                 id="_Suomi.fi_identification"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -3020,7 +3020,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-80"
                 id="_Email_identification"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -3223,7 +3223,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-81"
                 id="_Combining_identification_methods"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -3329,7 +3329,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-82"
                 id="_Kaksivaiheinen_tunnistautuminen"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -3602,7 +3602,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-83"
                 id="_Forgotten_password"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -3766,7 +3766,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-84"
                 id="_Changing_password"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -3891,7 +3891,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-85"
                 id="_Problem_with_identification"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -4024,7 +4024,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-86"
                 id="_Editing_profile_information"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -4181,7 +4181,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-87"
                 id="_Processing_of_your"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -4310,7 +4310,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-88"
                 id="_Download_your_information"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -4434,7 +4434,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-89"
                 id="_Deleting_your_information"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -4553,7 +4553,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-90"
                 id="_Deleting_your_Helsinki_profile"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -5352,7 +5352,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-27"
                   id="_Suomi.fi-tunnistautuminen"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -5581,7 +5581,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-28"
                   id="_Helsinki-tunnuksen_käyttö"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -5776,7 +5776,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-29"
                   id="_Tunnistautumistapojen_yhdistäminen"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -5883,7 +5883,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-30"
                   id="_Kaksivaiheinen_tunnistautuminen"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -6143,7 +6143,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-31"
                   id="_Unohtunut_salasana"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -6304,7 +6304,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-32"
                   id="_Salasanan_vaihto"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -6430,7 +6430,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-33"
                   id="_Ongelma_kirjautumisessa"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -6557,7 +6557,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-34"
                   id="_Profiili_tietojen_muokkaaminen"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -6690,7 +6690,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-35"
                   id="_Tietojen_käsittely_eri"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -6816,7 +6816,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-36"
                   id="_Tietojen_lataaminen"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -6931,7 +6931,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-37"
                   id="_Tietojen_poisto"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -7046,7 +7046,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-38"
                   id="_Profiilin_poisto"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -7776,7 +7776,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-27"
                 id="_Suomi.fi-tunnistautuminen"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -8005,7 +8005,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-28"
                 id="_Helsinki-tunnuksen_käyttö"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -8200,7 +8200,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-29"
                 id="_Tunnistautumistapojen_yhdistäminen"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -8307,7 +8307,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-30"
                 id="_Kaksivaiheinen_tunnistautuminen"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -8567,7 +8567,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-31"
                 id="_Unohtunut_salasana"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -8728,7 +8728,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-32"
                 id="_Salasanan_vaihto"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -8854,7 +8854,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-33"
                 id="_Ongelma_kirjautumisessa"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -8981,7 +8981,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-34"
                 id="_Profiili_tietojen_muokkaaminen"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -9114,7 +9114,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-35"
                 id="_Tietojen_käsittely_eri"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -9240,7 +9240,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-36"
                 id="_Tietojen_lataaminen"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -9355,7 +9355,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-37"
                 id="_Tietojen_poisto"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -9470,7 +9470,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-38"
                 id="_Profiilin_poisto"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -10257,7 +10257,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-53"
                   id="_Suomi.fi_identifiering"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -10492,7 +10492,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-54"
                   id="_Identifiering_av_e-post"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -10691,7 +10691,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-55"
                   id="_Kombinera_identifieringsmetoder"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -10797,7 +10797,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-56"
                   id="_Kaksivaiheinen_tunnistautuminen"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -11040,7 +11040,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-57"
                   id="_Glömt_lösenord"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -11203,7 +11203,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-58"
                   id="_Salasanan_vaihto"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -11326,7 +11326,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-59"
                   id="_Problem_med_identifiering"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -11457,7 +11457,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-60"
                   id="_Redigera_profilinformation"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -11598,7 +11598,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-61"
                   id="_Olika_tjänsters_bearbetning"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -11726,7 +11726,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-62"
                   id="_Ladda_ner_din"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -11844,7 +11844,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-63"
                   id="_Radera_dina_uppgifter"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -11961,7 +11961,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 <div
                   class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-64"
                   id="_Radera_din_Helsingforsprofil"
-                  style="max-width: 800px; border: 1px solid #ffffff;"
+                  style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
                 >
                   <div
                     class="Accordion-module_accordionHeader__3_uK7"
@@ -12697,7 +12697,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-53"
                 id="_Suomi.fi_identifiering"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -12932,7 +12932,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-54"
                 id="_Identifiering_av_e-post"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -13131,7 +13131,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-55"
                 id="_Kombinera_identifieringsmetoder"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -13237,7 +13237,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-56"
                 id="_Kaksivaiheinen_tunnistautuminen"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -13480,7 +13480,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-57"
                 id="_Glömt_lösenord"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -13643,7 +13643,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-58"
                 id="_Salasanan_vaihto"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -13766,7 +13766,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-59"
                 id="_Problem_med_identifiering"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -13897,7 +13897,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-60"
                 id="_Redigera_profilinformation"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -14038,7 +14038,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-61"
                 id="_Olika_tjänsters_bearbetning"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -14166,7 +14166,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-62"
                 id="_Ladda_ner_din"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -14284,7 +14284,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-63"
                 id="_Radera_dina_uppgifter"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -14401,7 +14401,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               <div
                 class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-64"
                 id="_Radera_din_Helsingforsprofil"
-                style="max-width: 800px; border: 1px solid #ffffff;"
+                style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
               >
                 <div
                   class="Accordion-module_accordionHeader__3_uK7"
@@ -15191,7 +15191,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-1"
               id="_Suomi.fi-tunnistautuminen"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
@@ -15420,7 +15420,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-2"
               id="_Helsinki-tunnuksen_käyttö"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
@@ -15615,7 +15615,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-3"
               id="_Tunnistautumistapojen_yhdistäminen"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
@@ -15722,7 +15722,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-4"
               id="_Kaksivaiheinen_tunnistautuminen"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
@@ -15982,7 +15982,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-5"
               id="_Unohtunut_salasana"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
@@ -16143,7 +16143,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-6"
               id="_Salasanan_vaihto"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
@@ -16269,7 +16269,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-7"
               id="_Ongelma_kirjautumisessa"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
@@ -16396,7 +16396,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-8"
               id="_Profiili_tietojen_muokkaaminen"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
@@ -16529,7 +16529,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-9"
               id="_Tietojen_käsittely_eri"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
@@ -16655,7 +16655,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-10"
               id="_Tietojen_lataaminen"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
@@ -16770,7 +16770,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-11"
               id="_Tietojen_poisto"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
@@ -16885,7 +16885,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
             <div
               class="Accordion-module_accordion__2fPUT Accordion-module_card__1iRKx Accordion-module_large__1LpkY custom-theme-12"
               id="_Profiilin_poisto"
-              style="max-width: 800px; border: 1px solid #ffffff;"
+              style="max-width: 800px; border: 1px solid rgb(255, 255, 255);"
             >
               <div
                 class="Accordion-module_accordionHeader__3_uK7"
