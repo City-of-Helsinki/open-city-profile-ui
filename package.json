@@ -113,7 +113,7 @@
     "cross-env": "^7.0.3",
     "helsinki-utils": "City-of-Helsinki/helsinki-utils-js#0.1.0",
     "husky": "^9.1.7",
-    "jsdom": "^24.0.0"
+    "jsdom": "^26.1.0"
   },
   "resolutions": {
     "node-fetch": "^2.6.7",
