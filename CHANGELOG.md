@@ -3,6 +3,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.26.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.25.1...open-city-profile-ui-v1.26.0) (2025-09-10)
+
+
+### Features
+
+* Update to HDS v4 HP-2876 ([#453](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/453)) ([301dfb2](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/301dfb2fbf0e2608242bdc0b7ff2be7ca5a65168))
+
+
+### Bug Fixes
+
+* Link icon HP-2909 ([#456](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/456)) ([1647bcf](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/1647bcf85911b3b024d94a7ae82283416faba6c3))
+
+
+### Dependencies
+
+* Bump form-data from 4.0.0 to 4.0.4 ([a9dbfba](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/a9dbfba9b18f68d9be475faaa45be1ca5ed56f3d))
+* Bump vite from 6.3.5 to 6.3.6 ([7b69a3c](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/7b69a3c0b8739ab6a686b775d5e3a85aeb48f05c))
+* Upgrade jsdom HP-2833 ([c86d550](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/c86d55050dc00ee1a020d8802da75e94ec6f08a1))
+
 ## [1.25.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.25.0...open-city-profile-ui-v1.25.1) (2025-06-10)
 
 
