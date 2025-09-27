@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.26.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.26.0...open-city-profile-ui-v1.26.1) (2025-09-27)
+
+
+### Bug Fixes
+
+* Reminder for oics-client-ts changes ([#457](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/457)) ([dccc948](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/dccc9481989fa41158a6e71ada6fdc370257593e))
+
 ## [1.26.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.25.1...open-city-profile-ui-v1.26.0) (2025-09-10)
 
 
