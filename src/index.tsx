@@ -19,9 +19,7 @@ if (window._env_.REACT_APP_SENTRY_DSN) {
     dsn: window._env_.REACT_APP_SENTRY_DSN,
     environment: window._env_.REACT_APP_SENTRY_ENVIRONMENT,
     release: window._env_.REACT_APP_SENTRY_RELEASE,
-    integrations: [
-      Sentry.browserTracingIntegration(),
-    ],
+    integrations: [Sentry.browserTracingIntegration()],
     tracesSampleRate: parseFloat(
       window._env_.REACT_APP_SENTRY_TRACES_SAMPLE_RATE || '0'
     ),
