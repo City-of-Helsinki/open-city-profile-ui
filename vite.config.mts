@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: './build',
     emptyOutDir: true,
+    sourcemap: true,
   },
   server: {
     host: true,
