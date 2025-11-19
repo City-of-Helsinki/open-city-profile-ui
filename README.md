@@ -101,8 +101,12 @@ Fetches country calling codes and generates src/i18n/countryCallingCodes.json fi
 | `REACT_APP_OIDC_SCOPE`              | Which scopes the app requires.                                                                                  |
 | `REACT_APP_PROFILE_AUDIENCE`        | Name of the api-token that client uses profile-api with.                                                        |
 | `REACT_APP_PROFILE_GRAPHQL`         | URL to the profile graphql.                                                                                     |
-| `REACT_APP_SENTRY_DSN`              | Sentry public dns-key. Both REACT_APP_SENTRY_DSN and REACT_APP_ENVIRONMENT has to be set to send error reports. |
-| `REACT_APP_ENVIRONMENT`             | App environment.                                                                                                |
+| `REACT_APP_SENTRY_DSN`              | Sentry DSN url                                       |
+| `REACT_APP_SENTRY_ENVIRONMENT`      | Sentry Environment configuration                      |
+| `REACT_APP_SENTRY_TRACE_PROPAGATION_TARGETS` | Any urls we want to match the trace with |
+| `REACT_APP_SENTRY_TRACES_SAMPLE_RATE` | Trace sample rate, affects amount of span generated |
+| `REACT_APP_SENTRY_REPLAYS_SESSION_SAMPLE_RATE` | Replay configuration, needs the replay plugin for sentry |
+| `REACT_APP_SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE`| Replay configuration, needs the replay plugin for sentry |
 | `REACT_APP_OIDC_RESPONSE_TYPE`      | Which response type to require.                                                                                 |
 | `REACT_APP_KEYCLOAK_GDPR_CLIENT_ID` | Client id for getting auth codes from keycloak                                                                  |
 | `REACT_APP_KEYCLOAK_AUTHORITY`      | Url to Keycloak. The openid config is fetched from this url                                                     |
