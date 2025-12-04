@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.27.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.26.1...open-city-profile-ui-v1.27.0) (2025-12-04)
+
+
+### Features
+
+* Change to cloud sentry ([#468](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/468)) ([c67b575](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/c67b5754e3e313972e4394ae58c8d8b581776425))
+
+
+### Dependencies
+
+* Bump js-yaml from 4.1.0 to 4.1.1 ([#467](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/467)) ([3bf2945](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/3bf29458a43791026818e9857124d1c614b0fabf))
+* Bump validator from 13.15.0 to 13.15.20 ([6f629ed](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/6f629edea2683b4cd17c47f64a2a5f7d63f64cd9))
+* Bump vite from 6.3.6 to 6.4.1 ([3da1170](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/3da117091fc65f76e36d237caaa076209cfee9eb))
+
 ## [1.26.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.26.0...open-city-profile-ui-v1.26.1) (2025-10-06)
 
 
