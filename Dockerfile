@@ -38,6 +38,7 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 RUN yarn config set network-timeout 300000
 RUN yarn install --frozen-lockfile --ignore-scripts && yarn cache clean --force
+RUN yarn update-runtime-env
 
 COPY --chown=default:root index.html vite.config.mts .eslintrc .eslintignore tsconfig.json .prettierrc .env* /app/
 COPY --chown=default:root ./src /app/src
