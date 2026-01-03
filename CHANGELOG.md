@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.28.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.27.0...open-city-profile-ui-v1.28.0) (2026-01-03)
+
+
+### Features
+
+* Skip failing e2e tests ([26fa566](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/26fa5667b03c565dedd4ff243b889b1d09105a43))
+
+
+### Dependencies
+
+* Bump validator from 13.15.20 to 13.15.22 ([7ded98f](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/7ded98f2c3f8b339ff7a8eec01ee212dbcc29c5b))
+
 ## [1.27.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.26.1...open-city-profile-ui-v1.27.0) (2025-12-04)
 
 
