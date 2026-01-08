@@ -9,7 +9,8 @@ on:
 
 jobs:
   common:
-    uses: City-of-Helsinki/.github/.github/workflows/ci-node.yml@main
+    uses: ./.github/workflows/ci-test.yml
     secrets: inherit
     with:
       node-version: 22.x
+      extra-commands: yarn update-runtime-env
