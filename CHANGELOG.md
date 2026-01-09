@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.29.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.28.0...open-city-profile-ui-v1.29.0) (2026-01-09)
+
+
+### Features
+
+* Add custom command for ci workflow ([5adbf48](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/5adbf4846f5cacd22a7bcce93f2a2187f517a2ad))
+
 ## [1.28.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.27.0...open-city-profile-ui-v1.28.0) (2026-01-07)
 
 
