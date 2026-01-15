@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.29.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.29.0...open-city-profile-ui-v1.29.1) (2026-01-15)
+
+
+### Dependencies
+
+* Bump react-router from 7.6.0 to 7.12.0 ([32f9ebb](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/32f9ebb3dab7801ba93703dc2b73eced67ecacd2))
+
 ## [1.29.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.28.0...open-city-profile-ui-v1.29.0) (2026-01-09)
 
 
