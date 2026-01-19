@@ -10,16 +10,25 @@ function delay(time: number): Promise<void> {
 }
 
 // After login and in some other cases, the API tokens are not immediately available.
+// Default to 50 retries with 300ms interval = 15 seconds total timeout
+// (Previous values: 10 retries × 200ms = 2 seconds, which was too short and caused intermittent failures)
 async function waitForApiToken(
-  maxRetries = 10,
-  interval = 200
+  maxRetries = Number(window._env_.REACT_APP_API_TOKEN_MAX_RETRIES) || 50,
+  interval = Number(window._env_.REACT_APP_API_TOKEN_RETRY_INTERVAL) || 300
 ): Promise<string> {
   let retries = 0;
+  const startTime = Date.now();
 
   while (retries < maxRetries) {
     const apiTokens = getApiTokensFromStorage();
 
     if (apiTokens !== null) {
+      const elapsedTime = Date.now() - startTime;
+      if (retries > 0) {
+        console.log(
+          `API tokens retrieved successfully after ${retries} retries (${elapsedTime}ms)`
+        );
+      }
       return pickProfileApiToken(apiTokens); // Return the token when available
     }
 
@@ -27,7 +36,10 @@ async function waitForApiToken(
     await delay(interval);
   }
 
-  throw new Error('Failed to retrieve API tokens after max retries');
+  const totalWaitTime = Date.now() - startTime;
+  const errorMessage = `Failed to retrieve API tokens after ${maxRetries} retries (${totalWaitTime}ms total wait time)`;
+  console.error(errorMessage);
+  throw new Error(errorMessage);
 }
 
 const cache = new InMemoryCache();
