@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.29.2](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.29.1...open-city-profile-ui-v1.29.2) (2026-01-28)
+
+
+### Dependencies
+
+* Bump lodash from 4.17.21 to 4.17.23 ([c04efdf](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/c04efdff0acc7b1bff203f0bfa1473fb39116837))
+* Bump lodash-es from 4.17.21 to 4.17.23 ([9d1ee67](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/9d1ee673976c6095cf9839b8a38f57ff9c108510))
+
 ## [1.29.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.29.0...open-city-profile-ui-v1.29.1) (2026-01-15)
 
 
