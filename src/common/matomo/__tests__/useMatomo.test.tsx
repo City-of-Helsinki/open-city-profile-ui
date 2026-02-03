@@ -35,7 +35,6 @@ describe('useMatomo', () => {
         }) as unknown as MatomoTracker.default
     );
 
-    // eslint-disable-next-line new-cap
     const instance = new MatomoTracker.default({
       urlBase: 'https://www.hel.fi',
       siteId: 'test123',
@@ -70,7 +69,6 @@ describe('useMatomo', () => {
         }) as unknown as MatomoTracker.default
     );
 
-    // eslint-disable-next-line new-cap
     const instance = new MatomoTracker.default({
       urlBase: 'https://www.hel.fi',
       siteId: 'test123',

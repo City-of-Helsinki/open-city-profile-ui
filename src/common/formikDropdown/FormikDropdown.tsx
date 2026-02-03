@@ -13,6 +13,13 @@ export function defaultFilter(option: Option, filterStr: string) {
   return option.label.toLowerCase().indexOf(filterStr.toLowerCase()) > -1;
 }
 
+// Type guard to check if an option has a value property
+function isOptionWithValue(
+  option: unknown
+): option is Option & { value: string } {
+  return typeof option === 'object' && option !== null && 'value' in option;
+}
+
 // Define the component props using more specific generic types
 type Props = {
   name: string;
@@ -57,9 +64,7 @@ function FormikDropdown(props: Props): React.ReactElement {
       // Search for option with matching value
       // Type assertion is needed because HDS's options could be a mix of types
       const foundOption = selectProps.options.find(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (option) =>
-          'value' in (option as any) && (option as any).value === value
+        (option) => isOptionWithValue(option) && option.value === value
       );
 
       return foundOption as Option | undefined;

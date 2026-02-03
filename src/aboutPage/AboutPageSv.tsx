@@ -148,7 +148,6 @@ function AboutPageSv(): ReactElement {
       <p>
         Behandlingen av uppgifter i Helsingforsprofilen beskrivs i{' '}
         <Link
-          // eslint-disable-next-line max-len
           href="https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Register%20over%20e-tjanster.pdf"
           external
           openInNewTab
@@ -159,7 +158,6 @@ function AboutPageSv(): ReactElement {
       <p>
         Mer information om{' '}
         <Link
-          // eslint-disable-next-line max-len
           href="https://www.hel.fi/sv/beslutsfattande-och-forvaltning/information-om-helsingfors/dataskydd-och-informationshantering/dataskydd/den-registrerades-rattigheter-och-hur-man-kan-havda-dem"
           external
           openInNewTab

@@ -13,7 +13,7 @@ export function getStoredQueue(storageKey: string): StoredQueue | undefined {
   const queue = sessionStorage.getItem(storageKey);
   try {
     return queue ? JSON.parse(queue) : undefined;
-  } catch (e) {
+  } catch {
     return undefined;
   }
 }
@@ -49,7 +49,7 @@ export function storeQueue(storageKey: string, queue: ActionQueue | null) {
       sessionStorage.setItem(storageKey, createStorageValue(queue));
     }
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

@@ -62,7 +62,6 @@ function App(): React.ReactElement {
     scope: window._env_.REACT_APP_OIDC_SCOPE,
     post_logout_redirect_uri: `${origin}/`,
     // This calculates to 1 minute, good for debugging:
-    // eslint-disable-next-line max-len
     // https://github.com/City-of-Helsinki/kukkuu-ui/blob/8029ed64c3d0496fa87fa57837c73520e8cbe37f/src/domain/auth/userManager.ts#L18
     // accessTokenExpiringNotificationTimeInSeconds: 3600 - 60,
   };

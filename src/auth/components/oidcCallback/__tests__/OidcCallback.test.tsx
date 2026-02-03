@@ -6,8 +6,6 @@ import { BrowserRouter, useNavigate } from 'react-router-dom';
 import OidcCallback from '../OidcCallback';
 import TestLoginProvider from '../../../../common/test/TestLoginProvider';
 
-const getApiTokensFromStorage = vi.fn(() => ({ 'foo.bar.baz': 'foo.bar.baz' }));
-
 vi.mock('hds-react', async () => {
   // Get the original module to keep other functionalities intact
   const actualHdsReact = await vi.importActual('hds-react');
@@ -31,7 +29,6 @@ vi.mock('hds-react', async () => {
         <div>oidc.authenticating</div>
       </div>
     ),
-    getApiTokensFromStorage: vi.fn(() => ({ foo: 'bar' })),
   };
 });
 
@@ -73,7 +70,6 @@ describe('OidcCallback', () => {
     successButton.click();
     await waitFor(() => {
       expect(mockedNavigate).toHaveBeenCalledTimes(1);
-      expect(getApiTokensFromStorage).toHaveBeenCalled;
     });
   });
 

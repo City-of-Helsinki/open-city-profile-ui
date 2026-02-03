@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import gql from 'graphql-tag';
 
 export const MY_PROFILE = gql`

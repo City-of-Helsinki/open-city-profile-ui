@@ -48,11 +48,15 @@ export function useConfirmationModal(): AsyncModalReturnType {
       ...props,
       isOpen: true,
       onClose: () => {
-        newControls.reject && newControls.reject(true);
+        if (newControls.reject) {
+          newControls.reject(true);
+        }
         closeModal();
       },
       onConfirm: () => {
-        newControls.resolve && newControls.resolve(true);
+        if (newControls.resolve) {
+          newControls.resolve(true);
+        }
         closeModal();
       },
     };

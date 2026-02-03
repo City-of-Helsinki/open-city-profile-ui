@@ -79,7 +79,6 @@ function ExpandingPanel({
       }
     }, 50);
 
-    // eslint-disable-next-line consistent-return
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [beforeCloseButtonClick]);

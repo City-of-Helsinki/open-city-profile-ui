@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { Fragment, ReactElement } from 'react';
 import { IconDownload, Link } from 'hds-react';
 

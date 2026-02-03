@@ -1,4 +1,3 @@
-#!/usr/bin/env ts-node-script
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-require-imports */
