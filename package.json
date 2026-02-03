@@ -88,7 +88,8 @@
     "update-country-calling-codes": "esrun --tsconfig=./scripts/tsconfig.json scripts/update-country-calling-codes.ts",
     "clear-babel-cache": "rm -rf ./node_modules/.cache/@babel",
     "typecheck": "tsc --skipLibCheck --noEmit --project tsconfig.json",
-    "postinstall": "if test \"$NODE_ENV\" != \"production\" ; then husky install ; fi && yarn update-runtime-env"
+    "prepare": "husky",
+    "postinstall": "yarn update-runtime-env"
   },
   "browserslist": {
     "production": [
