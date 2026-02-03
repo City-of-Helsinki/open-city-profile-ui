@@ -32,7 +32,6 @@ exports[`User guide > renders UserGuide component in English 1`] = `
               >
                 <span
                   class="HeaderActionBar-module_titleAndLogoContainer__2LEAb HeaderActionBar-module_logo__2r2T0"
-                  role="link"
                 >
                   <span
                     class="HeaderActionBarLogo-module_logoWrapper__8NgfS"
@@ -2539,7 +2538,6 @@ exports[`User guide > renders UserGuide component in English 1`] = `
             >
               <span
                 class="HeaderActionBar-module_titleAndLogoContainer__2LEAb HeaderActionBar-module_logo__2r2T0"
-                role="link"
               >
                 <span
                   class="HeaderActionBarLogo-module_logoWrapper__8NgfS"
@@ -5103,7 +5101,6 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
               >
                 <span
                   class="HeaderActionBar-module_titleAndLogoContainer__2LEAb HeaderActionBar-module_logo__2r2T0"
-                  role="link"
                 >
                   <span
                     class="HeaderActionBarLogo-module_logoWrapper__8NgfS"
@@ -7527,7 +7524,6 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
             >
               <span
                 class="HeaderActionBar-module_titleAndLogoContainer__2LEAb HeaderActionBar-module_logo__2r2T0"
-                role="link"
               >
                 <span
                   class="HeaderActionBarLogo-module_logoWrapper__8NgfS"
@@ -10008,7 +10004,6 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
               >
                 <span
                   class="HeaderActionBar-module_titleAndLogoContainer__2LEAb HeaderActionBar-module_logo__2r2T0"
-                  role="link"
                 >
                   <span
                     class="HeaderActionBarLogo-module_logoWrapper__8NgfS"
@@ -12448,7 +12443,6 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
             >
               <span
                 class="HeaderActionBar-module_titleAndLogoContainer__2LEAb HeaderActionBar-module_logo__2r2T0"
-                role="link"
               >
                 <span
                   class="HeaderActionBarLogo-module_logoWrapper__8NgfS"
@@ -14942,7 +14936,6 @@ exports[`User guide > renders UserGuide without errors 1`] = `
           >
             <span
               class="HeaderActionBar-module_titleAndLogoContainer__2LEAb HeaderActionBar-module_logo__2r2T0"
-              role="link"
             >
               <span
                 class="HeaderActionBarLogo-module_logoWrapper__8NgfS"
