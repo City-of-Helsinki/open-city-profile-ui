@@ -24,7 +24,6 @@ import {
   authCodeQueuesStorageKey,
 } from '../../../../gdprApi/useAuthCodeQueues';
 import ServiceConnectionRemover from '../ServiceConnectionRemover';
-// eslint-disable-next-line max-len
 import { getScenarioWhereDeleteServiceConnectionIsResumable } from '../../../../gdprApi/actions/__mocks__/queueScenarios';
 import { defaultRedirectionCatcherActionType } from '../../../../gdprApi/actions/redirectionHandlers';
 import { createNextActionParams } from '../../../../gdprApi/actions/utils';

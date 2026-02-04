@@ -109,7 +109,9 @@ export function useProfileDataEditor({
 
   const reset: ProfileDataEditorReturnType['reset'] = (item) => {
     const success = resetItem(item);
-    success && triggerUpdate();
+    if (success) {
+      triggerUpdate();
+    }
   };
 
   const add = () => {

@@ -82,14 +82,14 @@ export type ServiceConnectionsRoot = ServiceConnectionsQuery;
 export type ServiceConnectionsNode = ServiceConnectionsQueryEdgesNodeFragment;
 export type Service = ServiceConnectionsQueryEdgesNodeServiceFragment;
 export type ServiceConnectionsQueryVariables = ServiceConnectionsQueryVars;
-// eslint-disable-next-line max-len
+
 export type ServiceAllowedFieldsNode =
   ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesNodeFragment;
-// eslint-disable-next-line max-len
+
 export type ServiceAllowedFieldsEdge =
   ServiceConnectionsQueryEdgesNodeServiceAllowedDataFieldsEdgesFragment;
 export type GdprServiceConnectionsRoot = GdprServiceConnectionsQuery;
-// eslint-disable-next-line max-len
+
 export type GdprServiceConnectionService =
   GdprServiceConnectionsQueryMyProfileServiceConnectionsEdgesNodeServiceFragment;
 

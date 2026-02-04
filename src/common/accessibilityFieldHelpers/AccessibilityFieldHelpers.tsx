@@ -44,9 +44,10 @@ function AccessibilityFieldHelpers(props: Props): React.ReactElement {
       {content}
     </span>
   );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   const data = useMemo(
-    () => createElementData(props, t),
+    () => createElementData({ dataType }, t),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [dataType, i18n.language]
   );
   return (

@@ -143,7 +143,6 @@ function AboutPageFi(): ReactElement {
       <p>
         Helsinki-profiilin tietojen käsittely on kuvattu{' '}
         <Link
-          // eslint-disable-next-line max-len
           href="https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Sahkoisten%20asiointipalveluiden%20rekisteri.pdf"
           external
           openInNewTab
@@ -155,7 +154,6 @@ function AboutPageFi(): ReactElement {
       <p>
         Lisätietoa{' '}
         <Link
-          // eslint-disable-next-line max-len
           href="https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/rekisteroidyn-oikeudet-ja-niiden-toteuttaminen"
           external
           openInNewTab

@@ -142,7 +142,7 @@ export function getInternalRequestPathFromError(action: Action) {
   }
   try {
     return parseRequestPath(JSON.parse(errorMessage));
-  } catch (e) {
+  } catch {
     return undefined;
   }
 }

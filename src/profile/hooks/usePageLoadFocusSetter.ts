@@ -37,8 +37,12 @@ export function usePageLoadFocusSetter(props?: {
       if (selector) {
         getElementAndSetFocus(selector);
       } else {
-        getElementAndSetFocus(`.${pageLoadFocusTargetClassName}`) ||
+        const focused = getElementAndSetFocus(
+          `.${pageLoadFocusTargetClassName}`
+        );
+        if (!focused) {
           getElementAndSetFocus('h1');
+        }
       }
     }
   }, [disableFocusing, location, navType, selector]);

@@ -36,7 +36,7 @@ describe('graphql client', () => {
         `,
       });
       // eslint-disable-next-line no-empty
-    } catch (e) {}
+    } catch {}
 
     const fetchOptions = fetchMock.mock.calls[0][1] as RequestInit;
     expect(fetchOptions.headers).toHaveProperty(

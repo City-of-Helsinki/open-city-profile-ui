@@ -1,4 +1,3 @@
-#!/usr/bin/env ts-node-script
 import dotenv from 'dotenv';
 import * as path from 'path';
 import fs from 'fs';

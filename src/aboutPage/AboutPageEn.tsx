@@ -146,7 +146,6 @@ function AboutPageEn(): ReactElement {
       <p>
         The processing of data in the Helsinki profile is described in{' '}
         <Link
-          // eslint-disable-next-line max-len
           href="https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Sahkoisten%20asiointipalveluiden%20rekisteri.pdf"
           external
           openInNewTab
@@ -157,7 +156,6 @@ function AboutPageEn(): ReactElement {
       <p>
         Read more{' '}
         <Link
-          // eslint-disable-next-line max-len
           href="https://www.hel.fi/en/decision-making/information-on-helsinki/data-protection-and-information-management/data-protection/rights-of-data-subjects-and-exercising-these-rights"
           external
           openInNewTab

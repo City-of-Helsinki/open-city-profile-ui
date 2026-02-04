@@ -71,14 +71,18 @@ export const exposeProfileContext = (
     const updateProps = createUpdateProps(newContext);
     if (!_.isEqual(lastUpdate, updateProps)) {
       lastUpdate = updateProps;
-      updateChangeResolver && updateChangeResolver(newContext);
+      if (updateChangeResolver) {
+        updateChangeResolver(newContext);
+      }
     }
   };
 
   const trackDataChanges = (newContext: ProfileContextData): void => {
     const newData = JSON.stringify(newContext.data || {});
     if (newData !== lastData) {
-      dataChangeResolver && dataChangeResolver(newContext);
+      if (dataChangeResolver) {
+        dataChangeResolver(newContext);
+      }
       dataChangeResolver = undefined;
       lastData = newData;
     }
@@ -88,7 +92,9 @@ export const exposeProfileContext = (
     const errorMessage = getErrorMessage(newContext.error);
     if (errorMessage !== lastError.message) {
       lastError.message = errorMessage;
-      errorChangeResolver && errorChangeResolver(newContext);
+      if (errorChangeResolver) {
+        errorChangeResolver(newContext);
+      }
     }
   };
 

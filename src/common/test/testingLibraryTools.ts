@@ -431,7 +431,7 @@ export const createDomHelpersWithTesting = (
     try {
       const el = await renderResult.findByTestId(testId);
       return el;
-    } catch (error) {
+    } catch {
       // Handle error as needed - in this case, return null
       return null;
     }
