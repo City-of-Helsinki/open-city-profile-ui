@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.29.3](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.29.2...open-city-profile-ui-v1.29.3) (2026-02-05)
+
+
+### Dependencies
+
+* Bump @isaacs/brace-expansion from 5.0.0 to 5.0.1 ([0d36f97](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/0d36f977e24dcace57e1570be540684b5ad6f6d9))
+* Bump diff from 3.5.0 to 3.5.1 ([4aa13a9](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/4aa13a9bb55caa9a556ac19bf0b790eacb7a5c59))
+* Update devDependencies HP-3012 ([6e6ba93](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/6e6ba93ced60aa20a00186c52e22da158dadbd2d))
+* Update eslint version from 8.57.1 to 9.26.0 ([#486](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/486)) ([a5d20db](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/a5d20dbf29fa64e1ae6e6dcbe38bdbc5da3548ff))
+* Update HDS from 4.6.0 to 4.10 ([#484](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/484)) ([d83915a](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/d83915aa7d9405d8687aa6d60f04993b4f4bec61))
+
 ## [1.29.2](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.29.1...open-city-profile-ui-v1.29.2) (2026-01-28)
 
 
