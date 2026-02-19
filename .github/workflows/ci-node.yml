@@ -56,7 +56,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run commitlint
-        uses: wagoid/commitlint-github-action@3d28780bbf0365e29b144e272b2121204d5be5f3  # v6.1.2
+        uses: wagoid/commitlint-github-action@3d28780bbf0365e29b144e272b2121204d5be5f3 # v6.1.2
 
   build:
     name: Lint and build
@@ -134,50 +134,79 @@ jobs:
       run:
         working-directory: ${{ inputs.working-directory }}
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ inputs.node-version }} with dependency path
-      if: ${{ inputs.working-directory != '.' }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ inputs.node-version }}
-        cache: 'yarn'
-        cache-dependency-path: ${{ inputs.working-directory }}/package.json
-    - name: Use Node.js ${{ inputs.node-version }} without dependency path
-      if: ${{ inputs.working-directory == '.' }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ inputs.node-version }}
-        cache: 'yarn'
-    - name: Check Yarn version and install dependencies
-      run: |
-        YARN_VERSION=$(yarn --version)
-        MAJOR_VERSION=$(echo $YARN_VERSION | cut -d. -f1)
-        if [ "$MAJOR_VERSION" -ge "4" ]; then
-          echo "Using Yarn $YARN_VERSION - using modern flags"
-          if [ "${{ inputs.ignore-scripts }}" = "true" ]; then
-            yarn config set enableScripts false
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ inputs.node-version }} with dependency path
+        if: ${{ inputs.working-directory != '.' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: 'yarn'
+          cache-dependency-path: ${{ inputs.working-directory }}/package.json
+      - name: Use Node.js ${{ inputs.node-version }} without dependency path
+        if: ${{ inputs.working-directory == '.' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: 'yarn'
+      - name: Check Yarn version and install dependencies
+        run: |
+          YARN_VERSION=$(yarn --version)
+          MAJOR_VERSION=$(echo $YARN_VERSION | cut -d. -f1)
+          if [ "$MAJOR_VERSION" -ge "4" ]; then
+            echo "Using Yarn $YARN_VERSION - using modern flags"
+            if [ "${{ inputs.ignore-scripts }}" = "true" ]; then
+              yarn config set enableScripts false
+            fi
+            yarn install --immutable --inline-builds
+          else
+            echo "Using Yarn $YARN_VERSION - using legacy flags"
+            IGNORE_SCRIPTS="${{ inputs.ignore-scripts == true && '--ignore-scripts' || '' }}"
+            yarn install --frozen-lockfile --prefer-offline $IGNORE_SCRIPTS
           fi
-          yarn install --immutable --inline-builds
-        else
-          echo "Using Yarn $YARN_VERSION - using legacy flags"
-          IGNORE_SCRIPTS="${{ inputs.ignore-scripts == true && '--ignore-scripts' || '' }}"
-          yarn install --frozen-lockfile --prefer-offline $IGNORE_SCRIPTS
-        fi
-    - name: Run extra commands
-      if: ${{ inputs.extra-commands != ''}}
-      run: ${{ inputs.extra-commands }}
-    - name: Run tests
-      working-directory: ${{ inputs.app-directory == '.' && inputs.working-directory || inputs.app-directory }}
-      run: yarn test:coverage
-      env:
-        CI: true
+      - name: Run extra commands
+        if: ${{ inputs.extra-commands != ''}}
+        run: ${{ inputs.extra-commands }}
+      - name: Run tests
+        working-directory: ${{ inputs.app-directory == '.' && inputs.working-directory || inputs.app-directory }}
+        run: yarn test:coverage
+        env:
+          CI: true
+      - name: Store coverage report
+        uses: actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        with:
+          path: ${{ (inputs.app-directory == '.' && inputs.working-directory || inputs.app-directory) && format('{0}/', inputs.app-directory == '.' && inputs.working-directory || inputs.app-directory) || ''}}coverage
+          key: cache-${{ github.run_id }}-${{ github.run_attempt }}
 
-    - name: SonarQube Cloud Scan
-      if: ${{ !inputs.skip_sonar }}
-      uses: SonarSource/sonarqube-scan-action@v6
-      with:
-        projectBaseDir: ${{ inputs.app-directory == '.' && inputs.working-directory || inputs.app-directory }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        
+  sonarcloud:
+    name: Run SonarQube Cloud Scan
+    if: ${{ !inputs.skip_sonar }}
+    runs-on: ubuntu-latest
+    needs: tests
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore coverage report
+        uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        with:
+          path: ${{ (inputs.app-directory == '.' && inputs.working-directory || inputs.app-directory) && format('{0}/', inputs.app-directory == '.' && inputs.working-directory || inputs.app-directory) || ''}}coverage
+          key: cache-${{ github.run_id }}-${{ github.run_attempt }}
+          fail-on-cache-miss: true
+      # Without this workaround, SonarQube Cloud reports a warning about an incorrect source path
+      - name: Override coverage report source path for SonarQube Cloud
+        working-directory: ${{ inputs.app-directory == '.' && inputs.working-directory || inputs.app-directory }}
+        run: |
+          find coverage -type f \( -name '*.info' -o -name 'lcov.info' \) 2>/dev/null | xargs -r sed -i 's@SF:'$GITHUB_WORKSPACE'@SF:/github/workspace/@g' || true
+          find coverage -type f -name '*.json' 2>/dev/null | xargs -r sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' || true
+      - name: SonarQube Cloud Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        with:
+          projectBaseDir: ${{ inputs.app-directory == '.' && inputs.working-directory || inputs.app-directory }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
