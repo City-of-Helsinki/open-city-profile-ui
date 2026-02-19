@@ -248,6 +248,4 @@ describe('<EmailEditor /> ', () => {
         (variables.input.profile.addEmails as unknown as DataSource[])[0],
     });
   });
-
-
 });

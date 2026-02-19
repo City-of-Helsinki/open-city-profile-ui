@@ -128,7 +128,7 @@ describe('<ServiceConnections />', () => {
       expect(queryVariableTracker).toHaveBeenCalledWith({
         language: lang.toUpperCase(),
       });
-    }); 
+    });
   });
   describe('Renders the ServiceConnectionsRemover when a delete button is clicked', () => {
     it('Modal is shown. It is removed when close button is clicked', async () => {

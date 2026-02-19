@@ -77,5 +77,4 @@ describe('useAuth', () => {
     const passwordChange = result.current.changePassword();
     await expect(passwordChange).resolves.not.toThrow();
   });
-
 });

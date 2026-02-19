@@ -44,6 +44,16 @@ function getUserProfile(user: User | null): Profile | null {
   return profile;
 }
 
+export function sonarBranchTest(x: number) {
+  if (x > 10) return 'big';
+  return 'small';
+}
+
+export function sonarBranchTestTwo(x: number) {
+  if (x > 10) return 'big';
+  return 'small';
+}
+
 function useProfile(): ProfileState {
   const [profile, setProfile] = React.useState<Profile | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);

@@ -12,6 +12,16 @@ import { useErrorPageRedirect } from '../../../profile/hooks/useErrorPageRedirec
 import styles from './OidcCallback.module.css';
 import { getLinkRedirectState } from '../../../profile/hooks/usePageLoadFocusSetter';
 
+export function sonarBranchTest(x: number) {
+  if (x > 10) return 'big';
+  return 'small';
+}
+
+export function sonarBranchTestTwo(x: number) {
+  if (x > 10) return 'big';
+  return 'small';
+}
+
 function OidcCallback(): React.ReactElement | null {
   const { t } = useTranslation();
   const navigate = useNavigate();
