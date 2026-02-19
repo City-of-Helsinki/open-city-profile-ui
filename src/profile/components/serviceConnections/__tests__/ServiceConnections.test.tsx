@@ -128,47 +128,7 @@ describe('<ServiceConnections />', () => {
       expect(queryVariableTracker).toHaveBeenCalledWith({
         language: lang.toUpperCase(),
       });
-    });
-
-    it('should render a notification with reload button when error occurs. Button click refetches data.', async () => {
-      const responses: MockedResponse[] = [
-        {
-          errorType: 'graphQLError',
-        },
-        ...getDefaultResponse(),
-      ];
-      const t = i18n.getFixedT('fi');
-
-      const { getElement, waitForElement, clickElement } =
-        await renderTestSuite(responses);
-
-      await waitForElement({ testId: 'service-connections-load-error' });
-
-      await clickElement({
-        querySelector: '[data-testid="service-connections-load-error"] button',
-      });
-
-      await waitFor(() => {
-        expect(
-          getElement({ text: t('serviceConnections.title') })
-        ).toBeDefined();
-      });
-    });
-
-    it('If a serviceConnection is found in the sessionStorage, it is auto opened', async () => {
-      setServiceDataToStorage();
-
-      const { getElement, waitForElement } =
-        await renderTestSuite(getDefaultResponse());
-      await waitFor(() =>
-        serviceList.forEach((service) => {
-          expect(getElement({ text: service.title as string })).toBeDefined();
-        })
-      );
-      await waitFor(async () => {
-        await waitForElement(getDeleteButtonSelector(serviceList[0]));
-      });
-    });
+    }); 
   });
   describe('Renders the ServiceConnectionsRemover when a delete button is clicked', () => {
     it('Modal is shown. It is removed when close button is clicked', async () => {

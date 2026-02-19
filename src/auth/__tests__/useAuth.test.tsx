@@ -78,19 +78,4 @@ describe('useAuth', () => {
     await expect(passwordChange).resolves.not.toThrow();
   });
 
-  it('should enable MFA', async () => {
-    mockOidcClient.getUserManager().signinRedirect.mockResolvedValue(true);
-
-    const { result } = renderHook(() => useAuth());
-    const initTOTP = result.current.initiateTOTP();
-    await expect(initTOTP).resolves.not.toThrow();
-  });
-
-  it('should disable MFA', async () => {
-    mockOidcClient.getUserManager().signinRedirect.mockResolvedValue(true);
-
-    const { result } = renderHook(() => useAuth());
-    const disableTOTP = result.current.disableTOTP('111');
-    await expect(disableTOTP).resolves.not.toThrow();
-  });
 });

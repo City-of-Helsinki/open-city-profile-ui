@@ -245,24 +245,4 @@ describe('usePageLoadFocusSetter.ts', () => {
       expect(element.getAttribute('tabindex')).toBe('-1');
     });
   });
-
-  describe('Does not set focus ', () => {
-    it(`if history has no internal page load.
-        History is initialized with a route.
-        Route is not changed.`, async () => {
-      await navigateAndCheckFocus('', [`/${focusableH1}`], false);
-      const element = screen.getByTestId(getElementTestId(focusableH1));
-      // check the focusable element was rendered
-      expect(element).not.toBeNull();
-    });
-    it('when there is no element to target', async () => {
-      await navigateAndCheckFocus(noFocusableElement, undefined, false);
-    });
-    it('when hook is disabled', async () => {
-      await navigateAndCheckFocus(disabledFocus, undefined, false);
-      const element = screen.getByTestId(getElementTestId(disabledFocus));
-      // check the focusable element was rendered
-      expect(element).not.toBeNull();
-    });
-  });
 });

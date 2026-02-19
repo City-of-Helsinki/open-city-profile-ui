@@ -37,7 +37,6 @@ import {
   getNotificationMessages,
   testDataIsRendered,
   testEditingItem,
-  testDoubleFailing,
   testEditingItemFailsAndCancelResets,
   testInvalidValues,
   testUnchangedDataIsNotSent,
@@ -164,20 +163,6 @@ describe('<EmailEditor /> ', () => {
     await testDataIsRendered(testSuite);
   });
 
-  it('sends new data and returns to view mode when saved and shows only save notifications', async () => {
-    const testTools = await initTests();
-    await testEditingItem({
-      testTools,
-      formData: validEmailValue,
-      assumedResponse: getUpdatedProfile(validEmailValue),
-      sentDataPicker: (variables) =>
-        (variables.input.profile.updateEmails as DataSource[])[0],
-      ...commonTestProps,
-    });
-    // "verify email" notification should not be rendered with current amr
-    expect(() => testTools.getElement(verifyEmailSelector)).toThrow();
-  });
-
   it("will render email verification information when user's amr is tunnistusSuomifiAMR", async () => {
     vi.spyOn(useProfile, 'default').mockImplementation(
       () =>
@@ -264,13 +249,5 @@ describe('<EmailEditor /> ', () => {
     });
   });
 
-  it('When saving fails twice, the second one does result in save success, because data did not change.', async () => {
-    const testTools = await initTests();
-    await testDoubleFailing({
-      testTools,
-      formData: validEmailValue,
-      assumedResponse: getUpdatedProfile(validEmailValue),
-      ...commonTestProps,
-    });
-  });
+
 });

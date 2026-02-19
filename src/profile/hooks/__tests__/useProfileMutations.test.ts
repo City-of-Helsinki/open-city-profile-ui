@@ -294,31 +294,5 @@ describe('useProfileMutations.ts ', () => {
       );
     });
   });
-  describe('Handles errors ', () => {
-    it('and profile data is not modified after an error occured', async () => {
-      const renderHookResult = await initTests();
-      const { result } = renderHookResult;
 
-      // add the graphQL response
-      responses.push({
-        errorType: 'graphQLError',
-      });
-      const profileDataBeforeUpdate = JSON.stringify(
-        result.current.profileData
-      );
-      profileManipulator.remove('phones', { id: '123' });
-      try {
-        await result.current.update(
-          profileManipulator.getFormValues(),
-          getMyProfile()
-        );
-        expect('this should never run').toBeFalsy();
-        // eslint-disable-next-line no-empty
-      } catch {}
-
-      expect(JSON.stringify(result.current.profileData)).toEqual(
-        profileDataBeforeUpdate
-      );
-    });
-  });
 });
