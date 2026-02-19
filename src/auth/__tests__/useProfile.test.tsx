@@ -7,7 +7,7 @@ import {
   mockUserCreator,
   MockedUserOverrides,
 } from '../../common/test/userMocking';
-import useProfile, { Profile } from '../useProfile';
+import useProfile, { Profile, sonarBranchTestTwo } from '../useProfile';
 import TestLoginProvider from '../../common/test/TestLoginProvider';
 
 type Status = 'loading' | 'error' | 'loaded';
@@ -157,5 +157,18 @@ describe('useProfile', () => {
   it('should return error when authService.getUser() fails', async () => {
     const { getInfo } = renderTestComponent(undefined, true);
     await waitFor(() => expect(getInfo()).toEqual(errorStatus));
+  });
+});
+
+describe('sonarBranchTestTwo', () => {
+  it('should return "big" when x is greater than 10', () => {
+    expect(sonarBranchTestTwo(11)).toBe('big');
+    expect(sonarBranchTestTwo(100)).toBe('big');
+  });
+
+  it('should return "small" when x is 10 or less', () => {
+    expect(sonarBranchTestTwo(10)).toBe('small');
+    expect(sonarBranchTestTwo(0)).toBe('small');
+    expect(sonarBranchTestTwo(-5)).toBe('small');
   });
 });
