@@ -61,6 +61,7 @@
     "yup": "^1.6.1"
   },
   "scripts": {
+    "app:version": "echo \"$npm_package_version\"",
     "start": "yarn clear-babel-cache && yarn update-runtime-env && vite",
     "build": "yarn typecheck && vite build",
     "preview": "yarn clear-babel-cache && yarn update-runtime-env && vite preview",
