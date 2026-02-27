@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.30.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.29.3...open-city-profile-ui-v1.30.0) (2026-02-27)
+
+
+### Features
+
+* Readiness endpoint KEH-228 ([c11cae7](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/c11cae74b0b841a3d5f898f792d541964a660fc9))
+
+
+### Dependencies
+
+* Upgrade playwright to 1.58.2 Refs: RATY-299 ([80bcc86](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/80bcc867832875741e53682583f4efe0734725d7))
+* Upgrade react-router-dom to 7.12.0 Refs: RATY-299 ([23992b6](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/23992b699edb83a26d11ce360414dcbe981fc38d))
+
 ## [1.29.3](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.29.2...open-city-profile-ui-v1.29.3) (2026-02-05)
 
 
