@@ -29,7 +29,7 @@
     "await-to-js": "^3.0.0",
     "classnames": "^2.2.6",
     "date-fns": "^4.1.0",
-    "dompurify": "^3.2.5",
+    "dompurify": "^3.3.1",
     "dotenv": "^16.5.0",
     "esrun": "^3.2.26",
     "file-saver": "^2.0.2",
