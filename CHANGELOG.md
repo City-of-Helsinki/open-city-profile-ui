@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.30.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.30.0...open-city-profile-ui-v1.30.1) (2026-03-20)
+
+
+### Bug Fixes
+
+* Add authentication cookies to consent settings ([84b1e4c](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/84b1e4c6acb064bf72c49c79ce627209ffb894b6))
+
+
+### Dependencies
+
+* Bump dompurify from 3.2.5 to 3.3.1 ([66f5cee](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/66f5ceec23586174fdff436bf82ca8085b1a42b0))
+* Bump dompurify from 3.3.1 to 3.3.2 ([516cdc2](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/516cdc270298d5ebb26527bf70c2c2a578ee3326))
+* Bump rollup from 4.40.0 to 4.59.0 ([9870cfb](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/9870cfb8d5a25f467a59cb6e072f903862101e45))
+
 ## [1.30.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.29.3...open-city-profile-ui-v1.30.0) (2026-02-27)
 
 
