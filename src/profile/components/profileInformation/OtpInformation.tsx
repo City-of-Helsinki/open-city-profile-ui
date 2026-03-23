@@ -17,7 +17,13 @@ import useNotificationContent from '../editingNotifications/useNotificationConte
 import EditingNotifications from '../editingNotifications/EditingNotifications';
 import useAuth from '../../../auth/useAuth';
 
-function OtpInformation(): React.ReactElement | null {
+type Props = {
+  disableActions?: boolean;
+};
+
+function OtpInformation({
+  disableActions = false,
+}: Props): React.ReactElement | null {
   const { t } = useTranslation();
   const notificationRef = useRef<HTMLDivElement>(null);
 
@@ -103,7 +109,7 @@ function OtpInformation(): React.ReactElement | null {
         </div>
         <div className={commonFormStyles['edit-buttons']}>
           <div className={commonFormStyles['edit-buttons-container']}>
-            {!MFALoginMethod && (
+            {!MFALoginMethod && !disableActions && (
               <Button
                 data-testid={'enable-totp-button'}
                 onClick={() => {
@@ -113,7 +119,7 @@ function OtpInformation(): React.ReactElement | null {
                 {t('mfa.enable')}
               </Button>
             )}
-            {MFALoginMethod && (
+            {MFALoginMethod && !disableActions && (
               <Button
                 data-testid={'disable-totp-button'}
                 iconStart={<IconCrossCircle />}
