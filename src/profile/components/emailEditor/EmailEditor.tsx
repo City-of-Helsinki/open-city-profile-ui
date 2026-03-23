@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Formik, FormikProps, Form } from 'formik';
-import { TextInput, Notification, useOidcClient } from 'hds-react';
+import {
+  TextInput,
+  Notification,
+  NotificationSize,
+  useOidcClient,
+} from 'hds-react';
 import classNames from 'classnames';
 
 import styles from './emailEditor.module.css';
@@ -26,9 +31,11 @@ import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers
 import {
   hasHelsinkiAccountAMR,
   hasTunnistusSuomiFiAmr,
+  requiresStrongAuthenticationForHybrid,
 } from '../profileInformation/authenticationProviderUtil';
 import { useCommonEditHandling } from '../../hooks/useCommonEditHandling';
 import AddButton from '../addButton/AddButton';
+import { ProfileContext } from '../../context/ProfileContext';
 
 function EmailEditor(): React.ReactElement | null {
   const dataType: EditDataType = 'emails';
@@ -51,6 +58,7 @@ function EmailEditor(): React.ReactElement | null {
 
   const { content } = notificationContent;
   const { getAmr } = useOidcClient();
+  const { data } = useContext(ProfileContext);
 
   const editData = getEmailEditDataForUI(hasData() ? [getData()] : []);
   const { value, saving } = editData;
@@ -58,8 +66,13 @@ function EmailEditor(): React.ReactElement | null {
   const formFields = getFormFields(dataType);
   const ariaLabels = createActionAriaLabels(dataType, email, t);
   const amrArray = getAmr();
+  const strongAuthenticationRequired = requiresStrongAuthenticationForHybrid(
+    data,
+    amrArray
+  );
   const willSendEmailVerificationCode =
-    hasTunnistusSuomiFiAmr(amrArray) || hasHelsinkiAccountAMR(amrArray);
+    !strongAuthenticationRequired &&
+    (hasTunnistusSuomiFiAmr(amrArray) || hasHelsinkiAccountAMR(amrArray));
   const { hasFieldError, getFieldErrorMessage } =
     createFormFieldHelpers<EmailValue>(t, true);
   const containerStyle = commonFormStyles['responsive-flex-box-columns-rows'];
@@ -165,24 +178,37 @@ function EmailEditor(): React.ReactElement | null {
             commonFormStyles['last-item']
           )}
         >
-          {email ? (
-            <EditButtons
-              handler={actionChecker}
-              actions={{
-                removable: false,
-                setPrimary: false,
-              }}
-              editButtonId={editButtonId}
-              testId={dataType}
-              ariaLabels={ariaLabels}
-            />
-          ) : (
-            <AddButton editHandler={editHandler} />
-          )}
+          {!strongAuthenticationRequired &&
+            (email ? (
+              <EditButtons
+                handler={actionChecker}
+                actions={{
+                  removable: false,
+                  setPrimary: false,
+                }}
+                editButtonId={editButtonId}
+                testId={dataType}
+                ariaLabels={ariaLabels}
+              />
+            ) : (
+              <AddButton editHandler={editHandler} />
+            ))}
         </div>
       </div>
 
       <EditingNotifications content={content} dataType={dataType} />
+
+      {strongAuthenticationRequired && (
+        <div className={styles['notification-wrapper']}>
+          <Notification
+            size={NotificationSize.Small}
+            type={'error'}
+            data-testid="email-strong-authentication-required"
+          >
+            {t('profileInformation.explanationForStrongAuthentication')}
+          </Notification>
+        </div>
+      )}
 
       {showVerifyEmailInfo && (
         <div className={styles['notification-wrapper']}>

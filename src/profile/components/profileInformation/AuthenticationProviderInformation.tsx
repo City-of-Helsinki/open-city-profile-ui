@@ -1,9 +1,18 @@
 import React, { Fragment, useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, useOidcClient } from 'hds-react';
+import {
+  Button,
+  Notification,
+  NotificationSize,
+  useOidcClient,
+} from 'hds-react';
 import classNames from 'classnames';
 
-import { getAmrStatic, hasPasswordLogin } from './authenticationProviderUtil';
+import {
+  getAmrStatic,
+  hasPasswordLogin,
+  requiresStrongAuthenticationForHybrid,
+} from './authenticationProviderUtil';
 import OtpInformation from './OtpInformation';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
@@ -22,7 +31,12 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
 
   const hasPassword = hasPasswordLogin(data);
   const { getAmr } = useOidcClient();
-  const amr = getAmrStatic(getAmr());
+  const amrArray = getAmr();
+  const amr = getAmrStatic(amrArray);
+  const strongAuthenticationRequired = requiresStrongAuthenticationForHybrid(
+    data,
+    amrArray
+  );
   const showSuccess = passwordUpdateState;
   const { content, setSuccessMessage } = useNotificationContent();
   const { changePassword } = useAuth();
@@ -84,17 +98,28 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
               </div>
               <div className={commonFormStyles['edit-buttons']}>
                 <div className={commonFormStyles['edit-buttons-container']}>
-                  <Button
-                    data-testid={'change-password-button'}
-                    onClick={() => {
-                      changePassword();
-                    }}
-                  >
-                    {t('profileInformation.changePassword')}
-                  </Button>
+                  {!strongAuthenticationRequired && (
+                    <Button
+                      data-testid={'change-password-button'}
+                      onClick={() => {
+                        changePassword();
+                      }}
+                    >
+                      {t('profileInformation.changePassword')}
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
+            {strongAuthenticationRequired && (
+              <Notification
+                size={NotificationSize.Small}
+                type={'error'}
+                data-testid="login-method-strong-authentication-required"
+              >
+                {t('profileInformation.explanationForStrongAuthentication')}
+              </Notification>
+            )}
             <EditingNotifications
               ref={notificationRef}
               content={content}
@@ -102,7 +127,9 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
               bottomSpacing
             />
 
-            {config.mfa && <OtpInformation />}
+            {config.mfa && (
+              <OtpInformation disableActions={strongAuthenticationRequired} />
+            )}
           </Fragment>
         )}
       </div>

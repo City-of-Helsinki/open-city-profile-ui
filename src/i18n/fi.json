@@ -226,6 +226,7 @@
     "noEmail": "Et ole antanut sähköpostiosoitetta",
     "verifyEmailText": "Olemme lähettäneet lisäämääsi sähköpostiosoitteeseen vahvistusviestin. Jos et saanut viestiä, tarkasta myös sähköpostin roskapostikansio.",
     "verifyEmailTitle": "Vahvista sähköpostiosoite",
+    "explanationForStrongAuthentication": "Voit muokata sähköpostiosoitetta, salasanaa ja kaksivaiheista tunnistautumista vain, jos olet vahvasti tunnistautunut. Kirjaudu ulos ja takaisin sisään käyttäen Suomi.fi-tunnistautumista.",
     "contact": "Yhteystiedot",
     "emailInUse": "Antamasi sähköpostiosoite on jo käytössä.",
     "contactInformation": "Omat yhteystiedot"
