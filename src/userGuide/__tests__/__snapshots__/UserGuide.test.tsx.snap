@@ -170,9 +170,9 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   download="Helsinki-profile-userguide.pdf"
                   href="/Helsinki-profile-userguide.pdf"
                 >
-                  <span
+                  <div
                     aria-hidden="true"
-                    class="Link-module_iconStart__2bkHS link_hds-icon-start__385-w"
+                    style="display: contents;"
                   >
                     <svg
                       aria-hidden="true"
@@ -189,7 +189,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                         fill-rule="evenodd"
                       />
                     </svg>
-                  </span>
+                  </div>
                   <span
                     class="Link-module_buttonLabel__EFeWo undefined"
                   >
@@ -2248,7 +2248,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                         footer.needHelp
                       </h3>
                       <a
-                        class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                        class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                         href="/guide"
                       >
                         <span>
@@ -2269,7 +2269,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                           </li>
                           <li>
                             <a
-                              class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B link-with-icon"
+                              class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B link-with-icon"
                               href="tel:0931088800"
                             >
                               <svg
@@ -2308,8 +2308,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                         footer.otherContactInformation
                       </h3>
                       <a
-                        aria-label="opensInNewWindow."
-                        class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                        aria-label="opensInNewWindow"
+                        class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                         href="footer.contactUsLink"
                         target="_blank"
                       >
@@ -2319,7 +2319,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                         <svg
                           aria-hidden="true"
                           aria-label="link-external"
-                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                           role="img"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
@@ -2333,8 +2333,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                         </svg>
                       </a>
                       <a
-                        aria-label="opensInNewWindow."
-                        class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                        aria-label="opensInNewWindow"
+                        class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                         href="footer.feedbackLink"
                         target="_blank"
                       >
@@ -2344,7 +2344,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                         <svg
                           aria-hidden="true"
                           aria-label="link-external"
-                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                           role="img"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
@@ -2372,7 +2372,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                   class="FooterBase-module_logoWrapper__3BI7d"
                 >
                   <a
-                    class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B"
+                    class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B"
                     href="https://hel.fi/en"
                   >
                     <img
@@ -2413,8 +2413,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       |
                     </span>
                     <a
-                      aria-label="opensInNewWindow."
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      aria-label="opensInNewWindow"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
                       href="profileForm.termsFileDescriptionLink"
                       target="_blank"
                     >
@@ -2424,7 +2424,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       <svg
                         aria-hidden="true"
                         aria-label="link-external"
-                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE undefined"
                         role="img"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -2676,9 +2676,9 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 download="Helsinki-profile-userguide.pdf"
                 href="/Helsinki-profile-userguide.pdf"
               >
-                <span
+                <div
                   aria-hidden="true"
-                  class="Link-module_iconStart__2bkHS link_hds-icon-start__385-w"
+                  style="display: contents;"
                 >
                   <svg
                     aria-hidden="true"
@@ -2695,7 +2695,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       fill-rule="evenodd"
                     />
                   </svg>
-                </span>
+                </div>
                 <span
                   class="Link-module_buttonLabel__EFeWo undefined"
                 >
@@ -4754,7 +4754,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       footer.needHelp
                     </h3>
                     <a
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                       href="/guide"
                     >
                       <span>
@@ -4775,7 +4775,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                         </li>
                         <li>
                           <a
-                            class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B link-with-icon"
+                            class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B link-with-icon"
                             href="tel:0931088800"
                           >
                             <svg
@@ -4814,8 +4814,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       footer.otherContactInformation
                     </h3>
                     <a
-                      aria-label="opensInNewWindow."
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                      aria-label="opensInNewWindow"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                       href="footer.contactUsLink"
                       target="_blank"
                     >
@@ -4825,7 +4825,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       <svg
                         aria-hidden="true"
                         aria-label="link-external"
-                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                         role="img"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -4839,8 +4839,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       </svg>
                     </a>
                     <a
-                      aria-label="opensInNewWindow."
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                      aria-label="opensInNewWindow"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                       href="footer.feedbackLink"
                       target="_blank"
                     >
@@ -4850,7 +4850,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       <svg
                         aria-hidden="true"
                         aria-label="link-external"
-                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                         role="img"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -4878,7 +4878,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                 class="FooterBase-module_logoWrapper__3BI7d"
               >
                 <a
-                  class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B"
+                  class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B"
                   href="https://hel.fi/en"
                 >
                   <img
@@ -4919,8 +4919,8 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     |
                   </span>
                   <a
-                    aria-label="opensInNewWindow."
-                    class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    aria-label="opensInNewWindow"
+                    class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
                     href="profileForm.termsFileDescriptionLink"
                     target="_blank"
                   >
@@ -4930,7 +4930,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     <svg
                       aria-hidden="true"
                       aria-label="link-external"
-                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE undefined"
                       role="img"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
@@ -5237,9 +5237,9 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   download="Helsinki-profiili-ohjeet.pdf"
                   href="/Helsinki-profiili-ohjeet.pdf"
                 >
-                  <span
+                  <div
                     aria-hidden="true"
-                    class="Link-module_iconStart__2bkHS link_hds-icon-start__385-w"
+                    style="display: contents;"
                   >
                     <svg
                       aria-hidden="true"
@@ -5256,7 +5256,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                         fill-rule="evenodd"
                       />
                     </svg>
-                  </span>
+                  </div>
                   <span
                     class="Link-module_buttonLabel__EFeWo undefined"
                   >
@@ -7234,7 +7234,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                         footer.needHelp
                       </h3>
                       <a
-                        class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                        class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                         href="/guide"
                       >
                         <span>
@@ -7255,7 +7255,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                           </li>
                           <li>
                             <a
-                              class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B link-with-icon"
+                              class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B link-with-icon"
                               href="tel:0931088800"
                             >
                               <svg
@@ -7294,8 +7294,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                         footer.otherContactInformation
                       </h3>
                       <a
-                        aria-label="opensInNewWindow."
-                        class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                        aria-label="opensInNewWindow"
+                        class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                         href="footer.contactUsLink"
                         target="_blank"
                       >
@@ -7305,7 +7305,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                         <svg
                           aria-hidden="true"
                           aria-label="link-external"
-                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                           role="img"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
@@ -7319,8 +7319,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                         </svg>
                       </a>
                       <a
-                        aria-label="opensInNewWindow."
-                        class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                        aria-label="opensInNewWindow"
+                        class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                         href="footer.feedbackLink"
                         target="_blank"
                       >
@@ -7330,7 +7330,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                         <svg
                           aria-hidden="true"
                           aria-label="link-external"
-                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                           role="img"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
@@ -7358,7 +7358,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                   class="FooterBase-module_logoWrapper__3BI7d"
                 >
                   <a
-                    class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B"
+                    class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B"
                     href="https://hel.fi/fi"
                   >
                     <img
@@ -7399,8 +7399,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       |
                     </span>
                     <a
-                      aria-label="opensInNewWindow."
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      aria-label="opensInNewWindow"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
                       href="profileForm.termsFileDescriptionLink"
                       target="_blank"
                     >
@@ -7410,7 +7410,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       <svg
                         aria-hidden="true"
                         aria-label="link-external"
-                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE undefined"
                         role="img"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -7660,9 +7660,9 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 download="Helsinki-profiili-ohjeet.pdf"
                 href="/Helsinki-profiili-ohjeet.pdf"
               >
-                <span
+                <div
                   aria-hidden="true"
-                  class="Link-module_iconStart__2bkHS link_hds-icon-start__385-w"
+                  style="display: contents;"
                 >
                   <svg
                     aria-hidden="true"
@@ -7679,7 +7679,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       fill-rule="evenodd"
                     />
                   </svg>
-                </span>
+                </div>
                 <span
                   class="Link-module_buttonLabel__EFeWo undefined"
                 >
@@ -9657,7 +9657,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       footer.needHelp
                     </h3>
                     <a
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                       href="/guide"
                     >
                       <span>
@@ -9678,7 +9678,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                         </li>
                         <li>
                           <a
-                            class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B link-with-icon"
+                            class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B link-with-icon"
                             href="tel:0931088800"
                           >
                             <svg
@@ -9717,8 +9717,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       footer.otherContactInformation
                     </h3>
                     <a
-                      aria-label="opensInNewWindow."
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                      aria-label="opensInNewWindow"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                       href="footer.contactUsLink"
                       target="_blank"
                     >
@@ -9728,7 +9728,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       <svg
                         aria-hidden="true"
                         aria-label="link-external"
-                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                         role="img"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -9742,8 +9742,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       </svg>
                     </a>
                     <a
-                      aria-label="opensInNewWindow."
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                      aria-label="opensInNewWindow"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                       href="footer.feedbackLink"
                       target="_blank"
                     >
@@ -9753,7 +9753,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       <svg
                         aria-hidden="true"
                         aria-label="link-external"
-                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                         role="img"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -9781,7 +9781,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                 class="FooterBase-module_logoWrapper__3BI7d"
               >
                 <a
-                  class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B"
+                  class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B"
                   href="https://hel.fi/fi"
                 >
                   <img
@@ -9822,8 +9822,8 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     |
                   </span>
                   <a
-                    aria-label="opensInNewWindow."
-                    class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    aria-label="opensInNewWindow"
+                    class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
                     href="profileForm.termsFileDescriptionLink"
                     target="_blank"
                   >
@@ -9833,7 +9833,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     <svg
                       aria-hidden="true"
                       aria-label="link-external"
-                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE undefined"
                       role="img"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
@@ -10140,9 +10140,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   download="Helsingforsprofilens-hjalp.pdf"
                   href="/Helsingforsprofilens-hjalp.pdf"
                 >
-                  <span
+                  <div
                     aria-hidden="true"
-                    class="Link-module_iconStart__2bkHS link_hds-icon-start__385-w"
+                    style="display: contents;"
                   >
                     <svg
                       aria-hidden="true"
@@ -10159,7 +10159,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                         fill-rule="evenodd"
                       />
                     </svg>
-                  </span>
+                  </div>
                   <span
                     class="Link-module_buttonLabel__EFeWo undefined"
                   >
@@ -12153,7 +12153,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                         footer.needHelp
                       </h3>
                       <a
-                        class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                        class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                         href="/guide"
                       >
                         <span>
@@ -12174,7 +12174,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                           </li>
                           <li>
                             <a
-                              class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B link-with-icon"
+                              class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B link-with-icon"
                               href="tel:0931088800"
                             >
                               <svg
@@ -12213,8 +12213,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                         footer.otherContactInformation
                       </h3>
                       <a
-                        aria-label="opensInNewWindow."
-                        class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                        aria-label="opensInNewWindow"
+                        class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                         href="footer.contactUsLink"
                         target="_blank"
                       >
@@ -12224,7 +12224,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                         <svg
                           aria-hidden="true"
                           aria-label="link-external"
-                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                           role="img"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
@@ -12238,8 +12238,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                         </svg>
                       </a>
                       <a
-                        aria-label="opensInNewWindow."
-                        class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                        aria-label="opensInNewWindow"
+                        class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                         href="footer.feedbackLink"
                         target="_blank"
                       >
@@ -12249,7 +12249,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                         <svg
                           aria-hidden="true"
                           aria-label="link-external"
-                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                          class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                           role="img"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
@@ -12277,7 +12277,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                   class="FooterBase-module_logoWrapper__3BI7d"
                 >
                   <a
-                    class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B"
+                    class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B"
                     href="https://hel.fi/sv"
                   >
                     <img
@@ -12318,8 +12318,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       |
                     </span>
                     <a
-                      aria-label="opensInNewWindow."
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                      aria-label="opensInNewWindow"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
                       href="profileForm.termsFileDescriptionLink"
                       target="_blank"
                     >
@@ -12329,7 +12329,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <svg
                         aria-hidden="true"
                         aria-label="link-external"
-                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE undefined"
                         role="img"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -12579,9 +12579,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 download="Helsingforsprofilens-hjalp.pdf"
                 href="/Helsingforsprofilens-hjalp.pdf"
               >
-                <span
+                <div
                   aria-hidden="true"
-                  class="Link-module_iconStart__2bkHS link_hds-icon-start__385-w"
+                  style="display: contents;"
                 >
                   <svg
                     aria-hidden="true"
@@ -12598,7 +12598,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       fill-rule="evenodd"
                     />
                   </svg>
-                </span>
+                </div>
                 <span
                   class="Link-module_buttonLabel__EFeWo undefined"
                 >
@@ -14592,7 +14592,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       footer.needHelp
                     </h3>
                     <a
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                       href="/guide"
                     >
                       <span>
@@ -14613,7 +14613,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                         </li>
                         <li>
                           <a
-                            class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B link-with-icon"
+                            class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B link-with-icon"
                             href="tel:0931088800"
                           >
                             <svg
@@ -14652,8 +14652,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       footer.otherContactInformation
                     </h3>
                     <a
-                      aria-label="opensInNewWindow."
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                      aria-label="opensInNewWindow"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                       href="footer.contactUsLink"
                       target="_blank"
                     >
@@ -14663,7 +14663,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <svg
                         aria-hidden="true"
                         aria-label="link-external"
-                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                         role="img"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -14677,8 +14677,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       </svg>
                     </a>
                     <a
-                      aria-label="opensInNewWindow."
-                      class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                      aria-label="opensInNewWindow"
+                      class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                       href="footer.feedbackLink"
                       target="_blank"
                     >
@@ -14688,7 +14688,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       <svg
                         aria-hidden="true"
                         aria-label="link-external"
-                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                        class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                         role="img"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -14716,7 +14716,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                 class="FooterBase-module_logoWrapper__3BI7d"
               >
                 <a
-                  class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B"
+                  class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B"
                   href="https://hel.fi/sv"
                 >
                   <img
@@ -14757,8 +14757,8 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     |
                   </span>
                   <a
-                    aria-label="opensInNewWindow."
-                    class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                    aria-label="opensInNewWindow"
+                    class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
                     href="profileForm.termsFileDescriptionLink"
                     target="_blank"
                   >
@@ -14768,7 +14768,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     <svg
                       aria-hidden="true"
                       aria-label="link-external"
-                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE undefined"
                       role="img"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
@@ -15072,9 +15072,9 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               download="Helsinki-profiili-ohjeet.pdf"
               href="/Helsinki-profiili-ohjeet.pdf"
             >
-              <span
+              <div
                 aria-hidden="true"
-                class="Link-module_iconStart__2bkHS link_hds-icon-start__385-w"
+                style="display: contents;"
               >
                 <svg
                   aria-hidden="true"
@@ -15091,7 +15091,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     fill-rule="evenodd"
                   />
                 </svg>
-              </span>
+              </div>
               <span
                 class="Link-module_buttonLabel__EFeWo undefined"
               >
@@ -17069,7 +17069,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     footer.needHelp
                   </h3>
                   <a
-                    class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                    class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                     href="/guide"
                   >
                     <span>
@@ -17090,7 +17090,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                       </li>
                       <li>
                         <a
-                          class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B link-with-icon"
+                          class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B link-with-icon"
                           href="tel:0931088800"
                         >
                           <svg
@@ -17129,8 +17129,8 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     footer.otherContactInformation
                   </h3>
                   <a
-                    aria-label="opensInNewWindow."
-                    class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                    aria-label="opensInNewWindow"
+                    class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                     href="footer.contactUsLink"
                     target="_blank"
                   >
@@ -17140,7 +17140,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <svg
                       aria-hidden="true"
                       aria-label="link-external"
-                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                       role="img"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
@@ -17154,8 +17154,8 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     </svg>
                   </a>
                   <a
-                    aria-label="opensInNewWindow."
-                    class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
+                    aria-label="opensInNewWindow"
+                    class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_utility__3jLSl"
                     href="footer.feedbackLink"
                     target="_blank"
                   >
@@ -17165,7 +17165,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     <svg
                       aria-hidden="true"
                       aria-label="link-external"
-                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                      class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_small__gTGkU icon_hds-icon--size-s__2Lkik FooterLink-module_icon__3KZCE undefined"
                       role="img"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
@@ -17193,7 +17193,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
               class="FooterBase-module_logoWrapper__3BI7d"
             >
               <a
-                class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B"
+                class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B"
                 href="https://hel.fi/fi"
               >
                 <img
@@ -17234,8 +17234,8 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   |
                 </span>
                 <a
-                  aria-label="opensInNewWindow."
-                  class="Link-module_link__TeBQo link_hds-link__5Oxo- Link-module_link-medium__3gvla link_hds-link--medium__xEU_F FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
+                  aria-label="opensInNewWindow"
+                  class="Link-module_link__TeBQo link_hds-link__5Oxo- FooterLink-module_item__3Ig3B FooterLink-module_base__bzKoj"
                   href="profileForm.termsFileDescriptionLink"
                   target="_blank"
                 >
@@ -17245,7 +17245,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   <svg
                     aria-hidden="true"
                     aria-label="link-external"
-                    class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE link_icon__1UA7k"
+                    class="Icon-module_icon__1Jtzj icon_hds-icon__1YqNC Icon-module_extraSmall__3Q7tD icon_hds-icon--size-xs__3dAMZ FooterLink-module_icon__3KZCE undefined"
                     role="img"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
