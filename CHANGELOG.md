@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.30.2](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.30.1...open-city-profile-ui-v1.30.2) (2026-03-26)
+
+
+### Dependencies
+
+* Bump flatted from 3.3.1 to 3.4.2 ([b901808](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/b9018085832906f029f3e52ff8c8d82902365bff))
+
 ## [1.30.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.30.0...open-city-profile-ui-v1.30.1) (2026-03-20)
 
 
