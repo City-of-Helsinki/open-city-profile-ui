@@ -226,6 +226,7 @@
     "noEmail": "You have not entered an email address.",
     "verifyEmailText": "We have sent a verification email to the email address you have entered. If you did not receive the verification email, please check your junk mail folder.",
     "verifyEmailTitle": "Verify email",
+    "explanationForStrongAuthentication": "You can edit your email address, password and two-factor authentication only when you are strongly authenticated. Log out and log back in using Suomi.fi authentication.",
     "contact": "Contact",
     "emailInUse": "The email address you entered is already in use.",
     "contactInformation": "My contact information"
