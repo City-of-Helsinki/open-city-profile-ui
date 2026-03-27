@@ -1,13 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  Select,
-  SelectProps,
-  Option,
-  Texts,
-  SupportedLanguage,
-} from 'hds-react';
+import { Select, Option } from 'hds-react';
 import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { SupportedLanguage } from 'hds-react/components/dropdownComponents/modularOptionList/types';
 
 export function defaultFilter(option: Option, filterStr: string) {
   return option.label.toLowerCase().indexOf(filterStr.toLowerCase()) > -1;
@@ -33,7 +28,7 @@ type Props = {
   error?: string;
   onChange?: (clickedOption: Option) => void;
 } & Omit<
-  SelectProps<React.ReactElement>,
+  React.ComponentProps<typeof Select>,
   'defaultValue' | 'onChange' | 'value'
 >;
 
@@ -109,7 +104,7 @@ function FormikDropdown(props: Props): React.ReactElement {
   // Get the current value directly from the option
   const currentValue = (currentOption || selectedOption)?.value;
 
-  const defaultTexts: Partial<Texts> = {
+  const defaultTexts = {
     label,
     error,
     language: i18n.language as SupportedLanguage,
