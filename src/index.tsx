@@ -35,7 +35,13 @@ if (window._env_.REACT_APP_SENTRY_DSN) {
   });
 }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(<BrowserApp />);
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error('Root element not found');
+}
+
+ReactDOM.createRoot(rootElement).render(<BrowserApp />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

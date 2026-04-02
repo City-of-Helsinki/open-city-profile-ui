@@ -1,13 +1,18 @@
 import { ApolloError } from '@apollo/client';
-import { GraphQLError } from 'graphql';
 
 type ParsingResult = {
   isAllowedError: boolean;
   isInsufficientLoaError: boolean;
 };
 
-function getGraphQLErrors(error: ApolloError | Error): readonly GraphQLError[] {
-  return (error as ApolloError).graphQLErrors || [];
+function getGraphQLErrors(error: ApolloError | Error): ReadonlyArray<{
+  extensions?: { code?: string };
+  path?: readonly (string | number)[];
+}> {
+  return ((error as ApolloError).graphQLErrors || []) as ReadonlyArray<{
+    extensions?: { code?: string };
+    path?: readonly (string | number)[];
+  }>;
 }
 
 function parseGraphQLError(error: ApolloError | Error): ParsingResult {
