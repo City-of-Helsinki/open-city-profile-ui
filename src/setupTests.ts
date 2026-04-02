@@ -10,7 +10,7 @@ import '@testing-library/jest-dom/vitest';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 require('../public/test-env-config');
 
-window.scrollTo = vi.fn<any>();
+window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
 
 // Mock ResizeObserver for HDS components
 class MockResizeObserver {

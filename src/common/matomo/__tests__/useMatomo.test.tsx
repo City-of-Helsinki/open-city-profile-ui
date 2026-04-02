@@ -29,10 +29,11 @@ describe('useMatomo', () => {
     const trackPageViewMock = vi.fn();
 
     vi.spyOn(MatomoTracker, 'default').mockImplementation(
-      () =>
-        ({
+      function MockMatomoTracker() {
+        return {
           trackPageView: trackPageViewMock,
-        }) as unknown as MatomoTracker.default
+        } as unknown as MatomoTracker.default;
+      }
     );
 
     const instance = new MatomoTracker.default({
@@ -62,11 +63,12 @@ describe('useMatomo', () => {
     const trackEventMock = vi.fn();
 
     vi.spyOn(MatomoTracker, 'default').mockImplementation(
-      () =>
-        ({
+      function MockMatomoTracker() {
+        return {
           trackPageView: trackPageViewMock,
           trackEvent: trackEventMock,
-        }) as unknown as MatomoTracker.default
+        } as unknown as MatomoTracker.default;
+      }
     );
 
     const instance = new MatomoTracker.default({

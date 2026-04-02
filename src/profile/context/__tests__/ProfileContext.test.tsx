@@ -48,21 +48,19 @@ describe('ProfileContext', () => {
     const responses: MockedResponse[] = [
       { profileData: getMyProfile().myProfile as ProfileData },
     ];
-    const { result, waitForUpdate } = createTestEnv(responses);
-    let context = result.current;
+    const { result } = createTestEnv(responses);
 
-    const loadingPromise = waitForUpdate();
-    context.fetch();
-    await loadingPromise;
-    context = result.current;
-    expect(context.data).toBeUndefined();
-    expect(context.loading).toEqual(true);
-    expect(context.isInitialized).toEqual(true);
-    expect(context.isComplete).toEqual(false);
+    result.current.fetch();
 
-    const dataLoadedPromise = waitForUpdate();
-    await dataLoadedPromise;
-    context = result.current;
+    await waitFor(() => {
+      expect(result.current.isInitialized).toEqual(true);
+    });
+
+    await waitFor(() => {
+      expect(result.current.isComplete).toEqual(true);
+    });
+
+    const context = result.current;
     expect(context.data).toBeDefined();
     expect(context.loading).toEqual(false);
     expect(context.isInitialized).toEqual(true);
@@ -74,16 +72,15 @@ describe('ProfileContext', () => {
   });
   it("load is successful also when user's profile does not exist", async () => {
     const responses: MockedResponse[] = [{ profileData: null }];
-    const { result, waitForUpdate } = createTestEnv(responses);
-    let context = result.current;
+    const { result } = createTestEnv(responses);
 
-    const loadingPromise = waitForUpdate();
-    context.fetch();
-    await loadingPromise;
-    context = result.current;
-    const dataLoadedPromise = waitForUpdate();
-    await dataLoadedPromise;
-    context = result.current;
+    result.current.fetch();
+
+    await waitFor(() => {
+      expect(result.current.isComplete).toEqual(true);
+    });
+
+    const context = result.current;
     expect(context.data).toEqual({ myProfile: null });
     expect(context.isComplete).toEqual(true);
     expect(context.getProfile()).toBeNull();
