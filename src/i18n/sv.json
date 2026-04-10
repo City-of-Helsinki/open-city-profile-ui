@@ -226,6 +226,7 @@
     "noEmail": "Du har inte upgett en e-postadress",
     "verifyEmailText": "Vi har skickat en bekräftelse till e-postadressen som du angett. Om du inte har fått meddelandet, vänligen kontrollera skräpkorgen för e-post.",
     "verifyEmailTitle": "Bekräfta e-postadressen",
+    "explanationForStrongAuthentication": "Du kan redigera din e-postadress, ditt lösenord och tvåfaktorsautentisering endast när du är starkt autentiserad. Logga ut och logga in igen med Suomi.fi-autentisering.",
     "contact": "Kontaktinformation",
     "emailInUse": "E-postadressen du uppgett används redan.",
     "contactInformation": "Min kontaktinformation"

@@ -53,6 +53,25 @@ export function hasPasswordLogin(data: ProfileRoot | undefined): boolean {
   );
 }
 
+export function hasStrongLoginMethod(data: ProfileRoot | undefined): boolean {
+  return (
+    data?.myProfile?.availableLoginMethods?.some(
+      (item) => item && item.method === LoginMethodType.SUOMI_FI
+    ) ?? false
+  );
+}
+
+export function hasHybridLoginMethods(data: ProfileRoot | undefined): boolean {
+  return hasPasswordLogin(data) && hasStrongLoginMethod(data);
+}
+
+export function requiresStrongAuthenticationForHybrid(
+  data: ProfileRoot | undefined,
+  amrArray: Amr | undefined
+): boolean {
+  return hasHybridLoginMethods(data) && !hasTunnistusSuomiFiAmr(amrArray);
+}
+
 export function getMFALoginMethod(
   data: ProfileRoot | undefined
 ): MyLoginMethodNodeFragment | undefined {
