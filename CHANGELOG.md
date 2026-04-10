@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.30.4](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.30.3...open-city-profile-ui-v1.30.4) (2026-04-10)
+
+
+### Dependencies
+
+* Bump vite from 8.0.3 to 8.0.5 ([2125b7c](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/2125b7c68ba522881e14e4c87abc738835a79fba))
+* Update vulnerable packages ([ba2df6a](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/ba2df6ad53ec0346217e9997a4ebbefd39a6cced))
+* Upgrade HDS packages to v5.0.0 ([ce11147](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/ce111476e7d5ca506697c670ddc21ce90c7da854))
+
 ## [1.30.3](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.30.2...open-city-profile-ui-v1.30.3) (2026-04-02)
 
 
