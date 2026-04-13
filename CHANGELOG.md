@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.31.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.30.4...open-city-profile-ui-v1.31.0) (2026-04-13)
+
+
+### Features
+
+* Require strong auth for hybrid email/password/2FA edits ([3517f5b](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/3517f5bdc4393faafcd1e1c53ded850185da73bb))
+
 ## [1.30.4](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.30.3...open-city-profile-ui-v1.30.4) (2026-04-10)
 
 
