@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.31.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.31.0...open-city-profile-ui-v1.31.1) (2026-04-21)
+
+
+### Dependencies
+
+* Bump dompurify from 3.3.3 to 3.4.0 ([827240b](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/827240beb9c8fcc42654ac7b2aad11031199b50a))
+
 ## [1.31.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.30.4...open-city-profile-ui-v1.31.0) (2026-04-13)
 
 
