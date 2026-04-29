@@ -38,8 +38,13 @@ Missing country codes compared to the official ITU: https://www.itu.int/oth/T020
   Jamaicans can use +1 (US) and add 658 if needed.
 */
 import * as path from 'path';
+import fs from 'fs';
+import { promisify } from 'util';
+import { fileURLToPath } from 'url';
 
 import { to } from 'await-to-js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import countries from 'i18n-iso-countries';
 
 const CountryCodePropKey = 'ISO3166-1-Alpha-2';
@@ -73,11 +78,6 @@ type SubRegion = {
 type SubRegions = {
   [x: string]: SubRegion;
 };
-
-const fs = require('fs');
-const { promisify } = require('util');
-
-const fetch = require('node-fetch');
 
 const writeFile = promisify(fs.writeFile);
 const filePath = '../src/i18n/countryCallingCodes.json';
