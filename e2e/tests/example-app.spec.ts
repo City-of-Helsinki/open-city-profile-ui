@@ -43,8 +43,7 @@ test.describe('Example app tests', () => {
     expect(jwtValidTime).toBe(validTimeValue);
   });
 
-  // Enable again when backend issue is solved or when sentry is ok
-  test.skip('Change pet name', async ({ page }) => {
+  test('Change pet name', async ({ page }) => {
     await page.locator('[data-test-id="header-link-backend"]').click();
     await page.getByLabel('Uusi lemmikin nimi').fill('nodelete');
     await page.getByRole('button', { name: 'Tallenna' }).click();
@@ -54,8 +53,7 @@ test.describe('Example app tests', () => {
   });
 });
 
-// Enable again when backend issue is solved or when sentry is ok
-test.describe.skip('Profile tests', () => {
+test.describe('Profile tests', () => {
   test.beforeEach(async ({ page }) => {
     await acceptCookies(page);
     await loginToProfileWithSuomiFi(page, TEST_SSN);
