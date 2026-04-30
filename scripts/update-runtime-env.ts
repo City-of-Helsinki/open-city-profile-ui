@@ -2,6 +2,9 @@ import dotenv from 'dotenv';
 import * as path from 'path';
 import fs from 'fs';
 import util from 'util';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const USE_TEST_ENV = process.env.NODE_ENV === 'test';
 const defaultNodeEnv = USE_TEST_ENV ? 'test' : 'development';

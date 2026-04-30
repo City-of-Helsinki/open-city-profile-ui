@@ -1,5 +1,8 @@
 import dotenv from 'dotenv';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /// <reference types="./helsinki-utils" />
 import fetchTranslations from 'helsinki-utils/scripts/fetch-translations';
