@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.31.2](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.31.1...open-city-profile-ui-v1.31.2) (2026-05-02)
+
+
+### Bug Fixes
+
+* Enable unit test that were skipped because of backend issue ([e64f813](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/e64f81391eb3a43ee5bfa5c0ae041f454ab2c8e2))
+* Update hds switch esrun to tsx KEH-281 ([#516](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/516)) ([7d583d3](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/7d583d3c92cc303ffcc46cd434ad2b165049d85f))
+
+
+### Dependencies
+
+* Bump postcss from 8.5.8 to 8.5.12 ([39f1f09](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/39f1f09fb6d8329065263ef1a7cb53e34a78e210))
+* Bump uuid from 11.1.0 to 14.0.0 ([b803402](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/b803402ee8c950ee41e697faa9fd46a6701bdc70))
+
 ## [1.31.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.31.0...open-city-profile-ui-v1.31.1) (2026-04-21)
 
 
