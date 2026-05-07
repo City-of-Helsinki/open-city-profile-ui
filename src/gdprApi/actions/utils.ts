@@ -250,7 +250,7 @@ export function useInternalRedirect(controller: QueueController): {
   reset: () => void;
   redirect: (path: string) => boolean;
 } {
-  const currentRedirectPath = useRef<string | undefined>();
+  const currentRedirectPath = useRef<string | undefined>(undefined);
   const navigate = useNavigate();
   const isRouteMatch = (path?: string) => (path ? matchUrls(path) : false);
   return useMemo(() => {
