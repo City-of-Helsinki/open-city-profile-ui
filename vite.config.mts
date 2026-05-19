@@ -1,5 +1,5 @@
 import { configDefaults } from 'vitest/config';
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import eslint from '@nabla/vite-plugin-eslint';
 import { defineConfig } from 'vite';
 
