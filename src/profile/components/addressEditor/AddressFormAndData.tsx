@@ -1,17 +1,18 @@
 import { TextInput, Option } from 'hds-react';
-import React from 'react';
-import { Field, Formik, FormikProps, Form } from 'formik';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
 import countries from 'i18n-iso-countries';
 import classNames from 'classnames';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import { AddressValue } from '../../helpers/editData';
-import { createFormFieldHelpers } from '../../helpers/formik';
+import { createFormFieldHelpers } from '../../helpers/formFields';
 import { addressSchema } from '../../../common/schemas/schemas';
 import FormButtons from '../formButtons/FormButtons';
 import EditButtons from '../editButtons/EditButtons';
-import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
+import FormDropdown from '../../../common/formDropdown/FormDropdown';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import LabeledValue from '../../../common/labeledValue/LabeledValue';
 import getCountry from '../../helpers/getCountry';
@@ -20,13 +21,13 @@ import SaveIndicator from '../saveIndicator/SaveIndicator';
 import { EditHandling } from '../../hooks/useCommonEditHandling';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
-import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
+import AccessibleFormErrors from '../accessibleFormErrors/AccessibleFormErrors';
 import { RequiredFieldsNote } from '../../../common/requiredFieldsNote/RequiredFieldsNote';
 import { useVerifiedPersonalInformation } from '../../context/ProfileContext';
 import AddButton from '../addButton/AddButton';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
 
-type FormikValues = AddressValue;
+type FormValues = AddressValue;
 
 function AddressFormAndData({
   editHandler,
@@ -56,6 +57,32 @@ function AddressFormAndData({
     ? t('profileInformation.addressDescriptionNoWeakAddress')
     : t('profileInformation.addressDescriptionNoAddress');
   const containerStyle = commonFormStyles['responsive-flex-box-columns-rows'];
+
+  // Pre-compute initial values so hooks can be called unconditionally
+  const existingValue = hasData() ? (getData().value as AddressValue) : null;
+  const initialAddress = existingValue?.address ?? '';
+  const initialCity = existingValue?.city ?? '';
+  const initialPostalCode = existingValue?.postalCode ?? '';
+  const initialCountryCode = existingValue?.countryCode ?? '';
+
+  const { handleSubmit, formState, setValue, reset, register } =
+    useForm<FormValues>({
+      defaultValues: {
+        address: initialAddress,
+        city: initialCity,
+        postalCode: initialPostalCode,
+        countryCode: initialCountryCode,
+      },
+      resolver: yupResolver(addressSchema),
+    });
+
+  useEffect(() => {
+    if (isEditing && hasData()) {
+      reset(getData().value as AddressValue);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditing]);
+
   const DescriptionElement = (): React.ReactElement | null => {
     if (hasData() && !isNew) {
       return <p>{t('profileInformation.addressDescription')}</p>;
@@ -97,7 +124,7 @@ function AddressFormAndData({
 
   const data = getData();
   const value = data.value as AddressValue;
-  const { address, city, postalCode, countryCode } = value;
+  const { countryCode } = value;
   const lang = i18n.languages[0];
   const applicationLanguage = getLanguageCode(i18n.languages[0]);
   const countryList = countries.getNames(applicationLanguage);
@@ -122,7 +149,7 @@ function AddressFormAndData({
   const formFields = getFormFields(dataType);
 
   const { hasFieldError, getFieldErrorMessage } =
-    createFormFieldHelpers<FormikValues>(t, isNew);
+    createFormFieldHelpers<FormValues>(t, isNew);
 
   const { primary, saving } = data;
   const disableButtons = !!currentAction || !!saving;
@@ -131,111 +158,100 @@ function AddressFormAndData({
 
   if (isEditing) {
     return (
-      <Formik
-        initialValues={{
-          address,
-          city,
-          postalCode,
-          countryCode,
-        }}
-        onSubmit={async (values) => {
+      <form
+        onSubmit={handleSubmit(async (values) => {
           await actionHandler('save', values);
-        }}
-        validationSchema={addressSchema}
+        })}
       >
-        {(formikProps: FormikProps<FormikValues>) => (
-          <Form>
-            <Explanation />
-            <RequiredFieldsNote />
-            <FocusKeeper targetId={`${testId}-address`}>
-              <div
-                className={classNames(
-                  containerStyle,
-                  commonFormStyles['editor-form-fields']
-                )}
-              >
-                <Field
-                  name="address"
-                  id={`${testId}-address`}
-                  maxLength={formFields.address.max as number}
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps, 'address')}
-                  aria-invalid={hasFieldError(formikProps, 'address')}
-                  errorText={getFieldErrorMessage(formikProps, 'address')}
-                  label={`${t(formFields.address.translationKey)} *`}
-                  autoFocus
-                  aria-labelledby={`${dataType}-address-helper`}
-                  className={formFieldStyle}
-                />
-                <Field
-                  name="postalCode"
-                  id={`${testId}-postalCode`}
-                  maxLength={formFields.postalCode.max as number}
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps, 'postalCode')}
-                  aria-invalid={hasFieldError(formikProps, 'postalCode')}
-                  errorText={getFieldErrorMessage(formikProps, 'postalCode')}
-                  label={`${t(formFields.postalCode.translationKey)} *`}
-                  aria-labelledby={`${dataType}-postalCode-helper`}
-                  className={formFieldStyle}
-                />
-                <Field
-                  name="city"
-                  id={`${testId}-city`}
-                  maxLength={formFields.city.max as number}
-                  as={TextInput}
-                  invalid={hasFieldError(formikProps, 'city')}
-                  aria-invalid={hasFieldError(formikProps, 'city')}
-                  errorText={getFieldErrorMessage(formikProps, 'city')}
-                  label={`${t(formFields.city.translationKey)} *`}
-                  aria-labelledby={`${dataType}-city-helper`}
-                  className={formFieldStyle}
-                />
-                <div className={commonFormStyles['form-field']}>
-                  <FormikDropdown
-                    name="countryCode"
-                    id={`${testId}-countryCode`}
-                    options={countryOptions}
-                    label={`${t(formFields.countryCode.translationKey)} *`}
-                    defaultOption={defaultCountryOption as Option}
-                    invalid={hasFieldError(formikProps, 'countryCode')}
-                    error={(
-                      getFieldErrorMessage(formikProps, 'countryCode') ?? ''
-                    ).toString()}
-                    aria-describedby={`${dataType}-countryCode-helper`}
-                    allowSearch
-                    onChange={(option: Option) =>
-                      formikProps.setFieldValue(
-                        'countryCode',
-                        option ? option.value : ''
-                      )
-                    }
-                    initialOption={initialCountryOption}
-                  />
-                </div>
-              </div>
-              <AccessibleFormikErrors
-                formikProps={formikProps}
-                dataType={dataType}
+        <Explanation />
+        <RequiredFieldsNote />
+        <FocusKeeper targetId={`${testId}-address`}>
+          <div
+            className={classNames(
+              containerStyle,
+              commonFormStyles['editor-form-fields']
+            )}
+          >
+            <TextInput
+              {...register('address')}
+              id={`${testId}-address`}
+              maxLength={formFields.address.max as number}
+              invalid={hasFieldError(formState, 'address')}
+              aria-invalid={hasFieldError(formState, 'address')}
+              errorText={getFieldErrorMessage(formState, 'address')}
+              label={`${t(formFields.address.translationKey)} *`}
+              autoFocus
+              aria-labelledby={`${dataType}-address-helper`}
+              className={formFieldStyle}
+            />
+            <TextInput
+              {...register('postalCode')}
+              id={`${testId}-postalCode`}
+              maxLength={formFields.postalCode.max as number}
+              invalid={hasFieldError(formState, 'postalCode')}
+              aria-invalid={hasFieldError(formState, 'postalCode')}
+              errorText={getFieldErrorMessage(formState, 'postalCode')}
+              label={`${t(formFields.postalCode.translationKey)} *`}
+              aria-labelledby={`${dataType}-postalCode-helper`}
+              className={formFieldStyle}
+            />
+            <TextInput
+              {...register('city')}
+              id={`${testId}-city`}
+              maxLength={formFields.city.max as number}
+              invalid={hasFieldError(formState, 'city')}
+              aria-invalid={hasFieldError(formState, 'city')}
+              errorText={getFieldErrorMessage(formState, 'city')}
+              label={`${t(formFields.city.translationKey)} *`}
+              aria-labelledby={`${dataType}-city-helper`}
+              className={formFieldStyle}
+            />
+            <div className={commonFormStyles['form-field']}>
+              <FormDropdown
+                name="countryCode"
+                id={`${testId}-countryCode`}
+                options={countryOptions}
+                label={`${t(formFields.countryCode.translationKey)} *`}
+                defaultOption={defaultCountryOption as Option}
+                invalid={hasFieldError(formState, 'countryCode')}
+                error={(
+                  getFieldErrorMessage(formState, 'countryCode') ?? ''
+                ).toString()}
+                aria-describedby={`${dataType}-countryCode-helper`}
+                allowSearch
+                onChange={(option: Option) =>
+                  setValue('countryCode', option ? option.value : '')
+                }
+                initialOption={initialCountryOption}
               />
-              <EditingNotifications
-                content={notificationContent.content}
-                dataType={dataType}
-                noSpacing
-                topSpacingMobile
-              />
-              <FormButtons
-                handler={actionHandler}
-                disabled={disableButtons}
-                testId={testId}
-              />
-              <SaveIndicator action={currentAction} testId={testId} />
-            </FocusKeeper>
-          </Form>
-        )}
-      </Formik>
+            </div>
+          </div>
+          <AccessibleFormErrors
+            formState={
+              formState as {
+                errors: Record<string, { message?: string }>;
+                submitCount: number;
+              }
+            }
+            dataType={dataType}
+          />
+          <EditingNotifications
+            content={notificationContent.content}
+            dataType={dataType}
+            noSpacing
+            topSpacingMobile
+          />
+          <FormButtons
+            handler={actionHandler}
+            disabled={disableButtons}
+            testId={testId}
+          />
+          <SaveIndicator action={currentAction} testId={testId} />
+        </FocusKeeper>
+      </form>
     );
   }
+
   return (
     <div className={classNames(commonFormStyles['flex-box-columns'])}>
       <div

@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Field, Formik, FormikProps, Form } from 'formik';
+import { useForm, type Resolver } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   TextInput,
   Notification,
@@ -19,14 +20,14 @@ import {
 } from '../../helpers/editData';
 import { saveTypeToAction } from '../../hooks/useProfileDataEditor';
 import { emailSchema } from '../../../common/schemas/schemas';
-import { createFormFieldHelpers } from '../../helpers/formik';
+import { createFormFieldHelpers } from '../../helpers/formFields';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
 import EditButtons, { ActionHandler } from '../editButtons/EditButtons';
 import FormButtons from '../formButtons/FormButtons';
 import SaveIndicator from '../saveIndicator/SaveIndicator';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
-import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
+import AccessibleFormErrors from '../accessibleFormErrors/AccessibleFormErrors';
 import AccessibilityFieldHelpers from '../../../common/accessibilityFieldHelpers/AccessibilityFieldHelpers';
 import {
   hasHelsinkiAccountAMR,
@@ -79,6 +80,17 @@ function EmailEditor(): React.ReactElement | null {
   const headingStyle = commonFormStyles['label-size'];
   const boxStyle = commonFormStyles['flex-box-columns'];
 
+  const { register, handleSubmit, formState, reset } = useForm<EmailValue>({
+    defaultValues: { email },
+    resolver: yupResolver(emailSchema) as unknown as Resolver<EmailValue>,
+  });
+
+  useEffect(() => {
+    if (isEditing) {
+      reset({ email });
+    }
+  }, [isEditing, email, reset]);
+
   const actionChecker: ActionHandler = async (action, newValue) => {
     if (action === 'save') {
       const success = await actionHandler('save', newValue);
@@ -97,60 +109,60 @@ function EmailEditor(): React.ReactElement | null {
 
   if (isEditing) {
     return (
-      <Formik
-        initialValues={{ email }}
-        onSubmit={async (values) => actionChecker('save', values)}
-        validationSchema={emailSchema}
-      >
-        {(formikProps: FormikProps<EmailValue>) => (
-          <div className={boxStyle}>
-            <h3 className={commonFormStyles['label-size']}>
-              {t('profileForm.email')}
-            </h3>
-            <Form>
-              <FocusKeeper targetId={`${dataType}-email`}>
-                <div
-                  className={classNames(
-                    containerStyle,
-                    commonFormStyles['editor-form-fields']
-                  )}
-                >
-                  <Field
-                    name="email"
-                    id={`${dataType}-email`}
-                    maxLength={formFields.email.max as number}
-                    as={TextInput}
-                    invalid={hasFieldError(formikProps, 'email')}
-                    aria-invalid={hasFieldError(formikProps, 'email')}
-                    errorText={getFieldErrorMessage(formikProps, 'email')}
-                    aria-labelledby={`${dataType}-email-helper`}
-                    autoFocus
-                  />
-                  <AccessibilityFieldHelpers dataType={dataType} />
-                  <AccessibleFormikErrors
-                    formikProps={formikProps}
-                    dataType={dataType}
-                  />
-                </div>
-                <EditingNotifications
-                  content={content}
-                  dataType={dataType}
-                  noSpacing
-                />
-                <FormButtons
-                  handler={actionChecker}
-                  disabled={!!saving}
-                  testId={dataType}
-                />
-                <SaveIndicator
-                  action={saveTypeToAction(saving)}
-                  testId={dataType}
-                />
-              </FocusKeeper>
-            </Form>
-          </div>
-        )}
-      </Formik>
+      <div className={boxStyle}>
+        <h3 className={commonFormStyles['label-size']}>
+          {t('profileForm.email')}
+        </h3>
+        <form
+          onSubmit={handleSubmit(async (values) =>
+            actionChecker('save', values)
+          )}
+        >
+          <FocusKeeper targetId={`${dataType}-email`}>
+            <div
+              className={classNames(
+                containerStyle,
+                commonFormStyles['editor-form-fields']
+              )}
+            >
+              <TextInput
+                {...register('email')}
+                id={`${dataType}-email`}
+                maxLength={formFields.email.max as number}
+                invalid={hasFieldError(formState, 'email')}
+                aria-invalid={hasFieldError(formState, 'email')}
+                errorText={getFieldErrorMessage(formState, 'email')}
+                aria-labelledby={`${dataType}-email-helper`}
+                autoFocus
+              />
+              <AccessibilityFieldHelpers dataType={dataType} />
+              <AccessibleFormErrors
+                formState={
+                  formState as {
+                    errors: Record<string, { message?: string }>;
+                    submitCount: number;
+                  }
+                }
+                dataType={dataType}
+              />
+            </div>
+            <EditingNotifications
+              content={content}
+              dataType={dataType}
+              noSpacing
+            />
+            <FormButtons
+              handler={actionChecker}
+              disabled={!!saving}
+              testId={dataType}
+            />
+            <SaveIndicator
+              action={saveTypeToAction(saving)}
+              testId={dataType}
+            />
+          </FocusKeeper>
+        </form>
+      </div>
     );
   }
 

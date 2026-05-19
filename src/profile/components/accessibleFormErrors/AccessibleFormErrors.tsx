@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { FormikProps } from 'formik';
+import { FieldErrors } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
@@ -7,26 +7,35 @@ import { getErrorMessageWithOptions } from '../../../common/schemas/schemas';
 import { getFormFields, FormField } from '../../helpers/formProperties';
 import { EditDataType } from '../../helpers/editData';
 
+type FormState = {
+  errors: FieldErrors<Record<string, unknown>>;
+  submitCount: number;
+};
+
 type Props = {
-  formikProps: unknown;
+  formState: FormState;
   dataType: EditDataType;
 };
 
-const AccessibleFormikErrors = (props: Props): React.ReactElement | null => {
-  const formik = props.formikProps as FormikProps<Record<string, unknown>>;
+const AccessibleFormErrors = (props: Props): React.ReactElement | null => {
+  const { formState, dataType } = props;
   const [currentErrorText, setLastError] = useState<string>('');
-  const lastSubmitCountRef = useRef<number>(formik.submitCount);
+  const lastSubmitCountRef = useRef<number>(formState.submitCount);
   const { t } = useTranslation();
-  const errorList = Object.keys(formik.errors);
+  const errorList = Object.keys(formState.errors);
   const errorCount = errorList.length;
-  const formFields = getFormFields(props.dataType);
+  const formFields = getFormFields(dataType);
   const errorsToText = () =>
     errorList
       .map((errorKey) => {
-        const errorMessage = formik.errors[errorKey];
-        const { message, options } = getErrorMessageWithOptions(
-          errorMessage as string
-        );
+        const fieldError = formState.errors[errorKey] as
+          | { message?: string }
+          | undefined;
+        const errorMessage = fieldError?.message;
+        if (!errorMessage) {
+          return '';
+        }
+        const { message, options } = getErrorMessageWithOptions(errorMessage);
         const formField: FormField = formFields[errorKey];
         if (!formField) {
           return '';
@@ -40,11 +49,11 @@ const AccessibleFormikErrors = (props: Props): React.ReactElement | null => {
         return `${fieldTranslation} ${errorTranslation}`;
       })
       .join(' ');
-  if (!errorCount || formik.submitCount === 0) {
+  if (!errorCount || formState.submitCount === 0) {
     return null;
   }
-  if (formik.submitCount !== lastSubmitCountRef.current) {
-    lastSubmitCountRef.current = formik.submitCount;
+  if (formState.submitCount !== lastSubmitCountRef.current) {
+    lastSubmitCountRef.current = formState.submitCount;
     setLastError(errorsToText());
   }
 
@@ -52,11 +61,11 @@ const AccessibleFormikErrors = (props: Props): React.ReactElement | null => {
     <div
       role="alert"
       className={commonFormStyles['visually-hidden']}
-      data-testid={`${props.dataType}-error-list`}
+      data-testid={`${dataType}-error-list`}
     >
       {t('validation.errorTitleForScreenReaders')} {currentErrorText}
     </div>
   );
 };
 
-export default AccessibleFormikErrors;
+export default AccessibleFormErrors;
