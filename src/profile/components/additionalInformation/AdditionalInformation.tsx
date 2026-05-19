@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik, FormikProps } from 'formik';
 import to from 'await-to-js';
 import classNames from 'classnames';
 import { Option } from 'hds-react';
@@ -8,7 +7,7 @@ import { Option } from 'hds-react';
 import profileConstants from '../../constants/profileConstants';
 import commonFormStyles from '../../../common/cssHelpers/form.module.css';
 import ProfileSection from '../../../common/profileSection/ProfileSection';
-import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
+import FormDropdown from '../../../common/formDropdown/FormDropdown';
 import { useProfileDataEditor } from '../../hooks/useProfileDataEditor';
 import {
   additionalInformationType,
@@ -71,36 +70,23 @@ function AdditionalInformation(): React.ReactElement | null {
             commonFormStyles['last-item']
           )}
         >
-          <Formik
-            initialValues={{ language }}
-            onSubmit={() => {
-              /* onChange does this. This comment is here because onSubmit is mandatory and function cannot be empty */
-            }}
-          >
-            {(formikProps: FormikProps<FormValues>) => (
-              <Form>
-                <FormikDropdown
-                  className={classNames(
-                    commonFormStyles['hidden-labels'],
-                    commonFormStyles['responsive-button']
-                  )}
-                  id={`${additionalInformationType}-language`}
-                  name={'language'}
-                  label={t('profileForm.language')}
-                  options={languageOptions}
-                  defaultOption={defaultOption}
-                  currentOption={currentOption}
-                  disabled={!!saving}
-                  onChange={(option: Option) => {
-                    const languageValue =
-                      option.value as FormValues['language'];
-                    formikProps.setFieldValue('language', languageValue);
-                    updateLanguage(languageValue);
-                  }}
-                />
-              </Form>
+          <FormDropdown
+            className={classNames(
+              commonFormStyles['hidden-labels'],
+              commonFormStyles['responsive-button']
             )}
-          </Formik>
+            id={`${additionalInformationType}-language`}
+            name={'language'}
+            label={t('profileForm.language')}
+            options={languageOptions}
+            defaultOption={defaultOption}
+            currentOption={currentOption}
+            disabled={!!saving}
+            onChange={(option: Option) => {
+              const languageValue = option.value as FormValues['language'];
+              updateLanguage(languageValue);
+            }}
+          />
         </div>
         <EditingNotifications
           content={content}

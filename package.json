@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.6",
+    "@hookform/resolvers": "^5.2.2",
     "@nabla/vite-plugin-eslint": "^3.0.1",
     "@sentry/react": "^9.22.0",
     "@testing-library/dom": "^10.4.0",
@@ -33,7 +34,6 @@
     "dompurify": "^3.4.0",
     "dotenv": "^16.5.0",
     "file-saver": "^2.0.2",
-    "formik": "^2.0.4",
     "graphql": "^15.8.0",
     "graphql-tag": "2.12.6",
     "hds-core": "^5.0.1",
@@ -47,6 +47,7 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-helmet-async": "^3.0.0",
+    "react-hook-form": "^7.75.0",
     "react-i18next": "^15.5.1",
     "react-router": "^7.15.0",
     "react-router-dom": "^7.12.0",

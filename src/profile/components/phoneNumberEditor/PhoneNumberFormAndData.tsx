@@ -1,11 +1,12 @@
 import { PhoneInput, Option } from 'hds-react';
-import React from 'react';
-import { Field, Formik, FormikProps, Form } from 'formik';
+import React, { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import { PhoneValue } from '../../helpers/editData';
-import { createFormFieldHelpers } from '../../helpers/formik';
+import { createFormFieldHelpers } from '../../helpers/formFields';
 import { phoneSchema } from '../../../common/schemas/schemas';
 import FormButtons from '../formButtons/FormButtons';
 import EditButtons from '../editButtons/EditButtons';
@@ -15,8 +16,8 @@ import { EditHandling } from '../../hooks/useCommonEditHandling';
 import { getFormFields } from '../../helpers/formProperties';
 import createActionAriaLabels from '../../helpers/createActionAriaLabels';
 import FocusKeeper from '../../../common/focusKeeper/FocusKeeper';
-import AccessibleFormikErrors from '../accessibleFormikErrors/AccessibleFormikErrors';
-import FormikDropdown from '../../../common/formikDropdown/FormikDropdown';
+import AccessibleFormErrors from '../accessibleFormErrors/AccessibleFormErrors';
+import FormDropdown from '../../../common/formDropdown/FormDropdown';
 import getLanguageCode from '../../../common/helpers/getLanguageCode';
 import {
   getDefaultCountryCallingCode,
@@ -26,7 +27,7 @@ import {
 import AddButton from '../addButton/AddButton';
 import EditingNotifications from '../editingNotifications/EditingNotifications';
 
-type PhoneFormikValue = { number: string; countryCallingCode: string };
+type PhoneFormValue = { number: string; countryCallingCode: string };
 
 function PhoneNumberFormAndData({
   editHandler,
@@ -52,6 +53,31 @@ function PhoneNumberFormAndData({
   const headingStyle = commonFormStyles['label-size'];
   const containerStyle = commonFormStyles['responsive-flex-box-columns-rows'];
   const flexBoxColumnsStyle = commonFormStyles['flex-box-columns'];
+
+  // Pre-compute initial phone values so hooks can be called unconditionally
+  const existingPhone = hasData()
+    ? (getData().value as PhoneValue).phone || ''
+    : '';
+  const { countryCallingCode: initialCC, number: initialNumber } =
+    splitNumberAndCountryCallingCode(existingPhone);
+
+  const { handleSubmit, formState, setValue, reset, control } =
+    useForm<PhoneFormValue>({
+      defaultValues: { number: initialNumber, countryCallingCode: initialCC },
+      resolver: yupResolver(phoneSchema),
+    });
+
+  useEffect(() => {
+    if (isEditing) {
+      const phone = hasData()
+        ? (getData().value as PhoneValue).phone || ''
+        : '';
+      const { countryCallingCode, number } =
+        splitNumberAndCountryCallingCode(phone);
+      reset({ number, countryCallingCode });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditing]);
 
   if (!hasData()) {
     return (
@@ -94,15 +120,14 @@ function PhoneNumberFormAndData({
   const formFields = getFormFields(dataType);
   const disableButtons = !!currentAction || !!saving;
   const { hasFieldError, getFieldErrorMessage } =
-    createFormFieldHelpers<PhoneFormikValue>(t, isNew);
+    createFormFieldHelpers<PhoneFormValue>(t, isNew);
   const ariaLabels = createActionAriaLabels(dataType, inputValue, t);
+
   if (isEditing) {
     const countryCallingCodes = getMemoizedCountryCallingCodes(
       getLanguageCode(i18n.languages[0])
     );
-    const { countryCallingCode, number } = splitNumberAndCountryCallingCode(
-      (value as PhoneValue).phone || ''
-    );
+    const { countryCallingCode } = splitNumberAndCountryCallingCode(inputValue);
     const initialCountryCallingCodeOption = countryCallingCodes.find(
       (option) => option.value === countryCallingCode
     ) as Option;
@@ -113,107 +138,106 @@ function PhoneNumberFormAndData({
     ) as Option;
 
     return (
-      <Formik
-        initialValues={{
-          number,
-          countryCallingCode,
-        }}
-        onSubmit={async (values) => {
-          await actionHandler('save', {
-            phone: `${values.countryCallingCode}${values.number}`,
-          });
-        }}
-        validationSchema={phoneSchema}
+      <div
+        className={classNames(
+          flexBoxColumnsStyle,
+          commonFormStyles['common-editor-bottom-padding']
+        )}
       >
-        {(formikProps: FormikProps<PhoneFormikValue>) => (
-          <div
-            className={classNames(
-              flexBoxColumnsStyle,
-              commonFormStyles['common-editor-bottom-padding']
-            )}
-          >
-            <h3 className={headingStyle}>{title}</h3>
-            <Form>
-              <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
-                <div className={flexBoxColumnsStyle}>
-                  <div
-                    className={classNames(
-                      containerStyle,
-                      commonFormStyles['editor-form-fields']
-                    )}
-                  >
-                    <FormikDropdown
-                      className={classNames(commonFormStyles['form-field'])}
-                      name={'countryCallingCode'}
-                      id={dropdownId}
-                      label={t('profileForm.countryCallingCode')}
-                      options={countryCallingCodes}
-                      defaultOption={defaultCountryCallingCodeOption}
-                      disabled={!!saving}
-                      invalid={hasFieldError(formikProps, 'countryCallingCode')}
-                      error={(
-                        getFieldErrorMessage(
-                          formikProps,
-                          'countryCallingCode'
-                        ) ?? ''
-                      ).toString()}
-                      aria-describedby={`${dataType}-countryCallingCode-helper`}
-                      onChange={(clickedOption: Option) => {
-                        formikProps.setFieldValue(
-                          'countryCallingCode',
-                          clickedOption ? clickedOption.value : ''
-                        );
-                      }}
-                      allowSearch
-                      virtualized
-                      initialOption={initialCountryCallingCodeOption}
-                    />
-                    <Field
+        <h3 className={headingStyle}>{title}</h3>
+        <form
+          onSubmit={handleSubmit(async (values) => {
+            await actionHandler('save', {
+              phone: `${values.countryCallingCode}${values.number}`,
+            });
+          })}
+        >
+          <FocusKeeper targetId={`${dropdownId}-input`} autoFocus>
+            <div className={flexBoxColumnsStyle}>
+              <div
+                className={classNames(
+                  containerStyle,
+                  commonFormStyles['editor-form-fields']
+                )}
+              >
+                <FormDropdown
+                  className={classNames(commonFormStyles['form-field'])}
+                  name={'countryCallingCode'}
+                  id={dropdownId}
+                  label={t('profileForm.countryCallingCode')}
+                  options={countryCallingCodes}
+                  defaultOption={defaultCountryCallingCodeOption}
+                  disabled={!!saving}
+                  invalid={hasFieldError(formState, 'countryCallingCode')}
+                  error={(
+                    getFieldErrorMessage(formState, 'countryCallingCode') ?? ''
+                  ).toString()}
+                  aria-describedby={`${dataType}-countryCallingCode-helper`}
+                  onChange={(clickedOption: Option) => {
+                    setValue(
+                      'countryCallingCode',
+                      clickedOption ? clickedOption.value : ''
+                    );
+                  }}
+                  allowSearch
+                  virtualized
+                  initialOption={initialCountryCallingCodeOption}
+                />
+                <Controller
+                  name="number"
+                  control={control}
+                  render={({
+                    field: { onChange, value: fieldValue, ...field },
+                  }) => (
+                    <PhoneInput
+                      {...field}
+                      value={fieldValue}
                       className={commonFormStyles['form-field']}
-                      name="number"
                       id={inputId}
                       maxLength={formFields.number.max as number}
-                      as={PhoneInput}
-                      invalid={hasFieldError(formikProps, 'number')}
-                      aria-invalid={hasFieldError(formikProps, 'number')}
-                      errorText={getFieldErrorMessage(formikProps, 'number')}
+                      invalid={hasFieldError(formState, 'number')}
+                      aria-invalid={hasFieldError(formState, 'number')}
+                      errorText={getFieldErrorMessage(formState, 'number')}
                       aria-labelledby={`${dataType}-number-helper`}
                       disabled={!!saving}
                       label={t('profileForm.phone')}
                       onChange={(
                         event: React.ChangeEvent<HTMLInputElement>
                       ) => {
-                        formikProps.setFieldValue(
-                          'number',
-                          event.target.value.replace(/\D/g, '')
-                        );
+                        onChange(event.target.value.replace(/\D/g, ''));
                       }}
                     />
-                  </div>
-                  <AccessibleFormikErrors
-                    formikProps={formikProps}
-                    dataType={dataType}
-                  />
-                  <EditingNotifications
-                    content={notificationContent.content}
-                    dataType={dataType}
-                    noSpacing
-                    topSpacingMobile
-                  />
-                  <FormButtons
-                    handler={actionHandler}
-                    disabled={disableButtons}
-                    testId={testId}
-                  />
-                </div>
-                <SaveIndicator action={currentAction} testId={testId} />
-              </FocusKeeper>
-            </Form>
-          </div>
-        )}
-      </Formik>
+                  )}
+                />
+              </div>
+              <AccessibleFormErrors
+                formState={
+                  formState as {
+                    errors: Record<string, { message?: string }>;
+                    submitCount: number;
+                  }
+                }
+                dataType={dataType}
+              />
+              <EditingNotifications
+                content={notificationContent.content}
+                dataType={dataType}
+                noSpacing
+                topSpacingMobile
+              />
+              <FormButtons
+                handler={actionHandler}
+                disabled={disableButtons}
+                testId={testId}
+              />
+            </div>
+            <SaveIndicator action={currentAction} testId={testId} />
+          </FocusKeeper>
+        </form>
+      </div>
     );
   }
+
   return (
     <div className={flexBoxColumnsStyle}>
       <div className={classNames(containerStyle)}>

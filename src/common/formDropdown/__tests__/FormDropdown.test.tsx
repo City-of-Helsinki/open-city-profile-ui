@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
-import { Formik, FormikProps, Form } from 'formik';
+import { useForm } from 'react-hook-form';
 import { waitFor } from '@testing-library/react';
 import to from 'await-to-js';
 import { Mock } from 'vitest';
 import { Option } from 'hds-react';
 
-import FormikDropdown from '../FormikDropdown';
+import FormDropdown from '../FormDropdown';
 import i18nModule from '../../../i18n/i18nInit';
 import {
   getDefaultCountryCallingCode,
@@ -28,8 +28,8 @@ type RenderProps = {
   toggleButtonAriaLabel?: string;
 };
 
-describe('<FormikDropdown /> ', () => {
-  const formikId = 'formik-dropdown';
+describe('<FormDropdown /> ', () => {
+  const formid = 'form-dropdown';
   const onChangeListener = vi.fn();
   const onSubmitListener = vi.fn();
   let injectNewCurrentOption: (newCurrentOption: Option) => void;
@@ -39,9 +39,9 @@ describe('<FormikDropdown /> ', () => {
 
   const selectors = {
     toggleButton: {
-      id: `${formikId}-main-button`,
+      id: `${formid}-main-button`,
     },
-    input: { id: `${formikId}-input-element` },
+    input: { id: `${formid}-input-element` },
     submitButton: { id: `submit-button` },
     languageSwitchers: {
       fi: {
@@ -62,11 +62,9 @@ describe('<FormikDropdown /> ', () => {
   const renderAndReturnTestTools = async (
     testScenarioProps: RenderProps
   ): Promise<TestTools> => {
-    const FormikWrapper = (
-      formikWrapperProps: RenderProps
-    ): React.ReactElement => {
+    const FormWrapper = (wrapperProps: RenderProps): React.ReactElement => {
       const { defaultValue, initialValue, currentValue, allowSearch } =
-        formikWrapperProps;
+        wrapperProps;
       const { i18n } = useTranslation();
       const options = getMemoizedCountryCallingCodes(
         getLanguageCode(i18n.language)
@@ -88,43 +86,41 @@ describe('<FormikDropdown /> ', () => {
       injectNewCurrentOption = (newCurrentOption) => {
         reRender(newCurrentOption);
       };
+
+      const { handleSubmit, setValue } = useForm({
+        defaultValues: {
+          value:
+            currentOption?.value || initialOption?.value || defaultOption.value,
+        },
+      });
+
       return (
         <div>
-          <Formik
-            initialValues={{
-              value:
-                currentOption?.value ||
-                initialOption?.value ||
-                defaultOption.value,
-            }}
-            onSubmit={async (values) => {
+          <form
+            onSubmit={handleSubmit(async (values) => {
               onSubmitListener(values);
-            }}
+            })}
           >
-            {(formikProps: FormikProps<{ value: string }>) => (
-              <Form>
-                <FormikDropdown
-                  defaultOption={defaultOption}
-                  initialOption={initialOption}
-                  currentOption={currentOption}
-                  options={options}
-                  id={formikId}
-                  name={'value'}
-                  label={'label'}
-                  allowSearch={allowSearch !== false}
-                  virtualized
-                  onChange={(option: Option) => {
-                    const value = option ? option.value : '';
-                    formikProps.setFieldValue('value', value);
-                    onChangeListener(value);
-                  }}
-                />
-                <button type="submit" id={selectors.submitButton.id}>
-                  Submit
-                </button>
-              </Form>
-            )}
-          </Formik>
+            <FormDropdown
+              defaultOption={defaultOption}
+              initialOption={initialOption}
+              currentOption={currentOption}
+              options={options}
+              id={formid}
+              name={'value'}
+              label={'label'}
+              allowSearch={allowSearch !== false}
+              virtualized
+              onChange={(option: Option) => {
+                const value = option ? option.value : '';
+                setValue('value', value);
+                onChangeListener(value);
+              }}
+            />
+            <button type="submit" id={selectors.submitButton.id}>
+              Submit
+            </button>
+          </form>
           <button
             id={selectors.languageSwitchers.fi.id}
             onClick={() => changeLanguage(fiLanguageCode)}
@@ -141,7 +137,7 @@ describe('<FormikDropdown /> ', () => {
     return renderComponentWithMocksAndContexts(
       () => ({}) as MockedResponse,
       <I18nextProvider i18n={i18nModule}>
-        <FormikWrapper {...testScenarioProps} />
+        <FormWrapper {...testScenarioProps} />
       </I18nextProvider>
     );
   };
@@ -322,7 +318,7 @@ describe('<FormikDropdown /> ', () => {
       testTools: TestTools,
       option: Option
     ) => {
-      await testTools.comboBoxSelector(formikId, option.label);
+      await testTools.comboBoxSelector(formid, option.label);
       await checkInputValue(testTools.getElement, option.value, option.label);
 
       // First ensure the onChange event has been called with the right value
@@ -377,7 +373,7 @@ describe('<FormikDropdown /> ', () => {
         const newOption = findOptionByValue(optionsInComponent, nextValue);
         await changeDropdownOption(testTools, newOption);
 
-        // Ensure Formik has had time to update its internal state before checking
+        // Ensure RHF has had time to update its internal state before checking
         await waitFor(async () => {
           const values = await submitFormAndReturnData(testTools);
           if (values.value !== newOption.value) {
@@ -388,7 +384,7 @@ describe('<FormikDropdown /> ', () => {
         });
       }
     }, 15000);
-    it(`Using current option prevents visible changes from within the FormikDropdown.
+    it(`Using current option prevents visible changes from within the FormDropdown.
         Button text does not change even when option is changed.
         Form value changes, but the component which set the current option should handle it.
         Button text can match new option if parent sets new currentOption.

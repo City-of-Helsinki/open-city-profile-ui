@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Select, Option } from 'hds-react';
-import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { SupportedLanguage } from 'hds-react/lib/components/dropdownComponents/modularOptionList/types';
 
@@ -32,7 +31,7 @@ type Props = {
   'defaultValue' | 'onChange' | 'value'
 >;
 
-function FormikDropdown(props: Props): React.ReactElement {
+function FormDropdown(props: Props): React.ReactElement {
   const { i18n } = useTranslation();
   const {
     defaultOption,
@@ -117,23 +116,19 @@ function FormikDropdown(props: Props): React.ReactElement {
   const selectId = selectProps.id || `${props.name}-select`;
 
   return (
-    <Field name={props.name}>
-      {() => (
-        <Select
-          {...selectProps}
-          className={className}
-          clearable={false}
-          id={selectId}
-          options={options}
-          value={currentValue}
-          onChange={handleChange}
-          texts={defaultTexts}
-          filter={allowSearch ? defaultFilter : undefined}
-          virtualize={import.meta.env.NODE_ENV !== 'test' && virtualized}
-        />
-      )}
-    </Field>
+    <Select
+      {...selectProps}
+      className={className}
+      clearable={false}
+      id={selectId}
+      options={options}
+      value={currentValue}
+      onChange={handleChange}
+      texts={defaultTexts}
+      filter={allowSearch ? defaultFilter : undefined}
+      virtualize={import.meta.env.NODE_ENV !== 'test' && virtualized}
+    />
   );
 }
 
-export default FormikDropdown;
+export default FormDropdown;

@@ -118,7 +118,9 @@ export const createProfilePhoneSchema = yup.object().shape({
     ),
 });
 export const emailSchema = yup.object().shape({
-  email: yup.mixed().test('isValidEmail', 'validation.email', function () {
-    return this.parent?.email ? validator.isEmail(this.parent?.email) : false;
-  }),
+  email: yup
+    .string()
+    .test('isValidEmail', 'validation.email', (value) =>
+      value ? validator.isEmail(value) : false
+    ),
 });
