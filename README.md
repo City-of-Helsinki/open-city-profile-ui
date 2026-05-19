@@ -14,7 +14,7 @@ Production: https://profiili.hel.fi
 
 In the project directory, you can run:
 
-### `yarn start`
+### `pnpm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -28,7 +28,7 @@ Scripts generates first environment variables to `public/env-config.js` with `sc
 actual used variables when running the app. App is not using default `process.env` way to refer of variables but
 `window._env_` object.
 
-### `yarn test`
+### `pnpm test`
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://vitest.dev/guide/) for more information.
@@ -37,7 +37,7 @@ Scripts generates first environment variables to `public/env-config.js` with `sc
 actual used variables when running the app. App is not using default `process.env` way to refer of variables but
 `window._env_` object.
 
-### `yarn test:e2e`
+### `pnpm test:e2e`
 
 Runs end-to-end tests using [Playwright](https://playwright.dev).
 
@@ -53,7 +53,7 @@ The tests use the following environment variables to configure the URLs of diffe
 
 Please ensure these environment variables are correctly set in your environment before running the tests.
 
-### `yarn build`
+### `pnpm build`
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles app in production mode and optimizes the build for the best performance.
@@ -64,19 +64,19 @@ Your app is ready to be deployed!
 See the section about [build](https://vitejs.dev/guide/cli.html#build) for more information.
 
 Note that running built application locally you need to generate also `public/env-config.js` file. It can be done with
-`yarn update-runtime-env`. By default it's generated for development environment if no `NODE_ENV` is set.
+`pnpm update-runtime-env`. By default it's generated for development environment if no `NODE_ENV` is set.
 
-### `yarn codegen`
+### `pnpm codegen`
 
 Generate static types for GraphQL queries by using the schema from the backend server.
 
-### `yarn update-translations`
+### `pnpm update-translations`
 
 Fetches translation data from our Google Spreadsheet and updates translation files. See `.env` for configuration.
 
 You still need to update tests and add the translation files to the git repository manually.
 
-### `yarn update-runtime-env`
+### `pnpm update-runtime-env`
 
 Generates variable object used when app is running. Generated object is stored at `public/env-config.js` and available
 as `window._env_` object.
@@ -86,7 +86,7 @@ Generation uses values from either
 
 At the production deployment same generation is done with [`env.sh`](scripts/env.sh).
 
-### `yarn update-country-codes`
+### `pnpm update-country-codes`
 
 Fetches country calling codes and generates src/i18n/countryCallingCodes.json file. See scripts/update-country-calling-codes.ts for more information.
 
@@ -140,6 +140,6 @@ If running on Linux or MacOS, easiest way is to just run the app without docker.
 
 OR
 
-Run `yarn` to install dependencies, start app with `yarn start`.
+Run `pnpm install` to install dependencies, start app with `pnpm start`.
 
 The graphql-backend for development is located at https://profile-api.dev.hel.ninja/graphql/, it has graphiql installed so you can browse it in your browser!

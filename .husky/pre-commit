@@ -1,1 +1,1 @@
-yarn test --watch=false
+pnpm test --watch=false

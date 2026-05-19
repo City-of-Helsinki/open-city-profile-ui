@@ -1,0 +1,18 @@
+# Don't allow dependencies to be used before they have been released for at least 1 week
+minimumReleaseAge: 10080
+
+# Don't warn about ignored build scripts
+ignoredBuiltDependencies: []
+
+# Hoist all dependencies to the root of node_modules, for better compatibility with packages that expect flat node_modules
+shamefullyHoist: true
+
+overrides:
+  'lodash': '^4.18.1'
+  'picomatch': '^4.0.4'
+  '@typescript-eslint/typescript-estree>minimatch': '9.0.7'
+
+allowBuilds:
+  '@swc/core': true
+  esbuild: true
+  unrs-resolver: true
