@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.32.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.31.2...open-city-profile-ui-v1.32.0) (2026-05-22)
+
+
+### Features
+
+* Migrate yarn classic to pnpm Refs: HP-3065 ([a199d56](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/a199d561930b6c8d0ae766f3bc27d249078e1884))
+
+
+### Dependencies
+
+* Bump fast-uri from 3.1.0 to 3.1.2 ([1728d0a](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/1728d0aaad0bcbe940ece71bb4a7802df874df3e))
+* Use vitejs/plugin-react plugin Refs: HP-3065 ([8666b8d](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/8666b8dcde3bb70cb7077f8762e758f10a8a3e00))
+
 ## [1.31.2](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.31.1...open-city-profile-ui-v1.31.2) (2026-05-04)
 
 
