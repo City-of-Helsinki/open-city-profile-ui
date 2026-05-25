@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.32.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.32.0...open-city-profile-ui-v1.32.1) (2026-05-25)
+
+
+### Dependencies
+
+* Bump brace-expansion from 5.0.5 to 5.0.6 ([fdad247](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/fdad24708666beee4fb7c209ae1f19a8827fabe9))
+* Bump ws from 8.20.0 to 8.20.1 ([b618b1a](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/b618b1aec9f4981cb1678a88bba1124b1e96c8fc))
+
 ## [1.32.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.31.2...open-city-profile-ui-v1.32.0) (2026-05-22)
 
 
