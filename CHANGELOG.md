@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.32.2](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.32.1...open-city-profile-ui-v1.32.2) (2026-05-27)
+
+
+### Bug Fixes
+
+* Update js-cookie (CVE-2026-46625) ([07ba862](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/07ba86245f1012b8d5a9549cdada9b229ab056ed))
+
 ## [1.32.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.32.0...open-city-profile-ui-v1.32.1) (2026-05-25)
 
 
