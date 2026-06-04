@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.32.4](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.32.3...open-city-profile-ui-v1.32.4) (2026-06-04)
+
+
+### Bug Fixes
+
+* Allow root in robots.txt ([8f5f556](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/8f5f5566c66985b82fa11779e9808bf0831cd80a))
+
 ## [1.32.3](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.32.2...open-city-profile-ui-v1.32.3) (2026-06-04)
 
 
