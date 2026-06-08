@@ -152,7 +152,7 @@ describe('useProfileLoader.ts ', () => {
       () => mockUseProfileQueryResult
     );
 
-    vi.useFakeTimers();
+    vi.useFakeTimers({ shouldAdvanceTime: true });
   });
 
   afterEach(() => {

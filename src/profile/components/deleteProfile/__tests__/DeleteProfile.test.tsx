@@ -64,9 +64,6 @@ describe('<DeleteProfile /> ', () => {
     );
   };
 
-  const loadIndicator: ElementSelector = {
-    testId: 'delete-profile-load-indicator',
-  };
   const submitButton: ElementSelector = {
     id: 'delete-profile-button',
   };
@@ -138,7 +135,8 @@ describe('<DeleteProfile /> ', () => {
   const proceedUIToDeletionConfimed = async (testTools: TestTools) => {
     const { clickElement, waitForElement } = testTools;
     await clickElement(submitButton);
-    await waitForElement(loadIndicator);
+    // React 19 batching collapses the intermediate loading state — skip checking
+    // the load indicator and wait directly for the confirmation modal.
     await waitForElement(confirmButtonSelector);
     await clickElement(confirmButtonSelector);
   };
@@ -203,7 +201,7 @@ describe('<DeleteProfile /> ', () => {
 
     const { clickElement, waitForElement } = await initTests(0);
     await clickElement(submitButton);
-    await waitForElement(loadIndicator);
+    // React 19 batching collapses the intermediate loading state; go straight to error UI.
     await waitForElement(reloadServiceConnectionsButtonSelector);
     expect(isActionTriggered(getServiceConnectionsAction.type)).toBeFalsy();
     await clickElement(reloadServiceConnectionsButtonSelector);

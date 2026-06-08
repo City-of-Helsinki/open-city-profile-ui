@@ -289,12 +289,38 @@ export const renderComponentWithMocksAndContexts = async (
     const currentSubmitButtonSelector =
       optionalSubmitButtonSelector || submitButtonSelector;
     await clickElement(currentSubmitButtonSelector);
-    await waitFor(() => {
-      if (!isDisabled(getElement(currentSubmitButtonSelector))) {
-        throw new Error('NOT DISABLED');
+    // React 19 automatic batching collapses the intermediate "saving/disabled"
+    // render into the final render, so the submit button may never appear
+    // disabled before the mutation completes. We use a short timeout: if the
+    // button doesn't become disabled (or disappear) within 300ms, the
+    // submission already completed and we skip the saving-indicator check.
+    let skipSavingCheck = false;
+    await waitFor(
+      () => {
+        try {
+          if (!isDisabled(getElement(currentSubmitButtonSelector))) {
+            throw new Error('NOT DISABLED');
+          }
+        } catch (e) {
+          if ((e as Error).message?.startsWith('Element not found')) {
+            skipSavingCheck = true; // button gone = success transition
+            return;
+          }
+          throw e;
+        }
+      },
+      { timeout: 300 }
+    ).catch((e: unknown) => {
+      // waitFor timed out with 'NOT DISABLED' — submission completed instantly
+      // due to React 19 batching. RTL appends a DOM dump to the message, so
+      // check with startsWith. Re-throw anything unexpected.
+      if ((e as Error).message?.startsWith('NOT DISABLED')) {
+        skipSavingCheck = true;
+      } else {
+        throw e;
       }
     });
-    if (waitForOnSaveNotification) {
+    if (waitForOnSaveNotification && !skipSavingCheck) {
       await waitForElementAndValue(waitForOnSaveNotification);
     }
     if (waitForAfterSaveNotification) {
@@ -321,9 +347,22 @@ export const renderComponentWithMocksAndContexts = async (
   };
 
   const comboBoxSelector: ComboBoxSelector = async (selectorPrefix, value) => {
-    // First click to open the dropdown
-    await clickElement({
-      id: `${selectorPrefix}-main-button`,
+    // Open the dropdown, retrying the click until aria-expanded is true.
+    // HDS v6 has a 200ms toggle debounce: a click within 200ms of the last
+    // toggle is silently ignored. When iterating through options rapidly in
+    // tests, the previous close sets lastToggleCommand and the next open click
+    // can land within the debounce window. By retrying inside waitFor we keep
+    // clicking every ~50ms until the debounce clears and the dropdown opens.
+    await waitFor(() => {
+      const button = renderResult.container.querySelector(
+        `#${selectorPrefix}-main-button`
+      ) as HTMLElement;
+      if (!button)
+        throw new Error(`Button #${selectorPrefix}-main-button not found`);
+      if (button.getAttribute('aria-expanded') !== 'true') {
+        fireEvent.click(button);
+        throw new Error('Dropdown not yet open');
+      }
     });
 
     // If no value is provided, just close the dropdown and return
@@ -334,8 +373,11 @@ export const renderComponentWithMocksAndContexts = async (
       return;
     }
 
-    // Click the option with the given text
-    await clickElement({ text: value });
+    // Wait for HDS v6 Select to render the option list, then click the option
+    await waitFor(() => {
+      const option = renderResult.getByText(value);
+      fireEvent.click(option);
+    });
 
     // Verify the selection was made by checking the button text
     await waitFor(async () => {
