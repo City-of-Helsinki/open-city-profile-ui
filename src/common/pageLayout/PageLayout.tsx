@@ -5,8 +5,8 @@ import { useLocation } from 'react-router-dom';
 import { SessionEndedHandler, useGroupConsent } from 'hds-react';
 
 import { MAIN_CONTENT_ID } from '../constants';
-// import Header from '../header/Header';
-// import Footer from '../footer/Footer';
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
 import styles from './PageLayout.module.css';
 import PageMeta from '../pageMeta/PageMeta';
 import { usePageLoadFocusSetter } from '../../profile/hooks/usePageLoadFocusSetter';
@@ -47,7 +47,7 @@ function PageLayout(props: Props): React.ReactElement {
 
   return (
     <div className={styles.wrapper}>
-      {/* <Header /> */}
+      <Header />
       <PageMeta title={pageTitle} />
       <SessionEndedHandler
         content={{
@@ -63,7 +63,7 @@ function PageLayout(props: Props): React.ReactElement {
       >
         {props.children}
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
