@@ -1,7 +1,7 @@
 # ============================================================
 # STAGE 1: Build the Static Assets
 # ============================================================
-FROM helsinki.azurecr.io/ubi9/nodejs-22-pnpm-builder-base AS appbase
+FROM helsinki.azurecr.io/ubi9/nodejs-24-pnpm-builder-base AS appbase
 
 # 1. Copy only necessary files for build
 COPY --chown=default:root package.json pnpm-lock.yaml pnpm-workspace.yaml /app/
@@ -43,7 +43,7 @@ RUN pnpm build
 # ============================================================
 # STAGE 4: Production Runtime
 # ============================================================
-FROM helsinki.azurecr.io/ubi9/nginx-126-spa-standard AS production
+FROM helsinki.azurecr.io/ubi10/nginx-126-spa-standard AS production
 
 ARG REACT_APP_SENTRY_RELEASE
 ENV APP_RELEASE=${REACT_APP_SENTRY_RELEASE:-""}
