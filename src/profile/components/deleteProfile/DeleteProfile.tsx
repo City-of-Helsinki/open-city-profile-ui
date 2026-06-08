@@ -30,12 +30,13 @@ import { SERVICE_CONNECTIONS } from '../../graphql/ServiceConnectionsQuery';
 import { QueueController } from '../../../common/actionQueue/actionQueue';
 import useMatomo from '../../../common/matomo/hooks/useMatomo';
 
+const notStartedLoadState = 'not-started';
+const loadingLoadState = 'loading';
+const loadedLoadState = 'loaded';
+const errorLoadState = 'error';
+
 function DeleteProfile(): React.ReactElement {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const notStartedLoadState = 'not-started';
-  const loadingLoadState = 'loading';
-  const loadedLoadState = 'loaded';
-  const errorLoadState = 'error';
   const [dataLoadState, setDataLoadState] = useState<
     | typeof notStartedLoadState
     | typeof loadingLoadState
@@ -100,40 +101,50 @@ function DeleteProfile(): React.ReactElement {
 
   const [scrollIntoViewRef] = useScrollIntoView(isDeletingProfile);
 
-  const handleConfirmationModal = () => {
+  const handleConfirmationModal = useCallback(() => {
     setShowConfirmationModal((prevState) => !prevState);
     setFocusToRemoveButton();
-  };
+  }, [setFocusToRemoveButton]);
 
-  const [getServiceConnections, { data: serviceConnections }] = useLazyQuery<
-    ServiceConnectionsRoot,
-    ServiceConnectionsQueryVariables
-  >(SERVICE_CONNECTIONS, {
-    variables: createServiceConnectionsQueryVariables(i18n.language),
-    fetchPolicy: 'no-cache',
-    onCompleted: () => {
-      if (dataLoadState === loadedLoadState) {
-        return;
-      }
-      setDataLoadState(loadedLoadState);
-      handleConfirmationModal();
-    },
-    onError: (error) => {
-      setDataLoadState(errorLoadState);
-      reportErrorsToSentry(error);
-    },
-  });
+  const [
+    getServiceConnections,
+    { data: serviceConnections, error: serviceConnectionsError },
+  ] = useLazyQuery<ServiceConnectionsRoot, ServiceConnectionsQueryVariables>(
+    SERVICE_CONNECTIONS,
+    { fetchPolicy: 'no-cache' }
+  );
+
+  useEffect(() => {
+    if (!serviceConnections) return;
+    if (dataLoadState === loadedLoadState) return;
+    setDataLoadState(loadedLoadState);
+    handleConfirmationModal();
+  }, [serviceConnections, dataLoadState, handleConfirmationModal]);
+
+  useEffect(() => {
+    if (!serviceConnectionsError) return;
+    setDataLoadState(errorLoadState);
+    reportErrorsToSentry(serviceConnectionsError);
+  }, [serviceConnectionsError]);
 
   const loadServiceConnections = useCallback(
     (reloadAfterError = false) => {
       if (dataLoadState !== loadedLoadState && serviceConnections) {
         setDataLoadState(loadedLoadState);
       } else if (dataLoadState === notStartedLoadState || reloadAfterError) {
-        getServiceConnections();
+        getServiceConnections({
+          variables: createServiceConnectionsQueryVariables(i18n.language),
+        });
         setDataLoadState(loadingLoadState);
       }
     },
-    [getServiceConnections, setDataLoadState, dataLoadState, serviceConnections]
+    [
+      getServiceConnections,
+      setDataLoadState,
+      dataLoadState,
+      serviceConnections,
+      i18n.language,
+    ]
   );
 
   const handleDeleteClick = () => {

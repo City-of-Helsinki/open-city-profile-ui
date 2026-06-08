@@ -90,17 +90,19 @@ describe('ProfileContext', () => {
       { errorType: 'graphQLError' },
       { errorType: 'networkError' },
     ];
-    const { result, waitForErrorChange } = createTestEnv(responses);
+    const { result } = createTestEnv(responses);
     let context = result.current;
     const errorListener = vi.fn();
     const errorListener2 = vi.fn();
 
-    // first promise is resolved when context.loading changes to true
-    const errorPromise = waitForErrorChange();
     const listenerDisposer = context.addErrorListener(errorListener);
     context.addErrorListener(errorListener2);
     context.fetch();
-    await errorPromise;
+    // In React 19 concurrent mode, renders triggered outside act() may be deferred.
+    // waitFor() uses act() internally to flush pending updates reliably.
+    await waitFor(() => {
+      expect(result.current.error).toBeDefined();
+    });
     context = result.current;
     expect(context.data).toBeUndefined();
     expect(context.error).toBeDefined();
@@ -113,9 +115,7 @@ describe('ProfileContext', () => {
       expect(errorListener2).toHaveBeenCalledTimes(1);
     });
     listenerDisposer();
-    const secondErrorPromise = waitForErrorChange();
     context.refetch();
-    await secondErrorPromise;
     await waitFor(() => {
       expect(errorListener2).toHaveBeenCalledTimes(2);
     });

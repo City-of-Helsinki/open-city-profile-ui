@@ -14,10 +14,7 @@ import { getGdprQueryScopesAction } from '../actions/getGdprScopes';
 import mockWindowLocation from '../../common/test/mockWindowLocation';
 import config from '../../config';
 import { keycloakAuthCodeCallbackUrlAction } from '../actions/authCodeCallbackUrlDetector';
-import {
-  defaultRedirectorActionType,
-  defaultRedirectionCatcherActionType,
-} from '../actions/redirectionHandlers';
+import { defaultRedirectionCatcherActionType } from '../actions/redirectionHandlers';
 import {
   createFailedActionParams,
   createNextActionParams,
@@ -662,9 +659,13 @@ describe('useAuthCodeQueues', () => {
         nextPhase: nextPhases.waitForAction,
       });
 
+      // React 19 batching causes the redirector (which uses resolveExecutorWithRedirection
+      // returning Promise.resolve) to start AND complete before waitFor can observe its
+      // "started" state. Wait for redirectionCatcher instead — it uses a manual executor
+      // and stays in "started" state until explicitly completed below.
       await checkCurrentActionAndManuallyCompleteIt(
         keycloakAuthCodeParserAction.type,
-        defaultRedirectorActionType
+        defaultRedirectionCatcherActionType
       );
 
       await act(async () => {
