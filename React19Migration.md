@@ -34,8 +34,8 @@ This plan covers non-HDS packages that are incompatible with React 19 in this wo
 ### Migration Steps
 
 1. Update `package.json`: change `"@testing-library/react": "^13.0.0"` → `"@testing-library/react": "^16.0.0"`
-2. Run `yarn install`
-3. Run `yarn test` to verify
+2. Run `pnpm install`
+3. Run `pnpm test` to verify
 
 ### Breaking Changes (v13 → v16)
 
