@@ -25,6 +25,15 @@ const AccessibleFormErrors = (props: Props): React.ReactElement | null => {
   const formFields = getFormFields(dataType);
 
   useEffect(() => {
+    // Only announce errors when a new submission has occurred.
+    // formState.errors is a Proxy that gets a new reference on every render,
+    // even when error content is unchanged. Without this guard, every keystroke
+    // would trigger a re-announcement via the role="alert" element.
+    if (formState.submitCount === lastSubmitCountRef.current) {
+      return;
+    }
+    lastSubmitCountRef.current = formState.submitCount;
+
     const errorList = Object.keys(formState.errors);
 
     if (!errorList.length || formState.submitCount === 0) {
@@ -61,8 +70,6 @@ const AccessibleFormErrors = (props: Props): React.ReactElement | null => {
         return `${fieldTranslation} ${errorTranslation}`;
       })
       .join(' ');
-
-    lastSubmitCountRef.current = formState.submitCount;
 
     setLastError(newText);
   }, [formState.errors, formState.submitCount, formFields, t]);
