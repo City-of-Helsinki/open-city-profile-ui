@@ -115,14 +115,23 @@ function DeleteProfile(): React.ReactElement {
   );
 
   useEffect(() => {
-    if (!serviceConnections) return;
-    if (dataLoadState === loadedLoadState) return;
+    if (!serviceConnections) {
+      return;
+    }
+
+    if (dataLoadState === loadedLoadState) {
+      return;
+    }
+
     setDataLoadState(loadedLoadState);
     handleConfirmationModal();
   }, [serviceConnections, dataLoadState, handleConfirmationModal]);
 
   useEffect(() => {
-    if (!serviceConnectionsError) return;
+    if (!serviceConnectionsError) {
+      return;
+    }
+
     setDataLoadState(errorLoadState);
     reportErrorsToSentry(serviceConnectionsError);
   }, [serviceConnectionsError]);
