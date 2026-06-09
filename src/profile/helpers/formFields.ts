@@ -13,7 +13,7 @@ export type ErrorRenderer = ({
   options?: Record<string, unknown>;
 }) => ReactNode;
 
-export type RHFFormState<FormValues extends object = Record<string, unknown>> =
+export type HookFormState<FormValues extends object = Record<string, unknown>> =
   {
     errors: FieldErrors<FormValues>;
     submitCount: number;
@@ -27,7 +27,7 @@ function getFieldErrorObj<FormValues extends object>(
 }
 
 export function getIsInvalid<FormValues extends object>(
-  formState: RHFFormState<FormValues>,
+  formState: HookFormState<FormValues>,
   fieldName: string,
   isOldData = false
 ): boolean {
@@ -40,7 +40,7 @@ export function getIsInvalid<FormValues extends object>(
 const defaultErrorRender: ErrorRenderer = (props) => props.message;
 
 export function getError<FormValues extends object>(
-  formState: RHFFormState<FormValues>,
+  formState: HookFormState<FormValues>,
   fieldName: string,
   render: ErrorRenderer = defaultErrorRender,
   isOldData = false
@@ -59,7 +59,7 @@ export function getError<FormValues extends object>(
 
 export function getFieldError<FormValues extends object>(
   t: TFunction,
-  formState: RHFFormState<FormValues>,
+  formState: HookFormState<FormValues>,
   fieldName: string,
   isOldData = false
 ): string | undefined {
@@ -75,11 +75,11 @@ export function createFormFieldHelpers<FormValues extends object>(
   isNew: boolean
 ): {
   hasFieldError: (
-    formState: RHFFormState<FormValues>,
+    formState: HookFormState<FormValues>,
     type: keyof FormValues
   ) => boolean;
   getFieldErrorMessage: (
-    formState: RHFFormState<FormValues>,
+    formState: HookFormState<FormValues>,
     type: keyof FormValues
   ) => string | undefined;
 } {
