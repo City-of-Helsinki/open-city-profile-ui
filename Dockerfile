@@ -13,7 +13,7 @@ COPY --chown=default:root ./src /app/src
 # 2. Run the install and update-runtime-env script
 # corepack in the base image will automatically use the version of pnpm
 # defined in your package.json 'packageManager' field if present.
-RUN pnpm install --frozen-lockfile --ignore-scripts && pnpm store prune
+RUN pnpm install --frozen-lockfile --ignore-scripts && CI=true pnpm store prune
 RUN pnpm update-runtime-env
 
 # ============================================================
