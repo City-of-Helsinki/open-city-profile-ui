@@ -176,7 +176,8 @@ function PhoneNumberFormAndData({
                   onChange={(clickedOption: Option) => {
                     setValue(
                       'countryCallingCode',
-                      clickedOption ? clickedOption.value : ''
+                      clickedOption ? clickedOption.value : '',
+                      { shouldValidate: true, shouldDirty: true }
                     );
                   }}
                   allowSearch
