@@ -303,7 +303,8 @@ export const renderComponentWithMocksAndContexts = async (
           }
         } catch (e) {
           if ((e as Error).message?.startsWith('Element not found')) {
-            skipSavingCheck = true; // button gone = success transition
+            // button gone = success transition
+            skipSavingCheck = true;
             return;
           }
           throw e;
@@ -357,8 +358,11 @@ export const renderComponentWithMocksAndContexts = async (
       const button = renderResult.container.querySelector(
         `#${selectorPrefix}-main-button`
       ) as HTMLElement;
-      if (!button)
+
+      if (!button) {
         throw new Error(`Button #${selectorPrefix}-main-button not found`);
+      }
+
       if (button.getAttribute('aria-expanded') !== 'true') {
         fireEvent.click(button);
         throw new Error('Dropdown not yet open');
