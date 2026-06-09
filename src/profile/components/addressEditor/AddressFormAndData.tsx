@@ -220,7 +220,10 @@ function AddressFormAndData({
                 aria-describedby={`${dataType}-countryCode-helper`}
                 allowSearch
                 onChange={(option: Option) =>
-                  setValue('countryCode', option ? option.value : '')
+                  setValue('countryCode', option ? option.value : '', {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
                 }
                 initialOption={initialCountryOption}
               />
