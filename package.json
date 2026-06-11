@@ -101,7 +101,7 @@
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/typescript": "^4.0.6",
     "@graphql-codegen/typescript-operations": "^5.0.9",
-    "@playwright/test": "^1.58.2",
+    "@playwright/test": "^1.60.0",
     "@vitest/coverage-istanbul": "^4.1.2",
     "cross-env": "^7.0.3",
     "eslint": "^9.26.0",
