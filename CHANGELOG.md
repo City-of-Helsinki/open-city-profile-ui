@@ -3,6 +3,30 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.33.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.32.4...open-city-profile-ui-v1.33.0) (2026-06-11)
+
+
+### Features
+
+* Replace formik with react-hook-form ([53b95a4](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/53b95a44f0e1699b9757ecac407dff14089d4ffb))
+
+
+### Bug Fixes
+
+* AccessibleFormErrors anti patterns Refs: HP-2996 ([e99af3e](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/e99af3e2f3bd2f85d7ef6564918122f4d67a5ba9))
+* AccessibleFormErrors rendering Refs: HP-2996 ([a232718](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/a232718935c08467a7b4da5cfbffe8b2f227b8d1))
+* AddressFormAndData countryCode onChange validate Refs: HP-2996 ([bfa3ce7](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/bfa3ce730b72e9f91ace3aef6ad77637ebc61f49))
+* PhoneNumberFormAndData onChange validate Refs: HP-2996 ([3ccbe35](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/3ccbe35c7b1c938ef1b9b80d9ce12a09a1f79b73))
+* React 19 migration unit test fixes Refs: HP-2996 ([6f5f24f](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/6f5f24f4e62f5e14c61e56b815ffc7af3bf9f529))
+
+
+### Dependencies
+
+* Bump HDS to v6 Refs: HP-2996 ([fb12b0b](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/fb12b0b7c30e166ec02a69411b1a1e06d8263111))
+* Bump playwright Refs: HP-2996 ([09d45c4](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/09d45c4871d8c6869274108e13f3e6751812ef50))
+* Upgrade react to v19, replace react-helmet Refs: HP-2996 ([984d951](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/984d951fbaa6e1eadc99db63e16c20cd1bb6aec6))
+* Upgrade testing-library/react Refs: HP-2996 ([a6196b6](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/a6196b6c127720633fa27ebcb78e1046afe33641))
+
 ## [1.32.4](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.32.3...open-city-profile-ui-v1.32.4) (2026-06-04)
 
 
