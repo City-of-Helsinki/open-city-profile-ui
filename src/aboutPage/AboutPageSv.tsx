@@ -147,12 +147,8 @@ function AboutPageSv(): ReactElement {
       </p>
       <p>
         Behandlingen av uppgifter i Helsingforsprofilen beskrivs i{' '}
-        <Link
-          href="https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Register%20over%20e-tjanster.pdf"
-          external
-          openInNewTab
-        >
-          Helsingfors stads dataskyddsbeskrivning för elektroniska tjänster.
+        <Link href="https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Helsingfors-profilen-dataskyddsbeskrivning.pdf">
+          profilens dataskyddsbeskrivning.
         </Link>
       </p>
       <p>

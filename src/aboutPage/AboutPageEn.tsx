@@ -145,13 +145,9 @@ function AboutPageEn(): ReactElement {
       </p>
       <p>
         The processing of data in the Helsinki profile is described in{' '}
-        <Link
-          href="https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Sahkoisten%20asiointipalveluiden%20rekisteri.pdf"
-          external
-          openInNewTab
-        >
-          the Helsinki City e-services privacy policy
-        </Link>{' '}
+        <Link href="https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Helsinki-profiili-privacynotice.pdf">
+          profile’s privacy notice.
+        </Link>
       </p>
       <p>
         Read more{' '}
