@@ -142,13 +142,8 @@ function AboutPageFi(): ReactElement {
       </p>
       <p>
         Helsinki-profiilin tietojen käsittely on kuvattu{' '}
-        <Link
-          href="https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Sahkoisten%20asiointipalveluiden%20rekisteri.pdf"
-          external
-          openInNewTab
-        >
-          Helsingin kaupungin sähköisten asiointipalvelujen
-          tietosuojaselosteessa.
+        <Link href="https://www.hel.fi/static/liitteet-2019/Kaupunginkanslia/Rekisteriselosteet/Keha/Helsinki-profiili-tietosuojaseloste.pdf">
+          profiilin tietosuojaselosteessa.
         </Link>
       </p>
       <p>
