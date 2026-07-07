@@ -1,11 +1,9 @@
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import importX from 'eslint-plugin-import-x';
 import sonarjs from 'eslint-plugin-sonarjs';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
-import vitestGlobals from 'eslint-plugin-vitest-globals';
 import prettier from 'eslint-config-prettier';
 import globals from 'globals';
 
@@ -35,18 +33,16 @@ export default tseslint.config(
       globals: {
         ...globals.browser,
         ...globals.node,
-        ...vitestGlobals.environments.env.globals,
+        ...globals.vitest,
         fetchMock: true,
       },
     },
     plugins: {
       '@typescript-eslint': tseslint.plugin,
-      react,
       'react-hooks': reactHooks,
       'import-x': importX,
       sonarjs,
       'jsx-a11y': jsxA11y,
-      'vitest-globals': vitestGlobals,
     },
     settings: {
       react: {
@@ -82,18 +78,14 @@ export default tseslint.config(
       '@typescript-eslint/no-require-imports': ['error'],
       '@typescript-eslint/no-unnecessary-type-assertion': 'error',
 
-      // React rules
-      ...react.configs.recommended.rules,
-      'react/react-in-jsx-scope': 'off', // Not needed with React 17+ JSX transform
-      'react/no-unused-prop-types': [
-        'warn',
-        {
-          skipShapeProps: true,
-        },
-      ],
-
       // React Hooks rules
       ...reactHooks.configs.recommended.rules,
+      // React Compiler rules — deferred; codebase predates React Compiler idioms.
+      // Re-enable and fix in a follow-up ticket.
+      'react-hooks/refs': 'off',
+      'react-hooks/static-components': 'off',
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/purity': 'off',
 
       // Import rules
       'import-x/order': [
@@ -117,8 +109,6 @@ export default tseslint.config(
       ...jsxA11y.configs.recommended.rules,
       'jsx-a11y/no-autofocus': 'off',
 
-      // Vitest globals
-      ...vitestGlobals.configs.recommended.rules,
     },
   },
 

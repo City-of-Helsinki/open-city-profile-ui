@@ -42,9 +42,7 @@ const AccessibleFormErrors = (props: Props): React.ReactElement | null => {
 
     const newText = errorList
       .map((errorKey) => {
-        const fieldError = formState.errors[errorKey] as
-          | { message?: string }
-          | undefined;
+        const fieldError = formState.errors[errorKey];
         const errorMessage = fieldError?.message;
 
         if (!errorMessage) {

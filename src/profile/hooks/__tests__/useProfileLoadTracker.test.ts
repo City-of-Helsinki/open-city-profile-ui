@@ -3,10 +3,7 @@ import { waitFor } from '@testing-library/react';
 import { ApolloError } from '@apollo/client';
 
 import { cleanComponentMocks } from '../../../common/test/testingLibraryTools';
-import {
-  createApolloErrorWithAllowedPermissionError,
-  MockedResponse,
-} from '../../../common/test/MockApolloClientProvider';
+import { createApolloErrorWithAllowedPermissionError } from '../../../common/test/MockApolloClientProvider';
 import { getMyProfile } from '../../../common/test/myProfileMocking';
 import { ProfileRoot } from '../../../graphql/typings';
 import {
@@ -67,7 +64,7 @@ describe('useProfileLoader.ts ', () => {
   // Not setting this is beforeEach, because act() do not work with it.
   const initTests = async (): Promise<RenderResult> => {
     const renderHookResult = exposeHook<useProfileLoaderHookReturnType>(
-      () => ({}) as MockedResponse,
+      () => ({}),
       () => useProfileLoadTracker(),
       false
     );

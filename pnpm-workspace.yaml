@@ -4,6 +4,10 @@ minimumReleaseAge: 10080
 # Hoist all dependencies to the root of node_modules, for better compatibility with packages that expect flat node_modules
 shamefullyHoist: true
 
+peerDependencyRules:
+  allowedVersions:
+    'eslint-plugin-jsx-a11y>eslint': '10'
+
 overrides:
   'lodash': '^4.18.1'
   'picomatch': '^4.0.4'

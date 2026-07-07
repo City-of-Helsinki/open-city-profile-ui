@@ -14,9 +14,6 @@ import {
   AddressNode,
   EmailNode,
   PhoneNode,
-  PrimaryPhone,
-  PrimaryEmail,
-  PrimaryAddress,
   Emails,
   Addresses,
   Phones,
@@ -394,17 +391,9 @@ export function cloneProfileAndProvideManipulationFunctions(
         phones,
         emails,
         primaryAddress:
-          addresses[0] && addresses[0].primary
-            ? (addresses[0] as PrimaryAddress)
-            : undefined,
-        primaryEmail:
-          emails[0] && emails[0].primary
-            ? (emails[0] as PrimaryEmail)
-            : undefined,
-        primaryPhone:
-          phones[0] && phones[0].primary
-            ? (phones[0] as PrimaryPhone)
-            : undefined,
+          addresses[0] && addresses[0].primary ? addresses[0] : undefined,
+        primaryEmail: emails[0] && emails[0].primary ? emails[0] : undefined,
+        primaryPhone: phones[0] && phones[0].primary ? phones[0] : undefined,
       } as FormValues;
     },
   };

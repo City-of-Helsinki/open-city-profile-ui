@@ -68,10 +68,7 @@ const getResponseData = (
     return { downloadMyProfile: JSON.stringify({ key: 'value' }) };
   }
   if (profileDataWithServiceConnections) {
-    return profileDataWithServiceConnections as unknown as Record<
-      string,
-      unknown
-    >;
+    return profileDataWithServiceConnections;
   }
   if (createMyProfile) {
     return {

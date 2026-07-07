@@ -69,7 +69,7 @@ describe('actionQueueRunner', () => {
   // map common action execution logging types to {trackingType}:{actionType} for easy string comparison
   const mapLogTypes = (list: TrackingType[], actionType: ActionType) =>
     list
-      .map((trackingType) => ({ trackingType, actionType }) as TrackingData)
+      .map((trackingType) => ({ trackingType, actionType }))
       .map(mapTrackingData);
 
   // use mapLogTypes() to make an array of log types of a successful action execution

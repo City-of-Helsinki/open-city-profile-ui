@@ -6,7 +6,6 @@ import {
   MockedResponse,
   ResponseProvider,
 } from '../../../common/test/MockApolloClientProvider';
-import { ProfileData } from '../../../graphql/typings';
 import { exposeProfileContext } from '../../../common/test/exposeHooksForTesting';
 
 const mockSentyCaptureException = vi.fn();
@@ -46,7 +45,7 @@ describe('ProfileContext', () => {
 
   it("after fetch(), context indicates 'loading' state and data updates when fetch is finished", async () => {
     const responses: MockedResponse[] = [
-      { profileData: getMyProfile().myProfile as ProfileData },
+      { profileData: getMyProfile().myProfile },
     ];
     const { result } = createTestEnv(responses);
 

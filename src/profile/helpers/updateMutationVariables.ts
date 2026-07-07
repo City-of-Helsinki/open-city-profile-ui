@@ -172,7 +172,7 @@ function formMutationArrays<T extends AddressNode | EmailNode | PhoneNode>(
     case 'primaryAddress': {
       const addressInputs: AddressInputs = {
         addAddresses: addValues as CreateAddressInput[],
-        updateAddresses: updateValues as UpdateAddressInput[],
+        updateAddresses: updateValues,
       };
       if (removeValues.length > 0) {
         addressInputs.removeAddresses = removeValues;
@@ -182,7 +182,7 @@ function formMutationArrays<T extends AddressNode | EmailNode | PhoneNode>(
     case 'primaryEmail': {
       const emailInputs: EmailInputs = {
         addEmails: addValues as CreateEmailInput[],
-        updateEmails: updateValues as UpdateEmailInput[],
+        updateEmails: updateValues,
       };
       if (removeValues.length > 0) {
         emailInputs.removeEmails = removeValues;
@@ -192,7 +192,7 @@ function formMutationArrays<T extends AddressNode | EmailNode | PhoneNode>(
     case 'primaryPhone': {
       const phoneInputs: PhoneInputs = {
         addPhones: addValues as CreatePhoneInput[],
-        updatePhones: updateValues as UpdatePhoneInput[],
+        updatePhones: updateValues,
       };
       if (removeValues.length > 0) {
         phoneInputs.removePhones = removeValues;

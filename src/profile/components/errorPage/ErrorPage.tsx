@@ -25,7 +25,6 @@ export type ErrorPageContent = {
 };
 
 type ErrorPageProps = {
-  // eslint-disable-next-line react/no-unused-prop-types
   content?: ErrorPageContent;
 };
 

@@ -11,7 +11,6 @@ import DeleteProfile from '../DeleteProfile';
 import { ResponseProvider } from '../../../../common/test/MockApolloClientProvider';
 import getMyProfileWithServiceConnections from '../../../../common/test/getMyProfileWithServiceConnections';
 import i18n from '../../../../common/test/testi18nInit';
-import { ServiceConnectionsQueryVariables } from '../../../../graphql/typings';
 import mockWindowLocation from '../../../../common/test/mockWindowLocation';
 import { Action } from '../../../../common/actionQueue/actionQueue';
 import config from '../../../../config';
@@ -52,7 +51,7 @@ describe('<DeleteProfile /> ', () => {
   const renderTestSuite = (errorResponseIndex = -1) => {
     const responseProvider: ResponseProvider = (payload) => {
       responseCounter = responseCounter + 1;
-      queryVariableTracker(payload as ServiceConnectionsQueryVariables);
+      queryVariableTracker(payload);
       return responseCounter === errorResponseIndex
         ? { errorType: 'networkError' }
         : { profileDataWithServiceConnections: serviceConnections };

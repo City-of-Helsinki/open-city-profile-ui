@@ -100,7 +100,7 @@ function BasicData(): React.ReactElement | null {
                 {...register('firstName')}
                 className={formFieldStyle}
                 id={`${basicDataType}-firstName`}
-                maxLength={formFields.firstName.max as number}
+                maxLength={formFields.firstName.max}
                 invalid={hasFieldError(formState, 'firstName')}
                 aria-invalid={hasFieldError(formState, 'firstName')}
                 errorText={getFieldErrorMessage(formState, 'firstName')}
@@ -112,7 +112,7 @@ function BasicData(): React.ReactElement | null {
                 {...register('nickname')}
                 className={formFieldStyle}
                 id={`${basicDataType}-nickname`}
-                maxLength={formFields.nickname.max as number}
+                maxLength={formFields.nickname.max}
                 invalid={hasFieldError(formState, 'nickname')}
                 aria-invalid={hasFieldError(formState, 'nickname')}
                 errorText={getFieldErrorMessage(formState, 'nickname')}
@@ -123,7 +123,7 @@ function BasicData(): React.ReactElement | null {
                 {...register('lastName')}
                 className={formFieldStyle}
                 id={`${basicDataType}-lastName`}
-                maxLength={formFields.lastName.max as number}
+                maxLength={formFields.lastName.max}
                 invalid={hasFieldError(formState, 'lastName')}
                 aria-invalid={hasFieldError(formState, 'lastName')}
                 errorText={getFieldErrorMessage(formState, 'lastName')}

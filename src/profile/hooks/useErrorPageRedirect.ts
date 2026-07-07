@@ -11,9 +11,7 @@ export function useErrorPageRedirect(): RedirectFunction {
 
   return useCallback(
     (params) => {
-      const queryParams = new URLSearchParams(
-        params as URLSearchParams
-      ).toString();
+      const queryParams = new URLSearchParams(params).toString();
       navigate(`${config.errorPagePath}?${queryParams}`, { replace: true });
     },
     [navigate]

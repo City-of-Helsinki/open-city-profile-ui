@@ -6,7 +6,6 @@ import {
   ElementSelector,
   renderComponentWithMocksAndContexts,
 } from '../../../../common/test/testingLibraryTools';
-import { ProfileData } from '../../../../graphql/typings';
 import Profile from '../Profile';
 import {
   MockedResponse,
@@ -46,7 +45,7 @@ describe('<Profile />', () => {
 
   it('should render load indicator and then ViewProfile when profile exists', async () => {
     const responses: MockedResponse[] = [
-      { profileData: getMyProfile().myProfile as ProfileData },
+      { profileData: getMyProfile().myProfile },
     ];
 
     const { getElement, waitForIsComplete, waitForElement } =
@@ -58,7 +57,7 @@ describe('<Profile />', () => {
   it('should render profile when data has an allowed error', async () => {
     const responses: MockedResponse[] = [
       {
-        profileData: getMyProfile().myProfile as ProfileData,
+        profileData: getMyProfile().myProfile,
         withAllowedPermissionError: true,
       },
     ];
@@ -83,7 +82,7 @@ describe('<Profile />', () => {
   it('should retry profile load when reload button is clicked', async () => {
     const responses: MockedResponse[] = [
       { errorType: 'networkError' },
-      { profileData: getMyProfile().myProfile as ProfileData },
+      { profileData: getMyProfile().myProfile },
     ];
 
     const { waitForElement, clickElement } = await renderTestSuite(responses);

@@ -23,7 +23,7 @@ export function mockProfileCreator(
     nickname: 'Betty',
     sub: 'uuidvalue',
     ...overrides,
-  } as Profile;
+  };
 }
 
 export function mockUserCreator({

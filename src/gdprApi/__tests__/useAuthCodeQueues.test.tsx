@@ -450,7 +450,7 @@ describe('useAuthCodeQueues', () => {
     it('when storage has a queue with failed auth code retrieval, nextPhase is "restart"', async () => {
       mockedWindowControls.setPath(config.downloadPath);
       mockedWindowControls.setSearch(
-        createFailedActionParams(keycloakAuthCodeCallbackUrlAction as Action)
+        createFailedActionParams(keycloakAuthCodeCallbackUrlAction)
       );
       initTestQueue(
         getScenarioWhereNextPhaseIsResumeCallback({

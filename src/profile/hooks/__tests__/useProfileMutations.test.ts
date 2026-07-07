@@ -71,7 +71,7 @@ describe('useProfileMutations.ts ', () => {
   // not using before each, because act() do not work with it.
   const initTests = async (): Promise<RenderResult> => {
     responses.push({
-      profileData: getMyProfile().myProfile as ProfileData,
+      profileData: getMyProfile().myProfile,
     });
     const renderHookResult = render();
     const { result, waitForDataChange } = renderHookResult;

@@ -47,7 +47,7 @@ describe('<AuthenticationProviderInformation /> ', () => {
 
     it('should render helsinki account information as expected based on config', () => {
       vi.spyOn(authenticationProviderUtil, 'getAmrStatic').mockImplementation(
-        () => 'helsinkiAccount' as useProfile.AMRStatic
+        () => 'helsinkiAccount'
       );
 
       const { container } = getWrapper();
@@ -57,7 +57,7 @@ describe('<AuthenticationProviderInformation /> ', () => {
   describe('renders correctly when AMR is tunnistusSuomifiAMR', () => {
     it('should render suomi.fi information as expected based on config', () => {
       vi.spyOn(authenticationProviderUtil, 'getAmrStatic').mockImplementation(
-        () => 'tunnistusSuomifi' as useProfile.AMRStatic
+        () => 'tunnistusSuomifi'
       );
 
       const { container } = getWrapper();

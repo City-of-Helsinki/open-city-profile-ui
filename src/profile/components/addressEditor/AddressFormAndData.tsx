@@ -175,7 +175,7 @@ function AddressFormAndData({
             <TextInput
               {...register('address')}
               id={`${testId}-address`}
-              maxLength={formFields.address.max as number}
+              maxLength={formFields.address.max}
               invalid={hasFieldError(formState, 'address')}
               aria-invalid={hasFieldError(formState, 'address')}
               errorText={getFieldErrorMessage(formState, 'address')}
@@ -187,7 +187,7 @@ function AddressFormAndData({
             <TextInput
               {...register('postalCode')}
               id={`${testId}-postalCode`}
-              maxLength={formFields.postalCode.max as number}
+              maxLength={formFields.postalCode.max}
               invalid={hasFieldError(formState, 'postalCode')}
               aria-invalid={hasFieldError(formState, 'postalCode')}
               errorText={getFieldErrorMessage(formState, 'postalCode')}
@@ -198,7 +198,7 @@ function AddressFormAndData({
             <TextInput
               {...register('city')}
               id={`${testId}-city`}
-              maxLength={formFields.city.max as number}
+              maxLength={formFields.city.max}
               invalid={hasFieldError(formState, 'city')}
               aria-invalid={hasFieldError(formState, 'city')}
               errorText={getFieldErrorMessage(formState, 'city')}

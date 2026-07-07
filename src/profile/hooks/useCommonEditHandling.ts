@@ -19,7 +19,6 @@ import { ActionHandler } from '../components/editButtons/EditButtons';
 import { useFocusSetter } from './useFocusSetter';
 import useNotificationContent from '../components/editingNotifications/useNotificationContent';
 import { useConfirmationModal } from './useConfirmationModal';
-import { AnyObject } from '../../graphql/typings';
 
 type EditHandlingProps = {
   data?: EditData;
@@ -154,7 +153,7 @@ export const useCommonEditHandling = (
 
   const saveItem = async (item: EditData, newValue: Partial<EditDataValue>) => {
     clearMessage();
-    if (_.isMatch(newValue as AnyObject, item.value)) {
+    if (_.isMatch(newValue, item.value)) {
       setSuccessMessage('save');
       return cancelItem(item);
     }

@@ -18,7 +18,7 @@ type Props = {
 
 // Forwarding ref to the outer div
 const EditingNotifications = forwardRef<HTMLDivElement, Props>(
-  function EditingNotifications(
+  function EditingNotificationsRef(
     {
       content,
       dataType,

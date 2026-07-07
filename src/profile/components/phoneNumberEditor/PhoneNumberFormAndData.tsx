@@ -195,7 +195,7 @@ function PhoneNumberFormAndData({
                       value={fieldValue}
                       className={commonFormStyles['form-field']}
                       id={inputId}
-                      maxLength={formFields.number.max as number}
+                      maxLength={formFields.number.max}
                       invalid={hasFieldError(formState, 'number')}
                       aria-invalid={hasFieldError(formState, 'number')}
                       errorText={getFieldErrorMessage(formState, 'number')}
