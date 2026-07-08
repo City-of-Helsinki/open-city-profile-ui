@@ -106,7 +106,7 @@ export const exposeProfileContext = (
   };
 
   const callback = () =>
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+    // eslint-disable-next-line react-hooks/rules-of-hooks, @eslint-react/rules-of-hooks
     tracker(useContext(ProfileContext));
 
   // Modify how you handle the result to maintain compatibility

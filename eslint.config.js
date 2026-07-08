@@ -1,4 +1,5 @@
 import js from '@eslint/js';
+import eslintReact from '@eslint-react/eslint-plugin';
 import tseslint from 'typescript-eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
 import importX from 'eslint-plugin-import-x';
@@ -6,6 +7,8 @@ import sonarjs from 'eslint-plugin-sonarjs';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import prettier from 'eslint-config-prettier';
 import globals from 'globals';
+
+const reactFiles = ['**/*.{js,jsx,ts,tsx}'];
 
 export default tseslint.config(
   // Ignore patterns (replaces .eslintignore)
@@ -16,6 +19,26 @@ export default tseslint.config(
   // Base recommended configs
   js.configs.recommended,
   ...tseslint.configs.recommended,
+
+  // @eslint-react (replaces eslint-plugin-react; supports ESLint 10)
+  { files: reactFiles, ...eslintReact.configs['recommended-typescript'] },
+  { files: reactFiles, ...eslintReact.configs['disable-conflict-eslint-plugin-react-hooks'] },
+  {
+    files: reactFiles,
+    rules: {
+      '@eslint-react/static-components': 'off',
+      '@eslint-react/no-use-context': 'off',
+      '@eslint-react/use-state': 'off',
+      '@eslint-react/set-state-in-effect': 'off',
+      '@eslint-react/no-nested-component-definitions': 'off',
+      '@eslint-react/no-context-provider': 'off',
+      '@eslint-react/naming-convention-ref-name': 'off',
+      '@eslint-react/exhaustive-deps': 'off',
+      '@eslint-react/web-api-no-leaked-fetch': 'off',
+      '@eslint-react/purity': 'off',
+      '@eslint-react/no-array-index-key': 'off',
+    },
+  },
 
   // Main configuration
   {

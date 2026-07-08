@@ -47,6 +47,7 @@ function AuthenticationProviderInformation(): React.ReactElement | null {
       setPasswordUpdateState(false);
 
       // Scrolling needs timeout because the notification is not yet rendered
+      // eslint-disable-next-line @eslint-react/web-api-no-leaked-timeout
       setTimeout(() => {
         if (notificationRef.current) {
           notificationRef.current.scrollIntoView({
