@@ -17,7 +17,6 @@ import {
   renderComponentWithMocksAndContexts,
   TestTools,
 } from '../../test/testingLibraryTools';
-import { MockedResponse } from '../../test/MockApolloClientProvider';
 import countryCallingCodes from '../../../i18n/countryCallingCodes.json';
 
 type RenderProps = {
@@ -135,7 +134,7 @@ describe('<FormDropdown /> ', () => {
     };
 
     return renderComponentWithMocksAndContexts(
-      () => ({}) as MockedResponse,
+      () => ({}),
       <I18nextProvider i18n={i18nModule}>
         <FormWrapper {...testScenarioProps} />
       </I18nextProvider>

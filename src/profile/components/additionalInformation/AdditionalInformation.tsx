@@ -46,9 +46,7 @@ function AdditionalInformation(): React.ReactElement | null {
 
   const updateLanguage = async (newLanguage: FormValues['language']) => {
     clearMessage();
-    const [error] = await to(
-      save(editData, { language: newLanguage } as AdditionalInformationValue)
-    );
+    const [error] = await to(save(editData, { language: newLanguage }));
     if (error) {
       reset(editData);
       setErrorMessage('save');

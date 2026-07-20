@@ -128,7 +128,7 @@ function EmailEditor(): React.ReactElement | null {
               <TextInput
                 {...register('email')}
                 id={`${dataType}-email`}
-                maxLength={formFields.email.max as number}
+                maxLength={formFields.email.max}
                 invalid={hasFieldError(formState, 'email')}
                 aria-invalid={hasFieldError(formState, 'email')}
                 errorText={getFieldErrorMessage(formState, 'email')}

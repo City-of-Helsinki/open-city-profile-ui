@@ -17,8 +17,9 @@ type Props = {
 };
 
 // Forwarding ref to the outer div
+// eslint-disable-next-line @eslint-react/no-forward-ref
 const EditingNotifications = forwardRef<HTMLDivElement, Props>(
-  function EditingNotifications(
+  function EditingNotificationsRef(
     {
       content,
       dataType,

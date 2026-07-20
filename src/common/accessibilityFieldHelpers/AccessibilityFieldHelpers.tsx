@@ -53,7 +53,7 @@ function AccessibilityFieldHelpers(props: Props): React.ReactElement {
   return (
     <div className={commonFormStyles['visually-hidden']}>
       {data.map((elementData) => (
-        <Helper {...elementData} key={elementData.id} />
+        <Helper key={elementData.id} {...elementData} />
       ))}
     </div>
   );

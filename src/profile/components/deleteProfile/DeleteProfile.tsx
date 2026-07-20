@@ -225,6 +225,7 @@ function DeleteProfile(): React.ReactElement {
       <div className={commonFormStyles['editor-description-container']}>
         <h2>{t('deleteProfile.title')}</h2>
         <p
+          // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml
           dangerouslySetInnerHTML={{ __html: t('deleteProfile.explanation') }}
         />
       </div>

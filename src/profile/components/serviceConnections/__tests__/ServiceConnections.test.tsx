@@ -11,10 +11,7 @@ import {
   ElementSelector,
   renderComponentWithMocksAndContexts,
 } from '../../../../common/test/testingLibraryTools';
-import {
-  AnyObject,
-  ServiceConnectionsQueryVariables,
-} from '../../../../graphql/typings';
+import { AnyObject } from '../../../../graphql/typings';
 import getServiceConnectionData, {
   ServiceConnectionData,
 } from '../../../helpers/getServiceConnectionData';
@@ -30,7 +27,7 @@ describe('<ServiceConnections />', () => {
   const queryVariableTracker = vi.fn();
   const renderTestSuite = (responses: MockedResponse[]) => {
     const responseProvider: ResponseProvider = (payload) => {
-      queryVariableTracker(payload as ServiceConnectionsQueryVariables);
+      queryVariableTracker(payload);
       return responses.shift() as MockedResponse;
     };
     return renderComponentWithMocksAndContexts(

@@ -1,13 +1,14 @@
 import js from '@eslint/js';
+import eslintReact from '@eslint-react/eslint-plugin';
 import tseslint from 'typescript-eslint';
-import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import importX from 'eslint-plugin-import-x';
 import sonarjs from 'eslint-plugin-sonarjs';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
-import vitestGlobals from 'eslint-plugin-vitest-globals';
 import prettier from 'eslint-config-prettier';
 import globals from 'globals';
+
+const reactFiles = ['**/*.{js,jsx,ts,tsx}'];
 
 export default tseslint.config(
   // Ignore patterns (replaces .eslintignore)
@@ -18,6 +19,26 @@ export default tseslint.config(
   // Base recommended configs
   js.configs.recommended,
   ...tseslint.configs.recommended,
+
+  // @eslint-react (replaces eslint-plugin-react; supports ESLint 10)
+  { files: reactFiles, ...eslintReact.configs['recommended-typescript'] },
+  { files: reactFiles, ...eslintReact.configs['disable-conflict-eslint-plugin-react-hooks'] },
+  {
+    files: reactFiles,
+    rules: {
+      '@eslint-react/static-components': 'off',
+      '@eslint-react/no-use-context': 'off',
+      '@eslint-react/use-state': 'off',
+      '@eslint-react/set-state-in-effect': 'off',
+      '@eslint-react/no-nested-component-definitions': 'off',
+      '@eslint-react/no-context-provider': 'off',
+      '@eslint-react/naming-convention-ref-name': 'off',
+      '@eslint-react/exhaustive-deps': 'off',
+      '@eslint-react/web-api-no-leaked-fetch': 'off',
+      '@eslint-react/purity': 'off',
+      '@eslint-react/no-array-index-key': 'off',
+    },
+  },
 
   // Main configuration
   {
@@ -35,18 +56,16 @@ export default tseslint.config(
       globals: {
         ...globals.browser,
         ...globals.node,
-        ...vitestGlobals.environments.env.globals,
+        ...globals.vitest,
         fetchMock: true,
       },
     },
     plugins: {
       '@typescript-eslint': tseslint.plugin,
-      react,
       'react-hooks': reactHooks,
       'import-x': importX,
       sonarjs,
       'jsx-a11y': jsxA11y,
-      'vitest-globals': vitestGlobals,
     },
     settings: {
       react: {
@@ -82,18 +101,14 @@ export default tseslint.config(
       '@typescript-eslint/no-require-imports': ['error'],
       '@typescript-eslint/no-unnecessary-type-assertion': 'error',
 
-      // React rules
-      ...react.configs.recommended.rules,
-      'react/react-in-jsx-scope': 'off', // Not needed with React 17+ JSX transform
-      'react/no-unused-prop-types': [
-        'warn',
-        {
-          skipShapeProps: true,
-        },
-      ],
-
       // React Hooks rules
       ...reactHooks.configs.recommended.rules,
+      // React Compiler rules — deferred; codebase predates React Compiler idioms.
+      // Re-enable and fix in a follow-up ticket.
+      'react-hooks/refs': 'off',
+      'react-hooks/static-components': 'off',
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/purity': 'off',
 
       // Import rules
       'import-x/order': [
@@ -117,8 +132,6 @@ export default tseslint.config(
       ...jsxA11y.configs.recommended.rules,
       'jsx-a11y/no-autofocus': 'off',
 
-      // Vitest globals
-      ...vitestGlobals.configs.recommended.rules,
     },
   },
 

@@ -326,7 +326,7 @@ function setAllItemsToRemoveAndCloneList(
 
   return _.cloneDeep(allItems).map((element) => ({
     ...element,
-    saving: 'remove' as SaveType,
+    saving: 'remove',
   }));
 }
 
