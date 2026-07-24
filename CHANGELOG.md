@@ -3,6 +3,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.33.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.33.0...open-city-profile-ui-v1.33.1) (2026-07-24)
+
+
+### Bug Fixes
+
+* Stuck Dependabot workflows ([#544](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/544)) ([a391173](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/a391173321b19a85243cca95f4ef71e0acb5e12c))
+* Update privacy notice link and text ([#543](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/543)) ([3187725](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/31877250d33e3cf7c400e17aec96700dab827fa3))
+
+
+### Dependencies
+
+* Bump dompurify from 3.4.0 to 3.4.11 ([#541](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/541)) ([165d209](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/165d20977266d4c44b1cb1cd9f081154f41f9898))
+* Bump react-router from 7.15.0 to 7.15.1 ([#539](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/539)) ([6292fd7](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/6292fd7ac557a7cec45bd17afb6180efa4f13bbd))
+* Bump vite from 8.0.5 to 8.0.16 ([#538](https://github.com/City-of-Helsinki/open-city-profile-ui/issues/538)) ([e959b4d](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/e959b4d2e37ed0832519f2a21919464b18e583a0))
+
 ## [1.33.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.32.4...open-city-profile-ui-v1.33.0) (2026-06-11)
 
 
