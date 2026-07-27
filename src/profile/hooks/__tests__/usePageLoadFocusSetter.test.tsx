@@ -13,7 +13,7 @@ import {
   Route,
   Routes,
   Link,
-} from 'react-router-dom';
+} from 'react-router';
 
 import { getActiveElement } from '../../../common/test/testingLibraryTools';
 import {

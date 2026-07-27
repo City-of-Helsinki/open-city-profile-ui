@@ -58,8 +58,8 @@ type HookFunctionResults = {
 
 const mockNavigate = vi.fn();
 
-vi.mock('react-router-dom', async () => {
-  const module = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+  const module = await vi.importActual('react-router');
 
   return {
     ...module,

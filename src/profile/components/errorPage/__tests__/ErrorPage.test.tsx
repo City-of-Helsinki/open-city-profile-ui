@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
 import ErrorPage, {
   ErrorPageContent,
@@ -18,8 +18,8 @@ const mockUseLocationValue = {
   state: null,
 };
 
-vi.mock('react-router-dom', async () => {
-  const module = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+  const module = await vi.importActual('react-router');
 
   return {
     ...module,

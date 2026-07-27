@@ -8,7 +8,7 @@ import {
   logoSvDark,
   LogoSize,
 } from 'hds-react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import getLanguageCode from '../helpers/getLanguageCode';
 import config from '../../config';
