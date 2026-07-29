@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { act, render } from '@testing-library/react';
 import { vi, describe, it, expect, afterEach } from 'vitest';
 
@@ -7,8 +7,8 @@ import PasswordChangeCallback from '../PasswordChangeCallback';
 
 const mockNavigate = vi.fn();
 
-vi.mock('react-router-dom', async () => {
-  const module = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+  const module = await vi.importActual('react-router');
 
   return {
     ...module,

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { SessionEndedHandler, useGroupConsent } from 'hds-react';
 
 import { MAIN_CONTENT_ID } from '../constants';

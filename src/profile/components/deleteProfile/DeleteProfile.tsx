@@ -3,7 +3,7 @@ import { ApolloError, useLazyQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/react';
 import { Button, Notification, useGroupConsent } from 'hds-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import ConfirmationModal from '../modals/confirmationModal/ConfirmationModal';
 import {

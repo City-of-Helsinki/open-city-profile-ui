@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { BrowserRouter, useNavigate } from 'react-router-dom';
+import { BrowserRouter, useNavigate } from 'react-router';
 
 import OidcCallback from '../OidcCallback';
 import TestLoginProvider from '../../../../common/test/TestLoginProvider';
@@ -48,8 +48,8 @@ const renderComponent = () => {
 
 const getNavigateCallArgument = () => mockedNavigate.mock.calls[0][0];
 
-vi.mock('react-router-dom', async () => {
-  const module = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+  const module = await vi.importActual('react-router');
 
   return {
     ...module,

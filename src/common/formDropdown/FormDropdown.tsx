@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Select, Option } from 'hds-react';
+import { Select, Option, SupportedLanguage } from 'hds-react';
 import { useTranslation } from 'react-i18next';
-import { SupportedLanguage } from 'hds-react/lib/components/dropdownComponents/modularOptionList/types';
 
 export function defaultFilter(option: Option, filterStr: string) {
   return option.label.toLowerCase().indexOf(filterStr.toLowerCase()) > -1;

@@ -24,8 +24,8 @@ window.ResizeObserver = MockResizeObserver;
 const fetchMocker = createFetchMock(vi);
 fetchMocker.enableMocks();
 
-vi.mock('react-router-dom', async () => {
-  const module = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+  const module = await vi.importActual('react-router');
 
   return {
     ...module,

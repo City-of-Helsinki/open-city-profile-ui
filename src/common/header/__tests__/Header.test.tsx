@@ -5,8 +5,8 @@ import TestLoginProvider from '../../test/TestLoginProvider';
 import i18n from '../../test/testi18nInit';
 import Header from '../Header';
 
-vi.mock('react-router-dom', async () => {
-  const module = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+  const module = await vi.importActual('react-router');
 
   return {
     ...module,

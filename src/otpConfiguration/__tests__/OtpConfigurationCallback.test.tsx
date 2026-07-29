@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router';
 import { act, render } from '@testing-library/react';
 
 import OtpConfigurationCallback, {
@@ -25,8 +25,8 @@ const renderComponent = (props: OtpConfigurationCallbackProps) =>
 
 const getNavigateCallArgument = () => navigateMock.mock.calls[0][0];
 
-vi.mock('react-router-dom', async () => {
-  const module = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+  const module = await vi.importActual('react-router');
 
   return {
     ...module,

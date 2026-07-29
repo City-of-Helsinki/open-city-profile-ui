@@ -19,3 +19,6 @@ allowBuilds:
   '@swc/core': true
   esbuild: true
   unrs-resolver: true
+
+minimumReleaseAgeExclude:
+  - react-router@8.3.0

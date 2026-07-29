@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { LoadingSpinner } from 'hds-react';
 

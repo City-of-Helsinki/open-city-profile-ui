@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import config from '../../config';
 import { ErrorPageQueryParams } from '../components/errorPage/ErrorPage';
