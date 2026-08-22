@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.33.3](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.33.2...open-city-profile-ui-v1.33.3) (2026-08-22)
+
+
+### Bug Fixes
+
+* Sonar issue ([57ed503](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/57ed5033b993f185be04e9d097c3057415082ddf))
+
 ## [1.33.2](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.33.1...open-city-profile-ui-v1.33.2) (2026-08-12)
 
 
