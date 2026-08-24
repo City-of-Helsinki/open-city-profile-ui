@@ -84,18 +84,14 @@ type SaveDataMutator = (
 
 export const saveTypeSetPrimary = 'set-primary';
 
-export type SaveType =
-  | 'value'
-  | typeof saveTypeSetPrimary
-  | 'remove'
-  | undefined;
+export type SaveType = 'value' | typeof saveTypeSetPrimary | 'remove';
 
 export type EditData = {
   readonly id: string;
   readonly value: EditDataValue;
   readonly primary?: boolean;
   readonly type?: AddressType | EmailType | PhoneType | null;
-  readonly saving: SaveType;
+  readonly saving: SaveType | undefined;
 };
 
 type Backups = {

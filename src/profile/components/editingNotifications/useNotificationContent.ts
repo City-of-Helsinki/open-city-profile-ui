@@ -17,7 +17,10 @@ function useNotificationContent(): ContentHandlers {
   });
   const { t } = useTranslation();
   const tryAgainKey = 'notification.tryAgain';
-  const getActionMessage = (action: Action, error: boolean): string => {
+  const getActionMessage = (
+    action: Action | undefined,
+    error: boolean
+  ): string => {
     if (action === 'remove') {
       return error
         ? `${t('notification.removeError')} ${t(tryAgainKey)}.`

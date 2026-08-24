@@ -30,7 +30,7 @@ type EditHandlingProps = {
 };
 
 export type EditHandling = {
-  currentAction: Action;
+  currentAction: Action | undefined;
   isEditing: boolean;
   isNew: boolean;
   actionHandler: ActionHandler;
@@ -67,7 +67,9 @@ export const useCommonEditHandling = (
       ? dataType
       : `${dataType}-0`;
   const [isEditing, setEditing] = useState(isNew);
-  const [currentAction, setCurrentAction] = useState<Action>(undefined);
+  const [currentAction, setCurrentAction] = useState<Action | undefined>(
+    undefined
+  );
   const [editButtonId, setFocusToEditButton] = useFocusSetter({
     targetId: `${testId}-edit-button`,
   });
