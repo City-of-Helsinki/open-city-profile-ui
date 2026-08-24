@@ -475,8 +475,7 @@ export const createDomHelpersWithTesting = (
 } => ({
   findByTestId: async (testId: string): Promise<HTMLElement | null> => {
     try {
-      const el = await renderResult.findByTestId(testId);
-      return el;
+      return await renderResult.findByTestId(testId);
     } catch {
       // Handle error as needed - in this case, return null
       return null;
