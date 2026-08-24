@@ -26,12 +26,11 @@ function Profile(): React.ReactElement {
       return 'nav.information';
     }
 
-    switch (pathname) {
-      case 'connected-services':
-        return 'nav.services';
-      default:
-        return 'appName';
+    if (pathname === 'connected-services') {
+      return 'nav.services';
     }
+
+    return 'appName';
   };
 
   if (isProfileLoadComplete()) {
