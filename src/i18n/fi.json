@@ -37,7 +37,7 @@
   "deleteProfile": {
     "accept": "Ymmärrän, mitä tietojeni poistaminen tarkoittaa ja haluan jatkaa.",
     "delete": "Poista omat tiedot",
-    "explanation": "Halutessasi voit poistaa Helsinki-profiilisi ja kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Onkin suositeltavaa ladata omat tietosi talteen ennen profiilin ja omien tietojesi poistoa. <br/><br/>Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta.<br/><br/>Jos olet käyttänyt kirjautumisessa ulkopuolisen palveluntarjoajan tiliä (esim. Google tai Facebook), kyseistä tiliä ei poisteta. <br/>Voidaksesi jatkossa käyttää Helsingin kaupungin asiointipalveluja, sinun on luotava uusi Helsinki-profiili.",
+    "explanation": "Halutessasi voit poistaa Helsinki-profiilisi ja kaikki sinusta tallentamamme tiedot. Tietoja ei voi palauttaa sen jälkeen, kun ne on poistettu. Onkin suositeltavaa ladata omat tietosi talteen ennen profiilin ja omien tietojesi poistoa. <br/><br/>Poistamisen jälkeen sinut kirjataan automaattisesti ulos tästä palvelusta.<br/><br/>Voidaksesi jatkossa käyttää Helsingin kaupungin asiointipalveluja, sinun on luotava uusi Helsinki-profiili.",
     "title": "Haluatko poistaa omat tietosi?",
     "loadingServices": "Haetaan profiiliin yhdistettyjä palveluita",
     "deleteSuccessful": "Helsinki-profiili ja kaikki sinusta tallentamamme tiedot on poistettu onnistuneesti!",
@@ -262,10 +262,6 @@
   },
   "identityProvider": {
     "helsinkiAccount": "Olet tunnistautuneena Helsinki-tunnuksella.",
-    "github": "Olet tunnistautuneena GitHub-tilillä.",
-    "google": "Olet tunnistautuneena Google-tilillä.",
-    "facebook": "Olet tunnistautuneena Facebook-tilillä.",
-    "yletunnus": "Olet tunnistautuneena Yle Tunnuksella.",
     "tunnistusSuomifi": "Olet tunnistautuneena Suomi.fi-tunnistuksella."
   },
   "opensInNewWindow": "{{title}}. Avautuu uudessa ikkunassa.",

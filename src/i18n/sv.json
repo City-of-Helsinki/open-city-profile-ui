@@ -37,7 +37,7 @@
   "deleteProfile": {
     "accept": "Jag förstår vad att radera min information betyder och vill fortsätta.",
     "delete": "Radera min information",
-    "explanation": "Om du vill kan du radera din Helsingforsprofil och all information som vi har om dig. När dina uppgifter har raderats kan de inte återställas.  Vi rekommenderar därför att du laddar ner dina egna data innan du raderar din profil och dina egna data. <br/><br/>Efter borttagningen av profilen blir du automatiskt utloggad från denna tjänst.<br/><br/>Om du har loggat in med ett konto hos en utomstående tjänsteleverantör (t.ex. Google eller Facebook), raderas inte kontot i fråga. <br/>För att kunna använda Helsingfors stads tjänster i framtiden måste du skapa en ny Helsingforsprofil.",
+    "explanation": "Om du vill kan du radera din Helsingforsprofil och all information som vi har om dig. När dina uppgifter har raderats kan de inte återställas.  Vi rekommenderar därför att du laddar ner dina egna data innan du raderar din profil och dina egna data. <br/><br/>Efter borttagningen av profilen blir du automatiskt utloggad från denna tjänst.<br/><br/>För att kunna använda Helsingfors stads tjänster i framtiden måste du skapa en ny Helsingforsprofil.",
     "title": "Vill du radera din information?",
     "loadingServices": "Söker efter tjänster som är kopplade till profilen",
     "deleteSuccessful": "Helsingforsprofilen och alla uppgifter som vi har sparat om dig har tagits bort på ett lyckat sätt.",
@@ -262,10 +262,6 @@
   },
   "identityProvider": {
     "helsinkiAccount": "Du är autentiserad med Helsingfors-konto.",
-    "github": "Du är autentiserad med GitHub-konto.",
-    "google": "Du är autentiserad med Google-konto.",
-    "facebook": "Du är autentiserad med Facebook-konto.",
-    "yletunnus": "Du är autentiserad med Yle Konto.",
     "tunnistusSuomifi": "Du är autentiserad med Suomi.fi-identifikation."
   },
   "opensInNewWindow": "{{title}}. Öppnas i ett nytt fönster.",
