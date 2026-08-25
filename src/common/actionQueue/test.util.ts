@@ -7,10 +7,11 @@ import {
   mergeQueues,
   ActionUpdateProps,
   ActionType,
+  JSONStringifyableResult,
 } from './actionQueue';
 
 export type ActionSourceForTesting = Pick<ActionProps, 'type'> & {
-  resolveValue?: Action['result'];
+  resolveValue?: JSONStringifyableResult;
   rejectValue?: string | Error;
   executionDelay?: number;
 };

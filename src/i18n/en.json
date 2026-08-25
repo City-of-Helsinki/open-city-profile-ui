@@ -37,7 +37,7 @@
   "deleteProfile": {
     "accept": "I understand what deleting my data means and wish to proceed.",
     "delete": "Delete my information",
-    "explanation": "If you want to, you can delete your Helsinki profile and all the data we have stored. Once deleted, the data cannot be restored. It is therefore advisable to download your own data before deleting your profile and your own data. <br/><br/>After the deletion, you will be automatically logged out of this service.<br/><br/>If you have logged in using a third-party service provider account (e.g. Google or Facebook), that account will not be deleted. <br/>In order to use City of Helsinki services in the future, you will need to create a new Helsinki profile.",
+    "explanation": "If you want to, you can delete your Helsinki profile and all the data we have stored. Once deleted, the data cannot be restored. It is therefore advisable to download your own data before deleting your profile and your own data. <br/><br/>After the deletion, you will be automatically logged out of this service.<br/><br/>In order to use City of Helsinki services in the future, you will need to create a new Helsinki profile.",
     "title": "Do you want to delete your information?",
     "loadingServices": "Searching for services connected to the profile",
     "deleteSuccessful": "The Helsinki profile and all the data we hold on you have been deleted successfully!",
@@ -262,10 +262,6 @@
   },
   "identityProvider": {
     "helsinkiAccount": "You are authenticated with Helsinki ID.",
-    "github": "You are authenticated with GitHub account.",
-    "google": "You are authenticated with Google account.",
-    "facebook": "You are authenticated with Facebook account.",
-    "yletunnus": "You are authenticated with Yle ID.",
     "tunnistusSuomifi": "You are authenticated with Suomi.fi e-Identification."
   },
   "opensInNewWindow": "{{title}}. Opens in a new window.",
