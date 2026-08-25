@@ -21,7 +21,8 @@ export function usePageLoadFocusSetter(props?: {
   disableFocusing?: boolean;
 }): void {
   const location = useLocation();
-  const navType = useNavigationType(); // "POP", "PUSH", "REPLACE"
+  // "POP", "PUSH", "REPLACE"
+  const navType = useNavigationType();
   const { disableFocusing = false, selector } = props || {};
 
   useEffect(() => {

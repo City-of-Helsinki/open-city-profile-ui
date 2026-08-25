@@ -20,7 +20,7 @@ async function waitForApiToken(
     const apiTokens = getApiTokensFromStorage();
 
     if (apiTokens !== null) {
-      return pickProfileApiToken(apiTokens); // Return the token when available
+      return pickProfileApiToken(apiTokens);
     }
 
     retries += 1;
