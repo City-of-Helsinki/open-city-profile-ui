@@ -51,7 +51,7 @@ const EditingNotifications = forwardRef<HTMLDivElement, Props>(
 
     return (
       <div
-        ref={ref} // Attach the ref to the div
+        ref={ref}
         className={classNames(...classList)}
         role="alert"
         id={`${dataType}-edit-notifications`}

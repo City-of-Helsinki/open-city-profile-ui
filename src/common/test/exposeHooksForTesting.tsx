@@ -22,7 +22,8 @@ import { getErrorMessage } from './testingLibraryTools';
 export const exposeProfileContext = (
   responseProvider: ResponseProvider
 ): RenderHookResult<PropsWithChildren<object>, ProfileContextData> & {
-  result: { current: ProfileContextData }; // Structure to match old API
+  // Structure to match old API
+  result: { current: ProfileContextData };
   waitForDataChange: () => Promise<ProfileContextData>;
   waitForUpdate: () => Promise<ProfileContextData>;
   waitForErrorChange: () => Promise<ProfileContextData>;
@@ -129,7 +130,8 @@ export function exposeHook<T = unknown>(
   waitForProfileData: boolean
 ): {
   result: {
-    current: T & { [key: string]: unknown }; // Allow any property to be accessed on current
+    // Allow any property to be accessed on current
+    current: T & { [key: string]: unknown };
   };
   rerender: (props?: unknown) => void;
   unmount: () => void;
@@ -168,7 +170,8 @@ export const exposeProfileMutationsHook = (
   dataType: EditDataType
 ): {
   result: {
-    current: MutationReturnType & { [key: string]: unknown }; // Allow any property to be accessed on current
+    // Allow any property to be accessed on current
+    current: MutationReturnType & { [key: string]: unknown };
   };
   rerender: (props?: unknown) => void;
   unmount: () => void;
