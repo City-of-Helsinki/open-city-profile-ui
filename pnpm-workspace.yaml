@@ -2,13 +2,8 @@
 minimumReleaseAge: 10080
 
 minimumReleaseAgeExclude:
-  - baseline-browser-mapping@2.11.13
-  - browserslist@4.28.8
-  - caniuse-lite@1.0.30001809
-  - electron-to-chromium@1.5.403
-  - nanoid@3.3.18
-  - node-releases@2.0.53
-  - update-browserslist-db@1.3.0
+  - fast-uri@3.1.7
+  - js-yaml@4.3.2
 
 # Hoist all dependencies to the root of node_modules, for better compatibility with packages that expect flat node_modules
 shamefullyHoist: true
@@ -16,15 +11,23 @@ shamefullyHoist: true
 # Allow plugins that lag on peer ranges to load under ESLint 10.
 peerDependencyRules:
   allowedVersions:
-    eslint: '10'
+    eslint: "10"
 
 overrides:
-  'lodash': '^4.18.1'
-  'picomatch': '^4.0.4'
-  '@typescript-eslint/typescript-estree>minimatch': '9.0.7'
-  'js-cookie': '^3.0.7'
+  "lodash": "^4.18.1"
+  "picomatch": "^4.0.4"
+  "@typescript-eslint/typescript-estree>minimatch": "9.0.7"
+  "js-cookie": "^3.0.7"
+  # Dependabot alerts: force patched transitive versions of dev-only tooling deps
+  "shell-quote": "^1.10.0"
+  "brace-expansion@1": "^1.1.18"
+  "brace-expansion@5": "^5.0.9"
+  "immutable": "^5.1.9"
+  "fast-uri": "^3.1.7"
+  "postcss": "^8.5.26"
+  "js-yaml": "^4.3.2"
 
 allowBuilds:
-  '@swc/core': true
+  "@swc/core": true
   esbuild: true
   unrs-resolver: true
