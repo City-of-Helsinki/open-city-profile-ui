@@ -19,12 +19,10 @@ const Footer = () => {
   const lang = getLanguageCode(i18n.languages[0]);
   const logoSrcFromLanguage = lang === 'sv' ? logoSvDark : logoFiDark;
 
-  const createAriaLabel = (title: string) => {
+  const createExternalLinkAriaLabel = (title: string) => {
     const titleWithoutLastDot =
       title.slice(-1) === '.' ? title.substring(0, title.length - 1) : title;
-    return t('opensInNewWindow', {
-      title: titleWithoutLastDot,
-    });
+    return `${titleWithoutLastDot}. ${t('openInExternalDomainAriaLabel')}`;
   };
 
   const logoHref = `https://hel.fi/${lang}`;
@@ -78,18 +76,16 @@ const Footer = () => {
           className={styles['utility-group']}
         >
           <HDSFooter.Link
-            aria-label={createAriaLabel(t('footer.contactUs'))}
+            aria-label={createExternalLinkAriaLabel(t('footer.contactUs'))}
             external
             href={t('footer.contactUsLink')}
             label={t('footer.contactUs')}
-            target="_blank"
           />
           <HDSFooter.Link
-            aria-label={createAriaLabel(t('footer.feedback'))}
+            aria-label={createExternalLinkAriaLabel(t('footer.feedback'))}
             external
             href={t('footer.feedbackLink')}
             label={t('footer.feedback')}
-            target="_blank"
           />
         </HDSFooter.UtilityGroup>
       </HDSFooter.Utilities>
@@ -107,11 +103,10 @@ const Footer = () => {
         logoHref={logoHref}
       >
         <HDSFooter.Link
-          aria-label={createAriaLabel(t('footer.privacy'))}
+          aria-label={createExternalLinkAriaLabel(t('footer.privacy'))}
           external
           href={t('profileForm.termsFileDescriptionLink')}
           label={t('footer.privacy')}
-          target="_blank"
         />
         <HDSFooter.Link
           as={Link}

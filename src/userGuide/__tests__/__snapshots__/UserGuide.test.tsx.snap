@@ -2308,10 +2308,9 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                         footer.otherContactInformation
                       </h3>
                       <a
-                        aria-label="opensInNewWindow"
+                        aria-label="footer.contactUs. openInExternalDomainAriaLabel"
                         class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                         href="footer.contactUsLink"
-                        target="_blank"
                       >
                         <span>
                           footer.contactUs
@@ -2333,10 +2332,9 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                         </svg>
                       </a>
                       <a
-                        aria-label="opensInNewWindow"
+                        aria-label="footer.feedback. openInExternalDomainAriaLabel"
                         class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                         href="footer.feedbackLink"
-                        target="_blank"
                       >
                         <span>
                           footer.feedback
@@ -2413,10 +2411,9 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       |
                     </span>
                     <a
-                      aria-label="opensInNewWindow"
+                      aria-label="footer.privacy. openInExternalDomainAriaLabel"
                       class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_base__0Qd2m"
                       href="profileForm.termsFileDescriptionLink"
-                      target="_blank"
                     >
                       <span>
                         footer.privacy
@@ -4814,10 +4811,9 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       footer.otherContactInformation
                     </h3>
                     <a
-                      aria-label="opensInNewWindow"
+                      aria-label="footer.contactUs. openInExternalDomainAriaLabel"
                       class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                       href="footer.contactUsLink"
-                      target="_blank"
                     >
                       <span>
                         footer.contactUs
@@ -4839,10 +4835,9 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                       </svg>
                     </a>
                     <a
-                      aria-label="opensInNewWindow"
+                      aria-label="footer.feedback. openInExternalDomainAriaLabel"
                       class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                       href="footer.feedbackLink"
-                      target="_blank"
                     >
                       <span>
                         footer.feedback
@@ -4919,10 +4914,9 @@ exports[`User guide > renders UserGuide component in English 1`] = `
                     |
                   </span>
                   <a
-                    aria-label="opensInNewWindow"
+                    aria-label="footer.privacy. openInExternalDomainAriaLabel"
                     class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_base__0Qd2m"
                     href="profileForm.termsFileDescriptionLink"
-                    target="_blank"
                   >
                     <span>
                       footer.privacy
@@ -7294,10 +7288,9 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                         footer.otherContactInformation
                       </h3>
                       <a
-                        aria-label="opensInNewWindow"
+                        aria-label="footer.contactUs. openInExternalDomainAriaLabel"
                         class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                         href="footer.contactUsLink"
-                        target="_blank"
                       >
                         <span>
                           footer.contactUs
@@ -7319,10 +7312,9 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                         </svg>
                       </a>
                       <a
-                        aria-label="opensInNewWindow"
+                        aria-label="footer.feedback. openInExternalDomainAriaLabel"
                         class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                         href="footer.feedbackLink"
-                        target="_blank"
                       >
                         <span>
                           footer.feedback
@@ -7399,10 +7391,9 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       |
                     </span>
                     <a
-                      aria-label="opensInNewWindow"
+                      aria-label="footer.privacy. openInExternalDomainAriaLabel"
                       class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_base__0Qd2m"
                       href="profileForm.termsFileDescriptionLink"
-                      target="_blank"
                     >
                       <span>
                         footer.privacy
@@ -9717,10 +9708,9 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       footer.otherContactInformation
                     </h3>
                     <a
-                      aria-label="opensInNewWindow"
+                      aria-label="footer.contactUs. openInExternalDomainAriaLabel"
                       class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                       href="footer.contactUsLink"
-                      target="_blank"
                     >
                       <span>
                         footer.contactUs
@@ -9742,10 +9732,9 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                       </svg>
                     </a>
                     <a
-                      aria-label="opensInNewWindow"
+                      aria-label="footer.feedback. openInExternalDomainAriaLabel"
                       class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                       href="footer.feedbackLink"
-                      target="_blank"
                     >
                       <span>
                         footer.feedback
@@ -9822,10 +9811,9 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
                     |
                   </span>
                   <a
-                    aria-label="opensInNewWindow"
+                    aria-label="footer.privacy. openInExternalDomainAriaLabel"
                     class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_base__0Qd2m"
                     href="profileForm.termsFileDescriptionLink"
-                    target="_blank"
                   >
                     <span>
                       footer.privacy
@@ -12213,10 +12201,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                         footer.otherContactInformation
                       </h3>
                       <a
-                        aria-label="opensInNewWindow"
+                        aria-label="footer.contactUs. openInExternalDomainAriaLabel"
                         class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                         href="footer.contactUsLink"
-                        target="_blank"
                       >
                         <span>
                           footer.contactUs
@@ -12238,10 +12225,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                         </svg>
                       </a>
                       <a
-                        aria-label="opensInNewWindow"
+                        aria-label="footer.feedback. openInExternalDomainAriaLabel"
                         class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                         href="footer.feedbackLink"
-                        target="_blank"
                       >
                         <span>
                           footer.feedback
@@ -12318,10 +12304,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       |
                     </span>
                     <a
-                      aria-label="opensInNewWindow"
+                      aria-label="footer.privacy. openInExternalDomainAriaLabel"
                       class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_base__0Qd2m"
                       href="profileForm.termsFileDescriptionLink"
-                      target="_blank"
                     >
                       <span>
                         footer.privacy
@@ -14652,10 +14637,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       footer.otherContactInformation
                     </h3>
                     <a
-                      aria-label="opensInNewWindow"
+                      aria-label="footer.contactUs. openInExternalDomainAriaLabel"
                       class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                       href="footer.contactUsLink"
-                      target="_blank"
                     >
                       <span>
                         footer.contactUs
@@ -14677,10 +14661,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                       </svg>
                     </a>
                     <a
-                      aria-label="opensInNewWindow"
+                      aria-label="footer.feedback. openInExternalDomainAriaLabel"
                       class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                       href="footer.feedbackLink"
-                      target="_blank"
                     >
                       <span>
                         footer.feedback
@@ -14757,10 +14740,9 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
                     |
                   </span>
                   <a
-                    aria-label="opensInNewWindow"
+                    aria-label="footer.privacy. openInExternalDomainAriaLabel"
                     class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_base__0Qd2m"
                     href="profileForm.termsFileDescriptionLink"
-                    target="_blank"
                   >
                     <span>
                       footer.privacy
@@ -17129,10 +17111,9 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     footer.otherContactInformation
                   </h3>
                   <a
-                    aria-label="opensInNewWindow"
+                    aria-label="footer.contactUs. openInExternalDomainAriaLabel"
                     class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                     href="footer.contactUsLink"
-                    target="_blank"
                   >
                     <span>
                       footer.contactUs
@@ -17154,10 +17135,9 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                     </svg>
                   </a>
                   <a
-                    aria-label="opensInNewWindow"
+                    aria-label="footer.feedback. openInExternalDomainAriaLabel"
                     class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_utility__-U3kO"
                     href="footer.feedbackLink"
-                    target="_blank"
                   >
                     <span>
                       footer.feedback
@@ -17234,10 +17214,9 @@ exports[`User guide > renders UserGuide without errors 1`] = `
                   |
                 </span>
                 <a
-                  aria-label="opensInNewWindow"
+                  aria-label="footer.privacy. openInExternalDomainAriaLabel"
                   class="Link-module_link__8XuKE link_hds-link__MZCD0 FooterLink-module_item__rvkky FooterLink-module_base__0Qd2m"
                   href="profileForm.termsFileDescriptionLink"
-                  target="_blank"
                 >
                   <span>
                     footer.privacy
