@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.33.4](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.33.3...open-city-profile-ui-v1.33.4) (2026-09-16)
+
+
+### Dependencies
+
+* Bump vitest from 4.1.2 to 4.1.11 ([2f91bd5](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/2f91bd5ba6cdc2c8733ada5da71d0492feaefc9c))
+* Vitest upgrade fixes Refs: RATY-357 ([b62762b](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/b62762bfb3d2c35cb838bcbbffe151191def2e0c))
+
 ## [1.33.3](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.33.2...open-city-profile-ui-v1.33.3) (2026-09-14)
 
 
