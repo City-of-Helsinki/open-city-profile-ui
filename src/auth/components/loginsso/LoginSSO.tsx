@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import pageLayoutStyles from '../../../common/pageLayout/PageLayout.module.css';
@@ -8,8 +8,15 @@ import Loading from '../../../common/loading/Loading';
 function LoginSSO(): React.ReactElement {
   const { t } = useTranslation();
 
-  const auth = useAuth();
-  auth.login();
+  const { login } = useAuth();
+
+  useEffect(() => {
+    login().catch(() => {
+      // Navigation errors (e.g. blocked by iOS WebKit without a user gesture)
+      // are silently caught here to prevent unhandled exceptions.
+    });
+  }, [login]);
+
   return (
     <div className={pageLayoutStyles.wrapper}>
       <main className={pageLayoutStyles.content}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Route, Routes } from 'react-router';
 import countries from 'i18n-iso-countries';
 import fi from 'i18n-iso-countries/langs/fi.json';
@@ -12,7 +12,6 @@ import {
   CookieConsentContextProvider,
 } from 'hds-react';
 import { ApolloProvider } from '@apollo/client';
-import { UserManagerSettings } from 'oidc-client-ts';
 import { HelmetProvider } from 'react-helmet-async';
 
 import graphqlClient from './graphql/client';
@@ -42,44 +41,50 @@ countries.registerLocale(en);
 countries.registerLocale(sv);
 
 function App(): React.ReactElement {
-  const matomoTracker = new MatomoTracker({
-    urlBase: window._env_.REACT_APP_MATOMO_URL_BASE,
-    siteId: window._env_.REACT_APP_MATOMO_SITE_ID,
-    srcUrl: window._env_.REACT_APP_MATOMO_SRC_URL,
-    enabled: window._env_.REACT_APP_MATOMO_ENABLED === 'true',
-    configurations: {
-      setDoNotTrack: true,
-    },
-  });
+  const matomoTrackerRef = useRef<MatomoTracker | null>(null);
+  if (!matomoTrackerRef.current) {
+    matomoTrackerRef.current = new MatomoTracker({
+      urlBase: window._env_.REACT_APP_MATOMO_URL_BASE,
+      siteId: window._env_.REACT_APP_MATOMO_SITE_ID,
+      srcUrl: window._env_.REACT_APP_MATOMO_SRC_URL,
+      enabled: window._env_.REACT_APP_MATOMO_ENABLED === 'true',
+      configurations: {
+        setDoNotTrack: true,
+      },
+    });
+  }
 
   const origin = window.location.origin;
 
-  const userManagerSettings: Partial<UserManagerSettings> = {
-    authority: window._env_.REACT_APP_OIDC_AUTHORITY,
-    client_id: window._env_.REACT_APP_OIDC_CLIENT_ID,
-    redirect_uri: `${origin}/callback`,
-    silent_redirect_uri: `${origin}/silent_renew.html`,
-    response_type: window._env_.REACT_APP_OIDC_RESPONSE_TYPE,
-    scope: window._env_.REACT_APP_OIDC_SCOPE,
-    post_logout_redirect_uri: `${origin}/`,
-    // This calculates to 1 minute, good for debugging:
-    // https://github.com/City-of-Helsinki/kukkuu-ui/blob/8029ed64c3d0496fa87fa57837c73520e8cbe37f/src/domain/auth/userManager.ts#L18
-    // accessTokenExpiringNotificationTimeInSeconds: 3600 - 60,
-  };
-
-  const loginProviderProps: LoginProviderProps = {
-    userManagerSettings,
-    apiTokensClientSettings: {
-      url: window._env_.REACT_APP_OIDC_API_TOKENS_URL,
-      queryProps: {
-        grantType: 'urn:ietf:params:oauth:grant-type:uma-ticket',
-        permission: '#access',
+  const loginProviderProps: LoginProviderProps = useMemo(
+    () => ({
+      userManagerSettings: {
+        authority: window._env_.REACT_APP_OIDC_AUTHORITY,
+        client_id: window._env_.REACT_APP_OIDC_CLIENT_ID,
+        redirect_uri: `${origin}/callback`,
+        silent_redirect_uri: `${origin}/silent_renew.html`,
+        response_type: window._env_.REACT_APP_OIDC_RESPONSE_TYPE,
+        scope: window._env_.REACT_APP_OIDC_SCOPE,
+        post_logout_redirect_uri: `${origin}/`,
+        // This calculates to 1 minute, good for debugging:
+        // https://github.com/City-of-Helsinki/kukkuu-ui/blob/8029ed64c3d0496fa87fa57837c73520e8cbe37f/src/domain/auth/userManager.ts#L18
+        // accessTokenExpiringNotificationTimeInSeconds: 3600 - 60,
       },
-      audiences: [window._env_.REACT_APP_PROFILE_AUDIENCE],
-    },
-    debug: true,
-    sessionPollerSettings: { pollIntervalInMs: 60000 },
-  };
+      apiTokensClientSettings: {
+        url: window._env_.REACT_APP_OIDC_API_TOKENS_URL,
+        queryProps: {
+          grantType: 'urn:ietf:params:oauth:grant-type:uma-ticket',
+          permission: '#access',
+        },
+        audiences: [window._env_.REACT_APP_PROFILE_AUDIENCE],
+      },
+      debug: true,
+      sessionPollerSettings: { pollIntervalInMs: 60000 },
+    }),
+    // Runtime configuration is fixed for the lifetime of the app.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   const cookieConsentProps = useCookieConsentSettings();
 
@@ -89,7 +94,7 @@ function App(): React.ReactElement {
         <LoginProvider {...loginProviderProps}>
           <ApolloProvider client={graphqlClient}>
             <ToastProvider>
-              <MatomoProvider value={matomoTracker}>
+              <MatomoProvider value={matomoTrackerRef.current}>
                 <ProfileProvider>
                   <CookieBanner />
                   <Routes>
@@ -115,8 +120,8 @@ function App(): React.ReactElement {
                       path="/*"
                       element={
                         <WithAuthentication
-                          AuthorisedComponent={() => <Profile />}
-                          UnauthorisedComponent={() => <Login />}
+                          AuthorisedComponent={Profile}
+                          UnauthorisedComponent={Login}
                         />
                       }
                     />
