@@ -17,6 +17,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
             <a
               class="SkipLink-module_skipLink__6PN15"
               href="#main-content"
+              id="skip-to-content"
             >
               <span
                 class="SkipLink-module_skipLinkLabel__-13Ba"
@@ -2520,6 +2521,7 @@ exports[`User guide > renders UserGuide component in English 1`] = `
           <a
             class="SkipLink-module_skipLink__6PN15"
             href="#main-content"
+            id="skip-to-content"
           >
             <span
               class="SkipLink-module_skipLinkLabel__-13Ba"
@@ -5080,6 +5082,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
             <a
               class="SkipLink-module_skipLink__6PN15"
               href="#main-content"
+              id="skip-to-content"
             >
               <span
                 class="SkipLink-module_skipLinkLabel__-13Ba"
@@ -7500,6 +7503,7 @@ exports[`User guide > renders UserGuide component in Finnish 1`] = `
           <a
             class="SkipLink-module_skipLink__6PN15"
             href="#main-content"
+            id="skip-to-content"
           >
             <span
               class="SkipLink-module_skipLinkLabel__-13Ba"
@@ -9977,6 +9981,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
             <a
               class="SkipLink-module_skipLink__6PN15"
               href="#main-content"
+              id="skip-to-content"
             >
               <span
                 class="SkipLink-module_skipLinkLabel__-13Ba"
@@ -12413,6 +12418,7 @@ exports[`User guide > renders UserGuide component in Swedish 1`] = `
           <a
             class="SkipLink-module_skipLink__6PN15"
             href="#main-content"
+            id="skip-to-content"
           >
             <span
               class="SkipLink-module_skipLinkLabel__-13Ba"
@@ -14903,6 +14909,7 @@ exports[`User guide > renders UserGuide without errors 1`] = `
         <a
           class="SkipLink-module_skipLink__6PN15"
           href="#main-content"
+          id="skip-to-content"
         >
           <span
             class="SkipLink-module_skipLinkLabel__-13Ba"
