@@ -2,7 +2,7 @@ import { CookieConsentChangeEvent, CookieConsentReactProps } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 
 import siteSettings from './siteSettings.json';
-import { PAGE_HEADER_ID } from '../common/constants';
+import { SKIP_TO_CONTENT_ID } from '../common/constants';
 import getLanguageCode from '../common/helpers/getLanguageCode';
 
 const useCookieConsentSettings = () => {
@@ -30,7 +30,7 @@ const useCookieConsentSettings = () => {
     },
     siteSettings,
     options: {
-      focusTargetSelector: `#${PAGE_HEADER_ID}`,
+      focusTargetSelector: `#${SKIP_TO_CONTENT_ID}`,
       language: currentLanguage,
     },
   };

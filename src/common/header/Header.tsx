@@ -13,7 +13,7 @@ import {
   useGroupConsent,
 } from 'hds-react';
 
-import { MAIN_CONTENT_ID } from '../constants';
+import { MAIN_CONTENT_ID, SKIP_TO_CONTENT_ID } from '../constants';
 import { ProfileContext } from '../../profile/context/ProfileContext';
 import useMatomo from '../matomo/hooks/useMatomo';
 
@@ -103,6 +103,7 @@ function Header(): React.ReactElement {
       defaultLanguage={lang}
     >
       <HDSHeader.SkipLink
+        id={SKIP_TO_CONTENT_ID}
         skipTo={`#${MAIN_CONTENT_ID}`}
         label={t('skipToContent')}
       />
