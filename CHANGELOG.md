@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.33.7](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.33.6...open-city-profile-ui-v1.33.7) (2026-09-25)
+
+
+### Bug Fixes
+
+* Focus to skip-to-content on accepting cookies Refs: HP-2938 ([31b465d](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/31b465db724b19c3ff2ba8f3076565cd8e2f18ca))
+
 ## [1.33.6](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.33.5...open-city-profile-ui-v1.33.6) (2026-09-24)
 
 
