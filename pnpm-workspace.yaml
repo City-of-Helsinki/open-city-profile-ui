@@ -1,14 +1,6 @@
 # Don't allow dependencies to be used before they have been released for at least 1 week
 minimumReleaseAge: 10080
 
-minimumReleaseAgeExclude:
-  - baseline-browser-mapping@2.11.22
-  - electron-to-chromium@1.5.427
-  - nanoid@3.3.19
-  - node-releases@2.0.55
-  - obug@2.2.1
-  - update-browserslist-db@1.3.3
-
 # Hoist all dependencies to the root of node_modules, for better compatibility with packages that expect flat node_modules
 shamefullyHoist: true
 
@@ -24,10 +16,10 @@ overrides:
   "js-cookie": "^3.0.7"
   # Dependabot alerts: force patched transitive versions of dev-only tooling deps
   "shell-quote": "^1.10.0"
-  "brace-expansion@1": "^1.1.18"
-  "brace-expansion@5": "^5.0.9"
+  "brace-expansion@1": "^1.1.21"
+  "brace-expansion@5": "^5.0.12"
   "immutable": "^5.1.9"
-  "fast-uri": "^3.1.7"
+  "fast-uri": "^3.1.8"
   "postcss": "^8.5.26"
   "js-yaml": "^4.3.2"
   "@humanfs/node": "^0.17.0"
