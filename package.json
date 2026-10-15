@@ -65,6 +65,7 @@
     "test": "cross-env NODE_ENV=test pnpm update-runtime-env && vitest",
     "test:e2e:install": "npx playwright install",
     "test:e2e": "npx playwright test",
+    "test:e2e:ci": "pnpm test:e2e",
     "test:coverage": "cross-env CI=true pnpm test --coverage",
     "lint": "eslint src && prettier src --check",
     "lint:fix": "eslint src --fix && prettier src --write",
