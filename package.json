@@ -52,7 +52,7 @@
     "typescript": "5.8.3",
     "uuid": "^14.0.0",
     "validator": "^13.15.22",
-    "vite": "^8.0.16",
+    "vite": "^8.1.6",
     "vitest": "^4.1.11",
     "vitest-fetch-mock": "^0.4.5",
     "yup": "^1.6.1"
