@@ -7,7 +7,7 @@ FROM helsinki.azurecr.io/ubi9/nodejs-24-pnpm-builder-base AS appbase
 COPY --chown=default:root package.json pnpm-lock.yaml pnpm-workspace.yaml /app/
 COPY --chown=default:root ./scripts /app/scripts
 COPY --chown=default:root ./public /app/public
-COPY --chown=default:root index.html vite.config.mts eslint.config.js tsconfig.json .prettierrc .env* /app/
+COPY --chown=default:root index.html LICENSE vite.config.mts eslint.config.js tsconfig.json .prettierrc .env* /app/
 COPY --chown=default:root ./src /app/src
 
 # 2. Run the install and update-runtime-env script
