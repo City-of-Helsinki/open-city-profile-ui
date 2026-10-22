@@ -6,6 +6,7 @@ docker-compose*
 .git
 .gitignore
 README.md
-LICENSE
+# LICENSE is deliberately NOT excluded: the third-party notices plugin reads
+# it during `pnpm build` to reproduce the application license in the output.
 .vscode
 build

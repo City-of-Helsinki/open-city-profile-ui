@@ -17,6 +17,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "allowImportingTsExtensions": true,
     "noFallthroughCasesInSwitch": true,
     "jsx": "react-jsx",
     "types": [

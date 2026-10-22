@@ -143,3 +143,34 @@ OR
 Run `pnpm install` to install dependencies, start app with `pnpm start`.
 
 The graphql-backend for development is located at https://profile-api.dev.hel.ninja/graphql/, it has graphiql installed so you can browse it in your browser!
+
+## License
+
+The source code in this repository is licensed under the MIT License; see
+[LICENSE](./LICENSE). The licenses of the third-party code included in the
+production build are listed in `third-party-licenses.txt`, which is generated
+during the build and served from the root of the deployed application. The
+same information is emitted alongside it as `oss-licenses.json`, for license
+audit tooling.
+
+The MIT License covers source code only. The following files are **not**
+covered by it and remain with their respective rights holders:
+
+| Files                                                                                                                   | Rights holder and terms                                                                                                                 |
+| ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `public/favicon*`, `public/apple-touch-icon.png`                                                                        | City of Helsinki. The Helsinki Design System favicon kit, CC BY 4.0, except the City of Helsinki logo, which is a registered trademark. |
+| `public/Helsinki-profiili-ohjeet.pdf`, `public/Helsingforsprofilens-hjalp.pdf`, `public/Helsinki-profile-userguide.pdf` | City of Helsinki. User guides for the service in Finnish, Swedish and English; not offered for reuse under the MIT License.             |
+| `src/userGuide/assets/`                                                                                                 | City of Helsinki. Screenshots of the service for the user guide; not offered for reuse under the MIT License.                           |
+
+One third-party component is also loaded at runtime from a public CDN, so that
+copy does not appear in either generated file:
+[oidc-client-ts](https://github.com/authts/oidc-client-ts) (Apache-2.0),
+loaded by [silent_renew.html](./public/silent_renew.html) from cdnjs with a
+subresource integrity hash. It is not redistributed by this repository or by
+its build output. The copy bundled into the application itself is listed in
+the generated files as usual.
+
+The Helsinki Grotesk typeface used by the user interface is proprietary and
+licensed by Camelot Typefaces. No font files are stored in this repository;
+they are loaded at runtime from a City of Helsinki service. See
+[index.css](./src/index.css).
