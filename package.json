@@ -4,10 +4,10 @@
   "license": "MIT",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.9.0",
+  "packageManager": "pnpm@11.28.5",
   "engines": {
-    "node": ">=24",
-    "pnpm": ">=11.9.0"
+    "node": "^24",
+    "pnpm": ">=11.28.5"
   },
   "dependencies": {
     "@apollo/client": "^3.9.6",
