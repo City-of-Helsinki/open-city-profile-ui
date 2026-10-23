@@ -15,7 +15,7 @@ overrides:
   "@typescript-eslint/typescript-estree>minimatch": "9.0.7"
   "js-cookie": "^3.0.7"
   # Dependabot alerts: force patched transitive versions of dev-only tooling deps
-  "shell-quote": "^1.10.0"
+  "shell-quote": "^1.11.0"
   "brace-expansion@1": "^1.1.21"
   "brace-expansion@5": "^5.0.12"
   "immutable": "^5.1.9"
@@ -23,6 +23,16 @@ overrides:
   "postcss": "^8.5.26"
   "js-yaml": "^4.3.2"
   "@humanfs/node": "^0.17.0"
+  "@fastify/busboy": "^3.2.2"
+  "source-map-js": "^1.2.2"
+  # hds-react pins postcss-nesting@10, whose postcss-selector-parser@6 has no patched release
+  "postcss-nesting>postcss-selector-parser": "^7.1.6"
+  "@csstools/selector-specificity>postcss-selector-parser": "^7.1.6"
+
+auditConfig:
+  ignoreGhsas:
+    # braces: no patched version exists (3.0.3 is latest); only reached via dev-only codegen glob tooling
+    - GHSA-vfj7-8cjw-p6xm
 
 allowBuilds:
   "@swc/core": true
