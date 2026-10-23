@@ -2,31 +2,10 @@
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-/** All built-in and custom scalars, mapped to their actual values */
-export interface Scalars {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  DateTime: { input: any; output: any; }
-  JSONString: { input: any; output: any; }
-  UUID: { input: any; output: any; }
-  _Any: { input: any; output: any; }
-}
-
-export interface AddServiceConnectionMutationInput {
-  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  readonly serviceConnection: ServiceConnectionInput;
-}
-
 export enum AddressType {
   /** Home address */
   HOME = 'HOME',
@@ -37,12 +16,6 @@ export enum AddressType {
   WORK = 'WORK'
 }
 
-export interface ClaimProfileMutationInput {
-  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  readonly profile?: InputMaybe<ProfileInput>;
-  readonly token: Scalars['UUID']['input'];
-}
-
 /** An enumeration. */
 export enum ContactMethod {
   EMAIL = 'EMAIL',
@@ -51,138 +24,52 @@ export enum ContactMethod {
 
 export interface CreateAddressInput {
   /** Street address. Maximum length is 128 characters. */
-  readonly address: Scalars['String']['input'];
+  readonly address: string;
   /** Address type. */
   readonly addressType: AddressType;
   /** City. Maximum length is 64 characters. */
-  readonly city: Scalars['String']['input'];
+  readonly city: string;
   /** An ISO 3166 alpha-2 country code. */
-  readonly countryCode?: InputMaybe<Scalars['String']['input']>;
+  readonly countryCode?: string | null | undefined;
   /** Postal code. Maximum length is 32 characters. */
-  readonly postalCode: Scalars['String']['input'];
+  readonly postalCode: string;
   /** Is this primary address. */
-  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
+  readonly primary?: boolean | null | undefined;
 }
 
 export interface CreateEmailInput {
   /** Email address. */
-  readonly email: Scalars['String']['input'];
+  readonly email: string;
   /** Email address type. */
   readonly emailType: EmailType;
   /** Is this primary mail address. */
-  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
-}
-
-export interface CreateMyProfileMutationInput {
-  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  readonly profile: ProfileInput;
-}
-
-export interface CreateMyProfileTemporaryReadAccessTokenMutationInput {
-  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
-}
-
-export interface CreateOrUpdateProfileWithVerifiedPersonalInformationMutationInput {
-  readonly profile: ProfileWithVerifiedPersonalInformationInput;
-  /** Connect the profile to the service identified by this client id. */
-  readonly serviceClientId?: InputMaybe<Scalars['String']['input']>;
-  /** The **user id** of the user the Profile is or will be associated with. */
-  readonly userId: Scalars['UUID']['input'];
-}
-
-export interface CreateOrUpdateUserProfileMutationInput {
-  readonly profile: ProfileWithVerifiedPersonalInformationInput;
-  /** Connect the profile to the service identified by this client id. */
-  readonly serviceClientId?: InputMaybe<Scalars['String']['input']>;
-  /** The **user id** of the user the Profile is or will be associated with. */
-  readonly userId: Scalars['UUID']['input'];
+  readonly primary?: boolean | null | undefined;
 }
 
 export interface CreatePhoneInput {
   /** Phone number. Must not be empty. */
-  readonly phone: Scalars['String']['input'];
+  readonly phone: string;
   /** Phone number type. */
   readonly phoneType: PhoneType;
   /** Is this primary phone number. */
-  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
-}
-
-/**
- * The following fields are deprecated:
- *
- * * `image`
- * * `update_emails`
- * * `remove_emails`
- * * `update_phones`
- * * `remove_phones`
- * * `update_addresses`
- * * `remove_addresses`
- *
- * There's no replacement for these.
- */
-export interface CreateProfileInput {
-  /** Add addresses to profile. */
-  readonly addAddresses?: InputMaybe<ReadonlyArray<InputMaybe<CreateAddressInput>>>;
-  /** Add emails to profile. */
-  readonly addEmails?: InputMaybe<ReadonlyArray<InputMaybe<CreateEmailInput>>>;
-  /** Add phone numbers to profile. */
-  readonly addPhones?: InputMaybe<ReadonlyArray<InputMaybe<CreatePhoneInput>>>;
-  /** Contact method. */
-  readonly contactMethod?: InputMaybe<ContactMethod>;
-  /** First name. Maximum length is 255 characters. */
-  readonly firstName?: InputMaybe<Scalars['String']['input']>;
-  /** **DEPRECATED**. Any input is ignored. */
-  readonly image?: InputMaybe<Scalars['String']['input']>;
-  /** Language. */
-  readonly language?: InputMaybe<Language>;
-  /** Last name. Maximum length is 255 characters. */
-  readonly lastName?: InputMaybe<Scalars['String']['input']>;
-  /** Nickname. Maximum length is 32 characters. */
-  readonly nickname?: InputMaybe<Scalars['String']['input']>;
-  /** **DEPRECATED**. Any input is ignored. */
-  readonly removeAddresses?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  /** **DEPRECATED**. Any input is ignored. */
-  readonly removeEmails?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  /** **DEPRECATED**. Any input is ignored. */
-  readonly removePhones?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly sensitivedata?: InputMaybe<SensitiveDataFields>;
-  /** **DEPRECATED**. Any input is ignored. */
-  readonly updateAddresses?: InputMaybe<ReadonlyArray<InputMaybe<UpdateAddressInput>>>;
-  /** **DEPRECATED**. Any input is ignored. */
-  readonly updateEmails?: InputMaybe<ReadonlyArray<InputMaybe<UpdateEmailInput>>>;
-  /** **DEPRECATED**. Any input is ignored. */
-  readonly updatePhones?: InputMaybe<ReadonlyArray<InputMaybe<UpdatePhoneInput>>>;
-}
-
-export interface CreateProfileMutationInput {
-  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  readonly profile: CreateProfileInput;
-  /** **OBSOLETE**: doesn't do anything. Requester's service is determined by authentication. */
-  readonly serviceType?: InputMaybe<ServiceType>;
+  readonly primary?: boolean | null | undefined;
 }
 
 export interface DeleteMyProfileMutationInput {
   /** OAuth/OIDC authorization code from Keycloak */
-  readonly authorizationCode: Scalars['String']['input'];
-  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  readonly authorizationCode: string;
+  readonly clientMutationId?: string | null | undefined;
   /** Can be used to see if the profile can be removed. Default is False. */
-  readonly dryRun?: InputMaybe<Scalars['Boolean']['input']>;
+  readonly dryRun?: boolean | null | undefined;
 }
 
 export interface DeleteMyServiceDataMutationInput {
   /** OAuth/OIDC authorization code from Keycloak */
-  readonly authorizationCode: Scalars['String']['input'];
+  readonly authorizationCode: string;
   /** Can be used to see if the date can be removed from the service. Default is False. */
-  readonly dryRun?: InputMaybe<Scalars['Boolean']['input']>;
+  readonly dryRun?: boolean | null | undefined;
   /** The name of the service the data should be removed from */
-  readonly serviceName: Scalars['String']['input'];
-}
-
-export interface EmailInput {
-  /** The email address. */
-  readonly email: Scalars['String']['input'];
-  /** Sets whether the primary email address has been verified. If not given, defaults to False. */
-  readonly verified?: InputMaybe<Scalars['Boolean']['input']>;
+  readonly serviceName: string;
 }
 
 export enum EmailType {
@@ -232,84 +119,41 @@ export enum PhoneType {
  */
 export interface ProfileInput {
   /** Add addresses to profile. */
-  readonly addAddresses?: InputMaybe<ReadonlyArray<InputMaybe<CreateAddressInput>>>;
+  readonly addAddresses?: ReadonlyArray<CreateAddressInput | null | undefined> | null | undefined;
   /** Add emails to profile. */
-  readonly addEmails?: InputMaybe<ReadonlyArray<InputMaybe<CreateEmailInput>>>;
+  readonly addEmails?: ReadonlyArray<CreateEmailInput | null | undefined> | null | undefined;
   /** Add phone numbers to profile. */
-  readonly addPhones?: InputMaybe<ReadonlyArray<InputMaybe<CreatePhoneInput>>>;
+  readonly addPhones?: ReadonlyArray<CreatePhoneInput | null | undefined> | null | undefined;
   /** Contact method. */
-  readonly contactMethod?: InputMaybe<ContactMethod>;
+  readonly contactMethod?: ContactMethod | null | undefined;
   /** First name. Maximum length is 255 characters. */
-  readonly firstName?: InputMaybe<Scalars['String']['input']>;
+  readonly firstName?: string | null | undefined;
   /** **DEPRECATED**. Any input is ignored. */
-  readonly image?: InputMaybe<Scalars['String']['input']>;
+  readonly image?: string | null | undefined;
   /** Language. */
-  readonly language?: InputMaybe<Language>;
+  readonly language?: Language | null | undefined;
   /** Last name. Maximum length is 255 characters. */
-  readonly lastName?: InputMaybe<Scalars['String']['input']>;
+  readonly lastName?: string | null | undefined;
   /** Nickname. Maximum length is 32 characters. */
-  readonly nickname?: InputMaybe<Scalars['String']['input']>;
+  readonly nickname?: string | null | undefined;
   /** Remove addresses from profile. */
-  readonly removeAddresses?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  readonly removeAddresses?: ReadonlyArray<string | number | null | undefined> | null | undefined;
   /** Remove emails from profile. */
-  readonly removeEmails?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  readonly removeEmails?: ReadonlyArray<string | number | null | undefined> | null | undefined;
   /** Remove phone numbers from profile. */
-  readonly removePhones?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly sensitivedata?: InputMaybe<SensitiveDataFields>;
+  readonly removePhones?: ReadonlyArray<string | number | null | undefined> | null | undefined;
+  readonly sensitivedata?: SensitiveDataFields | null | undefined;
   /** Update profile addresses. */
-  readonly updateAddresses?: InputMaybe<ReadonlyArray<InputMaybe<UpdateAddressInput>>>;
+  readonly updateAddresses?: ReadonlyArray<UpdateAddressInput | null | undefined> | null | undefined;
   /** Update profile emails. */
-  readonly updateEmails?: InputMaybe<ReadonlyArray<InputMaybe<UpdateEmailInput>>>;
+  readonly updateEmails?: ReadonlyArray<UpdateEmailInput | null | undefined> | null | undefined;
   /** Update profile phone numbers. */
-  readonly updatePhones?: InputMaybe<ReadonlyArray<InputMaybe<UpdatePhoneInput>>>;
-}
-
-export interface ProfileWithVerifiedPersonalInformationInput {
-  /** First name. */
-  readonly firstName?: InputMaybe<Scalars['String']['input']>;
-  /** Last name. */
-  readonly lastName?: InputMaybe<Scalars['String']['input']>;
-  /** Sets the profile's primary email address. */
-  readonly primaryEmail?: InputMaybe<EmailInput>;
-  readonly verifiedPersonalInformation?: InputMaybe<VerifiedPersonalInformationInput>;
+  readonly updatePhones?: ReadonlyArray<UpdatePhoneInput | null | undefined> | null | undefined;
 }
 
 export interface SensitiveDataFields {
   /** Finnish personal identity code. */
-  readonly ssn?: InputMaybe<Scalars['String']['input']>;
-}
-
-export interface ServiceConnectionInput {
-  readonly enabled?: InputMaybe<Scalars['Boolean']['input']>;
-  /** **OBSOLETE**: doesn't do anything. Requester's service is determined by authentication. */
-  readonly service?: InputMaybe<ServiceInput>;
-}
-
-export interface ServiceInput {
-  readonly type?: InputMaybe<ServiceType>;
-}
-
-export enum ServiceType {
-  /**
-   * Berth
-   * @deprecated The whole ServiceType enum is deprecated and shouldn't be used anymore. There are different replacements in various places, depending on how this type was used.
-   */
-  BERTH = 'BERTH',
-  /**
-   * Godchildren of Culture
-   * @deprecated The whole ServiceType enum is deprecated and shouldn't be used anymore. There are different replacements in various places, depending on how this type was used.
-   */
-  GODCHILDREN_OF_CULTURE = 'GODCHILDREN_OF_CULTURE',
-  /**
-   * Helsinki My Data
-   * @deprecated The whole ServiceType enum is deprecated and shouldn't be used anymore. There are different replacements in various places, depending on how this type was used.
-   */
-  HKI_MY_DATA = 'HKI_MY_DATA',
-  /**
-   * Youth Membership
-   * @deprecated The whole ServiceType enum is deprecated and shouldn't be used anymore. There are different replacements in various places, depending on how this type was used.
-   */
-  YOUTH_MEMBERSHIP = 'YOUTH_MEMBERSHIP'
+  readonly ssn?: string | null | undefined;
 }
 
 /** An enumeration. */
@@ -321,131 +165,43 @@ export enum TranslationLanguage {
 
 export interface UpdateAddressInput {
   /** Street address. Maximum length is 128 characters. */
-  readonly address?: InputMaybe<Scalars['String']['input']>;
+  readonly address?: string | null | undefined;
   /** Address type. */
-  readonly addressType?: InputMaybe<AddressType>;
+  readonly addressType?: AddressType | null | undefined;
   /** City. Maximum length is 64 characters. */
-  readonly city?: InputMaybe<Scalars['String']['input']>;
+  readonly city?: string | null | undefined;
   /** An ISO 3166 alpha-2 country code. */
-  readonly countryCode?: InputMaybe<Scalars['String']['input']>;
-  readonly id: Scalars['ID']['input'];
+  readonly countryCode?: string | null | undefined;
+  readonly id: string | number;
   /** Postal code. Maximum length is 32 characters. */
-  readonly postalCode?: InputMaybe<Scalars['String']['input']>;
+  readonly postalCode?: string | null | undefined;
   /** Is this primary address. */
-  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
+  readonly primary?: boolean | null | undefined;
 }
 
 export interface UpdateEmailInput {
   /** Email address. */
-  readonly email?: InputMaybe<Scalars['String']['input']>;
+  readonly email?: string | null | undefined;
   /** Email address type. */
-  readonly emailType?: InputMaybe<EmailType>;
-  readonly id: Scalars['ID']['input'];
+  readonly emailType?: EmailType | null | undefined;
+  readonly id: string | number;
   /** Is this primary mail address. */
-  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
+  readonly primary?: boolean | null | undefined;
 }
 
 export interface UpdateMyProfileMutationInput {
-  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  readonly clientMutationId?: string | null | undefined;
   readonly profile: ProfileInput;
 }
 
 export interface UpdatePhoneInput {
-  readonly id: Scalars['ID']['input'];
+  readonly id: string | number;
   /** Phone number. If provided, must not be empty. */
-  readonly phone?: InputMaybe<Scalars['String']['input']>;
+  readonly phone?: string | null | undefined;
   /** Phone number type. */
-  readonly phoneType?: InputMaybe<PhoneType>;
+  readonly phoneType?: PhoneType | null | undefined;
   /** Is this primary phone number. */
-  readonly primary?: InputMaybe<Scalars['Boolean']['input']>;
-}
-
-/**
- * The following fields are deprecated:
- *
- * * `image`
- *
- * There's no replacement for these.
- */
-export interface UpdateProfileInput {
-  /** Add addresses to profile. */
-  readonly addAddresses?: InputMaybe<ReadonlyArray<InputMaybe<CreateAddressInput>>>;
-  /** Add emails to profile. */
-  readonly addEmails?: InputMaybe<ReadonlyArray<InputMaybe<CreateEmailInput>>>;
-  /** Add phone numbers to profile. */
-  readonly addPhones?: InputMaybe<ReadonlyArray<InputMaybe<CreatePhoneInput>>>;
-  /** Contact method. */
-  readonly contactMethod?: InputMaybe<ContactMethod>;
-  /** First name. Maximum length is 255 characters. */
-  readonly firstName?: InputMaybe<Scalars['String']['input']>;
-  readonly id: Scalars['ID']['input'];
-  /** **DEPRECATED**. Any input is ignored. */
-  readonly image?: InputMaybe<Scalars['String']['input']>;
-  /** Language. */
-  readonly language?: InputMaybe<Language>;
-  /** Last name. Maximum length is 255 characters. */
-  readonly lastName?: InputMaybe<Scalars['String']['input']>;
-  /** Nickname. Maximum length is 32 characters. */
-  readonly nickname?: InputMaybe<Scalars['String']['input']>;
-  /** Remove addresses from profile. */
-  readonly removeAddresses?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  /** Remove emails from profile. */
-  readonly removeEmails?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  /** Remove phone numbers from profile. */
-  readonly removePhones?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly sensitivedata?: InputMaybe<SensitiveDataFields>;
-  /** Update profile addresses. */
-  readonly updateAddresses?: InputMaybe<ReadonlyArray<InputMaybe<UpdateAddressInput>>>;
-  /** Update profile emails. */
-  readonly updateEmails?: InputMaybe<ReadonlyArray<InputMaybe<UpdateEmailInput>>>;
-  /** Update profile phone numbers. */
-  readonly updatePhones?: InputMaybe<ReadonlyArray<InputMaybe<UpdatePhoneInput>>>;
-}
-
-export interface UpdateProfileMutationInput {
-  readonly clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  readonly profile: UpdateProfileInput;
-  /** **OBSOLETE**: doesn't do anything. Requester's service is determined by authentication. */
-  readonly serviceType?: InputMaybe<ServiceType>;
-}
-
-export interface VerifiedPersonalInformationAddressInput {
-  /** Post office. Max length 100 characters. */
-  readonly postOffice?: InputMaybe<Scalars['String']['input']>;
-  /** Finnish postal code, exactly five digits. */
-  readonly postalCode?: InputMaybe<Scalars['String']['input']>;
-  /** Street address with possible house number etc. Max length 100 characters. */
-  readonly streetAddress?: InputMaybe<Scalars['String']['input']>;
-}
-
-export interface VerifiedPersonalInformationForeignAddressInput {
-  /** Additional address information, perhaps town, county, state, country etc. Max length 100 characters. */
-  readonly additionalAddress?: InputMaybe<Scalars['String']['input']>;
-  /** An ISO 3166-1 country code. */
-  readonly countryCode?: InputMaybe<Scalars['String']['input']>;
-  /** Street address or whatever is the _first part_ of the address. Max length 100 characters. */
-  readonly streetAddress?: InputMaybe<Scalars['String']['input']>;
-}
-
-export interface VerifiedPersonalInformationInput {
-  /** First name(s). Max length 100 characters. */
-  readonly firstName?: InputMaybe<Scalars['String']['input']>;
-  /** The name the person is called with. Max length 100 characters. */
-  readonly givenName?: InputMaybe<Scalars['String']['input']>;
-  /** Last name. Max length 100 characters. */
-  readonly lastName?: InputMaybe<Scalars['String']['input']>;
-  /** Official municipality of residence in Finland as a free form text. Max length 100 characters. */
-  readonly municipalityOfResidence?: InputMaybe<Scalars['String']['input']>;
-  /** Official municipality of residence in Finland as an official number, exactly three digits. */
-  readonly municipalityOfResidenceNumber?: InputMaybe<Scalars['String']['input']>;
-  /** Finnish personal identity code. */
-  readonly nationalIdentificationNumber?: InputMaybe<Scalars['String']['input']>;
-  /** The permanent residency address in Finland. */
-  readonly permanentAddress?: InputMaybe<VerifiedPersonalInformationAddressInput>;
-  /** The temporary foreign (i.e. not in Finland) residency address. */
-  readonly permanentForeignAddress?: InputMaybe<VerifiedPersonalInformationForeignAddressInput>;
-  /** The temporary residency address in Finland. */
-  readonly temporaryAddress?: InputMaybe<VerifiedPersonalInformationAddressInput>;
+  readonly primary?: boolean | null | undefined;
 }
 
 export type GdprDeleteMyProfileMutationDeleteMyProfileResultsErrorsFragment = { readonly __typename: 'ServiceConnectionDeletionError', readonly code: string };
@@ -485,11 +241,11 @@ export type GdprServiceConnectionsQueryVariables = Exact<{ [key: string]: never;
 export type GdprServiceConnectionsQuery = { readonly myProfile: { readonly __typename: 'ProfileNode', readonly id: string, readonly serviceConnections: { readonly __typename: 'ServiceConnectionTypeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'ServiceConnectionTypeEdge', readonly node: { readonly __typename: 'ServiceConnectionType', readonly service: { readonly __typename: 'ServiceNode', readonly name: string, readonly gdprQueryScope: string, readonly gdprDeleteScope: string } } | null } | null> } | null } | null };
 
 export type DownloadMyProfileQueryVariables = Exact<{
-  authorizationCode: Scalars['String']['input'];
+  authorizationCode: string;
 }>;
 
 
-export type DownloadMyProfileQuery = { readonly downloadMyProfile: any | null };
+export type DownloadMyProfileQuery = { readonly downloadMyProfile: any };
 
 export type MyProfileQueryVerifiedPersonalInformationPermanentForeignAddressFragment = { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string };
 
@@ -509,7 +265,7 @@ export type MyProfileQueryEmailsEdgesNodeFragment = { readonly __typename: 'Emai
 
 export type MyProfileQueryPhonesEdgesNodeFragment = { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null };
 
-export type MyLoginMethodNodeFragment = { readonly __typename: 'LoginMethodNode', readonly method: LoginMethodType, readonly createdAt: any | null, readonly credentialId: string | null, readonly userLabel: string | null };
+export type MyLoginMethodNodeFragment = { readonly __typename: 'LoginMethodNode', readonly method: LoginMethodType, readonly createdAt: any, readonly credentialId: string | null, readonly userLabel: string | null };
 
 export type MyProfileQueryAddressesEdgesFragment = { readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null };
 
@@ -523,12 +279,12 @@ export type MyProfileQueryEmailsFragment = { readonly __typename: 'EmailNodeConn
 
 export type MyProfileQueryPhonesFragment = { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> };
 
-export type MyProfileQueryFragment = { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly availableLoginMethods: ReadonlyArray<{ readonly __typename: 'LoginMethodNode', readonly method: LoginMethodType, readonly createdAt: any | null, readonly credentialId: string | null, readonly userLabel: string | null } | null> | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null, readonly verifiedPersonalInformation: { readonly __typename: 'VerifiedPersonalInformationNode', readonly firstName: string, readonly lastName: string, readonly givenName: string, readonly nationalIdentificationNumber: string, readonly municipalityOfResidence: string, readonly municipalityOfResidenceNumber: string, readonly permanentAddress: { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string } | null, readonly permanentForeignAddress: { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string } | null } | null };
+export type MyProfileQueryFragment = { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly availableLoginMethods: ReadonlyArray<{ readonly __typename: 'LoginMethodNode', readonly method: LoginMethodType, readonly createdAt: any, readonly credentialId: string | null, readonly userLabel: string | null } | null> | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null, readonly verifiedPersonalInformation: { readonly __typename: 'VerifiedPersonalInformationNode', readonly firstName: string, readonly lastName: string, readonly givenName: string, readonly nationalIdentificationNumber: string, readonly municipalityOfResidence: string, readonly municipalityOfResidenceNumber: string, readonly permanentAddress: { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string } | null, readonly permanentForeignAddress: { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string } | null } | null };
 
 export type MyProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyProfileQuery = { readonly myProfile: { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly availableLoginMethods: ReadonlyArray<{ readonly __typename: 'LoginMethodNode', readonly method: LoginMethodType, readonly createdAt: any | null, readonly credentialId: string | null, readonly userLabel: string | null } | null> | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null, readonly verifiedPersonalInformation: { readonly __typename: 'VerifiedPersonalInformationNode', readonly firstName: string, readonly lastName: string, readonly givenName: string, readonly nationalIdentificationNumber: string, readonly municipalityOfResidence: string, readonly municipalityOfResidenceNumber: string, readonly permanentAddress: { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string } | null, readonly permanentForeignAddress: { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string } | null } | null } | null };
+export type MyProfileQuery = { readonly myProfile: { readonly __typename: 'ProfileNode', readonly id: string, readonly firstName: string, readonly lastName: string, readonly nickname: string, readonly language: Language | null, readonly availableLoginMethods: ReadonlyArray<{ readonly __typename: 'LoginMethodNode', readonly method: LoginMethodType, readonly createdAt: any, readonly credentialId: string | null, readonly userLabel: string | null } | null> | null, readonly primaryAddress: { readonly __typename: 'AddressNode', readonly id: string, readonly primary: boolean, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null, readonly addresses: { readonly __typename: 'AddressNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'AddressNodeEdge', readonly node: { readonly __typename: 'AddressNode', readonly primary: boolean, readonly id: string, readonly address: string, readonly postalCode: string, readonly city: string, readonly countryCode: string, readonly addressType: AddressType | null } | null } | null> } | null, readonly primaryEmail: { readonly __typename: 'EmailNode', readonly id: string, readonly email: string, readonly primary: boolean, readonly emailType: EmailType | null } | null, readonly emails: { readonly __typename: 'EmailNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'EmailNodeEdge', readonly node: { readonly __typename: 'EmailNode', readonly primary: boolean, readonly id: string, readonly email: string, readonly emailType: EmailType | null } | null } | null> } | null, readonly primaryPhone: { readonly __typename: 'PhoneNode', readonly id: string, readonly phone: string, readonly primary: boolean, readonly phoneType: PhoneType | null } | null, readonly phones: { readonly __typename: 'PhoneNodeConnection', readonly edges: ReadonlyArray<{ readonly __typename: 'PhoneNodeEdge', readonly node: { readonly __typename: 'PhoneNode', readonly primary: boolean, readonly id: string, readonly phone: string, readonly phoneType: PhoneType | null } | null } | null> } | null, readonly verifiedPersonalInformation: { readonly __typename: 'VerifiedPersonalInformationNode', readonly firstName: string, readonly lastName: string, readonly givenName: string, readonly nationalIdentificationNumber: string, readonly municipalityOfResidence: string, readonly municipalityOfResidenceNumber: string, readonly permanentAddress: { readonly __typename: 'VerifiedPersonalInformationAddressNode', readonly streetAddress: string, readonly postalCode: string, readonly postOffice: string } | null, readonly permanentForeignAddress: { readonly __typename: 'VerifiedPersonalInformationForeignAddressNode', readonly streetAddress: string, readonly additionalAddress: string, readonly countryCode: string } | null } | null } | null };
 
 export type NameQueryVariables = Exact<{ [key: string]: never; }>;
 

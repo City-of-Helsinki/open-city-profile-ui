@@ -2,16 +2,16 @@ overwrite: true
 schema: 'https://profile-api.dev.hel.ninja/graphql/'
 documents: ['./src/gdprApi/graphql/*.ts', './src/profile/graphql/*.ts']
 config:
-  # typescript
   avoidOptionals:
     field: true
-  declarationKind: 'interface'
+  declarationKind:
+    input: 'interface'
+    result: 'type'
+  defaultScalarType: 'any'
+  enumType: 'native'
   immutableTypes: true
   nonOptionalTypename: true
   namingConvention: 'keep'
-  onlyOperationTypes: true
-
-  # typescript-operations
   dedupeOperationSuffix: true
   preResolveTypes: true
   skipTypeNameForRoot: true
@@ -24,5 +24,4 @@ generates:
             - '/* eslint-disable */'
             - '// @generated'
             - '// This file was automatically generated and should not be edited.'
-      - 'typescript'
       - 'typescript-operations'
