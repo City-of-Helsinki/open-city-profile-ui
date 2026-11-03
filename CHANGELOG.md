@@ -3,6 +3,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.34.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.33.8...open-city-profile-ui-v1.34.0) (2026-11-03)
+
+
+### Features
+
+* Generate third-party license notices at build time ([fe0e207](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/fe0e20762f3c484a4d00dd496e64e5b7ca93b907))
+
+
+### Bug Fixes
+
+* Dependency vulnerabilities ([72ec7b4](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/72ec7b47b9cad51e4cd2984283458984df3c6cb8))
+* Update nodejs and pnpm version ([96a5876](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/96a5876eccfe6b023f04e0d2f6bb974533a4e1ba))
+
+
+### Dependencies
+
+* Bump fast-uri from 3.1.8 to 3.1.9 ([4c59299](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/4c59299efd29c2c82ba8c0ff488412486c5eda3c))
+
 ## [1.33.8](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.33.7...open-city-profile-ui-v1.33.8) (2026-10-12)
 
 
