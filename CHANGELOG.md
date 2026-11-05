@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.34.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.34.0...open-city-profile-ui-v1.34.1) (2026-11-05)
+
+
+### Dependencies
+
+* Fix zod vulnerability, update playwright and clean up pnpm config ([049700a](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/049700a056ce3ee24aedd86a05ab4050b044d793))
+
 ## [1.34.0](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.33.8...open-city-profile-ui-v1.34.0) (2026-11-03)
 
 
