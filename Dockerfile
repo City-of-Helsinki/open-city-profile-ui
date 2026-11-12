@@ -23,13 +23,19 @@ FROM appbase AS development
 
 WORKDIR /app
 
+USER root
+RUN groupadd -g 1000 appuser \
+   && useradd -u 1000 -g appuser -ms /bin/bash appuser \
+   && chown -R appuser:root /app
+
 # Set NODE_ENV to development in the development container
 ARG NODE_ENV=development
 ENV NODE_ENV $NODE_ENV
 
 EXPOSE 8080
 
-CMD pnpm exec vite --port 8080
+USER appuser
+CMD pnpm update-runtime-env && pnpm exec vite --port 8080
 
 # ===================================
 FROM appbase AS staticbuilder
