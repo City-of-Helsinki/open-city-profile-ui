@@ -35,7 +35,7 @@ ENV NODE_ENV $NODE_ENV
 EXPOSE 8080
 
 USER appuser
-CMD pnpm update-runtime-env && pnpm exec vite --port 8080
+CMD pnpm start --port 8080
 
 # ===================================
 FROM appbase AS staticbuilder
