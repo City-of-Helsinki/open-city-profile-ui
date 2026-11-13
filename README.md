@@ -130,13 +130,13 @@ Clone https://github.com/City-of-Helsinki/open-city-profile/.
      - `APPLY_MIGRATIONS`, applies migrations on startup
      - `BOOTSTRAP_DIVISIONS`, bootstrap data import for divisions
 
-2. Run `docker-compose up`
+2. Run `docker compose up`
 
 ### open-city-profile-ui
 
 If running on Linux or MacOS, easiest way is to just run the app without docker. Any semi-new version of node should probably work, the docker-image is set to use node 14.
 
-`docker-compose up` starts the container.
+`docker compose up` starts the container.
 
 OR
 
