@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.34.2](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.34.1...open-city-profile-ui-v1.34.2) (2026-11-18)
+
+
+### Bug Fixes
+
+* Update env-config script version to v2 ([8376aea](https://github.com/City-of-Helsinki/open-city-profile-ui/commit/8376aea42f338d067dee43390e80f6e44ec8e195))
+
 ## [1.34.1](https://github.com/City-of-Helsinki/open-city-profile-ui/compare/open-city-profile-ui-v1.34.0...open-city-profile-ui-v1.34.1) (2026-11-05)
 
 
