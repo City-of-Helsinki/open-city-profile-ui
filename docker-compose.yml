@@ -8,7 +8,8 @@ services:
     env_file:
       - .env
       - .env.development
-      - .env.local
+      - path: .env.local
+        required: false
     volumes:
       - '.:/app'
       - '/app/node_modules'
